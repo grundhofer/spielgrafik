@@ -1,0 +1,213 @@
+{
+ "leuchtturm": {
+  "raw": "assets/raw/leuchtturm_a.png",
+  "crop": {
+   "raw_size": [
+    1264,
+    848
+   ],
+   "painted_bbox": [
+    38,
+    38,
+    1228,
+    810
+   ],
+   "crop": [
+    48,
+    95,
+    1218,
+    753
+   ],
+   "scale": 1.0940170940170941,
+   "slack_px": 94,
+   "dy_requested": 0,
+   "horizon_row_centered": null
+  },
+  "horizon_row": null,
+  "text": {
+   "line": "Die große Linse\ndreht sich leise.",
+   "lines": 2,
+   "cx": 650,
+   "y": 93,
+   "rect": [
+    497,
+    87,
+    803,
+    211
+   ],
+   "scheme": "dunkel",
+   "title_col": "#8e4232",
+   "line_col": "#3b3352",
+   "band": null,
+   "calm": {
+    "L_mean": 93.4,
+    "L_std": 0.5,
+    "L_p05": 92.6,
+    "L_p95": 94.3,
+    "grad_energy": 0.414,
+    "edge_density": 0.0
+   },
+   "contrast": {
+    "median": 9.73,
+    "p05": 9.47
+   }
+  },
+  "auto": {
+   "stars": 15
+  },
+  "handwork": {
+   "points": 1,
+   "rects": 2,
+   "polygons": 0,
+   "crop_overrides": 0,
+   "text_overrides": 0,
+   "names": [
+    "lamp",
+    "lens",
+    "wall"
+   ]
+  }
+ },
+ "stube": {
+  "raw": "assets/raw/stube.png",
+  "crop": {
+   "raw_size": [
+    1264,
+    848
+   ],
+   "painted_bbox": [
+    36,
+    36,
+    1228,
+    810
+   ],
+   "crop": [
+    46,
+    93,
+    1218,
+    752
+   ],
+   "scale": 1.0921501706484642,
+   "slack_px": 95,
+   "dy_requested": 0,
+   "horizon_row_centered": null
+  },
+  "horizon_row": null,
+  "text": {
+   "line": "Im Kamin knistert\ndie Glut.",
+   "lines": 2,
+   "cx": 640,
+   "y": 98,
+   "rect": [
+    454,
+    92,
+    826,
+    216
+   ],
+   "scheme": "dunkel",
+   "title_col": "#8e4232",
+   "line_col": "#3b3352",
+   "band": null,
+   "calm": {
+    "L_mean": 87.4,
+    "L_std": 1.98,
+    "L_p05": 84.5,
+    "L_p95": 90.3,
+    "grad_energy": 0.511,
+    "edge_density": 0.0001
+   },
+   "contrast": {
+    "median": 7.99,
+    "p05": 7.34
+   }
+  },
+  "auto": {
+   "stars": 3
+  },
+  "handwork": {
+   "points": 4,
+   "rects": 0,
+   "polygons": 0,
+   "crop_overrides": 0,
+   "text_overrides": 0,
+   "names": [
+    "candle",
+    "fire",
+    "kettle_spout",
+    "window_lamp"
+   ]
+  }
+ },
+ "klippe": {
+  "raw": "assets/raw/klippe.png",
+  "crop": {
+   "raw_size": [
+    1264,
+    848
+   ],
+   "painted_bbox": [
+    36,
+    38,
+    1228,
+    810
+   ],
+   "crop": [
+    46,
+    48,
+    1218,
+    707
+   ],
+   "scale": 1.0921501706484642,
+   "slack_px": 93,
+   "dy_requested": -65,
+   "horizon_row_centered": 339
+  },
+  "horizon_row": 389,
+  "text": {
+   "line": "Unten im Hafen gehen die Lichter an.",
+   "lines": 1,
+   "cx": 640,
+   "y": 18,
+   "rect": [
+    307,
+    12,
+    972,
+    96
+   ],
+   "scheme": "hell",
+   "title_col": "#f4b585",
+   "line_col": "#f8ecd6",
+   "band": null,
+   "calm": {
+    "L_mean": 52.9,
+    "L_std": 1.84,
+    "L_p05": 50.2,
+    "L_p95": 55.1,
+    "grad_energy": 0.482,
+    "edge_density": 0.0019
+   },
+   "contrast": {
+    "median": 4.36,
+    "p05": 4.05
+   }
+  },
+  "auto": {
+   "stars": 12,
+   "village_windows": 13,
+   "grass_tufts": 23
+  },
+  "handwork": {
+   "points": 1,
+   "rects": 3,
+   "polygons": 0,
+   "crop_overrides": 0,
+   "text_overrides": 0,
+   "names": [
+    "lamp",
+    "sea",
+    "sea_left",
+    "village"
+   ]
+  }
+ }
+}

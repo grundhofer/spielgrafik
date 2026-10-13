@@ -13,6 +13,7 @@ __pycache__/
 # build.py ab. Ihre Begleit-JSON, meta und Logs bleiben draußen (lokale Pfade, Sitzungsdaten). Die Liste ist aus allen
 # style.json erzeugt; tests/test_build.py (TestGitignore) scheitert, wenn eine gezeigte Datei ignoriert wird.
 styles/*/assets/raw/*
+styles/ortsserie/*/assets/raw/*
 !styles/apple2-hires/assets/raw/bg2_a.png
 !styles/apple2-hires/assets/raw/bg2_b.png
 !styles/apple2-hires/assets/raw/bg_a.png

@@ -1,0 +1,154 @@
+{
+ "ort": "leuchtturm",
+ "ui": {
+  "x": 20,
+  "y": 536,
+  "w": 1240,
+  "h": 164
+ },
+ "lights": [
+  {
+   "name": "fire",
+   "channel": "fire",
+   "pos": [
+    438.0,
+    213.7
+   ],
+   "bbox": [
+    348,
+    39,
+    525,
+    352
+   ],
+   "px": 45853,
+   "glow": 199.8,
+   "glow_k": 0.18
+  }
+ ],
+ "flames": [],
+ "horizon_y": 270.4,
+ "water_bottom": 328,
+ "fx": {
+  "sky_amp": 6.0,
+  "sky_period": 60.0,
+  "water_amp": 1.2,
+  "sparkle_k": 0.3,
+  "receiver_k": 0.5,
+  "flicker": {
+   "fire": [
+    0.96,
+    1.05,
+    3.0
+   ],
+   "small": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "lamp": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "lens": {
+   "period": 8.0,
+   "k": 0.42,
+   "sweep_k": 0.16,
+   "sweep_w": 150.0,
+   "rect": [
+    348,
+    39,
+    525,
+    352
+   ],
+   "center": [
+    438.0,
+    213.7
+   ]
+  },
+  "fog": [
+   {
+    "y": 278.4,
+    "hh": 26,
+    "k": 0.5,
+    "speed": 5.0,
+    "mode": 1,
+    "scale": 260,
+    "lift": 0.25
+   },
+   {
+    "y": 470.0,
+    "hh": 70,
+    "k": 0.16,
+    "speed": 7.0,
+    "mode": 3,
+    "scale": 380,
+    "lift": 0.0
+   }
+  ],
+  "motes": {
+   "n": 40,
+   "k": 0.55,
+   "rect": [
+    108.0,
+    40,
+    798.0,
+    530
+   ],
+   "light": [
+    438.0,
+    213.7
+   ]
+  },
+  "vignette": 0.26,
+  "glint_lo": 0.529
+ },
+ "_report": {
+  "src": "assets/raw/leuchtturm_a.png",
+  "src_size": [
+   1264,
+   848
+  ],
+  "mask_size": [
+   1264,
+   848
+  ],
+  "mask_shares": {
+   "other": 0.8602,
+   "sky": 0.064,
+   "water": 0.0191,
+   "lantern": 0.0567
+  },
+  "align": {
+   "sx": 1.004,
+   "sy": 1.008,
+   "dx": 1.0,
+   "dy": 0.0,
+   "score": 0.4114,
+   "score_identity": 0.4003,
+   "edge_points": 2206
+  },
+  "horizon_src": 403.0,
+  "horizon_src_share": 0.475,
+  "crop_from": "Horizont auf Zeile 270",
+  "crop_box": [
+   0,
+   136,
+   1264,
+   847
+  ],
+  "lights": [
+   "fire@[438.0, 213.7]"
+  ],
+  "stats": {
+   "sky": 0.0772,
+   "water": 0.023,
+   "stars_px": 23,
+   "grass": 0.0,
+   "fire_px": 35876,
+   "small_px": 0,
+   "lamp_px": 0
+  }
+ }
+}

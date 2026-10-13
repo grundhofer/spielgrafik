@@ -1,0 +1,7 @@
+Turn the attached painting into a flat colour-coded segmentation map for an animation tool. Keep the composition, the outlines, the positions and the proportions of the attached image exactly, as if traced on a clear sheet laid on top of it: the same framing, the same horizon height, the same size and place of every object. Replace every area by one flat, pure, fully saturated colour with hard, clean edges: no shading, no texture, no brush strokes, no outlines, no gradients, no glow, no halos, no details inside the areas. It is a technical map, not a picture: do not keep any colour of the attached painting, use only the colour codes below.
+
+Colour codes: the whole sky including all clouds and stars, down to the horizon: pure blue #0000FF. All open water of the sea and the harbour, including every reflection on the water: pure cyan #00FFFF. The lit windows of the harbour houses: pure yellow #FFFF00. The glowing lamp at the top of the lighthouse: pure red #FF0000. The grass, the heather and the low plants on the clifftop, only the plants themselves: pure green #00FF00. Everything else (the earth path and its stones, the boulders, the fence, the signpost, the bench, the cliffs and rocks, the harbour houses and boats, the headland and the lighthouse tower): pure black #000000. Use no other colours, and do not add, remove or move any object.
+
+No text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.
+
+Image format: landscape 3:2.

@@ -1,0 +1,238 @@
+{
+ "ort": "stube",
+ "ui": {
+  "x": 20,
+  "y": 536,
+  "w": 1240,
+  "h": 164
+ },
+ "lights": [
+  {
+   "name": "fire",
+   "channel": "fire",
+   "pos": [
+    164.7,
+    471.2
+   ],
+   "bbox": [
+    128,
+    450,
+    223,
+    510
+   ],
+   "px": 3595,
+   "glow": 69.0,
+   "glow_k": 0.18
+  },
+  {
+   "name": "small",
+   "channel": "small",
+   "pos": [
+    664.6,
+    306.9
+   ],
+   "bbox": [
+    661,
+    288,
+    669,
+    321
+   ],
+   "px": 246,
+   "glow": 31.8,
+   "glow_k": 0.22
+  },
+  {
+   "name": "lamp",
+   "channel": "lamp",
+   "pos": [
+    890.2,
+    204.5
+   ],
+   "bbox": [
+    889,
+    204,
+    892,
+    206
+   ],
+   "px": 8,
+   "glow": 13.8,
+   "glow_k": 0.22
+  },
+  {
+   "name": "fire_raum",
+   "channel": "fire",
+   "pos": [
+    164.7,
+    471.2
+   ],
+   "bbox": [
+    128,
+    450,
+    223,
+    510
+   ],
+   "px": 0,
+   "glow": 320.0,
+   "glow_k": 0.07
+  },
+  {
+   "name": "small_raum",
+   "channel": "small",
+   "pos": [
+    664.6,
+    306.9
+   ],
+   "bbox": [
+    661,
+    288,
+    669,
+    321
+   ],
+   "px": 0,
+   "glow": 130.0,
+   "glow_k": 0.05
+  }
+ ],
+ "flames": [
+  {
+   "pos": [
+    175.5,
+    492.0
+   ],
+   "w": 76.0,
+   "h": 70.0,
+   "k": 0.5
+  },
+  {
+   "pos": [
+    665.0,
+    299.6
+   ],
+   "w": 9,
+   "h": 16.0,
+   "k": 0.6
+  }
+ ],
+ "horizon_y": 270.4,
+ "water_bottom": 328,
+ "lamp": [
+  890.2,
+  204.5
+ ],
+ "fx": {
+  "sky_amp": 5.0,
+  "sky_period": 60.0,
+  "water_amp": 1.0,
+  "sparkle_k": 0.3,
+  "receiver_k": 1.0,
+  "flicker": {
+   "fire": [
+    0.82,
+    1.16,
+    14.0
+   ],
+   "small": [
+    0.86,
+    1.12,
+    10.0
+   ],
+   "lamp": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "beam": {
+   "len": 70.0,
+   "k": 0.55,
+   "period": 10.0
+  },
+  "fog": [
+   {
+    "y": 276.4,
+    "hh": 18,
+    "k": 0.45,
+    "speed": 4.0,
+    "mode": 1,
+    "scale": 200,
+    "lift": 0.2
+   },
+   {
+    "y": 480.0,
+    "hh": 60,
+    "k": 0.2,
+    "speed": 6.0,
+    "mode": 3,
+    "scale": 380,
+    "lift": 0.0
+   }
+  ],
+  "motes": {
+   "n": 22,
+   "k": 0.6,
+   "rect": [
+    84.69999999999999,
+    150,
+    424.7,
+    500
+   ],
+   "light": [
+    164.7,
+    471.2
+   ]
+  },
+  "vignette": 0.28,
+  "glint_lo": 0.507
+ },
+ "_report": {
+  "src": "assets/raw/stube.png",
+  "src_size": [
+   1264,
+   848
+  ],
+  "mask_size": [
+   1264,
+   848
+  ],
+  "mask_shares": {
+   "other": 0.9817,
+   "sky": 0.0107,
+   "water": 0.0041,
+   "window": 0.0002,
+   "lantern": 0.0033,
+   "lamp": 0.0
+  },
+  "align": {
+   "sx": 1.0,
+   "sy": 1.004,
+   "dx": 1.0,
+   "dy": 1.0,
+   "score": 0.4037,
+   "score_identity": 0.3851,
+   "edge_points": 975
+  },
+  "horizon_src": 376.0,
+  "horizon_src_share": 0.443,
+  "crop_from": "Horizont auf Zeile 270",
+  "crop_box": [
+   0,
+   109,
+   1264,
+   820
+  ],
+  "lights": [
+   "fire@[164.7, 471.2]",
+   "small@[664.6, 306.9]",
+   "lamp@[890.2, 204.5]"
+  ],
+  "stats": {
+   "sky": 0.0116,
+   "water": 0.0048,
+   "stars_px": 101,
+   "grass": 0.0,
+   "fire_px": 3422,
+   "small_px": 306,
+   "lamp_px": 0
+  }
+ }
+}

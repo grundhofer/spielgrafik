@@ -1,0 +1,16 @@
+{
+ "_comment": "Korrekturen von Hand über der Automatik (process.py), Bildschirmpixel 1280x720. measure.py zählt je Ort die Einträge und Zahlenwerte als Handarbeit.",
+ "leuchtturm": {
+  "_why": "KI-Maske färbte Linse samt Messingsockel orange; Leuchtfläche auf die Glasringe begrenzt (Rechteck aus overlay.png abgelesen)",
+  "lights": {"fire": {"clip": [330, 20, 540, 352]}}
+ },
+ "stube": {
+  "_why": "Flammen über Glut und Docht: Basis als Anteil der Maskenhöhe, Größe nach Augenmaß; Kerze in der Maske samt Kerzenkörper",
+  "flames_auto": {"fire": {"base": 0.7, "h": 70, "w": 0.8, "k": 0.5},
+                  "small": {"base": 0.35, "h": 16, "w_px": 9, "k": 0.6}}
+ },
+ "klippe": {
+  "_why": "kleine Laterne am Wegweiser (nicht im Farbcode verlangt); Lage per hellstem warmem Punkt im Ausschnitt gemessen",
+  "extra_lights": [{"name": "laterne", "channel": "small", "pos": [874.5, 444.4], "r": 9, "glow": 26}]
+ }
+}

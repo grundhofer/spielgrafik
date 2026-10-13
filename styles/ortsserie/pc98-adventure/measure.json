@@ -1,0 +1,994 @@
+{
+ "stil": "pc98-adventure",
+ "anker": {
+  "roh": "styles/pc98-adventure/assets/raw/bg.png",
+  "verarbeitet": "styles/pc98-adventure/assets/bg_preview.png",
+  "detail": {
+   "grad_energy": 3.612,
+   "edge_density": 0.3445
+  },
+  "pixelraster": {
+   "pixel_period_px": 3.11,
+   "pixel_period_clarity": 95.1,
+   "flat_share": 0.486
+  }
+ },
+ "masse": {
+  "layout": "Korrelation der Oklab-Helligkeit (96x64) und der Gradientenbilder (192x128 → 48x32)",
+  "kacheln": "3x2 Kacheln, je Korrelation r und mittlerer |ΔL|; kopiert = r ≥ 0,9 und |ΔL| ≤ 0,03",
+  "palette": "k-means (12) in Oklab auf 632 px Breite, gematchter Abstand beider Richtungen, ΔE = Oklab × 100",
+  "detail": "mittlere Gradientenenergie von L ×100 und Anteil Gradient > 0,04, auf 632 px Breite",
+  "pixelraster": "stärkste Periode 2–10 px der Spaltenunterschiede (1264 px Breite), Deutlichkeit = Spitze/Median",
+  "verlust": "ΔE zwischen Quelle (416x256) und gerastertem Bild, beide 4x4 in linearem Licht gemittelt"
+ },
+ "basis_unabhaengige_bilder": {
+  "anker_vs_codex": {
+   "leuchtturm": {
+    "gray_corr": 0.037,
+    "edge_corr": 0.147
+   },
+   "stube": {
+    "gray_corr": 0.123,
+    "edge_corr": 0.229
+   },
+   "klippe": {
+    "gray_corr": -0.025,
+    "edge_corr": 0.323
+   }
+  },
+  "codex_paare": {
+   "hafen-leuchtturm": {
+    "gray_corr": 0.422,
+    "edge_corr": 0.381
+   },
+   "hafen-stube": {
+    "gray_corr": 0.427,
+    "edge_corr": 0.443
+   },
+   "hafen-klippe": {
+    "gray_corr": 0.7,
+    "edge_corr": 0.572
+   },
+   "leuchtturm-stube": {
+    "gray_corr": 0.432,
+    "edge_corr": 0.315
+   },
+   "leuchtturm-klippe": {
+    "gray_corr": 0.447,
+    "edge_corr": 0.263
+   },
+   "stube-klippe": {
+    "gray_corr": 0.429,
+    "edge_corr": 0.347
+   }
+  },
+  "codex_kacheln_hafen_klippe": {
+   "tile": "mitte-oben",
+   "r": 0.907,
+   "dL": 0.03
+  },
+  "hinweis": "Codex-Paare teilen dieselben Serienregeln (dunkles unteres Viertel, Horizont 40 %) und korrelieren deshalb schon ohne Kopie mit 0,4–0,7 (grau). Ein reiner Dämmerungshimmel ergibt auch zwischen unabhängigen Bildern eine Kachel an der Schwelle (Codex hafen/klippe, mitte-oben: r = 0,91, |ΔL| = 0,03). Eine Kachel gilt deshalb erst zusammen mit der Sichtprüfung als kopiert; bei klippe ist mitte-oben praktisch identisch (r = 1,00, |ΔL| = 0,01) und rechts-oben mit Leuchtturm und Felsnase r = 0,93, |ΔL| = 0,02."
+ },
+ "experiment_ab": {
+  "ort": "leuchtturm",
+  "A": {
+   "beschreibung": "Hafenbild des Stils als Stilreferenz (Ankerabsatz: nur Machart, nicht Aufbau)",
+   "datei": "styles/ortsserie/pc98-adventure/assets/raw/leuchtturm_a.png",
+   "sekunden": 66.5,
+   "geliefert": "1264x848",
+   "angefragt": "1536x1024",
+   "backend": "agy",
+   "verbatim": true,
+   "refs": [
+    "../../../../pc98-adventure/assets/raw/bg.png"
+   ],
+   "layout_zum_anker": {
+    "gray_corr": 0.211,
+    "edge_corr": 0.25
+   },
+   "kacheln_zum_anker": {
+    "copied_tiles": [],
+    "closest_tile": {
+     "tile": "rechts-oben",
+     "r": 0.621,
+     "dL": 0.146
+    },
+    "tiles": [
+     {
+      "tile": "links-oben",
+      "r": 0.516,
+      "dL": 0.218
+     },
+     {
+      "tile": "mitte-oben",
+      "r": 0.511,
+      "dL": 0.159
+     },
+     {
+      "tile": "rechts-oben",
+      "r": 0.621,
+      "dL": 0.146
+     },
+     {
+      "tile": "links-unten",
+      "r": 0.101,
+      "dL": 0.154
+     },
+     {
+      "tile": "mitte-unten",
+      "r": -0.445,
+      "dL": 0.203
+     },
+     {
+      "tile": "rechts-unten",
+      "r": -0.228,
+      "dL": 0.201
+     }
+    ]
+   },
+   "palette_zum_anker": {
+    "dE_matched": 5.07,
+    "dE_new_to_anchor": 5.41,
+    "dE_anchor_to_new": 4.73,
+    "dE_max_new_color": 12.1
+   },
+   "detail": {
+    "grad_energy": 5.317,
+    "edge_density": 0.3842
+   },
+   "detail_rel_anker": {
+    "grad_energy": 1.47,
+    "edge_density": 1.12
+   },
+   "pixelraster": {
+    "pixel_period_px": 2.88,
+    "pixel_period_clarity": 15.4,
+    "flat_share": 0.381
+   },
+   "ruhe_portraetzone": 0.833,
+   "verarbeitet_serienpalette_dE": 3.06
+  },
+  "B": {
+   "beschreibung": "ohne Referenz, nur Stilblock",
+   "datei": "styles/ortsserie/pc98-adventure/assets/raw/leuchtturm_b.png",
+   "sekunden": 64.7,
+   "geliefert": "1264x848",
+   "angefragt": "1536x1024",
+   "backend": "agy",
+   "verbatim": true,
+   "refs": [],
+   "layout_zum_anker": {
+    "gray_corr": 0.111,
+    "edge_corr": 0.255
+   },
+   "kacheln_zum_anker": {
+    "copied_tiles": [],
+    "closest_tile": {
+     "tile": "mitte-oben",
+     "r": 0.454,
+     "dL": 0.22
+    },
+    "tiles": [
+     {
+      "tile": "links-oben",
+      "r": 0.397,
+      "dL": 0.231
+     },
+     {
+      "tile": "mitte-oben",
+      "r": 0.454,
+      "dL": 0.22
+     },
+     {
+      "tile": "rechts-oben",
+      "r": 0.284,
+      "dL": 0.204
+     },
+     {
+      "tile": "links-unten",
+      "r": -0.032,
+      "dL": 0.215
+     },
+     {
+      "tile": "mitte-unten",
+      "r": -0.488,
+      "dL": 0.252
+     },
+     {
+      "tile": "rechts-unten",
+      "r": -0.302,
+      "dL": 0.245
+     }
+    ]
+   },
+   "palette_zum_anker": {
+    "dE_matched": 5.57,
+    "dE_new_to_anchor": 6.64,
+    "dE_anchor_to_new": 4.5,
+    "dE_max_new_color": 12.9
+   },
+   "detail": {
+    "grad_energy": 5.154,
+    "edge_density": 0.3661
+   },
+   "detail_rel_anker": {
+    "grad_energy": 1.43,
+    "edge_density": 1.06
+   },
+   "pixelraster": {
+    "pixel_period_px": 8.65,
+    "pixel_period_clarity": 16.0,
+    "flat_share": 0.424
+   },
+   "ruhe_portraetzone": 1.02,
+   "verarbeitet_serienpalette_dE": 4.63
+  },
+  "A_vs_B_layout": {
+   "gray_corr": 0.444,
+   "edge_corr": 0.188
+  },
+  "gemalter_rahmen_px": {
+   "A": 22,
+   "B": 34
+  },
+  "wahl": "A",
+  "begruendung": "A liegt in der Palette näher am Anker (ΔE 5,07 gegen 5,57), sein Pseudo-Pixelraster ist dem des Ankers ähnlicher (Periode 2,88 gegen 3,11 px; B 8,65 px, also kein klares Pixelraster) und der Himmel im Fenster hat dieselben Rasterbänder wie der Hafen (Sichtprüfung). Layout-Kopie ist bei A nicht messbar: Kanten-Korrelation 0,25 wie B (0,26) und im Bereich unabhängiger Bilder (0,15–0,32), keine Kachel kopiert. Die ruhigere Porträtzone (0,83 gegen 1,02) spricht ebenfalls für A.",
+  "gegenprobe_klippe": {
+   "A (Serienbild)": {
+    "layout_zum_anker": {
+     "gray_corr": 0.55,
+     "edge_corr": 0.326
+    },
+    "palette_zum_anker": {
+     "dE_matched": 2.52,
+     "dE_new_to_anchor": 2.84,
+     "dE_anchor_to_new": 2.2,
+     "dE_max_new_color": 8.6
+    },
+    "pixelraster": {
+     "pixel_period_px": 3.11,
+     "pixel_period_clarity": 203.0,
+     "flat_share": 0.327
+    }
+   },
+   "B (klippe_b, ohne Referenz)": {
+    "layout_zum_anker": {
+     "gray_corr": 0.407,
+     "edge_corr": 0.14
+    },
+    "palette_zum_anker": {
+     "dE_matched": 4.19,
+     "dE_new_to_anchor": 4.27,
+     "dE_anchor_to_new": 4.12,
+     "dE_max_new_color": 8.4
+    },
+    "pixelraster": {
+     "pixel_period_px": 3.73,
+     "pixel_period_clarity": 53.9,
+     "flat_share": 0.435
+    }
+   },
+   "befund": "Mit Referenz übernahm agy beim Außenort die obere Bildhälfte des Ankers fast pixelgleich (Himmel, Wolken, Leuchtturm auf der Felsnase an derselben Stelle; Pixelraster 3,11 px wie der Anker, Deutlichkeit 203). Ohne Referenz entsteht ein eigener Aufbau, das Meer kommt aber graulila statt dunkelblau (Palettenabstand 4,19 statt 2,52). Die Serienpalette rastert das graulila Meer auch graulila (Verlust nur ΔE 2,73); sie vereinheitlicht die Farbwerte, nicht den Farbton eines anders gemalten Bildes (Sichtprüfung assets/sheet.png). Bei A verliert der kopierte, gesättigte Hafenhimmel in der Serienpalette mehr (ΔE 3,59)."
+  }
+ },
+ "orte": {
+  "leuchtturm": {
+   "versuche": 3,
+   "bilder": [
+    "leuchtturm_a",
+    "leuchtturm_b",
+    "leuchtturm"
+   ],
+   "erster_versuch_brauchbar": true,
+   "anmerkung": "Experiment A (mit Anker) und B (ohne) waren beide brauchbar, hatten aber einen gemalten Bildrahmen (Serienregel „framed window“); das Serienbild ist der erste Versuch mit korrigierter Serienregel (Variante A).",
+   "sekunden_je_erzeugung": {
+    "leuchtturm_a": 66.5,
+    "leuchtturm_b": 64.7,
+    "leuchtturm": 91.3
+   },
+   "geliefert": "1264x848",
+   "palettenabstand_zum_anker_dE": 6.06,
+   "detail_rel_anker": {
+    "grad_energy": 1.23,
+    "edge_density": 0.91
+   },
+   "layout_aehnlichkeit_zum_anker": {
+    "gray_corr": 0.12,
+    "edge_corr": 0.18
+   },
+   "kopierte_kacheln": [],
+   "kacheln_zum_anker": [
+    {
+     "tile": "links-oben",
+     "r": 0.623,
+     "dL": 0.287
+    },
+    {
+     "tile": "mitte-oben",
+     "r": 0.506,
+     "dL": 0.212
+    },
+    {
+     "tile": "rechts-oben",
+     "r": 0.303,
+     "dL": 0.226
+    },
+    {
+     "tile": "links-unten",
+     "r": 0.082,
+     "dL": 0.176
+    },
+    {
+     "tile": "mitte-unten",
+     "r": -0.547,
+     "dL": 0.218
+    },
+    {
+     "tile": "rechts-unten",
+     "r": -0.344,
+     "dL": 0.23
+    }
+   ],
+   "pixelraster": {
+    "pixel_period_px": 2.76,
+    "pixel_period_clarity": 12.9,
+    "flat_share": 0.446
+   },
+   "ruhe_textflaeche": {
+    "textfenster": "eigenes schwarzes Textfenster unter dem Bildfenster, überdeckt das Bild nicht",
+    "portraetzone_gradient_rel_bild": 1.186,
+    "anker_portraetzone_gradient_rel_bild": 0.564
+   },
+   "verarbeitung": {
+    "demo_palette": "serie",
+    "verlust_dE": {
+     "fixed": 4.88,
+     "serie": 2.62,
+     "own": 2.44
+    },
+    "verlust_dE_p90": {
+     "fixed": 9.59,
+     "serie": 4.24,
+     "own": 4.21
+    },
+    "groesste_verluste_hafenpalette": [
+     {
+      "share": 0.198,
+      "src": "c7c6d4",
+      "out": "ebdab9",
+      "dE": 9.1
+     },
+     {
+      "share": 0.099,
+      "src": "b5adb4",
+      "out": "c8b49f",
+      "dE": 5.7
+     },
+     {
+      "share": 0.11,
+      "src": "9592a3",
+      "out": "8d8d92",
+      "dE": 5.2
+     }
+    ],
+    "groesste_verluste_serienpalette": [
+     {
+      "share": 0.095,
+      "src": "9d6a52",
+      "out": "966665",
+      "dE": 4.2
+     },
+     {
+      "share": 0.085,
+      "src": "342739",
+      "out": "302d3d",
+      "dE": 3.3
+     },
+     {
+      "share": 0.048,
+      "src": "4d4d7c",
+      "out": "4f507b",
+      "dE": 2.9
+     }
+    ],
+    "farben_im_bild": 16,
+    "licht_register14_px": 438,
+    "blitz_register15_px": 274,
+    "blitz_aus_farbe": "cccccc",
+    "wasser_glanzstriche": 36,
+    "wasser_geaenderte_px": 118
+   },
+   "handarbeit": {
+    "glow_boxes": 1,
+    "lamp_box": 0,
+    "lamp_center": 1,
+    "lamp_rings": 3,
+    "beam": 0,
+    "lamp_off": 1,
+    "sea_boxes": 2,
+    "sea_polygons": 0,
+    "crop_top": 1,
+    "texts": 6,
+    "entries_total": 9,
+    "zahlen_von_hand": 21,
+    "minuten_geschaetzt": "10–15",
+    "minuten_hinweis": "geschätzt: Kästen und Mittelpunkte am 4-fach vergrößerten Rasterbild ablesen, Prüfbild mit eingefärbten Registern ansehen, 1–2 Korrekturen; dazu je Ort 3–5 Minuten für Texte. Ohne die einmalige Arbeit am Skript (Palettenwege, Tauschverfahren für Feuerschein)."
+   }
+  },
+  "stube": {
+   "versuche": 1,
+   "bilder": [
+    "stube"
+   ],
+   "erster_versuch_brauchbar": true,
+   "anmerkung": "Ein Versuch; zusätzlich ein Fass, das der Ortsblock nicht nennt.",
+   "sekunden_je_erzeugung": {
+    "stube": 77.5
+   },
+   "geliefert": "1264x848",
+   "palettenabstand_zum_anker_dE": 5.06,
+   "detail_rel_anker": {
+    "grad_energy": 1.13,
+    "edge_density": 0.99
+   },
+   "layout_aehnlichkeit_zum_anker": {
+    "gray_corr": 0.395,
+    "edge_corr": 0.279
+   },
+   "kopierte_kacheln": [],
+   "kacheln_zum_anker": [
+    {
+     "tile": "links-oben",
+     "r": 0.588,
+     "dL": 0.096
+    },
+    {
+     "tile": "mitte-oben",
+     "r": 0.775,
+     "dL": 0.11
+    },
+    {
+     "tile": "rechts-oben",
+     "r": 0.394,
+     "dL": 0.12
+    },
+    {
+     "tile": "links-unten",
+     "r": 0.061,
+     "dL": 0.134
+    },
+    {
+     "tile": "mitte-unten",
+     "r": 0.07,
+     "dL": 0.151
+    },
+    {
+     "tile": "rechts-unten",
+     "r": -0.043,
+     "dL": 0.157
+    }
+   ],
+   "pixelraster": {
+    "pixel_period_px": 2.74,
+    "pixel_period_clarity": 13.1,
+    "flat_share": 0.377
+   },
+   "ruhe_textflaeche": {
+    "textfenster": "eigenes schwarzes Textfenster unter dem Bildfenster, überdeckt das Bild nicht",
+    "portraetzone_gradient_rel_bild": 1.284,
+    "anker_portraetzone_gradient_rel_bild": 0.564
+   },
+   "verarbeitung": {
+    "demo_palette": "serie",
+    "verlust_dE": {
+     "fixed": 3.34,
+     "serie": 2.29,
+     "own": 2.15
+    },
+    "verlust_dE_p90": {
+     "fixed": 5.14,
+     "serie": 4.1,
+     "own": 3.35
+    },
+    "groesste_verluste_hafenpalette": [
+     {
+      "share": 0.043,
+      "src": "c0a7a7",
+      "out": "e89979",
+      "dE": 8.1
+     },
+     {
+      "share": 0.031,
+      "src": "a598a9",
+      "out": "a08c8e",
+      "dE": 5.2
+     },
+     {
+      "share": 0.14,
+      "src": "8386af",
+      "out": "778597",
+      "dE": 4.2
+     }
+    ],
+    "groesste_verluste_serienpalette": [
+     {
+      "share": 0.044,
+      "src": "a37f72",
+      "out": "a78189",
+      "dE": 4.3
+     },
+     {
+      "share": 0.043,
+      "src": "c0a7a7",
+      "out": "ba9aaa",
+      "dE": 4.1
+     },
+     {
+      "share": 0.02,
+      "src": "c89876",
+      "out": "d8937f",
+      "dE": 4.0
+     }
+    ],
+    "farben_im_bild": 16,
+    "licht_register14_px": 1796,
+    "blitz_register15_px": 11,
+    "blitz_aus_farbe": "223366",
+    "wasser_glanzstriche": 7,
+    "wasser_geaenderte_px": 55
+   },
+   "handarbeit": {
+    "glow_boxes": 2,
+    "lamp_box": 1,
+    "lamp_center": 1,
+    "lamp_rings": 3,
+    "beam": 0,
+    "lamp_off": 0,
+    "sea_boxes": 1,
+    "sea_polygons": 0,
+    "crop_top": 1,
+    "texts": 6,
+    "entries_total": 9,
+    "zahlen_von_hand": 25,
+    "minuten_geschaetzt": "15–20",
+    "minuten_hinweis": "geschätzt: Kästen und Mittelpunkte am 4-fach vergrößerten Rasterbild ablesen, Prüfbild mit eingefärbten Registern ansehen, 1–2 Korrekturen; dazu je Ort 3–5 Minuten für Texte. Ohne die einmalige Arbeit am Skript (Palettenwege, Tauschverfahren für Feuerschein)."
+   }
+  },
+  "klippe": {
+   "versuche": 2,
+   "bilder": [
+    "klippe",
+    "klippe_b"
+   ],
+   "erster_versuch_brauchbar": true,
+   "anmerkung": "Brauchbar, aber Himmel, Wolken und Leuchtturm oben rechts sind aus dem Anker kopiert (Kachel r ≈ 1,0). klippe_b ist eine Gegenprobe ohne Referenz, kein Ersatz.",
+   "sekunden_je_erzeugung": {
+    "klippe": 185.7,
+    "klippe_b": 66.9
+   },
+   "geliefert": "1264x848",
+   "palettenabstand_zum_anker_dE": 2.52,
+   "detail_rel_anker": {
+    "grad_energy": 1.01,
+    "edge_density": 1.07
+   },
+   "layout_aehnlichkeit_zum_anker": {
+    "gray_corr": 0.55,
+    "edge_corr": 0.326
+   },
+   "kopierte_kacheln": [
+    "mitte-oben",
+    "rechts-oben"
+   ],
+   "kacheln_zum_anker": [
+    {
+     "tile": "links-oben",
+     "r": 0.652,
+     "dL": 0.087
+    },
+    {
+     "tile": "mitte-oben",
+     "r": 1.0,
+     "dL": 0.01
+    },
+    {
+     "tile": "rechts-oben",
+     "r": 0.931,
+     "dL": 0.022
+    },
+    {
+     "tile": "links-unten",
+     "r": -0.047,
+     "dL": 0.131
+    },
+    {
+     "tile": "mitte-unten",
+     "r": 0.185,
+     "dL": 0.13
+    },
+    {
+     "tile": "rechts-unten",
+     "r": 0.329,
+     "dL": 0.118
+    }
+   ],
+   "pixelraster": {
+    "pixel_period_px": 3.11,
+    "pixel_period_clarity": 203.0,
+    "flat_share": 0.327
+   },
+   "ruhe_textflaeche": {
+    "textfenster": "eigenes schwarzes Textfenster unter dem Bildfenster, überdeckt das Bild nicht",
+    "portraetzone_gradient_rel_bild": 1.235,
+    "anker_portraetzone_gradient_rel_bild": 0.564
+   },
+   "verarbeitung": {
+    "demo_palette": "serie",
+    "verlust_dE": {
+     "fixed": 2.86,
+     "serie": 3.59,
+     "own": 2.72
+    },
+    "verlust_dE_p90": {
+     "fixed": 4.56,
+     "serie": 6.04,
+     "own": 4.84
+    },
+    "groesste_verluste_hafenpalette": [
+     {
+      "share": 0.146,
+      "src": "46494c",
+      "out": "544847",
+      "dE": 3.6
+     },
+     {
+      "share": 0.115,
+      "src": "39343f",
+      "out": "433041",
+      "dE": 3.4
+     },
+     {
+      "share": 0.056,
+      "src": "e79077",
+      "out": "e59479",
+      "dE": 3.3
+     }
+    ],
+    "groesste_verluste_serienpalette": [
+     {
+      "share": 0.071,
+      "src": "aa6084",
+      "out": "96696f",
+      "dE": 6.3
+     },
+     {
+      "share": 0.063,
+      "src": "1c174b",
+      "out": "22243b",
+      "dE": 5.9
+     },
+     {
+      "share": 0.096,
+      "src": "6e508c",
+      "out": "5c5986",
+      "dE": 4.6
+     }
+    ],
+    "farben_im_bild": 15,
+    "licht_register14_px": 13,
+    "blitz_register15_px": 212,
+    "blitz_aus_farbe": "223366",
+    "wasser_glanzstriche": 41,
+    "wasser_geaenderte_px": 178
+   },
+   "handarbeit": {
+    "glow_boxes": 2,
+    "lamp_box": 1,
+    "lamp_center": 1,
+    "lamp_rings": 3,
+    "beam": 1,
+    "lamp_off": 0,
+    "sea_boxes": 2,
+    "sea_polygons": 0,
+    "crop_top": 1,
+    "texts": 6,
+    "entries_total": 11,
+    "zahlen_von_hand": 30,
+    "minuten_geschaetzt": "10–15",
+    "minuten_hinweis": "geschätzt: Kästen und Mittelpunkte am 4-fach vergrößerten Rasterbild ablesen, Prüfbild mit eingefärbten Registern ansehen, 1–2 Korrekturen; dazu je Ort 3–5 Minuten für Texte. Ohne die einmalige Arbeit am Skript (Palettenwege, Tauschverfahren für Feuerschein)."
+   }
+  }
+ },
+ "palette": {
+  "hafen_palette": [
+   "000000",
+   "eeddbb",
+   "993322",
+   "556633",
+   "ee9977",
+   "aa8866",
+   "778899",
+   "aa6688",
+   "776666",
+   "775599",
+   "553333",
+   "444488",
+   "221122",
+   "222266",
+   "ffeeaa",
+   "ffffcc"
+  ],
+  "serien_palette": [
+   "000000",
+   "eeddbb",
+   "993322",
+   "556633",
+   "ee9977",
+   "cccccc",
+   "bb99aa",
+   "8888aa",
+   "666688",
+   "996666",
+   "554444",
+   "555588",
+   "223366",
+   "222233",
+   "ffeeaa",
+   "ffffcc"
+  ],
+  "hafen_verlust_dE": {
+   "fixed": 2.58,
+   "serie": 3.28
+  },
+  "hafen_groesste_verluste_serienpalette": [
+   {
+    "share": 0.061,
+    "src": "ac6587",
+    "out": "996a6e",
+    "dE": 6.1
+   },
+   {
+    "share": 0.089,
+    "src": "1d1b49",
+    "out": "22253c",
+    "dE": 4.8
+   },
+   {
+    "share": 0.071,
+    "src": "705391",
+    "out": "5d5a86",
+    "dE": 4.5
+   }
+  ],
+  "mittel_4_bilder_dE": {
+   "hafenpalette": 3.42,
+   "serienpalette": 2.94,
+   "eigene_je_bild_nur_orte": 2.44
+  },
+  "serienpalette_mit_zusatzakzent": {
+   "ohne": {
+    "verlust_dE": {
+     "hafen": 3.28,
+     "leuchtturm": 2.62,
+     "stube": 2.29,
+     "klippe": 3.59
+    },
+    "mittel": 2.94,
+    "palette": [
+     "000000",
+     "eeddbb",
+     "993322",
+     "556633",
+     "ee9977",
+     "cccccc",
+     "bb99aa",
+     "8888aa",
+     "666688",
+     "996666",
+     "554444",
+     "555588",
+     "223366",
+     "222233"
+    ]
+   },
+   "holz_aa7755": {
+    "verlust_dE": {
+     "hafen": 3.55,
+     "leuchtturm": 2.49,
+     "stube": 2.47,
+     "klippe": 3.83
+    },
+    "mittel": 3.08,
+    "palette": [
+     "000000",
+     "eeddbb",
+     "993322",
+     "556633",
+     "ee9977",
+     "aa7755",
+     "cccccc",
+     "bbaaaa",
+     "8888aa",
+     "666688",
+     "aa6688",
+     "554444",
+     "444477",
+     "222244"
+    ]
+   },
+   "holz_996655": {
+    "verlust_dE": {
+     "hafen": 3.57,
+     "leuchtturm": 2.55,
+     "stube": 2.73,
+     "klippe": 3.77
+    },
+    "mittel": 3.15,
+    "palette": [
+     "000000",
+     "eeddbb",
+     "993322",
+     "556633",
+     "ee9977",
+     "996655",
+     "cccccc",
+     "bb99aa",
+     "8888aa",
+     "666688",
+     "aa6688",
+     "554444",
+     "444477",
+     "222244"
+    ]
+   },
+   "violett_775599": {
+    "verlust_dE": {
+     "hafen": 3.46,
+     "leuchtturm": 2.7,
+     "stube": 2.75,
+     "klippe": 3.59
+    },
+    "mittel": 3.12,
+    "palette": [
+     "000000",
+     "eeddbb",
+     "993322",
+     "556633",
+     "ee9977",
+     "775599",
+     "cccccc",
+     "bb99aa",
+     "8888aa",
+     "666688",
+     "996666",
+     "554444",
+     "444477",
+     "222244"
+    ]
+   }
+  }
+ },
+ "vergleich_codex_serie": {
+  "hinweis": "gleiche Maße, Bezug jeweils der eigene Hafen-Anker der Serie",
+  "codex": {
+   "leuchtturm": {
+    "palette_zum_codex_hafen": 3.4,
+    "detail_rel_codex_hafen": 1.33,
+    "layout_zum_codex_hafen": {
+     "gray_corr": 0.422,
+     "edge_corr": 0.381
+    },
+    "kopierte_kacheln": []
+   },
+   "stube": {
+    "palette_zum_codex_hafen": 2.9,
+    "detail_rel_codex_hafen": 1.26,
+    "layout_zum_codex_hafen": {
+     "gray_corr": 0.427,
+     "edge_corr": 0.443
+    },
+    "kopierte_kacheln": []
+   },
+   "klippe": {
+    "palette_zum_codex_hafen": 2.25,
+    "detail_rel_codex_hafen": 1.21,
+    "layout_zum_codex_hafen": {
+     "gray_corr": 0.7,
+     "edge_corr": 0.572
+    },
+    "kopierte_kacheln": [
+     "mitte-oben"
+    ]
+   }
+  },
+  "agy_pc98": {
+   "leuchtturm": {
+    "palette_zum_anker": 6.06,
+    "detail_rel_anker": 1.23,
+    "layout_zum_anker": {
+     "gray_corr": 0.12,
+     "edge_corr": 0.18
+    },
+    "kopierte_kacheln": []
+   },
+   "stube": {
+    "palette_zum_anker": 5.06,
+    "detail_rel_anker": 1.13,
+    "layout_zum_anker": {
+     "gray_corr": 0.395,
+     "edge_corr": 0.279
+    },
+    "kopierte_kacheln": []
+   },
+   "klippe": {
+    "palette_zum_anker": 2.52,
+    "detail_rel_anker": 1.01,
+    "layout_zum_anker": {
+     "gray_corr": 0.55,
+     "edge_corr": 0.326
+    },
+    "kopierte_kacheln": [
+     "mitte-oben",
+     "rechts-oben"
+    ]
+   }
+  }
+ },
+ "erzeugungen": {
+  "gesamt": 6,
+  "budget": 10,
+  "workers_max": 2,
+  "liste": [
+   "leuchtturm_a",
+   "leuchtturm_b",
+   "leuchtturm",
+   "stube",
+   "klippe",
+   "klippe_b"
+  ],
+  "sperren": [
+   "Beim Auftrag klippe meldete ein agy-Konto sein Kontingent erschöpft; genimg.py wich auf das nächste agy-Konto aus (Erzeugung dauerte deshalb 185,7 s). Sperren zählen laut PIPELINE.md nicht als Erzeugung."
+  ]
+ },
+ "godot_testaufnahme": {
+  "leuchtturm": {
+   "bilder": 180,
+   "farben_je_bild_min_max": [
+    15,
+    16
+   ],
+   "bilder_ausserhalb_12bit": 0,
+   "bildfenster_aenderung_je_bild_mittel": 0.0011,
+   "bildfenster_aenderung_je_bild_max": 0.0049,
+   "bildfenster_anteil_je_bewegt_6s": 0.0078,
+   "textfenster_farben": 2,
+   "ganzzahlig_x2": true
+  },
+  "stube": {
+   "bilder": 180,
+   "farben_je_bild_min_max": [
+    14,
+    16
+   ],
+   "bilder_ausserhalb_12bit": 0,
+   "bildfenster_aenderung_je_bild_mittel": 0.0037,
+   "bildfenster_aenderung_je_bild_max": 0.0174,
+   "bildfenster_anteil_je_bewegt_6s": 0.0175,
+   "textfenster_farben": 2,
+   "ganzzahlig_x2": true
+  },
+  "klippe": {
+   "bilder": 180,
+   "farben_je_bild_min_max": [
+    15,
+    16
+   ],
+   "bilder_ausserhalb_12bit": 0,
+   "bildfenster_aenderung_je_bild_mittel": 0.0004,
+   "bildfenster_aenderung_je_bild_max": 0.0032,
+   "bildfenster_anteil_je_bewegt_6s": 0.0038,
+   "textfenster_farben": 3,
+   "ganzzahlig_x2": true
+  }
+ }
+}

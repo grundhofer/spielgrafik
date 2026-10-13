@@ -1,0 +1,654 @@
+{
+ "style": "bilderbuch-gouache",
+ "backend": "agy (fest gewählt, genimg.py --backend agy)",
+ "generations": {
+  "total": 6,
+  "budget": 10,
+  "by_target": {
+   "leuchtturm_a": 2,
+   "leuchtturm_b": 1,
+   "stube": 1,
+   "klippe": 1,
+   "klippe_b": 1
+  }
+ },
+ "methods": {
+  "layout_sim": "Pearson-r der Graustufen (64x36) und der weichgezeichneten Sobel-Kantenbilder (80x45), beide Bilder 1280x720 ohne Papierrand",
+  "palette_dE": "k-means (k=12) in Oklab je Bild, jede Farbe zur nächsten des anderen Bildes, nach Flächenanteil gewichtet, symmetrisch gemittelt; ΔE = Oklab-Abstand × 100; Mittel über 8 Seeds (palette_dE_sd = Streuung), Rauschboden in baseline.palette_dE_noise_floor",
+  "detail": "grad_energy = mittlerer |∇L| (Oklab) × 100; edge_density = Anteil |∇L| > 0,03; texture_energy = mittlere Abweichung der 8-bit-Helligkeit vom 3-px-Weichzeichner (wie hintergrund-serie/drift.json)",
+  "text_area": "Rechteck des Textblocks (Titel + Satz); L_std und grad_energy wie oben; Kontrast = WCAG-Kontrast der Satzfarbe gegen jedes Hintergrundpixel (Median, 5-%-Quantil)"
+ },
+ "baseline": {
+  "same_motif": {
+   "n": 18,
+   "gray_r_mean": 0.091,
+   "gray_r_sd": 0.259,
+   "edge_r_mean": 0.186,
+   "edge_r_sd": 0.052,
+   "edge_r_max": 0.265,
+   "gray_r_max": 0.371
+  },
+  "independent_codex_places": {
+   "leuchtturm": {
+    "gray_r": -0.143,
+    "edge_r": -0.051
+   },
+   "stube": {
+    "gray_r": 0.039,
+    "edge_r": 0.099
+   },
+   "klippe": {
+    "gray_r": -0.124,
+    "edge_r": 0.15
+   }
+  },
+  "anchor_detail": {
+   "grad_energy": 0.952,
+   "edge_density": 0.0608,
+   "texture_energy": 3.5
+  },
+  "palette_dE_noise_floor": {
+   "anchor_vs_itself": 1.11,
+   "note": "derselbe Anker gegen sich selbst mit verschiedenen Seeds; Werte in dieser Größe bedeuten keinen Unterschied"
+  },
+  "anchor_text_area": {
+   "rect": [
+    300,
+    14,
+    980,
+    132
+   ],
+   "calm": {
+    "L_mean": 52.3,
+    "L_std": 2.4,
+    "L_p05": 48.7,
+    "L_p95": 55.3,
+    "grad_energy": 0.425,
+    "edge_density": 0.0011
+   },
+   "contrast_cream": {
+    "median": 4.43,
+    "p05": 4.01
+   }
+  },
+  "anchor_generation": {
+   "seconds": 70.7,
+   "size_delivered": "1264x848"
+  }
+ },
+ "orte": {
+  "leuchtturm": {
+   "raw": "assets/raw/leuchtturm_a.png",
+   "variant": "A (Hafenbild des Stils als Stilreferenz)",
+   "generation": {
+    "seconds": 69.3,
+    "size_requested": "1536x1024",
+    "size_delivered": "1264x848",
+    "backend": "agy",
+    "verbatim": true,
+    "refs": [
+     "../../../../bilderbuch-gouache/assets/raw/bg.png"
+    ],
+    "tries": 2,
+    "first_try_ok": false,
+    "note": "1. Aufruf: agy meldete „image failed to generate: no image generated in response“ (kein Bild, zählt als Erzeugung); 2. Aufruf brauchbar"
+   },
+   "prompt_matches_file": true,
+   "layout_sim_to_anchor": {
+    "gray_r": -0.078,
+    "edge_r": 0.15
+   },
+   "palette_dE_to_anchor": 3.82,
+   "palette_dE_sd": 0.43,
+   "mean_oklab_L_a_b_C": [
+    75.5,
+    0.83,
+    4.51,
+    5.67
+   ],
+   "detail": {
+    "grad_energy": 1.313,
+    "edge_density": 0.0922,
+    "texture_energy": 5.3
+   },
+   "detail_rel_anchor": {
+    "grad_energy": 1.38,
+    "edge_density": 1.52,
+    "texture_energy": 1.51
+   },
+   "layout_sim_model_output": {
+    "gray_r": -0.078,
+    "edge_r": 0.15
+   },
+   "text_area": {
+    "rect": [
+     497,
+     87,
+     803,
+     211
+    ],
+    "lines": 2,
+    "scheme": "dunkel",
+    "calm": {
+     "L_mean": 93.4,
+     "L_std": 0.5,
+     "L_p05": 92.6,
+     "L_p95": 94.3,
+     "grad_energy": 0.414,
+     "edge_density": 0.0
+    },
+    "contrast_text": {
+     "median": 9.73,
+     "p05": 9.47
+    },
+    "band_needed": false
+   },
+   "crop": {
+    "raw_size": [
+     1264,
+     848
+    ],
+    "painted_bbox": [
+     38,
+     38,
+     1228,
+     810
+    ],
+    "crop": [
+     48,
+     95,
+     1218,
+     753
+    ],
+    "scale": 1.0940170940170941,
+    "slack_px": 94,
+    "dy_requested": 0,
+    "horizon_row_centered": null
+   },
+   "horizon_row": null,
+   "auto_found": {
+    "stars": 15
+   },
+   "handwork": {
+    "points": 1,
+    "rects": 2,
+    "polygons": 0,
+    "crop_overrides": 0,
+    "text_overrides": 0,
+    "names": [
+     "lamp",
+     "lens",
+     "wall"
+    ],
+    "minutes_estimate": 10
+   }
+  },
+  "stube": {
+   "raw": "assets/raw/stube.png",
+   "variant": "A (Hafenbild des Stils als Stilreferenz)",
+   "generation": {
+    "seconds": 71.5,
+    "size_requested": "1536x1024",
+    "size_delivered": "1264x848",
+    "backend": "agy",
+    "verbatim": true,
+    "refs": [
+     "../../../../bilderbuch-gouache/assets/raw/bg.png"
+    ],
+    "tries": 1,
+    "first_try_ok": true,
+    "note": ""
+   },
+   "prompt_matches_file": true,
+   "layout_sim_to_anchor": {
+    "gray_r": 0.227,
+    "edge_r": 0.158
+   },
+   "palette_dE_to_anchor": 4.55,
+   "palette_dE_sd": 0.31,
+   "mean_oklab_L_a_b_C": [
+    67.1,
+    1.45,
+    3.76,
+    4.35
+   ],
+   "detail": {
+    "grad_energy": 1.414,
+    "edge_density": 0.1039,
+    "texture_energy": 5.68
+   },
+   "detail_rel_anchor": {
+    "grad_energy": 1.49,
+    "edge_density": 1.71,
+    "texture_energy": 1.62
+   },
+   "layout_sim_model_output": {
+    "gray_r": 0.227,
+    "edge_r": 0.158
+   },
+   "text_area": {
+    "rect": [
+     454,
+     92,
+     826,
+     216
+    ],
+    "lines": 2,
+    "scheme": "dunkel",
+    "calm": {
+     "L_mean": 87.4,
+     "L_std": 1.98,
+     "L_p05": 84.5,
+     "L_p95": 90.3,
+     "grad_energy": 0.511,
+     "edge_density": 0.0001
+    },
+    "contrast_text": {
+     "median": 7.99,
+     "p05": 7.34
+    },
+    "band_needed": false
+   },
+   "crop": {
+    "raw_size": [
+     1264,
+     848
+    ],
+    "painted_bbox": [
+     36,
+     36,
+     1228,
+     810
+    ],
+    "crop": [
+     46,
+     93,
+     1218,
+     752
+    ],
+    "scale": 1.0921501706484642,
+    "slack_px": 95,
+    "dy_requested": 0,
+    "horizon_row_centered": null
+   },
+   "horizon_row": null,
+   "auto_found": {
+    "stars": 3
+   },
+   "handwork": {
+    "points": 4,
+    "rects": 0,
+    "polygons": 0,
+    "crop_overrides": 0,
+    "text_overrides": 0,
+    "names": [
+     "candle",
+     "fire",
+     "kettle_spout",
+     "window_lamp"
+    ],
+    "minutes_estimate": 12
+   }
+  },
+  "klippe": {
+   "raw": "assets/raw/klippe.png",
+   "variant": "A (Hafenbild des Stils als Stilreferenz)",
+   "generation": {
+    "seconds": 59.7,
+    "size_requested": "1536x1024",
+    "size_delivered": "1264x848",
+    "backend": "agy",
+    "verbatim": true,
+    "refs": [
+     "../../../../bilderbuch-gouache/assets/raw/bg.png"
+    ],
+    "tries": 1,
+    "first_try_ok": true,
+    "note": ""
+   },
+   "prompt_matches_file": true,
+   "layout_sim_to_anchor": {
+    "gray_r": 0.61,
+    "edge_r": 0.194
+   },
+   "palette_dE_to_anchor": 2.2,
+   "palette_dE_sd": 0.29,
+   "mean_oklab_L_a_b_C": [
+    60.7,
+    -0.7,
+    1.52,
+    5.35
+   ],
+   "detail": {
+    "grad_energy": 0.944,
+    "edge_density": 0.0594,
+    "texture_energy": 3.24
+   },
+   "detail_rel_anchor": {
+    "grad_energy": 0.99,
+    "edge_density": 0.98,
+    "texture_energy": 0.93
+   },
+   "layout_sim_model_output": {
+    "gray_r": 0.299,
+    "edge_r": 0.127
+   },
+   "text_area": {
+    "rect": [
+     307,
+     12,
+     972,
+     96
+    ],
+    "lines": 1,
+    "scheme": "hell",
+    "calm": {
+     "L_mean": 52.9,
+     "L_std": 1.84,
+     "L_p05": 50.2,
+     "L_p95": 55.1,
+     "grad_energy": 0.482,
+     "edge_density": 0.0019
+    },
+    "contrast_text": {
+     "median": 4.36,
+     "p05": 4.05
+    },
+    "band_needed": false
+   },
+   "crop": {
+    "raw_size": [
+     1264,
+     848
+    ],
+    "painted_bbox": [
+     36,
+     38,
+     1228,
+     810
+    ],
+    "crop": [
+     46,
+     48,
+     1218,
+     707
+    ],
+    "scale": 1.0921501706484642,
+    "slack_px": 93,
+    "dy_requested": -65,
+    "horizon_row_centered": 339
+   },
+   "horizon_row": 389,
+   "auto_found": {
+    "stars": 12,
+    "village_windows": 13,
+    "grass_tufts": 23
+   },
+   "handwork": {
+    "points": 1,
+    "rects": 3,
+    "polygons": 0,
+    "crop_overrides": 0,
+    "text_overrides": 0,
+    "names": [
+     "lamp",
+     "sea",
+     "sea_left",
+     "village"
+    ],
+    "minutes_estimate": 12
+   }
+  }
+ },
+ "experiment": {
+  "question": "Kopiert agy das Layout des Hafenbilds, wenn es als Stilreferenz mitgeht, und hält die Referenz den Strich besser als der Stilblock allein?",
+  "A": "Ankerabsatz (nur Malweise übernehmen) + Hafenbild des Stils als einzige Referenz",
+  "B": "derselbe Prompt ohne Ankerabsatz und ohne Referenz",
+  "pairs": {
+   "leuchtturm": {
+    "A": {
+     "raw": "assets/raw/leuchtturm_a.png",
+     "generation": {
+      "seconds": 69.3,
+      "size_requested": "1536x1024",
+      "size_delivered": "1264x848",
+      "backend": "agy",
+      "verbatim": true,
+      "refs": [
+       "../../../../bilderbuch-gouache/assets/raw/bg.png"
+      ],
+      "tries": 2,
+      "first_try_ok": false,
+      "note": "1. Aufruf: agy meldete „image failed to generate: no image generated in response“ (kein Bild, zählt als Erzeugung); 2. Aufruf brauchbar"
+     },
+     "prompt_matches_file": true,
+     "layout_sim_to_anchor": {
+      "gray_r": -0.078,
+      "edge_r": 0.15
+     },
+     "palette_dE_to_anchor": 3.82,
+     "palette_dE_sd": 0.43,
+     "mean_oklab_L_a_b_C": [
+      75.5,
+      0.83,
+      4.51,
+      5.67
+     ],
+     "detail": {
+      "grad_energy": 1.313,
+      "edge_density": 0.0922,
+      "texture_energy": 5.3
+     },
+     "detail_rel_anchor": {
+      "grad_energy": 1.38,
+      "edge_density": 1.52,
+      "texture_energy": 1.51
+     }
+    },
+    "B": {
+     "raw": "assets/raw/leuchtturm_b.png",
+     "generation": {
+      "seconds": 122.7,
+      "size_requested": "1536x1024",
+      "size_delivered": "1264x848",
+      "backend": "agy",
+      "verbatim": true,
+      "refs": [],
+      "tries": 1,
+      "first_try_ok": true,
+      "note": ""
+     },
+     "prompt_matches_file": true,
+     "layout_sim_to_anchor": {
+      "gray_r": 0.056,
+      "edge_r": 0.217
+     },
+     "palette_dE_to_anchor": 3.23,
+     "palette_dE_sd": 0.26,
+     "mean_oklab_L_a_b_C": [
+      66.3,
+      0.06,
+      2.82,
+      5.23
+     ],
+     "detail": {
+      "grad_energy": 2.378,
+      "edge_density": 0.1775,
+      "texture_energy": 8.94
+     },
+     "detail_rel_anchor": {
+      "grad_energy": 2.5,
+      "edge_density": 2.92,
+      "texture_energy": 2.55
+     }
+    }
+   },
+   "klippe": {
+    "A": {
+     "raw": "assets/raw/klippe.png",
+     "generation": {
+      "seconds": 59.7,
+      "size_requested": "1536x1024",
+      "size_delivered": "1264x848",
+      "backend": "agy",
+      "verbatim": true,
+      "refs": [
+       "../../../../bilderbuch-gouache/assets/raw/bg.png"
+      ],
+      "tries": 1,
+      "first_try_ok": true,
+      "note": ""
+     },
+     "prompt_matches_file": true,
+     "layout_sim_to_anchor": {
+      "gray_r": 0.299,
+      "edge_r": 0.127
+     },
+     "palette_dE_to_anchor": 2.49,
+     "palette_dE_sd": 0.3,
+     "mean_oklab_L_a_b_C": [
+      61.2,
+      -0.51,
+      1.91,
+      5.25
+     ],
+     "detail": {
+      "grad_energy": 0.977,
+      "edge_density": 0.0639,
+      "texture_energy": 3.4
+     },
+     "detail_rel_anchor": {
+      "grad_energy": 1.03,
+      "edge_density": 1.05,
+      "texture_energy": 0.97
+     }
+    },
+    "B": {
+     "raw": "assets/raw/klippe_b.png",
+     "generation": {
+      "seconds": 61.4,
+      "size_requested": "1536x1024",
+      "size_delivered": "1264x848",
+      "backend": "agy",
+      "verbatim": true,
+      "refs": [],
+      "tries": 1,
+      "first_try_ok": true,
+      "note": ""
+     },
+     "prompt_matches_file": true,
+     "layout_sim_to_anchor": {
+      "gray_r": 0.202,
+      "edge_r": 0.198
+     },
+     "palette_dE_to_anchor": 3.2,
+     "palette_dE_sd": 0.3,
+     "mean_oklab_L_a_b_C": [
+      62.4,
+      -0.78,
+      2.27,
+      5.86
+     ],
+     "detail": {
+      "grad_energy": 1.31,
+      "edge_density": 0.0902,
+      "texture_energy": 4.76
+     },
+     "detail_rel_anchor": {
+      "grad_energy": 1.38,
+      "edge_density": 1.48,
+      "texture_energy": 1.36
+     }
+    }
+   }
+  },
+  "decision": "A",
+  "reason": "A kopiert das Hafen-Layout nicht (Kanten-r 0,15 und 0,13, unter dem Wert für gleiches Motiv 0,19 ± 0,05 und unter B mit 0,22 und 0,20) und hält den Detailgrad des Ankers (Gradient ×1,38 und ×1,03 gegen B ×2,50 und ×1,38); B malt dünne dunkle Konturen und Motiv-Klischees (Häuser und Wolken im Lampenraum, Häuschen auf der Klippe). Palettenabstand gemischt: Leuchtturm B näher (3,23 gegen 3,82), Klippe A näher (2,49 gegen 3,20); Streuung des Maßes ±0,3–0,4."
+ },
+ "codex_series_same_metrics": {
+  "anchor": "styles/hintergrund-serie/assets/bg_hafen.png (vor der LUT)",
+  "orte": {
+   "leuchtturm": {
+    "layout_sim_to_anchor": {
+     "gray_r": 0.413,
+     "edge_r": 0.261
+    },
+    "palette_dE_to_anchor": 3.07,
+    "detail_rel_anchor": {
+     "grad_energy": 1.2,
+     "edge_density": 1.31,
+     "texture_energy": 1.3
+    }
+   },
+   "stube": {
+    "layout_sim_to_anchor": {
+     "gray_r": 0.365,
+     "edge_r": 0.303
+    },
+    "palette_dE_to_anchor": 3.12,
+    "detail_rel_anchor": {
+     "grad_energy": 1.21,
+     "edge_density": 1.41,
+     "texture_energy": 1.22
+    }
+   },
+   "klippe": {
+    "layout_sim_to_anchor": {
+     "gray_r": 0.647,
+     "edge_r": 0.352
+    },
+    "palette_dE_to_anchor": 2.43,
+    "detail_rel_anchor": {
+     "grad_energy": 1.24,
+     "edge_density": 1.38,
+     "texture_energy": 1.21
+    }
+   }
+  }
+ },
+ "godot": {
+  "renderer": "Forward+ (Movie Maker, 30 fps, 180 Bilder je Szene, Kopie des Demo-Ordners)",
+  "errors_in_log": 0,
+  "deterministic": "Klippe zweimal aufgenommen: Bilder 0, 30, 76, 89 bitgleich",
+  "threshold": "Pixel ändert sich um mehr als 8/255 in einem Kanal",
+  "scenes": {
+   "leuchtturm": {
+    "frames": 180,
+    "changed_share_2.5s_vs_3.0s_without_text": 0.02453,
+    "changed_share_by_region_2.5s_vs_3.0s": {
+     "halo halo_lamp @419,295": 0.27578,
+     "sweep sweep": 0.32755,
+     "sweep halo_wall": 0.07814
+    },
+    "changed_share_every_0.5s_min": 0.00438,
+    "changed_share_every_0.5s_max": 0.02493
+   },
+   "stube": {
+    "frames": 180,
+    "changed_share_2.5s_vs_3.0s_without_text": 0.00283,
+    "changed_share_by_region_2.5s_vs_3.0s": {
+     "halo halo_fire @118,584": 0.13484,
+     "halo halo_lantern @631,366": 0.01297,
+     "halo halo_window @1014,287": 0.03,
+     "flames": 0.12959,
+     "steam": 0.16977
+    },
+    "changed_share_every_0.5s_min": 0.00184,
+    "changed_share_every_0.5s_max": 0.00387
+   },
+   "klippe": {
+    "frames": 180,
+    "changed_share_2.5s_vs_3.0s_without_text": 0.01196,
+    "changed_share_by_region_2.5s_vs_3.0s": {
+     "halo halo_lamp @1183,236": 0.58062,
+     "halo halo_window @148.5,462.3": 0.00063,
+     "halo halo_window @47.5,477.8": 0.005,
+     "glints sea": 0.04947,
+     "grass (sway)": 0.01649
+    },
+    "changed_share_every_0.5s_min": 0.00584,
+    "changed_share_every_0.5s_max": 0.01196
+   }
+  }
+ }
+}

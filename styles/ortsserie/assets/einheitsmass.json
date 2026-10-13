@@ -1,0 +1,452 @@
+{
+ "method": "assets/einheitsmass.json: dieselben Maße für alle vier Serien, jeweils Ort gegen den eigenen Hafen-Anker, an der\n   Modellausgabe (Rohbild, mittiger 16:9-Schnitt über die volle Breite, bei Gouache innerhalb des gemalten\n   Papierrands, auf 1280×720). Die drei Stil-Agenten haben je eigene Maße benutzt; diese Tabelle macht die Serien\n   untereinander vergleichbar. Die Maßfunktionen stammen aus den Teilordnern (nicht neu erfunden):\n     palette_de    bilderbuch-gouache/scripts/gmetrics.py: k-means (k = 12) in Oklab, nächste Farbe, nach Fläche\n                   gewichtet, symmetrisch, Mittel ± Streuung über 8 Seeds (Oklab × 100)\n     detail        gmetrics.detail: Gradientenenergie (mittlerer |∇L| × 100) im Verhältnis zum Anker\n     struct_corr   painterly-digital/scripts/metrics.py: Bandpass-Korrelation der Helligkeit (gleiche Formen an\n                   gleicher Stelle); struct_top dasselbe für die oberen 45 % (Himmel). Maß für Layout-Kopie.\n     struct_top_rowfree  wie struct_top, aber vorher je Zeile das Mittel des Bandpasses abgezogen: waagrechte\n                   Linien quer durchs Bild (Horizont, durchgehende Wolkenbänder) zählen nicht mit\n     mean_L        mittleres Oklab-L × 100 (Helligkeit; Abendstimmung)\n   Vergleichswerte: Rauschboden des Palettenmaßes (Anker gegen sich selbst, andere Seeds), struct_corr\n   unabhängiger Bildpaare (jeder Codex-Ort gegen jeden agy-Anker: anderes Modell, anderer Stil, andere\n   Horizontregel) und derselbe Stilblock ohne Referenz (jede agy-Fassung ohne Referenz gegen den eigenen Anker:\n   kann nichts kopiert haben, teilt aber Stilblock und Serienregeln).",
+ "series": {
+  "codex": {
+   "name": "Codex-Serie (hintergrund-serie)",
+   "model": "gpt-image (Codex)",
+   "anchor": "styles/hintergrund-serie/assets/raw/hafen.png",
+   "places": {
+    "leuchtturm": {
+     "file": "styles/hintergrund-serie/assets/raw/leuchtturm.png",
+     "variant": "mit Anker als Referenz",
+     "palette_de": 2.75,
+     "palette_sd": 0.18,
+     "detail_ratio": 1.22,
+     "struct_corr": -0.011,
+     "struct_top": 0.03,
+     "struct_top_rowfree": 0.029,
+     "mean_L": 41.1,
+     "anchor_mean_L": 37.7
+    },
+    "stube": {
+     "file": "styles/hintergrund-serie/assets/raw/stube.png",
+     "variant": "mit Anker als Referenz",
+     "palette_de": 3.21,
+     "palette_sd": 0.13,
+     "detail_ratio": 1.21,
+     "struct_corr": -0.006,
+     "struct_top": -0.017,
+     "struct_top_rowfree": -0.025,
+     "mean_L": 38.4,
+     "anchor_mean_L": 37.7
+    },
+    "klippe": {
+     "file": "styles/hintergrund-serie/assets/raw/klippe.png",
+     "variant": "mit Anker als Referenz",
+     "palette_de": 2.47,
+     "palette_sd": 0.23,
+     "detail_ratio": 1.24,
+     "struct_corr": 0.184,
+     "struct_top": 0.296,
+     "struct_top_rowfree": 0.282,
+     "mean_L": 38.5,
+     "anchor_mean_L": 37.7
+    }
+   },
+   "alt": {},
+   "palette_noise_floor": {
+    "palette_de": 1.87,
+    "palette_sd": 0.44,
+    "note": "Anker gegen sich selbst mit anderen Seeds"
+   }
+  },
+  "bilderbuch-gouache": {
+   "name": "Bilderbuch & Gouache",
+   "model": "agy",
+   "anchor": "styles/bilderbuch-gouache/assets/raw/bg.png",
+   "places": {
+    "leuchtturm": {
+     "file": "styles/ortsserie/bilderbuch-gouache/assets/raw/leuchtturm_a.png",
+     "variant": "mit Referenz",
+     "palette_de": 3.53,
+     "palette_sd": 0.44,
+     "detail_ratio": 1.39,
+     "struct_corr": 0.048,
+     "struct_top": 0.053,
+     "struct_top_rowfree": 0.052,
+     "mean_L": 75.5,
+     "anchor_mean_L": 62.4
+    },
+    "stube": {
+     "file": "styles/ortsserie/bilderbuch-gouache/assets/raw/stube.png",
+     "variant": "mit Referenz",
+     "palette_de": 4.54,
+     "palette_sd": 0.28,
+     "detail_ratio": 1.49,
+     "struct_corr": 0.005,
+     "struct_top": -0.018,
+     "struct_top_rowfree": 0.005,
+     "mean_L": 67.1,
+     "anchor_mean_L": 62.4
+    },
+    "klippe": {
+     "file": "styles/ortsserie/bilderbuch-gouache/assets/raw/klippe.png",
+     "variant": "mit Referenz",
+     "palette_de": 2.38,
+     "palette_sd": 0.16,
+     "detail_ratio": 1.03,
+     "struct_corr": -0.006,
+     "struct_top": 0.002,
+     "struct_top_rowfree": 0.014,
+     "mean_L": 61.2,
+     "anchor_mean_L": 62.4
+    }
+   },
+   "alt": {
+    "leuchtturm_b": {
+     "place": "leuchtturm",
+     "file": "styles/ortsserie/bilderbuch-gouache/assets/raw/leuchtturm_b.png",
+     "variant": "ohne Referenz",
+     "palette_de": 2.86,
+     "palette_sd": 0.26,
+     "detail_ratio": 2.51,
+     "struct_corr": -0.044,
+     "struct_top": 0.028,
+     "struct_top_rowfree": 0.035,
+     "mean_L": 66.3,
+     "anchor_mean_L": 62.4
+    },
+    "klippe_b": {
+     "place": "klippe",
+     "file": "styles/ortsserie/bilderbuch-gouache/assets/raw/klippe_b.png",
+     "variant": "ohne Referenz",
+     "palette_de": 3.22,
+     "palette_sd": 0.22,
+     "detail_ratio": 1.38,
+     "struct_corr": -0.052,
+     "struct_top": 0.017,
+     "struct_top_rowfree": -0.01,
+     "mean_L": 62.4,
+     "anchor_mean_L": 62.4
+    }
+   },
+   "palette_noise_floor": {
+    "palette_de": 1.25,
+    "palette_sd": 0.54,
+    "note": "Anker gegen sich selbst mit anderen Seeds"
+   }
+  },
+  "painterly-digital": {
+   "name": "Digital gemalt (lebendes Standbild)",
+   "model": "agy",
+   "anchor": "styles/painterly-digital/assets/raw/master.png",
+   "places": {
+    "leuchtturm": {
+     "file": "styles/ortsserie/painterly-digital/assets/raw/leuchtturm_a.png",
+     "variant": "mit Referenz",
+     "palette_de": 2.41,
+     "palette_sd": 0.11,
+     "detail_ratio": 1.83,
+     "struct_corr": 0.021,
+     "struct_top": 0.022,
+     "struct_top_rowfree": 0.019,
+     "mean_L": 46.5,
+     "anchor_mean_L": 46.3
+    },
+    "stube": {
+     "file": "styles/ortsserie/painterly-digital/assets/raw/stube.png",
+     "variant": "mit Referenz",
+     "palette_de": 2.48,
+     "palette_sd": 0.15,
+     "detail_ratio": 1.47,
+     "struct_corr": -0.024,
+     "struct_top": 0.01,
+     "struct_top_rowfree": 0.01,
+     "mean_L": 36.2,
+     "anchor_mean_L": 46.3
+    },
+    "klippe": {
+     "file": "styles/ortsserie/painterly-digital/assets/raw/klippe_b.png",
+     "variant": "ohne Referenz",
+     "palette_de": 2.68,
+     "palette_sd": 0.08,
+     "detail_ratio": 1.09,
+     "struct_corr": 0.064,
+     "struct_top": 0.265,
+     "struct_top_rowfree": 0.319,
+     "mean_L": 47.3,
+     "anchor_mean_L": 46.3
+    }
+   },
+   "alt": {
+    "leuchtturm_b": {
+     "place": "leuchtturm",
+     "file": "styles/ortsserie/painterly-digital/assets/raw/leuchtturm_b.png",
+     "variant": "ohne Referenz",
+     "palette_de": 1.97,
+     "palette_sd": 0.26,
+     "detail_ratio": 1.41,
+     "struct_corr": 0.017,
+     "struct_top": 0.027,
+     "struct_top_rowfree": 0.033,
+     "mean_L": 43.2,
+     "anchor_mean_L": 46.3
+    },
+    "stube_b": {
+     "place": "stube",
+     "file": "styles/ortsserie/painterly-digital/assets/raw/stube_b.png",
+     "variant": "ohne Referenz",
+     "palette_de": 2.69,
+     "palette_sd": 0.11,
+     "detail_ratio": 1.52,
+     "struct_corr": 0.04,
+     "struct_top": 0.027,
+     "struct_top_rowfree": 0.028,
+     "mean_L": 37.9,
+     "anchor_mean_L": 46.3
+    },
+    "klippe_a": {
+     "place": "klippe",
+     "file": "styles/ortsserie/painterly-digital/assets/raw/klippe.png",
+     "variant": "mit Referenz, verworfen",
+     "palette_de": 1.52,
+     "palette_sd": 0.29,
+     "detail_ratio": 1.31,
+     "struct_corr": 0.205,
+     "struct_top": 0.425,
+     "struct_top_rowfree": 0.406,
+     "mean_L": 45.6,
+     "anchor_mean_L": 46.3
+    }
+   },
+   "palette_noise_floor": {
+    "palette_de": 1.02,
+    "palette_sd": 0.27,
+    "note": "Anker gegen sich selbst mit anderen Seeds"
+   }
+  },
+  "pc98-adventure": {
+   "name": "Japanischer 16-Bit-PC",
+   "model": "agy",
+   "anchor": "styles/pc98-adventure/assets/raw/bg.png",
+   "places": {
+    "leuchtturm": {
+     "file": "styles/ortsserie/pc98-adventure/assets/raw/leuchtturm.png",
+     "variant": "mit Referenz",
+     "palette_de": 6.33,
+     "palette_sd": 0.49,
+     "detail_ratio": 1.08,
+     "struct_corr": 0.045,
+     "struct_top": 0.01,
+     "struct_top_rowfree": 0.015,
+     "mean_L": 62.5,
+     "anchor_mean_L": 44.9
+    },
+    "stube": {
+     "file": "styles/ortsserie/pc98-adventure/assets/raw/stube.png",
+     "variant": "mit Referenz",
+     "palette_de": 5.03,
+     "palette_sd": 0.19,
+     "detail_ratio": 0.98,
+     "struct_corr": 0.016,
+     "struct_top": -0.001,
+     "struct_top_rowfree": 0.0,
+     "mean_L": 48.6,
+     "anchor_mean_L": 44.9
+    },
+    "klippe": {
+     "file": "styles/ortsserie/pc98-adventure/assets/raw/klippe.png",
+     "variant": "mit Referenz",
+     "palette_de": 2.74,
+     "palette_sd": 0.3,
+     "detail_ratio": 0.96,
+     "struct_corr": 0.361,
+     "struct_top": 0.626,
+     "struct_top_rowfree": 0.607,
+     "mean_L": 43.3,
+     "anchor_mean_L": 44.9
+    }
+   },
+   "alt": {
+    "leuchtturm_a": {
+     "place": "leuchtturm",
+     "file": "styles/ortsserie/pc98-adventure/assets/raw/leuchtturm_a.png",
+     "variant": "mit Referenz, gemalter Rahmen",
+     "palette_de": 5.17,
+     "palette_sd": 0.44,
+     "detail_ratio": 1.27,
+     "struct_corr": 0.065,
+     "struct_top": 0.012,
+     "struct_top_rowfree": -0.0,
+     "mean_L": 56.7,
+     "anchor_mean_L": 44.9
+    },
+    "leuchtturm_b": {
+     "place": "leuchtturm",
+     "file": "styles/ortsserie/pc98-adventure/assets/raw/leuchtturm_b.png",
+     "variant": "ohne Referenz, gemalter Rahmen",
+     "palette_de": 5.88,
+     "palette_sd": 0.56,
+     "detail_ratio": 1.24,
+     "struct_corr": 0.005,
+     "struct_top": 0.024,
+     "struct_top_rowfree": 0.031,
+     "mean_L": 55.2,
+     "anchor_mean_L": 44.9
+    },
+    "klippe_b": {
+     "place": "klippe",
+     "file": "styles/ortsserie/pc98-adventure/assets/raw/klippe_b.png",
+     "variant": "ohne Referenz",
+     "palette_de": 4.98,
+     "palette_sd": 0.21,
+     "detail_ratio": 1.02,
+     "struct_corr": -0.026,
+     "struct_top": -0.031,
+     "struct_top_rowfree": 0.013,
+     "mean_L": 47.1,
+     "anchor_mean_L": 44.9
+    }
+   },
+   "palette_noise_floor": {
+    "palette_de": 1.54,
+    "palette_sd": 0.42,
+    "note": "Anker gegen sich selbst mit anderen Seeds"
+   }
+  }
+ },
+ "baseline": {
+  "independent_struct": {
+   "pairs": [
+    {
+     "a": "codex/leuchtturm",
+     "b": "bilderbuch-gouache/anker",
+     "struct_corr": 0.016,
+     "struct_top": 0.032,
+     "struct_top_rowfree": 0.031
+    },
+    {
+     "a": "codex/leuchtturm",
+     "b": "painterly-digital/anker",
+     "struct_corr": -0.021,
+     "struct_top": 0.008,
+     "struct_top_rowfree": 0.013
+    },
+    {
+     "a": "codex/leuchtturm",
+     "b": "pc98-adventure/anker",
+     "struct_corr": 0.015,
+     "struct_top": 0.001,
+     "struct_top_rowfree": -0.001
+    },
+    {
+     "a": "codex/stube",
+     "b": "bilderbuch-gouache/anker",
+     "struct_corr": -0.006,
+     "struct_top": 0.002,
+     "struct_top_rowfree": 0.012
+    },
+    {
+     "a": "codex/stube",
+     "b": "painterly-digital/anker",
+     "struct_corr": 0.025,
+     "struct_top": 0.032,
+     "struct_top_rowfree": 0.026
+    },
+    {
+     "a": "codex/stube",
+     "b": "pc98-adventure/anker",
+     "struct_corr": -0.054,
+     "struct_top": -0.066,
+     "struct_top_rowfree": -0.057
+    },
+    {
+     "a": "codex/klippe",
+     "b": "bilderbuch-gouache/anker",
+     "struct_corr": -0.028,
+     "struct_top": -0.047,
+     "struct_top_rowfree": -0.061
+    },
+    {
+     "a": "codex/klippe",
+     "b": "painterly-digital/anker",
+     "struct_corr": -0.013,
+     "struct_top": -0.027,
+     "struct_top_rowfree": -0.045
+    },
+    {
+     "a": "codex/klippe",
+     "b": "pc98-adventure/anker",
+     "struct_corr": 0.038,
+     "struct_top": 0.066,
+     "struct_top_rowfree": 0.042
+    }
+   ],
+   "min": -0.054,
+   "max": 0.038,
+   "abs_max": 0.054
+  },
+  "same_style_no_ref": {
+   "note": "agy-Fassungen ohne Referenz gegen den eigenen Anker: gleicher Stilblock und gleiche Serienregeln, kein Referenzbild, also keine Kopie möglich",
+   "pairs": [
+    {
+     "a": "leuchtturm_b",
+     "series": "bilderbuch-gouache",
+     "place": "leuchtturm",
+     "variant": "ohne Referenz",
+     "struct_corr": -0.044,
+     "struct_top": 0.028,
+     "struct_top_rowfree": 0.035
+    },
+    {
+     "a": "klippe_b",
+     "series": "bilderbuch-gouache",
+     "place": "klippe",
+     "variant": "ohne Referenz",
+     "struct_corr": -0.052,
+     "struct_top": 0.017,
+     "struct_top_rowfree": -0.01
+    },
+    {
+     "a": "klippe_b",
+     "series": "painterly-digital",
+     "place": "klippe",
+     "variant": "ohne Referenz",
+     "struct_corr": 0.064,
+     "struct_top": 0.265,
+     "struct_top_rowfree": 0.319
+    },
+    {
+     "a": "leuchtturm_b",
+     "series": "painterly-digital",
+     "place": "leuchtturm",
+     "variant": "ohne Referenz",
+     "struct_corr": 0.017,
+     "struct_top": 0.027,
+     "struct_top_rowfree": 0.033
+    },
+    {
+     "a": "stube_b",
+     "series": "painterly-digital",
+     "place": "stube",
+     "variant": "ohne Referenz",
+     "struct_corr": 0.04,
+     "struct_top": 0.027,
+     "struct_top_rowfree": 0.028
+    },
+    {
+     "a": "leuchtturm_b",
+     "series": "pc98-adventure",
+     "place": "leuchtturm",
+     "variant": "ohne Referenz, gemalter Rahmen",
+     "struct_corr": 0.005,
+     "struct_top": 0.024,
+     "struct_top_rowfree": 0.031
+    },
+    {
+     "a": "klippe_b",
+     "series": "pc98-adventure",
+     "place": "klippe",
+     "variant": "ohne Referenz",
+     "struct_corr": -0.026,
+     "struct_top": -0.031,
+     "struct_top_rowfree": 0.013
+    }
+   ],
+   "struct_corr_min": -0.052,
+   "struct_corr_max": 0.064,
+   "struct_top_min": -0.031,
+   "struct_top_max": 0.265
+  }
+ }
+}

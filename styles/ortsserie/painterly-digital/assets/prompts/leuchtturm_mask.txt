@@ -1,0 +1,7 @@
+Turn the attached painting into a flat colour-coded segmentation map for an animation tool. Keep the composition, the outlines, the positions and the proportions of the attached image exactly, as if traced on a clear sheet laid on top of it: the same framing, the same horizon height, the same size and place of every object. Replace every area by one flat, pure, fully saturated colour with hard, clean edges: no shading, no texture, no brush strokes, no outlines, no gradients, no glow, no halos, no details inside the areas. It is a technical map, not a picture: do not keep any colour of the attached painting, use only the colour codes below.
+
+Colour codes: the sky seen through the windows, including all clouds and stars, down to the horizon: pure blue #0000FF. The sea seen through the windows, from the horizon down to the window sill: pure cyan #00FFFF. The glowing glass lens of the big lighthouse lamp, with the brass lamp inside it: pure orange #FF8000. Everything else (the walls, the ceiling, the window frames and bars, the floor, the desk with everything on it, the iron staircase, the rope and the crate): pure black #000000. Use no other colours, and do not add, remove or move any object.
+
+No text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.
+
+Image format: landscape 3:2.

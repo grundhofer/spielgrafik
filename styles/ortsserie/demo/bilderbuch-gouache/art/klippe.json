@@ -1,0 +1,361 @@
+{
+ "bg": "bg_klippe.png",
+ "seed": 20261013,
+ "text_rect": [
+  307,
+  12,
+  972,
+  96
+ ],
+ "stars": [
+  [
+   532.3,
+   27.3
+  ],
+  [
+   55.5,
+   35.5
+  ],
+  [
+   1199.9,
+   40.6
+  ],
+  [
+   379.8,
+   44.0
+  ],
+  [
+   141.5,
+   61.1
+  ],
+  [
+   753.7,
+   61.8
+  ],
+  [
+   976.6,
+   68.2
+  ],
+  [
+   518.2,
+   77.2
+  ],
+  [
+   322.2,
+   117.7
+  ],
+  [
+   1112.9,
+   118.1
+  ],
+  [
+   1029.0,
+   146.0
+  ],
+  [
+   80.7,
+   146.7
+  ]
+ ],
+ "text": {
+  "title": "KLIPPENPFAD",
+  "line": "Unten im Hafen gehen die Lichter an.",
+  "cx": 640,
+  "y": 18,
+  "title_col": "#f4b585",
+  "line_col": "#f8ecd6"
+ },
+ "halos": [
+  {
+   "tex": "halo_lamp",
+   "pos": [
+    1183,
+    236
+   ],
+   "scale": 0.55,
+   "mode": "blink",
+   "period": 2.5,
+   "phase": 0.6,
+   "alpha": [
+    0.3,
+    1.0
+   ],
+   "grow": [
+    0.7,
+    1.05
+   ]
+  },
+  {
+   "tex": "halo_window",
+   "pos": [
+    148.5,
+    462.3
+   ],
+   "scale": 0.13,
+   "mode": "flicker",
+   "phase": 0.0,
+   "alpha": [
+    0.15,
+    0.6
+   ],
+   "grow": [
+    0.9,
+    1.1
+   ]
+  },
+  {
+   "tex": "halo_window",
+   "pos": [
+    47.5,
+    477.8
+   ],
+   "scale": 0.13,
+   "mode": "flicker",
+   "phase": 11.0,
+   "alpha": [
+    0.15,
+    0.6
+   ],
+   "grow": [
+    0.9,
+    1.1
+   ]
+  },
+  {
+   "tex": "halo_window",
+   "pos": [
+    164.7,
+    482.1
+   ],
+   "scale": 0.13,
+   "mode": "flicker",
+   "phase": 22.0,
+   "alpha": [
+    0.15,
+    0.6
+   ],
+   "grow": [
+    0.9,
+    1.1
+   ]
+  },
+  {
+   "tex": "halo_window",
+   "pos": [
+    81.7,
+    489.5
+   ],
+   "scale": 0.13,
+   "mode": "flicker",
+   "phase": 33.0,
+   "alpha": [
+    0.15,
+    0.6
+   ],
+   "grow": [
+    0.9,
+    1.1
+   ]
+  },
+  {
+   "tex": "halo_window",
+   "pos": [
+    140.7,
+    496.1
+   ],
+   "scale": 0.13,
+   "mode": "flicker",
+   "phase": 44.0,
+   "alpha": [
+    0.15,
+    0.6
+   ],
+   "grow": [
+    0.9,
+    1.1
+   ]
+  },
+  {
+   "tex": "halo_window",
+   "pos": [
+    102.4,
+    498.0
+   ],
+   "scale": 0.13,
+   "mode": "flicker",
+   "phase": 55.0,
+   "alpha": [
+    0.15,
+    0.6
+   ],
+   "grow": [
+    0.9,
+    1.1
+   ]
+  },
+  {
+   "tex": "halo_window",
+   "pos": [
+    125.9,
+    500.1
+   ],
+   "scale": 0.13,
+   "mode": "flicker",
+   "phase": 66.0,
+   "alpha": [
+    0.15,
+    0.6
+   ],
+   "grow": [
+    0.9,
+    1.1
+   ]
+  },
+  {
+   "tex": "halo_window",
+   "pos": [
+    61.9,
+    502.1
+   ],
+   "scale": 0.13,
+   "mode": "flicker",
+   "phase": 77.0,
+   "alpha": [
+    0.15,
+    0.6
+   ],
+   "grow": [
+    0.9,
+    1.1
+   ]
+  },
+  {
+   "tex": "halo_window",
+   "pos": [
+    31.1,
+    508.6
+   ],
+   "scale": 0.13,
+   "mode": "flicker",
+   "phase": 88.0,
+   "alpha": [
+    0.15,
+    0.6
+   ],
+   "grow": [
+    0.9,
+    1.1
+   ]
+  },
+  {
+   "tex": "halo_window",
+   "pos": [
+    43.5,
+    509.8
+   ],
+   "scale": 0.13,
+   "mode": "flicker",
+   "phase": 99.0,
+   "alpha": [
+    0.15,
+    0.6
+   ],
+   "grow": [
+    0.9,
+    1.1
+   ]
+  },
+  {
+   "tex": "halo_window",
+   "pos": [
+    20.4,
+    524.0
+   ],
+   "scale": 0.13,
+   "mode": "flicker",
+   "phase": 110.0,
+   "alpha": [
+    0.15,
+    0.6
+   ],
+   "grow": [
+    0.9,
+    1.1
+   ]
+  },
+  {
+   "tex": "halo_window",
+   "pos": [
+    6.6,
+    526.9
+   ],
+   "scale": 0.13,
+   "mode": "flicker",
+   "phase": 121.0,
+   "alpha": [
+    0.15,
+    0.6
+   ],
+   "grow": [
+    0.9,
+    1.1
+   ]
+  },
+  {
+   "tex": "halo_window",
+   "pos": [
+    22.4,
+    536.5
+   ],
+   "scale": 0.13,
+   "mode": "flicker",
+   "phase": 132.0,
+   "alpha": [
+    0.15,
+    0.6
+   ],
+   "grow": [
+    0.9,
+    1.1
+   ]
+  }
+ ],
+ "rays": [
+  {
+   "pos": [
+    1183,
+    236
+   ],
+   "scale": 0.5,
+   "mode": "blink",
+   "period": 2.5,
+   "phase": 0.6
+  }
+ ],
+ "glints": [
+  {
+   "rect": [
+    187,
+    396,
+    1053,
+    441
+   ],
+   "n": 14,
+   "scale": 1.0
+  },
+  {
+   "rect": [
+    5,
+    612,
+    217,
+    692
+   ],
+   "n": 4,
+   "scale": 0.8
+  }
+ ],
+ "sway": {
+  "mask": "sway_klippe.png",
+  "amp_px": 4.0
+ }
+}

@@ -1,0 +1,149 @@
+{
+ "bg": "bg_stube.png",
+ "seed": 20261013,
+ "text_rect": [
+  454,
+  92,
+  826,
+  216
+ ],
+ "stars": [
+  [
+   903.0,
+   267.5
+  ],
+  [
+   988.0,
+   267.5
+  ],
+  [
+   1025.5,
+   268.5
+  ]
+ ],
+ "text": {
+  "title": "STUBE DES HAFENMEISTERS",
+  "line": "Im Kamin knistert\ndie Glut.",
+  "cx": 640,
+  "y": 98,
+  "title_col": "#8e4232",
+  "line_col": "#3b3352"
+ },
+ "halos": [
+  {
+   "tex": "halo_fire",
+   "pos": [
+    118,
+    584
+   ],
+   "scale": 1.0,
+   "mode": "flicker",
+   "alpha": [
+    0.22,
+    0.5
+   ],
+   "grow": [
+    0.92,
+    1.06
+   ]
+  },
+  {
+   "tex": "halo_lantern",
+   "pos": [
+    631,
+    366
+   ],
+   "scale": 0.7,
+   "mode": "flicker",
+   "phase": 17.0,
+   "alpha": [
+    0.35,
+    0.75
+   ],
+   "grow": [
+    0.9,
+    1.05
+   ]
+  },
+  {
+   "tex": "halo_window",
+   "pos": [
+    1014,
+    287
+   ],
+   "scale": 0.22,
+   "mode": "blink",
+   "period": 2.5,
+   "alpha": [
+    0.0,
+    0.95
+   ],
+   "grow": [
+    0.7,
+    1.1
+   ]
+  }
+ ],
+ "flames": [
+  {
+   "tex": "flame",
+   "frames": 4,
+   "pos": [
+    96,
+    600
+   ],
+   "scale": 0.3,
+   "fps": 10,
+   "phase": 0.0
+  },
+  {
+   "tex": "flame",
+   "frames": 4,
+   "pos": [
+    120,
+    602
+   ],
+   "scale": 0.36,
+   "fps": 10,
+   "phase": 1.0
+  },
+  {
+   "tex": "flame",
+   "frames": 4,
+   "pos": [
+    142,
+    600
+   ],
+   "scale": 0.28,
+   "fps": 10,
+   "phase": 2.0
+  },
+  {
+   "tex": "flame",
+   "frames": 4,
+   "pos": [
+    631,
+    378
+   ],
+   "scale": 0.17,
+   "fps": 10,
+   "phase": 3.0
+  }
+ ],
+ "puffs": [
+  {
+   "tex": "steam",
+   "pos": [
+    187,
+    487
+   ],
+   "every": 0.55,
+   "life": 2.8,
+   "scale": 0.95,
+   "rise": 22.0,
+   "drift": 14.0,
+   "sway": 4.0,
+   "alpha": 0.55
+  }
+ ]
+}

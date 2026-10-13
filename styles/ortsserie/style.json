@@ -1,0 +1,286 @@
+{
+ "slug": "ortsserie",
+ "name": "Ortsserie: ein Look, viele Orte (agy)",
+ "family": "technik",
+ "kind": "technique",
+ "era": "Technik für gemalte und gepixelte 2D-Adventures (Bildserie aus einem Bildmodell)",
+ "summary": "Die drei empfohlenen Stile (Bilderbuch & Gouache, Digital gemalt mit lebendem Standbild, Japanischer 16-Bit-PC) an denselben drei neuen Orten von Lornholm, die hintergrund-serie mit Codex gebaut hat: Lampenraum im Leuchtturm, Stube des Hafenmeisters, Klippenpfad. Alle 20 Bilder kamen bewusst über agy (Gemini-Bildmodell), je Ort mit dem Hafenbild des Stils als Stilreferenz oder ohne, und jeder Ort ist eine lebende Szene mit dem Textfeld des Stils. Ergebnis: agy hält in allen drei Stilen die Handschrift über die Orte. Die Drift liegt in Helligkeit, Detail und, bei Außenorten mit Referenz, in kopierten Bildteilen des Ankers. Die Demo zeigt die neun Szenen als Raster und danach je Stil einen Ort groß.",
+ "references": [
+  "Point-and-Click- und Befehlsmenü-Adventures, deren Orte alle aus einer Hand gemalt oder gepixelt sind (1980er bis heute)",
+  "Eintrag hintergrund-serie: dieselben drei Orte als Codex-Serie (gpt-image) mit Aquarell-Stilblock, Vergleichsmaßstab dieses Eintrags",
+  "Einträge bilderbuch-gouache, painterly-digital, kinemagramm und pc98-adventure: Stilblock, Hafen-Anker, Effekte und Textfeld stammen von dort"
+ ],
+ "traits": [
+  "Neun Orte: drei Stile × drei Orte. Die Ortsblöcke stehen wörtlich in hintergrund-serie/tools/prompts.py (importiert, dort nichts geändert). Alle 20 Bilder kamen über agy (genimg.py --backend agy), alle mit 1264×848 statt der bestellten 1536×1024, alle mit verbatim true",
+  "Stilanker je Stil ist das Hafenbild des Ursprungseintrags. Verwendet: Gouache an allen drei Orten mit Referenz; Digital gemalt innen mit Referenz, die Klippe ohne (die Fassung mit Referenz kopierte den Hafenhimmel); 16-Bit-PC an allen drei Orten mit Referenz, die Klippe trotz kopiertem Himmel",
+  "Einheitsmaß für alle vier Serien (Codex und drei agy-Stile), jeweils Ort gegen den eigenen Anker an der Modellausgabe (assets/einheitsmass.json). Palettenabstand: Codex 2,5–3,2, Gouache 2,4–4,5, Digital gemalt 2,4–2,7, 16-Bit-PC 2,7–6,3 (Rauschboden 1,0–1,9). Detail ÷ Anker: Codex ×1,21–1,24, Gouache ×1,03–1,49, Digital gemalt ×1,09–1,83, 16-Bit-PC ×0,96–1,08",
+  "Layout-Kopie als Bandpass-Korrelation gemessen (Struktur r, jeweils ganzes Bild / Himmel = oberste 45 %), mit zwei Vergleichen. Unabhängige Paare (Codex-Orte gegen agy-Anker, also anderes Modell, anderer Stil, andere Horizontregel): −0,05 bis 0,04 / −0,07 bis 0,07. Derselbe Stilblock ohne Referenz (7 agy-Fassungen, keine Kopie möglich): −0,05 bis 0,06 / −0,03 bis 0,27; an der Klippe Gouache −0,05 / 0,02, Digital gemalt 0,06 / 0,27, 16-Bit-PC −0,03 / −0,03. Klippe mit Referenz: Gouache −0,01 / 0,00 (keine Kopie), Digital gemalt 0,21 / 0,43 (Kopie, verworfen), 16-Bit-PC 0,36 / 0,63 (Kopie, verwendet). Zum Vergleich die Codex-Klippe: 0,18 / 0,30 (Anordnung des Hafens, eigene Wolken). Innenräume aller Stile −0,02 bis 0,05 / −0,02 bis 0,05",
+  "Helligkeit als größte Drift (mittleres Oklab-L Ort/Anker): Gouache-Innenräume taghell (76 und 67 gegen 62), die Stube in Digital gemalt dunkler (36 gegen 46), die Innenräume des 16-Bit-PC heller (63 und 49 gegen 45). Die Codex-Serie liegt bei 38–41 gegen 38",
+  "Jeder Ort lebt im Duktus seines Stils. Gouache: gemalte Lichthöfe, Pinselstrahlen, Flammen- und Dampftupfer, Lichtwanderung in der Linse, Wind im Gras. Digital gemalt: Kinemagramm mit agy-Farbcode-Maske je Ort (Strahl, Nebel, Glitzern, Gras, Flackern, Möwen). 16-Bit-PC: animierte Palettenregister 14 und 15 und Wasser in drei Einzelbildern",
+  "Textfeld des Ursprungsstils je Ort. Gouache: Ortsname und Satz an der ruhigsten Stelle, automatisch gefunden, Schriftfarbe nach Untergrund (Creme im Himmel, dunkle Tinte auf heller Wand). Digital gemalt: Textleiste mit Tasche aus textoberflaeche. 16-Bit-PC: Bildfenster, Befehlsmenü, Objektliste und Erzähltext Zeichen für Zeichen",
+  "Demo: 0–2 s Raster 3×3 (Zeilen = Stile, Spalten = Orte, Zellen 368×207 aus je einer SubViewport 1280×720), dann Zoom auf Gouache · Stube (ruhig 2,35–3,5 s) und Überblendungen zu Digital gemalt · Klippenpfad (3,7–4,75 s) und 16-Bit-PC · Lampenraum (ab 4,95 s). Die Überblendungen liegen zwischen den Zeitpunkten von frames.jpg, dort erscheint jede Großansicht unvermischt. Das Poster bei 1,9 s zeigt das Raster",
+  "Vergleichsbild assets/vergleich_codex_agy.png: je Ort die Codex-Fassung aus hintergrund-serie neben den drei agy-Stilen, dazu die vier Hafen-Anker, beschriftet mit dem Einheitsmaß"
+ ],
+ "camera": "Feste Kamera je Ort, Augenhöhe, gerade Ansicht; in der Demo Raster aus neun Szenen, danach Zoom und Überblendung auf Einzelszenen",
+ "resolution": "1280×720. Gouache und Digital gemalt aus 1264×848 geschnitten; 16-Bit-PC als 640×360-Indexbild (Bildfenster 416×256), ×2 skaliert",
+ "pipeline": [
+  {
+   "step": "Prompts je Stil",
+   "tool": "bilderbuch-gouache/scripts/make_jobs.py, painterly-digital/scripts/prompts.py, pc98-adventure/scripts/build_prompts.py",
+   "detail": "Aufbau je Bild: bei Fassung A ein Ankerabsatz (nur die Malweise des Referenzbilds übernehmen, nicht Aufbau oder Gegenstände), dann der Stilblock des Ursprungseintrags, Serienregeln, Ortsblock, freier Boden, die Liste der Effekte, die Godot animiert, die Schutzregeln (guards_en) und das Format. Die Stilblöcke sind wörtlich übernommen; nur hafenbezogene Sätze wurden ersetzt (Gouache: Leuchtturm, Häuschen und Kai durch allgemeine Wörter; Digital gemalt: der Satz über die Lichthöfe; 16-Bit-PC: Kamera und Bildaufbau sowie die Konturliste). Ortsblock, Effektliste und anchor_extra sind wörtlich aus hintergrund-serie/tools/prompts.py importiert. Die Serienregeln gelten je Stil für alle Orte: Abend wie im Hafen, Horizont bzw. Augenhöhe 45–46 %, eine ruhige Fläche für das Textfeld. Lesbare Fassungen liegen in <stil>/assets/prompts/."
+  },
+  {
+   "step": "Bilder erzeugen",
+   "tool": "tools/genimg.py --backend agy (Gemini-Bildmodell), --workers ≤ 2",
+   "detail": "21 Aufrufe erreichten das Modell, 20 lieferten ein Bild. Gouache 6: leuchtturm_a 2 (der 1. Aufruf endete ohne Bild mit „no image generated in response“), leuchtturm_b, stube, klippe, klippe_b. Digital gemalt 9: leuchtturm_a, leuchtturm_b, stube, stube_b und klippe mit A/B, klippe_b sowie je Ort eine Farbcode-Maske. 16-Bit-PC 6: leuchtturm_a, leuchtturm_b, leuchtturm, stube, klippe, klippe_b. Alle 1264×848, verbatim true, meist 60–98 s je Bild. Zweimal meldete ein agy-Konto sein Kontingent erschöpft, und genimg.py wich auf ein anderes aus (123 s bzw. 186 s); das ist nicht gezählt. Codex wurde nicht benutzt."
+  },
+  {
+   "step": "A/B-Versuch: mit oder ohne Stilreferenz",
+   "tool": "je Stil scripts/measure.py, assets/sheet.png (Gouache zusätzlich assets/ab_sheet.png)",
+   "detail": "Am Leuchtturm je Stil A (Hafenbild des Stils als einzige Referenz) gegen B (nur Stilblock), an der Klippe als Gegenprobe. Gouache: A behält Strich und Detail des Ankers (Detail ×1,39 gegen ×2,51), B malt Konturen und Motiv-Klischees wie Häuser und Wolken im Lampenraum; an der Klippe kopiert A nichts, deshalb A an allen drei Orten. Digital gemalt: A zeigt innen keine Kopie und lag im Teilmaß bei zwei von drei Palettenmaßen näher. Im Einheitsmaß lag dagegen B am Lampenraum näher (Palette 1,97 gegen 2,41, Detail ×1,41 gegen ×1,83); für A sprachen dort nur die Helligkeit (L 46,5 gegen 43,2, Anker 46,3) und der Inhalt (Wendeltreppe, Himmel in den Fenstern). Das Detail ×1,83 des Lampenraums gehört also zu Fassung A. An der Klippe übernahm A Wolkenbild, Leuchtturmlage und Kaimauer des Hafens; diese Fassung ist verworfen, verwendet ist B. 16-Bit-PC: A trifft Palette und Pseudo-Pixelraster besser (2,88 px gegen keine klare Periode). A und B malten mit der ersten Serienregel („framed window“) einen Rahmen; die Regel wurde auf randlos geändert und der Leuchtturm neu erzeugt. Die Klippe mit A kopierte Himmel und Leuchtturm des Ankers und ist trotzdem verwendet, weil B das Meer graulila malte."
+  },
+  {
+   "step": "Gouache verarbeiten",
+   "tool": "bilderbuch-gouache/scripts/build_orte.py, paperframe.py, fx_orte.py",
+   "detail": "agy malte wie beim Anker einen Papierrand mit. paperframe.py findet ihn über die Papierfarbe und rückt 10 px ein, danach folgt der 16:9-Schnitt. Die Klippe wird auf die Horizontzeile des Hafens ausgerichtet (Zeile 389 statt 339, Hafen 410; mehr ließ der Rand nicht zu). Die Effekte malt die Pinselbibliothek des Ursprungseintrags (Lichthöfe, Strahlen, Glitzer, Sterne), neu sind Flammen-Tupfer, Dampf und Lichtwanderung. Automatisch gefunden werden Sterne, 13 Dorffenster, 23 Grasbüschel als Windmaske und die Textlage samt Schriftfarbe mit WCAG-Kontrastprüfung. Von Hand gesetzt sind je Ort 1–4 Punkte und 0–3 Rechtecke."
+  },
+  {
+   "step": "Digital gemalt als Kinemagramm verarbeiten",
+   "tool": "painterly-digital/scripts/process.py (nutzt aimask.py und imgops.py aus kinemagramm), scene.override.json, make_scenes.py",
+   "detail": "Die Farbcode-Maske je Ort kam mit dem Gemälde als Referenz („as if traced on a clear sheet“), alle drei im ersten Versuch und nach einer Skalierung um 0,996–1,008 auf höchstens 1 px deckungsgleich (ohne die Skalierung bis etwa 3 px Versatz an den Bildrändern; aimask.py findet Skalierung und Verschiebung selbst). Die Codefarben werden je Ort umgedeutet (Linse/Glut, Kerze/Fenster, Lampe, Gras). Danach folgen der Schnitt mit dem Horizont auf Zeile 270, Masken für Wasser, Himmel, Sterne, Lichter, Gras, Lichtempfänger und Strahl, eine saubere Platte und scene.json. Von Hand gibt es je Ort einen Override-Eintrag mit 4–8 Zahlen: die Linse ohne Messingsockel, die Flammen über Glut und Docht, eine Laterne am Wegweiser, die im Farbcode fehlte."
+  },
+  {
+   "step": "16-Bit-PC rastern",
+   "tool": "pc98-adventure/scripts/build_ort.py (pc98lib des Ursprungseintrags)",
+   "detail": "BOX auf 416×279, Bildfenster 416×256, dann Musterdithering in 5 Stufen (Bayer 4×4, bildschirmfest). Licht liegt auf Register 14, Blitz und Leuchtfeuer auf Register 15, Wasser in 3 Einzelbildern. Drei Palettenwege wurden verglichen; Verlust in ΔE zwischen Quelle und Raster, gemittelt über Hafen und drei Orte: feste Hafen-Palette 3,42, gemeinsame Serienpalette (5 feste Akzente und 9 k-means-Farben über alle vier Bilder) 2,94, eigene Palette je Ort 2,44. Die Szenen nutzen die Serienpalette, weil die feste Hafen-Palette die Kalkwand zu Creme und den Kerzenschein zu Pfirsich macht und eigene Paletten die Rahmenfarben der Oberfläche ändern. Von Hand gesetzt sind je Ort 9–11 Einträge mit 21–30 Zahlen."
+  },
+  {
+   "step": "Einheitsmaß und Vergleichsbild",
+   "tool": "scripts/vergleich.py (Maßfunktionen aus bilderbuch-gouache/scripts/gmetrics.py und painterly-digital/scripts/metrics.py)",
+   "detail": "Die drei Teile haben je eigene Maße benutzt, ihre Zahlen sind deshalb untereinander nicht vergleichbar. vergleich.py misst alle vier Serien gleich. Grundlage ist die Modellausgabe im mittigen 16:9-Schnitt über die volle Breite (bei Gouache innerhalb des Papierrands), auf 1280×720 gebracht. Gemessen werden Palettenabstand (k-means 12 in Oklab, 8 Seeds), Detail (Gradientenenergie ÷ Anker), Struktur r (Bandpass-Korrelation, ganzes Bild und oberste 45 %) und mittleres L, jeweils gegen den eigenen Anker. Vergleichswerte sind der Rauschboden (Anker gegen sich selbst), 9 unabhängige Paare (Codex-Orte gegen agy-Anker) und als Grundlinie für Kopien die 7 agy-Fassungen ohne Referenz gegen ihren eigenen Anker. Dazu struct_top_rowfree: der Himmelswert ohne waagrechte Linien (Zeilenmittel des Bandpasses abgezogen). Das Vergleichsbild zeigt die Spielbilder ohne Effekte, die Codex-Bilder vor ihrer LUT."
+  },
+  {
+   "step": "Hauptdemo und Aufnahme",
+   "tool": "demo/main.gd, demo/shaders/verkleinern.gdshader, tools/capture.py --poster-at 0.32",
+   "detail": "Ein Godot-Projekt mit drei Teilordnern (res://bilderbuch-gouache, res://painterly-digital, res://pc98-adventure). main.gd setzt die neun Szenen in je eine SubViewport und führt ihre Zeit aus dem eigenen Bildzähler. Geprüft nach der letzten Änderung: zwei Forward+-Aufnahmen bitgleich (180/180 Bilder), mobile bitgleich (180/180), gl_compatibility je Bild im Mittel 0,001–0,331/255 über alle Pixel und Kanäle (alle 180 Bilder; am höchsten in der Überblendung bei 3,6 s, im Raster 0,109/255) und höchstens 2/255 Abweichung, ein Lauf des Rasters ab t = 30 s ohne Fehler und mit vollständigen Texten. project.godot setzt wie verlangt physics_jitter_fix = 0 und delta_smoothing = false. capture.py endet mit ok, ohne Fehler und ohne Warnungen."
+  },
+  {
+   "step": "Begleitdateien bereinigen, Prompts sammeln",
+   "tool": "<stil>/scripts/sanitize_raw.py, scripts/collect_prompts_serie.py",
+   "detail": "Die Begleitdateien von genimg.py enthielten Sitzungs-ID, Kontoname und absolute Pfade. Die Teil-Agenten haben sie bereinigt; zusätzlich ignoriert .gitignore jetzt styles/ortsserie/*/assets/raw/*. collect_prompts_serie.py sammelt die 20 Prompts aus den drei Teilordnern mit derselben Funktion wie tools/collect_prompts.py nach prompts.json."
+  }
+ ],
+ "godot": [
+  "Projekt styles/ortsserie/demo: 1280×720, stretch canvas_items/keep, Forward+, physics_jitter_fix = 0, delta_smoothing = false. main.tscn ist ein Node2D mit main.gd; main.gd baut den Rest im Code auf: Hintergrund, neun SubViewports (1280×720, disable_3d, UPDATE_ALWAYS), je Zelle ein TextureRect, Beschriftungen in Alegreya Sans und Alegreya SC sowie ein Bildtitel für die Großansichten",
+  "shaders/verkleinern.gdshader verkleinert ohne Flimmern: Mittel über 4×4 bilineare Abtastungen im Fußabdruck des Bildschirmpixels (dFdx/dFdy), weil ViewportTexturen keine Mipmaps haben. Bei 1:1 zählt nur die Mitte, damit die Pixel des 16-Bit-PC scharf bleiben. Die Vertexfarbe läuft über ein varying, damit modulate die Überblendung tragen kann",
+  "Zeit: t = t0 + n/30 aus dem eigenen Bildzähler, main.gd mit process_priority −10 vor den Szenen. Jede Szene bekommt die Zeit über ihre eigene Schnittstelle. Gouache: autoplay = false und set_time(t). Digital gemalt: frozen, t0 und _update(). 16-Bit-PC: n und _update(n). So zeigen alle neun Zellen im selben Bild dieselbe Zeit",
+  "Gouache-Szenen (res://bilderbuch-gouache/<ort>.tscn): Node2D mit ort.gd, das art/<ort>.json liest. paper.gdshader legt Papierkorn als Multiply darüber, sway.gdshader bewegt das Gras im Wind. Die Effekte sind Sprites aus der Pinselbibliothek, die Schrift ist Fraunces",
+  "Digital-gemalt-Szenen (res://painterly-digital/<ort>.tscn): Control mit ort.gd und einem canvas_item-Shader (ort.gdshader) für Himmel, Wasser, Glitzern, Sterne, Flackern, Linsenblitz, Lichtfleck, Flammen, Leuchtturmstrahl, Gras, Möwen, Nebelbänder, Lichtteilchen, Lichthöfe und Vignette. Die Textleiste stammt aus textoberflaeche (reveal_fx.gd, Icons)",
+  "16-Bit-PC-Szenen (res://pc98-adventure/<ort>.tscn): Indexbild in einer SubViewport 640×360, palette.gdshader schlägt 16 Register mit 4 Bit je Kanal nach, Darstellung ×2. ui.gd zeichnet die Oberfläche mit einem DotGothic16-Atlas. Bewegung entsteht nur über Register 14/15 und die Wasserstreifen",
+  "Prüfschalter nach „--“: --t0=<s>, --grid (nur Raster), --solo=<zeile>,<spalte> (eine Zelle von Anfang an groß). Die Einzelszenen haben eigene Schalter (Gouache --only=bg, --no-text, --no-fx; Digital gemalt --frozen, --no-ui)"
+ ],
+ "techniques": [
+  "hintergrund-serie",
+  "kinemagramm",
+  "saubere-platte",
+  "textoberflaeche",
+  "palette-einrasten",
+  "dithering",
+  "palettenwechsel",
+  "prozedurale-animation"
+ ],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 4,
+  "effort": 2,
+  "text_adventure": 5,
+  "mobile": 4
+ },
+ "ratings_note": "ai_fit 4: Alle neun Hintergründe und die drei Farbcode-Masken kommen von agy, und jeder Stil wurde an allen Orten getroffen. Der Look der Szenen kommt aus diesen Bildern. Abzüge: Die Bewegung kommt aus Code und Shadern; beim 16-Bit-PC trägt die gemeinsame 16-Farben-Palette einen Teil des Zusammenhalts (die Rohfarben streuen innen 5,0–6,3); agy malte trotz Verbot Lichtschein, Flammen und Funken mit. consistency 4: In allen drei Stilen wirken die Orte wie aus einer Hand, belegt mit dem Einheitsmaß. Palettenabstand zum eigenen Anker: Gouache 2,4–4,5, Digital gemalt 2,4–2,7, 16-Bit-PC roh 2,7–6,3; die Codex-Serie liegt bei 2,5–3,2. Detail ×0,96–1,83, keine Layout-Kopie in Innenräumen. Abzüge für die Helligkeitsdrift (Gouache-Innenräume taghell, Stube in Digital gemalt dunkler), für mehr Detail in Digital gemalt (bis ×1,83, Lampenraum in Fassung A) und für kopierte Himmel bei Außenorten mit Referenz (zwei von drei Stilen). effort 2: je Ort ein agy-Bild (Digital gemalt zwei: Gemälde und Maske), die Verarbeitung läuft per Skript. Die Handarbeit ist geschätzt, nicht gemessen: 10–12 min je Ort für Gouache, 10–20 min plus Texte für den 16-Bit-PC, 45–60 min für Digital gemalt, vor allem Effektplanung; allein wäre Digital gemalt eher 3. text_adventure 5: Genau das braucht das erste Spiel, eine Ortsserie aus agy in einem festen Stil mit lebender Szene und Textfeld. mobile 4 (geschätzt): Die Hauptdemo lief mit mobile bitgleich zu Forward+, mit gl_compatibility je Bild im Mittel 0,001–0,331/255 (alle 180 Bilder, alle Pixel und Kanäle) und höchstens 2/255 Abweichung. Je Ort ist eine Szene billig: Gouache besteht aus Sprites und einem Vollbild-Multiply, der 16-Bit-PC aus einer kleinen SubViewport und einem Palettenshader. Digital gemalt rechnet einen Vollbild-Shader mit vielen Effekten. Die Raster-Demo selbst rendert neun 1280×720-Viewports; das ist eine Schauansicht, keine Spielszene. Auf Geräten nicht gemessen.",
+ "verdict": "Ja: agy hält den Look über mehrere Orte, in allen drei Stilen. An den meisten Orten war das erste gelieferte Bild brauchbar. Ausnahmen: die Klippe von Digital gemalt (die Fassung mit Referenz kopierte den Hafenhimmel, verwendet ist eine zweite ohne Referenz), der Lampenraum des 16-Bit-PC (dreimal erzeugt, weil A und B mit der ersten Serienregel einen gemalten Rahmen bekamen) und der Gouache-Lampenraum (zwei Aufrufe, der erste ohne Bild). Je Stil wirken die Orte wie aus einer Hand. Am besten trägt Bilderbuch & Gouache: Mit dem Hafenbild als einziger Referenz hielt agy Strich und Detail an allen drei Orten (×1,03–1,49), auch draußen ohne Layout-Kopie (Struktur r −0,01). Das kostete je Ort ein Bild (am Lampenraum zwei Aufrufe) und etwa 10–12 Minuten. Zu korrigieren bleibt die Abendstimmung innen: Die Räume sind taghell, das muss der Prompt fester fassen oder eine Farbkorrektur je Ort ausgleichen (ungeprüft). Digital gemalt mit lebendem Standbild hat die engste Palette der drei agy-Stile (Palettenabstand 2,4–2,7, so eng wie die Codex-Serie mit 2,5–3,2; der Unterschied liegt im Rauschen) und die stärkste Atmosphäre. Dafür braucht jeder Ort zwei Bilder (Gemälde und Maske) und 45–60 Minuten Handarbeit, das Detail steigt bis ×1,83 (Lampenraum in Fassung A; die nicht gewählte Fassung B ohne Referenz lag bei ×1,41), und die Klippe musste ohne Referenz entstehen. Der 16-Bit-PC hält Bildsprache und Detail (×0,96–1,08), aber die Rohfarben driften innen; zusammen hält ihn erst die gemeinsame 16-Farben-Palette. Außerdem kopierte die Klippe mit Referenz Himmel und Leuchtturm des Hafens fast pixelgleich. Gegen die Codex-Serie: Codex hielt Detail (×1,21–1,24) und Helligkeit gleichmäßiger, traf aber den verlangten Aquarellstil nicht. agy trifft jeden der drei Stile, streut aber stärker in Helligkeit und Detail. Für das Textadventure: Bilderbuch & Gouache mit dem Hafenbild als einziger Referenz ist der robusteste und billigste agy-Weg. Wer die lebendigste Szene will, nimmt Digital gemalt und plant Maske und Effektarbeit je Ort ein. In jedem Stil sollte man Außenorte mit Referenz gegen den Anker messen: Struktur r im ganzen Bild über etwa 0,15 oder im Himmel über etwa 0,35 heißt ansehen. Die beiden Kopien lagen bei 0,21 und 0,36 (ganzes Bild) bzw. 0,43 und 0,63 (Himmel), dieselben Orte ohne Referenz bei höchstens 0,06 bzw. 0,27. Der Himmelswert steigt auch ohne Kopie, wenn agy denselben Bildaufbau wie im Anker malt.",
+ "pitfalls": [
+  "Außenorte mit Stilreferenz kopieren Bildteile des Ankers. Bei Digital gemalt übernahm die Klippe Wolkenbild, Leuchtturmlage und Kaimauer (Struktur r 0,21, Himmel 0,43); diese Fassung ist verworfen, verwendet ist eine zweite ohne Referenz. Beim 16-Bit-PC kamen Himmel und Leuchtturm fast pixelgleich (Struktur r 0,36, Himmel 0,63); diese Fassung ist verwendet, weil die Gegenprobe ohne Referenz das Meer graulila malte. Der Leuchtturm steht dort also vom Klippenpfad aus genau wie vom Kai. Gouache kopierte nichts (−0,01). Jeder Befund stützt sich auf ein einziges Bildpaar je Stil",
+  "Der Himmelswert allein trennt Kopie und gleichen Bildaufbau schlecht. Die Klippe von Digital gemalt ohne Referenz (kann nichts kopiert haben) liegt im Himmel bei 0,27, weil agy denselben Aufbau malte wie im Anker: Leuchtturm auf dem Kap rechts, dunkle Wolken oben links, Abendlicht am Horizont. An der gleichen Horizonthöhe liegt es nicht: Ohne waagrechte Linien (Zeilenmittel abgezogen, struct_top_rowfree) steigt der Wert auf 0,32. Die Schwelle in verdict und lessons (ganzes Bild über etwa 0,15, Himmel über etwa 0,35) ist an nur zwei Kopien (0,21 / 0,43 und 0,36 / 0,63) und sieben Fassungen ohne Referenz (höchstens 0,06 / 0,27) geeicht. Die Codex-Klippe (0,18 / 0,30), die die Anordnung ihres Hafens mit eigenen Wolken übernahm, läge im ganzen Bild knapp darüber",
+  "Die Helligkeit driftet stärker als der Strich. Die Gouache-Innenräume sind taghell (mittleres L 76 und 67 gegen 62 beim Anker), die Dämmerung zeigt sich nur in den Fenstern, deshalb steht der Text dort dunkel auf der Wand. Die Stube in Digital gemalt ist dunkler (36 gegen 46). Die Innenräume des 16-Bit-PC sind roh heller (63 und 49 gegen 45); die Serienpalette fängt das zum Teil auf",
+  "Digital gemalt ist detailreicher als der Anker: Lampenraum ×1,83 mit fein gezeichneter Wendeltreppe, Stube ×1,47. Die ×1,83 gehören zu Fassung A; im Einheitsmaß lag die Fassung B ohne Referenz am Lampenraum näher (Detail ×1,41, Palette 1,97 gegen 2,41). Für A sprachen dort nur Inhalt (Wendeltreppe, Himmel in den Fenstern) und Helligkeit (L 46,5 gegen 43,2, Anker 46,3). Alle Gemälde haben unten einen flachen Streifen von 16,5–17,7 % der Bildhöhe, weil agy die Serienregel „bottom quarter calm … text bar will cover it“ wörtlich nahm. Die Textleiste deckt ihn, die Kante liegt aber in der Leiste",
+  "agy hielt Verbote und Ortsblock nicht ganz ein. Es gibt gemalten Lichtschein an Kerze und Leuchtturmlampe (Gouache), kleine Flammen und Funken im Kamin (Digital gemalt) und gerasterte Lichthöfe um Linse und Kerze (16-Bit-PC). Dazu kamen zusätzliche Gegenstände wie ein Fass in der Stube des 16-Bit-PC. Im Gouache-Lampenraum fehlen Meer und Wolken in den Fenstern, und der Tisch der Gouache-Stube steht im Laufband",
+  "Wörter über die Bildschirmdarstellung malt agy ins Bild. Die erste Serienregel des 16-Bit-PC („shown inside a framed window“) ergab in A und B einen gemalten Rahmen von 22 bzw. 34 px. Nach der Korrektur auf „edge to edge, no painted frame“ wurde der Lampenraum ein drittes Mal erzeugt",
+  "Ein agy-Aufruf (Gouache, Lampenraum) endete ohne Bild („no image generated in response“) und zählt als Erzeugung",
+  "Kontingent: 21 Erzeugungen für den ganzen Eintrag. Das liegt über den 10 Bildern je Eintrag aus PIPELINE.md, weil der Eintrag drei Stile mit je eigenem Rahmen von 10 Bildern bündelt (genutzt 6, 9 und 6)",
+  "Die Maße der drei Teile sind untereinander nicht vergleichbar. Die Stube in Digital gemalt hat im Teilmaß (8 Farben 1:1) den Palettenabstand 6,6 und im Einheitsmaß 2,5. Vergleiche zwischen Stilen deshalb nur über assets/einheitsmass.json. Dort gibt es je Fassung nur ein Bild, also Einzelstichproben ohne Streuung zwischen Erzeugungen; der Rauschboden des Palettenmaßes liegt bei 1,0–1,9",
+  "Die Demo zeigt bewusst weder den Hafen noch den Dachs-Kurier, abweichend von data/motif.json. Geprüft wird die Ortsserie, die Hafen-Anker stehen in den Ursprungseinträgen und im Vergleichsbild. Eine Figur in den neuen Orten ist nicht geprüft",
+  "Im Raster sind die Zellen nur 368×207 groß: Textfelder sind dort kaum lesbar, und die Bewegung ist klein (capture.json: 0,4–0,6 % der Pixel ändern sich je 0,5 s um mehr als 24/255). Die Großansichten stehen je 1,05–1,15 s ruhig; das reicht für einen Eindruck, nicht für ganze Bewegungszyklen. Von Bild zu Bild ändern sich in der Gouache-Stube 0,7–2,6 % der Pixel überhaupt und höchstens 0,06 % um mehr als 24/255 (Digital gemalt · Klippe 17–20 % bzw. höchstens 0,005 %, viel weiche Bewegung; 16-Bit-PC · Lampenraum 0–0,3 % bzw. höchstens 0,07 %)",
+  "Der Hafen des 16-Bit-PC liegt nur als statische Vorschau in der Serienpalette vor (pc98-adventure/assets/hafen_bg_serie.png); die Szene des Ursprungseintrags nutzt ihre eigene Palette",
+  "Die Handarbeits-Minuten sind Schätzungen der Teil-Agenten für jemanden mit den fertigen Skripten, nicht gemessen. Der einmalige Aufwand für Skripte und Shader ist nicht enthalten",
+  "painterly-digital/scripts/prompts.py lud styles/hintergrund-serie/tools/prompts.py ohne sys.dont_write_bytecode und legte dabei am 13.10. um 20:02 styles/hintergrund-serie/tools/__pycache__/prompts.cpython-313.pyc an, also eine Datei in einem fremden Eintrag (von .gitignore erfasst, harmlos). Das Skript setzt jetzt sys.dont_write_bytecode = True; die vorhandene .pyc ist nicht gelöscht und muss vom Besitzer entfernt werden"
+ ],
+ "lessons": [
+  "Stilreferenz und Ankerabsatz („nur die Malweise übernehmen, nicht Aufbau oder Gegenstände“) sind bei agy für Innenräume in allen drei Stilen unbedenklich (Struktur r −0,02 bis 0,05 wie bei unabhängigen Bildern). Außenorte, die Motive des Ankers teilen (Meer, Horizont, Leuchtturm rechts), kopieren in zwei von drei Stilen den Himmel. Deshalb jeden Außenort messen: Bandpass-Korrelation zum Anker im ganzen Bild und in den oberen 45 %. Ansehen, wenn das ganze Bild über etwa 0,15 oder der Himmel über etwa 0,35 liegt; Fassungen ohne Referenz lagen bei höchstens 0,06 bzw. 0,27, die Kopien bei 0,21 / 0,43 und 0,36 / 0,63. Als Grundlinie taugt eine Fassung ohne Referenz mit demselben Stilblock besser als Bilder aus anderen Serien, weil sie denselben Bildaufbau teilt",
+  "Ob agy ohne Referenz den Look hält, war je Stil verschieden: Digital gemalt ja (Klippe Detail ×1,09, Lampenraum ×1,41), Gouache nicht (Cartoon mit Konturen, Detail ×2,51 statt ×1,39 mit Referenz), der 16-Bit-PC nur teilweise (Lampenraum ohne klares Pixelraster, Klippe mit graulila Meer). Je Stil und Ort gibt es nur ein Bildpaar. Die Ursache ist offen: Alle drei Hafen-Anker sind agy-Bilder ohne Referenz, und alle drei Serien übernehmen den Stilblock ihres Ankers fast wörtlich, am Entstehen des Ankers liegt es also nicht. In Frage kommen der Stil selbst oder wie fest der Stilblock das Medium beschreibt (ungeprüft)",
+  "Ein Einheitsmaß für Serien: Palettenabstand mit k-means über 8 Seeds samt Rauschboden (Anker gegen sich selbst), Detail als Gradientenenergie ÷ Anker, Layout-Kopie als Bandpass-Korrelation mit unabhängigen Paaren als Vergleich, dazu mittleres L für die Lichtstimmung. Ohne gemeinsames Maß widersprechen sich die Zahlen der Teile (Stube 6,6 gegen 2,5)",
+  "Bildaufbau-Regeln für agy nur über das Bild selbst formulieren. „framed window“ wird ein gemalter Rahmen, „calm plain foreground (a text bar will cover it)“ ein flacher Balken. Besser: „fills the whole canvas edge to edge“ und „dark calm floor with content to the bottom edge“",
+  "Bei Pixelstilen trägt eine gemeinsame Serienpalette über alle Orte (feste Akzente plus k-means über alle Bilder gleich gewichtet) den Zusammenhalt; die Palette des ersten Ortes hält neue Materialien wie Kalkwand oder Kerzenschein nicht. Den Farbton eines anders gemalten Bildes gleicht sie nicht an",
+  "Farbcode-Masken von agy mit dem Gemälde als Referenz kamen 3 von 3 im ersten Versuch und saßen nach einer Skalierung um 0,996–1,008 auf höchstens 1 px (ohne die Skalierung bis etwa 3 px an den Bildrändern; aimask.align findet beides). Die Kinemagramm-Kette (aimask.py) lässt sich auf jeden Ort übertragen, wenn man die Codefarben je Ort umdeutet",
+  "Eine Szene je Ort mit eigener Zeitschnittstelle (set_time oder Bildzähler von außen setzbar) lässt sich ohne Umbau in eine Übersicht, einen Szenenwechsel oder ein Spiel setzen. Für die Übersicht verkleinert ein 4×4-Mittel im Shader die ViewportTexturen ohne Flimmern",
+  "agy liefert bei Gouache einen gemalten Papierrand mit. Ihn über die Papierfarbe finden und 10 px einrücken; Effekt-Lagen in Rohbildpixeln speichern, damit ein geänderter Schnitt sie nicht verschiebt",
+  "Die Begleitdateien von genimg.py enthalten Sitzungs- und Kontodaten sowie absolute Pfade. Vor dem Veröffentlichen bereinigen oder ignorieren, auch bei Rohbildordnern unterhalb eines Teilordners"
+ ],
+ "assets": [
+  {
+   "file": "assets/vergleich_codex_agy.png",
+   "kind": "comparison",
+   "made_with": "scripts/vergleich.py: Hafen-Anker und drei Orte, Codex-Serie (vor der LUT) neben den drei agy-Stilen, beschriftet mit dem Einheitsmaß",
+   "prompt": ""
+  },
+  {
+   "file": "assets/einheitsmass.json",
+   "kind": "measurement",
+   "made_with": "scripts/vergleich.py: Palettenabstand, Detail, Struktur r und mittleres L aller vier Serien gegen den eigenen Anker, Rauschboden und unabhängige Paare",
+   "prompt": ""
+  },
+  {
+   "file": "bilderbuch-gouache/assets/bg_leuchtturm.png",
+   "kind": "background",
+   "made_with": "agy mit dem Gouache-Hafen als Referenz, 2 Aufrufe (1. ohne Bild); build_orte.py: Papierrand weg, 16:9",
+   "prompt": "bilderbuch-gouache/assets/raw/leuchtturm_a.json"
+  },
+  {
+   "file": "bilderbuch-gouache/assets/bg_stube.png",
+   "kind": "background",
+   "made_with": "agy mit dem Gouache-Hafen als Referenz, 1 Versuch; build_orte.py",
+   "prompt": "bilderbuch-gouache/assets/raw/stube.json"
+  },
+  {
+   "file": "bilderbuch-gouache/assets/bg_klippe.png",
+   "kind": "background",
+   "made_with": "agy mit dem Gouache-Hafen als Referenz, 1 Versuch; build_orte.py: auf die Horizontzeile des Hafens geschnitten",
+   "prompt": "bilderbuch-gouache/assets/raw/klippe.json"
+  },
+  {
+   "file": "bilderbuch-gouache/assets/sheet.png",
+   "kind": "comparison",
+   "made_with": "bilderbuch-gouache/scripts/make_sheet.py: Hafen-Anker und drei Orte mit den Messwerten des Teils",
+   "prompt": ""
+  },
+  {
+   "file": "bilderbuch-gouache/assets/ab_sheet.png",
+   "kind": "comparison",
+   "made_with": "make_sheet.py: A/B-Versuch an Lampenraum und Klippe (mit gegen ohne Stilreferenz)",
+   "prompt": ""
+  },
+  {
+   "file": "bilderbuch-gouache/measure.json",
+   "kind": "measurement",
+   "made_with": "bilderbuch-gouache/scripts/measure.py: Layout, Palette, Detail, Textfläche, Handarbeit je Ort",
+   "prompt": ""
+  },
+  {
+   "file": "painterly-digital/assets/leuchtturm/still.png",
+   "kind": "background",
+   "made_with": "agy mit dem Hafen von painterly-digital als Referenz, 1 Versuch; process.py: Schnitt, Horizont auf Zeile 270",
+   "prompt": "painterly-digital/assets/raw/leuchtturm_a.json"
+  },
+  {
+   "file": "painterly-digital/assets/stube/still.png",
+   "kind": "background",
+   "made_with": "agy mit dem Hafen von painterly-digital als Referenz, 1 Versuch; process.py",
+   "prompt": "painterly-digital/assets/raw/stube.json"
+  },
+  {
+   "file": "painterly-digital/assets/klippe/still.png",
+   "kind": "background",
+   "made_with": "agy ohne Referenz (2. Versuch; die Fassung mit Referenz kopierte den Hafenhimmel); process.py",
+   "prompt": "painterly-digital/assets/raw/klippe_b.json"
+  },
+  {
+   "file": "painterly-digital/assets/klippe/plate.png",
+   "kind": "plate",
+   "made_with": "process.py: saubere Platte der Klippe (Himmel und Wasser unter Zaun, Pfosten und Objekten fortgesetzt), damit sich Himmel und Wasser im Kinemagramm bewegen können",
+   "prompt": "painterly-digital/assets/raw/klippe_b.json"
+  },
+  {
+   "file": "painterly-digital/assets/sheet.png",
+   "kind": "comparison",
+   "made_with": "painterly-digital/scripts/sheet.py: Hafen-Anker, drei Orte und die nicht verwendeten A/B-Fassungen",
+   "prompt": ""
+  },
+  {
+   "file": "painterly-digital/measure.json",
+   "kind": "measurement",
+   "made_with": "painterly-digital/scripts/measure.py: Layout (struct_corr), Palette, Detail, Textleiste, Maskenausrichtung, Handarbeit",
+   "prompt": ""
+  },
+  {
+   "file": "pc98-adventure/assets/leuchtturm_bg.png",
+   "kind": "background",
+   "made_with": "agy mit dem Hafen von pc98-adventure als Referenz (3. Fassung nach Korrektur der Serienregel); build_ort.py: 416×256, Serienpalette, Musterdithering",
+   "prompt": "pc98-adventure/assets/raw/leuchtturm.json"
+  },
+  {
+   "file": "pc98-adventure/assets/stube_bg.png",
+   "kind": "background",
+   "made_with": "agy mit dem Hafen von pc98-adventure als Referenz, 1 Versuch; build_ort.py",
+   "prompt": "pc98-adventure/assets/raw/stube.json"
+  },
+  {
+   "file": "pc98-adventure/assets/klippe_bg.png",
+   "kind": "background",
+   "made_with": "agy mit dem Hafen von pc98-adventure als Referenz, 1 Versuch, Himmel und Leuchtturm aus dem Anker kopiert; build_ort.py",
+   "prompt": "pc98-adventure/assets/raw/klippe.json"
+  },
+  {
+   "file": "pc98-adventure/assets/hafen_bg_serie.png",
+   "kind": "preview",
+   "made_with": "build_ort.py: Hafen des Eintrags pc98-adventure in der gemeinsamen Serienpalette (nur statisch)",
+   "prompt": ""
+  },
+  {
+   "file": "pc98-adventure/assets/sheet.png",
+   "kind": "comparison",
+   "made_with": "pc98-adventure/scripts/make_sheet.py: Serienpalette gegen feste Hafen-Palette, Gegenproben, beide Paletten",
+   "prompt": ""
+  },
+  {
+   "file": "pc98-adventure/measure.json",
+   "kind": "measurement",
+   "made_with": "pc98-adventure/scripts/measure.py: Layout, Kacheln, Palette, Detail, Pixelraster, Palettenverlust, Godot-Testaufnahme",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Fraunces (Variationsschrift) in den Gouache-Szenen",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/fraunces (Lizenztext: demo/bilderbuch-gouache/fonts/OFL.txt)"
+  },
+  {
+   "item": "Schrift Alegreya SC Medium (Digital gemalt, Beschriftung der Hauptdemo)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/alegreyasc (Lizenztext: demo/painterly-digital/fonts/OFL-AlegreyaSC.txt)"
+  },
+  {
+   "item": "Schrift Alegreya Sans Medium (Digital gemalt, Beschriftung der Hauptdemo)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/alegreyasans (Lizenztext: demo/painterly-digital/fonts/OFL-AlegreyaSans.txt)"
+  },
+  {
+   "item": "Schrift DotGothic16 (The DotGothic16 Project Authors) und daraus gerasterter Atlas demo/pc98-adventure/fonts/dotgothic16_atlas.png",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/dotgothic16 (Lizenztext: demo/pc98-adventure/fonts/OFL-DotGothic16.txt)"
+  },
+  {
+   "item": "Hash without Sine (Shader-Funktion), Copyright (c) 2014 David Hoskins – in demo/painterly-digital/shaders/ort.gdshader",
+   "license": "MIT",
+   "source": "https://www.shadertoy.com/view/4djSRW"
+  }
+ ],
+ "image_generations": 21,
+ "tool_issues": [
+  "tools/collect_prompts.py liest nur styles/<slug>/assets/raw/. Die Ortsserie hat ihre Rohbilder je Stil in styles/ortsserie/<stil>/assets/raw/, deshalb lässt das Werkzeug den Eintrag unverändert. Umgangen mit scripts/collect_prompts_serie.py, das dieselbe Funktion collect() je Teilordner aufruft",
+  ".gitignore schloss mit styles/*/assets/raw/* nur Rohbildordner direkt unter einem Eintrag aus. Die Rohbilder unter styles/ortsserie/<stil>/assets/raw/ (rund 23 MB samt Begleitdateien) wären eingecheckt worden. Ergänzt um styles/ortsserie/*/assets/raw/*",
+  "Die Begleitdateien von genimg.py enthalten Sitzungs-ID, Kontoname und absolute Pfade. Die Teil-Agenten haben sie mit <stil>/scripts/sanitize_raw.py bereinigt; build.py entfernt solche Felder nur beim Kopieren von JSON-Assets",
+  "agy lieferte einmal kein Bild („no image generated in response“, Beleg bilderbuch-gouache/assets/raw/leuchtturm_a.fail.json). Zweimal meldete ein Konto sein Kontingent erschöpft; genimg.py wich wie beschrieben auf ein anderes aus. Beides gab keine Sperre",
+  "tools/capture.py zählt nur Pixel, die sich in 0,5 s um mehr als 24/255 ändern; weiches Flackern (Kaminschein in Digital gemalt) und die kleinen Rasterzellen erscheinen dadurch fast unbewegt"
+ ],
+ "status": "done"
+}

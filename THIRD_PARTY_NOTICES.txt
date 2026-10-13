@@ -11,7 +11,7 @@ liegen im Ordner styles/<slug>/demo/fonts/ des jeweiligen Eintrags.
 ------------------------------------
 
 Quelle: Shadertoy 4djSRW, https://www.shadertoy.com/view/4djSRW
-Verwendet: Shader mehrerer Demos (styles/*/demo/shaders/) nutzen diese Hash-Funktionen
+Verwendet: Shader mehrerer Demos (unter styles/*/demo/) nutzen diese Hash-Funktionen
 (hash11 … hash33) oder Abwandlungen davon.
 
 MIT License

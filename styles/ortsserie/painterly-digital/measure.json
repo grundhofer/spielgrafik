@@ -1,0 +1,582 @@
+{
+ "anchor": {
+  "file": "styles/painterly-digital/assets/raw/master.png",
+  "detail": {
+   "grad_energy": 0.572,
+   "edge_density": 0.037,
+   "texture_energy": 1.947
+  },
+  "textbar_calm": {
+   "L_std": 2.46,
+   "L_mean": 25.78,
+   "grad_mean": 0.459
+  },
+  "note": "agy-Hauptbild des Eintrags painterly-digital, 1264x848"
+ },
+ "metric_notes": {
+  "layout": "gray_corr/edge_corr/struct_corr/struct_top siehe scripts/metrics.py; struct_corr ist das Maß für Layout-Kopie (gleiche Formen an gleicher Stelle)",
+  "palette": "Oklab x 100: palette_matched (8 Farben, 1:1 zugeordnet), palette_chamfer (12), mean_dE",
+  "detail": "Verhältnis zum Anker bei 1264 px Breite (grad_energy, edge_density, texture_energy)",
+  "textbar_calm": "Rechteck der Textleiste (20, 536, 1240x164) im geschnittenen 1280x720-Bild: Streuung und Gradient der Helligkeit (Oklab L x 100); Anker gleich geschnitten"
+ },
+ "generations": [
+  {
+   "name": "leuchtturm_a",
+   "file": "assets/raw/leuchtturm_a.png",
+   "backend": "agy",
+   "seconds": 66.4,
+   "actual_size": "1264x848",
+   "verbatim": true,
+   "refs": [
+    "../../../../painterly-digital/assets/raw/master.png"
+   ]
+  },
+  {
+   "name": "leuchtturm_b",
+   "file": "assets/raw/leuchtturm_b.png",
+   "backend": "agy",
+   "seconds": 58.9,
+   "actual_size": "1264x848",
+   "verbatim": true,
+   "refs": []
+  },
+  {
+   "name": "stube",
+   "file": "assets/raw/stube.png",
+   "backend": "agy",
+   "seconds": 98.1,
+   "actual_size": "1264x848",
+   "verbatim": true,
+   "refs": [
+    "../../../../painterly-digital/assets/raw/master.png"
+   ]
+  },
+  {
+   "name": "klippe",
+   "file": "assets/raw/klippe.png",
+   "backend": "agy",
+   "seconds": 75.7,
+   "actual_size": "1264x848",
+   "verbatim": true,
+   "refs": [
+    "../../../../painterly-digital/assets/raw/master.png"
+   ]
+  },
+  {
+   "name": "leuchtturm_mask",
+   "file": "assets/raw/leuchtturm_mask.png",
+   "backend": "agy",
+   "seconds": 53.7,
+   "actual_size": "1264x848",
+   "verbatim": true,
+   "refs": [
+    "leuchtturm_a.png"
+   ]
+  },
+  {
+   "name": "stube_mask",
+   "file": "assets/raw/stube_mask.png",
+   "backend": "agy",
+   "seconds": 56.5,
+   "actual_size": "1264x848",
+   "verbatim": true,
+   "refs": [
+    "stube.png"
+   ]
+  },
+  {
+   "name": "klippe_b",
+   "file": "assets/raw/klippe_b.png",
+   "backend": "agy",
+   "seconds": 69.6,
+   "actual_size": "1264x848",
+   "verbatim": true,
+   "refs": []
+  },
+  {
+   "name": "klippe_mask",
+   "file": "assets/raw/klippe_mask.png",
+   "backend": "agy",
+   "seconds": 57.6,
+   "actual_size": "1264x848",
+   "verbatim": true,
+   "refs": [
+    "klippe_b.png"
+   ]
+  },
+  {
+   "name": "stube_b",
+   "file": "assets/raw/stube_b.png",
+   "backend": "agy",
+   "seconds": 81.0,
+   "actual_size": "1264x848",
+   "verbatim": true,
+   "refs": []
+  }
+ ],
+ "image_generations": 9,
+ "failed_calls": [],
+ "experiment_ab": {
+  "baseline_independent": {
+   "hintergrund-serie/leuchtturm": {
+    "gray_corr": 0.355,
+    "edge_corr": 0.117,
+    "struct_corr": -0.017,
+    "struct_top": 0.012
+   },
+   "hintergrund-serie/stube": {
+    "gray_corr": 0.272,
+    "edge_corr": 0.236,
+    "struct_corr": 0.021,
+    "struct_top": 0.029
+   },
+   "hintergrund-serie/klippe": {
+    "gray_corr": 0.567,
+    "edge_corr": 0.416,
+    "struct_corr": -0.012,
+    "struct_top": -0.027
+   }
+  },
+  "baseline_same_motif": {
+   "kinemagramm/bg (Codex-Hafen)": {
+    "gray_corr": 0.562,
+    "edge_corr": 0.306,
+    "struct_corr": -0.013,
+    "struct_top": -0.032
+   }
+  },
+  "places": {
+   "leuchtturm": {
+    "a": {
+     "file": "assets/raw/leuchtturm_a.png",
+     "with_reference": true,
+     "layout_vs_anchor": {
+      "gray_corr": 0.661,
+      "edge_corr": 0.166,
+      "struct_corr": 0.02,
+      "struct_top": 0.016
+     },
+     "palette_vs_anchor": {
+      "palette_matched": 3.21,
+      "palette_chamfer": 2.55,
+      "mean_dE": 2.1
+     },
+     "detail_vs_anchor": {
+      "grad_energy_ratio": 1.853,
+      "edge_density_ratio": 2.784,
+      "texture_energy_ratio": 2.034
+     }
+    },
+    "b": {
+     "file": "assets/raw/leuchtturm_b.png",
+     "with_reference": false,
+     "layout_vs_anchor": {
+      "gray_corr": 0.531,
+      "edge_corr": 0.203,
+      "struct_corr": 0.015,
+      "struct_top": 0.024
+     },
+     "palette_vs_anchor": {
+      "palette_matched": 4.13,
+      "palette_chamfer": 1.6,
+      "mean_dE": 2.42
+     },
+     "detail_vs_anchor": {
+      "grad_energy_ratio": 1.355,
+      "edge_density_ratio": 1.838,
+      "texture_energy_ratio": 1.417
+     }
+    },
+    "a_vs_b_layout": {
+     "gray_corr": 0.715,
+     "edge_corr": 0.578,
+     "struct_corr": 0.047,
+     "struct_top": 0.037
+    },
+    "used": "a"
+   },
+   "stube": {
+    "a": {
+     "file": "assets/raw/stube.png",
+     "with_reference": true,
+     "layout_vs_anchor": {
+      "gray_corr": 0.636,
+      "edge_corr": 0.241,
+      "struct_corr": -0.02,
+      "struct_top": 0.02
+     },
+     "palette_vs_anchor": {
+      "palette_matched": 6.64,
+      "palette_chamfer": 2.33,
+      "mean_dE": 9.97
+     },
+     "detail_vs_anchor": {
+      "grad_energy_ratio": 1.442,
+      "edge_density_ratio": 1.949,
+      "texture_energy_ratio": 1.473
+     }
+    },
+    "b": {
+     "file": "assets/raw/stube_b.png",
+     "with_reference": false,
+     "layout_vs_anchor": {
+      "gray_corr": 0.327,
+      "edge_corr": 0.255,
+      "struct_corr": 0.04,
+      "struct_top": 0.018
+     },
+     "palette_vs_anchor": {
+      "palette_matched": 6.06,
+      "palette_chamfer": 2.66,
+      "mean_dE": 7.71
+     },
+     "detail_vs_anchor": {
+      "grad_energy_ratio": 1.505,
+      "edge_density_ratio": 2.141,
+      "texture_energy_ratio": 1.502
+     }
+    },
+    "a_vs_b_layout": {
+     "gray_corr": 0.724,
+     "edge_corr": 0.7,
+     "struct_corr": 0.058,
+     "struct_top": -0.01
+    },
+    "used": "a"
+   },
+   "klippe": {
+    "a": {
+     "file": "assets/raw/klippe.png",
+     "with_reference": true,
+     "layout_vs_anchor": {
+      "gray_corr": 0.81,
+      "edge_corr": 0.323,
+      "struct_corr": 0.215,
+      "struct_top": 0.428
+     },
+     "palette_vs_anchor": {
+      "palette_matched": 1.47,
+      "palette_chamfer": 1.5,
+      "mean_dE": 0.76
+     },
+     "detail_vs_anchor": {
+      "grad_energy_ratio": 1.262,
+      "edge_density_ratio": 1.451,
+      "texture_energy_ratio": 1.307
+     }
+    },
+    "b": {
+     "file": "assets/raw/klippe_b.png",
+     "with_reference": false,
+     "layout_vs_anchor": {
+      "gray_corr": 0.616,
+      "edge_corr": 0.382,
+      "struct_corr": 0.065,
+      "struct_top": 0.27
+     },
+     "palette_vs_anchor": {
+      "palette_matched": 4.25,
+      "palette_chamfer": 2.58,
+      "mean_dE": 2.37
+     },
+     "detail_vs_anchor": {
+      "grad_energy_ratio": 1.028,
+      "edge_density_ratio": 1.135,
+      "texture_energy_ratio": 1.02
+     }
+    },
+    "a_vs_b_layout": {
+     "gray_corr": 0.782,
+     "edge_corr": 0.467,
+     "struct_corr": 0.041,
+     "struct_top": 0.143
+    },
+    "used": "b"
+   }
+  },
+  "decision": "Nach leuchtturm: A für die Serie (keine Layout-Kopie messbar, struct_corr 0,02 wie unabhängige Bilder; Palette nach zwei von drei Maßen näher; Himmel in den Fenstern am nächsten am Anker; Ortsinhalt treuer). Preis: gut ein Drittel mehr Detail als B (Gradientenenergie 1,85 gegen 1,36 × Anker). Im gemeinsamen Einheitsmaß der Ortsserie (styles/ortsserie/assets/einheitsmass.json) lag B näher am Anker (Palette 1,97 gegen 2,41, Detail ×1,41 gegen ×1,83); dort sprechen für A nur die Helligkeit (L 46,5 gegen 43,2, Anker 46,3) und der Inhalt (Wendeltreppe, Himmel in den Fenstern). Das Detail ×1,83 der Serie gehört zu Fassung A. stube mit A. klippe mit A übernahm Wolkenbild, Leuchtturmlage und Kaimauer des Ankers (struct_corr 0,215, Himmel 0,428): verworfen, klippe mit B neu erzeugt und verwendet. stube_b nur zum Vergleich erzeugt (dritter A/B-Punkt), nicht verarbeitet."
+ },
+ "locations": {
+  "leuchtturm": {
+   "painting": "assets/raw/leuchtturm_a.png",
+   "variant": "a",
+   "with_reference": true,
+   "mask": "assets/raw/leuchtturm_mask.png",
+   "tries_painting": 1,
+   "tries_mask": 1,
+   "first_try_ok": true,
+   "seconds_painting": [
+    66.4
+   ],
+   "seconds_mask": 53.7,
+   "actual_size": "1264x848",
+   "mask_size": "1264x848",
+   "palette_vs_anchor": {
+    "palette_matched": 3.21,
+    "palette_chamfer": 2.55,
+    "mean_dE": 2.1
+   },
+   "detail_vs_anchor": {
+    "grad_energy_ratio": 1.853,
+    "edge_density_ratio": 2.784,
+    "texture_energy_ratio": 2.034
+   },
+   "layout_vs_anchor": {
+    "gray_corr": 0.661,
+    "edge_corr": 0.166,
+    "struct_corr": 0.02,
+    "struct_top": 0.016
+   },
+   "textbar_calm": {
+    "L_std": 9.0,
+    "L_mean": 25.15,
+    "grad_mean": 0.458
+   },
+   "textbar_calm_vs_anchor": {
+    "L_std": 3.66,
+    "grad_mean": 1.0
+   },
+   "horizon_src_share": 0.475,
+   "crop_box": [
+    0,
+    136,
+    1264,
+    847
+   ],
+   "mask_align": {
+    "sx": 1.004,
+    "sy": 1.008,
+    "dx": 1.0,
+    "dy": 0.0,
+    "score": 0.4114,
+    "score_identity": 0.4003,
+    "edge_points": 2206
+   },
+   "lights": [
+    "fire@[438.0, 213.7]"
+   ],
+   "handwork": {
+    "override_entries": 1,
+    "override_numbers": 4,
+    "minutes_estimate": {
+     "override": 5,
+     "effektplanung": 25,
+     "pruefen": 15
+    },
+    "minutes_total": 45,
+    "note": "Linse: Rechteck um die Glasringe (Maske hatte den Messingsockel mit eingefärbt). Effektplanung (Linsenblitz, wandernder Lichtfleck, Fensternebel, Lichtteilchen) im FX-Block von process.py, Werte nach zwei Probeaufnahmen."
+   },
+   "look_match": "Malweise, Himmel in den Fenstern und Palette wie im Hafen; heller gekalkte Wände und eine fein gezeichnete Wendeltreppe machen das Bild detailreicher als den Anker. Unten ein flacher dunkler Streifen (Textleistenzone wörtlich genommen), liegt unter der Textleiste."
+  },
+  "stube": {
+   "painting": "assets/raw/stube.png",
+   "variant": "a",
+   "with_reference": true,
+   "mask": "assets/raw/stube_mask.png",
+   "tries_painting": 1,
+   "tries_mask": 1,
+   "first_try_ok": true,
+   "seconds_painting": [
+    98.1
+   ],
+   "seconds_mask": 56.5,
+   "actual_size": "1264x848",
+   "mask_size": "1264x848",
+   "palette_vs_anchor": {
+    "palette_matched": 6.64,
+    "palette_chamfer": 2.33,
+    "mean_dE": 9.97
+   },
+   "detail_vs_anchor": {
+    "grad_energy_ratio": 1.442,
+    "edge_density_ratio": 1.949,
+    "texture_energy_ratio": 1.473
+   },
+   "layout_vs_anchor": {
+    "gray_corr": 0.636,
+    "edge_corr": 0.241,
+    "struct_corr": -0.02,
+    "struct_top": 0.02
+   },
+   "textbar_calm": {
+    "L_std": 7.49,
+    "L_mean": 26.67,
+    "grad_mean": 0.56
+   },
+   "textbar_calm_vs_anchor": {
+    "L_std": 3.04,
+    "grad_mean": 1.22
+   },
+   "horizon_src_share": 0.443,
+   "crop_box": [
+    0,
+    109,
+    1264,
+    820
+   ],
+   "mask_align": {
+    "sx": 1.0,
+    "sy": 1.004,
+    "dx": 1.0,
+    "dy": 1.0,
+    "score": 0.4037,
+    "score_identity": 0.3851,
+    "edge_points": 975
+   },
+   "lights": [
+    "fire@[164.7, 471.2]",
+    "small@[664.6, 306.9]",
+    "lamp@[890.2, 204.5]"
+   ],
+   "handwork": {
+    "override_entries": 1,
+    "override_numbers": 8,
+    "minutes_estimate": {
+     "override": 15,
+     "effektplanung": 25,
+     "pruefen": 20
+    },
+    "minutes_total": 60,
+    "note": "Flammen über Glut und Docht: Basis als Anteil der Maskenhöhe und Größe nach Augenmaß an Probeaufnahmen (8 Zahlen). Kerze in der Maske samt Kerzenkörper."
+   },
+   "look_match": "Gleiche Pinselführung und Dunst; kühles Petrol mit warmem Kamin und Kerze, im Fenster Hafen und Leuchtturm. Kamin mit kleinen gemalten Flammen und einzelnen Funken trotz Verbot. Dunkler als der Anker (mehr Fläche im Schatten), flacher Streifen unten."
+  },
+  "klippe": {
+   "painting": "assets/raw/klippe_b.png",
+   "variant": "b",
+   "with_reference": false,
+   "mask": "assets/raw/klippe_mask.png",
+   "tries_painting": 2,
+   "tries_mask": 1,
+   "first_try_ok": false,
+   "seconds_painting": [
+    75.7,
+    69.6
+   ],
+   "seconds_mask": 57.6,
+   "actual_size": "1264x848",
+   "mask_size": "1264x848",
+   "palette_vs_anchor": {
+    "palette_matched": 4.25,
+    "palette_chamfer": 2.58,
+    "mean_dE": 2.37
+   },
+   "detail_vs_anchor": {
+    "grad_energy_ratio": 1.028,
+    "edge_density_ratio": 1.135,
+    "texture_energy_ratio": 1.02
+   },
+   "layout_vs_anchor": {
+    "gray_corr": 0.616,
+    "edge_corr": 0.382,
+    "struct_corr": 0.065,
+    "struct_top": 0.27
+   },
+   "textbar_calm": {
+    "L_std": 6.99,
+    "L_mean": 35.85,
+    "grad_mean": 0.493
+   },
+   "textbar_calm_vs_anchor": {
+    "L_std": 2.84,
+    "grad_mean": 1.07
+   },
+   "horizon_src_share": 0.423,
+   "crop_box": [
+    0,
+    92,
+    1264,
+    803
+   ],
+   "mask_align": {
+    "sx": 1.0,
+    "sy": 0.996,
+    "dx": 0.0,
+    "dy": 1.0,
+    "score": 0.238,
+    "score_identity": 0.2351,
+    "edge_points": 7349
+   },
+   "lights": [
+    "small@[62.1, 553.0]",
+    "small2@[23.7, 468.3]",
+    "small3@[70.8, 455.7]",
+    "small4@[42.0, 461.0]",
+    "lamp@[1081.5, 132.8]",
+    "laterne@[874.5, 444.4]"
+   ],
+   "handwork": {
+    "override_entries": 1,
+    "override_numbers": 6,
+    "minutes_estimate": {
+     "override": 8,
+     "effektplanung": 25,
+     "pruefen": 15
+    },
+    "minutes_total": 48,
+    "note": "Laterne am Wegweiser als zusätzliches Licht (nicht im Farbcode verlangt), Lage per Skript als hellster warmer Punkt gemessen. Gras, Strahl, Möwen, Nebel im FX-Block."
+   },
+   "look_match": "Fassung B (ohne Referenz): Himmel, Nebel über dem Meer, Leuchtturm und Palette wie im Hafen, Detail fast gleich (1,03x). Fassung A (mit Referenz) übernahm Wolkenbild, Leuchtturmlage und die Kaimauer des Ankers und wurde verworfen. Unten flacher Streifen."
+  }
+ },
+ "codex_series": {
+  "anchor": "styles/hintergrund-serie/assets/raw/hafen.png",
+  "note": "Codex (gpt-image), jedes Folgebild mit dem Hafen als einziger Referenz, rohe Bilder vor der LUT",
+  "places": {
+   "leuchtturm": {
+    "layout_vs_anchor": {
+     "gray_corr": 0.459,
+     "edge_corr": 0.36,
+     "struct_corr": -0.01,
+     "struct_top": 0.031
+    },
+    "palette_vs_anchor": {
+     "palette_matched": 3.7,
+     "palette_chamfer": 3.41,
+     "mean_dE": 4.88
+    },
+    "detail_vs_anchor": {
+     "grad_energy_ratio": 1.284,
+     "edge_density_ratio": 1.452,
+     "texture_energy_ratio": 1.339
+    }
+   },
+   "stube": {
+    "layout_vs_anchor": {
+     "gray_corr": 0.478,
+     "edge_corr": 0.456,
+     "struct_corr": -0.005,
+     "struct_top": -0.014
+    },
+    "palette_vs_anchor": {
+     "palette_matched": 4.07,
+     "palette_chamfer": 3.07,
+     "mean_dE": 3.93
+    },
+    "detail_vs_anchor": {
+     "grad_energy_ratio": 1.245,
+     "edge_density_ratio": 1.49,
+     "texture_energy_ratio": 1.236
+    }
+   },
+   "klippe": {
+    "layout_vs_anchor": {
+     "gray_corr": 0.741,
+     "edge_corr": 0.631,
+     "struct_corr": 0.188,
+     "struct_top": 0.307
+    },
+    "palette_vs_anchor": {
+     "palette_matched": 1.82,
+     "palette_chamfer": 2.21,
+     "mean_dE": 1.21
+    },
+    "detail_vs_anchor": {
+     "grad_energy_ratio": 1.216,
+     "edge_density_ratio": 1.403,
+     "texture_energy_ratio": 1.197
+    }
+   }
+  }
+ }
+}

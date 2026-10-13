@@ -1,0 +1,100 @@
+{
+ "ort": "stube",
+ "name": "Hafenmeisterstube",
+ "time": "Abenddämmerung",
+ "text": [
+  "Im Kamin glüht die Asche, die Kerze flackert.",
+  "Fern im Fenster blinkt der Leuchtturm."
+ ],
+ "objects": [
+  "Teekanne",
+  "Seekarte",
+  "Ölzeug"
+ ],
+ "palette": [
+  "000000",
+  "eeddbb",
+  "993322",
+  "556633",
+  "ee9977",
+  "cccccc",
+  "bb99aa",
+  "8888aa",
+  "666688",
+  "996666",
+  "554444",
+  "555588",
+  "223366",
+  "222233",
+  "ee9977",
+  "ffffcc"
+ ],
+ "palette_mode": "serie",
+ "palette_info": {
+  "source": "gemeinsame k-means-Palette über Hafen, Leuchtturm, Stube, Klippe",
+  "mediancut_14": [
+   "d5cece",
+   "caaaa0",
+   "9d8c9f",
+   "7c829e",
+   "a96771",
+   "7c5e6c",
+   "636786",
+   "4b5574",
+   "654454",
+   "4e3f60",
+   "3f3959",
+   "233363",
+   "2a274e",
+   "1c1634"
+  ]
+ },
+ "scene": [
+  12,
+  12,
+  416,
+  256
+ ],
+ "ui": {
+  "black": 0,
+  "cream": 1,
+  "peach": 4,
+  "steel": 7,
+  "indigo": 11,
+  "navy": 12,
+  "plum": 13
+ },
+ "registers": [
+  {
+   "mode": "flicker",
+   "steps": [
+    "ee9977",
+    "ffaa88",
+    "dd8866",
+    "ffbb99"
+   ],
+   "hold": 3,
+   "seed": 11,
+   "index": 14
+  },
+  {
+   "mode": "flash",
+   "period": 90,
+   "phase": 25,
+   "index": 15,
+   "off": "223366",
+   "on": "ffffcc"
+  }
+ ],
+ "strips": [
+  {
+   "file": "water.png",
+   "frames": 3,
+   "hold": 6,
+   "pos": [
+    0,
+    0
+   ]
+  }
+ ]
+}
