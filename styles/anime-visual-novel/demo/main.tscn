@@ -1,0 +1,218 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="Texture2D" path="res://art/bg.png" id="2_bg"]
+[ext_resource type="Texture2D" path="res://art/badger_neutral.png" id="3_badger"]
+[ext_resource type="Texture2D" path="res://art/fx/beam.png" id="4_beam"]
+[ext_resource type="Texture2D" path="res://art/fx/glow.png" id="5_glow"]
+[ext_resource type="Texture2D" path="res://art/fx/flare.png" id="6_flare"]
+[ext_resource type="Texture2D" path="res://art/fx/emote.png" id="7_emote"]
+[ext_resource type="Texture2D" path="res://art/fx/gull_near.png" id="8_gull"]
+[ext_resource type="Shader" path="res://shaders/badger.gdshader" id="10_badger"]
+[ext_resource type="Shader" path="res://shaders/glow_add.gdshader" id="11_add"]
+[ext_resource type="Shader" path="res://shaders/ui_box.gdshader" id="12_box"]
+[ext_resource type="Shader" path="res://shaders/ui_plate.gdshader" id="13_plate"]
+[ext_resource type="Shader" path="res://shaders/ui_card.gdshader" id="14_card"]
+[ext_resource type="FontFile" path="res://fonts/ZenMaruGothic-Medium.ttf" id="20_med"]
+[ext_resource type="FontFile" path="res://fonts/ZenMaruGothic-Bold.ttf" id="21_bold"]
+[ext_resource type="FontFile" path="res://fonts/ZenMaruGothic-Black.ttf" id="22_black"]
+
+[sub_resource type="ShaderMaterial" id="M_add"]
+shader = ExtResource("11_add")
+
+[sub_resource type="ShaderMaterial" id="M_badger"]
+shader = ExtResource("10_badger")
+shader_parameter/mix_b = 0.0
+shader_parameter/tint = Vector3(1, 1, 1)
+shader_parameter/shadow_tint = Vector3(1, 1, 1)
+shader_parameter/rim_color = Vector3(1, 0.72, 0.5)
+shader_parameter/rim = 0.0
+shader_parameter/rim_dir = Vector2(1, -0.4)
+shader_parameter/rim_px = 5.0
+shader_parameter/line_px = 2.5
+shader_parameter/line_lum = 0.2
+
+[sub_resource type="ShaderMaterial" id="M_box"]
+shader = ExtResource("12_box")
+shader_parameter/size = Vector2(1168, 158)
+shader_parameter/radius = 18.0
+
+[sub_resource type="ShaderMaterial" id="M_name"]
+shader = ExtResource("13_plate")
+shader_parameter/size = Vector2(236, 52)
+shader_parameter/radius = 20.0
+shader_parameter/pad = 6.0
+
+[sub_resource type="ShaderMaterial" id="M_card"]
+shader = ExtResource("14_card")
+shader_parameter/size = Vector2(440, 60)
+shader_parameter/reveal = 1.0
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="BG" type="Sprite2D" parent="World"]
+texture = ExtResource("2_bg")
+centered = false
+
+[node name="Stars" type="Node2D" parent="World"]
+
+[node name="FarGulls" type="Node2D" parent="World"]
+
+[node name="Smoke" type="Node2D" parent="World"]
+
+[node name="Beam" type="Node2D" parent="World"]
+
+[node name="BeamSprite" type="Sprite2D" parent="World/Beam"]
+material = SubResource("M_add")
+texture = ExtResource("4_beam")
+centered = false
+offset = Vector2(0, -80)
+
+[node name="LampGlow" type="Sprite2D" parent="World"]
+material = SubResource("M_add")
+texture = ExtResource("5_glow")
+
+[node name="LampFlare" type="Sprite2D" parent="World"]
+material = SubResource("M_add")
+texture = ExtResource("6_flare")
+
+[node name="WindowGlow" type="Sprite2D" parent="World"]
+material = SubResource("M_add")
+texture = ExtResource("5_glow")
+
+[node name="LanternGlow" type="Sprite2D" parent="World"]
+material = SubResource("M_add")
+texture = ExtResource("5_glow")
+
+[node name="LanternFlare" type="Sprite2D" parent="World"]
+material = SubResource("M_add")
+texture = ExtResource("6_flare")
+
+[node name="Glints" type="Node2D" parent="World"]
+
+[node name="Badger" type="Sprite2D" parent="World"]
+material = SubResource("M_badger")
+texture = ExtResource("3_badger")
+centered = false
+
+[node name="Emote" type="Sprite2D" parent="World"]
+texture = ExtResource("7_emote")
+centered = false
+offset = Vector2(-19, -122)
+visible = false
+
+[node name="NearGull" type="Sprite2D" parent="World"]
+texture = ExtResource("8_gull")
+hframes = 4
+visible = false
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="LocCard" type="ColorRect" parent="UI"]
+material = SubResource("M_card")
+offset_left = 0.0
+offset_top = 20.0
+offset_right = 440.0
+offset_bottom = 80.0
+mouse_filter = 2
+
+[node name="LocLabel" type="Label" parent="UI/LocCard"]
+offset_left = 36.0
+offset_top = 2.0
+offset_right = 400.0
+offset_bottom = 38.0
+theme_override_colors/font_color = Color(1, 0.98, 0.95, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.06, 0.2, 0.55)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("22_black")
+theme_override_font_sizes/font_size = 26
+text = "Hafen von Lornholm"
+
+[node name="LocSub" type="Label" parent="UI/LocCard"]
+offset_left = 38.0
+offset_top = 35.0
+offset_right = 400.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(1, 0.80, 0.70, 1)
+theme_override_fonts/font = ExtResource("20_med")
+theme_override_font_sizes/font_size = 14
+text = "Abenddämmerung"
+
+[node name="TextBox" type="ColorRect" parent="UI"]
+material = SubResource("M_box")
+offset_left = 56.0
+offset_top = 546.0
+offset_right = 1224.0
+offset_bottom = 704.0
+mouse_filter = 2
+
+[node name="NamePlate" type="ColorRect" parent="UI"]
+material = SubResource("M_name")
+offset_left = 84.0
+offset_top = 518.0
+offset_right = 320.0
+offset_bottom = 570.0
+mouse_filter = 2
+
+[node name="NameLabel" type="Label" parent="UI/NamePlate"]
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 230.0
+offset_bottom = 46.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.55, 0.18, 0.2, 0.7)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("21_bold")
+theme_override_font_sizes/font_size = 23
+text = "Dachs-Kurier"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Line" type="Label" parent="UI"]
+offset_left = 108.0
+offset_top = 580.0
+offset_right = 1180.0
+offset_bottom = 660.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.05, 0.04, 0.16, 0.6)
+theme_override_colors/font_shadow_color = Color(0.03, 0.02, 0.1, 0.45)
+theme_override_constants/outline_size = 5
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/line_spacing = 8
+theme_override_fonts/font = ExtResource("20_med")
+theme_override_font_sizes/font_size = 29
+text = "„Die Laterne flackert im Wind. Am Kai wartet ein Paket auf dich.“"
+autowrap_mode = 3
+visible_characters = 0
+visible_characters_behavior = 1
+
+[node name="CTC" type="Label" parent="UI"]
+offset_left = 1176.0
+offset_top = 650.0
+offset_right = 1200.0
+offset_bottom = 672.0
+theme_override_colors/font_color = Color(1, 0.78, 0.66, 1)
+theme_override_fonts/font = ExtResource("20_med")
+theme_override_font_sizes/font_size = 16
+text = "▼"
+horizontal_alignment = 1
+
+[node name="Quick" type="Label" parent="UI"]
+offset_left = 700.0
+offset_top = 676.0
+offset_right = 1196.0
+offset_bottom = 696.0
+theme_override_colors/font_color = Color(0.93, 0.88, 0.98, 0.55)
+theme_override_fonts/font = ExtResource("20_med")
+theme_override_font_sizes/font_size = 13
+text = "Verlauf    Auto    Überspringen    Speichern    Laden    Optionen"
+horizontal_alignment = 2
+
+[node name="Choices" type="Control" parent="UI"]
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2

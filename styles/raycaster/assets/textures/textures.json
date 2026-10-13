@@ -1,0 +1,294 @@
+{
+ "pave": {
+  "size": [
+   64,
+   64
+  ],
+  "colors": 53,
+  "note": "KI-Zelle, 64x64",
+  "seam_lr_tb": [
+   0.82,
+   0.72
+  ]
+ },
+ "slate": {
+  "size": [
+   64,
+   64
+  ],
+  "colors": 51,
+  "note": "KI-Zelle, 64x64",
+  "seam_lr_tb": [
+   1.11,
+   1.17
+  ]
+ },
+ "deck": {
+  "size": [
+   64,
+   64
+  ],
+  "colors": 47,
+  "note": "KI-Zelle, 64x64",
+  "seam_lr_tb": [
+   2.02,
+   0.68
+  ]
+ },
+ "tarboard": {
+  "size": [
+   64,
+   64
+  ],
+  "colors": 43,
+  "note": "KI-Zelle, 64x64",
+  "seam_lr_tb": [
+   0.88,
+   1.19
+  ]
+ },
+ "plaster": {
+  "size": [
+   64,
+   64
+  ],
+  "colors": 28,
+  "note": "KI-Zelle, 64x64",
+  "seam_lr_tb": [
+   1.1,
+   1.27
+  ]
+ },
+ "cliff": {
+  "size": [
+   64,
+   64
+  ],
+  "colors": 61,
+  "note": "KI-Zelle, 64x64",
+  "seam_lr_tb": [
+   1.0,
+   0.7
+  ]
+ },
+ "grass": {
+  "size": [
+   64,
+   64
+  ],
+  "colors": 50,
+  "note": "KI-Zelle, 64x64",
+  "seam_lr_tb": [
+   0.88,
+   0.9
+  ]
+ },
+ "boatwhite": {
+  "size": [
+   64,
+   64
+  ],
+  "colors": 46,
+  "note": "KI-Zelle, 64x64",
+  "seam_lr_tb": [
+   2.52,
+   0.67
+  ]
+ },
+ "brick": {
+  "size": [
+   64,
+   64
+  ],
+  "colors": 48,
+  "note": "KI-Zelle, 64x64",
+  "seam_lr_tb": [
+   1.33,
+   1.1
+  ]
+ },
+ "iron": {
+  "size": [
+   64,
+   64
+  ],
+  "colors": 39,
+  "note": "KI-Zelle, 64x64",
+  "seam_lr_tb": [
+   1.58,
+   1.19
+  ]
+ },
+ "quaywall": {
+  "size": [
+   64,
+   64
+  ],
+  "colors": 70,
+  "note": "KI-Zelle, 64x64",
+  "seam_lr_tb": [
+   0.77,
+   3.77
+  ]
+ },
+ "quaywall_dry": {
+  "size": [
+   64,
+   64
+  ],
+  "colors": 42,
+  "note": "KI-Zelle, 64x64",
+  "seam_lr_tb": [
+   1.38,
+   1.0
+  ]
+ },
+ "cottage": {
+  "size": [
+   64,
+   64
+  ],
+  "colors": 48,
+  "note": "KI-Zelle, 64x64",
+  "seam_lr_tb": [
+   0.87,
+   0.73
+  ]
+ },
+ "plasterred": {
+  "size": [
+   64,
+   64
+  ],
+  "colors": 10,
+  "note": "plaster umgefärbt"
+ },
+ "boatred": {
+  "size": [
+   64,
+   64
+  ],
+  "colors": 15,
+  "note": "boatwhite umgefärbt"
+ },
+ "boat_a": {
+  "size": [
+   64,
+   64
+  ],
+  "colors": 54,
+  "note": "weiße Planken, roter Rand"
+ },
+ "boat_b": {
+  "size": [
+   64,
+   64
+  ],
+  "colors": 39,
+  "note": "rote Planken, weißer Rand"
+ },
+ "crate": {
+  "size": [
+   32,
+   32
+  ],
+  "colors": 27,
+  "note": "Kistenseite 1 m"
+ },
+ "cottage_win": {
+  "size": [
+   64,
+   128
+  ],
+  "colors": 72,
+  "note": "Fieldstone + KI-Fenster (1,0 m Brüstung)"
+ },
+ "cottage_door": {
+  "size": [
+   64,
+   128
+  ],
+  "colors": 54,
+  "note": "Fieldstone + KI-Tür"
+ },
+ "door": {
+  "size": [
+   40,
+   64
+  ],
+  "colors": 30,
+  "note": "KI-Tür mit Rahmen (Türnische)"
+ },
+ "lh_tower": {
+  "size": [
+   64,
+   256
+  ],
+  "colors": 38,
+  "note": "Putz weiß mit rotem Band"
+ },
+ "lh_tower_win": {
+  "size": [
+   64,
+   256
+  ],
+  "colors": 40,
+  "note": "Turmseite mit zwei Fensterschlitzen"
+ },
+ "lh_door": {
+  "size": [
+   64,
+   256
+  ],
+  "colors": 58,
+  "note": "Turmseite mit Tür"
+ },
+ "lamp": {
+  "size": [
+   32,
+   64
+  ],
+  "colors": 5,
+  "note": "Laternenhaus, Code"
+ },
+ "water0": {
+  "size": [
+   64,
+   64
+  ],
+  "colors": 10,
+  "note": "Wasser Bild 1/4, Code"
+ },
+ "water1": {
+  "size": [
+   64,
+   64
+  ],
+  "colors": 10,
+  "note": "Wasser Bild 2/4, Code"
+ },
+ "water2": {
+  "size": [
+   64,
+   64
+  ],
+  "colors": 10,
+  "note": "Wasser Bild 3/4, Code"
+ },
+ "water3": {
+  "size": [
+   64,
+   64
+  ],
+  "colors": 10,
+  "note": "Wasser Bild 4/4, Code"
+ },
+ "sky": {
+  "size": [
+   256,
+   128
+  ],
+  "colors": 31,
+  "note": "Himmel 256x128, Code, Horizont Zeile 100"
+ }
+}

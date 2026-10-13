@@ -1,0 +1,264 @@
+{
+ "slug": "flat-vektor",
+ "name": "Flaches Vektordesign",
+ "family": "grafisch",
+ "kind": "style",
+ "era": "2012–2018",
+ "summary": "Saubere Vektorformen mit weichen Kurven, flache Füllungen mit höchstens einem sanften Verlauf je Fläche, keine Konturen und keine Texturen. Atmosphäre entsteht über gestaffelte Silhouetten-Ebenen in Luftperspektive vor einem Abendhimmel-Verlauf und über additive Lichtscheine; die Figur ist eine stark vereinfachte Gliederpuppe aus wenigen Formen. Szene und Figur sind als SVG aus Code gezeichnet und werden als Polygon2D-Knoten in Godot animiert; der Weg über ein KI-Bild und automatische Vektorisierung ist daneben verglichen.",
+ "references": [
+  "Alto's Adventure (Snowman 2015) und Alto's Odyssey (2018): gestaffelte Silhouetten in Luftperspektive, Himmelsverläufe, Tageszeitstimmung",
+  "Monument Valley (ustwo 2014): flache Flächen mit sanften Verläufen, reduzierte Figur",
+  "Ridiculous Fishing (Vlambeer 2013): flache Vektorgrafik ohne Konturen, wenige Farben je Ebene",
+  "Old Man's Journey (Broken Rules 2017): geschichtete flache Illustration als Spielwelt, ruhiges Erzähltempo",
+  "Flat-Design-Welle der Mobil-Oberflächen um 2013 (iOS 7, Material Design 2014): flache Karten, Pillen-Knöpfe, geometrische Groteskschrift"
+ ],
+ "traits": [
+  "Alles ist Vektorform: Die Szene besteht aus 231 Polygon2D-Knoten (4060 Punkte) in 63 Gruppen, die Figur aus 45 Polygon2D (724 Punkte) in 11 Gruppen, dazu 7 Rauchwolken aus Code (assets/harbor_stats.json, assets/badger_stats.json). Keine Bilddatei in der Demo, keine Kontur, keine Körnung; die einzigen Texturen sind 30 erzeugte GradientTexture2D für Verläufe.",
+  "Sanfte Verläufe statt Schattierung: 26 Verläufe in der Szene (Himmel mit 6 Stufen von #17183f bis #ffc979, Meer mit 4, je einer für Wolken je Höhe, Ebenen, Turm, Wand, Fässer, Kisten, Rümpfe) und 4 an der Figur (Rumpf, Weste, Tasche, Paket); jede Fläche hat höchstens einen Verlauf. Alle 30 wirken: Die UV-Prüfung in svg2godot.py meldet keine Fläche, deren UV die Verlaufstextur verfehlt. Wolken und Kisten teilen sich einen Verlauf je Gruppe über objectBoundingBox, jede Kiste ist oben heller (#bb8068) als unten (#84505a).",
+  "Atmosphäre über Farbschichten (Luftperspektive): ferne Inseln in Dunstrosa (#b8668a nach #e48a83), Hügel links in Violett (#8a4c84), Felsnase rechts fast Nachtblau (#5a4282 nach #2a2350), davor Kai und Figur in voller Farbe. Je weiter hinten, desto näher am Horizontlicht. Wolken sind unten vom Abendlicht angestrahlt: Gemessen im Poster wird die obere linke Wolke von oben (76,54,120) nach unten (152,77,136) heller, die rechte mittlere von (175,96,136) nach (215,117,139).",
+  "Geometrische Vereinfachung: Wolken als eine Form aus Kapsel und Halbkreisen, Leuchtturm als Trapez mit Band, Häuschen als Fünfeck mit Giebelkante, Boote als Rumpf aus zwei Kurven, Fels als glatte Silhouette mit einer Lichtkante.",
+  "Licht als additiver radialer Verlauf: Leuchtfeuer, Laterne, Fenster, Sonne. Der Hinweisring am Paket ist ein radialer Verlauf mit transparentem Inneren (Ring ohne Loch im Polygon).",
+  "Figur stark vereinfacht: Birnenrumpf, Kopf aus Gesichtsfläche, Augenband und Punktauge, Mütze aus drei Formen, Beine als Kapseln, Pfoten als eigene Knoten, Paket unter dem vorderen Arm, Schal mit eigenem wehendem Ende. Höhe 176–181 px (gemessen, oberste Zeile 393–398 bei Fußlinie 573); die Figur ist gegenüber Tür und Requisiten bewusst überhöht (siehe pitfalls).",
+  "Gang ohne Rutschen: 14 Schritte zu 30 px in je genau 7 Bildern (7/30 s, 128,6 px/s) vom Häuschen bis vor das Paket, Halt bei 3,45 s. Gemessen (scripts/measure_badger.py, Differenzbild mit und ohne Dachs, nur Fellfarben): Fußlinie in allen 180 Bildern Zeile 573, jede der 14 Standphasen dauert genau 7 Bilder, kein Bild mit Fersen-Doppelkontakt, in 165 Folgebild-Paaren mit aufstehender Pfote verschiebt sich die Pfote um 0 px; Kopf wippt im Gang 3 px (Zeile 395–398), höchstens 2 px je Bild.",
+  "Mindestens zwei Umgebungsanimationen, hier acht: Drehfeuer (Strahl als Projektion, Blitz bei 3,96 s), Laterne pendelt und flackert im Windstoß (4,3–5,7 s), Rauch steigt aus dem Schornstein und treibt wie Schal, Wolken und Möwen nach links (im Windstoß stärker), zwei Boote schaukeln, Sonnenpfad und Glanzstriche auf dem Wasser, Sterne funkeln, Wolken ziehen, zwei Möwen fliegen mit Flügelschlag.",
+  "Oberfläche im Flat-Design der Mobil-Spiele: Ortsschild als Pille oben links, Karte unten aus StyleBoxFlat mit 22 px Rundung, drei Pillen-Knöpfe, die gewählte Handlung wird Koralle (#e8574b), Eingabefeld mit getipptem „> nimm paket“; Schrift Montserrat (variabel, 500/600). Deckt 14,5 % des Bildes ab.",
+  "Auflösungsunabhängig: gezeichnet in 1280×720 ohne Rasterung; Kanten über 4×-MSAA im 2D-Renderer."
+ ],
+ "camera": "Seitenansicht, feste Kamera. Horizont bei y 372, damit der Kopf des Dachses ganz vor dem Wasser steht; Häuschen links angeschnitten, Sonne in der Mitte sinkend (Mittelpunkt 10 px unter dem Horizont, das obere Drittel der Scheibe steht über dem Wasser, gemessen y 349–371 bei x 509–570), Laterne, Paket, Steg und Boote rechts der Mitte, Felsnase mit Leuchtturm rechts.",
+ "resolution": "1280×720 nativ, Vektorformen (Polygon2D), auflösungsunabhängig, 4×-MSAA im 2D-Renderer",
+ "pipeline": [
+  {
+   "step": "Weg A: Szene und Figur als SVG aus Code",
+   "tool": "scripts/build_svg.py (Python, ohne Zusatzpakete)",
+   "detail": "Hilfen für glatte Silhouetten (Catmull-Rom als kubische Bézierkurven), Wolken als Vereinigung aus Kapsel und Halbkreisen, Verläufe in userSpaceOnUse mit Koordinaten im lokalen System der Gruppe, oder in objectBoundingBox, wenn mehrere verschobene Formen einen Verlauf teilen (Wolken, Kisten); weiche Ausläufe der Horizont-Silhouetten auf die Basislinie. Gruppen mit id sind die animierten Teile; ihr translate() ist der Drehpunkt (Laterne am Haken, Boote an der Wasserlinie, Kopf am Hals, Arme an der Schulter, Beine an der Hüfte). Ergebnis assets/harbor.svg (35 KB) und assets/badger.svg (5 KB), in jedem Vektorprogramm weiter bearbeitbar. Acht Durchläufe Rendern–Ansehen–Ändern, danach eine Runde nach unabhängiger Prüfung."
+  },
+  {
+   "step": "SVG nach Godot",
+   "tool": "scripts/svg2godot.py",
+   "detail": "Wandelt g/path/rect/circle/ellipse/polygon mit transform, opacity und Verläufen in eine .tscn aus Node2D und Polygon2D um (demo/art/harbor.tscn, demo/art/badger.tscn). Kurven adaptiv mit 0,25 px Toleranz zerlegt. Verläufe werden GradientTexture2D (linear 1024×1, radial 256×256) mit UV je Punkt; weil das UV affin zur Position ist, gibt die Dreiecksinterpolation den Verlauf exakt wieder. data-blend=\"add\" wird ein CanvasItemMaterial mit additiver Mischung. Warnt (stderr und --stats) bei sich selbst schneidenden Polygonen und bei Polygonen, deren UV-Bereich die Verlaufstextur nicht schneidet (Fläche würde einfarbig); die alte harbor.svg löst 7 solche Warnungen aus (4 Wolken, 3 Kisten), die neue keine. scripts/rebuild.sh führt beide Schritte aus."
+  },
+  {
+   "step": "Animation",
+   "tool": "demo/main.gd (GDScript, Zeit = Summe von delta, feste Saat 20261013)",
+   "detail": "Bewegt nur benannte Knoten: Gang als umgekehrtes Pendel mit festen Fußpunkten (Hüfthöhe √(30² − dx²)), Schwungbein über scale.y verkürzt, Pfoten als eigene Knoten auf dem Boden; Arme, Kopfnicken, Schal, Atmen, Blinzeln. Umgebung über rotation/scale/modulate der SVG-Gruppen; Rauch als 7 Kreis-Polygon2D aus Code."
+  },
+  {
+   "step": "Oberfläche",
+   "tool": "Godot Control + StyleBoxFlat + FontVariation (Montserrat)",
+   "detail": "Ortsschild, Karte, drei Pillen-Knöpfe, Eingabefeld. Getippt wird über die Bildnummer round((t − 2,0)·30), ein Zeichen je 3 Bilder."
+  },
+  {
+   "step": "Weg B: KI-Bild",
+   "tool": "genimg (agy) und genimg (Codex, gpt-image)",
+   "detail": "Hintergrund 1536×1024 bestellt, 1264×848 geliefert (agy, backend_choice Lastverteilung, verbatim true), Stilblock „flat vector illustration … aerial perspective … smooth gradient sky“ plus Motivblock, Leuchtturmstrahl, Laternenschein und Rauch ausdrücklich nicht gemalt. Figur 1024×1024 bestellt, 1254×1254 geliefert (Codex wegen Transparenz, Referenz shared/badger/master_sheet.png). 2 Erzeugungen, keine Wiederholung."
+  },
+  {
+   "step": "Weg B: Vektorisieren",
+   "tool": "scripts/vectorize_ai.py mit vtracer 0.6.15 (MIT) in eigenem venv, dann scripts/svg2godot.py",
+   "detail": "vtracer im Modus color/stacked/spline; Voreinstellungen coarse, flat, fine. Hintergrund: 153 / 452 / 1261 Formen (4165 / 11103 / 22973 Punkte); Figur (flat): 946 Pfade, davon 519 entartete 1-px-Krümel, ergeben 696 Polygon2D. Ergebnis assets/bg_ai_vec.svg und assets/badger_ai_vec.svg (Voreinstellung flat)."
+  },
+  {
+   "step": "Vergleich",
+   "tool": "scripts/compare_ai.py",
+   "detail": "Rendert KI-Raster, KI→vtracer→Polygon2D und Code-SVG→Polygon2D im selben Godot-Renderer; die KI-Figuren stehen auf derselben Höhe und Stelle wie der Code-Dachs. Ergebnis assets/compare_ai_vs_code.jpg und .json (Formen, Punkte, Dateigrößen)."
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/measure_badger.py, check_ui_timing.py, compare_renderers.py",
+   "detail": "Fußkontakt und Dauer jeder Standphase per Differenzbild (--probe-no-badger), Haltezeiten der Eingabe ohne Schreibmarke (--probe-no-caret), Vergleich Forward+/Mobile/Compatibility bei t = 4,68 s; Zeichenaufrufe über --probe-stats; Langlauf ab t0 = 37 s gesichtet (Wolken laufen außerhalb des Bildes um, behalten ihren Verlauf); UV-Abdeckung aller Verlaufs-Polygone in der tscn nachgerechnet (26 von 26 Szenenverläufen und 4 von 4 an der Figur treffen die Textur)."
+  },
+  {
+   "step": "Aufnahme",
+   "tool": "tools/capture.py --poster-at 0.78",
+   "detail": "Poster = Bild 140 (t ≈ 4,68 s): Dachs steht und schaut zum Paket, „Das Paket ansehen“ ist gewählt, das Drehfeuer streicht nach links über den Himmel, Windstoß bewegt Schal, Laterne und Rauch nach links. Keine Godot-Fehler oder -Warnungen."
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, stretch canvas_items, anti_aliasing/quality/msaa_2d = 2 (4×), Forward+; keine Bilddateien, keine Shader, keine Plugins",
+  "main.tscn instanziert art/harbor.tscn und art/badger.tscn (beide erzeugt von scripts/svg2godot.py, nicht von Hand ändern); die Reihenfolge im SVG ist die Zeichenreihenfolge",
+  "Verläufe als GradientTexture2D-Unterressourcen mit uv je Polygonpunkt (Polygon2D.uv ist in Texturpixeln anzugeben); Lichtscheine mit CanvasItemMaterial blend_mode = Add",
+  "Drehfeuer: Strahl-Gruppe mit scale.x = cos θ (Umlauf 4,4 s), Lampenschein mit scale = 1 + 1,6·max(0, sin θ)^10 als Blitz, wenn der Strahl zum Betrachter zeigt",
+  "Dachs: Körper-, Kopf-, Arm- und Schalgruppen drehen um ihre SVG-Ursprünge; Beine werden je Bild auf Hüfte und Pfote gesetzt (rotation = atan2(−dx, dy), scale.y = Länge/30)",
+  "Rauch: 7 Polygon2D-Kreise als Kinder des Häuschens an Index 0 (hinter dem Schornstein), Alter = (t + i·T/7) mod 3,6 s, Drift nach links (−10u − 26u² − 30·Windstoß·u)",
+  "Prüfschalter nach --: --t0=<s>, --probe-no-badger, --probe-no-ui, --probe-no-caret, --probe-static, --probe-stats",
+  "Gemessen bei Bild 20: 288 Zeichenaufrufe, 402 Objekte, 5604 Primitive (in Forward+ und Compatibility gleich)"
+ ],
+ "techniques": [
+  "svg-zu-polygon2d",
+  "vektorisierung",
+  "verlauf-per-uv",
+  "gliederpuppe",
+  "prozedurale-animation",
+  "fuss-halten",
+  "additiver-lichtkegel",
+  "bildmodelle-vergleich",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 1,
+  "consistency": 4,
+  "effort": 3,
+  "text_adventure": 4,
+  "mobile": 4
+ },
+ "ratings_note": "ai_fit 1, weil die KI zum Look der Demo nichts beiträgt: Szene und Figur kommen vollständig aus Code-SVG, die beiden KI-Bilder (Weg B) dienen nur dem Vergleich. Dabei traf das Hintergrundbild von agy den Stil im ersten Versuch (Luftperspektive, Himmelsverlauf, keine Konturen), die Codex-Figur ist dagegen nicht stark vereinfacht (Fellandeutung, viele Taschen und Knöpfe). Als Rasterbild verliert der Stil seine Vorteile (einzeln animierbare, benannte Teile, Auflösungsunabhängigkeit), und vtracer macht aus dem Himmels- und Meeresverlauf in allen drei Voreinstellungen eine flache Fläche. consistency 4: gleiche Hilfsfunktionen und Palette mit Rollen halten Formensprache und Farben zusammen; einige Farben sind trotzdem frei im Code gesetzt, eine Prüfung wie der Palettenprüfer in minimal-geometrisch fehlt. effort 3: die Szene sind rund 270 Zeilen Python und acht Durchläufe Rendern–Ansehen–Ändern; mit einem Vektorprogramm und benannten Gruppen ginge es schneller, der Import ist automatisch. text_adventure 4: viel Stimmung bei geringen Kosten je Ort, Hotspots und Licht lassen sich direkt animieren; Mimik nur über Haltung, Blick und Blinzeln. Der überhöhte Maßstab der Figur (siehe pitfalls) ist eine Frage der Komposition, keine Grenze des Stils, muss für das Spiel aber neu geplant werden. mobile 4: Mobile ist pixelgleich mit Forward+; Compatibility hat kein 2D-MSAA (Treppenkanten, 0,55 % der Pixel weichen um mehr als 24 je Kanal ab, 22,8 % überhaupt, Lichtscheine schwächer). 288 Zeichenaufrufe je Bild; die Leistung auf Telefonen ist geschätzt, nicht gemessen.",
+ "verdict": "Für unser Textadventure ein starker Kandidat: Ein Ort ist eine SVG-Datei mit benannten Gruppen, daraus wird ohne Handarbeit eine Godot-Szene, in der jedes Licht, jedes Boot und jeder Hotspot einzeln animierbar ist. Gegenüber minimal-geometrisch bringen Verläufe, Lichtscheine und gestaffelte Ebenen deutlich mehr Abendstimmung, ohne dass ein einziges Bild geladen wird; die Figur bleibt als Gliederpuppe billig zu animieren und rutscht nicht. Der Vergleich zeigt die Arbeitsteilung: Die KI liefert in Sekunden eine stimmige Komposition im Stil (gut als Vorlage und Farbskript), aber kein verwendbares Vektor-Asset – vtracer zerlegt das Bild in Hunderte namenlose Flächen und verliert genau die weichen Verläufe, die den Stil ausmachen. Empfehlung: KI-Bild als Kompositionsskizze, Orte in einem Vektorprogramm (oder per Code) mit benannten Gruppen nachzeichnen, Verläufe bewusst setzen, mit svg2godot.py importieren. Der Maßstab der Demo ist nicht spieltauglich: Die Figur ist für die Lesbarkeit etwa doppelt so groß wie Tür und Requisiten; für das Spiel Figur und Orte in einem gemeinsamen Maßstab planen. Grenzen: kein Mienenspiel, jede Komposition braucht Handarbeit, und für Web-Exporte (Compatibility) fehlt ohne weiteren Aufwand die Kantenglättung.",
+ "pitfalls": [
+  "Erste Fassung: Horizont bei y 412 lief genau durch Kopf und Mützenschirm des Dachses. Horizont auf y 372 gelegt, der Kopf (oberste Zeile 393) steht jetzt ganz vor dem Wasser.",
+  "Erste Figur: Beine 44 px lang und schmal (wirkten wie Hosenbeine), die Pfote als Kreis mitten auf dem Paket las sich wie ein Fotoapparat. Beine auf 30 px gekürzt und verbreitert, Unterarm liegt jetzt über dem Paket, die Pfote an dessen Vorderkante.",
+  "Wolken unsichtbar ohne jede Fehlermeldung: Die Umrisspunkte der rechten Rundung liefen in falscher Richtung, das Polygon schnitt sich selbst, und Godot zeichnete das Polygon2D einfach nicht (kein ERROR in der Ausgabe). svg2godot.py prüft seitdem auf Selbstschnitte und meldet sie. Danach standen die Wolken an falscher Stelle, weil die Schleifenvariable x den Wolkenursprung überschrieb.",
+  "Felsbrocken an der Wasserlinie der Felsnase wirkten wie halb versunkene Reifen, die Spiegelung ragte als dunkler Keil links über die Spitze hinaus. Brocken entfernt, Spiegelung beginnt an der Wasserlinie, eine helle Brandungslinie trennt Fels und Wasser.",
+  "Das Fischerboot hinter dem Steg sah aus, als stünde es auf den Planken (Rumpfunterkante genau auf der Stegoberkante). Es liegt jetzt längsseits am Kai, die Kaikante verdeckt die Wasserlinie.",
+  "FontVariation.variation_opentype = {\"wght\": 600} hatte keine Wirkung, die Schrift blieb dünn. Der Schlüssel muss TextServerManager.get_primary_interface().name_to_tag(\"wght\") sein.",
+  "Compatibility-Renderer (Web, ältere Geräte): kein 2D-MSAA (Warnung „2D MSAA is not yet supported for GLES3“), alle Kanten haben Treppen, additive Scheine sind schwächer. Polygon2D.antialiased hat in Godot 4.7 keine Wirkung (Forward+: 0 Pixel verändert; Compatibility: Abweichungswerte unverändert). Nicht gelöst; Ausweg wäre Überabtastung über einen doppelt großen SubViewport.",
+  "288 Zeichenaufrufe je Bild: Polygon2D mit eigenen Verlaufstexturen werden nicht zusammengefasst. Für Telefone sollten unbewegte Ebenen (Himmel, ferne Inseln, Kai) einmal in eine Textur gerendert werden. Nicht umgesetzt, Leistung auf Telefonen nicht gemessen.",
+  "vtracer 0.6.15 stürzt unter Python 3.14 mit Speicherzugriffsfehler ab, sobald ein Schlüsselwortargument übergeben wird; positionell übergeben funktioniert (vectorize_ai.py tut das).",
+  "vtracer verliert die weichen Verläufe: Der Himmel des KI-Bildes wird in allen drei Voreinstellungen (153, 452, 1261 Formen) zu einer einzigen gedeckten Mauve-Fläche, ebenso das Meer; Sterne verschwinden. Um die vektorisierte KI-Figur bleiben dunkle Krümel stehen, 519 von 946 Pfaden sind entartete 1-px-Flächen. Alle Formen sind namenlos (p1 … p696), es gibt keine Teile zum Animieren.",
+  "Die KI-Figur (Codex) folgt dem Stilblock nur teilweise: flache Farben ja, aber Fellkanten, Hemdfalten, Taschen und Knöpfe statt starker Vereinfachung; in die Demo ist sie nicht eingegangen. Eine zweite Erzeugung mit strengerem Stilblock wurde nicht versucht.",
+  "Vier der 26 Szenenverläufe wirkten nicht (Wolken g_cloud_hi/mid/lo, Kisten g_crate), gefunden erst von der unabhängigen Prüfung: Die Verlaufskoordinaten standen absolut in userSpaceOnUse (Wolken y 95–152, Kisten y 0–46), die Formen lagen aber in verschobenen Gruppen (z. B. cloud_a translate(40,150), lokal y −54…0). SVG rechnet userSpaceOnUse im lokalen System der Form, das UV lag ganz außerhalb der Textur (cloud_a u −2687…−1707), und Wolken und Kisten erschienen einfarbig in der ersten Stufe, ohne jede Meldung. Behoben mit objectBoundingBox (ein Verlauf für mehrere Formen); svg2godot.py warnt seitdem, wenn der UV-Bereich eines Polygons die Textur nicht schneidet. Die Behauptung „Wolken unten angestrahlt“ stand vorher ungeprüft in style.json.",
+  "Gangrhythmus ging nicht in 30 fps auf: STEP_T = 0,24 s sind 7,2 Bilder, die Standphasen liefen 7-7-7-7-8, und dreimal (Bild 28, 64, 100) stand ein Bild lang die Ferse der neuen Pfote neben der alten (das war der vorher beschriebene „Fersen-Effekt“). STEP_T = 7/30 s gesetzt; jetzt dauert jede Standphase genau 7 Bilder und kein Bild zeigt Doppelkontakt. Es bleibt: Es gibt keine Doppelstützphase, die hintere Pfote hebt im selben Bild ab, in dem die vordere aufsetzt (30 px Schritt bei 28 px Pfote); bei 4,3 Schritten je Sekunde fällt das nicht auf.",
+  "Windrichtung widersprach sich: Der Rauch trieb nach rechts und im Windstoß noch stärker, während Schal, Wolken und Möwen nach links zogen. Die Drift des Rauchs ist umgekehrt, jetzt weht alles nach links.",
+  "Horizont-Silhouetten endeten mit senkrechten Stufen von 6–8 px (Hügel bei x 400, ferne Insel bei x 520 direkt an der Sonne, zweite Insel ab x 660), weil ridge() die Kurve flach bis x0/x1 weiterführte; an der Spitze der Felsnase stand ein 6 px langer dunkler Stummel (x 856–862). ridge() lässt Enden im Bild jetzt weich auf die Basislinie auslaufen, die Felsnase beginnt an der Brandungslinie (x 862). Die erste Fassung davon ließ headland_low unter die Basislinie durchhängen (Selbstschnitt, von svg2godot.py gemeldet), der überzählige Spitzenpunkt ist entfernt.",
+  "Maßstab bewusst überhöht und nicht spieltauglich: Der Dachs ist 176–181 px hoch, die Haustür nur etwa 81 px (sichtbar y 467–547), Fässer etwa 48 px, Kisten 46 px, der Laternenpfahl 140 px, das Segelboot samt Mast etwa 85 px, alle fast in derselben Tiefe (Fußlinien 548–573). Vor dem Häuschen reicht er bis an die Traufe. Grund: Gesicht, Mütze, Schal und Paket sollen in der Totale lesbar sein (PIPELINE: Figur groß genug für den Stil), und eine Tür in Figurhöhe hätte das Häuschen auf mehr als die doppelte Höhe gebracht (Giebel bis etwa y 60) und die linke Bildhälfte verdeckt; nicht umgebaut. Für das Spiel muss ein gemeinsamer Maßstab gelten (Tür mindestens Figurhöhe, Boote länger) oder die Figur in der Totale kleiner und für Gespräche eine Nahaufnahme.",
+  "Im Stand stehen beide Pfoten 6 px versetzt und verschmelzen in der Seitenansicht zu einer Kontaktfläche; der ferne Arm ist hinter dem Rumpf nie zu sehen.",
+  "Die getippte Eingabe zeigt einen Zwischenstand 6 Bilder lang: Das ist „nimm“ plus Leerzeichen, das Leerzeichen ändert kein Pixel. Alle übrigen Zeichen stehen genau 3 Bilder (assets/ui_timing.json)."
+ ],
+ "lessons": [
+  "SVG als Austauschformat zwischen Zeichnen und Spiel: benannte Gruppen = animierbare Knoten, Gruppenursprung = Drehpunkt. Damit kann eine Illustratorin in Inkscape, Figma oder Affinity zeichnen, und svg2godot.py (rund 500 Zeilen, nur Standardbibliothek) erzeugt die Godot-Szene; das Animationsskript greift nur über Knotennamen zu.",
+  "Verläufe in Polygon2D über GradientTexture2D plus UV je Punkt: Weil das UV eine affine Funktion der Position ist, interpoliert die Dreieckszerlegung den Verlauf exakt, auch mit mehreren Stufen und radial. Ringe (Hinweis am Paket) gehen ohne Loch im Polygon über einen radialen Verlauf mit transparentem Inneren.",
+  "Verläufe in SVG-Gruppen: userSpaceOnUse gilt im lokalen System der Form (nach dem translate der Gruppe), nicht in Bildkoordinaten. Teilen sich verschobene Formen einen Verlauf (Wolken, Kisten), objectBoundingBox nehmen. Der Fehler ist still (die Fläche wird einfach einfarbig); der Konverter sollte deshalb das UV jedes Polygons gegen die Textur prüfen und warnen.",
+  "Wolken, Felsen und Hügel als eine einzige glatte Form (Catmull-Rom-Kurve durch wenige Punkte bzw. Vereinigung aus Kapsel und Kreisen) statt aus überlappenden Einzelformen: keine Nahtstellen, eine Verlaufstextur, ein Knoten zum Bewegen.",
+  "Luftperspektive als Regel statt Gefühl: jede Ebene bekommt einen Verlauf, dessen untere Farbe zum Horizontlicht hin aufgehellt ist; so entsteht die typische Tiefenstaffelung der Mobil-Spiele mit drei bis vier Ebenen.",
+  "Gang als umgekehrtes Pendel mit festen Fußpunkten, Beinen als skalierte Kapseln und Pfoten als eigenen Knoten: 0 px Rutschen gemessen, ohne ein einziges Einzelbild. Messung per Differenzbild nur in den Fellfarben; bei flachen Farben ist das exakt, Schatten und Kanten zählen nicht mit.",
+  "Drehfeuer in Seitenansicht als Projektion (scale.x = cos θ) eines additiven Verlaufskeils, Blitz bei sin θ ≈ 1: wirkt räumlich, kostet einen Knoten.",
+  "KI im Flat-Vektor-Stil taugt als Kompositions- und Farbvorlage: agy lieferte in einem Versuch eine stimmige Szene mit Luftperspektive. Für ein Spiel-Asset muss man sie nachzeichnen; automatische Vektorisierung lohnt nur für Silhouetten ohne Verlauf (vtracer coarse: 153 Formen), Verläufe danach von Hand setzen.",
+  "Vor jeder Szene prüfen, dass Polygone sich nicht selbst schneiden; Godot verwirft solche Polygon2D ohne Meldung.",
+  "Flat-Design-Oberfläche direkt mit StyleBoxFlat (Rundung, Farbe, anti_aliasing) und einer variablen Groteskschrift; Auswahlfarbe der Oberfläche und Hinweisring in der Szene über dieselbe Schwelle (SEL_AT) koppeln.",
+  "Schrittdauer in ganzen Bildern festlegen (hier 7/30 s): Dann sieht jeder Schritt Bild für Bild gleich aus, und die Messung kann die Dauer jeder Standphase direkt prüfen. Bei krummen Werten (0,24 s = 7,2 Bilder) entstehen ungleiche Standphasen und einzelne Bilder mit Doppelkontakt.",
+  "Weich auslaufende Silhouetten: Enden einer Hügel- oder Inselkurve auf die Basislinie legen statt flach weiterzuführen, und nach der Änderung erneut auf Selbstschnitt prüfen (Catmull-Rom schießt an steilen Enden leicht über die Basis hinaus)."
+ ],
+ "assets": [
+  {
+   "file": "assets/harbor.svg",
+   "kind": "vector",
+   "made_with": "scripts/build_svg.py (Code), Quelle der Demo-Szene",
+   "prompt": ""
+  },
+  {
+   "file": "assets/badger.svg",
+   "kind": "vector",
+   "made_with": "scripts/build_svg.py (Code), Gliederpuppe des Dachses",
+   "prompt": ""
+  },
+  {
+   "file": "demo/art/harbor.tscn",
+   "kind": "scene",
+   "made_with": "scripts/svg2godot.py aus assets/harbor.svg (231 Polygon2D, 26 Verläufe)",
+   "prompt": ""
+  },
+  {
+   "file": "demo/art/badger.tscn",
+   "kind": "scene",
+   "made_with": "scripts/svg2godot.py aus assets/badger.svg (45 Polygon2D, 4 Verläufe)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/compare_ai_vs_code.jpg",
+   "kind": "reference",
+   "made_with": "scripts/compare_ai.py: KI-Raster, KI -> vtracer -> Polygon2D, Code-SVG -> Polygon2D im selben Renderer",
+   "prompt": ""
+  },
+  {
+   "file": "assets/compare_ai_vs_code.json",
+   "kind": "data",
+   "made_with": "Formen, Punkte und Dateigrößen beider Wege",
+   "prompt": ""
+  },
+  {
+   "file": "assets/raw/bg_ai.png",
+   "kind": "reference",
+   "made_with": "Gemini (agy), Weg B, nicht in der Demo",
+   "prompt": "assets/raw/bg_ai.json"
+  },
+  {
+   "file": "assets/raw/badger_ai.png",
+   "kind": "reference",
+   "made_with": "gpt-image (Codex, transparent), Weg B, nicht in der Demo",
+   "prompt": "assets/raw/badger_ai.json"
+  },
+  {
+   "file": "assets/bg_ai_vec.svg",
+   "kind": "vector",
+   "made_with": "vtracer (Voreinstellung flat) aus assets/raw/bg_ai.png, 452 Formen",
+   "prompt": ""
+  },
+  {
+   "file": "assets/badger_ai_vec.svg",
+   "kind": "vector",
+   "made_with": "vtracer (Voreinstellung flat) aus assets/raw/badger_ai.png, 946 Pfade",
+   "prompt": ""
+  },
+  {
+   "file": "assets/badger_measure.json",
+   "kind": "data",
+   "made_with": "scripts/measure_badger.py: Fußkontakte, Dauer der Standphasen, Fußlinie und Kopfhöhe je Bild",
+   "prompt": ""
+  },
+  {
+   "file": "assets/ui_timing.json",
+   "kind": "data",
+   "made_with": "scripts/check_ui_timing.py: Haltezeiten der Eingabe, Auswahlwechsel",
+   "prompt": ""
+  },
+  {
+   "file": "assets/renderers.json",
+   "kind": "data",
+   "made_with": "scripts/compare_renderers.py: Abweichung Mobile und Compatibility zu Forward+",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/svg2godot.py",
+   "kind": "script",
+   "made_with": "SVG -> Godot-Szene aus Polygon2D mit Verläufen",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/build_svg.py",
+   "kind": "script",
+   "made_with": "zeichnet harbor.svg und badger.svg",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/vectorize_ai.py",
+   "kind": "script",
+   "made_with": "KI-Bild -> vtracer -> SVG (eigenes venv mit vtracer)",
+   "prompt": ""
+  },
+  {
+   "file": "demo/main.gd",
+   "kind": "code",
+   "made_with": "GDScript: Animation, Gang, Oberfläche",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Montserrat (variabel)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/montserrat (Lizenztext: demo/fonts/OFL-Montserrat.txt)"
+  },
+  {
+   "item": "Szene, Figur, Oberfläche",
+   "license": "eigener Code, keine fremden Bilder oder Texturen",
+   "source": "styles/flat-vektor/scripts/build_svg.py, styles/flat-vektor/demo/main.gd"
+  },
+  {
+   "item": "vtracer 0.6.15 (nur für den Vergleich, nicht in der Demo)",
+   "license": "MIT",
+   "source": "https://github.com/visioncortex/vtracer"
+  }
+ ],
+ "image_generations": 2,
+ "tool_issues": [],
+ "status": "done"
+}

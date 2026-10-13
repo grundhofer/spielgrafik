@@ -1,0 +1,278 @@
+{
+ "slug": "voxel",
+ "name": "Voxel",
+ "family": "modern3d",
+ "kind": "style",
+ "era": "2009–heute",
+ "summary": "Szene und Figur aus sichtbaren Würfeln mit je einer flachen Farbe, weich abgedunkelt durch Voxel-Ambient-Occlusion an den Ecken. Hier entsteht alles per Skript aus der gemeinsamen 3D-Szene: ein eigener Python-Voxelizer baut Hafen (10 cm je Voxel) und Dachs (1/32 m je Voxel), Wasser, Wolken und Rauch sind ebenfalls Würfel.",
+ "references": [
+  "Minecraft (Mojang 2011): Blockwelt, Figuren feiner gerastert als die Blöcke, Ecken-Abdunklung (smooth lighting) als Voxel-AO",
+  "3D Dot Game Heroes (Silicon Studio 2009): Figuren und Welt als Voxel-Sprites mit flachen Farben",
+  "Cube World (Picroma 2013/2019): Voxellandschaft mit Gras, Fels und Wasser in Stufen, Figuren aus groben Würfeln",
+  "Crossy Road (Hipster Whale 2014): Voxelfiguren mit wenigen flachen Farben auf Smartphones",
+  "The Touryst (Shin'en 2019): Voxel-Abenteuer mit Inseln, Abendlicht und weicher Verschattung",
+  "Cloudpunk (ION LANDS 2020): erzählerisches Spiel in einer Voxelstadt, Gespräche als Textfenster",
+  "Teardown (Tuxedo Labs 2022): kleine Voxel von 10 cm, Licht und Schatten auf jedem Würfel"
+ ],
+ "traits": [
+  "Alles aus achsenparallelen Würfeln mit sichtbarer Voxelgröße: Hafen 0,1 m (10 Voxel je Meter, 231 598 sichtbare Würfelflächen), ferne Inseln 1 m, Dachs 1/32 m (32 Voxel hoch, 4 016 Voxel, 7 406 Flächen). Silhouetten von Leuchtturm, Fels, Dach, Boot, Paket und Figur sind Treppen, keine Rundungen.",
+  "Flache Farbe je Voxel aus einer festen Palette (15 Hafen-, 13 Figurenfarben, wärmer und kräftiger als die glTF-Farben) mit ±6 % Abwandlung je Voxel; Muster per Regel statt Textur: Gras in vier Tönen mit einzelnen Blütenvoxeln, Fels in drei Flecktönen, Bretter in Streifen, Dachziegel in Reihen, jede Pflasterplatte ein eigener Ton, Schal in Strickreihen, Gelände oben Gras, darunter zwei Lagen Erde, dann Fels.",
+  "Voxel-AO wie in Blockspielen: je Flächenecke zählt der Voxelizer die Nachbarn (0–3) und backt das Ergebnis in den Alphakanal der Vertexfarbe (Helligkeit 0,38–1,0), die Viereck-Diagonale wird nach dem AO gedreht. Gemessen mit Vergleichsschalter --no-ao: 8,6 % (Totale, Bild 60) bzw. 8,8 % (Nahaufnahme, Bild 150) der Pixel ändern sich um mehr als 8 Stufen.",
+  "Animierte Voxelwasserfläche statt glatter Ebene: 101 420 Säulen à 0,1 m im Hafenbecken und 66 000 Säulen à 0,4 m bis 120 m Entfernung (MultiMesh). Jede Säule hebt und senkt sich in ganzen 0,1-m-Stufen; die Dünung läuft in +z auf den Kai zu, die Kämme liegen fast parallel zu x, sodass die Stufen breite, waagerechte Terrassenbänder bilden (in Totale und Nahaufnahme sichtbar, assets/preview/water.png). Jede Stufe einen Ton heller, Seitenflächen im Ton der Stufe darunter, Kämme hell; Brandung am Ufer je 0,4-m-Block als Band zum Ufer; Schaumvoxel an Ufer und Booten im 1/6-s-Takt.",
+  "Auch die meisten Effekte sind Würfel: Rauch aus 8 Würfeln, die auf dem 0,1-m-Raster aufsteigen (1,9 m), wachsen und schrumpfen und in der Totale frei vor dem Himmel enden; Wolken aus 9-m-Quadern mit einer Farbe je Flächenrichtung (Unterseite orange von der untergegangenen Sonne), treiben mit 2,5 m/s; Sterne als kleine Quadrate, die im 1/5-s-Takt funkeln; die Boote schaukeln als starre Voxelkörper. Nicht aus Würfeln: der Lichtkegel des Leuchtturms ist ein glatter Kegel (nur seine Helligkeit ist in 2-m-Abschnitte und vier Querstufen gestuft), Glow und Lichter sind glatt.",
+  "Starre Voxelfigur: Jeder Voxel des Dachses gehört genau einem Knochen (20 Teile: Kopf, Rumpf, Arme, Beine, Schalenden, Schwanz, Paket an der Hand), Gewicht 1, Skelett und Animationen Idle, Walk, Wave unverändert aus shared/3d. Gesicht per Regel: weißer Mittelstreifen und Schnauze, Augenstreifen in eigenem, etwas hellerem Ton (#6B5A55) mit je zwei schwarzen Augenvoxeln, Nase als 3 × 2 Voxel großer schwarzer Block oben an der Schnauzenspitze. Paket per Regel als Quader aus 9 × 5 × 5 Voxeln unter dem rechten Arm, etwas vor und neben dem Körper, mit dunkler Schnur aus je einer Voxelreihe in den drei Mittelebenen (auf jeder Seite ein Kreuz).",
+  "Zwei Einstellungen mit Fahrt: bis 2,3 s Totale mit der Hauptkamera aus shared/3d (Dachs 74 px hoch, Rauch und Fensterlicht sichtbar, nur das Ortsschild eingeblendet), 2,3–4,1 s Kamerafahrt, danach feste Nahaufnahme (Dachs 282 px hoch, ein Figurenvoxel ≈ 9 px, Leuchtturm mit drehendem Strahl, Boot, Steg und Laterne). Der Dialogkasten klappt erst ab 3,0 s auf, wenn der Dachs links davon steht (mit --mask gemessen: in keinem der 91 Bilder mit Kasten liegt ein Pixel der Figur im Kastenrechteck); Poster bei 4,8 s während des Winkens.",
+  "Animierte Figur gemessen (scripts/measure_badger.py, Knochenpunkte und weiße Silhouetten, assets/measure_badger.txt): Im Lauf und beim Abbiegen steht der Fuß am Boden höchstens 9 mm je Bild (Abrollen der Zehe; in der festen Totale höchstens 0,64 px); die Drehung um den Standfuß läuft von 2,29 bis 3,39 s ohne Pause (3° je Bild, im Doppelstand 1,5° um die Mitte beider Füße); im Übergang zum Stehen hält eine Bein-IK jeden Fuß ab dem Aufsetzen fest (Doppelstand höchstens 6,8 mm je Bild an der sich senkenden Zehe, vorher 12 mm Rutschen beider Füße); im Stehen und Winken bewegen sich die Fußpunkte höchstens 0,7 mm je Bild, Fußzeile in der Nahaufnahme in allen Bildern 124–179 auf Zeile 691.",
+  "Abendlicht: Sonne von links mit fast harten Schatten (Winkel 0,2°, blur 0,5, Filter high, vier Kaskaden bis 60 m), damit jede Würfelfläche flach bleibt: Nachbarkontrast auf dem Pflaster 2,2 (Nahaufnahme) bzw. 3,2 (Totale, mit dem Schatten des Dachses) gegen 2,2 / 2,3 ohne Schatten und 5,6 / 8,7 mit den weichen Schatten der ersten Fassung (assets/preview/shadows.png). Violettes Umgebungslicht, Fensterlicht, flackernde Laterne (10 Stufen je Sekunde) und Leuchtfeuer als Punktlichter, leuchtende Glasvoxel mit Glow, AgX-Tonemapping und Tiefennebel ab 45 m.",
+  "Oberfläche in Blockoptik (ui.gd): Ortsschild als Holzblock mit zwei Nagelvoxeln (etwa 468 × 56 px), Dialogkasten als Steinblock (helle Kante oben und links, dunkle unten und rechts, abgestufte Ecken), Rahmen und Blöcke auf einem 4-px-Raster. Pixelify Sans ohne Kantenglättung und ohne Ligaturen in ihrer Rastergröße (11 px = 1 px je Schriftpixel) gesetzt und ganzzahlig vergrößert: Ortsschild 4 px, Dialog 2 px je Schriftpixel; scripts/check_font.py findet im Poster keine Strichbreite außerhalb dieses Rasters. Text Zeichen für Zeichen, drei Auswahlblöcke (gewählter golden mit hüpfendem Voxelpfeil), Parserzeile mit Blockcursor. Kasten 752 × 164 px (13,4 % des Bildes)."
+ ],
+ "camera": "Bis 2,3 s die Hauptkamera aus shared/3d unverändert (−1,8 | 3,4 | 14,5, 3° nach unten, fov 42). Von 2,3 bis 4,1 s Fahrt (doppelt geglättet, Position linear, Drehung per Slerp, fov 42 → 53) zu einer festen Nahaufnahme bei (−2,45 | 1,4 | 4,6) mit Blick auf (0,75 | 0,62 | −4,9), fov 53 vertikal; Ausschnitt vorab mit scripts/frame_close.py gerechnet (Dachs links neben dem Dialogkasten, Leuchtfeuer oben in der Mitte). Der Dialogkasten erscheint erst ab 3,0 s, nachdem der Dachs in der Totale unter seinem Rechteck hindurchgelaufen ist.",
+ "resolution": "1280×720 nativ, Forward+, MSAA 2×. Voxelgrößen: Welt 0,1 m (in der Nahaufnahme neben dem Dachs ≈ 28 px), Dachs 1/32 m (≈ 9 px), ferne Inseln 1 m, fernes Wasser 0,4 m. Oberfläche: Rahmen auf 4-px-Raster, Schrift 4 bzw. 2 px je Schriftpixel.",
+ "pipeline": [
+  {
+   "step": "Hafen voxelisieren",
+   "tool": "scripts/voxelize_harbor.py mit scripts/voxcore.py, glb.py, meshutil.py (Python, nur NumPy und Pillow, etwa 80 s)",
+   "detail": "Liest shared/3d/harbor.glb (unverändert). Kai, Westhügel und Landzunge als Höhenfeld (oberste Fläche je Spalte, Fugen im Pflaster geschlossen), alle übrigen Objekte als Körper über die verallgemeinerte Windungszahl, dünne Teile (Bretter, Bootswände, Geländer) als Hülle. Material je Voxel nach dem, was ein Strahl von außen entlang der Flächennormale im Originalmodell trifft (gegen Sprenkel an dünnen Wänden), Bootsrümpfe zusätzlich entsprenkelt, Laternenglas per Regel aus dem Gehäuse geschnitten. Je sichtbarer Würfelfläche ein Viereck mit Farbe und Ecken-AO in der Vertexfarbe; verdeckte Flächen, Flächen nach −Z und unter Wasser entfallen. Knotennamen, Empties und Materialnamen bleiben wie im Original. Ergebnis demo/models/harbor_voxel.glb (22 MB, 463 196 Dreiecke) und demo/textures/water_mask.png (Land, Uferabstand, Bootsrumpf je 10-cm-Zelle)."
+  },
+  {
+   "step": "Dachs voxelisieren",
+   "tool": "scripts/voxelize_badger.py (Python, etwa 10 s)",
+   "detail": "Liest shared/3d/badger.glb, voxelisiert die Bindepose auf 1/32 m (z = 0 in einer Zellmitte, damit das Gesicht symmetrisch bleibt), weist jeden Voxel dem Knochen des nächsten Originalpunkts zu (Weste, Tasche und Messing an den Armlöchern per Regel an die Brust), ersetzt das Paket durch einen Regelquader mit Schnur an hand.R (Körpervoxel, die nur über einen Paketpunkt an der Hand hingen, gehen an den Körper zurück), setzt Gesicht und Schal per Regel und schreibt ein skinned Mesh mit Gewicht 1 samt Skelett, Skin und den Animationen Idle, Walk, Wave nach demo/models/badger_voxel.glb (Zahlen in assets/badger_voxel.json). Flächen zwischen Teilen verschiedener Knochen bleiben stehen, damit beim Beugen keine hohlen Teile sichtbar werden."
+  },
+  {
+   "step": "Voxel-Material, Wasser, Himmel, Effekte",
+   "tool": "Godot 4.7.2: shaders/voxel.gdshader, voxel_water.gdshader, voxel_sky.gdshader, voxel_cloud.gdshader, beam.gdshader, main.gd",
+   "detail": "main.gd ersetzt jedes glTF-Material per Name durch das Voxel-Material (Rauheit und Glas-Emission je Material), baut das Voxelwasser (zwei MultiMesh-Bereiche, Uferabstand und Bootsrumpf als Instanzdaten), Wolken (MultiMesh aus Quadern, fester Seed) und Rauch (Würfel auf dem Voxelraster) und steuert Boote, Laterne, Leuchtfeuer, Dachs (mit Bein-IK im Übergang zum Stehen) und Kamera über aufsummiertes delta."
+  },
+  {
+   "step": "Bildausschnitt rechnen",
+   "tool": "scripts/frame_close.py (Python, ohne Godot)",
+   "detail": "Projektion wie in Godot (Keep Height, looking_at) auf 1280×720, um die Nahaufnahme ohne Probieren zu setzen: Dachs links neben dem Dialogkasten, Leuchtfeuer, Boot und Laterne im Bild."
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/measure_badger.py, compare_switches.py, compare_renderers.py, check_font.py, preview_vox.py, snap.py, tools/capture.py",
+   "detail": "Füße, Drehung und Kopf über Knochenpunkte (--measure, feste Totale) und über weiße Silhouetten (--mask) gemessen, dazu die Verdeckung der Figur durch den Dialogkasten in allen Bildern ab BOX_T (assets/measure_badger.txt); Vergleichsschalter --no-ao, --no-edge, --no-shadow, --old-shadow mit Nachbarkontrast auf dem Pflaster (assets/preview/switches.png, shadows.png); Strichbreiten der Schrift im Poster (check_font.py); Probeläufe mit Mobile und Compatibility (assets/preview/renderers.png); Orthoansichten des Voxeldachses ohne Godot (assets/preview/badger_views.png); Vorher/Nachher des Wassers (assets/preview/water.png); zwei Läufe ergaben Bild 60 und 150 bitgleich; Aufnahme mit capture.py --poster-at 0.8."
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, Forward+, MSAA 3D 2×, rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality = 4 (high); Hauptszene main.tscn mit WorldEnvironment, Sonne, Figurenlicht, Kamera, Hafen- und Dachs-glb, Attach-Knoten und CanvasLayer für die Oberfläche",
+  "voxel.gdshader: ALBEDO aus der Vertexfarbe (sRGB im Shader nach linear umgerechnet), AO aus dem Alphakanal (0,38–1,0), dunkler Rand je Würfelfläche über UV 0..1 (Breite 0,07, Stärke 0,32), mit fwidth ausgeblendet, sobald eine Fläche kleiner als etwa 7 px wird; EMISSION für Glasvoxel als Faktor auf die Voxelfarbe",
+  "Importeinstellungen der Voxel-glb: generate_lods=false, force_disable_compression=true (Würfelecken bleiben exakt), Hafen ohne NORMAL im glTF (flache Normalen erzeugt Godot beim Import), water_mask.png verlustfrei ohne Mipmaps",
+  "Voxelwasser: MultiMeshInstance3D je Bereich, Instanz = Einheitssäule aus SurfaceTool (Oberseite, Vorderseite, zwei Seiten, Schürze 4 bzw. 1,5 Einheiten tief), Dreiecke im Uhrzeigersinn (Godots Vorderseite); INSTANCE_CUSTOM r = Uferabstand, g = Bootsrumpf; voxel_water.gdshader verschiebt im vertex() um round(Welle × 0,17 / 0,1) × 0,1 m und färbt im fragment() je Stufe; das glatte Meer (Sea) aus harbor.glb ist ausgeblendet, unter dem Horizont malt der Himmel Meeresfarbe",
+  "Environment: Sky mit voxel_sky.gdshader (Verlauf in vier Zonen, Glut im Westen, Sterne als Zellen im Winkelraum), Umgebungslicht aus Himmel und violetter Farbe (0,55 | 0,52 | 0,72), AgX-Tonemapping (white 6), Glow im Screen-Modus ab HDR 1,0, Tiefennebel 45–520 m, Sättigung 1,08",
+  "Licht: DirectionalLight3D Sonne (Abendsonne von links, etwa 30° hoch, light_angular_distance 0,2, shadow_blur 0,5, shadow_bias 0,15, normal_bias 4, vier Schattenkaskaden bis 60 m); zweites DirectionalLight3D nur für den Dachs (light_cull_mask = 2, Dachs auf Ebene 1 und 2) für ein lesbares Gesicht; OmniLight3D an Laterne, Fenster und Leuchtfeuer, SpotLight3D plus additiver CylinderMesh-Kegel (beam.gdshader, beginnt 1,1 m vor der Lampenmitte, Helligkeit gestuft, vor dem Lampenhaus ausgeblendet) als drehender Strahl, Lampe blitzt auf, wenn der Strahl zur Kamera zeigt",
+  "Attach-Muster aus shared/3d: Knoten unter Attach heißen wie die Ziele in harbor_voxel.glb und werden per reparent(target, false) dorthin gehängt; Laternenglas, Lampe und Fenster bekommen eigene Materialkopien zum Flackern",
+  "Dachs: AnimationPlayer im manuellen Modus (advance(delta) in main.gd): Pose, dann Vorschub entlang der Blickrichtung (0,367 m/s × speed_scale 2), dann Drehung um den Bodenpunkt des Standfußes (höchstens 3° je Bild, im Doppelstand 1,5° um die Mitte beider Füße) bis −74°; Bremsen 3,22–3,62 s, Walk → Idle (0,3 s) ab 3,57 s: Figur um die Verschiebung der Füße am Boden zurückgesetzt, dazu Zwei-Knochen-IK je Bein (Skeleton3D.set_bone_global_pose für Oberschenkel, Schienbein, Fuß), die jeden Fuß ab seinem ersten Bodenkontakt (waagerecht ab 2,5 cm Höhe) festhält; Wave 4,0–5,4 s, danach Idle",
+  "ui.gd: Control in einer CanvasLayer, zeichnet in _draw() Rechtecke auf einem 4-px-Raster; Pixelify Sans als FontVariation (wght 400) mit antialiasing NONE, hinting NONE, subpixel aus und opentype_features liga/clig = 0, gesetzt in 11 px und per draw_set_transform 4- bzw. 2-fach vergrößert (texture_filter Nearest), Positionen auf ganze Schriftpixel gerundet; Dialog ab 3,0 s, Text ab 3,3 s mit 45 Zeichen/s, Auswahl ab 4,3 s",
+  "Deterministisch: alle Animationen hängen an aufsummiertem delta, Laternenrauschen (FastNoiseLite) und Wolken/Rauch mit festem Seed 20261011. Schalter nach --: --no-ao, --no-edge, --no-shadow, --old-shadow, --static-cam, --close-cam, --mask, --measure"
+ ],
+ "techniques": [
+  "voxelisierung",
+  "voxel-ao",
+  "voxel-wasser",
+  "prozedurale-animation",
+  "fuss-halten",
+  "bein-ik",
+  "figurenlicht",
+  "additiver-lichtkegel",
+  "kamerafahrt",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 1,
+  "consistency": 4,
+  "effort": 3,
+  "text_adventure": 3,
+  "mobile": 2
+ },
+ "ratings_note": "ai_fit 1, weil die KI hier nichts beigetragen hat: Es wurde kein Bild erzeugt, der Look entsteht vollständig aus dem eigenen Voxelizer (Python), Shadern und Code. Wie gut ein Bildmodell Voxel-Grafik trifft, ist damit nicht geprüft. consistency 4: Jedes glb läuft durch dasselbe Raster, dieselbe Palette und dasselbe AO, neue Orte sehen automatisch gleich aus; kleine Details (Gesicht, Paket, Laternenglas, Bootswände, Weste am Arm) brauchten aber eigene Regeln je Objekt, und Figur und Welt haben verschiedene Voxelgrößen. effort 3: Der Voxelizer ist fertig, je Ort braucht es aber zuerst ein 3D-Modell und Regeln für Kleinteile; Handarbeit in einem Voxel-Editor wäre die Alternative. text_adventure 3: Der Stil ist sofort erkennbar und trägt feste Einstellungen gut, aber Gesichter mit drei Voxelreihen zeigen kaum Mimik. mobile 2 ist geschätzt: Probeläufe auf dem Mac mit Mobile (3,4–6,1 % der Pixel weichen um mehr als 8 Stufen ab, keine Fehler) und Compatibility (keine Fehler, aber 62–76 % der Pixel deutlich dunkler und gesättigter) liefen; die Szene ist mit rund 1,82 Mio. Dreiecken (463 196 Hafen, etwa 1,34 Mio. Voxelwasser, 14 812 Dachs) und einer 22-MB-glb für Smartphones zu schwer; auf einem Smartphone nicht gemessen.",
+ "verdict": "Voxel ist für unser Textadventure ein gangbarer Weg, wenn die Orte ohnehin als 3D-Modelle entstehen: Das Skript macht aus jedem glb in gut einer Minute eine Voxelfassung mit flachen Farben und AO, und Wasser, Rauch und Oberfläche passen sich ohne Handarbeit an. Bewusste Abweichungen vom Auftrag bzw. von der Vorlage: Der Dachs hat 1/32-m-Voxel statt der 0,1 m der Welt, weil er sonst nur 10 Voxel hoch wäre und kein Gesicht hätte (Voxelspiele rastern Figuren oft feiner als die Welt); das Paket ist ein Regelquader mit dunkler statt cremefarbener Schnur, damit es sich als Paket liest. Schwächen für ein Spiel mit Gesprächen: wenig Mimik, Übergänge der Figur brauchen Bein-IK, damit die Füße stehen bleiben, die Oberfläche muss Rücksicht auf Laufwege nehmen (Dialog erst nach dem Lauf), und für Smartphones müssten Flächen zusammengefasst und das Voxelwasser verkleinert werden.",
+ "pitfalls": [
+  "Voxelwasser, erste Fassung: Die Säulen des MultiMesh waren gegen den Uhrzeigersinn gewickelt; Godot sieht Dreiecke im Uhrzeigersinn als Vorderseite, mit cull_back fielen deshalb Oberseiten und Vorderflächen weg, und man sah in die Säulen hinein auf die Innenseiten der Seitenwände: feine senkrechte Nadeln statt Würfelstufen, am Ufer einzelne Säulen wie blaues Gras (zusätzlich hatte die Brandung eine Zufallsphase je Säule), dazu ein oranger Glanzstreifen unter dem Horizont, der kein Spiegelbild war. Gefunden mit einer Prüfaufnahme, die Oberseiten, Vorderflächen und Seitenflächen in eigenen Farben zeigte. Behoben (Wicklung, Kämme parallel zu x, Seitenflächen im Ton der Stufe darunter, Brandung je 0,4-m-Block); Vorher/Nachher in assets/preview/water.png. Der Pitfall der ersten Fassung („Stufen nahe der Kamera deutlich“) war falsch.",
+  "Voxelwasser jetzt: In der Ferne sind die Säulen kleiner als ein Pixel, die Terrassen werden zu feinen waagerechten Linien, und die Wellen laufen bewusst in einer Richtung (achsparallele Bänder statt natürlicher Kreuzsee). Das Glitzern unter Laterne und Leuchtfeuer liegt auf den Oberseiten und ist kaum zu sehen: Ohne es ändern sich 0,05 % der Pixel der Totale (unter der Laterne) und keine im Poster.",
+  "Verdeckung durch den Dialogkasten: In der ersten Fassung klappte der Kasten bei 0,5 s auf, und der Dachs lief in der Totale von 1,7 bis 2,9 s dahinter (bis 22 % der Figur, Beine und Füße unsichtbar). Jetzt erscheint der Kasten erst ab 3,0 s (gemessen: 0 Pixel der Figur im Kastenrechteck in allen 91 Bildern mit Kasten). Folge: Die Totale zeigt nur das Ortsschild, und der Text läuft mit 45 Zeichen/s schneller als vorher (30), damit er im Poster bei 4,8 s vollständig ist. In einem Spiel mit Laufwegen muss die Oberfläche auf die Figur Rücksicht nehmen (Kasten erst nach dem Gang oder Laufweg außerhalb).",
+  "Füße beim Übergang Lauf → Stehen: Die Überblendung Walk → Idle (0,3 s ab 3,57 s) schob in der ersten Fassung beide Füße im Doppelstand je 12 mm je Bild über den Boden. Jetzt hält eine Zwei-Knochen-IK jeden Fuß ab dem Aufsetzen fest: im Doppelstand bewegt sich nur noch die Zehe beim Absenken (höchstens 6,8 mm je Bild), im Aufsetzbild die Ferse 5,6 mm (überwiegend senkrecht). Geblieben: Weil das Bremsen die Laufanimation mitten im Schritt anhält, steht der Dachs etwa 0,1 s (3,53–3,62 s) auf einem Bein mit 7 cm angehobenem Fuß, bevor die Überblendung ihn absetzt; eine eigene Stopp-Animation wäre sauberer.",
+  "Drehung: In der ersten Fassung drehte sich die Figur nur, solange genau ein Fuß am Boden stand, also in Schüben (5 Bilder je 3°, dann 3 Bilder Pause). Jetzt dreht sie im Doppelstand mit halber Rate um die Mitte beider Füße weiter; dabei drehen beide Füße auf dem Boden mit: In den Doppelstandbildern der Drehung bewegen sich die Fußpunkte am Boden 1,4–6,7 mm je Bild (vorher 1,4–9,0 mm, das Abrollen der Zehe eingeschlossen).",
+  "Zwei Voxelgrößen: Figur 1/32 m, Welt 0,1 m (Faktor 3,2). In der Nahaufnahme stehen 9-px-Würfel des Dachses neben 28-px-Würfeln des Pflasters. Das ist in Voxelspielen üblich, wer aber durchgehend eine Voxelgröße will (wie Teardown), sieht einen Bruch.",
+  "Gesicht: Zwischen Mützenschirm und Schal bleiben auf 1/32 m nur drei Voxelreihen; die Abtastung ergab Flecken, deshalb ist das Gesicht per Regel gesetzt. Die erste Fassung hatte eine 1 Voxel breite, senkrechte Nase (las sich wie Schneidezähne), ein 1 Voxel hoher Block in der Mitte der Schnauze las sich wie ein Schlitz; jetzt 3 × 2 Voxel oben an der Spitze. Augen und Nase sind alle schwarze Blöcke ähnlicher Größe, die Augen verschattet der Schirm etwas; Mimik, Blinzeln oder Sprechen sind nicht gebaut.",
+  "Paket: Die Abtastung ergab ein flaches Stück aus Packpapier-, Westen- und Fellvoxeln, teils an Brust und Hüfte statt an der Hand, das sich in der Nahaufnahme wie ein Brett las. Jetzt ein Regelquader (9 × 5 × 5 Voxel, etwas vor und neben dem Körper) mit Schnur; die Schnur ist dunkel (#4A2E1C), obwohl Referenzblatt und Original-glb eine helle Schnur zeigen, weil helle Voxel auf dem hellbraunen Papier kaum auffielen. Die Paketmaße weichen damit vom gemeinsamen Modell ab (dicker und weiter vorn).",
+  "Knochenzuordnung nach nächstem Originalpunkt: 109 Westen-, Taschen- und Messingvoxel an den Armlöchern hingen an den Oberarmen; beim Winken stand ein grünes Stück Weste mit dem Arm ab. Behoben durch die Regel „Rumpfmaterialien gehören zur Brust“ (assets/badger_voxel.json zeigt die Teilgrößen).",
+  "Dünne Wände: Bootsrümpfe und Bretter sind nur ein bis zwei Voxel dick; trotz Material per Strahl von außen und Entsprenkeln bleiben im roten und weißen Lack des Kutters einzelne braune Holzvoxel stehen (im Poster in der Bildmitte), die wie Rost wirken.",
+  "Die dunkle Voxelkante im Shader ist kaum sichtbar: Mit --no-edge ändern sich 0,0 % (Totale) bzw. 2,2 % (Nahaufnahme) der Pixel. Sie ist unter etwa 7 px Flächengröße ausgeblendet, damit ferne Flächen kein Moiré bilden; eine stärkere Kante wurde nicht ausprobiert. Die Würfel lesen sich vor allem über Geometrie, AO (8,6–8,8 %) und die Farbabwandlung je Voxel.",
+  "Schatten: Die weichen Schatten der ersten Fassung (Winkel 1,2°, blur 1,0, Filter low) verdeckten Schattenakne nur teilweise und legten ein bildschirmfestes Körnungsmuster über Pflaster und große Flächen (Nachbarkontrast 5,6 bzw. 8,7 gegen 2,2 / 2,3 ohne Schatten). Härter gefiltert wurde die Akne erst richtig sichtbar (diagonale Streifen, Kontrast bis 20), erst shadow_bias 0,15 und normal_bias 4 beseitigten sie. Der hohe Bias kann dünne Teile (Geländer, Bootswände) aus dem Eigenschatten nehmen und Schatten minimal vom Fuß ablösen; im Bild nicht aufgefallen, aber nicht gezielt gemessen.",
+  "Schrift: Die Prüfung nahm 1 Schriftpixel = 1/9 em an und schlug 18 bzw. 36 px vor; nachgemessen hat Pixelify Sans Schriftpixel von etwa 0,09 em mit 0,10 em breiten Strichen, und 18 px ergab noch mehr gemischte Breiten (1, 2, 5 px). Keine direkt gesetzte Größe war in beiden Richtungen gleichmäßig (22 px: Striche 3 px breit, 2 px hoch; 44 px: 4 px breit, 5 px hoch). Gelöst durch Setzen in 11 px und ganzzahliges Vergrößern. Das große „Z“ in „Zum“ sieht in dieser Schrift auch auf dem Raster wie eine „2“ aus (die Glyphen unterscheiden sich in einem Pixel); nur eine andere Schrift würde das ändern. Die fette Fassung (wght 700) hat kein gleichmäßiges Raster und wird nicht mehr verwendet, das Ortsschild ist jetzt Regular in 4-facher Größe und breiter (etwa 468 px).",
+  "Leuchtturmstrahl: Der Kegel ist glatt, nur seine Helligkeit ist gestuft; Glow und Lichter sind glatt. Zeigt der Strahl schräg zur Kamera (wie im Poster), lag sein Anfang als beiger Schleier über dem Lampenhaus. Jetzt beginnt er 1,1 m vor der Lampenmitte und wird dort nicht gezeichnet, wo der Sichtstrahl näher als 1,5 m an der Lampenmitte vorbeigeht; von der Seite gesehen bleibt dadurch innerhalb des Geländers eine Lücke zwischen Glas und Strahl.",
+  "Rauch: In der Totale endet er jetzt frei vor dem Himmel (oberster Würfel etwa bei Zeile 108, Schild bis Zeile 88). Während der Kamerafahrt wandert er nach links oben aus dem Bild und streift dabei für einige Bilder das Ortsschild.",
+  "Geometriemenge: ein Viereck je sichtbarer Würfelfläche, kein Zusammenfassen gleichfarbiger Flächen (Greedy Meshing), weil Farbe und AO je Voxel und Ecke wechseln. Hafen 231 598 Flächen in einer 22-MB-glb (deshalb nicht in assets aufgeführt, sie läge sonst auf der Website), Voxelwasser 167 420 Säulen mit je 8 Dreiecken.",
+  "Compatibility-Renderer: läuft ohne Fehler, aber 62–76 % der Pixel weichen deutlich ab (Szene dunkler, Steg und Boote gesättigter rot); die Ursache ist nicht untersucht, die Farben müssten für diesen Renderer neu abgestimmt werden.",
+  "Pixelschrift: Pixelify Sans setzt „fl“ als Ligatur mit einer Form wie „A“; in einer frühen Aufnahme stand „Die Laterne Aackert im Wind“. Behoben mit opentype_features liga/clig = 0.",
+  "Der erste Bau wurde einmal unterbrochen (Nutzungslimit des Bau-Agenten); in dieser Überarbeitung sind Modell, Messwerte, Vergleichstafeln und Aufnahme neu erzeugt."
+ ],
+ "lessons": [
+  "Ein eigener Voxelizer in NumPy reicht, Blender ist nicht nötig: Körper über die verallgemeinerte Windungszahl (robust gegen überlappende und nicht ganz geschlossene Teile), Gelände als Höhenfeld, dünne Teile als Hülle, Material je Voxel per Strahl von außen entlang der Flächennormale. Er ist deterministisch: harbor_voxel.glb, water_mask.png und badger_voxel.glb ließen sich bytegleich neu erzeugen.",
+  "Voxel-AO wie in Blockspielen kostet zur Laufzeit nichts: je Flächenecke 3 − (Seite1 + Seite2 + Ecke), beide Seiten belegt = 0, in den Alphakanal der Vertexfarbe gebacken und die Viereck-Diagonale nach dem AO gedreht (sonst Knicke im Verlauf).",
+  "Selbst gebaute Meshes (SurfaceTool, ArrayMesh) in Godot im Uhrzeigersinn wickeln. Falsch gewickelte Würfel sehen mit cull_back nicht kaputt aus, sondern wie ein Muster aus Innenwänden; eine Prüfaufnahme, die Flächenarten in eigenen Farben zeigt, findet das in einer Minute.",
+  "Voxelwasser als MultiMesh aus Säulen, deren Höhe der Vertex-Shader in ganzen Voxelstufen setzt; Uferabstand und Bootsrumpf als Instanzdaten aus einer beim Voxelisieren erzeugten Maske. Wellenkämme achsparallel legen, sonst entstehen Treppen aus einzelnen Säulen; Zufall je Block statt je Säule.",
+  "Starre Voxelteile je Knochen mit Gewicht 1 behalten Skelett und Animationen der gemeinsamen Figur; Flächen zwischen Teilen verschiedener Knochen stehen lassen, sonst sieht man beim Beugen in hohle Teile. Die Zuordnung nach nächstem Punkt mit Materialregeln nachbessern (Rumpfkleidung an die Brust), kleine Requisiten wie das Paket als Regelkörper bauen.",
+  "Kleine, wichtige Details per Regel statt per Abtastung: Gesicht (Mittelstreifen, Augen, Nase), Paket mit Schnur, Laternenglas, Schal in Strickreihen, Plattentöne im Pflaster. Auf drei Voxelreihen entscheidet jeder einzelne Voxel; Ergebnis mit preview_vox.py und einem 4-fach-Ausschnitt der Godot-Aufnahme prüfen.",
+  "Übergänge der Figur: erst die Figur um die Verschiebung der Füße am Boden zurücksetzen, dann den Rest mit einer kleinen Zwei-Knochen-IK je Bein nach advance() abfangen (Fuß ab dem Aufsetzen festhalten, waagerecht schon ab 2,5 cm Höhe). Drehungen im Doppelstand nicht anhalten, sondern mit halber Rate um die Mitte beider Füße fortsetzen.",
+  "Pixelschriften im Raster messen, nicht schätzen: die Glyphen groß rendern und die Kanten ablesen, dann in der Größe mit 1 px je Schriftpixel setzen und ganzzahlig vergrößern (draw_set_transform, Nearest); check_font.py zählt Strichbreiten außerhalb des Rasters. Ligaturen (fl, fi) abschalten.",
+  "Weiche Schatten können Schattenakne verdecken und selbst ein Körnungsmuster erzeugen; zum Prüfen härter filtern, Bias erhöhen und den Nachbarkontrast einer ebenen Fläche gegen ein Bild ohne Schatten messen.",
+  "Oberfläche gegen Laufwege prüfen: Mit der Maskenaufnahme (--mask) und dem Kastenrechteck lässt sich die Verdeckung der Figur je Bild zählen; so ließ sich der Zeitpunkt für den Dialog genau wählen.",
+  "Effekte mit Schaltern messen statt schätzen: AO verändert 8,6–8,8 % der Pixel, die Voxelkante nur 0–2,2 %, das Glitzern 0–0,05 %; so zeigt sich, was den Stil trägt."
+ ],
+ "assets": [
+  {
+   "file": "scripts/voxelize_harbor.py",
+   "kind": "code",
+   "made_with": "Voxelisierung des Hafens (0,1 m), Palette, Muster je Material, Wassermaske",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/voxelize_badger.py",
+   "kind": "code",
+   "made_with": "Voxelisierung des Dachses (1/32 m), starre Teile je Knochen, Gesichts- und Paketregeln",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/voxcore.py",
+   "kind": "code",
+   "made_with": "Kern: Windungszahl, Höhenfeld, Hülle, Material per Strahl, Würfelflächen mit Voxel-AO",
+   "prompt": ""
+  },
+  {
+   "file": "demo/models/badger_voxel.glb",
+   "kind": "model",
+   "made_with": "voxelize_badger.py aus shared/3d/badger.glb: 4 016 Voxel, 7 406 Flächen (14 812 Dreiecke), Idle/Walk/Wave",
+   "prompt": ""
+  },
+  {
+   "file": "assets/badger_voxel.json",
+   "kind": "data",
+   "made_with": "voxelize_badger.py: Voxel, Flächen, Teile je Knochen, Voxel je Material",
+   "prompt": ""
+  },
+  {
+   "file": "demo/textures/water_mask.png",
+   "kind": "texture",
+   "made_with": "voxelize_harbor.py: R Land, G Uferabstand, B Bootsrumpf je 10-cm-Zelle",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/voxel.gdshader",
+   "kind": "shader",
+   "made_with": "flache Farbe je Voxel, gebackenes Voxel-AO, Voxelkante, Glas-Emission",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/voxel_water.gdshader",
+   "kind": "shader",
+   "made_with": "Wassersäulen in ganzen Voxelstufen, achsparallele Dünung, Stufentöne, Brandung je Block, Schaumvoxel, Glitzern",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/voxel_sky.gdshader",
+   "kind": "shader",
+   "made_with": "Abendhimmel in Zonen mit quadratischen Sternen",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/voxel_cloud.gdshader",
+   "kind": "shader",
+   "made_with": "Quaderwolken mit einer Farbe je Flächenrichtung",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/beam.gdshader",
+   "kind": "shader",
+   "made_with": "Lichtkegel des Leuchtturms, additiv, Helligkeit gestuft, vor dem Lampenhaus ausgeblendet",
+   "prompt": ""
+  },
+  {
+   "file": "demo/main.gd",
+   "kind": "code",
+   "made_with": "Voxel-Material je glTF-Material, Voxelwasser, Wolken, Rauch, Licht, Ablauf von Dachs (mit Bein-IK) und Kamera, Mess- und Vergleichsschalter",
+   "prompt": ""
+  },
+  {
+   "file": "demo/ui.gd",
+   "kind": "code",
+   "made_with": "Oberfläche in Blockoptik: Ortsschild, Dialogkasten, Auswahlblöcke, Parserzeile; Schrift 11 px ganzzahlig vergrößert",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/badger_close.png",
+   "kind": "preview",
+   "made_with": "Ausschnitt aus dem Poster, 2-fach ohne Glättung: Voxeldachs beim Winken mit Paket",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/badger_views.png",
+   "kind": "preview",
+   "made_with": "preview_vox.py: Voxeldachs von vorn, von rechts, von hinten und von oben (Ruhepose, gebackenes AO)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/water.png",
+   "kind": "preview",
+   "made_with": "Bild 150, Ausschnitt 2-fach: oben erste Fassung (Innenwände der Säulen, Nadeln), unten jetzt (Terrassen)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/shadows.png",
+   "kind": "preview",
+   "made_with": "compare_switches.py: Pflaster neben dem Dachs 4-fach, alte weiche Schatten / jetzt / ohne Schatten",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/switches.png",
+   "kind": "preview",
+   "made_with": "compare_switches.py: Spalten voll / ohne AO / ohne Voxelkante / alte Schatten; Zeilen Bild 60 (Totale) und 150 (Nahaufnahme)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/renderers.png",
+   "kind": "preview",
+   "made_with": "compare_renderers.py: Spalten Forward+, Mobile, Compatibility; Zeilen Bild 60 und 150",
+   "prompt": ""
+  },
+  {
+   "file": "assets/measure_badger.txt",
+   "kind": "measurement",
+   "made_with": "measure_badger.py: Füße, Drehung und Kopf über Knochenpunkte und Silhouetten, Verdeckung durch den Dialogkasten",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/check_font.py",
+   "kind": "code",
+   "made_with": "Prüfung der Strichbreiten der Pixelschrift im gerenderten Bild",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Pixelify Sans (variabel, wght 400 und 700)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/pixelifysans (Lizenztext: demo/fonts/OFL-PixelifySans.txt)"
+  },
+  {
+   "item": "Hafen und Dachs",
+   "license": "eigene Modelle aus shared/3d (Blender-Skripte), hier per eigenem Skript voxelisiert",
+   "source": "shared/3d/blender/, styles/voxel/scripts/"
+  },
+  {
+   "item": "Voxelizer, Shader, Wasser, Wolken, Rauch, Oberfläche",
+   "license": "eigener Code, keine fremden Texturen oder Bilder",
+   "source": "styles/voxel/"
+  },
+  {
+   "item": "Hash without Sine (Shader-Funktion), Copyright (c) 2014 David Hoskins – in demo/shaders/voxel_sky.gdshader, demo/shaders/voxel_water.gdshader",
+   "license": "MIT",
+   "source": "https://www.shadertoy.com/view/4djSRW"
+  }
+ ],
+ "image_generations": 0,
+ "tool_issues": [],
+ "status": "done"
+}

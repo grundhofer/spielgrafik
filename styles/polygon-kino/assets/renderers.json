@@ -1,0 +1,62 @@
+{
+ "0.5": {
+  "mobile": {
+   "changed_px": 0,
+   "share": 0.0
+  },
+  "gl_compatibility": {
+   "changed_px": 0,
+   "share": 0.0
+  }
+ },
+ "1.5": {
+  "mobile": {
+   "changed_px": 0,
+   "share": 0.0
+  },
+  "gl_compatibility": {
+   "changed_px": 0,
+   "share": 0.0
+  }
+ },
+ "3.3": {
+  "mobile": {
+   "changed_px": 0,
+   "share": 0.0
+  },
+  "gl_compatibility": {
+   "changed_px": 0,
+   "share": 0.0
+  }
+ },
+ "4.4": {
+  "mobile": {
+   "changed_px": 0,
+   "share": 0.0
+  },
+  "gl_compatibility": {
+   "changed_px": 0,
+   "share": 0.0
+  }
+ },
+ "5.0": {
+  "mobile": {
+   "changed_px": 0,
+   "share": 0.0
+  },
+  "gl_compatibility": {
+   "changed_px": 0,
+   "share": 0.0
+  }
+ },
+ "30.0": {
+  "mobile": {
+   "changed_px": 0,
+   "share": 0.0
+  },
+  "gl_compatibility": {
+   "changed_px": 0,
+   "share": 0.0
+  }
+ }
+}

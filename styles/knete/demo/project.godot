@@ -1,0 +1,30 @@
+; Engine configuration file.
+; Von Hand geschrieben: Katalogeintrag knete (Knetfigur & Stop-Motion), Godot 4.7.
+; Forward+, 1280×720, MSAA 4×. Der Hafen aus shared/3d ist in Blender zu Knetmasse umgeformt
+; (blender/build_clay_harbor.py); Fingerabdrücke, Dellen, Krümel und Glanz kommen aus clay.gdshader.
+; Alles Bewegte springt wie bei Stop-Motion: Figur auf Zweien (15 Bilder/s), Umgebung auf Dreien (10 Bilder/s).
+
+config_version=5
+
+[application]
+
+config/name="Knetfigur & Stop-Motion – Hafen von Lornholm"
+run/main_scene="res://main.tscn"
+config/features=PackedStringArray("4.7", "Forward Plus")
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+
+[rendering]
+
+anti_aliasing/quality/msaa_3d=2
+camera/depth_of_field/depth_of_field_bokeh_shape=2
+camera/depth_of_field/depth_of_field_bokeh_quality=2
+camera/depth_of_field/depth_of_field_use_jitter=false
+environment/defaults/default_clear_color=Color(0.1, 0.1, 0.16, 1)
+environment/ssao/quality=3
+lights_and_shadows/directional_shadow/size=8192
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality=4
+lights_and_shadows/positional_shadow/soft_shadow_filter_quality=4

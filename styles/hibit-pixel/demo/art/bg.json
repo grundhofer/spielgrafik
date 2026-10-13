@@ -1,0 +1,29 @@
+{
+ "size": [
+  640,
+  360
+ ],
+ "crop_y0": 36,
+ "scale": 2.4,
+ "palette_size": 120,
+ "first_water_row": 173,
+ "quay_top": [
+  262,
+  292
+ ],
+ "retouch": {
+  "glass_px": 675,
+  "glow_px": 2113,
+  "wall_ref_ab": [
+   0.045,
+   0.031
+  ],
+  "far_to_near_px": 164
+ },
+ "share": {
+  "sky": 0.343,
+  "water": 0.121,
+  "far": 0.07,
+  "near": 0.466
+ }
+}

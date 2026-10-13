@@ -1,0 +1,65 @@
+{
+ "frames_compared": [
+  30,
+  100,
+  144
+ ],
+ "log_errors_warnings": {
+  "forward": [],
+  "forward_2": [],
+  "mobile": [],
+  "gl_compatibility": [],
+  "t30": []
+ },
+ "forward_2": {
+  "30": {
+   "mean": 0.0,
+   "max": 0,
+   "share_diff": 0.0
+  },
+  "100": {
+   "mean": 0.0,
+   "max": 0,
+   "share_diff": 0.0
+  },
+  "144": {
+   "mean": 0.0,
+   "max": 0,
+   "share_diff": 0.0
+  }
+ },
+ "mobile": {
+  "30": {
+   "mean": 0.0,
+   "max": 0,
+   "share_diff": 0.0
+  },
+  "100": {
+   "mean": 0.0,
+   "max": 0,
+   "share_diff": 0.0
+  },
+  "144": {
+   "mean": 0.0,
+   "max": 0,
+   "share_diff": 0.0
+  }
+ },
+ "gl_compatibility": {
+  "30": {
+   "mean": 0.13,
+   "max": 2,
+   "share_diff": 0.3373
+  },
+  "100": {
+   "mean": 0.146,
+   "max": 2,
+   "share_diff": 0.3678
+  },
+  "144": {
+   "mean": 0.149,
+   "max": 13,
+   "share_diff": 0.3753
+  }
+ }
+}

@@ -1,0 +1,38 @@
+{
+ "cell": 24,
+ "cursors": {
+  "point_up": {
+   "index": 0,
+   "hotspot": [
+    6,
+    0
+   ],
+   "size": [
+    18,
+    21
+   ]
+  },
+  "point_right": {
+   "index": 1,
+   "hotspot": [
+    20,
+    6
+   ],
+   "size": [
+    21,
+    18
+   ]
+  },
+  "open": {
+   "index": 2,
+   "hotspot": [
+    9,
+    1
+   ],
+   "size": [
+    18,
+    20
+   ]
+  }
+ }
+}

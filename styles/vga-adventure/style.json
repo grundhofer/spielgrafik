@@ -1,0 +1,240 @@
+{
+ "slug": "vga-adventure",
+ "name": "VGA-Adventure (256 Farben)",
+ "family": "computer",
+ "kind": "style",
+ "era": "1990–1995",
+ "summary": "Gemalt wirkende Pixel-Hintergründe in 320×200 mit einer einzigen 256-Farben-Palette aus 262.144 möglichen Farben (6 Bit je Kanal wie beim VGA-DAC), weichen Verläufen aus vielen Abstufungen und sparsamem geordnetem Dithering. Bewegung entsteht über die Palette (Farbzyklus für Wasser und Leuchtfeuer, flackernde Laterne), dazu eine kleine Figur mit Laufzyklus und die Verbleiste der Point-and-Click-Adventures.",
+ "references": [
+  "The Secret of Monkey Island (VGA-Fassung, LucasArts 1990)",
+  "Monkey Island 2: LeChuck's Revenge (LucasArts 1991)",
+  "Indiana Jones and the Fate of Atlantis (LucasArts 1992)",
+  "Loom (VGA-Fassung, LucasArts 1992)",
+  "King's Quest V und VI (Sierra 1990/1992)",
+  "Farbzyklus-Hintergründe von Mark Ferrari (u. a. für LucasArts)"
+ ],
+ "traits": [
+  "Bildschirm 320×200, ganzzahlig ×3 hochskaliert, harte Pixel ohne Filter, bewusst quadratische Pixel (siehe pitfalls)",
+  "höchstens 256 Farben je Bild für alles (Hintergrund, Figur, Schrift, Oberfläche, Rauch); gemessen 183–203",
+  "jede Farbe liegt auf dem 6-Bit-Raster des VGA-DAC (64 Stufen je Kanal, 262.144 mögliche Farben), auch die zur Laufzeit berechneten Flackerfarben; gemessen 0 Abweichungen in allen 180 Bildern",
+  "Spielszene 320×152 oben, Verbleiste 48 px unten (24 % des Bildes)",
+  "Hintergrund mit weichen Himmelsverläufen über viele Abstufungen, geordnetes 4×4-Dithering nur in ruhigen Verläufen",
+  "Wasser glitzert per Palettenrotation auf der ganzen offenen Wasserfläche (8 Tonstufen × 6 Einträge, Randpixel mit eigener, schwächerer Stufe), keine Pixeländerung im Bild",
+  "Leuchtturmlampe per Palettenrotation; Lichtkegel per Aufhell-Tabelle in 5 Stufen als flache Bänder, Dithering nur an den Stufengrenzen, Kegel 130 px lang, spitz auslaufend und auf beiden Seiten direkt am Lampenglas ansetzend; Laterne und Fenster flackern über Palettenwerte",
+  "Rauch aus handgesetzten Puff-Sprites (4 Größen × 2 Varianten) mit 3 Tönen: helle Kante oben links, Körper, dunklere Unterkante; der Wind biegt die Fahne nach rechts, sie zerfällt oben im Bild und wird dabei dunkler (Mitte bleibt bei y ≥ 3)",
+  "Figur 40 px hoch mit 4-Bild-Laufzyklus (Kontakt, Durchgang, Aufwärts, Ausgreifen) bei 10 Bildern/s und Vorschub je Bild, Standfuß bleibt stehen, 1 px Auf und Ab im Bild „Aufwärts“; beim Anhalten ein Übergangsbild (Laufrumpf, Stehbeine); 1-px-Kontur, Sprech- und Blinzelbilder ohne Versatz",
+  "Sprechtext in Figurfarbe mit schwarzer Kontur über dem Kopf, Ortsname beim Betreten eingeblendet",
+  "Satzzeile („Nimm Paket“), 3×3-Verben mit gemessen 10 px Spaltenabstand, Inventar mit Symbolen, Fadenkreuz-Cursor, dessen Mittellücke auf der oberen rechten Ecke des Pakets liegt",
+  "Paket am Kai in leichter Draufsicht: helle Oberseite (2 px), Vorderseite mit Schnurkreuz, Schattenzeile auf dem Pflaster"
+ ],
+ "camera": "Seitenansicht wie eine Bühne, feste Kamera, Kai als begehbarer Boden",
+ "resolution": "320×200 (Szene 320×152 + Leiste 48), 256 Farben aus einer Palette, jeder Kanal 6 Bit (262.144 mögliche Farben), quadratische Pixel (×3 = 960×600 in der 1280×720-Aufnahme)",
+ "pipeline": [
+  {
+   "step": "Hintergrund erzeugen",
+   "tool": "genimg (gpt-image)",
+   "detail": "1536×1024, Stilblock beschreibt VGA-PC, 320×200, 256 Farben, Verläufe aus vielen Stufen, sparsames Dithering, Bühnen-Komposition mit Inhalt im mittleren Band, Leuchtturm ohne gemalte Strahlen. Ein Versuch genügte. Prompt: prompts/bg.txt"
+  },
+  {
+   "step": "Auf 320 Breite bringen und zuschneiden",
+   "tool": "scripts/build_bg.py",
+   "detail": "BOX-Verkleinerung 4,8:1 auf 320×213 (das Pseudo-Pixelraster des Modells ist ungleichmäßig, Einrasten per mode passt hier nicht), gemalten Schornsteinrauch entfernen: das Rechteck x 13–31, Zeilen 9–39 wird durch Himmel derselben Zeilen 19 px weiter rechts ersetzt (gleiche Textur, keine Sterne darin; erste Fassung: Zeilen-Median, siehe pitfalls), Zeilen 20–171 als Szene 320×152 ausschneiden"
+  },
+  {
+   "step": "Masken für Palettenanimation",
+   "tool": "scripts/build_bg.py",
+   "detail": "Wasser: ganze Wasserfläche (Horizont bis Kai) über den Farbton (195–345°, Sättigung > 0,12) plus warme Spiegelungen in Sonnen-, Leuchtturm- und Horizontstreifen; ausgenommen werden nur Gegenstände samt Schatten über 13 von Hand nachgezeichnete Polygone (Boote, Masten, Pfähle, Steg, Felsen, Landzunge, Kisten) und 4 Takelage-Linien, alles um 1 px erweitert. Wasserpixel mit einem Nicht-Wasser-Nachbarn bilden den Rand (1112 von 5483 Pixeln im Farbzyklus). Dazu Lampe, Laternenglas und Lichthof, Fenster, Sterne (heller als lokaler Median)"
+  },
+  {
+   "step": "Palette bauen (256 Einträge)",
+   "tool": "scripts/build_bg.py",
+   "detail": "Feste Aufteilung: 0–11 Oberfläche, 12–39 Figur/Paket/Inventar, 40–43 Rauch (Lichtkante, Körper, Unterkante, Zerfall), 44–91 Wasser (5 blaue + 3 Reflex-Tonstufen × 6), 92–121 Wasserrand (5 blaue Tonstufen × 6 mit halbem Glitzer-Ausschlag), 122–129 Lampe, 130–133 Sterne, 134–141 Laterne, 142–145 Fenster, 146–165 Lichttöne für den Kegel, 166–255 statische Farben (90, k-means in Oklab). Alle Einträge werden mit vga6() auf 6 Bit je Kanal gerundet (v6 = round(v·63/255), zurück als v6<<2 | v6>>4), die statischen Farben vor dem Quantisieren und Dithern, alle übrigen vor der Suche der Aufhell-Tabelle. Ausgabe: Indexbild bg_index.png (Graustufe = Index), palette.json"
+  },
+  {
+   "step": "Lichtkegel ohne neue Farben",
+   "tool": "scripts/build_bg.py",
+   "detail": "beam.png enthält je Pixel Stärke, Abstand zur Lampe und Seite; Kegel 130 px lang, wird bis etwa zur Mitte breiter und läuft dann spitz aus (halbe Höhe 1 + 0,09·d·(1 − (d/130)²)). In den Zeilen des Lampenglases beginnt der Kegel direkt neben den Glasspalten (x 292–297), darüber und darunter bleibt der Turm gesperrt. beam_lut.png bildet jeden Index in 5 Stufen auf einen helleren Index ab (additives warmes Licht 9/18/28/39/52 %). Die Zieltöne sind 20 eigene Paletteneinträge (k-means über alle Pixel im Kegel). Erste Fassung: 200 px, 3 Stufen, durchgehend gedithert. scripts/beam_preview.py rechnet den Shader in NumPy nach und zeigt den Kegel für mehrere Drehwinkel ohne Godot-Lauf"
+  },
+  {
+   "step": "Figur erzeugen",
+   "tool": "genimg (gpt-image) + Referenzblatt",
+   "detail": "Ein Bild mit zwei Reihen: 6 Laufbilder, 4 Steh-/Sprech-/Blinzelbilder, damit Lauf und Stand gleich aussehen. Prompt: prompts/badger_small.txt. Zwei frühere Versuche (prompts/walk.txt, walk2.txt) verworfen"
+  },
+  {
+   "step": "Figur auf 40 px (materialtreu)",
+   "tool": "scripts/build_badger.py",
+   "detail": "Rohpixel per Oklab-Regeln einem Material zuordnen (Schal, Weste/Mütze, Paket, Hell, Leder, Fell, Kontur); je Reihe ein gemeinsames Zielraster, dessen Ursprung am Kopf hängt (Schwerpunkt nur im oberen Viertel, damit der Gestik-Arm nicht zählt); je Zielpixel gewinnt das Material mit den meisten Rohpixeln, der Ton ist das Mittel nur dieses Materials, gerundet auf eine Tonleiter je Material (16 Farben). Danach Krümel- und Mehrheitsfilter für Weste, Schal und Fell, Paket als Fläche mit dunkler Schnur (Kreuz) und Unterkante neu gesetzt, 1-px-Kontur"
+  },
+  {
+   "step": "Laufzyklus und Sprechbilder korrigieren",
+   "tool": "scripts/build_badger.py, build_sprites.py",
+   "detail": "Laufen: von 6 KI-Bildern die 4 mit unterschiedlicher Beinstellung (0 Kontakt, 2 Durchgang, 3 Aufwärts, 5 Ausgreifen); in Bild 3 die Beinzeilen um 2 px nach vorn (Standbein war zu weit hinten). Vorschub je Bildwechsel 3/3/2/2 px aus der gemessenen Lage des Standfußes, in sprites.json (step_px). Auf und Ab: Laufzellen 41 statt 40 px hoch; im Bild „Aufwärts“ Kopf, Rumpf und Oberschenkel 1 px höher, Zeile 33 verdoppelt, Unterschenkel und Füße unverändert. Stehen: Beinzeilen aller Stehbilder aus Bild 3; Sprech- und Blinzelbilder = Körper aus Bild 0 + Gesichtsfeld (Mund, Auge) + Gestik-Arm des jeweiligen Bildes. Übergangsbild beim Anhalten: Zeilen 0–33 aus dem letzten Laufbild (am Kopf ausgerichtet), Beine aus dem Stehbild, neue Kontur; die Stehzellen sind dafür 1 Spalte breiter (32 px), weil der Schal des Laufbilds weiter nach hinten weht"
+  },
+  {
+   "step": "Inventar-Symbole und Paket",
+   "tool": "genimg + build_sprites.py, Code",
+   "detail": "4 Gegenstände in einem Bild (Seekarte, Schlüssel, Brief, Kompass), auf höchstens 24×15 verkleinert, 10 eigene Farben, Kontur. Paket am Kai 14×11 als Pixelmuster im Skript aus den Paket- und Lederfarben der Figur: helle Oberseite (2 px) mit Längsschnur, Vorderseite mit Schnurkreuz und Schattenseite, darunter eine Schattenzeile 1 px nach rechts versetzt in der statischen Hintergrundfarbe, die dem halb so hellen Pflaster am nächsten kommt (keine neue Farbe). Lage (149, 138) in sprites.json, main.gd setzt Paket und Cursorziel daraus"
+  },
+  {
+   "step": "Rauch",
+   "tool": "Code (demo/scripts/smoke.gd)",
+   "detail": "4 Stufen (4×3, 6×4/6×5, 9×6/8×6, zerfallend 10×6/11×6) mit je 2 Varianten als Textmuster mit den Zeichen H/B/S von Hand gesetzt; Töne aus den Rauch-Einträgen 40–43, ab 1,2 s und 2,3 s eine Stufe dunkler. Ein Wölkchen alle 0,5 s, quillt am Topf auf (Steigen 9 px/s, aus dem Stand mit Zeitkonstante 0,4 s), der Wind schiebt es nach rechts (x + 2,0·t + 2,4·t²) und drückt die Fahne flach (y + 0,9·t²); nach 3 s liegt die Mitte bei etwa x 50, y 4. Positionen auf ganze Pixel gerundet"
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/probe.py, measure_ui.py, beam_preview.py, tools/capture.py",
+   "detail": "probe.py nimmt in Basisauflösung auf, zählt Farben je Bild (183–203) und Farben außerhalb des 6-Bit-DAC-Rasters (0 in allen 180 Bildern) und schreibt mit --feet je Bild Kopfoberkante, Kopf-Schwerpunkt und Fußzeilen 143–146 des Dachses: jedes Laufbild genau 3 Aufnahmebilder lang, Kopfoberkante 106 im Bild „Aufwärts“ und 107 sonst, Standfuß über die Laufbilder auf ±1 px fest (Zeile 146: 272–275, 270–278, 272–276, 271–276, 271–275), Fußzeilen in allen 93 Stehbildern einschließlich Übergangsbild gleich, Kopf beim Anhalten ohne Sprung (205,3 → 205,3). measure_ui.py misst die Verbspalten an der gerenderten Tinte (4–49 | 60–110 | 121–170, Pfeil 178–182, Inventar 188–315). Wasser: je Palettenschritt ändern sich rund 4000 der 5483 Wasserpixel (ohne Sprechtext darüber). Aufnahme mit Forward+, mobile und gl_compatibility bitgleich (0 abweichende Pixel in 180 Bildern); Poster bitgleich zu Bild 108 einer eigenen Aufnahme"
+  }
+ ],
+ "godot": [
+  "Viewport 320×200, stretch mode viewport, scale_mode integer, Standardfilter Nearest, snap_2d_transforms/vertices_to_pixel an; Fenster 1280×800; quadratische Pixel (keine 4:3-Streckung)",
+  "Hintergrund: Sprite2D mit Indexbild und canvas_item-Shader shaders/indexed.gdshader: Index per texelFetch lesen, Farbe aus 256×1-Palettentextur holen, im Lichtkegel Index über Aufhell-Tabelle tauschen. Stufe = Stärke × 5,8; der Nachkommateil wird auf einen Übergang der Breite 0,25 um die Stufengrenze zusammengedrückt und erst dann mit der Bayer-4×4-Schwelle verglichen: flache Bänder, Dithering nur an den Grenzen. Stufenzahl, Verstärkung und Bandbreite setzt main.gd aus palette.json → beam",
+  "Palette: main.gd schreibt jedes Bild alle 256 Einträge in ein Image (RGBA8) und ruft ImageTexture.update(); jeder Kanal geht dabei durch _dac() und landet wie beim VGA-DAC auf 64 Stufen, auch die berechneten Flackerwerte von Laterne und Fenster. Nicht nachgebildet: Register werden einmal je Bild gesetzt, nicht zeilenweise",
+  "Wasser und Wasserrand: Rotation in ganzen Schritten (7,5 Schritte/s = alle 4 Bilder), Sterne 3 Schritte/s, Lampe rotiert synchron zum Drehwinkel des Leuchtfeuers (Umdrehung 4,8 s); Laterne und Fenster: Helligkeitsfaktor aus geglättetem Zufallsrauschen mit festem Seed",
+  "Figur: ein Sprite2D, wechselt zwischen badger_walk.png (4 Bilder in 31×41-Zellen, 10 fps, jedes Bild 3 Aufnahmebilder) und badger_stand.png (5 Bilder in 32×40-Zellen: stehen, sprechen ×2, blinzeln, Übergangsbild; Sprechfolge mit 6 fps), flip_h für die Laufrichtung, Zellen über die Fußlinie (y=147) und den Kopfanker ausgerichtet. Position je Laufbild um den Vorschub aus sprites.json (3/3/2/2 px = 25 px/s) versetzt; Start bei x=276, nach 29 Laufbildern (2,9 s) Halt bei x=206 im Kontaktbild, dann 3 Aufnahmebilder Übergangsbild, 3 Blinzeln, ab 3,1 s Sprechen",
+  "Rauch (smoke.gd): handgesetzte Puff-Muster als Konstanten (H/B/S), je Pixel draw_rect in Palettenfarbe, deterministisch aus der Zeit; Möwe (gull.gd) per _draw als 1-px-Rechtecke in Palettenfarben",
+  "Oberfläche (ui.gd): Pixel Operator 8 / HB 8 mit FontFile.antialiasing = NONE, hinting NONE, subpixel_positioning DISABLED – dadurch keine Mischfarben; Sprechtext mit 8-fach-Kontur; Verbspalten bei x=3/59/120 (gemessen 10 px Abstand), Pfeile 5×3 bei x=180, Inventar ab x=188 mit 32-px-Feldern; großes Ö als „O“ + zwei 1-px-Punkte mit einer Leerzeile Abstand; Cursor wechselt mit 7,5 Hz die Farbe",
+  "Zeit über delta aufsummiert, alle Zufallswerte mit festem Seed; Ablauf: Ortsname „Hafen von Lornholm“ 0–2,6 s oben eingeblendet, Dachs kommt von rechts, bleibt bei x=206 stehen, blinzelt, spricht ab 3,1 s; Cursor zeigt nacheinander „Gehe zu Hafen“, „Gehe zu Leuchtturm“, „Rede mit Dachs-Kurier“ und „Nimm Paket“ (Mittellücke des Fadenkreuzes auf der oberen rechten Paketecke, die Arme laufen nur über die Kontur); Lage des Pakets aus sprites.json"
+ ],
+ "techniques": [
+  "farbzyklus",
+  "ki-spritesheet",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 3,
+  "effort": 3,
+  "text_adventure": 5,
+  "mobile": 5
+ },
+ "ratings_note": "Der Hintergrund traf den Stil im ersten Versuch und lässt sich mit dem Skript verlässlich auf 320×200 und eine echte 256er-Palette mit 6 Bit je Kanal bringen; die Lebendigkeit (Farbzyklus, Lichtkegel, Rauch, Oberfläche) kommt aber aus Code und Shader, nicht aus der KI. Die Figur zeichnet das Modell immer etwa 70 Pixel hoch, mit unsauberen Laufphasen, ohne Auf und Ab und mit anders gezeichnetem Rumpf in Lauf- und Stehbildern; erst materialtreue Verkleinerung, Beinkorrektur, gesetztes Auf und Ab, Übergangsbild und aus Teilen gesetzte Sprechbilder ergeben eine ruhige 40-px-Figur (consistency 3). Jeder neue Hintergrund braucht von Hand gezeichnete Ausnahme-Polygone für den Farbzyklus und eine Retusche gemalter Effekte (effort 3). Mobile geprüft: Aufnahmen mit --rendering-method mobile und gl_compatibility sind bitgleich zum Forward+-Bild (0 abweichende Pixel in 180 Bildern, nach dieser Überarbeitung erneut gemessen); die Szene ist ein Draw-Call mit einfachem Shader plus wenige Rechtecke.",
+ "verdict": "Sehr gut geeignet für das erste Spiel: Ein Textadventure braucht vor allem Hintergründe, und genau die gelingen hier am besten. Ein Bild pro Ort plus etwa eine Stunde Polygonarbeit für die Wassermaske ergibt eine lebendige Szene (Wasser, Licht, Rauch) ohne Animationsaufwand. Wer Figuren braucht, sollte sie wenige und klein halten und die Nacharbeit (Laufphasen prüfen, Sprechbilder aus Teilen) einplanen; die Skripte dafür sind wiederverwendbar.",
+ "pitfalls": [
+  "Die erste Fassung hielt die Hardware-Regel aus dem Auftrag (256 aus 262.144 Farben, 6 Bit je Kanal) nicht ein und nannte sie nicht: Nur 195 der 768 Kanalwerte der Palette lagen auf dem 64er-Raster, und main.gd skalierte die Laternen- und Fensterfarben jedes Bild stufenlos auf beliebige 8-Bit-Werte; style.json nannte das Setzen der Palette trotzdem „wie das Setzen der VGA-DAC-Register“. Jetzt runden build_bg.py, build_sprites.py (vga6) und main.gd (_dac) jeden Kanal auf 6 Bit; probe.py findet in allen 180 Bildern 0 Farben außerhalb des Rasters. Die mittlere Abweichung des Hintergrunds zur Vorlage steigt dadurch kaum (Oklab 0,0164 → 0,0169, ohne den retuschierten Bereich gemessen), das Flackern der Laterne hat jetzt sichtbar weniger Zwischenstufen. Nicht nachgebildet: Die Palette wird einmal je Bild gesetzt, Rasterzeilen-Effekte (Palettenwechsel mitten im Bild) gibt es nicht.",
+  "Das Bildmodell zeichnet Figuren immer mit etwa 70 Kunstpixeln Höhe (Pseudo-Raster ca. 5,3 px bei 1536×1024), auch wenn 36 oder 40 px verlangt werden; drei Figurenbilder waren nötig. Die 40-px-Fassung entsteht durch Verkleinern; Augen und Mund werden dabei zu Einzelpixeln, Knöpfe und Taschen der Weste verschwinden.",
+  "Einfaches BOX-Verkleinern mit k-means-Palette (erste Fassung) mischte Weste, Riemen und Fell zu Tarnmuster-Rauschen, das zwischen den Laufbildern flimmerte; das Paket unter dem Arm las sich als beiger Bauchfleck. Gelöst durch materialtreue Verkleinerung und neu gesetztes Paket (Pixeländerungen je Laufbildwechsel jetzt 229–361 statt 310–482, überwiegend echte Bewegung; je Sprechbildwechsel 51–98 statt 272–663 einschließlich des alten Versatzes).",
+  "Die 6 KI-Laufbilder sind kein sauberer Zyklus: Bild 0, 1 und 4 haben fast dieselbe Beinstellung, und im Bild „Aufwärts“ steht das Standbein ca. 3 px zu weit hinten. Mit allen 6 Bildern und 47 px/s rutschten die Füße über den Kai. Jetzt 4 Bilder, 2 px Beinkorrektur und Vorschub je Bild; der Standfuß bleibt auf ±1 px stehen. Ein 4-Bild-Zyklus wirkt etwas gröber als die 6–8-Bild-Zyklen der Vorbilder. Die KI-Laufbilder haben außerdem alle dieselbe Kopfhöhe (bis zur zweiten Prüfung lag die Kopfoberkante in allen 87 Laufbildern auf y=107, der Gang wirkte steif); das Auf und Ab um 1 px im Bild „Aufwärts“ ist nachträglich gesetzt, indem eine Beinzeile verdoppelt wird.",
+  "Die erste Fassung richtete die Stehbilder am Schwerpunkt der oberen 45 % aus; der erhobene Gestik-Arm zählte mit, Sprechbild 1 saß 2–3 px versetzt und der Dachs hüpfte beim Sprechen seitlich. Zusätzlich hat die KI Stehbild 0 mit ca. 1 px anderem Kopf-Fuß-Abstand gezeichnet. Gelöst durch Kopfmessung nur im oberen Viertel, gemeinsame Beinzeilen und Sprechbilder aus Körper (Bild 0) + Gesicht + Arm.",
+  "Lauf- und Stehbilder hat die KI mit verschieden gezeichnetem Rumpf gemalt (im Stehen sitzt das Paket tiefer und weiter vorn, der Rumpf ist breiter, der Schal hängt statt zu wehen). Bis zur zweiten Prüfung sprangen beim Anhalten Rumpf, Paket und das hintere Bein (4–5 px) im selben Bild. Jetzt steht 3 Aufnahmebilder lang ein Übergangsbild aus Laufrumpf und Stehbeinen dazwischen: Erst schließen die Beine, dann wechselt der Rumpf. Der Rumpfwechsel selbst bleibt sichtbar, nur kleiner; ganz verschwinden würde er erst, wenn Lauf- und Stehbilder aus demselben Rumpf gebaut würden (dann verlieren die Sprechbilder ihre Gesten aus den KI-Bildern). Im Übergangsbild bleibt vom Schwanz des Laufbilds ein 2 px kurzer Stummel stehen.",
+  "Das Pseudo-Pixelraster im Hintergrundbild ist ungleichmäßig (Teilung schwankt zwischen etwa 5,8 und 6,6 px); Einrasten per mode ging nicht, die BOX-Verkleinerung funktionierte nur, weil die Vorlage flächig gemalt war.",
+  "3:2-Bild gegen 320×152-Szene: Es muss ein Streifen ausgeschnitten werden. Die Anweisung, den Inhalt ins mittlere Band zu legen, wurde nur teilweise befolgt; der gemalte Schornsteinrauch musste wegretuschiert werden. Die erste Retusche setzte x 11–34, Zeilen 0–40 auf den Median der Nachbarspalten: die flache Fläche wurde beim Quantisieren zu einem Rechteck aus völlig gleichmäßigem Bayer-Muster, das links neben dem Rauch zu erkennen war, und die oberste Zeile des Schornsteintopfs fehlte. Jetzt wird nur das Rechteck um den Rauch durch Himmel derselben Zeilen 19 px weiter rechts ersetzt; das Dithering sieht dort aus wie im übrigen Himmel. Das funktioniert, weil der Himmel neben dem Schornstein gleichmäßig ist; bei Rauch vor Wolken oder Gebäuden müsste man von Hand retuschieren.",
+  "Farbzyklus-Masken sind Handarbeit: Schatten von Booten und Steg, Bootsrümpfe, Felsen und ferne Hügel sind ebenso blau-violett wie das Wasser. Die erste Fassung nutzte Rechteckbereiche; dort blieb Wasser links von x=100 statisch und das Glitzern endete an senkrechten Kanten. Jetzt 13 Polygone + 4 Linien für diesen einen Hintergrund. Bewusst statisch bleiben das Wasser unter dem Steg, die Bootsschatten und ein 3 px breiter Streifen entlang jeder Takelage-Linie.",
+  "Für den weichen Maskenrand (30 Einträge) und eine dritte Reflex-Tonstufe (6) musste die statische Palette von 126 auf 90 Farben schrumpfen; die mittlere Abweichung zur Vorlage stieg messbar, aber kaum sichtbar (Oklab 0,0152 → 0,0163).",
+  "Der Leuchtturmstrahl ist keine reine Palettenrotation: Die Lampe rotiert, der Kegel wird über eine Aufhell-Tabelle gezeichnet. Reines Mischen mit der statischen Palette ergab schmutzige Grautöne; erst 20 eigene Lichttöne und additives Licht sahen nach Licht aus. Die erste Fassung (200 px lang, 3 Stufen, durchgehend Bayer-gedithert) endete in einem breiten, dünnen Punktefeld, das als Rasterrechteck im Himmel las. Jetzt 130 px, spitz auslaufend, 5 Stufen als flache Bänder mit Dithering nur an den Stufengrenzen. Beim Drehen zur Kamera hin wird der Kegel kürzer und endet dann mit einem kurzen geditherten Übergang statt einer Spitze. Bis zur zweiten Prüfung begann der Kegel 2 px (links) bzw. 3 px (rechts) neben dem Lampenglas und schwebte losgelöst im Himmel, weil der Sperrbereich um den Turm mittig um x=295 lag, das Glas aber bei x 292–297; jetzt setzt er auf beiden Seiten direkt am Glas an.",
+  "Pixelschrift mit 8 px: Großbuchstaben mit Umlaut haben nur x-Höhe, „Öffne“ las sich wie „öffne“. Gelöst durch „Offne“ + zwei 1-px-Punkte in Verbfarbe mit einer Leerzeile Abstand über dem O (ui.gd, _umlaut_text, gilt für Ä/Ö/Ü am Wortanfang). Für längere Texte mit vielen großen Umlauten wäre eine eigene Bitmapschrift besser.",
+  "Bei 8-px-Schrift sind die Verbspalten knapp: „Schau an“ ist 51 px breit, und die Schrift setzt ein Wortleerzeichen 6 px breit. Die erste Fassung (Spalten 3/56/112, Inventarfelder 35 px) ließ nur 5 px zwischen den Spalten, „Schau an Rede mit“ las sich wie eine Zeile, „Schließe“ stieß fast an den Pfeil. Jetzt Inventarfelder 32 px (Symbol 26 px mit 2 px Luft), Pfeile 5×3 statt 7×4: gemessen 10 px zwischen den Verbspalten, 7 px bis zum Pfeil, 5 px bis zum Inventar. Mehr Luft ginge nur mit einer schmaleren Verbschrift oder ohne Pfeile.",
+  "Das Paket am Kai war zuerst 11×8 px klein und wurde vom Fadenkreuz verdeckt; die zweite Fassung (13×9) war ein flaches Rechteck von vorn ohne Oberseite und Schatten und wirkte wie ein aufgeklebtes Inventarsymbol, und der Cursor stand 6 px daneben, sodass „Nimm Paket“ im Spiel nichts angewählt hätte. Jetzt 14×11 mit heller Oberseite und Schattenzeile; die Mittellücke des Fadenkreuzes liegt auf der oberen rechten Ecke, die Arme laufen nur über die Kontur. Die Schattenzeile ist 1 px schmal und auf dem dunklen Pflaster nur bei genauem Hinsehen zu erkennen.",
+  "Der Rauch ist Code, kein Teil der Vorlage. Die erste Fassung zeichnete einfarbige Scheiben (Kreise aus 1-px-Rechtecken) und wirkte wie Programmierergrafik. Jetzt handgesetzte Puff-Muster mit Lichtkante, Körper und Unterkante; das braucht 4 Rauch-Einträge in der Palette und für jede neue Rauchquelle (andere Größe, anderer Wind) eigene Muster. Ein Wölkchen erscheint beim Wechsel der Größenstufe sprunghaft größer, wie bei Sprite-Rauch üblich. Die zweite Fassung stieg mit 11 px/s und lief nach etwa 2,5 s noch hell über den oberen Bildrand, wo sie abgeschnitten wurde; jetzt steigt sie mit 9 px/s, biegt stärker mit dem Wind ab und erreicht den dunkelsten Ton bei y ≈ 6–7, die Mitte bleibt bis zum Verschwinden bei y ≥ 3.",
+  "Seitenverhältnis: Original-VGA zeigte 320×200 auf 4:3-Monitoren, jedes Pixel war 1,2-mal so hoch wie breit; die 4:3-Fassung wäre 1,2-mal höher (bei ×3 960×720 statt 960×600). Bewusst gewählt sind quadratische Pixel: (1) bei ×3 bräuchte jede Pixelzeile 3,6 Bildschirmzeilen, also abwechselnd 3 und 4 Zeilen oder Filterung – beides verletzt das harte Pixelraster; ganzzahlig geht 4:3 erst mit 5× breit und 6× hoch (1600×1200), das passt nicht in 1280×720 und kaum auf ein Smartphone im Querformat. (2) Hintergrund (KI-Bild 3:2 → 320×213) und Figur wurden mit quadratischen Pixeln erzeugt, verkleinert und gemessen; gestreckt würden Leuchtturm, Fässer und Dachs 20 % höher und schmaler als gezeichnet. Folge: Das Bild wirkt etwas flacher als damals auf dem Röhrenmonitor. Wer den alten Eindruck will, muss die Grafik von Anfang an für hohe Pixel zeichnen und mit 5×6 skalieren.",
+  "Die erste Fassung lief mit 12 Laufbildern/s; bei 30 fps hält das jedes Bild abwechselnd 3 und 2 Aufnahmebilder lang (ungleichmäßiger Gang). Jetzt 10 Bilder/s (je 3 Aufnahmebilder), 29 statt 37 Laufbilder, damit der Dachs weiterhin vor 3,1 s steht und spricht; er geht dadurch etwas langsamer (25 statt 30 px/s). Die Cursorfarbe wechselte mit 8 Hz (3,75 Aufnahmebilder), jetzt 7,5 Hz."
+ ],
+ "lessons": [
+  "Ein Hintergrund-Prompt, der Hardware und Technik beschreibt (VGA-PC, 320×200, 256 Farben, Verläufe aus vielen Stufen, sparsames Dithering, Bühnenkomposition), liefert ohne Namen von Spielen eine stimmige Szene.",
+  "BOX 4,8:1 + k-means in Oklab + geordnetes Dithering nur dort, wo zwei benachbarte Palettenfarben nah beieinander liegen und die Umgebung ruhig ist, ergibt glaubwürdige VGA-Verläufe schon mit 90 statischen Farben.",
+  "Indexbild + 256×1-Palettentextur im canvas_item-Shader ist echte Palettenanimation in Godot: Das Bild bleibt unverändert, GDScript setzt pro Bild 256 Einträge. Wiederverwendbar für jeden Ort.",
+  "Palettenbudget vorab fest aufteilen und alles (Figur, Schrift, Symbole, Rauch) in diese Palette zwingen; probe.py misst 189–210 Farben je Bild.",
+  "Lichteffekte in 256 Farben: Aufhell-Tabelle (Index → hellerer Index) mit Bayer-Dithering statt Transparenz, Zieltöne als eigene Paletteneinträge.",
+  "Wassermaske: die ganze Fläche über den Farbton nehmen und nur Gegenstände samt Schatten als Polygone (+1 px) ausnehmen, nicht umgekehrt Rechtecke einschließen. Randpixel bekommen eigene Einträge mit halbem Glitzer-Ausschlag, dann läuft das Glitzern zu Booten und Pfählen hin aus.",
+  "Wasserglitzern: Phase je Pixel = (x // Strichlänge der Zeile + Zeilenversatz) mod 6 mit festem Seed, Einträge je Tonstufe mit Helligkeitsbuckel; Reflexsäulen und Horizontstreifen eigene, stärkere Stufen.",
+  "Materialtreue Verkleinerung für KI-Figuren: Rohpixel zuerst Materialien zuordnen, je Zielpixel entscheidet die Mehrheit, der Ton kommt nur aus diesem Material und wird auf eine kurze Tonleiter je Material gerundet. Keine Mischfarben über Materialgrenzen, Kostümteile bleiben flächig (build_badger.py).",
+  "Alle Bilder einer Figurenreihe auf einem gemeinsamen Zielraster verkleinern, dessen Ursprung am Anker hängt; den Anker am Kopf nur im oberen Viertel messen, damit Gesten ihn nicht verschieben.",
+  "Laufen: KI-Laufbilder nach Beinstellung auswählen und ordnen, den Standfuß je Bild messen und den Vorschub je Bildwechsel daraus ableiten (hier 3/3/2/2 px) statt konstanter Geschwindigkeit; mit probe.py --feet prüfen, ob der Standfuß über mehrere Bilder an derselben Stelle bleibt.",
+  "Sprechen wie bei den Vorbildern aus Teilen: Körper aus einem Grundbild, nur Gesichtsfeld und Gestik-Arm aus dem jeweiligen KI-Bild, Beinzeilen gemeinsam. Der Körper flimmert dann nicht und die Füße stehen still.",
+  "Pixelschrift in Godot ohne Mischfarben: FontFile laden und antialiasing NONE, hinting NONE, subpixel_positioning DISABLED setzen, Text auf ganze Pixel legen. Fehlende Versal-Umlaute mit zwei 1-px-Punkten ergänzen; Spaltenabstände an der gerenderten Pixelbreite messen, nicht schätzen.",
+  "Inventar-Symbole: vier Gegenstände in einem 1024er-Bild, danach je Viertel den größten Block ausschneiden (Splitter der Nachbarn fallen weg). Das Bild kam 1254×1254 statt 1024×1024 zurück – Größe immer messen.",
+  "Lichtkegel in 256 Farben ohne Punkteraster: mehr, feinere Aufhellstufen (5 statt 3) als flache Bänder und Bayer-Dithering nur in einem schmalen Übergang an der Stufengrenze (Nachkommateil der Stufe vor dem Schwellwertvergleich auf ±0,125 um 0,5 zusammendrücken); Kegel zum Ende verengen statt in einer breiten schwachen Fläche auslaufen lassen. Einen NumPy-Nachbau des Shaders (beam_preview.py) zum schnellen Ausprobieren nutzen.",
+  "Rauch in Pixel-Art: wenige von Hand gesetzte Puff-Muster mit drei Tönen (Lichtkante oben links, Körper, Unterkante) und einer zerfallenden Endstufe wirken gezeichnet; mit dem Alter Muster vergrößern und Töne Richtung Himmel verschieben. Das Steigen mit einer Zeitkonstante anfahren, damit das jüngste Wölkchen am Schornstein hängt.",
+  "Spaltenabstände in Verbleisten am Wortleerzeichen der Schrift messen: Sie müssen deutlich größer sein (hier 10 px gegen 6 px Leerzeichen), sonst lesen sich zwei Verben nebeneinander als ein Ausdruck. measure_ui.py liest die Spalten aus ui.gd und misst die Tinte im gerenderten Bild.",
+  "VGA-DAC ehrlich nachbilden: die Palette mit vga6 (6 Bit je Kanal, v6<<2 | v6>>4) runden, bevor quantisiert, gedithert und die Aufhell-Tabelle gesucht wird, und Farben, die erst zur Laufzeit entstehen (Flackern, Überblendungen), im Skript ebenfalls runden. probe.py prüft jeden Ausgabekanal auf das Raster; das kostet kaum Bildqualität.",
+  "Gemalte Effekte (Rauch) aus einem Hintergrund entfernen: die Fläche mit Himmel derselben Zeilen aus der Nachbarschaft ersetzen (versetzt kopieren, ohne Sterne), nicht mit einem Zeilen-Median füllen; flache Flächen werden beim Dithern zu auffällig regelmäßigen Mustern.",
+  "Wechsel zwischen zwei KI-Bildreihen (Laufen → Stehen) mit einem Übergangsbild aus Teilen beider Reihen (Rumpf der alten, Beine der neuen) entschärfen, am Kopfanker ausgerichtet und mit neu gesetzter Kontur. Auf und Ab in einem KI-Laufzyklus lässt sich nachträglich setzen, indem man im Hoch-Bild eine Oberschenkelzeile verdoppelt; Füße und Vorschub bleiben dann unverändert.",
+  "Bewegte Effekte am Bildrand (Rauch, Möwen) vorab in Python durchrechnen: Bahn und Tonstufen je Alter ausgeben und so wählen, dass der Effekt im Bild zerfällt statt am Rand abgeschnitten zu werden."
+ ],
+ "assets": [
+  {
+   "file": "assets/bg_index.png",
+   "kind": "background",
+   "made_with": "gpt-image + build_bg.py (BOX 4,8:1, 256er-Palette, Farbzyklus-Indizes über Farbton + Ausnahme-Polygone)",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/bg_preview.png",
+   "kind": "background",
+   "made_with": "bg_index.png mit Grundpalette als RGB (Ansicht)",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/palette.json",
+   "kind": "palette",
+   "made_with": "build_bg.py + build_sprites.py (Bereiche, Gruppen, 256 Grundfarben auf 6 Bit je Kanal)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/palette_sheet.png",
+   "kind": "palette",
+   "made_with": "palette_sheet.py (16×16 Felder)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/beam.png",
+   "kind": "effect",
+   "made_with": "build_bg.py (Lichtkegel: Stärke, Abstand, Seite; 130 px, spitz auslaufend)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/beam_lut.png",
+   "kind": "effect",
+   "made_with": "build_bg.py (Aufhell-Tabelle 256×5, Zieltöne aus 20 eigenen Paletteneinträgen)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/badger_walk.png",
+   "kind": "sprite",
+   "made_with": "gpt-image mit Referenzblatt + build_badger.py (materialtreu 40 px, 16 Farben, Kontur) + build_sprites.py; 4 Bilder in 31×41-Zellen (KI-Bilder 0, 2, 3, 5; Bild 3 mit 2 px Beinkorrektur und 1 px Auf und Ab), Vorschub je Bild in demo/art/sprites.json",
+   "prompt": "assets/raw/badger_small.json"
+  },
+  {
+   "file": "assets/badger_stand.png",
+   "kind": "sprite",
+   "made_with": "gpt-image mit Referenzblatt + build_badger.py + build_sprites.py, 5 Bilder in 32×40-Zellen (stehen, sprechen ×2, blinzeln, Übergangsbild aus Laufrumpf und Stehbeinen); Körper aus Bild 0, Gesicht und Gestik-Arm aus dem jeweiligen Bild, Beine gemeinsam",
+   "prompt": "assets/raw/badger_small.json"
+  },
+  {
+   "file": "assets/items.png",
+   "kind": "ui",
+   "made_with": "gpt-image + build_sprites.py (4 Symbole 26×17, 10 Farben)",
+   "prompt": "assets/raw/items.json"
+  },
+  {
+   "file": "assets/parcel.png",
+   "kind": "prop",
+   "made_with": "Pixelmuster 14×11 im Skript (build_sprites.py) aus Paket-, Hell- und Lederfarben der Figur, Oberseite 2 px, Schattenzeile in einer statischen Hintergrundfarbe",
+   "prompt": ""
+  },
+  {
+   "file": "demo/scripts/smoke.gd",
+   "kind": "effect",
+   "made_with": "Code: handgesetzte Puff-Muster (4 Größen × 2 Varianten, 3 Töne aus den Rauch-Einträgen 40–43), deterministisch aus der Zeit, vom Wind gebogen, zerfällt im Bild",
+   "prompt": ""
+  },
+  {
+   "file": "demo/scripts/gull.gd",
+   "kind": "effect",
+   "made_with": "Code: Möwe, 3 Flügelstellungen als Pixelmuster",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schriften Pixel Operator 8 und Pixel Operator HB 8 (Jayvee Enaguas)",
+   "license": "CC0-1.0",
+   "source": "https://www.dafont.com/pixel-operator.font (Lizenztext: demo/fonts/PixelOperator-LICENSE.txt)"
+  }
+ ],
+ "image_generations": 5,
+ "tool_issues": [
+  "tools/genimg.py (Backend codex, codex-cli 0.162.0): Bei --size 1024x1024 kam assets/raw/items.png mit 1254×1254 Pixeln zurück; genimg.py meldet die Abweichung nicht. Umgangen, indem build_sprites.py die Symbole nach Inhalt ausschneidet statt feste Koordinaten anzunehmen."
+ ],
+ "status": "done"
+}

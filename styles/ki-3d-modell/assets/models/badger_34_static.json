@@ -1,0 +1,32 @@
+{
+ "name": "BadgerTSR",
+ "dir": "work/tsr/badger_34",
+ "input_faces": 123194,
+ "input_vertices": 61597,
+ "components": [
+  123186,
+  8
+ ],
+ "components_removed": 1,
+ "faces_removed": 8,
+ "projected_share": 0.287,
+ "projection": {
+  "D": 1.8,
+  "iou": 0.981,
+  "iou_default_1.9m_40deg": 0.8822
+ },
+ "tilt_deg": 8.0,
+ "yaw_sym_err": 0.02251,
+ "yaw_deg": -28.0,
+ "scale": 1.0135,
+ "size_m": [
+  0.642,
+  0.731,
+  1.011
+ ],
+ "tris": 7998,
+ "vertices": 3997,
+ "t_bake": 0.23,
+ "glb_bytes": 1403544,
+ "t_total": 2.98
+}

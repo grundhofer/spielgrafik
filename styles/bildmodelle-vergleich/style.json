@@ -1,0 +1,133 @@
+{
+ "slug": "bildmodelle-vergleich",
+ "name": "Bildmodelle im Vergleich",
+ "family": "technik",
+ "kind": "technique",
+ "era": "Stand 13. Oktober 2026: gpt-image über Codex CLI 0.162 und das Gemini-Bildmodell über Antigravity CLI (agy) 1.3.4, beide über tools/genimg.py",
+ "summary": "Sieben Bildaufträge aus vga-adventure, oelmalerei, ps1-lowpoly und shared/badger mit wörtlich demselben Prompt und denselben Referenzen über beide Bildmodelle, dazu je zwei Läufe desselben VGA-Hintergrunds pro Modell. Die Demo zeigt drei Paare in einer Vergleichsansicht (links Codex, rechts agy, Trennlinie wischt über das Bild, waagerechte Wischblende zum nächsten Paar) und wischt dann in die Hafenszene aus dem jeweils besseren Bild: VGA-Hintergrund von Codex, Dachs von agy. Ergebnis: Kein Modell ist durchweg besser. Beide Modelle machen dieselben Fehler auch im zweiten Lauf wieder, deshalb taugen sie je nach Asset-Art unterschiedlich gut.",
+ "references": [
+  "Kein Spielstil, sondern eine Produktionsfrage: welches Bildmodell für welche Asset-Art eines 2D-Adventures",
+  "Vergleichsansicht mit Trennlinie (Vorher/Nachher-Schieber), wie sie Bildbearbeitungen und Remaster-Vergleiche zeigen",
+  "Quellbilder: styles/vga-adventure (bg, badger_small, items), styles/oelmalerei (bg3, portrait), styles/ps1-lowpoly (textures), shared/badger (master_sheet)"
+ ],
+ "traits": [
+  "7 Bildpaare mit gleichem Prompt und gleichen Referenzen, je ein Bild von Codex (gpt-image) und eines von agy (Gemini): VGA-Hintergrund, Ölmalerei-Hintergrund, VGA-Figurenblatt mit Referenzblatt, Öl-Porträt mit Referenzblatt, Figurenblatt ohne Referenz, Inventar-Symbole, Texturblatt 4×4. Alle Paare in assets/pairs_overview.jpg, Messwerte in assets/measurements.json",
+  "Wiederholbarkeit: VGA-Hintergrund je Modell zweimal mit demselben Prompt. Beide Modelle wiederholen ihre eigene Auslegung, einschließlich ihrer Fehler (agy malt in beiden Läufen Letterbox-Balken: oben 15,0 % / 15,1 %, unten 14,4 % / 15,0 % der Bildhöhe einfarbig). Mittleres ΔE (Lab, 48×32) zwischen den Läufen: Codex 15,1, agy 10,1; zwischen den Modellen 25,8",
+  "Vergleichsansicht 0–3,9 s: Paar 1/3 VGA-Hintergrund, 2/3 Ölmalerei-Hintergrund, 3/3 Figurenblatt. Links immer Codex, rechts immer agy. Die Trennlinie fährt von 85 % zur Mitte, hält etwa 0,3 s und fährt weiter bis 15 %. Zwischen den Paaren wischt eine waagerechte Kante in 0,26 s von oben nach unten. Die Messkarten links und rechts nennen Größe, Dauer und Befund, die Textbox die Modelle, die Quelle des Prompts und das Urteil",
+  "Bildpaare liegen auf gleicher Leinwand 870×580 (3:2, gleiche Skalierung, agy 1264×848 oben und unten um je 2 px beschnitten); freigestellte Bilder auf ruhigem Schachbrett",
+  "Schlussszene ab 3,92 s (Wischblende von links bis 4,27 s): 320×180, ganzzahlig ×4 auf 1280×720, Szene 320×138 aus dem Codex-VGA-Hintergrund, darunter Textleiste 320×42 (23 %) in Pixel Operator 8 ohne Kantenglättung mit Ort, getipptem Erzähltext, Parserzeile und dem Vermerk „Bild: Codex  Dachs: agy“",
+  "Dachs aus der Laufreihe des agy-Figurenblatts, 46 px hoch, 6 Bilder, 6 Bilder/s (jedes Bild genau 5 Videobilder). Vorschub je Bildwechsel aus dem gemessenen Standfuß (6/12/3/13/4/14 px, 52 px je Zyklus). In der Godot-Ausgabe gemessen (scripts/check_badger.py): Fußzeile in allen 111 Bildern mit Dachs 130, Standfuß in 8 Folgen Kontakt–Durchgang–Kontakt 0 px Abweichung, Kopf wippt zwischen Zeile 83, 85 und 86; Stehen ab 5,3 s mit 1 px Atmen (Zeile 87)",
+  "Umgebungsanimationen der Schlussszene: Leuchtfeuer blitzt alle 2,4 s (Helligkeit in Viertelstufen), Laterne flackert (Tabelle mit festem Seed, 12 Werte/s, auf 4 Stufen gerundet), Fensterschein (6 Werte/s, 2 Stufen), 35 Glitzerstriche in den Spiegelungen von Abendrot und Leuchtfeuer und im offenen Wasser, in ganzen Pixeln"
+ ],
+ "camera": "Vergleichsansicht: feste Bühne 1280×720 mit Bildfeld 870×580. Schlussszene: Seitenansicht, feste Kamera, Ausschnitt Zeilen 34–171 des auf 320×213 verkleinerten Hintergrunds",
+ "resolution": "Vergleich 1280×720 (Bilder geglättet verkleinert). Schlussszene 320×180 mit quadratischen Pixeln (×4): Hintergrund 216 Farben, Dachs 23 Farben, jeder Kanal auf 6 Bit gerundet; Lichthöfe und Glitzern werden additiv gemischt und erzeugen Zwischentöne, also keine strenge 256-Farben-Palette",
+ "pipeline": [
+  {"step": "Aufträge aus vorhandenen Begleitdateien bauen", "tool": "assets/pair_jobs.json", "detail": "Prompt und Referenzen wörtlich aus den .json der Quellbilder übernommen (Referenzpfade aufgelöst), Größe wie damals bestellt, --backend je Auftrag fest gewählt (agy für die 6 Codex-Quellen und die 2. Fassung des VGA-Hintergrunds, codex für das agy-Texturblatt aus ps1-lowpoly und die 2. Fassung des VGA-Hintergrunds)"},
+  {"step": "9 Bilder erzeugen", "tool": "genimg (7× agy, 2× codex), --workers 2", "detail": "Alle 9 im ersten Versuch. Ein agy-Versuch endete mit erschöpftem Kontingent ohne Bild, genimg.py wiederholte ihn automatisch. verbatim in allen 7 agy-Begleitdateien true. agy ersetzt „isolated on a fully transparent background“ durch Magenta-Schlüsselfarbe und stellt frei (Figurenblatt 55 %, Symbole 72 % durchsichtig)"},
+  {"step": "Messen", "tool": "scripts/measure_pairs.py", "detail": "Größe und Dauer aus den Begleitdateien; Pseudo-Pixelraster über die Autokorrelation der Kantenenergie (Gipfelhöhe = Rasterschärfe); Farben, die 95 % der Fläche decken (5 Bit); Alpha-Verteilung, Dunst (Alpha 1–7), Lila-Saum je Randring; Figurenreihen (Anzahl, Höhe, Fußlinie, Kopfauf und -ab, Maßstab Reihe 2 zu Reihe 1); Kachelnähte des Texturblatts; ΔE und Kantenkorrelation zwischen Wiederholungsläufen. Ausgabe assets/measurements.json"},
+  {"step": "Paare für die Demo und Übersicht", "tool": "scripts/build_pairs.py", "detail": "drei Paare auf je 870×580 (cover, LANCZOS), freigestellte auf Schachbrett; Übersicht aller 7 Paare und der Wiederholungen als assets/pairs_overview.jpg"},
+  {"step": "Hintergrund der Schlussszene", "tool": "scripts/build_final.py", "detail": "Codex-Bild styles/vga-adventure/assets/raw/bg.png mit BOX auf 320×213 verkleinert, Zeilen 34–171 ausgeschnitten, Median-Cut auf 224 Farben ohne Dithering, Kanäle auf 6 Bit (216 Farben bleiben). Der gemalte Schornsteinrauch bleibt als kurzer Ansatz am oberen Rand stehen"},
+  {"step": "Dachs der Schlussszene", "tool": "scripts/build_final.py", "detail": "Laufreihe des agy-Blatts (6 Bilder, Quellhöhe 290–303 px): gemeinsame Palette (k-means, 24 Farben, 6 Bit), jedes Quellpixel einer Palettenfarbe zugeordnet, je Zielpixel Mehrheitsentscheid; ein Maßstab (0,156) für alle Bilder, Kopfanker (Schwerpunkt der oberen 25 %) auf Spalte 25, Fußlinie auf Zeile 48 der Zelle 46×50; Alpha hart (über 50 % deckend). Der lila Freistellsaum bildet eine eigene Palettenfarbe (36/0/24) und wird auf die nächste dunkle Farbe umgelenkt. Stehen = Durchgangsbild 5, Atmen = Oberkörper (Zeilen 0–30) 1 px tiefer"},
+  {"step": "Lichthöfe", "tool": "scripts/build_final.py", "detail": "drei radiale Scheiben (Radius 7, 11, 14 px) in vier Alphastufen, Farbe und Stärke setzt Godot"},
+  {"step": "Prüfen", "tool": "scripts/check_badger.py + tools/capture.py", "detail": "Demo mit --final einmal mit und einmal ohne Dachs aufgenommen, Differenz = Figurmaske, Fußzeile, Standfuß und Kopf in Szenenpixeln gemessen (assets/badger_check.json). Aufnahme mit --poster-at 0.1167 (Paar 1 mit Trennlinie in der Mitte)"}
+ ],
+ "godot": [
+  "Hauptfenster 1280×720, stretch mode canvas_items. Vergleichsbild: ColorRect 870×580 mit canvas_item-Shader shaders/compare.gdshader. Er bekommt vier Texturen (aktuelles und nächstes Paar, je Codex und agy), die Trennlinien split_cur und split_next und den Wechsel change; alle Texturen werden vor jeder Verzweigung abgetastet",
+  "Oberfläche (hud.gd): per _draw, Source Sans 3 als FontVariation (wght 420/640), Zahlen in IBM Plex Mono, Akzentfarbe Codex bernstein, agy hellblau. Der Text wechselt in der Mitte der Wischblende",
+  "Schlussszene in einem SubViewport 320×180 (render_target_update_mode always, Standardfilter Nearest, snap_2d_transforms/vertices_to_pixel), angezeigt über ein TextureRect 1280×720 mit Filter Nearest und shaders/final_wipe.gdshader, der auf ganzen Szenenpixeln von links aufdeckt",
+  "Dachs: Sprite2D mit hframes 6 (Laufen) bzw. 2 (Stehen/Atmen); Position je Laufbild aus der Vorschubliste in badger.json (linke Zellkante beginnt bei -12). Er läuft ab 2,3 s unsichtbar los, damit er beim Hereinwischen mitten im Gang ist; nach 18 Laufbildern steht er auf dem Durchgangsbild",
+  "Lichthöfe als Sprite2D mit CanvasItemMaterial blend_mode ADD, Helligkeit stufig (Leuchtfeuer in Viertelstufen, Laterne 4 Stufen, Fenster 2); Glitzern (glints.gd) und Textleiste (pixel_ui.gd) per _draw in ganzen Pixeln; Pixel Operator 8 mit antialiasing NONE, hinting NONE, subpixel_positioning DISABLED",
+  "Zeit über delta aufsummiert, RandomNumberGenerator mit Seed 20261013. Prüfschalter nach --: --t0=<s>, --final (Schlussszene von Anfang an), --no-badger (Figur aus, für Differenzmessung), --split=<0..1> (Trennlinie fest)"
+ ],
+ "techniques": ["ki-spritesheet", "fuss-halten", "sprite-animation", "palette-einrasten", "textoberflaeche"],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 3,
+  "effort": 3,
+  "text_adventure": 4,
+  "mobile": 5
+ },
+ "ratings_note": "ai_fit 4: Für jede Asset-Art liefert eines der beiden Modelle ein brauchbares Bild im ersten Versuch. Ein einzelnes Modell verfehlt dagegen je Asset-Art systematisch Teile des Prompts (agy die Letterbox-Bühne und die Blickrichtung, Codex die Reduktion in Ölmalerei und das Kunstpixelmaß). consistency 3: Jedes Modell bleibt im zweiten Lauf bei seiner Auslegung (ΔE 15 bzw. 10). Zwischen den Modellen liegen ΔE 26, und agy-Figuren haben schwarze Konturen und ein festes Raster, Codex-Hintergründe weiche Pseudo-Pixel ohne Konturen; gemischt fällt das auf (siehe pitfalls). effort 3: Ein Paar kostet zwei Erzeugungen plus Sichtprüfung. Die Messskripte sind wiederverwendbar, die Figur der Schlussszene brauchte trotzdem eigenes Verkleinern und Vermessen. mobile 5 ist gemessen: 2D-Szene; --rendering-method mobile pixelgleich mit Forward+, gl_compatibility höchstens 1 Stufe Abweichung je Kanal in 7 geprüften Bildern.",
+ "verdict": "Für unser Textadventure gibt es kein „bestes“ Bildmodell, die Wahl hängt von der Asset-Art ab. Hintergründe in Stilen mit Stimmung und Farbverläufen (VGA-Pixel, Postkarten-Abend) und alles mit vorgegebener Bühnenaufteilung, Blickrichtung oder echtem Alphakanal macht Codex besser. Stile, die Reduktion verlangen (große Pinselstriche, wenige Objekte, gedämpfte Farben), Pixel-Art mit festem Raster und kleinem Kunstpixelmaß (Symbole) sowie Laufzyklen mit unterscheidbaren Posen gelingen mit agy besser. Ein Spiel sollte aber je Asset-Art bei einem Modell bleiben: Beide wiederholen ihre Auslegung verlässlich, und gemischte Quellen brauchen eine gemeinsame Nachbearbeitung (Palette, Kontur, Raster). Weil agy in beiden Läufen Letterbox-Balken malte, bei agy keine Bildbänder in Prozent vorgeben, sondern die Bühne über Inhalte beschreiben.",
+ "vergleich": [
+  {"kriterium": "Stiltreue VGA-Hintergrund", "codex": "Weiche Pseudo-Pixel ohne festes Raster (Autokorrelation ohne Gipfel), viele Verläufe (1063 Farben decken 95 %), Stimmung der frühen 90er", "agy": "Festes Raster 2,7 px (≈ 460×310 statt 320×200), harte 1-px-Konturen, flach (313 Farben), eher heutige Indie-Pixel-Art", "besser": "Codex"},
+  {"kriterium": "Stiltreue Ölmalerei-Hintergrund", "codex": "Detailreich, Postkarten-Abendrot, viele kleine Gegenstände trotz „few big strokes, almost no small detail“", "agy": "Große flache Striche, wenige Objekte, gedämpfte Grün-, Ocker- und Violetttöne wie verlangt; weniger pastos (kaum Farbgrate)", "besser": "agy"},
+  {"kriterium": "Stiltreue Pixel-Symbole (je etwa 24×18 Kunstpixel verlangt)", "codex": "Raster 8,8 px, schwach (Gipfel 0,04), Symbole 52–74 Kunstpixel breit (Brief 73×53), kräftige Farben, Seekarte mit Kartenbild", "agy": "Raster 10,5 px, scharf (Gipfel 0,15), Symbole 33–37 Kunstpixel breit (Brief 37×26), näher am verlangten Maß; Seekarte ohne Kartenbild, blasser", "besser": "agy beim Raster, Codex bei der Lesbarkeit"},
+  {"kriterium": "Stiltreue Texturblatt (ps1-lowpoly)", "codex": "Körnig, kontrastreich, handgemalt wirkend, Seil diagonal wie verlangt", "agy": "Glatter, sauberer, Seil waagerecht statt diagonal, Sandfeld mit Schattenverlauf trotz „no baked-in shadows“", "besser": "Codex"},
+  {"kriterium": "Komposition", "codex": "VGA: Bühne wie verlangt (oben Himmel, unten Pflaster, Horizont etwa 47 %); Öl: Leuchtturm bei 74 % statt zwei Dritteln", "agy": "VGA: „wide letterboxed game screen“ wörtlich genommen, oben und unten je 15 % einfarbige Balken (beide Läufe); Öl: Leuchtturm bei 66 %, erhöhter Blick wie verlangt", "besser": "je nach Bild"},
+  {"kriterium": "Treue zum Referenzblatt", "codex": "Kostüm vollständig, Paket gut lesbar, Kopf eher rundlich-bärenhaft; Porträt blickt wie verlangt nach links", "agy": "Gesichtsstreifen wie im Referenzblatt, Weste mit Taschen, Paket kaum lesbar; Porträt blickt nach rechts statt nach links", "besser": "unentschieden"},
+  {"kriterium": "Figurenblatt-Layout", "codex": "6 + 4 Bilder, Reihen fast gleich groß (1,05), Fußlinie 0 px, Kopf in allen Laufbildern auf derselben Zeile; Figuren 81 Kunstpixel hoch statt 40", "agy": "6 + 4 Bilder, Fußlinie 0 px, Kopf wippt (13 px Spanne), Kontakt- und Durchgangsposen klar; Stehreihe 1,29-mal größer; Figuren 71 Kunstpixel hoch statt 40", "besser": "agy für Laufzyklen, Codex für einheitlichen Maßstab"},
+  {"kriterium": "Figurenblatt ohne Referenz (Magenta-Hintergrund verlangt)", "codex": "Fast reines #FF00FF (Abstand 5,8, Streuung 4), keine Bodenschatten, drei Ansichten", "agy": "Rosa statt reinem Magenta (G = 39, Streuung 15–17), Bodenschatten unter allen drei Ansichten trotz „no shadows on the ground“ (3,2 % der Fläche), flacherer Kinderbuchstil", "besser": "Codex"},
+  {"kriterium": "Freistellen", "codex": "Echter Alphakanal, aber Figurenpixel nur Alpha 249–254 (Median 252) und 9 % des Hintergrunds mit Alpha 1–7 (unsichtbarer Dunst); vor Gebrauch hart schneiden", "agy": "Magenta-Schlüssel, 1-Bit-artig (0,8 % halbdurchsichtig), aber JPEG-Farbunterabtastung trägt Lila 2–3 px in die Kontur: Randring 1 zu 18 %, Ring 2 zu 53 % lila (Symbole 5 % bzw. 34 %)", "besser": "unentschieden, beide brauchen Nacharbeit"},
+  {"kriterium": "Textfehler", "codex": "In den 8 Codex-Bildern bei der Sichtprüfung keine Schrift erkannt", "agy": "Wachssiegel des Briefsymbols mit buchstabenähnlichem Monogramm (wie „R“ oder „K“) trotz „No text, letters“", "besser": "Codex"},
+  {"kriterium": "Wiederholbarkeit (VGA-Hintergrund, 2 Läufe)", "codex": "Gleicher Bildaufbau (Häuschen links, Steg Mitte, Leuchtturm rechts), ΔE 15,1", "agy": "Gleicher Bildaufbau und dieselben Balken, ΔE 10,1", "besser": "beide hoch, agy etwas farbstabiler"},
+  {"kriterium": "Bildgröße", "codex": "1536×1024 wie bestellt, quadratisch 1254×1254 statt 1024×1024", "agy": "1264×848 statt 1536×1024, quadratisch 1024×1024 wie bestellt; JPEG", "besser": "Codex (höhere Auflösung, verlustfrei)"},
+  {"kriterium": "Dauer je Bild", "codex": "46–103 s (Median der 8 Bilder 69 s)", "agy": "44–85 s ohne abgewiesenen Versuch (Median 65 s); 199 s für einen Auftrag, bei dem ein Kontingent erschöpft war", "besser": "gleich"}
+ ],
+ "empfehlung": [
+  {"asset_art": "Hintergrund mit Stimmung und Verläufen (VGA, gemalte Postkarte)", "modell": "Codex", "grund": "Verläufe, Detail, hält Bühnenvorgaben ein"},
+  {"asset_art": "Hintergrund in reduzierter Malerei (große Striche, gedämpfte Farben)", "modell": "agy", "grund": "folgt dem Stilblock, statt zur detaillierten Postkarte zu ziehen"},
+  {"asset_art": "Hintergrund mit Bildbändern in Prozent oder „letterboxed“", "modell": "Codex", "grund": "agy malt Balken ins Bild (in 2 von 2 Läufen)"},
+  {"asset_art": "Laufzyklus und Figurenblatt", "modell": "agy", "grund": "unterscheidbare Posen, Kopf wippt; Maßstab zwischen Reihen selbst angleichen, Lila-Saum in der Kontur entfernen"},
+  {"asset_art": "Figurenblatt ohne Referenz, Charakterdesign, Porträt mit Blickrichtung", "modell": "Codex", "grund": "hält Hintergrundfarbe, Schattenverbot und Blickrichtung ein"},
+  {"asset_art": "Pixel-Symbole mit kleinem Kunstpixelmaß", "modell": "agy", "grund": "festes Raster, näher am verlangten Kunstpixelmaß (aber noch etwa 1,5-mal zu groß); Siegel auf Buchstaben prüfen"},
+  {"asset_art": "Texturblatt", "modell": "Codex", "grund": "körniger, hält Richtungsvorgaben ein; beide Blätter haben sichtbare Kachelnähte (Nahtverhältnis Median 2,35 bzw. 2,3)"},
+  {"asset_art": "Echte Transparenz, Masken, Folgebilder einer Serie", "modell": "Codex bzw. das Modell des ersten Bilds", "grund": "Alphakanal und verlustfreies PNG; Folgebilder bleiben beim Modell des Ankerbilds (genimg.py bindet automatisch)"}
+ ],
+ "pitfalls": [
+  "Je Paar nur ein Lauf pro Modell, nur beim VGA-Hintergrund zwei. Die Urteile sind deshalb Stichproben: Was in beiden Läufen gleich war (agy-Balken, Codex-Bühne), ist belastbar, die übrigen Befunde nicht.",
+  "Die Bedingungen sind nicht ganz gleich: Die Codex-Bilder stammen vom 10. Oktober (gleiche Codex-Version), die agy-Bilder vom 13. Oktober. Beide Modelle bekommen den Prompt über verschiedene Hüllen von genimg.py, und bei Transparenz bekommt agy statt „transparent background“ eine Magenta-Anweisung (prompt_sent). Verglichen werden also die Wege des Werkzeugs, nicht die nackten Modelle.",
+  "Das Texturpaar ist umgekehrt: ps1-lowpoly hatte kein Codex-Bild, sondern ein agy-Texturblatt (Begleitdatei mit verbatim false, Werkzeug 1.3.3); hier wurde die Codex-Seite neu erzeugt.",
+  "Die Demo zeigt in 6 s nur 3 der 7 Paare, je etwa 1,2 s. Die übrigen Paare und die Wiederholungsläufe stehen nur in assets/pairs_overview.jpg und in den Tabellen.",
+  "Die Schlussszene mischt beide Modelle: Der Codex-Hintergrund hat weiche Pseudo-Pixel ohne schwarze Konturen, der agy-Dachs ein festes Raster und eine fast schwarze Kontur. Nebeneinander fällt der Stilbruch bei genauem Hinsehen auf. Für ein echtes Spiel beides aus einem Modell nehmen oder die Kontur der Figur einfärben.",
+  "Der Dachs ist 46 statt der VGA-üblichen 40 px hoch: Bei 40 px verschwanden Augen und Gesichtsstreifen. Das Paket unter dem Arm ist auch bei 46 px nur ein hellbrauner Fleck (schon im agy-Blatt kaum lesbar), das Auge ein einzelnes dunkles Pixel im Streifen. Ein Blinzeln ist daher nicht zu sehen, die Figur atmet stattdessen (1 px).",
+  "Der agy-Laufzyklus hat nur zwei Posen je Schritt (Kontakt, Durchgang). Bei 6 Bildern/s und fußgenauem Vorschub springt der Körper je Bild 3–14 px. Die Füße stehen still (gemessen 0 px), der Gang wirkt aber ruckiger als ein 8-Bild-Zyklus. Die Stehreihe des Blatts ist 1,29-mal größer gezeichnet und wurde nicht verwendet.",
+  "Der Lila-Saum der agy-Freistellung sitzt im 2. und 3. Randpixel und nicht am äußersten Rand. Beim Verkleinern bildete er eine eigene Palettenfarbe (36/0/24), die umgelenkt werden musste. Wer agy-Figuren größer verwendet, muss die Kontur nachfärben.",
+  "Der Bildausschnitt der Schlussszene (Zeilen 34–171 von 213) schneidet den gemalten Schornsteinrauch zu einem kurzen Ansatz am oberen Rand ab und lässt nur 18 px Pflaster. Rauch ist keine der Umgebungsanimationen; der gemalte Ansatz bleibt starr stehen.",
+  "Die Messungen sind grob: Das Raster misst nur einen festen Abstand (Codex' ungleichmäßige Pseudo-Pixel ergeben „kein Raster“, nicht deren Größe). Die Kantenkorrelation zwischen Läufen (0,31) unterscheidet sich kaum von der zwischen den Modellen (0,28) und taugt hier nicht als Maß. Stiltreue, Komposition und Referenztreue sind Sichturteile.",
+  "Die Dauer in den Begleitdateien enthält Wartezeiten: Der VGA-Hintergrund von agy brauchte 199 s, vermutlich weil ein Kontingent erschöpft war und genimg.py den Auftrag wiederholte. Der zweite Lauf desselben Prompts brauchte 67 s."
+ ],
+ "lessons": [
+  "Paare lassen sich billig bauen: Prompt und Referenzen aus der vorhandenen Begleitdatei nehmen, --backend fest wählen, dasselbe Zielformat bestellen. genimg.py schreibt Dauer und verbatim dazu (assets/pair_jobs.json als Vorlage).",
+  "Jedes Modell wiederholt seine Auslegung. Ein Fehler, der in zwei Läufen gleich auftritt, ist eine Eigenschaft des Modells und kein Zufall. Abhilfe ist dann ein anderer Prompt oder das andere Modell, nicht die nächste Wiederholung.",
+  "agy liest Formatwörter wörtlich: „letterboxed“ und Prozentbänder ergeben gemalte Balken. Die Bühne bei agy über Inhalte beschreiben („the bottom of the picture is stone paving“), nicht über Bildschirmformate.",
+  "Die Autokorrelation der Kantenenergie (scripts/measure_pairs.py → grid_period) zeigt schnell, ob ein KI-Pixelbild ein festes Raster hat und wie groß es ist. agy lieferte durchgehend feste Raster (Gipfel 0,12–0,15), Codex weiche Pseudo-Pixel (Gipfel unter 0,08).",
+  "Codex-Alpha vor Gebrauch hart schneiden: Die Figuren sind nur zu 98 % deckend und der Hintergrund trägt unsichtbaren Dunst. agy-Freistellungen auf Lila im 2. und 3. Randring prüfen (Ringmessung in measure_pairs.py).",
+  "Mehrheitsentscheid auf einer gemeinsamen Palette, ein Maßstab, Kopfanker und Fußlinie ergeben aus einem KI-Blatt mit 70 Kunstpixeln Figurhöhe eine ruhige 46-px-Figur. Unter etwa zwei Dritteln der gezeichneten Höhe gehen Gesichtszüge verloren.",
+  "Vorschub aus dem Standfuß berechnen (Spitze vorn im Kontaktbild gegen Spitze im Durchgangsbild): Die Füße stehen in der Godot-Ausgabe auf 0 px still, obwohl die Schritte 3–14 px lang sind.",
+  "Eine Figurmaske lässt sich in Godot ohne Sonderaufbau messen: zweimal aufnehmen, einmal mit --no-badger, und die Bilder voneinander abziehen (scripts/check_badger.py).",
+  "Für Vergleichsansichten beide Bilder vorab auf dieselbe Leinwand bringen; dann genügt ein Shader mit gemeinsamen UV, Trennlinie und Wischkante."
+ ],
+ "assets": [
+  {"file": "assets/pairs_overview.jpg", "kind": "Übersicht aller Paare", "made_with": "scripts/build_pairs.py aus 8 Codex- und 8 agy-Bildern (links Codex, rechts agy)"},
+  {"file": "demo/art/pairs/vga_bg_codex.png", "kind": "Paar 1, Codex", "made_with": "gpt-image (styles/vga-adventure/assets/raw/bg.png), 870×580"},
+  {"file": "demo/art/pairs/vga_bg_agy.png", "kind": "Paar 1, agy", "made_with": "Gemini über agy, 870×580", "prompt": "assets/raw/vga_bg_agy.json"},
+  {"file": "demo/art/pairs/oel_bg_codex.png", "kind": "Paar 2, Codex", "made_with": "gpt-image (styles/oelmalerei/assets/raw/bg3.png), 870×580"},
+  {"file": "demo/art/pairs/oel_bg_agy.png", "kind": "Paar 2, agy", "made_with": "Gemini über agy, 870×580", "prompt": "assets/raw/oel_bg_agy.json"},
+  {"file": "demo/art/pairs/vga_badger_codex.png", "kind": "Paar 3, Codex", "made_with": "gpt-image (styles/vga-adventure/assets/raw/badger_small.png) auf Schachbrett, 870×580"},
+  {"file": "demo/art/pairs/vga_badger_agy.png", "kind": "Paar 3, agy", "made_with": "Gemini über agy, Magenta freigestellt, auf Schachbrett, 870×580", "prompt": "assets/raw/vga_badger_agy.json"},
+  {"file": "assets/final_bg.png", "kind": "Hintergrund Schlussszene", "made_with": "gpt-image + BOX 320×213 + Median-Cut 224 Farben, 6 Bit (scripts/build_final.py)"},
+  {"file": "assets/badger_walk.png", "kind": "Dachs, Laufzyklus 6 Bilder", "made_with": "Gemini über agy + Mehrheitsentscheid auf 24 Palettenfarben (23 genutzt), 46 px (scripts/build_final.py)", "prompt": "assets/raw/vga_badger_agy.json"},
+  {"file": "assets/badger_idle.png", "kind": "Dachs, Stehen und Atmen", "made_with": "Durchgangsbild + Oberkörper 1 px tiefer (scripts/build_final.py)", "prompt": "assets/raw/vga_badger_agy.json"},
+  {"file": "assets/measurements.json", "kind": "Messwerte der Paare", "made_with": "scripts/measure_pairs.py"},
+  {"file": "assets/badger_check.json", "kind": "Messung Dachs in der Godot-Ausgabe", "made_with": "scripts/check_badger.py"},
+  {"file": "assets/raw/oel_portrait_agy.png", "kind": "Öl-Porträt, agy (Paar zu oelmalerei/portrait)", "made_with": "Gemini über agy", "prompt": "assets/raw/oel_portrait_agy.json"},
+  {"file": "assets/raw/master_sheet_agy.png", "kind": "Figurenblatt ohne Referenz, agy (Paar zu shared/badger/master_sheet)", "made_with": "Gemini über agy", "prompt": "assets/raw/master_sheet_agy.json"},
+  {"file": "assets/raw/vga_items_agy.png", "kind": "Inventar-Symbole, agy (Paar zu vga-adventure/items)", "made_with": "Gemini über agy, Magenta freigestellt", "prompt": "assets/raw/vga_items_agy.json"},
+  {"file": "assets/raw/ps1_textures_codex.png", "kind": "Texturblatt, Codex (Paar zu ps1-lowpoly/textures)", "made_with": "gpt-image über Codex", "prompt": "assets/raw/ps1_textures_codex.json"},
+  {"file": "assets/raw/vga_bg_agy_b.png", "kind": "VGA-Hintergrund, agy, 2. Lauf", "made_with": "Gemini über agy", "prompt": "assets/raw/vga_bg_agy_b.json"},
+  {"file": "assets/raw/vga_bg_codex_b.png", "kind": "VGA-Hintergrund, Codex, 2. Lauf", "made_with": "gpt-image über Codex", "prompt": "assets/raw/vga_bg_codex_b.json"}
+ ],
+ "licenses": [
+  {"item": "Schrift Source Sans 3 (variabel)", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/sourcesans3 (Lizenztext: demo/fonts/OFL-SourceSans3.txt)"},
+  {"item": "Schrift IBM Plex Mono (Regular, SemiBold)", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/ibmplexmono (Lizenztext: demo/fonts/OFL-IBMPlexMono.txt)"},
+  {"item": "Schrift Pixel Operator 8 (Jayvee Enaguas)", "license": "CC0-1.0", "source": "https://www.dafont.com/pixel-operator.font (Lizenztext: demo/fonts/PixelOperator-LICENSE.txt)"},
+  {"item": "Quellbilder der Codex-Seite", "license": "projekteigen", "source": "styles/vga-adventure, styles/oelmalerei, shared/badger (KI-Bilder dieses Projekts)"}
+ ],
+ "image_generations": 9,
+ "tool_issues": [
+  "genimg.py: Die Freistellung von agy-Bildern (sprites.py key über genimg.py) entfärbt nur den äußersten Randring. Die JPEG-Farbunterabtastung trägt das Magenta aber 2–3 px in dunkle Konturen (Figurenblatt: Ring 1 zu 18 %, Ring 2 zu 53 % lila; Symbole 5 % bzw. 34 %). key_transparent_share meldet das nicht. Hier lokal umgangen: lila Palettenfarbe in build_final.py umgelenkt.",
+  "genimg.py: „seconds“ in der Begleitdatei enthält Wartezeit auf freie Plätze und abgewiesene Versuche bei erschöpftem agy-Kontingent (hier 199 s statt etwa 67 s). Für Zeitvergleiche fehlt die reine Erzeugungsdauer."
+ ],
+ "status": "done"
+}

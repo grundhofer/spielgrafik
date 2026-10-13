@@ -1,0 +1,167 @@
+[gd_scene load_steps=14 format=3]
+
+; Pixel-3D: Hafen und Dachs aus shared/3d, gerendert in den SubViewport "World" (428×242).
+; main.gd ersetzt die Materialien per Name (Toon-Stufen), hängt die Lichter an die Empties, führt
+; Kamera (Objektivverschiebung in ganzen Pixeln + Restversatz beim Hochskalieren), Dachs und Effekte
+; und zeigt World und UIView als Sprite2D mit Nearest ×3 im 1280×720-Fenster.
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://models/harbor.glb" id="2_harbor"]
+[ext_resource type="PackedScene" path="res://models/badger.glb" id="3_badger"]
+[ext_resource type="Shader" path="res://shaders/p3d_sky.gdshader" id="4_sky"]
+[ext_resource type="Shader" path="res://shaders/p3d_beam.gdshader" id="6_beam"]
+[ext_resource type="Script" path="res://ui.gd" id="7_ui"]
+
+[sub_resource type="ShaderMaterial" id="SkyMat"]
+shader = ExtResource("4_sky")
+
+[sub_resource type="Sky" id="Sky"]
+sky_material = SubResource("SkyMat")
+radiance_size = 0
+
+[sub_resource type="Environment" id="Env"]
+background_mode = 2
+sky = SubResource("Sky")
+ambient_light_source = 2
+ambient_light_color = Color(0.46, 0.4, 0.66, 1)
+ambient_light_energy = 1.0
+reflected_light_source = 1
+tonemap_mode = 0
+tonemap_exposure = 1.0
+glow_enabled = false
+fog_enabled = false
+
+[sub_resource type="QuadMesh" id="PostQuad"]
+size = Vector2(2, 2)
+
+[sub_resource type="CylinderMesh" id="BeamMesh"]
+top_radius = 2.6
+bottom_radius = 0.28
+height = 26.0
+radial_segments = 24
+rings = 1
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="ShaderMaterial" id="BeamMat"]
+render_priority = 10
+shader = ExtResource("6_beam")
+shader_parameter/color = Color(1, 0.86, 0.6, 1)
+shader_parameter/intensity = 0.32
+shader_parameter/length_m = 26.0
+
+[node name="Main" type="Node"]
+script = ExtResource("1_main")
+
+[node name="World" type="SubViewport" parent="."]
+size = Vector2i(428, 242)
+msaa_3d = 0
+screen_space_aa = 0
+use_taa = false
+use_debanding = false
+canvas_item_default_texture_filter = 0
+positional_shadow_atlas_size = 2048
+render_target_update_mode = 4
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
+environment = SubResource("Env")
+
+; Abendsonne tief von links vorn (14° über dem Horizont), Lichtrichtung (0.86, -0.24, -0.46) wie shared/3d
+[node name="Sun" type="DirectionalLight3D" parent="World"]
+transform = Transform3D(0.4694716, 0.21360436, -0.85672027, 0, 0.9702957, 0.2419219, 0.88294756, -0.113575466, 0.4555263, 0, 30, 0)
+light_color = Color(1, 0.66, 0.42, 1)
+light_energy = 1.5
+shadow_enabled = true
+shadow_bias = 0.04
+shadow_normal_bias = 1.0
+directional_shadow_mode = 0
+directional_shadow_max_distance = 45.0
+light_cull_mask = 4294967293
+
+; Figurenlicht nur für den Dachs (Ebene 2): von links vorn oben, damit Gesicht und Vorderseite im
+; hellen Ton liegen; Schatten wirft der Dachs weiter über die Sonne.
+[node name="FigureLight" type="DirectionalLight3D" parent="World"]
+light_color = Color(1, 0.88, 0.74, 1)
+light_energy = 1.45
+light_cull_mask = 2
+shadow_enabled = false
+
+; Kamera: Lage, Neigung und Bildwinkel setzt main.gd (CAM_*), Projektion FRUSTUM (Objektivverschiebung)
+[node name="Camera" type="Camera3D" parent="World"]
+current = true
+near = 0.05
+far = 2000.0
+
+[node name="Post" type="MeshInstance3D" parent="World/Camera"]
+cast_shadow = 0
+extra_cull_margin = 16384.0
+mesh = SubResource("PostQuad")
+
+[node name="Harbor" parent="World" instance=ExtResource("2_harbor")]
+
+[node name="Badger" parent="World" instance=ExtResource("3_badger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.2, 0, 1.2)
+
+; Alles unter "Attach" hängt main.gd an ein Empty bzw. Objekt des Hafens (Name = Ziel).
+[node name="Attach" type="Node3D" parent="World"]
+
+[node name="LanternLight" type="Node3D" parent="World/Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="World/Attach/LanternLight"]
+light_color = Color(1, 0.72, 0.4, 1)
+light_energy = 1.8
+omni_range = 5.0
+omni_attenuation = 1.2
+
+[node name="CottageWindow" type="Node3D" parent="World/Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="World/Attach/CottageWindow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+light_color = Color(1, 0.74, 0.42, 1)
+light_energy = 1.2
+omni_range = 4.0
+omni_attenuation = 1.2
+
+[node name="LighthouseLight" type="Node3D" parent="World/Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="World/Attach/LighthouseLight"]
+light_color = Color(1, 0.84, 0.58, 1)
+light_energy = 2.0
+omni_range = 5.0
+
+; Drehteil des Leuchtfeuers: main.gd dreht "Rotor" um Y; "Tilt" neigt den Strahl 5° nach unten
+[node name="Rotor" type="Node3D" parent="World/Attach/LighthouseLight"]
+
+[node name="Tilt" type="Node3D" parent="World/Attach/LighthouseLight/Rotor"]
+transform = Transform3D(1, 0, 0, 0, 0.9961947, 0.08715574, 0, -0.08715574, 0.9961947, 0, 0, 0)
+
+[node name="Beam" type="MeshInstance3D" parent="World/Attach/LighthouseLight/Rotor/Tilt"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, -13)
+cast_shadow = 0
+mesh = SubResource("BeamMesh")
+surface_material_override/0 = SubResource("BeamMat")
+
+[node name="UIView" type="SubViewport" parent="."]
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+canvas_item_default_texture_filter = 0
+size = Vector2i(427, 240)
+render_target_update_mode = 4
+
+[node name="UI" type="Control" parent="UIView"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 427.0
+offset_bottom = 240.0
+script = ExtResource("7_ui")
+
+[node name="Screen" type="Sprite2D" parent="."]
+texture_filter = 1
+centered = false
+scale = Vector2(3, 3)
+
+[node name="UIScreen" type="Sprite2D" parent="."]
+texture_filter = 1
+centered = false
+scale = Vector2(3, 3)

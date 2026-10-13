@@ -1,0 +1,33 @@
+{
+ "source": "styles/amiga-illustration/assets/raw/bg.png",
+ "source_size": [
+  1536,
+  1024
+ ],
+ "scaled_height": 213,
+ "crop_y": 16,
+ "horizon_y": 82,
+ "water_bottom": 130,
+ "pixels": {
+  "water": 7786,
+  "lamp": 2,
+  "lantern": 53,
+  "window": 157,
+  "sky": 18747
+ },
+ "lamp_xy": [
+  267.5,
+  39.5
+ ],
+ "lantern_xy": [
+  96.52830188679245,
+  66.20754716981132
+ ],
+ "chimney_xy": [
+  30.5,
+  6.0
+ ],
+ "feet_y": 139.5,
+ "stop_x": 108,
+ "gull_y": 32
+}

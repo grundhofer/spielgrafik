@@ -1,0 +1,13 @@
+{
+ "ticks": 90,
+ "ticks_with_wood": 0,
+ "strokes_on_wood": 0,
+ "max_wood_strokes_tick": 0,
+ "glint_px_on_boats": 0,
+ "strokes_visible_mean": 8.86,
+ "examples": [],
+ "strokes_visible_min_max": [
+  4,
+  16
+ ]
+}

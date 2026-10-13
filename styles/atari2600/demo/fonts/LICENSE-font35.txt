@@ -1,0 +1,9 @@
+Blockschrift font35 (3x5, Großbuchstaben, Ziffern, Satzzeichen, Ä/Ö/Ü) – Katalogeintrag atari2600
+
+Eigene Zeichnung für diesen Eintrag. Die Glyphen stehen als Text in scripts/font35.py und werden über
+demo/rom/rom.json geladen; es gibt keine Schriftdatei.
+
+Lizenz: CC0 1.0 Universal (Public Domain Dedication)
+https://creativecommons.org/publicdomain/zero/1.0/
+Soweit gesetzlich möglich, verzichtet der Urheber auf alle Urheber- und verwandten Schutzrechte an diesen
+Glyphen. Sie dürfen ohne Genehmigung kopiert, verändert und verwendet werden, auch kommerziell.

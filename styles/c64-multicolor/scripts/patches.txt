@@ -1,0 +1,125 @@
+# Handretusche des eingerasteten KI-Hintergrunds (160x144 Doppelpixel).
+# Kopf: @name x y  (linke obere Ecke in Doppelpixeln/Zeilen), danach Zeilen mit Farbnummern 0-f,
+# "." = Pixel behalten, "_" = Hintergrundfarbe der Zeile (Bitpaar 00).
+# Farben: 0 schwarz 1 weiß 2 rot 3 cyan 4 lila 5 grün 6 blau 7 gelb 8 orange 9 braun a hellrot
+#         b dunkelgrau c grau d hellgrün e hellblau f hellgrau
+# Regeln beim Zeichnen: je 4x8-Zelle höchstens 3 Farben neben der Zeilen-Hintergrundfarbe.
+
+# Schornstein ohne Aufsatz (Rauch kommt als Sprite), Schattenseite braun wie im KI-Bild
+@chimney 13 3
+________
+________
+________
+________
+________
+________
+________
+bccccccb
+99bbbbbb
+99bccccb
+99bccccb
+99bbbbbb
+99ccbccc
+99ccbccc
+99bbbbbb
+99bcccbc
+99bcccbc
+99bbbbbb
+99ccbccc
+99ccbccc
+99bbbbbb
+
+# zwei Fässer vor dem Haus, dahinter Schlagschatten (schwarz); Farben je Zelle: schwarz, braun, orange
+@barrels 0 104
+00999900009999000000
+09888890098888900000
+09999990099999900000
+09899890098998900000
+00000000000000000000
+98898889988988890000
+98898889988988890000
+98898889988988890000
+00000000000000000000
+98898889988988890000
+98898889988988890000
+98898889988988890000
+98898889988988890000
+98898889988988890000
+98898889988988890000
+00000000000000000000
+98898889988988890000
+98898889988988890000
+98898889988988890000
+00000000000000000000
+09899890098998900000
+09899890098998900000
+00999900009999000000
+00000000000000000000
+
+# Kistenstapel rechts neben dem Haus, ganz in eigenen Zellen (x 32-39)
+@crates 32 100
+_000000_
+_099990_
+_088890_
+_088890_
+_088980_
+_088980_
+_089880_
+_089880_
+_098880_
+_098880_
+_099990_
+_000000_
+00000000
+09999990
+08888890
+08888890
+08888980
+08888980
+08889880
+08889880
+08898880
+08898880
+08988880
+08988880
+09888880
+09888880
+09999990
+00000000
+
+# Leuchtturmspitze, symmetrisch über dem Turm (x 150-153, Mitte x 152 = Zellgrenze): Knauf, Dach, Laternenraum
+# in den Zeilen 4-6 mit schwarzem Rahmen (x 149/154), Glas (x 150/153) und Lampe (x 151-152), Galerie mit
+# Geländer. Glas und Lampe sind eigene Gruppen (build_bg.py), main.gd setzt ihre Farbe jedes Bild. Alles in
+# Zellzeile 0 (y 0-7): je Zelle Schwarz + Glas + Lampe; darunter (y 8-15) nur Schwarz + Turmfarben.
+@lighthouse 148 0
+________
+___00___
+__0000__
+_000000_
+_087780_
+_087780_
+_087780_
+00000000
+_0_00_0_
+_000000_
+__1fff__
+__1fff__
+__1fff__
+__1fff__
+
+# kleines weißes Boot mit roter Bauchbinde am Stegende (x 96-107), Steg endet am Pfahl x 90-92
+@boat2 93 101
+___............__
+___...8_______0__
+___000000000001__
+___011111111111__
+___022222222220__
+___011111111110__
+____0111111110___
+_____00000000____
+_________________
+_________________
+_________________
+_____33333333____
+_________________
+_______3333______

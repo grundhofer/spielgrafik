@@ -1,0 +1,309 @@
+{
+ "slug": "lowpoly-flat",
+ "name": "Low-Poly mit Flat-Shading",
+ "family": "modern3d",
+ "kind": "style",
+ "era": "2012–heute",
+ "summary": "Echtzeit-3D aus wenigen, deutlich sichtbaren Dreiecken: Jede Facette hat genau eine Normale und damit eine einzige Helligkeit, jedes Material eine flache Farbe ohne Textur. Dazu eine Pastell-Abendpalette, ein weicher Farbverlauf als Himmel, Tiefennebel, der ferne Formen in Himmelsfarben auflöst, und Wasser als facettiertes, bewegtes Dreiecksnetz. Der Look entsteht aus einer per Skript reduzierten Fassung der gemeinsamen Modelle aus shared/3d, aus Shadern und aus Code, ohne KI-Bilder.",
+ "references": [
+  "Kentucky Route Zero (Cardboard Computer 2013–2020): flach schattierte Low-Poly-Szenen mit Text im Mittelpunkt, theaterhafte feste Kameras",
+  "Monument Valley (ustwo games 2014): flache Pastellfarben, klare geometrische Formen, Farbverlauf-Hintergründe",
+  "Lara Croft GO (Square Enix Montreal 2015): facettierte Felsen und Gelände, wenige Farben je Fläche, weicher Verlaufshimmel",
+  "The Battle of Polytopia (Midjiwan 2016): Low-Poly-Welt ohne Texturen, eine Farbe je Material",
+  "Islanders (Grizzly Games 2019): Pastellpalette, flache Facetten, weicher Nebel über Inseln und Meer",
+  "Alba: A Wildlife Adventure (ustwo games 2020): Low-Poly-Insel mit flachen Farben, Wasser und Abendlicht"
+ ],
+ "traits": [
+  "Eine Normale je Facette: lowpoly.gdshader rechnet die Flächennormale aus den Ableitungen der Position (cross(dFdx(VERTEX), dFdy(VERTEX)), zur Kamera gedreht) – für Hafen, geriggten Dachs, Wasser, Wolken, Rauch und Möwen. Vergleichsschalter --smooth (Original-Hafen aus shared/3d, Mesh-Normalen): 14,7 % (Totale, Bild 60) bzw. 11,9 % (Nahaufnahme, Bild 150) der Pixel weichen um mehr als 8 Stufen ab, vor allem Wasser, Gelände, Fässer und Figur",
+  "Low-Poly-Geometrie: Gelände und Felsen per Decimate grob reduziert (WestHill 1568 → 343, Headland 998 → 299, RocksSea 640 → 288, IslandsFar 262 → 157 Dreiecke), die Facetten der Felsnase sind in der Totale 30–150 px groß; Häuschen, Kai, Boote, Fässer (12 Seiten) und Leuchtturm (16 Seiten) bleiben wie in shared/3d. Dachs: badger_low.glb mit 876 Dreiecken",
+  "Eine flache Farbe je Material, keine Texturen: 13 Hafen- und 11 Figurenmaterialien per Name durch eine Pastellpalette ersetzt (z. B. Pflaster #D8C3B8, Gras #9CCF8E, Dach #6F6FAE, Schal #EE5A62); dazu eine kleine Abweichung je Facette (±9 % Helligkeit, ±3,5 % warm/kalt) aus Vertexfarben, die das Blender-Skript mit festem Seed setzt. Schalter --no-jitter: 3,3 % bzw. 2,5 % der Pixel über 8 Stufen, im Mittel 1,6 bzw. 1,1 Stufen – bewusst leise",
+  "Farbverlauf-Himmel (sky.gdshader): Glutband am Horizont (Apricot), Rosa, Lavendel, Indigo; der Verlauf ist auf die sichtbaren 0–30° Höhe zusammengeschoben, dazu ein warmer Schein in Richtung der Sonne und vereinzelte, leicht funkelnde Sterne. Die vier Farben sind globale Shader-Uniforms",
+  "Weicher Nebel: Tiefennebel 28–420 m in Rosa mit aerial perspective 0,55; die Felsnase (30–40 m) wird rosa, die fernen Inseln (185–320 m) sind nur noch als blasse Schichten zu sehen",
+  "Wasser als facettiertes, animiertes Mesh: eigenes unregelmäßiges Dreiecksnetz (1,75 m Raster mit ±32 % Versatz und zufälligen Diagonalen im Hafen, nach außen um den Faktor 1,4 je Zelle gröber bis 700 m seitlich und 900 m nach hinten; 9 576 Dreiecke), vier Sinuswellen in Weltkoordinaten (0,14 m), für das Licht dreifach überhöhte Neigung, Farbe je Facette aus der Wellenhöhe am führenden Eckpunkt (flat varying); Himmel und Lampen spiegeln sich je Facette",
+  "Licht in zwei Farben: Abendsonne tief von links (warm, weiche Schatten), kühles Fülllicht von rechts hinten ohne Schatten, Umgebungslicht aus dem Himmel. Lichtseiten pfirsichfarben, Schattenseiten lavendel; auch die Facetten der Schattenseite unterscheiden sich",
+  "Effekte im selben Stil: Wolken als Haufen grober Kugeln (7 × 4 Segmente) mit lavendel Oberseite und pfirsichfarbener Unterseite, treiben nach rechts; Rauch aus groben Kugeln, die wachsen, aufsteigen und schrumpfen; drei Möwen aus je 32 Dreiecken mit zweiteiligen Flügeln (Schlag- und Gleitphasen); Lichtkegel des Leuchtturms als sechsseitiger, additiver Kegel, die Lampe blitzt bei etwa 5,5 s auf; Laterne flackert, Boote schaukeln",
+  "Zwei Einstellungen mit Fahrt: 0–2,0 s Totale mit der Hauptkamera aus shared/3d (Dachs etwa 70 px), 2,0–3,9 s Kamerafahrt, ab 3,9 s feste Nahaufnahme (Dachs 220 px, Leuchtturm rechts, Boot und Steg in der Mitte); Poster bei 5,0 s",
+  "Animierte Figur: Walk mit 0,73 m/s, biegt in den letzten Schritten zur Nahaufnahme ab (−67°, Drehung nur um den Standfuß), bremst in der Durchgangsphase, Idle, Wave ab 4,0 s. Gemessen (scripts/measure_badger.py): Standfuß im Lauf höchstens 4,2 mm je Bild, in der festen Totale höchstens 0,25 px; Überblendung auf Idle höchstens 1,7 mm; Füße im Stehen und Winken innerhalb 1,3 mm; in den Silhouetten der Nahaufnahme Fußzeile 625 in allen Bildern, Kopf 404–405 (größter Sprung 1 px)",
+  "Oberfläche aus Dreiecken (ui.gd): Ortsschild und Dialogkasten sind unregelmäßige Dreiecksnetze mit Farbverlauf und abgeschrägten Ecken; der Kasten setzt sich ab 3,4 s in 0,5 s Dreieck für Dreieck von links nach rechts zusammen, Text Zeichen für Zeichen, Auswahl als facettierte Knöpfe (gewählter in Pfirsich mit Dreieckszeiger), Eingabezeile „> nimm paket“. Schrift Quicksand. Kasten 808 × 186 px (16,3 %), mit Ortsschild etwa 18 % des Bildes"
+ ],
+ "camera": "Bis 2,0 s die Hauptkamera aus shared/3d unverändert (−1,8 | 3,4 | 14,5, 3° nach unten, fov 42). Von 2,0 bis 3,9 s Fahrt (doppelt geglättet, Position linear, Drehung per Slerp, fov 42 → 50) zu einer festen Nahaufnahme bei (−1,25 | 1,3 | 5,25) mit Blick auf (−1,25 | 1,125 | −4,75), fov 50 vertikal. Werte mit scripts/plan_shot.py und einer Suche über Kamerapositionen gerechnet: Füße bei x ≈ 310, Dachs etwa 220 px, Leuchtfeuer bei (928 | 62), Fässer links neben statt hinter dem Dachs.",
+ "resolution": "1280×720 nativ, Forward+, MSAA 4× (msaa_3d = 2), Debanding für den Himmelsverlauf; etwa 25 500 Dreiecke in der Szene (Hafen ohne Meer 12 351, Wasser 9 576, Dachs 876, Wolken, Rauch, Möwen)",
+ "pipeline": [
+  {
+   "step": "Low-Poly-Fassung des Hafens",
+   "tool": "Blender 5.2 (blender/build_lowpoly.py)",
+   "detail": "shared/3d/harbor.glb mit merge_vertices importiert, WestHill, Headland, RocksSea und IslandsFar mit Decimate (Collapse, 22–60 %) reduziert, Rock/Sand/Grass danach je Facette nach der Regel aus build_harbor.py neu zugewiesen, alle Flächen flach schattiert, je Facette eine Zufallsfarbe (R = Helligkeit, G = Farbton) als FLOAT_COLOR-Attribut, Export als demo/models/harbor_lowpoly.glb mit COLOR_0; gleiche Objekt-, Empty- und Materialnamen. Dreieckszahlen in assets/harbor_lowpoly.json"
+  },
+  {
+   "step": "Figur",
+   "tool": "shared/3d (badger_low.glb)",
+   "detail": "unveränderte Kopie der Low-Fassung (876 Dreiecke, gleiche Knochen und Animationen); facettiert erst im Shader"
+  },
+  {
+   "step": "Palette und Flat-Shading",
+   "tool": "Godot 4.7.2, shaders/lowpoly.gdshader, main.gd",
+   "detail": "alle glTF-Materialien nach resource_name durch einen ShaderMaterial ersetzt (Farbe aus PALETTE/BADGER_PALETTE, Lambert ohne Glanz, Flächennormale aus Ableitungen, Abweichung je Facette aus der Vertexfarbe); LOD-Erzeugung beim Import abgeschaltet"
+  },
+  {
+   "step": "Wasser",
+   "tool": "main.gd (_build_water), shaders/water.gdshader",
+   "detail": "Dreiecksnetz mit SurfaceTool und festem Seed gebaut, Sea aus dem glb ausgeblendet; Wellen im Vertex-Shader über Weltkoordinaten und globale Zeit lp_time"
+  },
+  {
+   "step": "Himmel, Nebel, Licht",
+   "tool": "shaders/sky.gdshader, WorldEnvironment, DirectionalLight3D ×2, OmniLight3D ×3",
+   "detail": "Verlaufshimmel als Sky-Shader, Umgebungs- und Spiegellicht aus dem Himmel, Tiefennebel mit aerial perspective, Glow für Lampen und Fenster"
+  },
+  {
+   "step": "Wolken, Rauch, Möwen, Lichtkegel",
+   "tool": "main.gd, shaders/facet_cloud.gdshader, shaders/beam.gdshader",
+   "detail": "aus SphereMesh mit wenigen Segmenten, eigenen Dreiecks-Meshes und einem sechsseitigen CylinderMesh im Code gebaut; Wolken springen außerhalb des Bildes (±600 m) von rechts nach links"
+  },
+  {
+   "step": "Oberfläche",
+   "tool": "ui.gd, Quicksand (OFL)",
+   "detail": "Dreiecksnetz je Feld mit Geometry2D.intersect_polygons auf die abgeschrägte Form zugeschnitten, in _draw() gezeichnet; Zeit aus main.gd"
+  },
+  {
+   "step": "Bildausschnitt und Laufplan rechnen",
+   "tool": "scripts/plan_shot.py (Python, ohne Godot)",
+   "detail": "Lauf simuliert (Bremsbeginn 3,22 s → Durchgangsphase 0,81), Nahaufnahme projiziert; Kameraposition per Rastersuche (Dachs links, Leuchtfeuer im Bild, Fässer nicht hinter dem Dachs)"
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/measure_badger.py, scripts/compare_switches.py, scripts/snap.py, tools/capture.py",
+   "detail": "Füße und Kopf über Knochenpunkte und über weiße Silhouetten (--mask) gemessen; Vergleichsschalter --smooth und --no-jitter; Probeläufe mit Mobile und Compatibility; Langzeitprüfung mit --t0=30; zwei Läufe bitgleich (Poster gegen Bild 150 eines zweiten Laufs: Abweichung 0); capture.py mit --poster-at 0.834"
+  },
+  {
+   "step": "KI-Bilder",
+   "tool": "keine",
+   "detail": "laut Auftrag ohne genimg.py; kein Bild erzeugt"
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, Forward+, MSAA 3D 4× (Wert 2), use_debanding, Schatten-Atlas 8192, soft_shadow_filter_quality 2; globale Shader-Uniforms lp_time, sky_top, sky_mid, sky_low, sky_glow",
+  "lowpoly.gdshader: render_mode diffuse_lambert, specular_disabled, cull_back; NORMAL = Flächennormale aus dFdx/dFdy von VERTEX (zur Kamera gedreht), umschaltbar per Uniform flat_shading; ALBEDO = Palettenfarbe × (1 ± 9 % aus COLOR.r) × warm/kalt aus COLOR.g; Glas mit 20 % Albedo und Emission, damit Sonne und Punktlicht das Fenster nicht überstrahlen",
+  "water.gdshader: diffuse_lambert, specular_schlick_ggx, ROUGHNESS 0,3, SPECULAR 0,35; vier Sinuswellen auf Weltkoordinaten, ab 45–140 m vom Hafen ausgeblendet; Flächennormale in Weltkoordinaten, Neigung × 3 (tilt_gain) für das Licht; varying flat float für die Farbe je Facette (Tal → Kamm, nach hinten zur Himmelsfarbe)",
+  "Environment: Hintergrund Sky (sky.gdshader, radiance_size 2), Umgebungslicht aus dem Himmel (Energie 0,75), Spiegelungen aus dem Himmel, Tonemapping linear, Glow additiv ab 1,0, Tiefennebel 28–420 m (Kurve 1,3), aerial perspective 0,55",
+  "Licht: Sonne DirectionalLight3D Richtung (0,82 | −0,3 | −0,36) normiert, Farbe (1 | 0,74 | 0,54), Energie 1,35, Schatten mit blur 1,2 bis 80 m; Fülllicht Richtung (−0,6 | −0,55 | 0,45), lavendel, Energie 0,35, ohne Schatten; Punktlichter an Laterne, Fenster und Leuchtfeuer über das Attach-Muster aus shared/3d",
+  "facet_cloud.gdshader: unshaded, fog_disabled, Farbe je Facette aus der Flächennormale in Weltkoordinaten (oben lavendel, Seite rosa, unten und zur Sonne pfirsich); beam.gdshader: unshaded, blend_add, depth_draw_never, Helligkeit je Seitenfläche aus Flächennormale gegen Blickrichtung",
+  "Dachs: AnimationPlayer im manuellen Modus (advance); Lauftempo über play(\"Walk\", -1, Tempo) statt speed_scale, damit Walk beim Überblenden auf Idle steht bleibt; Vorschub entlang der Blickrichtung (0,367 m/s × Tempo), Drehung höchstens 3° je Bild um den Bodenpunkt des Standfußes; beim Überblenden auf Idle (0,3 s) wird der Standfuß festgehalten; Idle und Walk auf LOOP_LINEAR; models/*.glb.import mit generate_lods=false",
+  "ui.gd: Control in einer CanvasLayer, zeichnet in _draw(); Quicksand als FontVariation (wght 600 und 700); Dreiecke deckend (mit Alpha < 1 erschienen Nähte zwischen den Dreiecken)",
+  "Deterministisch: Zeit t als aufsummiertes delta, alle Zufallswerte aus RandomNumberGenerator bzw. FastNoiseLite mit festen Seeds; Schalter nach --: --smooth, --no-jitter, --static-cam, --mask, --measure, --brake=<s>, --t0=<s>"
+ ],
+ "techniques": [
+  "flat-shading",
+  "blender-lowpoly-variante",
+  "blender-dezimieren",
+  "vertexfarben-backen",
+  "shader-wasser",
+  "vertex-animation",
+  "farbverlauf-himmel",
+  "tiefennebel",
+  "additiver-lichtkegel",
+  "grundformen-per-code",
+  "prozedurale-animation",
+  "fuss-halten",
+  "kamerafahrt",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 1,
+  "consistency": 5,
+  "effort": 2,
+  "text_adventure": 4,
+  "mobile": 4
+ },
+ "ratings_note": "ai_fit 1 heißt hier: Die KI hat nichts beigetragen. Laut Auftrag wurde kein Bild erzeugt; der Look kommt vollständig aus dem Blender-Skript, den Shadern und dem Code. Wie gut ein Bildmodell Low-Poly mit Flat-Shading trifft, ist nicht geprüft. consistency 5 und effort 2: Ein neues Objekt braucht nur Materialnamen in der Palette; Facetten, Licht, Nebel und Farbabweichung gelten automatisch, grobe Modelle sind schnell gebaut, und vorhandene Modelle lassen sich mit dem Blender-Skript reduzieren (Anteil je Objekt von Hand gewählt). mobile 4 ist geschätzt: Keine Texturen, etwa 25 500 Dreiecke, einfache Shader; teuer sind nur der 8192er Schattenatlas, MSAA 4× und Glow. Probeläufe auf dem Mac: Mobile läuft ohne Fehler und weicht in 5,4 % (Totale) bzw. 4,3 % (Nahaufnahme) der Pixel um mehr als 8 Stufen ab (im Mittel unter 1 Stufe); Compatibility läuft ebenfalls ohne Fehler, die Farben weichen aber in 93 % bzw. 79 % der Pixel ab (im Mittel 30–32 Stufen: Himmel oben deutlich dunkler violett, Pflaster und Felsen rosiger und gesättigter) und müssten neu abgestimmt werden. Auf einem Smartphone nicht gemessen.",
+ "verdict": "Gut geeignet für unser Textadventure, wenn wir Orte in 3D bauen wollen: Ein Ort braucht nur ein grobes Modell, Materialnamen und eine Palette, keine Texturen und keine KI-Bilder; Shader, Wasser, Himmel, Oberfläche und Messskripte sind wiederverwendbar, und der Stil bleibt über viele Orte gleich. Die ruhigen, großen Flächen lassen Platz für Text, und der Look läuft auch mit dem Mobile-Renderer. Grenzen: Kleine, dünne Dinge (Tau, Geländer, Poller) verlieren an Lesbarkeit, die Figur hat keine Mimik, und ohne eigene Palette und Bildausschnitte wirkt Low-Poly schnell austauschbar. Für Nahaufnahmen der Figur braucht jeder Ort eine zweite Kamera.",
+ "pitfalls": [
+  "Keine KI-Bilder (Vorgabe des Auftrags): ai_fit ist nicht bewertet, sondern bedeutet „kein Beitrag“.",
+  "Bewusste Abweichungen vom Auftrag bzw. von shared/3d: Kamerafahrt zu einer Nahaufnahme (in der Totale ist der Dachs nur etwa 70 px hoch, seine Facetten sind dort kaum zu sehen); der Dachs startet bei x = −5 statt −6 (WalkStart) und dreht sich nur auf −67°; der Dialogkasten erscheint erst ab 3,4 s, damit er den laufenden Dachs in der Totale nicht verdeckt (das Ortsschild ist ab 0,2 s zu sehen); Sonne von links etwas steiler als in shared/3d; badger_low.glb statt badger.glb; das Meer-Gitter Sea aus dem glb ist ausgeblendet und durch ein eigenes Netz ersetzt.",
+  "Blender importiert glTF ohne merge_vertices als an UV-Nähten und harten Kanten aufgetrennte Meshes; Decimate hätte dort Löcher gerissen. Die Nahtstelle zwischen reduziertem Gelände und Kai ist nur aus den beiden Kameras der Demo geprüft (keine Lücken sichtbar).",
+  "Die Farbabweichung je Facette war mit ±5 % praktisch unsichtbar (höchstens 8 Stufen, 0 % der Pixel über der Schwelle); mit ±9 % ist sie messbar, aber leise (3,3 % der Pixel). Weil Blender beim Import trianguliert, bekommen auch rechteckige Flächen (Pflasterplatten, Kistenseiten) zwei Töne mit sichtbarer Diagonale.",
+  "Überblendung Walk → Idle: Mit speed_scale lief die ausgeblendete Walk-Animation während der 0,3 s mit vollem Tempo weiter, die Füße rutschten bis 24 mm je Bild über den Boden. Gelöst mit play(\"Walk\", -1, Tempo) und Festhalten des Standfußes (jetzt höchstens 1,7 mm). Verblieben: Beim Bremsen hängt der Schwungfuß etwa 0,1 s in 7 cm Höhe, bevor er sich senkt.",
+  "Das Wasser ist geometrisch flach (Wellen 0,14 m); deutlich facettiert wirkt es erst mit der dreifach überhöhten Neigung im Licht und der Farbe je Facette. Hinten (ab 45–140 m) laufen die Wellen aus, der Streifen am Horizont ist glatt und violett.",
+  "Das Glas der Fenster leuchtete zuerst weiß aus: Sonne und Punktlicht beleuchteten die emissive Fläche zusätzlich. Gelöst mit 20 % Albedo für Glas.",
+  "Compatibility-Renderer: deutlich andere Farben (siehe ratings_note); die Palette ist nur für Forward+ und Mobile abgestimmt.",
+  "Rauch aus einzelnen groben Kugeln liest sich in der Totale als Kette von Perlen; die Taurolle wirkt in der Nahaufnahme wie ein flacher Ring mit Stiel. Low-Poly lebt von großen Formen, kleine Teile mit vielen dünnen Facetten (Tau, Geländer, Poller) verlieren an Klarheit.",
+  "Das Pflaster (Quay, 3070 Dreiecke, nicht reduziert) nimmt in der Totale fast die halbe Bildhöhe ein; Facetten zeigt es dort nur an den Fasen der Platten.",
+  "Wolken: Die erste Fassung (eine Reihe stark gestauchter Kugeln) sah wie schwebende Pfannkuchen aus; erst eine flache untere Reihe mit zwei, drei runden Kuppen darüber liest sich als Haufenwolke.",
+  "Möwen sind in beiden Einstellungen nur 20–40 px groß; Flügelschlag und Facetten sind nur im Video zu erkennen."
+ ],
+ "lessons": [
+  "Flat-Shading im Shader statt in der Geometrie: NORMAL = normalize(cross(dFdx(VERTEX), dFdy(VERTEX))), zur Kamera gedreht. Das funktioniert für jedes Mesh, auch für die geriggte Figur und das Wasser mit Vertex-Animation, ohne aufgetrennte Normalen; LOD-Erzeugung beim Import abschalten.",
+  "Low-Poly-Variante per Blender-Skript aus der gemeinsamen glb: Import mit merge_vertices=True, Decimate Collapse je Objekt, Materialien des Geländes je Facette neu zuweisen, shade_flat, Export mit gleichen Namen. Vertexfarben als FLOAT_COLOR auf CORNER anlegen und mit export_vertex_color='ACTIVE' exportieren; Godot liefert sie als COLOR mit Werten 0–1.",
+  "Facettiertes Wasser: eigenes Dreiecksnetz mit Versatz und zufälligen Diagonalen (wirkt nicht wie ein Raster), nach außen gröber; Wellen in Weltkoordinaten; die Neigung nur für das Licht überhöhen statt die Wellen hoch zu machen; varying flat gibt eine Farbe je Dreieck.",
+  "Umgebungslicht aus einem Verlaufshimmel plus ein kühles Fülllicht von der Gegenseite: Ohne sie hat die ganze Schattenseite eine einzige Farbe und die Facetten verschwinden dort.",
+  "Den Himmelsverlauf auf den sichtbaren Höhenbereich legen (bei fov 42 bis etwa 20–30° über dem Horizont), sonst sieht man nur einen Ausschnitt des Verlaufs. Globale Uniforms für die Himmelsfarben halten Himmel und Wasser gleich.",
+  "Tiefennebel mit aerial perspective nimmt die Himmelsfarbe in Blickrichtung: Ferne Low-Poly-Formen werden zu blassen Schichten, ohne dass man den Nebel einfärben muss.",
+  "Lauftempo über play(name, -1, Tempo) statt speed_scale: speed_scale gilt auch für die ausblendende Animation und die Überblendung; mit eigenem Tempo bleibt Walk beim Wechsel auf Idle stehen. Zusätzlich den Standfuß während der Überblendung festhalten (Wurzel nachführen).",
+  "Bremsbeginn so legen, dass der Lauf in einer Durchgangsphase endet (plan_shot.py --scan), und das Ergebnis in Godot messen (Rasterlauf mit --brake=<s>): Von sechs Bremszeiten ergab 3,22 s die wenigsten Rutscher.",
+  "Kameraposition der Nahaufnahme per Rastersuche in Python statt Ausprobieren: Ziele (Füße, Höhe der Figur, Leuchtfeuer im Bild) und Verbote (Fass hinter der Figur) als Kostenfunktion.",
+  "Oberfläche im selben Stil: Dreiecksnetz mit Versatz, mit Geometry2D.intersect_polygons auf eine abgeschrägte Form zuschneiden, Farbe je Dreieck aus einem Verlauf; deckend zeichnen, sonst entstehen Nähte. Das Zusammensetzen Dreieck für Dreieck kostet nur eine Skalierung je Dreieck.",
+  "Langzeitprüfung über einen Startzeit-Schalter (--t0=30): Wolken treiben über einen festen Bereich und springen außerhalb des Bildes zurück, alles andere ist periodisch."
+ ],
+ "assets": [
+  {
+   "file": "blender/build_lowpoly.py",
+   "kind": "code",
+   "made_with": "Blender 5.2: Low-Poly-Fassung des Hafens aus shared/3d/harbor.glb (Decimate, Flat-Shading, Farbabweichung je Facette)",
+   "prompt": ""
+  },
+  {
+   "file": "demo/models/harbor_lowpoly.glb",
+   "kind": "model",
+   "made_with": "blender/build_lowpoly.py (15 551 Dreiecke inkl. ausgeblendetem Meer-Gitter, gleiche Namen wie shared/3d)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/harbor_lowpoly.json",
+   "kind": "data",
+   "made_with": "Dreieckszahlen je Objekt vor und nach dem Reduzieren",
+   "prompt": ""
+  },
+  {
+   "file": "demo/models/badger_low.glb",
+   "kind": "model",
+   "made_with": "unveränderte Kopie von shared/3d/badger_low.glb (876 Dreiecke, Idle/Walk/Wave)",
+   "prompt": ""
+  },
+  {
+   "file": "demo/models/harbor.glb",
+   "kind": "model",
+   "made_with": "unveränderte Kopie von shared/3d/harbor.glb, nur für den Vergleichsschalter --smooth",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/lowpoly.gdshader",
+   "kind": "shader",
+   "made_with": "Flat-Shading aus Ableitungen, Palettenfarbe, Farbabweichung je Facette",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/water.gdshader",
+   "kind": "shader",
+   "made_with": "facettiertes Wasser: Wellen im Vertex-Shader, überhöhte Neigung, Farbe je Facette",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/sky.gdshader",
+   "kind": "shader",
+   "made_with": "Farbverlauf-Himmel mit Glutband, Sonnenschein und Sternen",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/facet_cloud.gdshader",
+   "kind": "shader",
+   "made_with": "Wolken und Rauch: Farbe je Facette aus der Normale",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/beam.gdshader",
+   "kind": "shader",
+   "made_with": "sechsseitiger additiver Lichtkegel",
+   "prompt": ""
+  },
+  {
+   "file": "demo/main.gd",
+   "kind": "code",
+   "made_with": "Palette, Wasser-Netz, Wolken, Rauch, Möwen, Ablauf von Dachs und Kamera, Mess- und Vergleichsschalter",
+   "prompt": ""
+  },
+  {
+   "file": "demo/ui.gd",
+   "kind": "code",
+   "made_with": "Oberfläche aus Dreiecken: Ortsschild, sich zusammensetzender Dialogkasten, Auswahl",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/plan_shot.py",
+   "kind": "code",
+   "made_with": "Laufplan und Bildausschnitt der Nahaufnahme vorab rechnen",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/measure_badger.py",
+   "kind": "code",
+   "made_with": "Füße und Kopf messen (Knochenpunkte und Silhouetten)",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/compare_switches.py",
+   "kind": "code",
+   "made_with": "Vergleichsschalter und Renderer messen, Vorschaubilder",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/snap.py",
+   "kind": "code",
+   "made_with": "Einzelbilder rendern (auch mit --t0 für die Langzeitprüfung)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/measure_badger.json",
+   "kind": "data",
+   "made_with": "Messwerte von measure_badger.py",
+   "prompt": ""
+  },
+  {
+   "file": "assets/compare_switches.json",
+   "kind": "data",
+   "made_with": "Messwerte von compare_switches.py",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/totale_f060.png",
+   "kind": "preview",
+   "made_with": "Godot-Aufnahme, Bild 60 (2,0 s): Totale mit der Hauptkamera aus shared/3d",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/closeup_f150.png",
+   "kind": "preview",
+   "made_with": "Godot-Aufnahme, Bild 150 (5,0 s): Nahaufnahme mit Oberfläche (= Poster)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/badger_close.png",
+   "kind": "preview",
+   "made_with": "Ausschnitt aus Bild 150, 2-fach: facettierter Dachs beim Winken",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/switches.png",
+   "kind": "preview",
+   "made_with": "compare_switches.py: Spalten voll / --smooth / --no-jitter, Zeilen Bild 60 und 150",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/renderers.png",
+   "kind": "preview",
+   "made_with": "compare_switches.py: Spalten Forward+ / Mobile / Compatibility, Zeilen Bild 60 und 150",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Quicksand (variabel, Strichstärke 600 und 700)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/quicksand (Lizenztext: demo/fonts/OFL-Quicksand.txt)"
+  },
+  {
+   "item": "Hafen und Dachs",
+   "license": "eigene Modelle aus shared/3d (Blender-Skripte), Low-Poly-Fassung mit eigenem Skript",
+   "source": "shared/3d/blender/, styles/lowpoly-flat/blender/build_lowpoly.py"
+  },
+  {
+   "item": "Shader, Wasser, Wolken, Rauch, Möwen, Oberfläche",
+   "license": "eigener Code, keine fremden Texturen oder Bilder",
+   "source": "styles/lowpoly-flat/demo/"
+  }
+ ],
+ "image_generations": 0,
+ "tool_issues": [
+  "PIPELINE.md (Selbstprüfung, Punkt 3) verlangt, Endlos-Animationen „zusätzlich mit --t0 20–40 s“ zu prüfen, tools/capture.py kennt aber keinen Schalter --t0 (nur --seconds, --fps, --resolution, --poster-at, --timeout). Lokal umgangen: main.gd versteht --t0=<s> nach --, scripts/snap.py rendert damit Einzelbilder (geprüft bei 30–36 s).",
+  "shared/3d/README.md beschreibt die Probeszene als „MSAA 2×“, project.godot setzt aber anti_aliasing/quality/msaa_3d=2; in Godot ist der Wert 2 MSAA 4× (0 aus, 1 2×, 2 4×, 3 8×). Nur Doku, keine Auswirkung auf diesen Eintrag."
+ ],
+ "status": "done"
+}

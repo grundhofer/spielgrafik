@@ -1,0 +1,77 @@
+; Godot 4.7 – Sprite-Stacking (Katalogeintrag sprite-stacking)
+config_version=5
+
+[application]
+
+config/name="Sprite-Stacking – Hafen von Lornholm"
+run/main_scene="res://main.tscn"
+config/features=PackedStringArray("4.7")
+
+[display]
+
+window/size/viewport_width=426
+window/size/viewport_height=240
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/stretch/mode="viewport"
+window/stretch/scale_mode="integer"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+environment/defaults/default_clear_color=Color(0.06, 0.06, 0.12, 1)
+
+[shader_globals]
+
+cam_cs={
+"type": "vec2",
+"value": Vector2(1, 0)
+}
+cam_pivot={
+"type": "vec2",
+"value": Vector2(213, 96)
+}
+cam_center={
+"type": "vec2",
+"value": Vector2(213, 96)
+}
+sun_dir={
+"type": "vec3",
+"value": Vector3(-0.74, 0.3, 0.6)
+}
+light_lantern={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}
+light_window={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}
+light_lamp={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}
+glow_levels={
+"type": "vec3",
+"value": Vector3(1, 1, 1)
+}
+sim_time={
+"type": "float",
+"value": 0.0
+}
+boat_a={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 1)
+}
+boat_b={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 1)
+}
+flat_light={
+"type": "float",
+"value": 0.0
+}
+mask_mode={
+"type": "float",
+"value": 0.0
+}

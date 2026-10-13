@@ -1,0 +1,847 @@
+{
+ "sole_fixed": {
+  "0": 505,
+  "1": 435
+ },
+ "summary": {
+  "0": {
+   "changes": 29,
+   "measured": 29,
+   "pivot_hist": {
+    "-1": 2,
+    "0": 24,
+    "1": 3
+   },
+   "heel_hist": {
+    "-1": 1,
+    "0": 7
+   }
+  },
+  "1": {
+   "changes": 7,
+   "measured": 7,
+   "pivot_hist": {
+    "-1": 2,
+    "0": 3,
+    "1": 2
+   },
+   "heel_hist": {
+    "-1": 1,
+    "0": 1
+   }
+  }
+ },
+ "changes": [
+  {
+   "img": 2,
+   "shot": 0,
+   "change": "walk_4->walk_5",
+   "advance": 4,
+   "d_nose": 5,
+   "d_top": -1,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": 0,
+   "foot_a": [
+    24,
+    29
+   ],
+   "foot_b": [
+    24,
+    41
+   ],
+   "heel": [
+    24,
+    24
+   ],
+   "d_heel": 0
+  },
+  {
+   "img": 5,
+   "shot": 0,
+   "change": "walk_5->walk_6",
+   "advance": 7,
+   "d_nose": 7,
+   "d_top": -1,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": 0,
+   "foot_a": [
+    24,
+    41
+   ],
+   "foot_b": [
+    24,
+    43
+   ]
+  },
+  {
+   "img": 8,
+   "shot": 0,
+   "change": "walk_6->walk_7",
+   "advance": 3,
+   "d_nose": 3,
+   "d_top": 2,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": 0,
+   "foot_a": [
+    24,
+    43
+   ],
+   "foot_b": [
+    24,
+    43
+   ]
+  },
+  {
+   "img": 11,
+   "shot": 0,
+   "change": "walk_7->walk_0",
+   "advance": 5,
+   "d_nose": 5,
+   "d_top": 0,
+   "d_sole": 0,
+   "pivot": "Spitze",
+   "d_pivot": 0,
+   "foot_a": [
+    24,
+    43
+   ],
+   "foot_b": [
+    37,
+    43
+   ]
+  },
+  {
+   "img": 14,
+   "shot": 0,
+   "change": "walk_0->walk_1",
+   "advance": 6,
+   "d_nose": 6,
+   "d_top": -1,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": 0,
+   "foot_a": [
+    46,
+    47
+   ],
+   "foot_b": [
+    46,
+    62
+   ],
+   "heel": [
+    46,
+    46
+   ],
+   "d_heel": 0
+  },
+  {
+   "img": 17,
+   "shot": 0,
+   "change": "walk_1->walk_2",
+   "advance": 5,
+   "d_nose": 6,
+   "d_top": 0,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": 0,
+   "foot_a": [
+    46,
+    62
+   ],
+   "foot_b": [
+    46,
+    61
+   ]
+  },
+  {
+   "img": 20,
+   "shot": 0,
+   "change": "walk_2->walk_3",
+   "advance": 8,
+   "d_nose": 7,
+   "d_top": 0,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": 0,
+   "foot_a": [
+    46,
+    61
+   ],
+   "foot_b": [
+    46,
+    65
+   ]
+  },
+  {
+   "img": 23,
+   "shot": 0,
+   "change": "walk_3->walk_4",
+   "advance": 5,
+   "d_nose": 4,
+   "d_top": 1,
+   "d_sole": 0,
+   "pivot": "Spitze",
+   "d_pivot": 0,
+   "foot_a": [
+    46,
+    65
+   ],
+   "foot_b": [
+    60,
+    65
+   ]
+  },
+  {
+   "img": 26,
+   "shot": 0,
+   "change": "walk_4->walk_5",
+   "advance": 4,
+   "d_nose": 5,
+   "d_top": -1,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": 0,
+   "foot_a": [
+    67,
+    72
+   ],
+   "foot_b": [
+    67,
+    84
+   ],
+   "heel": [
+    67,
+    67
+   ],
+   "d_heel": 0
+  },
+  {
+   "img": 29,
+   "shot": 0,
+   "change": "walk_5->walk_6",
+   "advance": 7,
+   "d_nose": 7,
+   "d_top": -1,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": 0,
+   "foot_a": [
+    67,
+    84
+   ],
+   "foot_b": [
+    67,
+    86
+   ]
+  },
+  {
+   "img": 32,
+   "shot": 0,
+   "change": "walk_6->walk_7",
+   "advance": 3,
+   "d_nose": 3,
+   "d_top": 2,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": 0,
+   "foot_a": [
+    67,
+    86
+   ],
+   "foot_b": [
+    67,
+    86
+   ]
+  },
+  {
+   "img": 35,
+   "shot": 0,
+   "change": "walk_7->walk_0",
+   "advance": 6,
+   "d_nose": 6,
+   "d_top": 0,
+   "d_sole": 0,
+   "pivot": "Spitze",
+   "d_pivot": 1,
+   "foot_a": [
+    67,
+    86
+   ],
+   "foot_b": [
+    81,
+    87
+   ]
+  },
+  {
+   "img": 38,
+   "shot": 0,
+   "change": "walk_0->walk_1",
+   "advance": 5,
+   "d_nose": 5,
+   "d_top": -1,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": -1,
+   "foot_a": [
+    90,
+    91
+   ],
+   "foot_b": [
+    89,
+    105
+   ],
+   "heel": [
+    90,
+    89
+   ],
+   "d_heel": -1
+  },
+  {
+   "img": 41,
+   "shot": 0,
+   "change": "walk_1->walk_2",
+   "advance": 5,
+   "d_nose": 6,
+   "d_top": 0,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": 0,
+   "foot_a": [
+    89,
+    105
+   ],
+   "foot_b": [
+    89,
+    104
+   ]
+  },
+  {
+   "img": 44,
+   "shot": 0,
+   "change": "walk_2->walk_3",
+   "advance": 8,
+   "d_nose": 7,
+   "d_top": 0,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": 0,
+   "foot_a": [
+    89,
+    104
+   ],
+   "foot_b": [
+    89,
+    108
+   ]
+  },
+  {
+   "img": 47,
+   "shot": 0,
+   "change": "walk_3->walk_4",
+   "advance": 5,
+   "d_nose": 4,
+   "d_top": 1,
+   "d_sole": 0,
+   "pivot": "Spitze",
+   "d_pivot": 0,
+   "foot_a": [
+    89,
+    108
+   ],
+   "foot_b": [
+    103,
+    108
+   ]
+  },
+  {
+   "img": 50,
+   "shot": 0,
+   "change": "walk_4->walk_5",
+   "advance": 4,
+   "d_nose": 5,
+   "d_top": -1,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": 0,
+   "foot_a": [
+    110,
+    115
+   ],
+   "foot_b": [
+    110,
+    127
+   ],
+   "heel": [
+    110,
+    110
+   ],
+   "d_heel": 0
+  },
+  {
+   "img": 53,
+   "shot": 0,
+   "change": "walk_5->walk_6",
+   "advance": 7,
+   "d_nose": 7,
+   "d_top": -1,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": 0,
+   "foot_a": [
+    110,
+    127
+   ],
+   "foot_b": [
+    110,
+    129
+   ]
+  },
+  {
+   "img": 56,
+   "shot": 0,
+   "change": "walk_6->walk_7",
+   "advance": 3,
+   "d_nose": 3,
+   "d_top": 2,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": 0,
+   "foot_a": [
+    110,
+    129
+   ],
+   "foot_b": [
+    110,
+    129
+   ]
+  },
+  {
+   "img": 59,
+   "shot": 0,
+   "change": "walk_7->walk_0",
+   "advance": 6,
+   "d_nose": 6,
+   "d_top": 0,
+   "d_sole": 0,
+   "pivot": "Spitze",
+   "d_pivot": 1,
+   "foot_a": [
+    110,
+    129
+   ],
+   "foot_b": [
+    124,
+    130
+   ]
+  },
+  {
+   "img": 62,
+   "shot": 0,
+   "change": "walk_0->walk_1",
+   "advance": 6,
+   "d_nose": 6,
+   "d_top": -1,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": 0,
+   "foot_a": [
+    133,
+    134
+   ],
+   "foot_b": [
+    133,
+    149
+   ],
+   "heel": [
+    133,
+    133
+   ],
+   "d_heel": 0
+  },
+  {
+   "img": 65,
+   "shot": 0,
+   "change": "walk_1->walk_2",
+   "advance": 5,
+   "d_nose": 6,
+   "d_top": 0,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": 0,
+   "foot_a": [
+    133,
+    149
+   ],
+   "foot_b": [
+    133,
+    148
+   ]
+  },
+  {
+   "img": 68,
+   "shot": 0,
+   "change": "walk_2->walk_3",
+   "advance": 7,
+   "d_nose": 6,
+   "d_top": 0,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": -1,
+   "foot_a": [
+    133,
+    148
+   ],
+   "foot_b": [
+    132,
+    151
+   ]
+  },
+  {
+   "img": 71,
+   "shot": 0,
+   "change": "walk_3->walk_4",
+   "advance": 5,
+   "d_nose": 4,
+   "d_top": 1,
+   "d_sole": 0,
+   "pivot": "Spitze",
+   "d_pivot": 0,
+   "foot_a": [
+    132,
+    151
+   ],
+   "foot_b": [
+    146,
+    151
+   ]
+  },
+  {
+   "img": 74,
+   "shot": 0,
+   "change": "walk_4->walk_5",
+   "advance": 4,
+   "d_nose": 5,
+   "d_top": -1,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": 0,
+   "foot_a": [
+    153,
+    158
+   ],
+   "foot_b": [
+    153,
+    170
+   ],
+   "heel": [
+    153,
+    153
+   ],
+   "d_heel": 0
+  },
+  {
+   "img": 77,
+   "shot": 0,
+   "change": "walk_5->walk_6",
+   "advance": 8,
+   "d_nose": 8,
+   "d_top": -1,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": 1,
+   "foot_a": [
+    153,
+    170
+   ],
+   "foot_b": [
+    154,
+    173
+   ]
+  },
+  {
+   "img": 80,
+   "shot": 0,
+   "change": "walk_6->walk_7",
+   "advance": 3,
+   "d_nose": 3,
+   "d_top": 2,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": 0,
+   "foot_a": [
+    154,
+    173
+   ],
+   "foot_b": [
+    154,
+    173
+   ]
+  },
+  {
+   "img": 83,
+   "shot": 0,
+   "change": "walk_7->walk_0",
+   "advance": 5,
+   "d_nose": 5,
+   "d_top": 0,
+   "d_sole": 0,
+   "pivot": "Spitze",
+   "d_pivot": 0,
+   "foot_a": [
+    154,
+    173
+   ],
+   "foot_b": [
+    167,
+    173
+   ]
+  },
+  {
+   "img": 86,
+   "shot": 0,
+   "change": "walk_0->walk_1",
+   "advance": 6,
+   "d_nose": 6,
+   "d_top": -1,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": 0,
+   "foot_a": [
+    176,
+    177
+   ],
+   "foot_b": [
+    176,
+    192
+   ],
+   "heel": [
+    176,
+    176
+   ],
+   "d_heel": 0
+  },
+  {
+   "img": 92,
+   "shot": 1,
+   "change": "walk_2->walk_3",
+   "advance": 12,
+   "d_nose": 12,
+   "d_top": 0,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": 0,
+   "foot_a": [
+    276,
+    299
+   ],
+   "foot_b": [
+    276,
+    305
+   ]
+  },
+  {
+   "img": 95,
+   "shot": 1,
+   "change": "walk_3->walk_4",
+   "advance": 8,
+   "d_nose": 6,
+   "d_top": 1,
+   "d_sole": 0,
+   "pivot": "Spitze",
+   "d_pivot": 1,
+   "foot_a": [
+    276,
+    305
+   ],
+   "foot_b": [
+    298,
+    306
+   ]
+  },
+  {
+   "img": 98,
+   "shot": 1,
+   "change": "walk_4->walk_5",
+   "advance": 7,
+   "d_nose": 9,
+   "d_top": -1,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": 0,
+   "foot_a": [
+    310,
+    317
+   ],
+   "foot_b": [
+    310,
+    333
+   ],
+   "heel": [
+    310,
+    310
+   ],
+   "d_heel": 0
+  },
+  {
+   "img": 101,
+   "shot": 1,
+   "change": "walk_5->walk_6",
+   "advance": 11,
+   "d_nose": 10,
+   "d_top": -1,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": -1,
+   "foot_a": [
+    310,
+    333
+   ],
+   "foot_b": [
+    309,
+    340
+   ]
+  },
+  {
+   "img": 104,
+   "shot": 1,
+   "change": "walk_6->walk_7",
+   "advance": 5,
+   "d_nose": 6,
+   "d_top": 3,
+   "d_sole": 0,
+   "pivot": "Spitze",
+   "d_pivot": 0,
+   "foot_a": [
+    309,
+    340
+   ],
+   "foot_b": [
+    310,
+    340
+   ]
+  },
+  {
+   "img": 107,
+   "shot": 1,
+   "change": "walk_7->walk_0",
+   "advance": 9,
+   "d_nose": 9,
+   "d_top": -1,
+   "d_sole": 0,
+   "pivot": "Spitze",
+   "d_pivot": 1,
+   "foot_a": [
+    310,
+    340
+   ],
+   "foot_b": [
+    332,
+    341
+   ]
+  },
+  {
+   "img": 110,
+   "shot": 1,
+   "change": "walk_0->walk_1",
+   "advance": 9,
+   "d_nose": 9,
+   "d_top": -1,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": -1,
+   "foot_a": [
+    346,
+    347
+   ],
+   "foot_b": [
+    345,
+    370
+   ],
+   "heel": [
+    346,
+    345
+   ],
+   "d_heel": -1
+  },
+  {
+   "img": 113,
+   "shot": 1,
+   "change": "walk_1->stand",
+   "advance": 8,
+   "d_nose": 7,
+   "d_top": -3,
+   "d_sole": 0,
+   "pivot": "Spitze",
+   "d_pivot": -2,
+   "foot_a": [
+    345,
+    370
+   ],
+   "foot_b": [
+    337,
+    368
+   ]
+  },
+  {
+   "img": 137,
+   "shot": 1,
+   "change": "stand->turn",
+   "advance": 0,
+   "d_nose": -12,
+   "d_top": 0,
+   "d_sole": 0,
+   "pivot": "Spitze",
+   "d_pivot": 11,
+   "foot_a": [
+    337,
+    368
+   ],
+   "foot_b": [
+    368,
+    379
+   ]
+  },
+  {
+   "img": 161,
+   "shot": 1,
+   "change": "turn->blink",
+   "advance": 0,
+   "d_nose": 0,
+   "d_top": 0,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": 0,
+   "foot_a": [
+    324,
+    352
+   ],
+   "foot_b": [
+    324,
+    352
+   ]
+  },
+  {
+   "img": 165,
+   "shot": 1,
+   "change": "blink->turn",
+   "advance": 0,
+   "d_nose": 0,
+   "d_top": 0,
+   "d_sole": 0,
+   "pivot": "Ferse",
+   "d_pivot": 0,
+   "foot_a": [
+    324,
+    352
+   ],
+   "foot_b": [
+    324,
+    352
+   ]
+  }
+ ],
+ "moved_in_hold": []
+}

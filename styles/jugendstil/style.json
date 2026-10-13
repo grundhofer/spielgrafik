@@ -1,0 +1,286 @@
+{
+ "slug": "jugendstil",
+ "name": "Jugendstil",
+ "family": "grafisch",
+ "kind": "style",
+ "era": "1895–1910 (Plakatkunst und Buchgestaltung des Jugendstils, Art nouveau); als Spielgrafik seit den 1990er-Jahren",
+ "summary": "Der Hafen als Farblithografie um 1900 hinter einem Ornamentrahmen: flache, gedämpfte Druckfarben (Salbei, Oliv, Ocker, Altrosa, Petrol, Terrakotta) mit Gold, eine gleich starke dunkle Schlüssellinie um jede Form, Wolken als Ornamentbänder mit Spiralenden, das Meer als wellige Bänder mit Spiralkämmen. Der Rahmen mit Rundbogenfenster trägt Mohn, Lilien und Peitschenhieb-Ranken; im Spiel fließen die Wellenornamente, der Rauch zieht als salbeifarbenes Ornamentband aus dem Schornstein und rollt sich zur Spirale ein, hinter dem Leuchtfeuer pulsiert ein flacher Goldnimbus mit Blütenkranz, die Sterne funkeln und das Gold des Rahmens schimmert. Anders als Art déco (geometrisch, stromlinig, Stufenformen, konturlose Flächen mit Spritzpistolen-Verläufen, Versalschrift) ist der Jugendstil organisch und floral, mit Kontur, flachen Farben ohne Verlauf und geschwungener Schrift.",
+ "references": [
+  "Alfons Mucha: Theater- und Werbeplakate (z. B. „Gismonda“, 1894) – Rundbogen- und Ornamentrahmen, Nimbus hinter der Figur, Peitschenhieb-Linien, gedämpfte Farben mit Gold",
+  "Zeitschriften „Jugend“ (München, ab 1896) und „Pan“ (Berlin, ab 1895), Ornamente von Otto Eckmann – florale Rahmen und Vignetten der Buchgestaltung",
+  "Henri Rivière: Farblithografien „Les Aspects de la Nature“ (1897–1899) – Küsten und Meer in flachen Farbflächen mit Kontur",
+  "Thomas Maitland Cleland: Schrift „Della Robbia“ (1902) – Vorlage der verwendeten Schrift Della Respira",
+  "The Last Express (Smoking Car Productions, 1997): Abenteuerspiel im Jahr 1914 mit Jugendstil-Gestaltung in Figuren, Oberfläche und Schrift",
+  "Transistor (Supergiant Games, 2014): Erzählspiel mit vom Art nouveau geprägter Illustration und Ornamentik",
+  "BioShock Infinite (Irrational Games, 2013): Plakate und Architektur im Stil der Belle Époque und des Jugendstils"
+ ],
+ "traits": [
+  "Plakatbild als Farblithografie: jede Form mit dunkler, gleich starker Schlüssellinie (im KI-Bild 3–4 px an Hauptkonturen, 2 px an Binnenlinien gemessen), flache matte Farben in Salbei, Oliv, Ocker, Altrosa, Petrol, Terrakotta und Creme, Gold nur als Akzent (Wellenkämme, Fensterrahmen, Laterne, Kuppel, Sterne); Wolken als Ornamentbänder mit Spiralenden, Meer als wellige Bänder mit Spiralkämmen, Kletterrose am Häuschen",
+  "Ornamentrahmen mit Rundbogenfenster (904×518 px): Mohn und Lilien mit Peitschenhieb-Stängeln in den Zwickeln, Goldkreise, Blütenkrone im Scheitel, Ranken in den Seitenleisten; das Gold des Rahmens (5 % der Rahmenpixel) schimmert, ein schräger Lichtstreif läuft alle 3 s darüber",
+  "Fließende Wellenornamente: Die Wellenlinien des Plakats wandern als Welle die Bänder entlang (senkrechter Versatz bis 5,5 Weltpixel, 14–38 Weltpixel/s nach rechts) und gleiten waagrecht gegeneinander; gegenüber stehendem Wasser ändern sich 22–24 % der Wasserpixel um mehr als 30 Farbstufen; über die Goldlinien läuft eine Lichtwelle",
+  "Rauch als Ornamentband wie die Wolkenranken: steigt schmal aus der Schornsteinkrone, zieht als Peitschenhieb nach rechts (am breitesten 32 Weltpixel) und rollt sich in einer Spirale mit 1,4 Windungen (Radius 40 → 8 Weltpixel) über oben nach innen ein, wo er spitz ausläuft; Salbei wie die Wolkenbänder, gleich starke Kontur (2 px in der Totale), kantengeglättet, eine abgesetzte Innenlinie, die als flache Welle nach außen läuft und Ober- und Unterseite trennt; die Spirale atmet um ±1,5 Weltpixel",
+  "Leuchtfeuer pulsiert im Ornament: flacher, deckender Nimbus hinter Turm, Haus und Bäumen (nur auf Himmel und Wolken) aus einer Ockerscheibe (Radius 64) mit Kontur, einem Kranz aus 12 spitzen Goldblättern mit Kontur, einer blassgoldenen Mitte und einem kräftigen Goldring (Radius 82) mit Kontur beiderseits; alle 2,6 s blitzt die Lampe auf und eine Lichtwelle hellt nacheinander Mitte, Blätter und Ring zu Blassgold auf. Die Laterne hat einen deckenden Goldring mit Kontur, der beim Flackern heller und breiter wird",
+  "Sterne funkeln einzeln: 18 Sterne des Plakats als eigene Maske, jeder mit eigener Phase zwischen halber Helligkeit und Blassgold; Himmel und Wolken ändern sich sonst über die Zeit nicht (0 von 155 331 geprüften Pixeln in der Totale, 0 von 66 047 in der Nahaufnahme, auch ab 31 s)",
+  "Figur als flache Plakatfigur: 12 Druckfarben (Kontur, Fell, Grün, Rot, Braun, Paket, Creme, Gold und wenige Schattentöne), Fell und Schal je eine Fläche; Umrisslinie nachgezogen auf 4 px in der Nahaufnahme und 2 px in der Totale (gemessen), so stark wie die Linien des Plakats; Auge mit cremefarbenem Glanzpunkt",
+  "Textfeld im Rahmen: cremefarbene Tafel mit Blütenecken (vom Bildmodell), Ortsname in Della Respira (Wiederbelebung der Della Robbia von 1902) in Terrakotta, Erzählzeile in Amarante, Auswahl mit Goldpunkten wie im Rahmen, gewählte Antwort mit Peitschenhieb-Unterstrich, der 7 px vor dem Wortende in einen Kringel nach unten ausläuft, Eingabezeile mit blinkendem Goldbalken; Textfeld 930×72 px (7 % des Bildes)",
+  "Fuß hält, Kopf läuft gleichmäßig: Standfuß beim Laufen ±1 px über alle 56 Laufwechsel (im Nahaufnahme-Maßstab gemessen), Kopf rückt je Bildwechsel 8–10 px vor (vorher 7–13), Sohlenzeile in jeder Einstellung konstant; nach der Drehung atmet der Dachs (Scheitel 2 px auf und ab, 1,2 s je Atemzug) und blinzelt bei 5,27 s"
+ ],
+ "camera": "Feste Seitenansicht im Rundbogenfenster des Rahmens. Zwei feste Einstellungen hinter demselben Rahmen: Totale über den ganzen Hafen (0–3,0 s, Plakat Faktor 0,589), dann Schnitt auf eine Nahaufnahme 1:1 mit Dachs, Laterne und Wasser (3,0–6,0 s). Der Rahmen bleibt als Oberfläche stehen.",
+ "resolution": "1280×720; Rahmen 1144×720 (KI-Bild 1536×967, Faktor 0,745) plus 68 px Rand je Seite; Fenster 904×518; Welt = Plakatbild 1536×1064 (KI-Bild 1536×1024 plus 40 Zeilen Himmel); Dachs 110 px (Totale) bzw. 186 px (Nahaufnahme) hoch, eigener Bogen je Einstellung in Zielgröße",
+ "pipeline": [
+  {
+   "step": "Hintergrund, Versuch 1 (verworfen)",
+   "tool": "genimg (agy, Gemini-Bildmodell; automatisch per Lastverteilung)",
+   "detail": "assets/raw/bg.png, angefragt 1536×1024, geliefert 1264×848 (JPEG), 66 s, verbatim: true, Prompt assets/prompts/bg.txt. Stilblock: Jugendstil-Plakat um 1900 als Farblithografie, gleich starke dunkle Schlüssellinie (~4 px), flache matte Farben ohne Verlauf, Peitschenhieb-Linien, Wolken als Ornamentbänder mit Spiralenden, Meer als wellige Bänder mit Spiralkämmen, gedämpfte Palette mit Gold, Lampe ohne Strahl und Schornstein ohne Rauch (werden animiert), Komposition in Prozent, „no border, no frame“. Ergebnis flach mit Kontur und schönen Wellenbändern, aber schlicht wie eine moderne Flachillustration, kaum Gold, seltsam geformtes Häuschen, und trotz Verbot mit eigenem Rahmen. Nicht verwendet."
+  },
+  {
+   "step": "Hintergrund, Versuch 2 (verwendet)",
+   "tool": "genimg (gpt-image über Codex, --backend codex bewusst gewählt)",
+   "detail": "assets/raw/bg2.png, 1536×1024, 74 s, Prompt assets/prompts/bg2.txt: Stilblock wie Versuch 1, dazu Goldlinien auf den Wellenkämmen, Kletterrose mit Peitschenhieb-Stängeln am Häuschen, Gold nur an wenigen Stellen, „not a modern flat vector illustration“; Komposition auf das Fensterband 18–86 % der Bildhöhe ausgerichtet. Ergebnis im ersten Versuch eine überzeugende Jugendstil-Lithografie (Spiralwolken, Wellenbänder mit Goldkämmen, Rosen, goldene Sterne, leichte Druckkörnung). Die Prozentangaben hielt das Modell nicht ein: Schornstein oben bei 9 % statt 30 %, Leuchtturmspitze bei 14 % statt 27 %."
+  },
+  {
+   "step": "Farbcode-Maske",
+   "tool": "genimg (gpt-image über Codex), Referenz raw/bg2.png",
+   "detail": "assets/raw/mask.png, 57 s, Prompt assets/prompts/mask.txt („as if traced on a clear sheet laid on top of it“): Himmel, Wolken, Sonne, Wasser, Boote samt Takelage, Lichter, Rest. Mit einer Kantenüberlagerung an Leuchtturm, Booten, Steg und Häuschen geprüft: deckungsgleich. 0,7 % der Pixel weichen mehr als 60 Stufen vom nächsten Code ab (Kantenglättung). Die Innenflächen der Wolkenspiralen sind in der Maske nur ungefähr getroffen; Himmel und Wolken werden deshalb im Shader gemeinsam behandelt."
+  },
+  {
+   "step": "Layout-Skizze für den Rahmen",
+   "tool": "scripts/make_frame_layout.py (Pillow)",
+   "detail": "1536×1024: Magenta-Fenster mit Korbbogen (Eckradius 192, Scheitel 94), hellgraues Textfeld unten, grauer Rahmen, schwarze Streifen oben und unten als Bereich außerhalb von 16:9."
+  },
+  {
+   "step": "Ornamentrahmen",
+   "tool": "genimg (gpt-image über Codex), Referenzen frame_layout.png und raw/bg2.png",
+   "detail": "assets/raw/frame.png, 65 s, Prompt assets/prompts/frame.txt: Fenster leer und durchsichtig, Textfeld als leere Cremefläche mit Goldlinie und Blütenecken, Zwickel mit Mohn, Lilien, Peitschenhieb-Stängeln und Goldkreisen, Ranken in den Seitenleisten, Blütenkrone im Scheitel, Farben und Kontur aus dem Hintergrund. Im ersten Versuch brauchbar, mit echtem Alphakanal (höchstens 254). Die schwarzen Streifen hat das Modell nicht übernommen: Der Rahmen füllt die Zeilen 0–966, darunter ist das Bild leer; das Fenster ist etwas schmaler (x 161–1374) und runder gewölbt als skizziert."
+  },
+  {
+   "step": "Rahmen aufbereiten",
+   "tool": "scripts/build_frame.py (NumPy, Pillow)",
+   "detail": "Rahmen gleichmäßig auf 720 Zeilen verkleinert (Faktor 0,7446, vormultipliziertes Alpha, Lanczos) → 1144 px breit, links und rechts 68 px mit dem Grund des Rahmens (Petrol, Median der Seitenleisten) ergänzt, am Außenrand 2 px Kontur und 2 px Gold. Fenster (durchsichtige Fläche um die Mitte) und Textfeld (Cremefläche) gemessen und mit Bogenkante je Spalte in frame.json geschrieben; Goldmaske (Farbton 30–50°, Sättigung > 0,45, Helligkeit > 0,55) für den Schimmer."
+  },
+  {
+   "step": "Plakat und Maske aufbereiten",
+   "tool": "scripts/build_bg.py (NumPy, Pillow), scripts/layout.py",
+   "detail": "Die Bogenecke des Rahmens hätte den Schornstein verdeckt: 40 Zeilen Himmel oben angesetzt (gespiegelte oberste Zeilen, Sterne durch Himmelsfarbe ersetzt), die Szene sitzt damit 40 Weltpixel tiefer im Fenster. Maske: nächster Code, zweimal 3×3-Mehrheit, Lichter nach Lage getrennt (Fenster, Laterne, Laternenraum des Leuchtturms aus 4 Teilen), im Blaukanal der Abstand jedes Wasserpixels zum nächsten Nicht-Wasser-Pixel (bis 15 px). Eigene Sternmaske stars.png (RGB, R = Gewicht, G = Phase je Stern): Zusammenhangskomponenten heller, gesättigter Goldpixel über dem Horizont mit höchstens 120 px, deren Umgebungsring zu mindestens 70 % Himmelsfarbe hat und deren hellstes Pixel über 0,75 liegt; das ergibt genau die 18 Sterne des Plakats (8–71 px), Wolkenspiralen und -bänder fallen heraus. Für die Totale eine vorab verkleinerte Fassung bg_far.png (Lanczos, Faktor 0,589). layout.py rechnet beide Einstellungen aus dem gemessenen Fenster: Totale füllt die Fensterbreite, Nahaufnahme 1:1 mit Welt-x 560 in der Mitte und der Sohlenlinie 24 px über der Fensterunterkante."
+  },
+  {
+   "step": "Figur: Layout aus dem 3D-Modell",
+   "tool": "Blender 5.2 (blender/pose_layout.py) + scripts/make_layout.py, beide aus styles/art-deco kopiert",
+   "detail": "Posen von shared/3d/badger.glb orthografisch (409,6 px/m) auf Magenta, 2×5 Zellen à 307×512: walk_0 … walk_7, stand, turn. walk_layout.png ist bytegleich mit dem Layout von art-deco (und damit ukiyo-e, holzschnitt)."
+  },
+  {
+   "step": "Laufbogen",
+   "tool": "genimg (gpt-image über Codex), Referenzen walk_layout.png, master_sheet.png, raw/bg2.png",
+   "detail": "assets/raw/walk.png, 72 s, parallel zum Rahmen erzeugt (--workers 2), im ersten Versuch brauchbar: zehn Figuren 421–437 KI-px hoch, echter Alphakanal, Posen nach dem Layout. Prompt: Layout aus Referenz 1, nur Kostüm aus Referenz 2, Kontur und Farben aus dem Plakat (Referenz 3), sehr kräftige gleich starke Kontur (~9 px), flache Farben, Schatten als eine flache Form, Schalenden im S-Schwung, gedämpfte Kostümfarben. Geliefert wurde eine Bilderbuchfigur mit etwa 5 px Kontur, leichter Fellstruktur, Strickmuster im Schal und weichen Verläufen."
+  },
+  {
+   "step": "Farbauszug und Kontur",
+   "tool": "scripts/build_badger.py (NumPy, Pillow)",
+   "detail": "Jedes Pixel mit Alpha ≥ 128 bekommt die nächste von 12 Druckfarben (CIELAB, Vorlagen aus einer k-means-Einteilung des Bogens, k = 22); Fell und Schal je eine Fläche, Mischtöne an Teilgrenzen aus den Nachbarn aufgefüllt, zweimal 3×3-Mehrheit ohne Kontur. Konturflecken ab 400 px (Linienzüge) mit einer Kreisscheibe um 2 KI-px aufgedickt, auch nach außen; Auge, Nase und Mund bleiben. Farben an das Plakat angelehnt (Kontur wie die Schlüsselplatte, Grün wie Tür und Laternenpfahl, Rot wie das Dach, Gold wie im Rahmen). Zellen an der Sohle ausgerichtet. Jedes Auge (Lage von Hand an den Kopfansichten abgelesen, auf den dunkelsten Fleck nachgeführt) bekommt einen cremefarbenen Glanzpunkt (Radius 3 KI-px). Der Oberkörper jedes Laufbilds wird ab der Hüfte (120 KI-px über der Sohle) bis zur Augenhöhe linear geschert, um +3, −5, +1, 0, −1, 0, +2, 0 KI-px (walk_0 … walk_7), damit der Kopf bei festem Standfuß gleichmäßig vorrückt; die Füße bleiben unverändert. Idle aus Teilen: Drehpose mit dem Oberkörper um 0, 2 und 4 KI-px gestreckt (Atmen), Blinzelbild je Atemstufe (Auge samt Glanzpunkt mit der Fellfarbe übermalt, Lidbogen in Konturfarbe). Zwei Bögen in Zielgröße mit 15 Bildern (Totale Faktor 0,259, Nahaufnahme 0,44, vormultipliziertes Alpha)."
+  },
+  {
+   "step": "Vorschub und Ablauf",
+   "tool": "scripts/measure_stride.py + scripts/choreo.py",
+   "detail": "Kontaktspannen der untersten 0–20 Sohlenzeilen je Bild; Vorschub je Bildwechsel von Hand am Drehpunkt des Standfußes abgelesen: 23, 21, 22, 31, 15, 15, 24, 18 KI-px (Summe 169 je Doppelschritt, 74 Weltpixel); walk_6 → stand +12 (Standfuß bleibt), stand → turn +8 (Körpermitte). Die ungleichen Werte bleiben, weil sie aus den Füßen kommen; den Kopf gleicht die Scherung im Farbauszug aus (vorher 29, 15, 22, 23, 20, 19, 23, 18 KI-px Kopfvorschub je Wechsel, danach 21–22). Laufbilder 15 Bilder/s, Vorschub nur beim Bildwechsel, Lage als gerundete laufende Summe je Einstellung. Ablauf: Dachs kommt hinter der linken Rahmenleiste hervor, Schnitt auf die Nahaufnahme bei 3,0 s, Halt bei 3,87 s links der Laterne, Drehung zur Kamera bei 4,47 s, danach Atmen (Stufen 0/1/2/1 mit 12/6/12/6 Takten), Blinzeln bei 5,27 s (in Atemstufe 2)."
+  },
+  {
+   "step": "Godot-Demo",
+   "tool": "Godot 4.7.2 (GDScript, drei canvas_item-Shader, Line2D)",
+   "detail": "Plakat als Sprite2D in einem Welt-Knoten mit shaders/scene.gdshader (Wellen, Goldschimmer, Sterne aus eigener Maske, Nimbus, Laterne, Fenster), Rauch als Line2D mit shaders/smoke.gdshader (Kantenglättung im Shader), Dachs und Schatten in Bildschirmkoordinaten nach art/timeline.json, darüber der Rahmen mit shaders/frame.gdshader und der Text. scripts/build_all.sh baut alle Assets ohne Bildmodell neu (nach den Änderungen erneut gelaufen: alle Dateien in assets/ und demo/art bytegleich mit dem vorherigen Stand)."
+  },
+  {
+   "step": "Prüfung",
+   "tool": "scripts/probe_feet.py, scripts/check_sky.py, tools/capture.py",
+   "detail": "Prüflauf -- --probe-badger (nur Dachs vor Blau) und -- --probe-badger --shot=1 (ganzer Ablauf im Nahaufnahme-Maßstab, Ergebnis assets/measure_feet_close.json): Standfuß ±1 px, Kopf 8–10 px je Laufwechsel, Atmen 1 px je Stufe am Scheitel. Blinzeln: 38 Pixel ändern sich um mehr als 10 Stufen, 12 um mehr als 30. scripts/check_sky.py misst die Spannweite über die Zeit auf allen Himmels- und Wolkenpixeln außer Sternen, Nimbus, Laternenring und Rauchbahn (Ergebnis assets/measure_sky.json): 0 geänderte Pixel in Totale, Nahaufnahme und ab 31 s. Läufe mit --rendering-method mobile und gl_compatibility (je 180 Bilder), ein Lauf mit -- --t0=31; Aufnahme mit --poster-at 0.42 (Totale, Dachs vor dem Häuschen, Lichtwelle am Nimbusring). capture.py ohne Warnungen."
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, stretch canvas_items/keep, Forward+, Hintergrundfarbe = Grund des Rahmens (Petrol); keine Pixel-Einstellungen, alle Bilder in Zielgröße vorbereitet.",
+  "Welt = Pixel von bg.png (1536×1064). Zwei Einstellungen über Maßstab und Lage eines Welt-Knotens (Totale 0,589, Nahaufnahme 1,0), keine Camera2D; das Sprite bekommt je Einstellung eine andere Textur (bg_far.png vorab verkleinert bzw. bg.png) und die Skalierung Weltbreite/Texturbreite, der Shader rechnet mit UV × Weltgröße und ist für beide gleich.",
+  "Reihenfolge: Welt (Plakat, Rauch) → Schatten und Dachs → Rahmen-Sprite (Fenster durchsichtig) → Text. Der Dachs läuft dadurch hinter der linken Rahmenleiste hervor.",
+  "shaders/scene.gdshader: Maske mit filter_nearest, alle Texturen vor den Fallunterscheidungen abgetastet. Wasser: senkrechter Versatz amp·(0,7·sin(k(x − c·t)) + 0,3·sin(1,9k(x + 0,6c·t) + …)) mit Amplitude 1,2–5,5 und Wellenlänge 120–320 Weltpixel je nach Tiefe, dazu waagrechtes Gleiten sin(0,9t + 0,085y); ausgeblendet über den Randabstand aus dem Blaukanal, und nur übernommen, wenn auch die versetzte Stelle Wasser ist.",
+  "Goldschimmer auf dem Wasser: goldfarbene Pixel (R > 0,55, R > B + 0,18, G > B + 0,08) werden von einer Lichtwelle sin(0,026x − 2,3t + 0,12y) zu Blassgold gemischt. Sterne: eigene Textur art/stars.png (filter_linear, nicht im Alphakanal), Stern = mix(Farbe · 0,5, Richtung Blassgold, 0,5 + 0,5 sin(t(1,6 + 1,8φ) + 14πφ)) mit Gewicht R und Phase φ = G je Stern; keine Farbschwelle und keine Zellen mehr.",
+  "Nimbus als Plakatform, nur auf den Codes Himmel, Wolken, Sonne: Ockerscheibe (Radius 64) und Mitte (Radius 24) mit 3 Weltpixel Kontur, 12 Spitzblätter als Vesica-Abstandsfeld in Polarkoordinaten (Mitte Radius 44, 31 px lang, 14 px breit) mit Kontur, Goldring Radius 82 (5 px, bei der Welle 6,5 px) mit Kontur beiderseits, Glättung über fwidth; Lichtwelle pulse_front = −12 + 115·Phase (Periode 2,6 s) hellt Mitte, Blätter und Ring nacheinander auf. Laterne: ein Goldring Radius 36 mit Kontur, Farbe und Breite folgen dem Flackern.",
+  "Rauch: Line2D (Breite 36 Weltpixel mit Breitenkurve 0,5 → 0,9 → 0,68 → 0,42 → 0,2 → 0,04 über die Länge, LINE_TEXTURE_STRETCH mit 2×2-Weißtextur für UV, antialiased aus), Punkte je Takt aus einer kubischen Bézierkurve (steigt aus der Krone, S-Schwung nach rechts) und einer tangential anschließenden Spirale (1,4 Windungen, Radius 40 → 8, Drehsinn über oben nach innen), auf dem Peitschenhieb eine Welle von 4 Weltpixeln; shaders/smoke.gdshader rechnet den Abstand zum Bandrand in Bildschirmpixeln aus dem Gradienten von UV.y, setzt daraus Alpha (Kantenglättung) und eine Kontur konstanter Breite und zeichnet eine Innenlinie bei v = 0,34 + 0,08 sin(2π(4u − 0,5t)), die vor der Spitze ausläuft.",
+  "shaders/frame.gdshader: Goldmaske (nearest); schräger Lichtstreif (x + 0,6y) mit Periode 3 s und leichtes Atmen, nur auf Goldpixeln.",
+  "UiLayer (_draw): Text in der gemessenen Cremefläche des Rahmens; Della Respira (FontVariation, variation_embolden 0,45, spacing_glyph 1) 24 px, Amarante 19–20 px; Goldpunkte mit Konturring für die Ziffern, herzförmiges Goldblatt als Trenner, Peitschenhieb-Unterstrich als Polylinie mit Kringel nach unten 7 px vor dem Wortende.",
+  "Zeit: Takte in _process gezählt (Movie Maker 30 Bilder/s); Laternenflackern aus einer Zufallsfolge mit festem Seed 19001012; Prüfschalter --probe-badger, --shot=<0|1>, --t0=<s>, --no-waves."
+ ],
+ "techniques": [
+  "textoberflaeche",
+  "ki-spritesheet",
+  "posen-vorlage-3d",
+  "palette-einrasten",
+  "konturen-nachbearbeitung",
+  "fuss-halten",
+  "sprite-animation",
+  "ki-farbcode-maske",
+  "shader-wasser",
+  "prozedurale-animation",
+  "kinemagramm",
+  "kameraschnitt"
+ ],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 3,
+  "effort": 3,
+  "text_adventure": 4,
+  "mobile": 5
+ },
+ "ratings_note": "ai_fit 4: gpt-image trifft den Jugendstil für Plakat und Rahmen im ersten Versuch sehr gut (Schlüssellinie, gedämpfte Farben mit Gold, Spiralwolken, Wellenbänder, Mohn und Lilien), die Maske kam deckungsgleich; agy lieferte mit demselben Stilblock nur ein schlichtes Flachbild. Die Prozentangaben zur Komposition und die Rahmen-Skizze hielt das Modell nur grob ein, und die Figur kam als Bilderbuchfigur, die erst der Farbauszug mit nachgezogener Kontur zur Plakatfigur macht. Alle Bewegungen (fließende Wellen, Nimbus, Rauchband, Sterne, Goldschimmer, Atmen) kommen aus Shadern und Code. consistency 3: Rahmen und Plakat passen in Farben und Linie zusammen, weil der Hintergrund als Referenz mitging, und die Figur hat in allen Bildern dieselben 12 Farben; wie gleich ein zweiter Ort ausfällt, ist mit einem gelungenen Plakat nicht belegt, und die KI-Posen haben den Kopf ungleich weit vorn (walk_1 6 KI-px), was eine Scherung je Bild ausgleichen muss. effort 3: je Ort Plakat plus Maske (zwei Bilder) und Skripte, der Rahmen nur einmal; je Figur Layout, Laufbogen, Farbauszug, Augenlage und Vorschub von Hand. text_adventure 4: Rahmen mit Textfeld ist eine fertige Adventure-Oberfläche, aber das Textfeld fasst nur zwei Zeilen und der Rahmen belegt die Hälfte des Bildes. mobile 5: reine 2D-Szene mit drei Shadern und einer Line2D; mobile pixelgleich mit Forward+, gl_compatibility im Mittel 0,03–0,05 Stufen Abweichung (höchstens 2); Leistung auf einem echten Telefon geschätzt, nicht gemessen.",
+ "verdict": "Gut geeignet für unser Textadventure, wenn der Text mehr Platz bekommt. Der Jugendstil gibt jedem Ort ein ruhiges, sofort erkennbares Plakatbild, und der Ornamentrahmen ist zugleich die Oberfläche: Er wird einmal erzeugt und bleibt für alle Orte stehen, Szenen wechseln im Fenster. Wiederholbar ist der Weg Plakat (gpt-image mit einem Stilblock, der Schlüssellinie, flache gedämpfte Farben, Spiralwolken und Wellenbänder einzeln nennt) + deckungsgleiche Farbcode-Maske + eigene Masken für kleine Effekte (Sterne) + ein gemeinsamer Shader, der die Wellen fließen, das Gold schimmern und Lichter als flache Ornamente pulsieren lässt; Rauch und ähnliche Ranken als Line2D-Ornamentband; Figuren aus KI-Laufbögen über einen festen Farbauszug mit nachgezogener Kontur, Glanzpunkt im Auge und Scherung für einen gleichmäßigen Kopf. Für das echte Spiel braucht der Rahmen ein größeres Textfeld (neue Skizze mit 16:9-Fenster, das Ergebnis messen) und die Komposition jedes Plakats muss nach dem Bild ins Fenster eingepasst werden.",
+ "pitfalls": [
+  "Versuch 1 lief per Lastverteilung über agy: 1264×848 statt 1536×1024, flach und mit Kontur, aber schlicht wie eine moderne Flachillustration, kaum Gold, und trotz „no border, no frame“ mit eigenem Rahmen. Erst gpt-image (bewusst mit --backend codex) traf den Stil; ein Bild des Kontingents ging dafür verloren.",
+  "gpt-image hat die Prozentangaben zur Komposition weit verfehlt (Schornstein oben bei 9 % statt 30 %, Leuchtturmspitze bei 14 % statt 27 %). Im Rundbogenfenster hätte die Bogenecke den Schornstein verdeckt; die Szene sitzt deshalb 40 Weltpixel tiefer (angesetzter Himmel), dadurch ist die Vorderkante des Kais abgeschnitten und die Sohle des Dachses steht nur 24 px über der Fensterunterkante.",
+  "Über dem Schornstein liegt der Bogen nur etwa 13 Weltpixel höher. Der Rauch kann nicht aufsteigen, sondern muss schmal aus der Krone und dann flach nach rechts unter dem Bogen durchziehen und rollt sich erst bei Welt-x 330–400 ein, wo der Bogen genug Platz lässt; die Bahn ist an die gemessene Bogenkante und den großen Stern bei (204, 119) angepasst und gilt nur für diesen Ausschnitt.",
+  "Der Rahmen hat die schwarzen Streifen der Skizze ignoriert und füllt die Zeilen 0–966 von 1024. Gleichmäßig auf 720 Zeilen verkleinert ist er nur 1144 px breit; die 68 px links und rechts sind flacher Grund mit Goldlinie. Das Fenster ist damit nur 904×518 px (51 % des Bildes) und das Textfeld 72 px hoch: Es fasst zwei Zeilen (Ort und Erzählzeile, Auswahl und Eingabe), für längere Texte reicht es nicht.",
+  "Weil das 3:2-Plakat ganz ins Fenster muss, ist der Dachs in der Totale nur 110 px hoch; Kostüm und Kontur zeigt erst die Nahaufnahme ab 3,0 s (186 px). Rauch und Nimbus sind in der Nahaufnahme nicht im Bild.",
+  "Der Laufbogen kam mit etwa 5 px Kontur statt der verlangten 9 px, mit Fellstruktur, Strickmuster und weichen Verläufen. Der Farbauszug macht ihn flach, verliert dabei aber den Glanzpunkt im Auge; das Auge war ein dunkler Punkt auf dem dunklen Augenstreif und das Blinzeln praktisch unsichtbar (12 Pixel). Jetzt hat jedes Auge einen gezeichneten Glanzpunkt; das Blinzeln ist in der Nahaufnahme zu sehen, bleibt aber klein (Auge etwa 5 px breit, 12 Pixel ändern sich um mehr als 30 Stufen, 38 um mehr als 10). Die Augenlage musste je Bild von Hand abgelesen werden, weil das Auge in walk_2, walk_3 und stand mit der Lidlinie an der Kontur der Mütze hängt.",
+  "Der Kopf rückte in der Nahaufnahme ungleichmäßig 7–13 px je Bildwechsel vor (Schub-Rhythmus). Der Vorschlag, walk_4 um 8 KI-px in der Zelle nach vorn zu schieben, hätte nur die Zahlen geändert (Vorschub 23/23 statt 31/15), nicht das Bild: Bei festem Standfuß landet das Bild an derselben Stelle. Die eigentliche Ursache sind die Posen: walk_1 hat den Kopf 6 KI-px weiter vorn als die übrigen, walk_0 3 px weiter hinten. Ausgeglichen wird das mit einer Scherung des Oberkörpers je Bild (bis 5 KI-px an der Augenhöhe, Neigung unter 1,5°); danach 8–10 px je Wechsel. Die Füße und damit die Vorschübe 15–31 KI-px bleiben ungleich, weil sie aus der Zeichnung kommen.",
+  "Die Fußmessung im Totale-Maßstab (Figur 110 px) meldet an den Doppelstand-Wechseln 7–11 px, weil die vorletzte Sohlenzeile dort den anderen Fuß trifft. Derselbe Ablauf im Nahaufnahme-Maßstab (--shot=1): alle 56 Laufwechsel ±1 px.",
+  "Beim Wechsel stand → turn steht die Figur in der Dreiviertelansicht breitbeiniger (Füße 88–249 statt 128–218 KI-px); gehalten wird die Körpermitte, die Füße springen dabei um etwa 12 px nach außen.",
+  "Die Sterne funkelten zuerst über eine Farbschwelle auf dem Himmelscode der KI-Maske, mit einer Phase je 36-px-Zelle. Die Maske führt aber Innenflächen der Wolkenspiralen und Teile des altrosa Wolkenbands als Himmel; dort erfüllten etwa 3400 Wolkenpixel die Schwelle und pulsierten als rechteckige Tonblöcke mit harten Kanten (bis 21 Graustufen). Eine erste Verschärfung der Schwelle wurde in der vorigen Fassung dieses Steckbriefs fälschlich als Lösung gemeldet; die Blöcke waren weiter sichtbar. Gelöst erst mit einer eigenen Sternmaske aus isolierten Goldflecken und einer Phase je Stern; check_sky.py misst jetzt 0 geänderte Himmels- und Wolkenpixel außerhalb der Effekte.",
+  "Das Rauchband ist Code, nicht KI: Es ist gleichmäßiger als die gemalten Wolkenranken. Die erste Fassung (Creme mit hellen Glanzstreifen, treppige Außenkante, obwohl antialiased der Line2D an war – mit dem eigenen Shader (COLOR.a = 1) hatte es keine sichtbare Wirkung; warum genau, ist nicht untersucht, Ende als Haken mit 0,65 Windungen und ausgefranster Spitze) las sich eher als Rohr oder Spazierstockgriff. Jetzt Salbei, Alpha-Kantenglättung im Shader, 1,4 Windungen und spitzes Ende; die Spitze ist eine dunkle Spitze aus den zusammenlaufenden Konturen, kein gemalter Pinselauslauf.",
+  "Die Boote schaukeln nicht (dafür bräuchte es eine saubere Platte); das Wasser wird an Booten, Pfählen und Kai über den Randabstand aus der Maske ausgeblendet.",
+  "Der erste Nimbus aus fünf dünnen, teils halbdurchsichtigen Ringen und 20 kurzen Strahlen wirkte wie eine Zielscheibe oder Radaranzeige; ersetzt durch eine deckende Ockerscheibe mit Blütenkranz und einem Ring. Er deckt jetzt ein Stück Wolke links und rechts vom Leuchtturm ganz ab.",
+  "Federants rundes v ließ „Hafen von Lornholm“ bei 24 px wie „uon“ lesen, und der Kringel am Ende des Unterstrichs stand direkt hinter „ansehen“ wie ein Komma. Ortsname jetzt in Della Respira (eindeutiges spitzes v, aber dünner, deshalb künstlich verstärkt), Kringel 7 px vor dem Wortende nach unten."
+ ],
+ "lessons": [
+  "Stilblock für den Jugendstil bei gpt-image: Epoche und Medium nennen („Art Nouveau (Jugendstil) poster from around 1900, printed as a colour lithograph from a small set of flat, muted inks with gold accents“) und die Formen einzeln beschreiben: gleich starke dunkle Schlüssellinie, flache matte Farben ohne Verlauf, Wolken als Ornamentbänder mit Spiralenden, Meer als wellige Bänder mit Spiralkämmen und Goldlinien, Kletterrose mit Peitschenhieb-Stängeln, die Palette als Liste, dazu „not a modern flat vector illustration“. agy lieferte mit fast demselben Text nur ein schlichtes Flachbild.",
+  "Den Ornamentrahmen als eigenes Oberflächen-Asset erzeugen: Layout-Skizze (Magenta-Fenster, graues Textfeld) als Referenz 1 und das Plakat als Referenz 2 ergaben im ersten Versuch einen Rahmen mit echtem durchsichtigem Fenster, leerer Cremetafel und denselben Farben und Linien. Danach messen statt annehmen (Fenster, Textfeld, Bogenkante je Spalte) und Szene, Text und Rauchbahn nach den Messwerten setzen; den Rahmen nur gleichmäßig skalieren und fehlende Breite mit dem Grund auffüllen, damit Blüten nicht verzerren.",
+  "Linienstärke der Figur an das Plakat angleichen: Konturflecken ab 400 px um 2 KI-px aufdicken (Auge, Nase, Mund ausgenommen) und dann je Einstellung in Zielgröße verkleinern; gemessen 2 px (Totale) und 4 px (Nahaufnahme) gegen 2–4 px im Plakat. Fell und Schal als je eine Fläche wirken plakathaft, Mischtöne aus den Nachbarn auffüllen.",
+  "Fließende Wellenornamente aus dem KI-Wasser: senkrechter Versatz als laufende Welle plus waagrechtes Gleiten, Amplitude nach Tiefe, ausgeblendet über einen Randabstand, der im Blaukanal der Maske liegt, und nur übernommen, wenn auch die versetzte Stelle Wasser ist. 22–24 % der Wasserpixel ändern sich deutlich; Horizont, Boote und Pfähle bleiben ruhig. Mit einem --no-waves-Schalter messen.",
+  "Licht als Ornament statt als Lichtschein: ein flacher, deckender Nimbus (Scheibe, Kranz aus Spitzblättern als Vesica-Abstandsfeld in Polarkoordinaten, ein kräftiger Ring, alles mit derselben Kontur wie das Plakat) nur auf den Himmels-Codes der Maske, mit einer Lichtwelle, die die Teile nacheinander aufhellt. Wenige kräftige, deckende Formen lesen sich als gezeichnetes Ornament; viele dünne, halbdurchsichtige Ringe als Einblendung.",
+  "Ornamentband per Line2D: LINE_TEXTURE_STRETCH mit einer 2×2-Weißtextur liefert UV entlang und quer; der Abstand zum Bandrand in Bildschirmpixeln ist min(v, 1 − v) / |∇v| (dFdx/dFdy von UV.y). Daraus Alpha (Kantenglättung; antialiased der Line2D ist aus, weil es mit dem eigenen Shader keine sichtbare Wirkung hatte) und Kontur in konstanter Pixelbreite; Fluss durch eine Innenlinie, deren Lage als Welle entlang UV.x wandert. Die Bahn als Bézierkurve plus tangential anschließende Spirale; die Spirale hat mehr als eine Windung, wenn der Radius je Windung um mehr als die mittlere Bandbreite abnimmt und am Ende größer als die halbe Bandbreite bleibt; die Breite läuft über die Länge auf fast null aus.",
+  "Schriften: Della Respira (Wiederbelebung der Della Robbia von 1902) für Ortsnamen und Amarante (Jugendstil-Formen, gut lesbar) für Text, beide OFL mit Umlauten und ß; Ziffern in Goldpunkten wie die Goldkreise des Rahmens. Federant (Feder-Antiqua von 1911) wirkt stärker nach Jugendstil, ihr rundes v ist bei 24 px aber nicht vom u zu unterscheiden; Zierschriften immer mit dem echten Ortsnamen in Spielgröße prüfen.",
+  "Eine vorab verkleinerte Plakatfassung (Lanczos) für die Totale und das Original für die Nahaufnahme teilen sich einen Shader, wenn er mit UV × Weltgröße rechnet; so wird nichts unterabgetastet und Wasser, Nimbus und Maske liegen in beiden Einstellungen gleich.",
+  "Das Blender-Layout aus art-deco ließ sich bytegleich wiederverwenden; Laufbögen verschiedener Stile haben dieselben Posen und lassen sich vergleichen.",
+  "Sterne und andere kleine Effektflächen nicht über eine Farbschwelle auf einer KI-Maske finden, sondern als eigene Maske aus dem Bild: isolierte helle Flecken (Zusammenhangskomponenten mit Größengrenze, Umgebungsring in Himmelsfarbe), Gewicht aus der Helligkeit über dem Himmel, Phase je Fleck. Prüfen mit der Spannweite über die Zeit auf allen Pixeln, die sich nicht ändern dürfen (check_sky.py).",
+  "Ungleichmäßigen Kopfvorschub bei festem Standfuß nicht durch Verschieben ganzer Bilder beheben (das ändert bei Fußfixierung nichts), sondern den Oberkörper je Bild leicht scheren: Abweichung der Kopfposition von gleichmäßigem Vorschub je Bild ausrechnen, ab der Hüfte linear bis Augenhöhe in ganzen Pixeln je Zeile verschieben, in Quellauflösung vor dem Verkleinern. Atmen genauso: Oberkörper ab der Hüfte um wenige Zeilen strecken, Blinzelbild je Atemstufe."
+ ],
+ "assets": [
+  {
+   "file": "assets/bg.png",
+   "kind": "background",
+   "made_with": "gpt-image (Versuch 2) + scripts/build_bg.py (40 Zeilen Himmel oben angesetzt)",
+   "prompt": "assets/raw/bg2.json"
+  },
+  {
+   "file": "assets/bg_far.png",
+   "kind": "background",
+   "made_with": "scripts/build_bg.py (bg.png für die Totale verkleinert, Lanczos 0,589)",
+   "prompt": "assets/raw/bg2.json"
+  },
+  {
+   "file": "assets/mask.png",
+   "kind": "mask",
+   "made_with": "gpt-image (Farbcode-Maske, Referenz bg2) + scripts/build_bg.py (Codes, Lichter, Randabstand im Wasser)",
+   "prompt": "assets/raw/mask.json"
+  },
+  {
+   "file": "assets/stars.png",
+   "kind": "mask",
+   "made_with": "scripts/build_bg.py (Sternmaske aus isolierten Goldflecken des Plakats: R Gewicht, G Phase je Stern)",
+   "prompt": "assets/raw/bg2.json"
+  },
+  {
+   "file": "assets/frame.png",
+   "kind": "ui",
+   "made_with": "gpt-image (Ornamentrahmen nach Layout-Skizze, Referenz bg2) + scripts/build_frame.py",
+   "prompt": "assets/raw/frame.json"
+  },
+  {
+   "file": "assets/frame_gold.png",
+   "kind": "mask",
+   "made_with": "scripts/build_frame.py (Goldpixel des Rahmens)"
+  },
+  {
+   "file": "assets/walk_inks.png",
+   "kind": "sprite-sheet",
+   "made_with": "gpt-image Laufbogen + Farbauszug in 12 Druckfarben und nachgezogene Kontur (scripts/build_badger.py)",
+   "prompt": "assets/raw/walk.json"
+  },
+  {
+   "file": "assets/badger_far.png",
+   "kind": "sprite-sheet",
+   "made_with": "scripts/build_badger.py aus walk_inks (Totale, 15 Bilder à 80×119: 8 Laufbilder mit Scherung, Stand, Drehung in drei Atemstufen, Blinzeln in drei Atemstufen; Augen mit Glanzpunkt)",
+   "prompt": "assets/raw/walk.json"
+  },
+  {
+   "file": "assets/badger_close.png",
+   "kind": "sprite-sheet",
+   "made_with": "scripts/build_badger.py aus walk_inks (Nahaufnahme, 15 Bilder à 135×202, wie die Totale)",
+   "prompt": "assets/raw/walk.json"
+  },
+  {
+   "file": "assets/ref/walk_layout.png",
+   "kind": "reference",
+   "made_with": "Blender 5.2 (blender/pose_layout.py) + scripts/make_layout.py"
+  },
+  {
+   "file": "assets/ref/frame_layout.png",
+   "kind": "reference",
+   "made_with": "scripts/make_frame_layout.py"
+  },
+  {
+   "file": "assets/scene.json",
+   "kind": "data",
+   "made_with": "scripts/build_bg.py"
+  },
+  {
+   "file": "assets/frame.json",
+   "kind": "data",
+   "made_with": "scripts/build_frame.py"
+  },
+  {
+   "file": "assets/layout.json",
+   "kind": "data",
+   "made_with": "scripts/layout.py"
+  },
+  {
+   "file": "assets/timeline.json",
+   "kind": "data",
+   "made_with": "scripts/choreo.py"
+  },
+  {
+   "file": "demo/shaders/scene.gdshader",
+   "kind": "shader",
+   "made_with": "von Hand (Wellenfluss, Goldschimmer, Nimbus, Laterne, Sterne aus eigener Maske)"
+  },
+  {
+   "file": "demo/shaders/smoke.gdshader",
+   "kind": "shader",
+   "made_with": "von Hand (Rauch als Ornamentband, Kantenglättung über den Abstand zum Bandrand)"
+  },
+  {
+   "file": "demo/shaders/frame.gdshader",
+   "kind": "shader",
+   "made_with": "von Hand (Goldschimmer des Rahmens)"
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Della Respira",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/dellarespira"
+  },
+  {
+   "item": "Schrift Amarante",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/amarante"
+  },
+  {
+   "item": "3D-Modell Dachs-Kurier (shared/3d/badger.glb, nur als Posenvorlage)",
+   "license": "eigenes Modell des Katalogs",
+   "source": "shared/3d/blender/build_badger.py"
+  },
+  {
+   "item": "Distanzfunktion Vesica nach Inigo Quilez (Shader-Funktion), Copyright (c) Inigo Quilez – in demo/shaders/scene.gdshader",
+   "license": "MIT",
+   "source": "https://iquilezles.org/articles/distfunctions2d/"
+  }
+ ],
+ "image_generations": 5,
+ "tool_issues": [],
+ "status": "done"
+}

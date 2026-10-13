@@ -1,0 +1,65 @@
+{
+ "forward_plus_two_runs": {
+  "frame": 147,
+  "mean": 0.0,
+  "share_gt24": 0.0,
+  "max": 0,
+  "channel_mean": [
+   66.0,
+   27.6,
+   64.2
+  ],
+  "errors": []
+ },
+ "forward_plus_channel_mean": [
+  66.0,
+  27.6,
+  64.2
+ ],
+ "mobile": {
+  "frame": 147,
+  "mean": 3.06,
+  "share_gt24": 0.0408,
+  "max": 158,
+  "channel_mean": [
+   69.1,
+   28.7,
+   66.3
+  ],
+  "errors": []
+ },
+ "gl_compatibility": {
+  "frame": 147,
+  "mean": 21.644,
+  "share_gt24": 0.5435,
+  "max": 255,
+  "channel_mean": [
+   50.6,
+   19.9,
+   50.2
+  ],
+  "errors": []
+ },
+ "ss1": {
+  "frame": 147,
+  "mean": 1.636,
+  "share_gt24": 0.0297,
+  "max": 243,
+  "channel_mean": [
+   66.0,
+   27.7,
+   64.2
+  ],
+  "errors": []
+ },
+ "long_run_t30": {
+  "frames": 30,
+  "errors": [],
+  "motion_share_gt24": 0.1466
+ },
+ "long_run_t300": {
+  "frames": 30,
+  "errors": [],
+  "motion_share_gt24": 0.0693
+ }
+}

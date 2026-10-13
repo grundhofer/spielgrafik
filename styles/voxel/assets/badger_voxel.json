@@ -1,0 +1,45 @@
+{
+ "voxel_m": 0.03125,
+ "voxels": 4016,
+ "faces": 7406,
+ "extent_voxels_xyz": [
+  17,
+  32,
+  22
+ ],
+ "parts": {
+  "hips": 880,
+  "spine": 294,
+  "chest": 617,
+  "neck": 237,
+  "head": 611,
+  "scarf_1": 15,
+  "scarf_2": 35,
+  "upper_arm.L": 73,
+  "forearm.L": 34,
+  "hand.L": 17,
+  "upper_arm.R": 92,
+  "forearm.R": 47,
+  "hand.R": 238,
+  "tail": 78,
+  "thigh.L": 353,
+  "shin.L": 28,
+  "foot.L": 45,
+  "thigh.R": 249,
+  "shin.R": 28,
+  "foot.R": 45
+ },
+ "materials": {
+  "FurDark": 1375,
+  "FurLight": 360,
+  "Cap": 200,
+  "Brass": 12,
+  "Vest": 1005,
+  "Shirt": 313,
+  "Scarf": 439,
+  "Satchel": 174,
+  "Nose": 6,
+  "Eye": 4,
+  "Parcel": 128
+ }
+}

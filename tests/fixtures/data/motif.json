@@ -1,0 +1,21 @@
+{
+ "scene": {
+  "name_de": "Der Hafen von Lornholm in der Abenddämmerung",
+  "summary_de": "Kleiner Inselhafen mit Kai, Leuchtturm und Häuschen.",
+  "elements_required": ["Kai/Steg", "Wasser", "Leuchtturm mit Licht"],
+  "ambient_animations": ["Wellen oder Wasserglitzern", "Laterne flackert"]
+ },
+ "character": {
+  "name_de": "Der Dachs-Kurier",
+  "summary_de": "Gedrungener Dachs mit Schirmmütze, Weste und rotem Schal.",
+  "reference_sheet": "shared/badger/master_sheet.png",
+  "reference_note": "Für jedes Figurenbild das Referenzblatt mitgeben."
+ },
+ "ui_text": {
+  "location": "Hafen von Lornholm",
+  "line": "Die Laterne flackert im Wind.",
+  "choices": ["Zum Leuchtturm gehen", "Das Paket ansehen"],
+  "parser_prompt": "> nimm paket"
+ },
+ "demo": {"seconds": 6, "fps": 30, "requirements_de": ["Die Hafenszene ist erkennbar."]}
+}

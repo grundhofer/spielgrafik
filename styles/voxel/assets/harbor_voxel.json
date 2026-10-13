@@ -1,0 +1,114 @@
+{
+ "voxel_m": 0.1,
+ "objects": {
+  "Barrel1": {
+   "voxels": 245,
+   "faces": 213,
+   "voxel_m": 0.1
+  },
+  "Barrel2": {
+   "voxels": 252,
+   "faces": 187,
+   "voxel_m": 0.1
+  },
+  "BoatA": {
+   "voxels": 4307,
+   "faces": 3963,
+   "voxel_m": 0.1
+  },
+  "BoatB": {
+   "voxels": 2512,
+   "faces": 2970,
+   "voxel_m": 0.1
+  },
+  "Bollards": {
+   "voxels": 252,
+   "faces": 288,
+   "voxel_m": 0.1
+  },
+  "CottageWindow": {
+   "voxels": 244,
+   "faces": 169,
+   "voxel_m": 0.1
+  },
+  "Cottage": {
+   "voxels": 37667,
+   "faces": 7791,
+   "voxel_m": 0.1
+  },
+  "CrateStack": {
+   "voxels": 979,
+   "faces": 761,
+   "voxel_m": 0.1
+  },
+  "Headland": {
+   "voxels": 918184,
+   "faces": 66821,
+   "voxel_m": 0.1
+  },
+  "IslandsFar": {
+   "voxels": 40480,
+   "faces": 6097,
+   "voxel_m": 1.0
+  },
+  "Jetty": {
+   "voxels": 4031,
+   "faces": 5444,
+   "voxel_m": 0.1
+  },
+  "LanternGlass": {
+   "voxels": 56,
+   "faces": 60,
+   "voxel_m": 0.1
+  },
+  "LanternPost": {
+   "voxels": 177,
+   "faces": 262,
+   "voxel_m": 0.1
+  },
+  "LighthouseLamp": {
+   "voxels": 1404,
+   "faces": 348,
+   "voxel_m": 0.1
+  },
+  "Lighthouse": {
+   "voxels": 50775,
+   "faces": 12999,
+   "voxel_m": 0.1
+  },
+  "Quay": {
+   "voxels": 317723,
+   "faces": 23880,
+   "voxel_m": 0.1
+  },
+  "RocksSea": {
+   "voxels": 21607,
+   "faces": 5453,
+   "voxel_m": 0.1
+  },
+  "RopeCoil": {
+   "voxels": 78,
+   "faces": 113,
+   "voxel_m": 0.1
+  },
+  "WestHill": {
+   "voxels": 1631944,
+   "faces": 93779,
+   "voxel_m": 0.1
+  }
+ },
+ "water_mask": {
+  "file": "demo/textures/water_mask.png",
+  "x0": -20.0,
+  "z0": -35.0,
+  "cell_m": 0.1,
+  "size": [
+   410,
+   440
+  ],
+  "channels": "R Land/Objekt auf Wasserhöhe, G Abstand zum Ufer (0..12 Zellen -> 0..255), B Bootsrumpf"
+ },
+ "faces_total": 231598,
+ "triangles_total": 463196,
+ "seconds": 77.1
+}

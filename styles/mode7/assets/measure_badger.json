@@ -1,0 +1,3026 @@
+{
+ "frames": 180,
+ "godot_errors": [],
+ "walk_frames": 130,
+ "stance_phases": 24,
+ "stance_drift_px_max": 3,
+ "stance_drift_hist": {
+  "0": 6,
+  "1": 10,
+  "2": 2,
+  "3": 6
+ },
+ "walk_bottom_rows": [
+  195,
+  196,
+  197
+ ],
+ "walk_top_rows": [
+  158,
+  159
+ ],
+ "stand_bottom_rows": [
+  196,
+  197
+ ],
+ "stand_top_rows": [
+  158
+ ],
+ "height_px": [
+  38,
+  39,
+  40
+ ],
+ "rows": [
+  {
+   "frame": 0,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     3,
+     11,
+     4
+    ],
+    [
+     13,
+     19,
+     2
+    ]
+   ],
+   "height": 38,
+   "toe": 10
+  },
+  {
+   "frame": 1,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     5,
+     20,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 11
+  },
+  {
+   "frame": 2,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     5,
+     20,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 11
+  },
+  {
+   "frame": 3,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     8,
+     19,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 13
+  },
+  {
+   "frame": 4,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     8,
+     19,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 13
+  },
+  {
+   "frame": 5,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     13,
+     20,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 16
+  },
+  {
+   "frame": 6,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     13,
+     20,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 16
+  },
+  {
+   "frame": 7,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     14,
+     23,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 22
+  },
+  {
+   "frame": 8,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     14,
+     23,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 22
+  },
+  {
+   "frame": 9,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     16,
+     23,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 22
+  },
+  {
+   "frame": 10,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     16,
+     23,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 22
+  },
+  {
+   "frame": 11,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     17,
+     23,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 22
+  },
+  {
+   "frame": 12,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     17,
+     23,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 22
+  },
+  {
+   "frame": 13,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 197,
+   "feet": [
+    [
+     17,
+     23,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 23
+  },
+  {
+   "frame": 14,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 197,
+   "feet": [
+    [
+     17,
+     23,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 23
+  },
+  {
+   "frame": 15,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     17,
+     25,
+     4
+    ],
+    [
+     27,
+     33,
+     2
+    ]
+   ],
+   "height": 38,
+   "toe": 24
+  },
+  {
+   "frame": 16,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     17,
+     25,
+     4
+    ],
+    [
+     27,
+     33,
+     2
+    ]
+   ],
+   "height": 38,
+   "toe": 24
+  },
+  {
+   "frame": 17,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     18,
+     33,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 24
+  },
+  {
+   "frame": 18,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     18,
+     33,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 24
+  },
+  {
+   "frame": 19,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     22,
+     33,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 27
+  },
+  {
+   "frame": 20,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     22,
+     33,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 27
+  },
+  {
+   "frame": 21,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     27,
+     34,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 30
+  },
+  {
+   "frame": 22,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     27,
+     34,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 30
+  },
+  {
+   "frame": 23,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     27,
+     36,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 35
+  },
+  {
+   "frame": 24,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     27,
+     36,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 35
+  },
+  {
+   "frame": 25,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     30,
+     37,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 36
+  },
+  {
+   "frame": 26,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     30,
+     37,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 36
+  },
+  {
+   "frame": 27,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     31,
+     37,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 36
+  },
+  {
+   "frame": 28,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     31,
+     37,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 36
+  },
+  {
+   "frame": 29,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 197,
+   "feet": [
+    [
+     30,
+     36,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 36
+  },
+  {
+   "frame": 30,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 197,
+   "feet": [
+    [
+     30,
+     36,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 36
+  },
+  {
+   "frame": 31,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     30,
+     38,
+     4
+    ],
+    [
+     40,
+     46,
+     2
+    ]
+   ],
+   "height": 38,
+   "toe": 37
+  },
+  {
+   "frame": 32,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     30,
+     38,
+     4
+    ],
+    [
+     40,
+     46,
+     2
+    ]
+   ],
+   "height": 38,
+   "toe": 37
+  },
+  {
+   "frame": 33,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     32,
+     47,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 38
+  },
+  {
+   "frame": 34,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     32,
+     47,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 38
+  },
+  {
+   "frame": 35,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     35,
+     46,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 40
+  },
+  {
+   "frame": 36,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     35,
+     46,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 40
+  },
+  {
+   "frame": 37,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     40,
+     47,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 43
+  },
+  {
+   "frame": 38,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     40,
+     47,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 43
+  },
+  {
+   "frame": 39,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     41,
+     50,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 49
+  },
+  {
+   "frame": 40,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     41,
+     50,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 49
+  },
+  {
+   "frame": 41,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     44,
+     51,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 50
+  },
+  {
+   "frame": 42,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     44,
+     51,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 50
+  },
+  {
+   "frame": 43,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     44,
+     50,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 49
+  },
+  {
+   "frame": 44,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     44,
+     50,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 49
+  },
+  {
+   "frame": 45,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 197,
+   "feet": [
+    [
+     44,
+     50,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 50
+  },
+  {
+   "frame": 46,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 197,
+   "feet": [
+    [
+     44,
+     50,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 50
+  },
+  {
+   "frame": 47,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     44,
+     52,
+     4
+    ],
+    [
+     54,
+     60,
+     2
+    ]
+   ],
+   "height": 38,
+   "toe": 51
+  },
+  {
+   "frame": 48,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     44,
+     52,
+     4
+    ],
+    [
+     54,
+     60,
+     2
+    ]
+   ],
+   "height": 38,
+   "toe": 51
+  },
+  {
+   "frame": 49,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     45,
+     60,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 51
+  },
+  {
+   "frame": 50,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     45,
+     60,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 51
+  },
+  {
+   "frame": 51,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     49,
+     60,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 54
+  },
+  {
+   "frame": 52,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     49,
+     60,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 54
+  },
+  {
+   "frame": 53,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     54,
+     61,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 57
+  },
+  {
+   "frame": 54,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     54,
+     61,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 57
+  },
+  {
+   "frame": 55,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     54,
+     63,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 62
+  },
+  {
+   "frame": 56,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     54,
+     63,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 62
+  },
+  {
+   "frame": 57,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     57,
+     64,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 63
+  },
+  {
+   "frame": 58,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     57,
+     64,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 63
+  },
+  {
+   "frame": 59,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     58,
+     64,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 63
+  },
+  {
+   "frame": 60,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     58,
+     64,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 63
+  },
+  {
+   "frame": 61,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 197,
+   "feet": [
+    [
+     57,
+     63,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 63
+  },
+  {
+   "frame": 62,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 197,
+   "feet": [
+    [
+     57,
+     63,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 63
+  },
+  {
+   "frame": 63,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     57,
+     65,
+     4
+    ],
+    [
+     67,
+     73,
+     2
+    ]
+   ],
+   "height": 38,
+   "toe": 64
+  },
+  {
+   "frame": 64,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     57,
+     65,
+     4
+    ],
+    [
+     67,
+     73,
+     2
+    ]
+   ],
+   "height": 38,
+   "toe": 64
+  },
+  {
+   "frame": 65,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     59,
+     74,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 65
+  },
+  {
+   "frame": 66,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     59,
+     74,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 65
+  },
+  {
+   "frame": 67,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     63,
+     74,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 68
+  },
+  {
+   "frame": 68,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     63,
+     74,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 68
+  },
+  {
+   "frame": 69,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     67,
+     74,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 70
+  },
+  {
+   "frame": 70,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     67,
+     74,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 70
+  },
+  {
+   "frame": 71,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     68,
+     77,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 76
+  },
+  {
+   "frame": 72,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     68,
+     77,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 76
+  },
+  {
+   "frame": 73,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     71,
+     78,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 77
+  },
+  {
+   "frame": 74,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     71,
+     78,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 77
+  },
+  {
+   "frame": 75,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     71,
+     77,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 76
+  },
+  {
+   "frame": 76,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     71,
+     77,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 76
+  },
+  {
+   "frame": 77,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 197,
+   "feet": [
+    [
+     71,
+     77,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 77
+  },
+  {
+   "frame": 78,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 197,
+   "feet": [
+    [
+     71,
+     77,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 77
+  },
+  {
+   "frame": 79,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     71,
+     79,
+     4
+    ],
+    [
+     81,
+     87,
+     2
+    ]
+   ],
+   "height": 38,
+   "toe": 78
+  },
+  {
+   "frame": 80,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     71,
+     79,
+     4
+    ],
+    [
+     81,
+     87,
+     2
+    ]
+   ],
+   "height": 38,
+   "toe": 78
+  },
+  {
+   "frame": 81,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     72,
+     87,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 78
+  },
+  {
+   "frame": 82,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     72,
+     87,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 78
+  },
+  {
+   "frame": 83,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     76,
+     87,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 81
+  },
+  {
+   "frame": 84,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     76,
+     87,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 81
+  },
+  {
+   "frame": 85,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     81,
+     88,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 84
+  },
+  {
+   "frame": 86,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     81,
+     88,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 84
+  },
+  {
+   "frame": 87,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     81,
+     90,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 89
+  },
+  {
+   "frame": 88,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     81,
+     90,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 89
+  },
+  {
+   "frame": 89,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     84,
+     91,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 90
+  },
+  {
+   "frame": 90,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     84,
+     91,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 90
+  },
+  {
+   "frame": 91,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     85,
+     91,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 90
+  },
+  {
+   "frame": 92,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     85,
+     91,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 90
+  },
+  {
+   "frame": 93,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 197,
+   "feet": [
+    [
+     85,
+     91,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 91
+  },
+  {
+   "frame": 94,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 197,
+   "feet": [
+    [
+     85,
+     91,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 91
+  },
+  {
+   "frame": 95,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     84,
+     92,
+     4
+    ],
+    [
+     94,
+     100,
+     2
+    ]
+   ],
+   "height": 38,
+   "toe": 91
+  },
+  {
+   "frame": 96,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     84,
+     92,
+     4
+    ],
+    [
+     94,
+     100,
+     2
+    ]
+   ],
+   "height": 38,
+   "toe": 91
+  },
+  {
+   "frame": 97,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     86,
+     101,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 92
+  },
+  {
+   "frame": 98,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     86,
+     101,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 92
+  },
+  {
+   "frame": 99,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     90,
+     101,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 95
+  },
+  {
+   "frame": 100,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     90,
+     101,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 95
+  },
+  {
+   "frame": 101,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     94,
+     101,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 97
+  },
+  {
+   "frame": 102,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     94,
+     101,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 97
+  },
+  {
+   "frame": 103,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     95,
+     104,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 103
+  },
+  {
+   "frame": 104,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     95,
+     104,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 103
+  },
+  {
+   "frame": 105,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     98,
+     105,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 104
+  },
+  {
+   "frame": 106,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     98,
+     105,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 104
+  },
+  {
+   "frame": 107,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     98,
+     104,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 103
+  },
+  {
+   "frame": 108,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     98,
+     104,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 103
+  },
+  {
+   "frame": 109,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 197,
+   "feet": [
+    [
+     98,
+     104,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 104
+  },
+  {
+   "frame": 110,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 197,
+   "feet": [
+    [
+     98,
+     104,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 104
+  },
+  {
+   "frame": 111,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     98,
+     106,
+     4
+    ],
+    [
+     108,
+     114,
+     2
+    ]
+   ],
+   "height": 38,
+   "toe": 105
+  },
+  {
+   "frame": 112,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     98,
+     106,
+     4
+    ],
+    [
+     108,
+     114,
+     2
+    ]
+   ],
+   "height": 38,
+   "toe": 105
+  },
+  {
+   "frame": 113,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     99,
+     114,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 105
+  },
+  {
+   "frame": 114,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     99,
+     114,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 105
+  },
+  {
+   "frame": 115,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     103,
+     114,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 108
+  },
+  {
+   "frame": 116,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     103,
+     114,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 108
+  },
+  {
+   "frame": 117,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     108,
+     115,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 111
+  },
+  {
+   "frame": 118,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 195,
+   "feet": [
+    [
+     108,
+     115,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 111
+  },
+  {
+   "frame": 119,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     108,
+     117,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 116
+  },
+  {
+   "frame": 120,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     108,
+     117,
+     4
+    ]
+   ],
+   "height": 38,
+   "toe": 116
+  },
+  {
+   "frame": 121,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     111,
+     118,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 117
+  },
+  {
+   "frame": 122,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     111,
+     118,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 117
+  },
+  {
+   "frame": 123,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     112,
+     118,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 117
+  },
+  {
+   "frame": 124,
+   "sheet": "badger_walk",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     112,
+     118,
+     4
+    ]
+   ],
+   "height": 40,
+   "toe": 117
+  },
+  {
+   "frame": 125,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 197,
+   "feet": [
+    [
+     112,
+     118,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 118
+  },
+  {
+   "frame": 126,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 197,
+   "feet": [
+    [
+     112,
+     118,
+     4
+    ]
+   ],
+   "height": 39,
+   "toe": 118
+  },
+  {
+   "frame": 127,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     119,
+     4
+    ],
+    [
+     121,
+     127,
+     2
+    ]
+   ],
+   "height": 38,
+   "toe": 118
+  },
+  {
+   "frame": 128,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     119,
+     4
+    ],
+    [
+     121,
+     127,
+     2
+    ]
+   ],
+   "height": 38,
+   "toe": 118
+  },
+  {
+   "frame": 129,
+   "sheet": "badger_walk",
+   "top": 159,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     119,
+     4
+    ],
+    [
+     121,
+     127,
+     2
+    ]
+   ],
+   "height": 38,
+   "toe": 118
+  },
+  {
+   "frame": 130,
+   "sheet": "badger_turn",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     112,
+     117,
+     4
+    ],
+    [
+     119,
+     125,
+     2
+    ]
+   ],
+   "height": 40
+  },
+  {
+   "frame": 131,
+   "sheet": "badger_turn",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     112,
+     117,
+     4
+    ],
+    [
+     119,
+     125,
+     2
+    ]
+   ],
+   "height": 40
+  },
+  {
+   "frame": 132,
+   "sheet": "badger_turn",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     112,
+     117,
+     4
+    ],
+    [
+     119,
+     125,
+     2
+    ]
+   ],
+   "height": 40
+  },
+  {
+   "frame": 133,
+   "sheet": "badger_turn",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     112,
+     117,
+     4
+    ],
+    [
+     119,
+     125,
+     2
+    ]
+   ],
+   "height": 40
+  },
+  {
+   "frame": 134,
+   "sheet": "badger_turn",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     112,
+     117,
+     4
+    ],
+    [
+     119,
+     125,
+     2
+    ]
+   ],
+   "height": 40
+  },
+  {
+   "frame": 135,
+   "sheet": "badger_turn",
+   "top": 158,
+   "bottom": 197,
+   "feet": [
+    [
+     112,
+     117,
+     4
+    ],
+    [
+     119,
+     125,
+     2
+    ]
+   ],
+   "height": 40
+  },
+  {
+   "frame": 136,
+   "sheet": "badger_idle",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 137,
+   "sheet": "badger_idle",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 138,
+   "sheet": "badger_idle",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 139,
+   "sheet": "badger_idle",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 140,
+   "sheet": "badger_idle",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 141,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 142,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 143,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 144,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 145,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 146,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 147,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 148,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 149,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 150,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 151,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 152,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 153,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 154,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 155,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 156,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 157,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 158,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 159,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 160,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 161,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 162,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 163,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 164,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 165,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 166,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 167,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 168,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 169,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 170,
+   "sheet": "badger_wave",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 171,
+   "sheet": "badger_idle",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 172,
+   "sheet": "badger_idle",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 173,
+   "sheet": "badger_idle",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 174,
+   "sheet": "badger_idle",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 175,
+   "sheet": "badger_idle",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 176,
+   "sheet": "badger_idle",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 177,
+   "sheet": "badger_idle",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 178,
+   "sheet": "badger_idle",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  },
+  {
+   "frame": 179,
+   "sheet": "badger_idle",
+   "top": 158,
+   "bottom": 196,
+   "feet": [
+    [
+     111,
+     115,
+     4
+    ],
+    [
+     120,
+     124,
+     4
+    ]
+   ],
+   "height": 39
+  }
+ ]
+}

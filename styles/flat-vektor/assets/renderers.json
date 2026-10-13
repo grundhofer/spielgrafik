@@ -1,0 +1,17 @@
+{
+ "forward_plus": {
+  "errors": []
+ },
+ "mobile": {
+  "errors": [],
+  "share_diff_any": 0.0,
+  "share_diff_over_24": 0.0,
+  "max_diff": 0
+ },
+ "gl_compatibility": {
+  "errors": [],
+  "share_diff_any": 0.2283,
+  "share_diff_over_24": 0.0055,
+  "max_diff": 155
+ }
+}

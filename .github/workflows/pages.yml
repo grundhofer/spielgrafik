@@ -1,0 +1,73 @@
+name: Build and deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # build.py findet cwebp über den PATH (shutil.which). Ohne cwebp/sips würden große Bilder unverkleinert
+      # eingebettet (Stand 13.10.2026: bis 29 MB Bilder je Seite, mit cwebp höchstens 4 MB je Eintragsseite).
+      - name: Install cwebp
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq webp
+          cwebp -version
+
+      # build.py prüft vorher alle Steckbriefe (styles/<slug>/style.json): gültiges JSON, Bewertungen 1–5,
+      # vorhandene Assets und Medien.
+      # prompts.json entsteht lokal mit tools/collect_prompts.py (die Begleitdateien in assets/raw/ sind nicht eingecheckt).
+      - name: Build
+        run: python3 build.py
+
+      - name: Build and page tests
+        run: python3 -m unittest discover -s tests -v
+
+      - name: Sanity check
+        run: |
+          set -e
+          for f in docs/index.html docs/vergleich/index.html docs/techniken/index.html \
+                   docs/textadventure/index.html docs/werkzeuge/index.html docs/impressum/index.html docs/404.html \
+                   docs/assets/site.css docs/assets/site.js docs/assets/fonts/inter-latin.woff2 \
+                   docs/THIRD_PARTY_NOTICES.txt; do
+            test -s "$f" || { echo "fehlt oder leer: $f"; exit 1; }
+          done
+          echo "$(find docs -name index.html | wc -l) Seiten, $(find docs -name demo.mp4 | wc -l) Demos"
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
+    # Pull Requests werden gebaut und geprüft, aber nicht veröffentlicht.
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

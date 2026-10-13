@@ -1,0 +1,69 @@
+{
+ "frames": 180,
+ "walk_shot1": {
+  "steps": 145,
+  "max_mm": 9.04,
+  "max_px": 0.64,
+  "mean_px": 0.077,
+  "worst_t": 0.058,
+  "worst_point": "toe.R"
+ },
+ "walk_shot2": {
+  "steps": 49,
+  "max_mm": 11.84,
+  "max_px": 2.14,
+  "mean_px": 0.71,
+  "worst_t": 3.325,
+  "worst_point": "toe.L"
+ },
+ "walk_flat_shot1": {
+  "steps": 54,
+  "max_mm": 1.67,
+  "max_px": 0.12,
+  "mean_px": 0.02,
+  "worst_t": 0.225,
+  "worst_point": "mid.L"
+ },
+ "walk_flat_shot2": {
+  "steps": 19,
+  "max_mm": 1.65,
+  "max_px": 0.4,
+  "mean_px": 0.063,
+  "worst_t": 3.325,
+  "worst_point": "mid.R"
+ },
+ "blend_walk_idle": {
+  "max_mm": 17.84,
+  "max_px": 2.25
+ },
+ "stand": {
+  "frames": 57,
+  "feet_range_px": 0.34,
+  "feet_y_max_px": 544.16,
+  "head_step_max_px": 1.9
+ },
+ "mask_stand": {
+  "frames": 58,
+  "foot_rows": [
+   542,
+   543
+  ],
+  "top_min": 294,
+  "top_max": 295,
+  "top_step_max": 1
+ },
+ "mask_walk_height_px": {
+  "shot1": [
+   68,
+   73
+  ],
+  "shot2": [
+   229,
+   249
+  ]
+ },
+ "mask_stand_height_px": [
+  249,
+  250
+ ]
+}

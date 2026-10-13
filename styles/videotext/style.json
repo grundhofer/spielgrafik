@@ -1,0 +1,255 @@
+{
+ "slug": "videotext",
+ "name": "Videotext-Mosaik",
+ "family": "computer",
+ "kind": "style",
+ "era": "1974–2012 (Videotext/Teletext Level 1, SAA5050-Zeichengenerator ab 1980; deutscher Videotext ab 1980)",
+ "summary": "Das Bild ist eine Videotextseite: 40 × 25 Zeichenzellen, 8 reine Farben, Grafik aus 2 × 3-Mosaikblöcken (zusammenhängend oder getrennt). Jeder Farb- oder Grafikwechsel ist ein Steuerzeichen, das selbst eine Zelle belegt und dort als Lücke in Hintergrundfarbe erscheint (mit Hold Graphics als Wiederholung des letzten Mosaiks); je Zelle gibt es nur eine Vorder- und eine Hintergrundfarbe, Schwarz nur als Hintergrund. Bewegung entsteht durch Blinken (Flash) und dadurch, dass der Sender einzelne Zeilen neu überträgt.",
+ "references": [
+  "Ceefax (BBC, 1974–2012) und ORACLE (ITV, 1978–1992): Seiten mit Doppelhöhe-Titeln, Mosaikgrafik, Kopfzeile mit Seitennummer und Uhr",
+  "ARD/ZDF-Videotext (ab 1980): deutscher Zeichensatz mit Ä Ö Ü ä ö ü ß an den Plätzen von [ \\ ] { | } ~",
+  "Mullard SAA5050 (1980): Zeichengenerator mit 5 × 9-Punktmatrix und Zeichenglättung; BBC Micro MODE 7 (1981) nutzt denselben Chip",
+  "ETS 300 706 (Enhanced Teletext specification), Abschnitt 12.2: Spacing Attributes, Set-At/Set-After, Hold Mosaics",
+  "Bamboozle! (Ceefax-Quiz, 1997–2012): Spiel, das nur aus Videotextseiten und Farbtasten besteht",
+  "Videotext-Kunst der 2010er/2020er (z. B. Dan Farrimond, Teletext-Art-Festivals, Editor edit.tf)",
+  "MAME, src/devices/video/saa5050.cpp: Flash-Takt (Zähler über 64 Halbbilder, die ersten 16 aus) als Quelle für die Blinkzeit"
+ ],
+ "traits": [
+  "Seite 40 × 25 Zeichen à 20 × 28 Bildpunkte (800 × 700, mittig in 1280 × 720 auf Schwarz); jede Zelle ist genau ein Byte (7 Bit), das ein Level-1-Decoder in GDScript in Zeichen, Mosaik oder Steuerzelle übersetzt",
+  "Nur die 8 Videotextfarben im ganzen Bild, auch in der Schrift (Zeichengenerator binär wie der SAA5050); je Zelle höchstens 2 Farben (am Godot-Bild geprüft: 0 Verstöße und 0 Fremdfarben in Mosaik-, Steuer- und Textzellen, 180 Bilder ab 0 s und 60 Bilder ab 30 s; das Poster hat genau 8 Farben)",
+  "Bild (Zeilen 3–19) als 80 × 51 Mosaikpunkte zuzüglich Himmel in Zeile 1–2: Sechstel 10 × 8/12/8 Bildpunkte (Verhältnis 3:4:3 wie im SAA5050), getrennte Mosaike mit 3 Bildpunkten Lücke für Sterne, Pflaster und Leuchtfeuerstrahl",
+  "Steuerzeichen sichtbar als Lücken: 153–168 Steuerzellen je Bild in den 680 Bildzellen; schwarzer linker Rand in allen Himmelszeilen (Spalte 0 schaltet erst auf Grafik), schwarze Säume neben Figur und Laterne",
+  "Kopfzeile: P100 (vom Fernseher) und Sendername LORNTEXT, Seitennummer, Datum und laufende Uhr; ab 4,0 s tippt der Zuschauer 2-0-2, danach rollen die Seitennummern (Suche)",
+  "Titel „Hafen von Lornholm“ in doppelter Höhe gelb im blauen Himmel; Zeile 2 zeigt die unteren Hälften",
+  "Text in Bedstead (Nachbau des SAA5050) mit deutschem Nationalsatz, binär auf ein festes Punktraster gesetzt (je SAA5050-Punkt 3 × 3 Bildpunkte, alle Striche gleich breit); Beschreibung in 2 Zeilen, Auswahl als drei Zeilen mit Farbtaste (rot/grün/gelb) und Seitennummer 201–203; nach der Wahl blinkt „Das Paket ansehen“",
+  "Dachs-Kurier 11 × 15 Mosaikpunkte (5 Zeichenzeilen, 140 px hoch; Vorderansicht mit Paket 12 breit): tritt aus der Tür (das erste Laufbild steht an der Stelle der Türpose, der hintere Fuß bleibt stehen), läuft 20 Schritte à 1 Mosaikpunkt (21 Laufbilder, 10 Bilder/s), dreht sich zum Betrachter und grüßt; das gelbe Paket ist in Seiten- und Vorderansicht zu sehen; jedes Bild ist eine Neuübertragung von 5 Zeilen",
+  "Umgebung: Leuchtfeuer mit Flash-Lampe und kreisendem Strahl aus getrennten Mosaiken (12 Phasen, 2,4 s), Laterne flackert durch Tausch eines einzigen Steuerzeichens (Gelb 70 %, Weiß 30 %), Rauch als Kette aus Rauchfuß und drei wachsenden Wölkchen, die direkt auf der Schornsteinmündung beginnt und nach rechts oben treibt, Wellenkämme und Abendlicht verschieben sich, zwei Sterne blinken",
+  "Blinken wie im SAA5050: 64 Halbbilder Takt (1,28 s), 16 aus, 48 an (3:1), für alle blinkenden Zellen gemeinsam"
+ ],
+ "camera": "Seitenansicht wie eine Bühne, feste Kamera: Häuschen links mit offener Tür und rauchendem Schornstein, Meer mit zwei Booten in der Mitte, Leuchtturm auf grüner Felsnase rechts (grüner Hang, darunter grüne Felswand mit schwarzen Schichtfugen), Kai mit Pflaster als Laufboden unten; darunter 5 Textzeilen",
+ "resolution": "40 × 25 Zeichen, 8 Farben, Grafik 2 × 3 Mosaikpunkte je Zelle (Bildteil 80 × 57 Mosaikpunkte); Zelle 20 × 28 Bildpunkte, Seite 800 × 700 in 1280 × 720. Die Zelle hat das Seitenverhältnis des SAA5050 auf einem 4:3-Fernseher, die Mosaikpunkte sind fast quadratisch (10 × 9,3). Die Schrift ist binär auf ein festes Punktraster gesetzt: jeder SAA5050-Punkt 3 × 3 Bildpunkte, Zeichen 15 × 27 Bildpunkte mit 5 Bildpunkten Abstand. Auf einem echten Gerät sind die Punkte etwa 1,19-mal so breit wie hoch, die Zeichen hier also etwas schmaler und weiter gesperrt. Die Seite ist mit 1,14:1 etwas schmaler als auf einem echten Gerät (etwa 1,18:1). Keine Bildröhren-Nachbildung: scharfe Kanten ohne Mischtöne, kein Zeilensprung-Flimmern.",
+ "pipeline": [
+  {
+   "step": "Komposition per KI",
+   "tool": "genimg (agy, Gemini-Bildmodell)",
+   "detail": "2 Bilder mit demselben Prompt (prompts/bg.txt): Videotext-Mosaikbild, 80 × 57 Blöcke, die 8 Farben als Hex-Liste, Himmel als Farbbänder, strenge Seitenansicht. Beide liefern Bänderhimmel Blau/Magenta/Rot/Gelb und einen weißen Leuchtturm mit rotem Band, malen aber Grau und Braun, feine Fugen und Schrägsicht. verbatim: true, 1264 × 848 statt 1536 × 1024."
+  },
+  {
+   "step": "Versuch: KI-Bild automatisch umsetzen",
+   "tool": "scripts/ai_convert.py",
+   "detail": "Häufigste der 8 Farben (Oklab) je Mosaikpunkt, dann dieselbe Regel-DP wie für die Seite. Grau und Braun fallen auf Rot, Kai, Häuschen und Boote werden roter Brei (assets/ki_automatisch.png). Verworfen; bg_a.png dient nur als Vorlage für Farbaufteilung und Leuchtturm."
+  },
+  {
+   "step": "Vorlage per Code",
+   "tool": "scripts/scene.py (PIL-Formen auf 80 × 57)",
+   "detail": "Himmelsbänder je Zeichenzeile, Wolkenstreifen, Felsnase, Leuchtturm, Häuschen, Boote, Kai, Laterne, Paket, Kisten, Fässer als Rechtecke und Polygone, am 2 × 3-Raster ausgerichtet; dazu Gewichte, Trennwunsch je Zelle und Aus-Phase der Blinkpunkte. Etwa sechs Durchgänge, vor allem um zwei Vordergrundfarben in derselben Zellenzeile zu vermeiden; nach der Prüfung vier weitere: Schornstein endet mit einem roten Topf, der genau Zellenzeile 6 füllt, Rauch als Kette auf fester Bahn darüber; Fels unter der Felsnase grün mit schwarzen Schichtfugen statt schwarz; Laternenpfahl auch vor der Kaikante gelb (Gewicht 8), Kantenstein um den Pfahl als gelber Lichtschein (assets/scene_target.png)."
+  },
+  {
+   "step": "Regelkonform kodieren",
+   "tool": "scripts/ttxenc.py (dynamische Programmierung je Zeile)",
+   "detail": "Zustand des Decoders je Spalte: Modus, Vorder-, Hintergrund, getrennt, Hold, Flash, gehaltenes Zeichen und dessen Trennmodus (65 536 Zustände); erlaubt sind Mosaikzeichen und die Steuerzeichen 11–17, 1C, 1D, 19, 1A, 1E, 1F, 08, 09. Gesucht ist die Bytefolge mit der kleinsten gewichteten Farbabweichung (Oklab + 0,25 je falscher Farbe + 0,4, wenn statt der Zielfarbe eine andere bunte Farbe erscheint). Etwa 0,05 s je Zeile; die vorhergesagten Kosten stimmen mit dem Decoder überein."
+  },
+  {
+   "step": "Seite zusammensetzen",
+   "tool": "scripts/build_page.py",
+   "detail": "Kopfzeile, Titel in doppelter Höhe, Bildzeilen 3–19 aus der DP, Text- und Auswahlzeilen von Hand; die Laterne bekommt feste Bytes (Spalte 27 Mosaik-Gelb, 28 Vollblock, 29 Mosaik-Grün für den Fels daneben), damit das Flackern ein einziges Byte tauscht."
+  },
+  {
+   "step": "Dachs von Hand",
+   "tool": "scripts/badger.txt, scripts/sprites_ttx.py",
+   "detail": "11 × 15 Mosaikpunkte als Buchstabenkarte, Farbbereiche nach Zeichenzeilen getrennt (Mütze grün, Kopf weiß mit schwarzem Streif, Schal rot, Weste grün + Paket gelb, Beine blau); 4 Laufbilder mit vorher festgelegten Fersen, 2 Stehbilder, 2 Vorderansichten, 2 Grußbilder. Die Vorderansichten sind 12 breit: das Paket hängt links unter dem nicht winkenden Arm am Zeilenrand der Figur (Gelb-Code vor der Figur, ein Paketmosaik, dann der Grün-Code, der mit Hold Graphics das Paketmosaik wiederholt; 4 × 2 Punkte). Türpose bei x = 15, das erste Laufbild an derselben Stelle (nur der vordere Fuß hebt sich). Zellen mit Figur werden zusammenhängend, Pflasterpunkte darin entfernt."
+  },
+  {
+   "step": "Versuch: KI-Figur",
+   "tool": "genimg (agy), Referenz shared/badger/master_sheet.png; scripts/badger_ai_versuch.py",
+   "detail": "1 Bild (prompts/badger.txt): Seiten- und Vorderansicht in den 8 Farben, gut erkennbar, aber etwa 40 × 60 Blöcke statt 10 × 15 und mit weißem Boden. Auf 11 × 15 verkleinert unkenntlich (assets/badger_ki_vs_hand.png); nicht verwendet."
+  },
+  {
+   "step": "Sendestrom bauen",
+   "tool": "scripts/build_stream.py",
+   "detail": "Jede Animationsphase als Zielbild; neu kodiert werden nur die Zellen, deren Ziel sich ändert (± 3 Zellen), der Rest der Zeile bleibt Byte für Byte gleich (feste Bytes bis Spalte 39, Startzustand aus dem Decoder). 12 Himmelsphasen (Zeilen 3–5), 4 Wasserphasen (11–12), 28 Dachsbilder (15–19). Bericht: 0 Zellen im falschen Trennmodus; falsche Sechstel: Himmel 17, Wasser 64, Dachs 620 (in 140 Zeilen-Updates). Laterne: Codes Weiß/Gelb mit Gewichten 0,3/0,7."
+  },
+  {
+   "step": "Zeichensatz",
+   "tool": "scripts/build_atlas.py",
+   "detail": "Bedstead 3.261 (CC0) mit 20-facher Auflösung gezeichnet und auf ein festes Punktraster gebracht (Punktspalten 5 + 5 × 3 Bildpunkte, Punktzeilen 1 + 9 × 3, doppelte Höhe 2 + 9 × 6), je Bildpunkt Deckung ≥ 50 % → binär. Erste Fassung per Flächenmittel auf 20 × 28 hatte Mischtöne an allen Kanten (295 Farben im Poster); einfaches Binarisieren auf 20 / 6 Bildpunkte je Punkt gab Striche von 3 oder 4 Bildpunkten. 96 Zeichen des deutschen G0-Satzes in drei Fassungen (normal, obere und untere Hälfte doppelter Höhe), demo/fonts/g0_atlas.png."
+  },
+  {
+   "step": "Seitendatei",
+   "tool": "scripts/tti.py",
+   "detail": "Grundseite als TTI-Datei (assets/hafen.tti, 1,4 KB, Steuerzeichen als ESC + Code + 0x40, Fastext-Links 201/202/203/100), mit eigenem Leser bitgleich zurückgelesen."
+  },
+  {
+   "step": "Nachbesserung nach unabhängiger Prüfung",
+   "tool": "badger.txt, build_stream.py, scene.py, build_page.py, build_atlas.py, main.gd, check_badger.py, check_render.py",
+   "detail": "Behoben: Paket fehlte in allen Vorderansichten (3,0–6,0 s, Poster); Standfuß sprang beim Losgehen um 1 Punkt; Schrift kantengeglättet (13 362 Bildpunkte außerhalb der Palette im Poster); Rauch als einzelnes Wölkchen las sich wie Wolke, Vogel oder Stern; Fels unter der Felsnase als schwarzes Loch; Laternenpfahl in Zeile 14 weiß und Glas in 23 % der Bilder rot (rotes T). Die Prüfskripte messen jetzt auch Textzellen, die Posenübergänge und das Paket. Keine neuen KI-Bilder."
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/check_render.py, scripts/check_badger.py, tools/capture.py",
+   "detail": "Godot schreibt mit --dump die Seitenbytes je Bild; Python dekodiert und rendert sie: 180 von 180 Bildern pixelgleich mit Godot, 0 Zellen mit mehr als 2 Farben (Mosaik, Steuerzellen und Text), insgesamt nur die 8 Videotextfarben. Dachs im gerenderten Bild (check_badger.py): 11 Standphasen à 2 Laufbilder mit ortsfestem Fuß, Standfuß bleibt auch an den Übergängen Tür → Laufen (Bild 11 → 12), Laufen → Stehen und Stehen → Vorderansicht; Mütze 1 Mosaikpunkt je Laufbild; Fußzeile und Mützenoberkante in allen 180 Bildern gleich; Paket in allen 180 Bildern (600–760 gelbe Bildpunkte in der Westenzeile von der Seite, 800 von vorn). Laterne 129 Bilder gelb, 51 weiß, 0 rot. Dauerlauf ab 30 s (60 Bilder) mit denselben Prüfungen; Mobile und Kompatibilität bitgleich mit Forward+."
+  }
+ ],
+ "godot": [
+  "project.godot: Viewport 1280 × 720, stretch mode viewport, scale_mode integer, Standardfilter Nearest; keine Plugins",
+  "main.tscn: Node2D mit scripts/main.gd, schwarzes ColorRect als Bildschirm, ColorRect 800 × 700 bei (240, 10) mit ShaderMaterial (shaders/teletext.gdshader), Glyphenatlas als Textur-Parameter (Import verlustfrei, ohne Mipmaps)",
+  "main.gd ist der Empfänger: liest data/stream.json, setzt je Bild die Seite aus Grundseite, Himmels-, Wasser- und Dachszeilen, Laternenbyte, Flash-Code der gewählten Auswahl und Kopfzeile zusammen und dekodiert sie nach Level 1 (Set-At/Set-After, Hold Mosaics mit gehaltenem Zeichen samt Trennmodus, Löschen bei Modus- und Größenwechsel, doppelte Höhe mit unterer Zeile) in eine 40 × 25-Textur RGBA8",
+  "teletext.gdshader: Zelle und Bildpunkt per UV × (800, 700), Zellwerte per texelFetch, Glyphe aus dem Atlas vor allen Verzweigungen, Mosaik analytisch (Sechstel 10 × 8/12/8, doppelt hoch 16/24/16, getrennt 3 Bildpunkte Lücke), Flash über Uniform flash_on, feste 8-Farben-Tabelle",
+  "Flash-Takt aus der Bildnummer: Halbbild = Bild × 50/30, an bei (Halbbild mod 64) ≥ 16",
+  "Ablauf: Dachs in der Tür 0–0,4 s, Laufen 0,4–2,5 s (Laufbild alle 3 Aufnahmebilder, erstes Laufbild ohne Vorschub), Stehen bis 3,0 s, Vorderansicht, Gruß 3,4–4,2 s, danach Leerlauf mit wehendem Schal; Himmel 6 Bilder je Phase (Phase versetzt, damit das Poster bei 3,6 s den langen Strahl zeigt), Wasser 9 Bilder je Phase, Laterne alle 3 Bilder aus RandomNumberGenerator (Seed 1974) nach Gewichten aus stream.json (Weiß 0,3, Gelb 0,7); Eingabe 2-0-2 bei 4,0/4,3/4,6 s, rollende Kopfzeile ab 4,7 s",
+  "Deterministisch: t += delta, Bildnummer = round(t · 30); Prüfschalter nach --: --t0=<s>, --dump=<datei> (Seitenbytes je Bild), --timing",
+  "Rechenzeit (Desktop, --timing): 0,43 ms je Bild für Zusammensetzen und Dekodieren in GDScript; Aufnahmen mit --rendering-method mobile und gl_compatibility sind zu Forward+ bitgleich (0 von 180 Bildern weichen ab)"
+ ],
+ "techniques": [
+  "textoberflaeche",
+  "sprite-animation",
+  "fuss-halten",
+  "prozedurale-animation",
+  "grundformen-per-code",
+  "zeichengenerator-shader",
+  "attribut-blinken",
+  "steuerzeichen-kodierung",
+  "zeilen-aktualisierung"
+ ],
+ "ratings": {
+  "ai_fit": 2,
+  "consistency": 4,
+  "effort": 3,
+  "text_adventure": 4,
+  "mobile": 5
+ },
+ "ratings_note": "ai_fit 2: Das Bildmodell trifft mit einem 8-Farben-Prompt den Farbplan (Bänderhimmel, weißer Leuchtturm mit rotem Band), aber kein brauchbares Mosaikbild: automatisch umgesetzt wird Kai, Haus und Boot zu rotem Brei, und die KI-Figur ist auf 11 × 15 Punkten unkenntlich. Der Look kommt aus Vorlage per Code, Regel-DP, Decoder und Shader. consistency 4: Palette, Zellraster und Steuerzeichenregeln gelten für jedes Bild durch denselben Decoder, nachgewiesen pixelgleich mit Python; wie gut ein Ort aussieht, hängt aber an der von Hand gezeichneten Vorlage. effort 3: Ein neuer Ort ist eine 80 × 57-Vorlage mit 8 Farben, die DP setzt die Regeln automatisch um; die Vorlage muss aber zellengerecht gezeichnet werden (hier etwa sechs Durchgänge, nach der Prüfung vier weitere für Rauch, Fels und Laterne), und jede Figurenpose ist Handarbeit, bei der Farbwechsel je Zellenzeile geplant werden müssen (Paket der Vorderansicht). text_adventure 4: Seitennummern und Farbtasten sind eine fertige Auswahl-Oberfläche, Text ist das Medium selbst; 40 Spalten zwingen zu kurzen Beschreibungen und das Bild ist grob. mobile 5: 0,4 ms GDScript je Bild auf dem Desktop, ein Shader mit zwei Texturzugriffen; Forward+, Mobile und Kompatibilität bitgleich (auf einem Telefon selbst nicht gemessen).",
+ "verdict": "Sofort als Videotext erkennbar (Kopfzeile mit Seitennummer und Uhr, Doppelhöhe-Titel, reine 8 Farben, Blockgrafik mit Steuerzeichenlücken, Farbtasten mit Seitennummern) und für ein Textadventure naheliegend: Auswahl über Seitennummern und Fastext ist die native Bedienung, ein Raum ist eine 1,4-KB-Seite in einem Standardformat (TTI), und Animation ist eine Folge von Zeilen-Aktualisierungen, die jeder Decoder abspielt. Wiederholbar ist der Weg Vorlage (80 × 57, 8 Farben, zellengerecht) → Regel-DP → Seite; Decoder, Shader und Werkzeuge bleiben gleich. Grenzen: Figuren sind 11 × 15 Punkte und brauchen Handarbeit je Pose, Text muss in 40 Spalten passen, und das Bildmodell hilft nur beim Farbplan. Für unser erstes Spiel als bewusst grobe Nostalgie-Variante oder als Zwischenseite (Karte, Inventar, Nachrichten) gut geeignet; als Hauptstil nur, wenn das Spiel vom Videotext selbst erzählt.",
+ "pitfalls": [
+  "KI-Bilder als Vorlage taugen nicht direkt: Beide Hintergründe enthalten Grau und Braun, feine Fugen und Schrägsicht; automatisch auf 80 × 57 Punkte gebracht entsteht roter Brei (assets/ki_automatisch.png). Die Vorlage ist deshalb per Code gezeichnet; die KI lieferte nur den Farbplan.",
+  "KI-Figur: gutes 8-Farben-Bild, aber etwa 40 × 60 Blöcke und mit weißem Boden; auf 11 × 15 Punkte verkleinert unkenntlich (assets/badger_ki_vs_hand.png). Alle Posen sind von Hand gesetzt.",
+  "Zwei Vordergrundfarben in derselben Zellenzeile gehen nicht: Wellenkamm (Cyan) über weißem Bootsbord wurde weiß, Mauerfugen im Häuschen ergaben blaue Klammern neben der Tür, Mast neben Wolkenstreifen ergab weiße Splitter. Gelöst nur durch Umzeichnen der Vorlage (Kamm verschoben, Fugen gestrichen, Wolke verlegt).",
+  "Blinkende Lichtpunkte auf dem Wasser (Flash) sind verworfen: Im neun Punkte hohen Wasserband zwischen Booten, Laterne und Fels fand die DP für Flash-, Steady- und Farbcode keinen Platz; die Punkte fielen weg. Das Wasser bewegt sich nur durch verschobene Kämme und Lichtstreifen.",
+  "Der Leuchtfeuerstrahl kreist nur auf der linken Seite: Rechts vom Turm sind 3 Zellen bis zum Rand, nach Hintergrund-, Farb- und Steady-Code bliebe keine Zelle für den Strahl. Die Phasen „nach rechts“ zeigen deshalb nichts.",
+  "Pflaster neben dem Dachs: Getrennte Pflasterpunkte und zusammenhängende Figur brauchen Umschaltcodes; die DP opfert dafür die Punkte in etwa 1–2 Zellen um die Figur. Es wirkt wie ein dunkler Hof, der mit ihm wandert.",
+  "Laufen ist ein Watscheln: Bei 1 Mosaikpunkt (10 Bildpunkte) Vorschub je Laufbild und beiden Beinen in Blau bleibt der hintere Fuß immer hinten (Nachstellschritt, Fußwechsel −2/+6 Punkte). Gemessen bleibt jeder Standfuß 2 Laufbilder ortsfest, aber die Beine überholen sich nicht. Bewegung nur in ganzen Mosaikpunkten, 10 Bilder/s. In der geprüften Fassung sprang der Standfuß beim Losgehen um 1 Punkt (Türpose bei x = 14, erstes Laufbild bei x = 15); jetzt steht das erste Laufbild an der Stelle der Türpose.",
+  "Schwarz gibt es in Level 1 nur als Hintergrund: Augenstreif, Nase und Beinkonturen des Dachses sind Lücken; vor dem schwarzen Kai fällt die Nase weg, die Beine sind deshalb blau statt schwarz.",
+  "Paket in der Vorderansicht: Zwischen gelbem Paket und grüner Weste braucht dieselbe Zellenzeile einen Farbcode. Mit Hold Graphics zeigt diese Steuerzelle das Paketmosaik noch einmal; das Paket ist deshalb 4 × 2 statt 2 × 2 Punkte groß und deckt die linke Westenecke. Ohne Hold stünde eine schwarze Lücke zwischen Paket und Körper. In der geprüften Fassung fehlte das Paket in allen Vorderansichten (es verschwand beim Umdrehen).",
+  "Laterne: Der Pfahl kreuzt die weiße Kaikante; damit er dort gelb bleibt, braucht Zeile 14 einen Gelb- und einen Weiß-Code. Mit Hold zeigt der Weiß-Code das gelbe Kantenstück weiter; der Kantenstein um den Pfahl (x 52–61) ist deshalb bewusst als gelber Lichtschein gesetzt, der Pfahl bildet mit ihm ein flaches T. Die rote Kappe ist 6 statt 4 Punkte breit (gehaltenes Zeichen in den Steuerzellen daneben), neben dem Glas stehen schwarze Steuerzellen als Rahmen. Rot ist aus dem Flackern gestrichen: rotes Glas unter roter Kappe las sich wie ein Poller oder Hydrant.",
+  "Fels unter der Felsnase: schwarz mit zwei blauen Spalten las sich wie ein Loch. Ausprobiert: getrennte weiße Mosaike als graue Felsstruktur; regelmäßig gesetzt wirkten sie wie eine Ziegelmauer, unregelmäßig wie erleuchtete Fenster. Jetzt grüne Wand mit schwarzen Schichtfugen; links davon, hinter der Laterne, bleibt eine schwarze Stufe aus Fels und Steuerzellen. Die Felsnase liest sich damit eher als grüner Hügel denn als Felsen.",
+  "Schrift: Das Flächenmittel auf 20 × 28 Bildpunkte gab Mischtöne an allen Kanten (geprüfte Fassung: 295 Farben im Poster, 13 362 Bildpunkte außerhalb der Palette). Bei 50 % binarisiert wurden die Striche 3 oder 4 Bildpunkte breit, weil 20 Bildpunkte nicht ganzzahlig durch 6 Punkte gehen. Mit dem festen Raster (3 × 3 je Punkt) sind die Punkte quadratisch statt 1,19:1, die Zeichen 10 % schmaler und weiter gesperrt als auf dem Fernseher, und die halben Punkte der Zeichenglättung werden 1 oder 2 Bildpunkte groß.",
+  "Rauch: Fassung 1 aus getrennten Mosaiken las sich wie Sterne, Fassung 2 (ein Wölkchen neben der Mündung, in der Prüfung) wie Wolke, Vogel oder Stern. Erst die Kette, die direkt auf der Mündung beginnt und nach rechts oben größer wird, liest sich als Rauch. Dafür musste der Schornstein an einer Zellenzeilengrenze enden (roter Topf füllt Zeile 6), sonst hätten Topf, Rauch und Himmel drei Farben in einer Zelle; der Topf ist dadurch 3 Punkte hoch. Die Wölkchen bleiben eckige Blöcke, und an der Grenze zu Zeile 3 wird der obere Teil eines Wölkchens cyan, der untere bleibt weiß.",
+  "Vom Motiv abgewichen: kein Holzsteg (nur der Steinkai) und keine Taurolle; Steg und Rolle machten das neun Punkte hohe Wasser- und das Kaiband unlesbar. Die Fässer sind rote Blöcke mit einer Reifenlücke und lesen sich nur im Zusammenhang als Fässer.",
+  "Kein Parser: Videotext hat keine Tastatur. Statt „> nimm paket“ tippt der Zuschauer die Seitennummer 202 (Kopfzeile P2 → P20 → P202, dann rollende Suche), die Auswahlzeile blinkt. Seite 202 kommt in der Demo nie an.",
+  "Animation durch Zeilen-Updates mit bis zu 10 Bildern/s ist für echten Videotext ungewöhnlich (Seiten kamen im Karussell meist im Abstand von Sekunden); 5 Zeilen × 10/s wären etwa 50 Pakete/s und müssten vom Sender bevorzugt eingespeist werden. Nicht nachgebildet: Paritätsbits und Hamming-Schutz, Unterseiten, Conceal/Box, Level 2.5.",
+  "Die Kosten der DP behandeln getrennte Mosaike wie zusammenhängende (die Lücken zählen nicht); getrennt oder zusammenhängend wird über einen Wunsch je Zelle erzwungen. Gehaltene Zeichen tragen ihren Trennmodus mit (Fassung 1 zeigte die Lampe als getrenntes Punktraster aus dem Strahl, erst die Erweiterung des Zustands behob das).",
+  "Seite 800 × 700 in 16:9: 39 % der Aufnahme sind schwarzer Rand; die Mosaikpunkte sind 10 × 9,3 Bildpunkte, die Sechstelzeilen 8/12/8 statt 8,4/11,2/8,4. Keine Bildröhre (keine Unschärfe, kein Zeilensprung).",
+  "Ungeprüft: assets/hafen.tti ist nur mit dem eigenen Leser zurückgelesen, nicht in einem externen Videotext-Editor oder Einspeiser geöffnet; auf einem echten Telefon nicht gemessen."
+ ],
+ "lessons": [
+  "Regel-DP statt Pixel-Einrasten: Der Zustand des Decoders (Modus, Farben, Trennmodus, Hold, Flash, gehaltenes Zeichen) je Spalte als DP-Zustand, Steuerzeichen als Übergänge; die beste Bytefolge einer Zeile in etwa 0,05 s. Die Kosten der DP und die des Decoders stimmen überein, so ist die Regelkonformität Bauweise statt Absicht.",
+  "Animation als Zeilen-Update: Nur das Fenster um die geänderten Zellen neu kodieren und den Rest der Zeile als feste Bytes mitrechnen; so bleibt die Seite außerhalb der Bewegung byte- und pixelgleich, und jede Phase ist für sich regelkonform. Erste Fassung mit Endzustand-Gleichheit erzwang ein unpassendes gehaltenes Zeichen (roter Splitter neben dem Schal).",
+  "Decoder in GDScript, Zeichengenerator im Shader, dieselbe Logik in Python: Mit --dump der Seitenbytes lässt sich jedes Godot-Bild gegen die Python-Fassung prüfen (hier 180 von 180 pixelgleich). Forward+, Mobile und Kompatibilität sind bitgleich.",
+  "Vorlagen zellengerecht zeichnen: Farbbereiche an den 2 × 3-Zellen ausrichten, Gegenstände als eine Farbe mit schwarzen Lücken (Paketschnur, Kistenfugen, Fassreifen) statt mit zweiter Farbe, Figuren zeilenweise einfarbig (Mütze, Kopf, Schal, Weste, Beine je eine Zeichenzeile).",
+  "Abstandsmaß anpassen: Eine falsche bunte Farbe kostet mehr als eine schwarze Lücke; sonst setzt die DP rote oder gelbe Splitter, weil Schwarz im Oklab-Abstand weit von allen Farben liegt.",
+  "Farbtasten und Seitennummern sind eine fertige Auswahl-Oberfläche für ein Textadventure; Kopfzeile mit getippter Nummer und rollender Suche gibt Rückmeldung ohne zusätzliche Grafik. Fastext-Links stehen auch in der TTI-Datei.",
+  "Hold Graphics lohnt sich: Die DP setzt Hold in 11 der 17 Bildzeilen der Grundseite (Zeilen 4, 6–9, 11–14, 16 und 18), damit Steuerzellen das letzte Mosaik wiederholen statt eine Lücke zu zeigen (Turmränder, Masten, Wolkenkanten, Kaikante neben der Laterne).",
+  "Gleiche Farbe spart Steuerzeichen: Der Grußarm ist ein weißer Hemdärmel neben dem weißen Gesicht und braucht keinen Code; ein grüner Arm hätte dort eine Zelle Lücke gekostet.",
+  "Die Laterne flackert über ein festgelegtes Byte (Mosaikfarbe vor dem Glas); das ist die billigste Videotext-Animation und braucht keine Neukodierung.",
+  "Bedstead (CC0) liefert die SAA5050-Glyphen samt deutschem Nationalsatz; auf ein festes Punktraster gebracht (3 × 3 Bildpunkte je Punkt) und bei 50 % binarisiert, in drei Fassungen für doppelte Höhe. So bleibt der Shader trivial und die Schrift hat nur Vorder- und Hintergrundfarbe. Nicht ganzzahlige Punktbreiten (20 / 6) beim Binarisieren vermeiden, sonst werden Striche ungleich breit.",
+  "Hinweis KI (geprüft an 3 Bildern): Ein 8-Farben-Prompt mit Hex-Liste und „sky as horizontal colour bands“ liefert einen brauchbaren Farbplan, aber keine Mosaikgrafik; besser als Layout-Skizze nutzen und die Vorlage selbst setzen.",
+  "Farbwechsel einer Figur an den Zeilenrand legen: Das Paket der Vorderansicht sitzt links außen in der Westenzeile; der Gelb-Code ersetzt den Code, der vor der Figur ohnehin nötig ist, und nur der Wechsel Gelb → Grün kostet eine Zelle (mit Hold als Wiederholung des Pakets statt als Lücke).",
+  "Effekte über Objekten an Zellenzeilen ausrichten: Endet der Schornstein mit einer vollen Zellenzeile (Topf), kann der Rauch direkt darüber beginnen, ohne dass eine Zelle drei Farben braucht. Rauch liest sich erst als Kette ab der Mündung, die nach oben wächst.",
+  "Posenübergänge mitmessen, nicht nur den Laufzyklus: Tür → erstes Laufbild, letztes Laufbild → Stehen, Stehen → Vorderansicht. Ein Laufbild, das nur den vorderen Fuß hebt, ist ein sauberer Start ohne Vorschub."
+ ],
+ "assets": [
+  {
+   "file": "assets/raw/bg_a.png",
+   "kind": "background",
+   "made_with": "agy (Gemini-Bildmodell); Vorlage für Farbplan und Leuchtturm",
+   "prompt": "assets/raw/bg_a.json"
+  },
+  {
+   "file": "assets/raw/bg_b.png",
+   "kind": "background",
+   "made_with": "agy (Gemini-Bildmodell); zweite Fassung, nicht verwendet",
+   "prompt": "assets/raw/bg_b.json"
+  },
+  {
+   "file": "assets/raw/badger_ai.png",
+   "kind": "sprite-sheet",
+   "made_with": "agy (Gemini-Bildmodell), Referenz shared/badger/master_sheet.png; Versuch, nicht verwendet",
+   "prompt": "assets/raw/badger_ai.json"
+  },
+  {
+   "file": "assets/ki_automatisch.png",
+   "kind": "comparison",
+   "made_with": "scripts/ai_convert.py: bg_a.png automatisch auf 80 × 57 Punkte und durch die Regel-DP (links Raster, rechts Seite); verworfen"
+  },
+  {
+   "file": "assets/scene_target.png",
+   "kind": "background",
+   "made_with": "scripts/scene.py: Vorlage 80 × 57 Mosaikpunkte in 8 Farben (Code, PIL-Formen); Rauchphase 0"
+  },
+  {
+   "file": "assets/page_preview.png",
+   "kind": "background",
+   "made_with": "Grundseite (Python-Decoder und -Renderer), Dachs in der Tür"
+  },
+  {
+   "file": "assets/hafen.tti",
+   "kind": "data",
+   "made_with": "scripts/tti.py: Grundseite als TTI-Datei mit Fastext-Links"
+  },
+  {
+   "file": "scripts/badger.txt",
+   "kind": "sprite-sheet",
+   "made_with": "von Hand gesetzte Dachsbilder (4 Laufen, 2 Stehen, 2 Vorderansicht, 2 Gruß), 11 × 15 Mosaikpunkte, Vorderansichten 12 × 15 mit Paket links"
+  },
+  {
+   "file": "assets/badger_frames.png",
+   "kind": "sprite-sheet",
+   "made_with": "scripts/build_stream.py: alle 28 kodierten Dachsbilder im Kai (Zeilen 14–19)"
+  },
+  {
+   "file": "assets/badger_ki_vs_hand.png",
+   "kind": "comparison",
+   "made_with": "scripts/badger_ai_versuch.py: oben KI-Figur automatisch auf 11 × 15, unten Handfassung, beide durch die Regel-DP"
+  },
+  {
+   "file": "demo/data/stream.json",
+   "kind": "data",
+   "made_with": "scripts/build_stream.py: Grundseite und Zeilen-Updates (Himmel, Wasser, Dachs), Laterne, Kopfzeile, Flash-Takt"
+  },
+  {
+   "file": "demo/fonts/g0_atlas.png",
+   "kind": "font",
+   "made_with": "scripts/build_atlas.py aus Bedstead 3.261: 96 Zeichen (deutscher G0-Satz) × normal/oben/unten, 20 × 28, binär auf Punktraster 3 × 3 Bildpunkte je SAA5050-Punkt"
+  },
+  {
+   "file": "assets/charset.png",
+   "kind": "font",
+   "made_with": "Vorschau des Glyphenatlas (×2, gelb auf blau)"
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Bedstead 3.261 (Ben Harris u. a.), Glyphenatlas demo/fonts/g0_atlas.png daraus abgeleitet",
+   "license": "CC0-1.0 (Programm, neue Glyphen und Schrift laut bedstead.c und COPYING); die SAA5050-Grundformen gehören laut Quelltext Mullards Nachfolgern, ihre Nutzung ist nach Section 55 des UK Copyright, Designs and Patents Act 1988 erlaubt (Angabe des Autors, nicht juristisch geprüft)",
+   "source": "https://bjh21.me.uk/bedstead/ (bedstead-3.261.zip; Lizenztext demo/fonts/COPYING-Bedstead.txt)"
+  },
+  {
+   "item": "Hintergrund-Vorlagen und Figurenversuch",
+   "license": "eigene KI-Bilder (agy, Gemini-Bildmodell)",
+   "source": "assets/raw/"
+  },
+  {
+   "item": "Figurenblatt Dachs-Kurier (Referenz für Kostüm und Proportionen)",
+   "license": "eigenes Motiv des Katalogs",
+   "source": "shared/badger/master_sheet.png"
+  },
+  {
+   "item": "Vorlage, Dachsbilder, Decoder, Shader, Skripte",
+   "license": "eigener Code und eigene Mosaikpunkte; MAME-Quelltext nur für die Blinkzeit gelesen, nichts übernommen",
+   "source": "styles/videotext/"
+  }
+ ],
+ "image_generations": 3,
+ "tool_issues": [],
+ "status": "done"
+}

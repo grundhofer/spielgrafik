@@ -1,0 +1,6 @@
+Schrift „font8“ (8x8-Bitmapschrift der Textbox dieses Eintrags)
+
+Eigene Zeichnung für den Katalogeintrag gameboy (Glyphen als Text in scripts/font8.py,
+Vorschau assets/font_tiles.png). Die Demo nutzt die Glyphen als Kacheldaten aus rom/rom.json.
+
+Lizenz: CC0 1.0 Universal (gemeinfrei), https://creativecommons.org/publicdomain/zero/1.0/

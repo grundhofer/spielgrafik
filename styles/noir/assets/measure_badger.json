@@ -1,0 +1,4970 @@
+{
+ "soles": [
+  637,
+  644,
+  645
+ ],
+ "worst_stance_shift": 1,
+ "changes": [
+  {
+   "i": 8,
+   "t": 0.267,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 0,
+   "contact_px": [
+    0,
+    5
+   ],
+   "same_at_0": 0,
+   "foot_shift": 0,
+   "iou": 0.04,
+   "contact_prev": [],
+   "contact": [
+    [
+     0,
+     2
+    ]
+   ],
+   "end_moves": [],
+   "sole": 644,
+   "head": 492,
+   "head_prev": 502
+  },
+  {
+   "i": 9,
+   "t": 0.3,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 5,
+   "contact_px": [
+    5,
+    5
+   ],
+   "same_at_0": 5,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     0,
+     2
+    ]
+   ],
+   "contact": [
+    [
+     0,
+     2
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 644,
+   "head": 492,
+   "head_prev": 492
+  },
+  {
+   "i": 10,
+   "t": 0.333,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 5,
+   "contact_px": [
+    5,
+    8
+   ],
+   "same_at_0": 5,
+   "foot_shift": 1,
+   "iou": 0.647,
+   "contact_prev": [
+    [
+     0,
+     2
+    ]
+   ],
+   "contact": [
+    [
+     0,
+     4
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     2
+    ]
+   ],
+   "sole": 644,
+   "head": 470,
+   "head_prev": 492
+  },
+  {
+   "i": 11,
+   "t": 0.367,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 8,
+   "contact_px": [
+    8,
+    8
+   ],
+   "same_at_0": 8,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     0,
+     4
+    ]
+   ],
+   "contact": [
+    [
+     0,
+     4
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 644,
+   "head": 470,
+   "head_prev": 470
+  },
+  {
+   "i": 12,
+   "t": 0.4,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 8,
+   "contact_px": [
+    8,
+    8
+   ],
+   "same_at_0": 8,
+   "foot_shift": 0,
+   "iou": 0.941,
+   "contact_prev": [
+    [
+     0,
+     4
+    ]
+   ],
+   "contact": [
+    [
+     0,
+     4
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 644,
+   "head": 467,
+   "head_prev": 470
+  },
+  {
+   "i": 14,
+   "t": 0.467,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 8,
+   "contact_px": [
+    8,
+    26
+   ],
+   "same_at_0": 8,
+   "foot_shift": 7,
+   "iou": 0.118,
+   "contact_prev": [
+    [
+     0,
+     4
+    ]
+   ],
+   "contact": [
+    [
+     0,
+     14
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     10
+    ]
+   ],
+   "sole": 645,
+   "head": 469,
+   "head_prev": 467
+  },
+  {
+   "i": 16,
+   "t": 0.533,
+   "kind": "Kontaktwechsel",
+   "stance_shift": 5,
+   "stance_px": 26,
+   "contact_px": [
+    26,
+    104
+   ],
+   "same_at_0": 20,
+   "foot_shift": 0,
+   "iou": 0.631,
+   "contact_prev": [
+    [
+     0,
+     14
+    ]
+   ],
+   "contact": [
+    [
+     1,
+     39
+    ]
+   ],
+   "end_moves": [
+    [
+     1,
+     25
+    ]
+   ],
+   "sole": 645,
+   "head": 468,
+   "head_prev": 469
+  },
+  {
+   "i": 18,
+   "t": 0.6,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 102,
+   "contact_px": [
+    104,
+    104
+   ],
+   "same_at_0": 102,
+   "foot_shift": 1,
+   "iou": 0.944,
+   "contact_prev": [
+    [
+     1,
+     39
+    ]
+   ],
+   "contact": [
+    [
+     3,
+     39
+    ]
+   ],
+   "end_moves": [
+    [
+     2,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 467,
+   "head_prev": 468
+  },
+  {
+   "i": 20,
+   "t": 0.667,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 104,
+   "contact_px": [
+    104,
+    105
+   ],
+   "same_at_0": 104,
+   "foot_shift": 0,
+   "iou": 0.982,
+   "contact_prev": [
+    [
+     3,
+     39
+    ]
+   ],
+   "contact": [
+    [
+     3,
+     40
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     1
+    ]
+   ],
+   "sole": 645,
+   "head": 468,
+   "head_prev": 467
+  },
+  {
+   "i": 22,
+   "t": 0.733,
+   "kind": "Kontaktwechsel",
+   "stance_shift": 6,
+   "stance_px": 52,
+   "contact_px": [
+    105,
+    64
+   ],
+   "same_at_0": 37,
+   "foot_shift": 14,
+   "iou": 0.553,
+   "contact_prev": [
+    [
+     3,
+     40
+    ]
+   ],
+   "contact": [
+    [
+     18,
+     53
+    ]
+   ],
+   "end_moves": [
+    [
+     15,
+     13
+    ]
+   ],
+   "sole": 645,
+   "head": 467,
+   "head_prev": 468
+  },
+  {
+   "i": 24,
+   "t": 0.8,
+   "kind": "Kontaktwechsel",
+   "stance_shift": 6,
+   "stance_px": 38,
+   "contact_px": [
+    64,
+    95
+   ],
+   "same_at_0": 23,
+   "foot_shift": 14,
+   "iou": 0.705,
+   "contact_prev": [
+    [
+     18,
+     53
+    ]
+   ],
+   "contact": [
+    [
+     40,
+     74
+    ]
+   ],
+   "end_moves": [
+    [
+     22,
+     21
+    ]
+   ],
+   "sole": 645,
+   "head": 466,
+   "head_prev": 467
+  },
+  {
+   "i": 26,
+   "t": 0.867,
+   "kind": "Stand",
+   "stance_shift": 1,
+   "stance_px": 94,
+   "contact_px": [
+    95,
+    98
+   ],
+   "same_at_0": 93,
+   "foot_shift": 2,
+   "iou": 0.766,
+   "contact_prev": [
+    [
+     40,
+     74
+    ]
+   ],
+   "contact": [
+    [
+     40,
+     76
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     2
+    ]
+   ],
+   "sole": 645,
+   "head": 466,
+   "head_prev": 466
+  },
+  {
+   "i": 28,
+   "t": 0.933,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 96,
+   "contact_px": [
+    98,
+    98
+   ],
+   "same_at_0": 96,
+   "foot_shift": -1,
+   "iou": 0.969,
+   "contact_prev": [
+    [
+     40,
+     76
+    ]
+   ],
+   "contact": [
+    [
+     39,
+     76
+    ]
+   ],
+   "end_moves": [
+    [
+     -1,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 467,
+   "head_prev": 466
+  },
+  {
+   "i": 30,
+   "t": 1.0,
+   "kind": "Kontaktwechsel",
+   "stance_shift": 6,
+   "stance_px": 55,
+   "contact_px": [
+    98,
+    60
+   ],
+   "same_at_0": 42,
+   "foot_shift": 13,
+   "iou": 0.604,
+   "contact_prev": [
+    [
+     39,
+     76
+    ]
+   ],
+   "contact": [
+    [
+     52,
+     86
+    ]
+   ],
+   "end_moves": [
+    [
+     13,
+     10
+    ]
+   ],
+   "sole": 645,
+   "head": 469,
+   "head_prev": 467
+  },
+  {
+   "i": 32,
+   "t": 1.067,
+   "kind": "Kontaktwechsel",
+   "stance_shift": 6,
+   "stance_px": 34,
+   "contact_px": [
+    60,
+    104
+   ],
+   "same_at_0": 20,
+   "foot_shift": 14,
+   "iou": 0.685,
+   "contact_prev": [
+    [
+     52,
+     86
+    ]
+   ],
+   "contact": [
+    [
+     73,
+     111
+    ]
+   ],
+   "end_moves": [
+    [
+     21,
+     25
+    ]
+   ],
+   "sole": 645,
+   "head": 468,
+   "head_prev": 469
+  },
+  {
+   "i": 34,
+   "t": 1.133,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 102,
+   "contact_px": [
+    104,
+    104
+   ],
+   "same_at_0": 102,
+   "foot_shift": 1,
+   "iou": 0.753,
+   "contact_prev": [
+    [
+     73,
+     111
+    ]
+   ],
+   "contact": [
+    [
+     75,
+     111
+    ]
+   ],
+   "end_moves": [
+    [
+     2,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 467,
+   "head_prev": 468
+  },
+  {
+   "i": 35,
+   "t": 1.167,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 104,
+   "contact_px": [
+    104,
+    104
+   ],
+   "same_at_0": 104,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     75,
+     111
+    ]
+   ],
+   "contact": [
+    [
+     75,
+     111
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 467,
+   "head_prev": 467
+  },
+  {
+   "i": 36,
+   "t": 1.2,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 104,
+   "contact_px": [
+    104,
+    105
+   ],
+   "same_at_0": 104,
+   "foot_shift": 0,
+   "iou": 0.982,
+   "contact_prev": [
+    [
+     75,
+     111
+    ]
+   ],
+   "contact": [
+    [
+     75,
+     112
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     1
+    ]
+   ],
+   "sole": 645,
+   "head": 468,
+   "head_prev": 467
+  },
+  {
+   "i": 37,
+   "t": 1.233,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 105,
+   "contact_px": [
+    105,
+    105
+   ],
+   "same_at_0": 105,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     75,
+     112
+    ]
+   ],
+   "contact": [
+    [
+     75,
+     112
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 468,
+   "head_prev": 468
+  },
+  {
+   "i": 38,
+   "t": 1.267,
+   "kind": "Kontaktwechsel",
+   "stance_shift": 6,
+   "stance_px": 52,
+   "contact_px": [
+    105,
+    64
+   ],
+   "same_at_0": 37,
+   "foot_shift": 14,
+   "iou": 0.553,
+   "contact_prev": [
+    [
+     75,
+     112
+    ]
+   ],
+   "contact": [
+    [
+     90,
+     125
+    ]
+   ],
+   "end_moves": [
+    [
+     15,
+     13
+    ]
+   ],
+   "sole": 645,
+   "head": 467,
+   "head_prev": 468
+  },
+  {
+   "i": 40,
+   "t": 1.333,
+   "kind": "Kontaktwechsel",
+   "stance_shift": 6,
+   "stance_px": 38,
+   "contact_px": [
+    64,
+    95
+   ],
+   "same_at_0": 23,
+   "foot_shift": 14,
+   "iou": 0.705,
+   "contact_prev": [
+    [
+     90,
+     125
+    ]
+   ],
+   "contact": [
+    [
+     112,
+     146
+    ]
+   ],
+   "end_moves": [
+    [
+     22,
+     21
+    ]
+   ],
+   "sole": 645,
+   "head": 466,
+   "head_prev": 467
+  },
+  {
+   "i": 41,
+   "t": 1.367,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 95,
+   "contact_px": [
+    95,
+    95
+   ],
+   "same_at_0": 95,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     112,
+     146
+    ]
+   ],
+   "contact": [
+    [
+     112,
+     146
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 466,
+   "head_prev": 466
+  },
+  {
+   "i": 42,
+   "t": 1.4,
+   "kind": "Stand",
+   "stance_shift": 1,
+   "stance_px": 94,
+   "contact_px": [
+    95,
+    98
+   ],
+   "same_at_0": 93,
+   "foot_shift": 2,
+   "iou": 0.766,
+   "contact_prev": [
+    [
+     112,
+     146
+    ]
+   ],
+   "contact": [
+    [
+     112,
+     148
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     2
+    ]
+   ],
+   "sole": 645,
+   "head": 466,
+   "head_prev": 466
+  },
+  {
+   "i": 43,
+   "t": 1.433,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 98,
+   "contact_px": [
+    98,
+    98
+   ],
+   "same_at_0": 98,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     112,
+     148
+    ]
+   ],
+   "contact": [
+    [
+     112,
+     148
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 466,
+   "head_prev": 466
+  },
+  {
+   "i": 44,
+   "t": 1.467,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 96,
+   "contact_px": [
+    98,
+    98
+   ],
+   "same_at_0": 96,
+   "foot_shift": -1,
+   "iou": 0.969,
+   "contact_prev": [
+    [
+     112,
+     148
+    ]
+   ],
+   "contact": [
+    [
+     111,
+     148
+    ]
+   ],
+   "end_moves": [
+    [
+     -1,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 467,
+   "head_prev": 466
+  },
+  {
+   "i": 46,
+   "t": 1.533,
+   "kind": "Kontaktwechsel",
+   "stance_shift": 6,
+   "stance_px": 55,
+   "contact_px": [
+    98,
+    60
+   ],
+   "same_at_0": 42,
+   "foot_shift": 13,
+   "iou": 0.604,
+   "contact_prev": [
+    [
+     111,
+     148
+    ]
+   ],
+   "contact": [
+    [
+     124,
+     158
+    ]
+   ],
+   "end_moves": [
+    [
+     13,
+     10
+    ]
+   ],
+   "sole": 645,
+   "head": 469,
+   "head_prev": 467
+  },
+  {
+   "i": 47,
+   "t": 1.567,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 60,
+   "contact_px": [
+    60,
+    60
+   ],
+   "same_at_0": 60,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     124,
+     158
+    ]
+   ],
+   "contact": [
+    [
+     124,
+     158
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 469,
+   "head_prev": 469
+  },
+  {
+   "i": 48,
+   "t": 1.6,
+   "kind": "Kontaktwechsel",
+   "stance_shift": 6,
+   "stance_px": 34,
+   "contact_px": [
+    60,
+    104
+   ],
+   "same_at_0": 20,
+   "foot_shift": 14,
+   "iou": 0.685,
+   "contact_prev": [
+    [
+     124,
+     158
+    ]
+   ],
+   "contact": [
+    [
+     145,
+     183
+    ]
+   ],
+   "end_moves": [
+    [
+     21,
+     25
+    ]
+   ],
+   "sole": 645,
+   "head": 468,
+   "head_prev": 469
+  },
+  {
+   "i": 50,
+   "t": 1.667,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 102,
+   "contact_px": [
+    104,
+    104
+   ],
+   "same_at_0": 102,
+   "foot_shift": 1,
+   "iou": 0.752,
+   "contact_prev": [
+    [
+     145,
+     183
+    ]
+   ],
+   "contact": [
+    [
+     147,
+     183
+    ]
+   ],
+   "end_moves": [
+    [
+     2,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 467,
+   "head_prev": 468
+  },
+  {
+   "i": 51,
+   "t": 1.7,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 104,
+   "contact_px": [
+    104,
+    104
+   ],
+   "same_at_0": 104,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     147,
+     183
+    ]
+   ],
+   "contact": [
+    [
+     147,
+     183
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 467,
+   "head_prev": 467
+  },
+  {
+   "i": 52,
+   "t": 1.733,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 104,
+   "contact_px": [
+    104,
+    105
+   ],
+   "same_at_0": 104,
+   "foot_shift": 0,
+   "iou": 0.984,
+   "contact_prev": [
+    [
+     147,
+     183
+    ]
+   ],
+   "contact": [
+    [
+     147,
+     184
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     1
+    ]
+   ],
+   "sole": 645,
+   "head": 468,
+   "head_prev": 467
+  },
+  {
+   "i": 53,
+   "t": 1.767,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 105,
+   "contact_px": [
+    105,
+    105
+   ],
+   "same_at_0": 105,
+   "foot_shift": 0,
+   "iou": 0.997,
+   "contact_prev": [
+    [
+     147,
+     184
+    ]
+   ],
+   "contact": [
+    [
+     147,
+     184
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 468,
+   "head_prev": 468
+  },
+  {
+   "i": 54,
+   "t": 1.8,
+   "kind": "Kontaktwechsel",
+   "stance_shift": 6,
+   "stance_px": 52,
+   "contact_px": [
+    105,
+    64
+   ],
+   "same_at_0": 37,
+   "foot_shift": 14,
+   "iou": 0.552,
+   "contact_prev": [
+    [
+     147,
+     184
+    ]
+   ],
+   "contact": [
+    [
+     162,
+     197
+    ]
+   ],
+   "end_moves": [
+    [
+     15,
+     13
+    ]
+   ],
+   "sole": 645,
+   "head": 467,
+   "head_prev": 468
+  },
+  {
+   "i": 56,
+   "t": 1.867,
+   "kind": "Kontaktwechsel",
+   "stance_shift": 6,
+   "stance_px": 39,
+   "contact_px": [
+    64,
+    96
+   ],
+   "same_at_0": 24,
+   "foot_shift": 14,
+   "iou": 0.706,
+   "contact_prev": [
+    [
+     162,
+     197
+    ]
+   ],
+   "contact": [
+    [
+     183,
+     218
+    ]
+   ],
+   "end_moves": [
+    [
+     21,
+     21
+    ]
+   ],
+   "sole": 645,
+   "head": 466,
+   "head_prev": 467
+  },
+  {
+   "i": 58,
+   "t": 1.933,
+   "kind": "Kontaktwechsel",
+   "stance_shift": 2,
+   "stance_px": 96,
+   "contact_px": [
+    96,
+    99
+   ],
+   "same_at_0": 93,
+   "foot_shift": 2,
+   "iou": 0.77,
+   "contact_prev": [
+    [
+     183,
+     218
+    ]
+   ],
+   "contact": [
+    [
+     184,
+     220
+    ]
+   ],
+   "end_moves": [
+    [
+     1,
+     2
+    ]
+   ],
+   "sole": 645,
+   "head": 466,
+   "head_prev": 466
+  },
+  {
+   "i": 59,
+   "t": 1.967,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 99,
+   "contact_px": [
+    99,
+    99
+   ],
+   "same_at_0": 99,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     184,
+     220
+    ]
+   ],
+   "contact": [
+    [
+     184,
+     220
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 466,
+   "head_prev": 466
+  },
+  {
+   "i": 60,
+   "t": 2.0,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 97,
+   "contact_px": [
+    99,
+    99
+   ],
+   "same_at_0": 97,
+   "foot_shift": -1,
+   "iou": 0.977,
+   "contact_prev": [
+    [
+     184,
+     220
+    ]
+   ],
+   "contact": [
+    [
+     183,
+     220
+    ]
+   ],
+   "end_moves": [
+    [
+     -1,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 467,
+   "head_prev": 466
+  },
+  {
+   "i": 61,
+   "t": 2.033,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 99,
+   "contact_px": [
+    99,
+    99
+   ],
+   "same_at_0": 99,
+   "foot_shift": 0,
+   "iou": 0.997,
+   "contact_prev": [
+    [
+     183,
+     220
+    ]
+   ],
+   "contact": [
+    [
+     183,
+     220
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 467,
+   "head_prev": 467
+  },
+  {
+   "i": 62,
+   "t": 2.067,
+   "kind": "Kontaktwechsel",
+   "stance_shift": 6,
+   "stance_px": 55,
+   "contact_px": [
+    99,
+    60
+   ],
+   "same_at_0": 42,
+   "foot_shift": 13,
+   "iou": 0.602,
+   "contact_prev": [
+    [
+     183,
+     220
+    ]
+   ],
+   "contact": [
+    [
+     196,
+     230
+    ]
+   ],
+   "end_moves": [
+    [
+     13,
+     10
+    ]
+   ],
+   "sole": 645,
+   "head": 469,
+   "head_prev": 467
+  },
+  {
+   "i": 64,
+   "t": 2.133,
+   "kind": "Kontaktwechsel",
+   "stance_shift": 6,
+   "stance_px": 34,
+   "contact_px": [
+    60,
+    104
+   ],
+   "same_at_0": 20,
+   "foot_shift": 14,
+   "iou": 0.683,
+   "contact_prev": [
+    [
+     196,
+     230
+    ]
+   ],
+   "contact": [
+    [
+     217,
+     255
+    ]
+   ],
+   "end_moves": [
+    [
+     21,
+     25
+    ]
+   ],
+   "sole": 645,
+   "head": 468,
+   "head_prev": 469
+  },
+  {
+   "i": 66,
+   "t": 2.2,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 102,
+   "contact_px": [
+    104,
+    104
+   ],
+   "same_at_0": 102,
+   "foot_shift": 1,
+   "iou": 0.749,
+   "contact_prev": [
+    [
+     217,
+     255
+    ]
+   ],
+   "contact": [
+    [
+     219,
+     255
+    ]
+   ],
+   "end_moves": [
+    [
+     2,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 467,
+   "head_prev": 468
+  },
+  {
+   "i": 68,
+   "t": 2.267,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 104,
+   "contact_px": [
+    104,
+    105
+   ],
+   "same_at_0": 104,
+   "foot_shift": 0,
+   "iou": 0.982,
+   "contact_prev": [
+    [
+     219,
+     255
+    ]
+   ],
+   "contact": [
+    [
+     219,
+     256
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     1
+    ]
+   ],
+   "sole": 645,
+   "head": 468,
+   "head_prev": 467
+  },
+  {
+   "i": 70,
+   "t": 2.333,
+   "kind": "Kontaktwechsel",
+   "stance_shift": 6,
+   "stance_px": 52,
+   "contact_px": [
+    105,
+    64
+   ],
+   "same_at_0": 37,
+   "foot_shift": 14,
+   "iou": 0.552,
+   "contact_prev": [
+    [
+     219,
+     256
+    ]
+   ],
+   "contact": [
+    [
+     234,
+     269
+    ]
+   ],
+   "end_moves": [
+    [
+     15,
+     13
+    ]
+   ],
+   "sole": 645,
+   "head": 467,
+   "head_prev": 468
+  },
+  {
+   "i": 71,
+   "t": 2.367,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 64,
+   "contact_px": [
+    64,
+    64
+   ],
+   "same_at_0": 64,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     234,
+     269
+    ]
+   ],
+   "contact": [
+    [
+     234,
+     269
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 467,
+   "head_prev": 467
+  },
+  {
+   "i": 72,
+   "t": 2.4,
+   "kind": "Kontaktwechsel",
+   "stance_shift": 6,
+   "stance_px": 39,
+   "contact_px": [
+    64,
+    96
+   ],
+   "same_at_0": 24,
+   "foot_shift": 14,
+   "iou": 0.71,
+   "contact_prev": [
+    [
+     234,
+     269
+    ]
+   ],
+   "contact": [
+    [
+     255,
+     290
+    ]
+   ],
+   "end_moves": [
+    [
+     21,
+     21
+    ]
+   ],
+   "sole": 645,
+   "head": 466,
+   "head_prev": 467
+  },
+  {
+   "i": 74,
+   "t": 2.467,
+   "kind": "Kontaktwechsel",
+   "stance_shift": 2,
+   "stance_px": 96,
+   "contact_px": [
+    96,
+    99
+   ],
+   "same_at_0": 93,
+   "foot_shift": 2,
+   "iou": 0.767,
+   "contact_prev": [
+    [
+     255,
+     290
+    ]
+   ],
+   "contact": [
+    [
+     256,
+     292
+    ]
+   ],
+   "end_moves": [
+    [
+     1,
+     2
+    ]
+   ],
+   "sole": 645,
+   "head": 466,
+   "head_prev": 466
+  },
+  {
+   "i": 76,
+   "t": 2.533,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 97,
+   "contact_px": [
+    99,
+    99
+   ],
+   "same_at_0": 97,
+   "foot_shift": -1,
+   "iou": 0.974,
+   "contact_prev": [
+    [
+     256,
+     292
+    ]
+   ],
+   "contact": [
+    [
+     255,
+     292
+    ]
+   ],
+   "end_moves": [
+    [
+     -1,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 467,
+   "head_prev": 466
+  },
+  {
+   "i": 77,
+   "t": 2.567,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 99,
+   "contact_px": [
+    99,
+    99
+   ],
+   "same_at_0": 99,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     255,
+     292
+    ]
+   ],
+   "contact": [
+    [
+     255,
+     292
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 467,
+   "head_prev": 467
+  },
+  {
+   "i": 78,
+   "t": 2.6,
+   "kind": "Kontaktwechsel",
+   "stance_shift": 6,
+   "stance_px": 55,
+   "contact_px": [
+    99,
+    60
+   ],
+   "same_at_0": 42,
+   "foot_shift": 13,
+   "iou": 0.601,
+   "contact_prev": [
+    [
+     255,
+     292
+    ]
+   ],
+   "contact": [
+    [
+     268,
+     302
+    ]
+   ],
+   "end_moves": [
+    [
+     13,
+     10
+    ]
+   ],
+   "sole": 645,
+   "head": 469,
+   "head_prev": 467
+  },
+  {
+   "i": 80,
+   "t": 2.667,
+   "kind": "Kontaktwechsel",
+   "stance_shift": 6,
+   "stance_px": 34,
+   "contact_px": [
+    60,
+    104
+   ],
+   "same_at_0": 20,
+   "foot_shift": 14,
+   "iou": 0.683,
+   "contact_prev": [
+    [
+     268,
+     302
+    ]
+   ],
+   "contact": [
+    [
+     289,
+     327
+    ]
+   ],
+   "end_moves": [
+    [
+     21,
+     25
+    ]
+   ],
+   "sole": 645,
+   "head": 468,
+   "head_prev": 469
+  },
+  {
+   "i": 81,
+   "t": 2.7,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 104,
+   "contact_px": [
+    104,
+    104
+   ],
+   "same_at_0": 104,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     289,
+     327
+    ]
+   ],
+   "contact": [
+    [
+     289,
+     327
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 468,
+   "head_prev": 468
+  },
+  {
+   "i": 82,
+   "t": 2.733,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 102,
+   "contact_px": [
+    104,
+    104
+   ],
+   "same_at_0": 102,
+   "foot_shift": 1,
+   "iou": 0.751,
+   "contact_prev": [
+    [
+     289,
+     327
+    ]
+   ],
+   "contact": [
+    [
+     291,
+     327
+    ]
+   ],
+   "end_moves": [
+    [
+     2,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 467,
+   "head_prev": 468
+  },
+  {
+   "i": 84,
+   "t": 2.8,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 101,
+   "contact_px": [
+    104,
+    102
+   ],
+   "same_at_0": 101,
+   "foot_shift": 0,
+   "iou": 0.939,
+   "contact_prev": [
+    [
+     291,
+     327
+    ]
+   ],
+   "contact": [
+    [
+     291,
+     328
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     1
+    ]
+   ],
+   "sole": 645,
+   "head": 465,
+   "head_prev": 467
+  },
+  {
+   "i": 87,
+   "t": 2.9,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 102,
+   "contact_px": [
+    102,
+    102
+   ],
+   "same_at_0": 102,
+   "foot_shift": 0,
+   "iou": 0.997,
+   "contact_prev": [
+    [
+     291,
+     328
+    ]
+   ],
+   "contact": [
+    [
+     291,
+     328
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 465,
+   "head_prev": 465
+  },
+  {
+   "i": 88,
+   "t": 2.933,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 102,
+   "contact_px": [
+    102,
+    102
+   ],
+   "same_at_0": 102,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     291,
+     328
+    ]
+   ],
+   "contact": [
+    [
+     291,
+     328
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 465,
+   "head_prev": 465
+  },
+  {
+   "i": 89,
+   "t": 2.967,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 102,
+   "contact_px": [
+    102,
+    102
+   ],
+   "same_at_0": 102,
+   "foot_shift": 0,
+   "iou": 0.997,
+   "contact_prev": [
+    [
+     291,
+     328
+    ]
+   ],
+   "contact": [
+    [
+     291,
+     328
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 465,
+   "head_prev": 465
+  },
+  {
+   "i": 91,
+   "t": 3.033,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 102,
+   "contact_px": [
+    102,
+    102
+   ],
+   "same_at_0": 102,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     291,
+     328
+    ]
+   ],
+   "contact": [
+    [
+     291,
+     328
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 465,
+   "head_prev": 465
+  },
+  {
+   "i": 92,
+   "t": 3.067,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 102,
+   "contact_px": [
+    102,
+    102
+   ],
+   "same_at_0": 102,
+   "foot_shift": 0,
+   "iou": 0.997,
+   "contact_prev": [
+    [
+     291,
+     328
+    ]
+   ],
+   "contact": [
+    [
+     291,
+     328
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 465,
+   "head_prev": 465
+  },
+  {
+   "i": 94,
+   "t": 3.133,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 102,
+   "contact_px": [
+    102,
+    102
+   ],
+   "same_at_0": 102,
+   "foot_shift": 0,
+   "iou": 0.997,
+   "contact_prev": [
+    [
+     291,
+     328
+    ]
+   ],
+   "contact": [
+    [
+     291,
+     328
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 465,
+   "head_prev": 465
+  },
+  {
+   "i": 96,
+   "t": 3.2,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 95,
+   "contact_px": [
+    102,
+    176
+   ],
+   "same_at_0": 95,
+   "foot_shift": -10,
+   "iou": 0.558,
+   "contact_prev": [
+    [
+     291,
+     328
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     -15,
+     13
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 465
+  },
+  {
+   "i": 97,
+   "t": 3.233,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 98,
+   "t": 3.267,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    177
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 0.999,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 99,
+   "t": 3.3,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    177,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 0.999,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 100,
+   "t": 3.333,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 101,
+   "t": 3.367,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 102,
+   "t": 3.4,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 103,
+   "t": 3.433,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    177
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 0.999,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 462
+  },
+  {
+   "i": 104,
+   "t": 3.467,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 177,
+   "contact_px": [
+    177,
+    177
+   ],
+   "same_at_0": 177,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 105,
+   "t": 3.5,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 177,
+   "contact_px": [
+    177,
+    177
+   ],
+   "same_at_0": 177,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 106,
+   "t": 3.533,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 177,
+   "contact_px": [
+    177,
+    177
+   ],
+   "same_at_0": 177,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 107,
+   "t": 3.567,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    177,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 0.999,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 108,
+   "t": 3.6,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 109,
+   "t": 3.633,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 110,
+   "t": 3.667,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 111,
+   "t": 3.7,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 112,
+   "t": 3.733,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 113,
+   "t": 3.767,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 114,
+   "t": 3.8,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 115,
+   "t": 3.833,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 116,
+   "t": 3.867,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 117,
+   "t": 3.9,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 118,
+   "t": 3.933,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    177
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 0.999,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 119,
+   "t": 3.967,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 177,
+   "contact_px": [
+    177,
+    177
+   ],
+   "same_at_0": 177,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 120,
+   "t": 4.0,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 177,
+   "contact_px": [
+    177,
+    177
+   ],
+   "same_at_0": 177,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 121,
+   "t": 4.033,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    177,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 0.999,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 122,
+   "t": 4.067,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 461
+  },
+  {
+   "i": 123,
+   "t": 4.1,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 124,
+   "t": 4.133,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 125,
+   "t": 4.167,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 126,
+   "t": 4.2,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 127,
+   "t": 4.233,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 128,
+   "t": 4.267,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 129,
+   "t": 4.3,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 130,
+   "t": 4.333,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 131,
+   "t": 4.367,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 132,
+   "t": 4.4,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 133,
+   "t": 4.433,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 134,
+   "t": 4.467,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 135,
+   "t": 4.5,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 463,
+   "head_prev": 462
+  },
+  {
+   "i": 136,
+   "t": 4.533,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 463,
+   "head_prev": 463
+  },
+  {
+   "i": 137,
+   "t": 4.567,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 463,
+   "head_prev": 463
+  },
+  {
+   "i": 138,
+   "t": 4.6,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 463,
+   "head_prev": 463
+  },
+  {
+   "i": 139,
+   "t": 4.633,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 463,
+   "head_prev": 463
+  },
+  {
+   "i": 140,
+   "t": 4.667,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 463,
+   "head_prev": 463
+  },
+  {
+   "i": 141,
+   "t": 4.7,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 463,
+   "head_prev": 463
+  },
+  {
+   "i": 142,
+   "t": 4.733,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 463,
+   "head_prev": 463
+  },
+  {
+   "i": 143,
+   "t": 4.767,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 463,
+   "head_prev": 463
+  },
+  {
+   "i": 144,
+   "t": 4.8,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 463,
+   "head_prev": 463
+  },
+  {
+   "i": 145,
+   "t": 4.833,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 463,
+   "head_prev": 463
+  },
+  {
+   "i": 147,
+   "t": 4.9,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 463,
+   "head_prev": 463
+  },
+  {
+   "i": 148,
+   "t": 4.933,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 463,
+   "head_prev": 463
+  },
+  {
+   "i": 149,
+   "t": 4.967,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 463,
+   "head_prev": 463
+  },
+  {
+   "i": 150,
+   "t": 5.0,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 463,
+   "head_prev": 463
+  },
+  {
+   "i": 151,
+   "t": 5.033,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 463,
+   "head_prev": 463
+  },
+  {
+   "i": 152,
+   "t": 5.067,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 463,
+   "head_prev": 463
+  },
+  {
+   "i": 153,
+   "t": 5.1,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 463,
+   "head_prev": 463
+  },
+  {
+   "i": 154,
+   "t": 5.133,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 463,
+   "head_prev": 463
+  },
+  {
+   "i": 155,
+   "t": 5.167,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 463,
+   "head_prev": 463
+  },
+  {
+   "i": 156,
+   "t": 5.2,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 463
+  },
+  {
+   "i": 157,
+   "t": 5.233,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 158,
+   "t": 5.267,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 159,
+   "t": 5.3,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 160,
+   "t": 5.333,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 161,
+   "t": 5.367,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 162,
+   "t": 5.4,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 163,
+   "t": 5.433,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 164,
+   "t": 5.467,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    177
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 0.999,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 165,
+   "t": 5.5,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    177,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 0.999,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 166,
+   "t": 5.533,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 167,
+   "t": 5.567,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 168,
+   "t": 5.6,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 462,
+   "head_prev": 462
+  },
+  {
+   "i": 169,
+   "t": 5.633,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    177
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 0.999,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 462
+  },
+  {
+   "i": 170,
+   "t": 5.667,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 177,
+   "contact_px": [
+    177,
+    177
+   ],
+   "same_at_0": 177,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 171,
+   "t": 5.7,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 177,
+   "contact_px": [
+    177,
+    177
+   ],
+   "same_at_0": 177,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 172,
+   "t": 5.733,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 177,
+   "contact_px": [
+    177,
+    177
+   ],
+   "same_at_0": 177,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 173,
+   "t": 5.767,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    177,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 0.999,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 174,
+   "t": 5.8,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 175,
+   "t": 5.833,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 176,
+   "t": 5.867,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 177,
+   "t": 5.9,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 178,
+   "t": 5.933,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  },
+  {
+   "i": 179,
+   "t": 5.967,
+   "kind": "Stand",
+   "stance_shift": 0,
+   "stance_px": 176,
+   "contact_px": [
+    176,
+    176
+   ],
+   "same_at_0": 176,
+   "foot_shift": 0,
+   "iou": 1.0,
+   "contact_prev": [
+    [
+     276,
+     341
+    ]
+   ],
+   "contact": [
+    [
+     276,
+     341
+    ]
+   ],
+   "end_moves": [
+    [
+     0,
+     0
+    ]
+   ],
+   "sole": 645,
+   "head": 461,
+   "head_prev": 461
+  }
+ ]
+}

@@ -1,0 +1,214 @@
+{
+ "slug": "atari2600",
+ "name": "Zweite Konsolengeneration (Playfield-Blöcke)",
+ "family": "pixel",
+ "kind": "style",
+ "era": "1977–1984",
+ "summary": "Grafik eines Videochips ohne Bildspeicher: Das Programm setzt für jede der 192 Bildzeilen nur ein paar Register, und daraus entstehen grobe Playfield-Blöcke (40 je Zeile, 4 Pixel breit), waagrechte Farbbänder für Himmel und Meer und wenige 8 Pixel breite Figuren mit einer Farbe je Zeile. Die Demo bildet den Chip als Shader nach und schreibt die Zeilentabelle in GDScript wie ein Spielprogramm; was der Chip nicht kann, ist auch in der Demo nicht darstellbar (Ausnahme: das Textband).",
+ "references": [
+  "Adventure (Atari 1980)",
+  "Pitfall! (Activision 1982)",
+  "River Raid (Activision 1982)",
+  "Enduro (Activision 1983)",
+  "Combat (Atari 1977)",
+  "Superman (Atari 1979)",
+  "Raiders of the Lost Ark (Atari 1982)"
+ ],
+ "traits": [
+  "Bild 160×192 (NTSC), jedes Pixel doppelt so breit wie hoch (320×192, ×3 auf 960×576 im 1280×720-Bild); harte Pixel, keine Glättung",
+  "Nur die 128 Farben der NTSC-Palette (Werte aus Stella, gegen die Quelle geprüft); check_hw.py: keine fremden Farben in 8 geprüften Bildern",
+  "Je Szenenzeile höchstens 4 Farbregister sichtbar (Hintergrund, Playfield, Spieler 0, Spieler 1); auf rund 62 Zeilen je Bild wird die Playfield-Farbe in der Zeile umgeschrieben, dort stehen bis zu 5 Farben in einer Zeile",
+  "Hintergrund nur aus Playfield (40 Blöcke je 4 px, Doppelzeilen) und Hintergrundfarbe je Zeile: Himmel als Farbbänder von Schwarz über Blau, Violett und Rosa zu Orange, Meer mit einzelnen Abendlicht-Zeilen",
+  "Leuchtturm, Wolken, Felsnase, Häuschen und Kaimauer aus Playfield-Blöcken; die Lampe blinkt, der Strahl ist ein Kegel aus Blöcken (6 Zustände zu 12 Bildern, 2,4 s je Umdrehung)",
+  "Dachs = Spieler 0: 8 px breit, 22 Zeilen, eine Farbe je Zeile, dunkles Fell durchsichtig; 2 Laufbilder auf Dreien (10/s) mit 2 px Vorschub je Wechsel, der Standfuß bleibt stehen (probe.py: 28 Wechsel gemessen, alle ok); nach dem Halt Vorderansicht mit Atmen (alle 15 Bilder) und Wind im Schal (Vielfache von 5 Bildern), Fußzeile in 73 Stehbildern gleich",
+  "Spieler 1 als zwei Boote über NUSIZ-Kopien (32 px Abstand), die Masten sind die mitkopierte Missile 1; weiter unten zwei Fässer in einem doppelt breiten Bitmuster",
+  "Möwen aus den zwei Missiles; zwei Möwen in denselben Zeilen werden von Bild zu Bild abwechselnd gezeigt (Flackern, in der 30-fps-Aufnahme sichtbar); Sterne als Ball in zwei Sätzen ebenso",
+  "Objekte werden in Bändern wiederverwendet (Spieler 0: Rauch oben, Dachs unten; Missile 0: Möwe, Glitzern, Fenster; Missile 1: Möwe, Masten, Laterne mit Pfahl; Ball: Sterne, Paket); Sprünge über 7 px nur in Zeilen, in denen das Objekt unsichtbar ist (check_hw.py und HWSTAT: 0 Verstöße)",
+  "Schwarzer 8-px-Balken am linken Rand in allen Szenenzeilen (HMOVE in jeder Zeile), der Dachs kommt hinter ihm ins Bild",
+  "Weitere Umgebungsanimationen: Laterne flackert (Farbe wechselt nach 2–6 Bildern), Rauchsäule steigt (10 Zeilen/s), Brandung und Dünung (alle 5 Bilder), Glitzern, Boote schaukeln (24 Bilder)",
+  "Textband unten (Zeilen 136–191, 29 % des Bildes): eigene Blockschrift 3×5 in Großbuchstaben, je Glyphenzeile eine Farbe (Farbverlauf wie bei Punktanzeigen); Ort, zwei Zeilen Erzähltext mit Schreibmaschine, drei Auswahlpunkte mit Pfeil, Eingabezeile »> NIMM PAKET« mit blinkendem Block"
+ ],
+ "camera": "Seitenansicht wie eine Bühne, feste Kamera, ein Bildschirm",
+ "resolution": "160×192 (NTSC), Pixel 2:1 gestreckt auf 320×192, ×3; 128 Farben, höchstens 4 Farbregister je Zeile",
+ "pipeline": [
+  {
+   "step": "Vorlagen ansehen",
+   "tool": "shared/badger/master_sheet.png, shared/3d/preview_harbor_main.png, preview_badger_side.png",
+   "detail": "Nur als Lage- und Kostümvorlage angesehen (Häuschen links, Leuchtturm auf der Felsnase rechts, Boote in der Mitte, Laterne und Fässer rechts; Mütze, Streifengesicht, Schal, Paket). Nichts davon wurde verkleinert oder übernommen, weil der Chip keine Bitmaps kennt."
+  },
+  {
+   "step": "Palette",
+   "tool": "scripts/tia_ref.py",
+   "detail": "128 NTSC-Farben (Farbton × 8 Helligkeiten) wie im Emulator Stella; nach dem Bau mit src/common/PaletteHandler.cxx aus dem Stella-Repository verglichen: 0 Abweichungen. Auch als Hex-Liste für sprites.py --palette-hex (assets/ntsc_palette_hex.txt)."
+  },
+  {
+   "step": "Szene als Registertabelle",
+   "tool": "scripts/build_rom.py",
+   "detail": "Hintergrundfarbe je Zeile (Himmel, Horizont, Meer, Kai), Playfield-Blöcke je Zeile aus Rechtecken und ASCII-Stempeln (Leuchtturm, Wolken, Felsnase mit gezackter Kante, Häuschen mit Giebel, Tür als Lücke, Kaimauer im Verband), Playfield-Farbe je Zeile und, wo links und rechts verschiedene Dinge stehen, eine zweite Farbe ab einem Pixel auf dem 3-Pixel-Raster eines CPU-Takts. Dazu Plätze der Objekte (layout) und die Spielerbilder; alles nach demo/rom/rom.json."
+  },
+  {
+   "step": "Figuren und Requisiten pixeln",
+   "tool": "scripts/art.py (von Hand)",
+   "detail": "Dachs in rund 10 Entwürfen nebeneinander auf dem echten Hintergrund verglichen: Profil mit Mütze, weißem Stirnstreif, dunklem Augenstreif bis zur Nase, weißer Wange bis zur Schnauzenspitze, Schal, Paket nach vorn, Weste, schwarze Beine; Vorderansicht mit weißem Mittelstreif und durchsichtigen Augenstreifen. Beine der zwei Laufbilder so gezeichnet, dass bei 2 px Vorschub der Standfuß an derselben Stelle bleibt. Boot, Fässer in build_rom.py; Möwe, Rauch, Laterne, Glitzern entstehen im Kernel aus Missiles und Spieler 0."
+  },
+  {
+   "step": "Schrift",
+   "tool": "scripts/font35.py",
+   "detail": "Eigene Blockschrift 3×5 (CC0): Großbuchstaben, Ziffern, Satzzeichen, Ä/Ö/Ü mit Punkten in der Leerzeile darüber, M und W 5 px, N 4 px breit (in 3 px unlesbar); ß wird als SS geschrieben. Vorschub Breite + 1, Zeilenabstand 7."
+  },
+  {
+   "step": "Kernel und Chip in Godot",
+   "tool": "demo/scripts/main.gd, demo/shaders/tia.gdshader",
+   "detail": "main.gd setzt jedes Bild die Register aller 192 Zeilen (Animationen, Figuren, Text) und schätzt die nötigen Schreibzugriffe je Zeile; der Shader rechnet daraus Pixel wie der Chip (Playfield, Spieler mit NUSIZ und Spiegelung, Missiles, Ball, Vorrang, HMOVE-Balken)."
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/check_hw.py, scripts/probe.py, tools/capture.py",
+   "detail": "check_hw.py lässt Godot die Zeilentabelle von 8 Bildern ausgeben, prüft Farben je Zeile, Umsetzen von Objekten und Schreibzugriffe und rendert dieselbe Tabelle mit dem Python-Referenz-Renderer: 0 abweichende Pixel zum Godot-Bild. probe.py misst den Dachs (Fuß, Kopf) in einer Aufnahme, in der der Shader nur Spieler 0 zeigt. Forward+, Mobile und Compatibility: 180 von 180 Bildern bytegleich."
+  }
+ ],
+ "godot": [
+  "Viewport 320×192 (jedes Konsolenpixel 2 Godot-Pixel breit), stretch mode viewport, scale_mode integer, Standardfilter Nearest, Fenster 960×576; capture.py skaliert ×3 auf 1280×720",
+  "Szene = ein ColorRect mit shaders/tia.gdshader. Eingaben: Zeilentabelle 192×6 RGBA8 (je Zeile COLUBK, COLUPF, COLUP0, COLUP1, 40 Playfield-Bits, GRP0, GRP1, Flags, 5 Positionen, NUSIZ0/1, CTRLPF, zweite Playfield-Farbe und deren Startpixel), Palette 128×1, Textband-Bitmap 160×56 R8",
+  "Shader: Playfield-Block = x/4, Spieler mit 1–3 Kopien (16/32/64 px) oder 2-/4-facher Breite, Missiles 1/2/4/8 px mit den Kopien ihres Spielers, Ball 1–8 px in der Playfield-Farbe, Vorrang Spieler 0 > Spieler 1 > Playfield/Ball > Hintergrund, Score- und Vorrang-Bit von CTRLPF, HMOVE-Balken x < 8; Textzeilen lesen die Bitmap",
+  "main.gd ist das Spielprogramm: Grundwerte aus rom.json, dann Leuchtfeuer, Meer, Brandung, Sterne, Rauch, Möwen, Fenster/Glitzern, Boote, Laterne/Fässer, Paket, Dachs, Textband; danach Kernel-Rechnung und Übergabe per ImageTexture.update()",
+  "Kernel-Rechnung je Zeile (HWSTAT im Log, Werte je Bild in der Aufnahme): 116 von 136 Szenenzeilen mit asymmetrischem Playfield, 6 wiederholte Zeilen (Kaimauer), 0 gespiegelte, 14 ohne Playfield; rund 62 Zeilen mit umgeschriebener Playfield-Farbe; geschätzt höchstens 14 Schreibzugriffe in einer Zeile, nur 7 von 181 × 136 Zeilen über dem Budget von 13",
+  "Ablauf: Dachs läuft ab Bild 0 von x = 0 (hinter dem HMOVE-Balken) nach x = 66, hält bei 3,3 s im Durchgangsbild, dreht sich bei 3,6 s zur Kamera; Erzähltext ab 0,3 s mit 24 Zeichen/s, Auswahl ab 3,2 s, Pfeil springt bei 4,2 s auf »Das Paket ansehen«, Eingabe ab 4,5 s mit 12 Zeichen/s; Leuchtfeuer so gelegt, dass das Poster (Skriptbild 166, --poster-at 0.92) den langen Strahl zeigt",
+  "Zeit über delta aufsummiert, Zufallsfolgen (Laterne, Sterne, Glitzern, Wind, Meer) mit festen Seeds; Schalter --sprites-only (nur Spielerbild 0 auf Magenta) und --dump N PFAD (Zeilentabelle von Bild N als JSON) für die Prüfskripte",
+  "Renderer: Forward+, Mobile und Compatibility liefern bytegleiche Bilder (180 von 180); der Kernel in GDScript braucht headless am Mac etwa 2,4 ms je Bild"
+ ],
+ "techniques": [
+  "zeilen-kernel",
+  "registerwechsel-in-der-zeile",
+  "sprite-flackern",
+  "farbbaender-je-zeile",
+  "sprite-animation",
+  "prozedurale-animation",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 1,
+  "consistency": 4,
+  "effort": 4,
+  "text_adventure": 2,
+  "mobile": 4
+ },
+ "ratings_note": "ai_fit 1, weil die KI zu diesem Eintrag nichts beigetragen hat: Der Auftrag schloss Bilderzeugung aus, der Look kommt ganz aus Code (Registertabelle, Shader, Pixeldaten, Schrift); ob ein Bildmodell als Kompositionsvorlage hilft, ist ungeprüft. Konsistenz 4, weil Palette, Blockraster und Spielerformat jede Abweichung verhindern; Aufwand 4, weil jedes Objekt von Hand gesetzt und jede Zeile mit den Objekten anderer Bänder abgestimmt werden muss (der Dachs allein brauchte rund 10 Entwürfe). Textadventure 2: wenig Detail, die Figur ist nur mit Zusammenhang als Dachs zu erkennen, und der Text bricht die Hardwareregeln. Mobil 4: ein Draw-Call mit kleinem Shader, drei Renderer bytegleich geprüft; der Kernel in GDScript kostet am Mac 2,4 ms je Bild und wurde auf keinem Telefon gemessen.",
+ "verdict": "Der Stil ist auf den ersten Blick als Konsole der späten 70er erkennbar (Farbbänder, Blockgrafik, breite Pixel, einfarbige Zeilen in den Figuren, Flackern, schwarzer Balken links) und läuft sehr billig. Für unser erstes Textadventure taugt er eher als Sonderfall (Rückblende, Minispiel, Titelbild) denn als Hauptstil: Orte haben nur grobe Blöcke, Requisiten müssen sich die fünf beweglichen Objekte in Zeilenbändern teilen, und jeder neue Ort ist ein Planungsrätsel (welches Objekt in welchen Zeilen, wo umsetzen, wo flackern). Text in der gewünschten Menge geht auf der echten Hardware nicht; die Demo zeigt ihn deshalb in einem Band mit freier Bitmap, aber mit einer Farbe je Zeile. Wer den Look will, kann Kernel und Shader sofort für weitere Orte wiederverwenden; neu sind je Ort eine Szenenbeschreibung in build_rom.py und die Bandplanung in main.gd. Abweichungen vom Auftrag: Playfield fast überall asymmetrisch statt gespiegelt oder wiederholt, Möwe aus zwei Missiles statt einer (Gründe unter pitfalls).",
+ "pitfalls": [
+  "Abweichung vom Auftrag: Der Auftrag beschreibt die rechte Playfield-Hälfte als gespiegelt oder wiederholt. Das Motiv ist aber asymmetrisch (Häuschen links, Leuchtturm rechts); gespiegelt hätte links ein zweiter Leuchtturm gestanden. Deshalb schreibt das Kernel auf 116 von 136 Szenenzeilen PF0–PF2 mitten in der Zeile neu (asymmetrisches Playfield). Das ist eine echte Technik, kostet aber bis zu 6 der rund 13 Schreibzugriffe einer Zeile. Wiederholt ist nur die Kaimauer (6 Zeilen), gespiegelt keine Zeile.",
+  "Regelbruch Textband: 40 Zeichen je Zeile sind auf dem Chip nicht möglich. Echt gingen 6 Zeichen je Zeile (beide Spieler mit je 3 Kopien, 48 Pixel) oder etwa 12 mit Flackern. Die Demo liest im Textband eine freie Bitmap und behält nur die Regel »eine Farbe je Zeile«. Großbuchstaben 3×5 sind bei ×3 lesbar, Kleinbuchstaben gibt es nicht, ß wird zu SS.",
+  "Bis zu 5 Farben in einer Zeile: Auf rund 62 Zeilen je Bild wird COLUPF in der Zeile umgeschrieben (Wolken links, Turm rechts; Häuschen links, Fels rechts; Strahl matter als die Lampe; Brandung weiß). Die 4 Farbregister je Zeile bleiben eingehalten, aber ein Bild mit streng einer Playfield-Farbe je Zeile sähe deutlich gröber aus (Fels und Häuschen gleichfarbig).",
+  "Der Dachs bei 8 px Breite ist der schwächste Teil: Im Profil liest er sich als kleine Figur mit Mütze, Schal, Paket und dunklem Streifen wie eine Sonnenbrille; von vorn wie ein Panda oder Waschbär mit Mütze. Das Streifengesicht entsteht aus durchsichtigen Pixeln vor dem dunklen Meer; vor der hellen Hauswand (die erste Sekunde des Laufwegs) ist das Gesicht kaum lesbar. Lesbarkeit nur von mir beurteilt, kein Blindtest.",
+  "Möwe: Aus einer einzigen Missile (ein Strich je Zeile) lässt sich kein V zeichnen; jede Möwe nutzt beide Missiles. Ihre Farbe ist die Farbe der Rauchzeilen (COLUP0 wird in Zeile 30–69 mit dem Rauch geteilt), die Möwen sind deshalb grau.",
+  "Flackern: Im Poster (ein Einzelbild) ist nur eine der zwei Möwen und die Hälfte der Sterne zu sehen; im Video blinken sie mit 15 Hz. Das ist der Stil, kann aber unruhig wirken.",
+  "Die zwei Boote sind Kopien desselben Spielers: Sie sehen gleich aus und schaukeln zwangsläufig im Gleichtakt; mit 8 px sind sie im Verhältnis zum Dachs sehr klein (Spielzeugmaßstab, in den Vorbildern üblich).",
+  "Nicht umgesetzt aus dem Motiv: Holzsteg, Kistenstapel, Tau. In den Zeilen des Kais sind Spieler 0 (Dachs), Spieler 1 (Fässer), Missile 0 (Fenster), Missile 1 (Laterne mit Pfahl) und Ball (Paket) belegt; mehr ginge nur mit weiterem Flackern. Die Boote liegen im Hafenbecken, nicht an einem Steg.",
+  "Erste Fassungen hatten Fehler, die erst beim Messen oder Vergleichen auffielen: Die Zeilentabelle in PackedInt32Array schnitt die Playfield-Bits 32–39 ab (Leuchtturm fehlte); die Fußzeilen der Laufbilder passten nicht zum Vorschub (probe.py meldete 17 Rutscher); zwei Fass-Kopien kopierten auch den Laternenpfahl (Missile 1) als zweiten Strich; der Mast des linken Boots stand vor dem Dach. Alles behoben.",
+  "Felsnase: Farbige Gesteinsschichten je Zeile lasen sich als Treppe oder Bretterstapel; jetzt einfarbig grau mit gezackter Kante, dunklem Gras oben und hellerer nasser Zone unten. Die waagrechten Steinlagen des Häuschens wirken eher wie eine Holzhütte.",
+  "Vereinfacht gegenüber der Hardware: keine CPU und keine echte Zeitrechnung; die Schreibzugriffe je Zeile sind eine Schätzung aus geänderten Registern (5 Takte je Zugriff, 13 je Zeile), die Zeitfenster für das Neuschreiben von PF0–PF2 und COLUPF in der Zeile sind nicht geprüft. Kein VSYNC/VBLANK, keine 3-Pixel-Raster bei RESPx und keine HMOVE-Eigenheiten, keine Kollisionsregister, kein Ton.",
+  "Pixelseitenverhältnis 2:1 wie im Auftrag; auf einem NTSC-Fernseher waren die Pixel nach grober Rechnung etwa 1,7-mal so breit wie hoch, das Bild ist also etwas breiter als damals.",
+  "Movie Maker schreibt das erste Bild erst nach dem ersten _process: Bilddatei i zeigt Skriptbild i + 1. Ohne diesen Versatz verglich check_hw.py zunächst falsche Bilder (40 abweichende Pixel), und das Leuchtfeuer lag im Poster im falschen Zustand."
+ ],
+ "lessons": [
+  "Den Videochip als Shader nachbauen und die Zeilentabelle wie ein Spielprogramm in GDScript schreiben: Dann sind 8-px-Spieler, eine Farbe je Zeile und 40 Playfield-Blöcke keine Konvention, sondern das Datenformat. Kernel und Shader sind für weitere Orte wiederverwendbar.",
+  "Ein zweiter Renderer in Python (tia_ref.py) für dieselbe Tabelle und ein Dump-Schalter in der Demo machen den Shader prüfbar: check_hw.py vergleicht Pixel für Pixel (hier 0 Abweichungen in 8 Bildern) und findet Versatzfehler sofort.",
+  "Die eigentliche Gestaltung ist die Bandplanung: welches Objekt in welchen Zeilen, wo es umgesetzt wird (nur in Zeilen, in denen es unsichtbar ist) und welche Farben sich Objekte einer Zeile teilen. Die Tabelle im Kopf von main.gd vor dem Zeichnen anlegen.",
+  "Farben je Zeile nach dem Hintergrund dahinter wählen: schwarze Beine auf dem grauen Kai, Augenstreifen als durchsichtige Pixel vor dem dunklen Meer, das erleuchtete Fenster als gelbe Missile in der Hauswand.",
+  "Zwei Laufbilder (Ausschritt, Durchgang) mit 2 px Vorschub je Wechsel auf Dreien halten den Standfuß fest, wenn der vordere Fuß im Ausschritt und der Fuß im Durchgang nach dem Vorschub auf dieselbe Spalte fallen; probe.py misst das in einer Aufnahme nur mit Spieler 0.",
+  "NUSIZ-Kopien liefern Wiederholungen umsonst (zwei Boote samt Masten); ein doppelt breites Spielerbild mit zwei Formen ersetzt Kopien, wenn die Missile desselben Spielers in diesen Zeilen allein bleiben muss.",
+  "Mehr Objekte als Hardware in denselben Zeilen: von Bild zu Bild abwechseln. In einer 30-fps-Aufnahme muss der Wechsel je aufgenommenem Bild passieren, sonst verschwindet ein Objekt ganz.",
+  "Das Umschreiben der Playfield-Farbe mitten in der Zeile ist der billigste Weg zu verschiedenen Farben links und rechts (Häuschen und Fels, Wolken und Turm, Strahl und Lampe).",
+  "Eine 3×5-Blockschrift ist mit 2:1-Pixeln gut lesbar, wenn M, W und N breiter sein dürfen und die Umlautpunkte in der Leerzeile darüber stehen.",
+  "Hinweis für einen KI-Weg (ungeprüft): Ein Bildmodell könnte eine Kompositionsskizze im Stil liefern; ein Skript müsste sie dann auf 160×192 und die NTSC-Palette bringen (sprites.py pixelize --palette-hex mit assets/ntsc_palette_hex.txt) und je Zeile in Hintergrundfarbe, Playfield-Farbe und 40 Blöcke zerlegen. Die Figuren bleiben Handarbeit."
+ ],
+ "assets": [
+  {
+   "file": "assets/scene_preview.png",
+   "kind": "background",
+   "made_with": "Code: scripts/build_rom.py + Python-Referenz-Renderer, Standbild ohne Animation (×3, Pixel 2:1)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/scene_preview_native.png",
+   "kind": "background",
+   "made_with": "dasselbe in 160×192",
+   "prompt": ""
+  },
+  {
+   "file": "assets/sprites.png",
+   "kind": "sprite",
+   "made_with": "Von Hand (scripts/art.py, build_rom.py): Dachs Laufbild A und B, Vorderansicht, Wind, Atmen, Boot, Fässer",
+   "prompt": ""
+  },
+  {
+   "file": "assets/font.png",
+   "kind": "font",
+   "made_with": "Eigene Blockschrift 3×5 (scripts/font35.py), mit Umlaut-Probe",
+   "prompt": ""
+  },
+  {
+   "file": "assets/ntsc_palette.png",
+   "kind": "palette",
+   "made_with": "NTSC-Palette, 16 Farbtöne × 8 Helligkeiten",
+   "prompt": ""
+  },
+  {
+   "file": "assets/ntsc_palette_hex.txt",
+   "kind": "palette",
+   "made_with": "dieselbe Palette als Hex-Liste für sprites.py --palette-hex",
+   "prompt": ""
+  },
+  {
+   "file": "demo/rom/rom.json",
+   "kind": "data",
+   "made_with": "scripts/build_rom.py: Hintergrund- und Playfield-Farben, Playfield-Bits je Zeile, Objektplätze, Spielerbilder, Schrift",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/tia.gdshader",
+   "kind": "shader",
+   "made_with": "Code: Videochip je Pixel aus der Zeilentabelle",
+   "prompt": ""
+  },
+  {
+   "file": "demo/scripts/main.gd",
+   "kind": "code",
+   "made_with": "Code: Kernel (Zeilentabelle je Bild, Animationen, Textband, Kernel-Rechnung)",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/build_rom.py",
+   "kind": "code",
+   "made_with": "Code: Szene, Objektplätze, Vorschaubilder",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/check_hw.py",
+   "kind": "code",
+   "made_with": "Prüfskript: Hardwareregeln und Pixelvergleich Shader/Referenz",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/probe.py",
+   "kind": "code",
+   "made_with": "Prüfskript: Füße und Kopf des Dachses",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Eigene Blockschrift font35 (scripts/font35.py), über rom.json geladen",
+   "license": "CC0-1.0",
+   "source": "eigene Zeichnung für diesen Eintrag (demo/fonts/LICENSE-font35.txt)"
+  },
+  {
+   "item": "Farbwerte der NTSC-Palette (128 Zahlen, kein Code übernommen)",
+   "license": "Farbwerte als Daten; Quelle ist GPL-2.0-Software",
+   "source": "Emulator Stella, src/common/PaletteHandler.cxx (https://github.com/stella-emu/stella)"
+  }
+ ],
+ "image_generations": 0,
+ "tool_issues": [],
+ "status": "done"
+}

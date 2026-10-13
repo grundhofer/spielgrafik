@@ -1,0 +1,100 @@
+{
+ "boats": {
+  "A_boatA": {
+   "polygons": 10,
+   "points": 41,
+   "box_px": [
+    138,
+    75,
+    198,
+    108
+   ],
+   "size_px": [
+    60,
+    33
+   ],
+   "visible_px": 383,
+   "rock_deg": 3.0,
+   "heave_px": 1.0,
+   "max_vertex_shift_px": 2.68
+  },
+  "A_boatB": {
+   "polygons": 9,
+   "points": 42,
+   "box_px": [
+    221,
+    71,
+    273,
+    107
+   ],
+   "size_px": [
+    52,
+    36
+   ],
+   "visible_px": 182,
+   "rock_deg": 3.0,
+   "heave_px": 1.0,
+   "max_vertex_shift_px": 2.87
+  },
+  "A_untagged": 0,
+  "B_boatA": {
+   "polygons": 13,
+   "points": 59,
+   "box_px": [
+    85,
+    69,
+    173,
+    118
+   ],
+   "size_px": [
+    88,
+    49
+   ],
+   "visible_px": 364,
+   "rock_deg": 3.5,
+   "heave_px": 1.0,
+   "max_vertex_shift_px": 3.89
+  },
+  "B_boatB": {
+   "polygons": 8,
+   "points": 42,
+   "box_px": [
+    203,
+    67,
+    266,
+    114
+   ],
+   "size_px": [
+    63,
+    47
+   ],
+   "visible_px": 163,
+   "rock_deg": 3.5,
+   "heave_px": 1.0,
+   "max_vertex_shift_px": 3.8
+  },
+  "B_untagged": 0
+ },
+ "rocking": {
+  "A": {
+   "frames": 108,
+   "frames_changed": 108,
+   "changed_px_mean": 279.5,
+   "changed_px_max": 365,
+   "distinct_boat_images": {
+    "boatA": 34,
+    "boatB": 34
+   }
+  },
+  "B": {
+   "frames": 72,
+   "frames_changed": 72,
+   "changed_px_mean": 232.2,
+   "changed_px_max": 315,
+   "distinct_boat_images": {
+    "boatA": 24,
+    "boatB": 30
+   }
+  }
+ }
+}

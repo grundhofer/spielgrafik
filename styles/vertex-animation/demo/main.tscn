@@ -1,0 +1,167 @@
+[gd_scene load_steps=20 format=3]
+
+; Vertex-Animation & gebackene Simulationen: Hafen und Dachs aus shared/3d, Licht und Himmel wie in der
+; Probeszene. main.gd baut Meeresgitter, Fahne, Netz, Wimpel, Treibgut und Möwen und hängt die Knoten unter
+; "Attach" an die Empties im Hafen.
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://models/harbor.glb" id="2_harbor"]
+[ext_resource type="PackedScene" path="res://models/badger.glb" id="3_badger"]
+[ext_resource type="Shader" path="res://shaders/sea.gdshader" id="4_sea"]
+[ext_resource type="Shader" path="res://shaders/beam.gdshader" id="5_beam"]
+[ext_resource type="Shader" path="res://shaders/vat_flag.gdshader" id="6_vatflag"]
+[ext_resource type="Shader" path="res://shaders/vat_gull.gdshader" id="7_vatgull"]
+[ext_resource type="Shader" path="res://shaders/flutter.gdshader" id="8_flutter"]
+[ext_resource type="Texture2D" path="res://vat/flag_pos.exr" id="9_fpos"]
+[ext_resource type="Texture2D" path="res://vat/flag_nrm.exr" id="10_fnrm"]
+[ext_resource type="Texture2D" path="res://vat/gull_pos.exr" id="11_gpos"]
+[ext_resource type="Texture2D" path="res://vat/gull_nrm.exr" id="12_gnrm"]
+[ext_resource type="Script" path="res://ui.gd" id="13_ui"]
+
+[sub_resource type="ProceduralSkyMaterial" id="SkyMat"]
+sky_top_color = Color(0.04, 0.09, 0.3, 1)
+sky_horizon_color = Color(0.93, 0.6, 0.4, 1)
+sky_curve = 0.04
+ground_bottom_color = Color(0.06, 0.09, 0.14, 1)
+ground_horizon_color = Color(0.93, 0.6, 0.4, 1)
+ground_curve = 0.04
+sun_angle_max = 20.0
+
+[sub_resource type="Sky" id="Sky"]
+sky_material = SubResource("SkyMat")
+
+[sub_resource type="Environment" id="Env"]
+background_mode = 2
+sky = SubResource("Sky")
+ambient_light_source = 3
+ambient_light_energy = 0.8
+tonemap_mode = 4
+glow_enabled = true
+glow_intensity = 0.6
+glow_hdr_threshold = 1.0
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.78, 0.56, 0.46, 1)
+fog_density = 1.0
+fog_sky_affect = 0.0
+fog_depth_begin = 30.0
+fog_depth_end = 700.0
+fog_depth_curve = 1.0
+fog_aerial_perspective = 0.4
+ssr_enabled = true
+ssr_max_steps = 96
+ssr_fade_in = 0.15
+ssr_fade_out = 2.0
+ssr_depth_tolerance = 0.3
+
+[sub_resource type="ShaderMaterial" id="SeaMat"]
+render_priority = 0
+shader = ExtResource("4_sea")
+
+[sub_resource type="ShaderMaterial" id="FlagMat"]
+render_priority = 0
+shader = ExtResource("6_vatflag")
+shader_parameter/vat_pos = ExtResource("9_fpos")
+shader_parameter/vat_nrm = ExtResource("10_fnrm")
+
+[sub_resource type="ShaderMaterial" id="GullMat"]
+render_priority = 0
+shader = ExtResource("7_vatgull")
+shader_parameter/vat_pos = ExtResource("11_gpos")
+shader_parameter/vat_nrm = ExtResource("12_gnrm")
+
+[sub_resource type="CylinderMesh" id="BeamMesh"]
+top_radius = 3.2
+bottom_radius = 0.3
+height = 30.0
+radial_segments = 24
+rings = 1
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="ShaderMaterial" id="BeamMat"]
+render_priority = 0
+shader = ExtResource("5_beam")
+shader_parameter/color = Color(1, 0.86, 0.6, 1)
+shader_parameter/intensity = 0.25
+shader_parameter/length_m = 30.0
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_main")
+sea_material = SubResource("SeaMat")
+flag_material = SubResource("FlagMat")
+gull_material = SubResource("GullMat")
+flutter_shader = ExtResource("8_flutter")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Env")
+
+; Abendsonne tief von links vorn (14° über dem Horizont), wie in shared/3d/demo
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.4694716, 0.21360436, -0.85672027, 0, 0.9702957, 0.2419219, 0.88294756, -0.113575466, 0.4555263, 0, 30, 0)
+light_color = Color(1, 0.63, 0.38, 1)
+light_energy = 1.6
+shadow_enabled = true
+directional_shadow_max_distance = 70.0
+
+; Eigene Einstellung (Werte aus scripts/frame_shot.py): näher am Hafenbecken als die Hauptkamera
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(0.9781476, 0.02353627, -0.2065752, 0, 0.9935719, 0.1132032, 0.2079117, -0.1107295, 0.9718599, -1.8, 3.4, 10.5)
+current = true
+fov = 45.0
+near = 0.1
+far = 3000.0
+
+[node name="Harbor" parent="." instance=ExtResource("2_harbor")]
+
+[node name="Badger" parent="." instance=ExtResource("3_badger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.6, 0, 2.8)
+
+[node name="Sea" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+
+[node name="Gulls" type="MultiMeshInstance3D" parent="."]
+
+[node name="Attach" type="Node3D" parent="."]
+
+[node name="LanternLight" type="Node3D" parent="Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="Attach/LanternLight"]
+light_color = Color(1, 0.72, 0.4, 1)
+light_energy = 1.6
+omni_range = 6.0
+
+[node name="CottageWindow" type="Node3D" parent="Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="Attach/CottageWindow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+light_color = Color(1, 0.74, 0.42, 1)
+light_energy = 0.9
+omni_range = 4.0
+
+[node name="LighthouseLight" type="Node3D" parent="Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="Attach/LighthouseLight"]
+light_color = Color(1, 0.84, 0.58, 1)
+light_energy = 2.0
+omni_range = 5.0
+
+[node name="Rotor" type="Node3D" parent="Attach/LighthouseLight"]
+
+[node name="Tilt" type="Node3D" parent="Attach/LighthouseLight/Rotor"]
+transform = Transform3D(1, 0, 0, 0, 0.9961947, 0.08715574, 0, -0.08715574, 0.9961947, 0, 0, 0)
+
+[node name="Spot" type="SpotLight3D" parent="Attach/LighthouseLight/Rotor/Tilt"]
+light_color = Color(1, 0.86, 0.6, 1)
+light_energy = 40.0
+spot_range = 180.0
+spot_angle = 7.0
+
+[node name="Beam" type="MeshInstance3D" parent="Attach/LighthouseLight/Rotor/Tilt"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, -15)
+cast_shadow = 0
+mesh = SubResource("BeamMesh")
+surface_material_override/0 = SubResource("BeamMat")
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource("13_ui")

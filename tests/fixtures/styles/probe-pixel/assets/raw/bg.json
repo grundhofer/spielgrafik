@@ -1,0 +1,11 @@
+{
+ "prompt": "Pixel art background test prompt.",
+ "size": "1536x1024",
+ "refs": [],
+ "thread_id": "t-1",
+ "seconds": 40.0,
+ "generated_at": "2026-10-10T10:00:00+00:00",
+ "tool": "Codex CLI built-in image_gen",
+ "codex_version": "codex-cli 0.0.0",
+ "pngs_in_thread": 1
+}

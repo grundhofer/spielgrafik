@@ -1,0 +1,172 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="Texture2D" path="res://art/bg.png" id="2_bg"]
+[ext_resource type="Texture2D" path="res://art/bg_mask.png" id="3_mask"]
+[ext_resource type="Shader" path="res://shaders/bg.gdshader" id="4_bgsh"]
+[ext_resource type="Script" path="res://fx.gd" id="5_fx"]
+[ext_resource type="Script" path="res://panel.gd" id="6_panel"]
+[ext_resource type="FontFile" path="res://fonts/PatrickHand-Regular.ttf" id="7_hand"]
+[ext_resource type="FontFile" path="res://fonts/PatrickHandSC-Regular.ttf" id="8_handsc"]
+[ext_resource type="Texture2D" path="res://art/badger_ai.png" id="9_badger"]
+
+[sub_resource type="ShaderMaterial" id="bgmat"]
+shader = ExtResource("4_bgsh")
+shader_parameter/mask_tex = ExtResource("3_mask")
+
+[sub_resource type="CanvasItemMaterial" id="addmat"]
+blend_mode = 1
+
+[sub_resource type="StyleBoxFlat" id="sb_dialog"]
+bg_color = Color(0.96, 0.92, 0.82, 0.97)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.16, 0.11, 0.10, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0.04, 0.03, 0.08, 0.45)
+shadow_size = 6
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="sb_pill"]
+bg_color = Color(0.86, 0.62, 0.36, 0.32)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="Bg" type="Sprite2D" parent="."]
+material = SubResource("bgmat")
+texture = ExtResource("2_bg")
+centered = false
+
+[node name="Smoke" type="Node2D" parent="."]
+script = ExtResource("5_fx")
+kind = "smoke"
+
+[node name="Gulls" type="Node2D" parent="."]
+script = ExtResource("5_fx")
+kind = "gulls"
+
+[node name="Light" type="Node2D" parent="."]
+material = SubResource("addmat")
+script = ExtResource("5_fx")
+kind = "light"
+
+[node name="Shadow" type="Polygon2D" parent="."]
+color = Color(0.10, 0.09, 0.20, 0.32)
+
+[node name="Badger" type="Sprite2D" parent="."]
+texture = ExtResource("9_badger")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 136, 168)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 350.0
+offset_top = 10.0
+offset_right = 790.0
+offset_bottom = 232.0
+script = ExtResource("6_panel")
+
+[node name="Dialog" type="Panel" parent="UI"]
+offset_left = 688.0
+offset_top = 516.0
+offset_right = 1264.0
+offset_bottom = 708.0
+theme_override_styles/panel = SubResource("sb_dialog")
+
+[node name="Title" type="Label" parent="UI/Dialog"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 8.0
+offset_right = 560.0
+offset_bottom = 38.0
+theme_override_colors/font_color = Color(0.55, 0.18, 0.13, 1)
+theme_override_fonts/font = ExtResource("8_handsc")
+theme_override_font_sizes/font_size = 24
+text = "Hafen von Lornholm"
+
+[node name="Line" type="Label" parent="UI/Dialog"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 36.0
+offset_right = 560.0
+offset_bottom = 100.0
+theme_override_colors/font_color = Color(0.16, 0.12, 0.11, 1)
+theme_override_constants/line_spacing = -4
+theme_override_fonts/font = ExtResource("7_hand")
+theme_override_font_sizes/font_size = 25
+text = "Die Laterne flackert im Wind.
+Am Kai wartet ein Paket auf dich."
+
+[node name="Pill" type="Panel" parent="UI/Dialog"]
+visible = false
+layout_mode = 0
+offset_left = 14.0
+offset_top = 129.0
+offset_right = 232.0
+offset_bottom = 155.0
+theme_override_styles/panel = SubResource("sb_pill")
+
+[node name="C1" type="Label" parent="UI/Dialog"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 102.0
+offset_right = 330.0
+offset_bottom = 128.0
+theme_override_colors/font_color = Color(0.22, 0.17, 0.15, 1)
+theme_override_fonts/font = ExtResource("7_hand")
+theme_override_font_sizes/font_size = 21
+text = "1   Zum Leuchtturm gehen"
+
+[node name="C2" type="Label" parent="UI/Dialog"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 128.0
+offset_right = 330.0
+offset_bottom = 154.0
+theme_override_colors/font_color = Color(0.22, 0.17, 0.15, 1)
+theme_override_fonts/font = ExtResource("7_hand")
+theme_override_font_sizes/font_size = 21
+text = "2   Das Paket ansehen"
+
+[node name="C3" type="Label" parent="UI/Dialog"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 154.0
+offset_right = 330.0
+offset_bottom = 180.0
+theme_override_colors/font_color = Color(0.22, 0.17, 0.15, 1)
+theme_override_fonts/font = ExtResource("7_hand")
+theme_override_font_sizes/font_size = 21
+text = "3   Mit dem Dachs sprechen"
+
+[node name="Parser" type="Label" parent="UI/Dialog"]
+layout_mode = 0
+offset_left = 380.0
+offset_top = 154.0
+offset_right = 540.0
+offset_bottom = 180.0
+theme_override_colors/font_color = Color(0.20, 0.27, 0.42, 1)
+theme_override_fonts/font = ExtResource("7_hand")
+theme_override_font_sizes/font_size = 21
+text = "> nimm paket"
+
+[node name="Cursor" type="ColorRect" parent="UI/Dialog"]
+offset_left = 500.0
+offset_top = 159.0
+offset_right = 509.0
+offset_bottom = 178.0
+color = Color(0.20, 0.27, 0.42, 1)

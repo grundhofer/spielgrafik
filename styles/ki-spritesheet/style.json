@@ -1,0 +1,327 @@
+{
+ "slug": "ki-spritesheet",
+ "name": "KI-Sprite-Sheets mit Referenzbild",
+ "family": "technik",
+ "kind": "technique",
+ "era": "Sprite-Sheets seit den 1980ern; Erzeugung per Bildmodell mit Referenzbild seit etwa 2024",
+ "summary": "Der Dachs-Kurier als AnimatedSprite2D mit vier Zuständen (Laufen, Stehen, Springen, Winken), jede Bewegung ein einziges KI-Blatt, erzeugt aus dem Referenzblatt der Figur. Die Blätter kommen sauber freigestellt und farbtreu, aber mit doppelten Posen, verschiedenem Maßstab, flimmernden Einzelbildern und vertauschten Armen. Skripte zerlegen, messen und korrigieren sie und ziehen eine Außenkontur passend zum gezeichneten Hintergrund; ein Erklärfeld zeigt zu jedem Zustand das KI-Blatt mit den aussortierten Bildern und die rohe neben der korrigierten Fassung.",
+ "references": [
+  "The Secret of Monkey Island (Lucasfilm Games, 1990) und Day of the Tentacle (LucasArts, 1993) – Bild-für-Bild-Figuren mit wenigen Lauf-, Steh- und Gestenbildern, Drehung zur Kamera als harter Schnitt",
+  "Baphomets Fluch (Revolution Software, 1996) – gezeichnete Figuren mit Konturen vor gezeichneten Hintergründen",
+  "Thimbleweed Park (Terrible Toybox, 2017) – Zustandswechsel Laufen/Stehen/Geste in einem modernen Adventure",
+  "Hollow Knight (Team Cherry, 2017) – gezeichnete Bild-für-Bild-Sprites mit Konturen in einer heutigen Engine"
+ ],
+ "traits": [
+  "Dachs als AnimatedSprite2D mit SpriteFrames aus vier KI-Blättern (Lauf-, Idle-, Sprung-, Winkblatt; Codex mit dem Referenzblatt als erster Referenz); Zustandsfolge walk → idle → jump → idle → wave → idle mit Wechseln bei 2,67 / 3,33 / 4,13 / 4,33 / 6,0 s",
+  "Laufen mit 4 Posen bei 6 Bildern/s, jedes Bild genau 5 Videobilder; Standfuß in der Godot-Ausgabe je Bildwechsel höchstens 1 px verschoben (13 Wechsel, gemessen mit Alpha > 0,3 und > 0,5; beim Übergang zum Stehen 0 px); Kopf in allen Laufzellen auf derselben Spalte (Schnauzenspitze 116–117)",
+  "Stehen und Winken: unterste Figurzeile (Alpha > 0,5) in allen Steh- und Winkbildern 655, Sohlenkante unterpixelgenau 655,24 (Stehen) bzw. 655,28–655,35 (Winken); Fußränder im Idle 0 px, beim Winken 1 px Spanne",
+  "Ein Maßstab für alle Blätter: Kopfgröße per Kreuzkorrelation gegen Laufbild 1 (Idle ×0,765, Sprung ×0,843, Lauf je Bild 1,00–1,045), Winkblatt über die Standhöhe (×0,797); Standhöhe im Bild 190 px, mit Kontur 194 px",
+  "Außenkontur des Dachses: 2 px in der Konturfarbe des Hintergrunds (25/12/20), in build_sprites.py aus dem Alpha der fertig abgetasteten Zelle gezogen; die Beine heben sich damit vom Pflaster ab",
+  "Idle aus Teilen: ein Körper (Idle-Bild 1), Lid aus Idle-Bild 4 am Kopf eingepasst, Atmen als Verschiebung des Oberkörpers um 0–2 px in einer Schleife von 3,0 s; Blinzeln als eigene Animation „blink“ (je Atemstufe ein Bild), von main.gd mit RandomNumberGenerator (seed 23) in Abständen von 3–5 s eingesetzt, erstmals bei 3,0 s",
+  "Sprung mit der vom Modell gemalten Höhe (bis 42 px im Bild), Zehen beim Absprung fest, Landung 8 px weiter vorn, Schatten schrumpft in der Luft",
+  "Erklärfeld oben: KI-Blatt des aktuellen Zustands als Vorschau mit Markierung (doppelt, Seite, Körper, Lid, gerade gezeigtes Quellbild), daneben dieselbe Bewegung roh (tools/sprites.py slice, alle Blattbilder) und korrigiert, darunter Befund und Gegenmittel aus den Messwerten",
+  "Gezeichnete Hafenszene mit Konturen: Wasser zeilenweise um ganze Pixel versetzt mit Glanzstrichen und Laternenspiegelung, Rauch als flache Ballen in zwei Tonstufen mit dünner Umrisskontur, Leuchtfeuer mit kreisendem Strahl aus zwei flachen Keilen, flackernde Laterne und Fenster, zwei Möwen, die hinter Haus, Laterne, Leuchtturm und Felsen durchfliegen (Himmelsmaske)",
+  "Textfeld als cremefarbene Tafel mit dunkler Kontur (Fredoka): Ort, getippte Zeile, drei Antworten, Parserzeile mit Schreibmarke"
+ ],
+ "camera": "Feste, erhöhte Seitenansicht über den Kai: Horizont bei etwa 47 % der Bildhöhe (y ≈ 343) über der Figur (Augen bei y ≈ 495), keine Kamerafahrt; der Dachs läuft von links ins Bild, bleibt stehen, springt, dreht sich zur Kamera und winkt",
+ "resolution": "1280×720. Hintergrund aus dem agy-Bild (1264×848) auf 1280 Breite skaliert (×1,013) und auf 16:9 beschnitten. Dachs mit Kontur 152–215 px hoch (Stehen 194, Laufen 176–198, Winken 193–203, Sprung 152–215; ohne die 2-px-Kontur je 4 px weniger, Stehen 190 px); die Streifen sind in Bildgröße vorab skaliert (Lanczos, vormultipliziertes Alpha, eine Abtastung je Bild mit Unterpixel-Lage), die Kontur wird danach auf den Bildpixeln gezogen, gezeichnet wird 1:1 auf ganze Pixel",
+ "pipeline": [
+  {
+   "step": "Prompts bauen",
+   "tool": "scripts/make_prompts.py",
+   "detail": "Stilblock + Motivblöcke wörtlich aus data/motif.json + Schutzregeln + Formatangabe; assets/prompts/*.txt und die Auftragslisten assets/jobs_wave1–3.json. Bewusst ohne Posenvorlage: nur das Referenzblatt gibt Kostüm, Proportionen und Strich vor (den Weg mit Vorlage zeigt rotoskopie)."
+  },
+  {
+   "step": "Hintergrund",
+   "tool": "genimg (agy, verbatim: true), 1536×1024 bestellt",
+   "detail": "Gezeichneter Abendhafen mit gleichmäßigen dunklen Konturen und flachen Farbflächen passend zum Strich des Referenzblatts, leerer Kai als Laufweg, Lampe nur als Lichtpunkt, kein Rauch. Erster Versuch, 62 s, geliefert 1264×848 JPEG ohne gemalten Rauch oder Strahl."
+  },
+  {
+   "step": "Hintergrund aufbereiten",
+   "tool": "scripts/prep_bg.py",
+   "detail": "Auf 1280 Breite (Lanczos), Zeilen 84–804 als 16:9-Ausschnitt; Wassermaske (R) über die Farbe (Blau/Grün über Rot, zwischen Horizont und Kaikante, Boote und Pfosten bleiben draußen). Himmelsmaske (G) für die Möwen: Flutfüllung von der oberen Bildkante bis zum Horizont, die nur an den dunklen Objektkonturen stoppt (hellster Kanal < 70; Wolkenränder und Himmel liegen bei ≥ 84), danach 1 px erodiert; das Laternenhaus des Leuchtturms (dünne helle Ränder, die Flut lief hinein) ist als Rechteck ausgenommen."
+  },
+  {
+   "step": "Laufblatt",
+   "tool": "genimg (Codex, Grund: Transparenz), 1536×1024, Referenz shared/badger/master_sheet.png",
+   "detail": "Eine Reihe mit 8 benannten Phasen (Kontakt, Tief, Durchgang, Hoch je Bein). Erster Versuch, 70 s, echter Alphakanal, Figuren etwa 320 px hoch. Geliefert wurden 4 Posen zweimal: Bild 5–8 wiederholen 1–4."
+  },
+  {
+   "step": "Idle-, Sprung- und Winkblatt",
+   "tool": "genimg (Codex, gebunden an walk.png), je 1536×1024, Referenzen master_sheet.png und das eigene Laufblatt",
+   "detail": "Je eine Reihe mit 6 Phasen, „exactly the same scale … as there“. Je erster Versuch (96 s, 70 s, 69 s). Idle-Blatt 31 %, Sprungblatt 19 %, Winkblatt 25 % größer gemalt als Laufbild 1; im Sprungblatt trotz Prompt die Flughöhe eingezeichnet; im Winkblatt winken Bild 3 und 5 mit dem anderen Arm."
+  },
+  {
+   "step": "Winkblatt, zweiter Versuch",
+   "tool": "genimg (Codex, gebunden an walk.png)",
+   "detail": "Gegenmittel im Prompt geprüft: Seiten aus Sicht des Bildes benannt („parcel … on the LEFT side of the image in every single frame“, „the waving arm never changes sides“). 65 s. Gleicher Fehler in Bild 3 und 5; eingebaut wurde dieses Blatt, weil Bild 1, 2, 4 und 6 etwas ruhiger zueinander passen."
+  },
+  {
+   "step": "Zerlegen",
+   "tool": "scripts/kss_sheet.py (split_frames)",
+   "detail": "Zusammenhangskomponenten des Alphakanals statt Spalten, weil Schalenden in die Spalten des Nachbarbilds ragen; Splitter gehen an die nächste große Komponente. Berühren sich zwei Figuren (Winkblatt 2, Pfoten von Bild 4 und 5), wird die Maske erodiert, bis 6 Kerne entstehen, und die Kerne wachsen in der Maske zurück."
+  },
+  {
+   "step": "Messen",
+   "tool": "scripts/build_sprites.py → assets/sheets.json",
+   "detail": "Kopfanker: Schnauzenspitze im oberen Drittel, verfeinert per normierter Kreuzkorrelation des Kopfausschnitts (±14 px). Kopfmaßstab je Bild: Kreuzkorrelation über Skalen 0,70–1,08 in Schritten von 0,005. Bodenläufe (Ferse/Zehe), Abweichung der Beinmasken aller Bildpaare am Kopf ausgerichtet (Doppelte: 6–16 %, andere Paare ≥ 26 %), Flimmern (Anteil der Figurpixel mit mehr als 40 Tonwerten Änderung), Farben je Kostümteil in Oklab."
+  },
+  {
+   "step": "Korrigieren",
+   "tool": "scripts/build_sprites.py",
+   "detail": "Laufen: Bilder 1–4, je Bild auf Kopfgröße skaliert, waagerecht am Kopfanker, senkrecht an der tiefsten Zeile; Vorschub je Wechsel (28,1 / 38,7 / 29,9 / 31,5 px) aus einer Fußtabelle, die an vergrößerten Bodenläufen abgelesen wurde. Idle: Körper aus Bild 1, Lid aus Bild 4 (eingepasst mit Maßstab 1,025, Versatz 5/−3 px, Korrelation 0,93, weich eingeblendet), Atmen als Bandverschiebung. Sprung: gemalte Höhe, Zehen von Absprung und Hocke deckungsgleich (nach dem Skalieren um 6 px nachgesetzt), Flugbilder mit gleichmäßigem Kopfweg. Winken: Bilder 1, 2, 4, 6 an den Beinen ausgerichtet (Kreuzkorrelation 0,92–0,96). Stehen und Winken danach unterpixelgenau auf eine Sohlenkante gelegt (75. Perzentil der Alpha-Deckung in den Spalten, die 8 Zeilen über dem Boden deckend sind; Ziel 1 px über der Ankerzeile): Winkbild 6 saß 0,45 px tiefer als 1, 2 und 4, diese wurden um 0,42–0,46 px gesenkt, durch erneutes Abtasten mit verschobener Lage. Laufen und Springen behalten die Ausrichtung an der tiefsten Zeile. Außenkontur für alle Zellen: Alpha mit einer Kreisscheibe (r = 2) dilatiert und in der Konturfarbe des Hintergrunds (Median der Pixel mit hellstem Kanal < 50: 25/12/20) unter die Zelle gelegt; der Anker sitzt 2 px tiefer, damit die Kontur unter den Füßen auf dem Boden steht. Jede Zelle entsteht in einer einzigen Lanczos-Abtastung mit Unterpixel-Lage."
+  },
+  {
+   "step": "SpriteFrames schreiben",
+   "tool": "scripts/build_sprites.py",
+   "detail": "demo/badger_frames.tres (AtlasTexture je Zelle, Dauer je Bild, Schleife nur für walk und idle; „blink“ nutzt die Lid-Zellen des Idle-Streifens) und demo/raw_frames.tres (rohe Fassung); demo/art/anim.json mit Anker, Vorschub, Zehen- und Fußmitte je Zelle, Vorschau-Status und den Erklärzeilen, die aus den Messwerten gebildet werden."
+  },
+  {
+   "step": "Rohe Vergleichsfassung",
+   "tool": "tools/sprites.py slice --frames N --height 120",
+   "detail": "Jedes Blatt so zerlegt, wie man es ohne Messung täte: Teilung an der dünnsten Spalte, Ausrichtung am Schwerpunkt und an der Unterkante, Maßstab je Blatt über die höchste Zelle, alle Blattbilder in Reihenfolge (Laufen mit 10, Idle und Winken mit 6, Sprung mit 10 Bildern/s)."
+  },
+  {
+   "step": "Prüfung",
+   "tool": "scripts/measure_badger.py, scripts/make_checks.py",
+   "detail": "Dachs allein (--badger-only), zweimal aufgenommen vor Magenta und Grün (--key), Alpha aus der Differenz: Haltezeiten 5/3 Videobilder ohne Ausreißer (das Blinzeln bei 3,0 s teilt ein Halten in 10 + 5 + 5), Standfuß je Laufwechsel −1…+1 px (13 Wechsel, bei Alpha > 0,3 und > 0,5), Idle-Füße 0 px, Winken 1 px Spanne, unterste Zeile 655 in allen Steh-, Winkbildern und am Boden beim Sprung, Sohlenkante 655,24–655,35. Dauerlauf ab --t0=30 über 20 s: Atemschleife 35/15/25/15 Videobilder, Blinzler bei 34,2 / 37,7 / 42,3 / 46,2 / 49,5 s (Abstände 3,3–4,7 s), jeweils mit dem Lid zur gerade gezeigten Atemstufe. Möwen hinter Laterne und Pfahl bei 14,8–17,3 s und 46–48,5 s als Einzelbilder angesehen, Rauch und Strahl bei 0–6 s und 33 s. Prüfbilder in assets/check/. gl_compatibility gegen Forward+: mittlere Abweichung 0,11 Tonwerte, in 180 Bildern 4 Einzelpixel über 8 (Ränder des Strahls). Zwei Läufe bitgleich (180 Bilder, md5)."
+  },
+  {
+   "step": "Aufnahme",
+   "tool": "tools/capture.py --poster-at 0.84",
+   "detail": "6 s, 30 fps, ohne Godot-Fehler und -Warnungen; Poster bei 5,03 s mit erhobener Pfote und dem Winkblatt im Erklärfeld."
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, stretch mode canvas_items, Forward+, nur 2D, keine Plugins",
+  "Badger: AnimatedSprite2D mit badger_frames.tres (walk 4 Bilder, 6/s, Schleife; idle 4 Einträge aus 3 Zellen (Atemstufen 0/1/2 px), 6/s, Dauern 7-3-5-3 = 3,0 s, Schleife; blink 3 Bilder (Lid je Atemstufe), ohne Schleife; jump 6 Bilder, 10/s, Dauern 2-1-1-1-1-2, ohne Schleife; wave 10 Einträge aus 4 Zellen, 6/s, ohne Schleife); centered = false, offset = −Anker der Animation",
+  "main.gd: Zustandsfolge als Liste in Videobildern (walk 0, idle 80, jump 100, idle 124, wave 130, idle 180). Welches Bild gezeigt wird, rechnet das Skript aus den Dauern der SpriteFrames in ganzen Videobildern (round(30 / speed × duration)) statt AnimatedSprite2D.play() laufen zu lassen; so hält jedes Bild genau 5 bzw. 3 Videobilder",
+  "Blinzeln: main.gd legt die Zeitpunkte mit RandomNumberGenerator (seed 23) für zwei Stunden fest (erstmals Videobild 90, dann alle 90–150 Videobilder, Vielfache von 5) und zeigt für 5 Videobilder statt der Atemzelle das passende Bild aus „blink“, nur wenn es ganz im Stehen-Abschnitt liegt und auf dessen 6-Bilder/s-Raster beginnt",
+  "Laufvorschub nur beim Bildwechsel: Lage = Startlage + Summe der gemessenen Vorschübe der bisher gezeigten Bilder; Startlage rückwärts aus dem Halt (Zehen bei x = 420) berechnet; Positionen auf ganze Pixel gerundet",
+  "Zustandswechsel ohne Sprung der Füße: zwischen Seitenansichten werden die Zehenenden am Boden (unterste 3 Zeilen) deckungsgleich gelegt, mit der Dreiviertelansicht die Mitte beider Füße (unterste 24 Zeilen); beide Werte je Zelle in anim.json",
+  "Tönung der Figur über modulate (0,90 / 0,88 / 0,97), Schatten aus zwei weichen Ellipsen unter der Fußmitte, beim Sprung nach dem Abstand zum Boden kleiner und heller",
+  "sheet_panel.gd: Erklärfeld als Node2D mit _draw (StyleBoxFlat, Vorschaustreifen, Markierungen, JetBrains Mono als FontVariation), zwei weitere AnimatedSprite2D für roh (raw_frames.tres, ×0,90) und korrigiert (badger_frames.tres, ×0,55) an Ort und Stelle; gestrichelte Linie an der Schnauze von Bild 1 zeigt das Kopfzittern",
+  "shaders/bg.gdshader: Wasser nur in der Wassermaske, Zeilen um ganze Pixel versetzt (vorn stärker), gelesen nur aus Wasserpixeln; Glanzstriche aus einem Hash, Laternenspiegelung als flackernde Bänder",
+  "fx.gd: Rauch als flache Ballen (draw_circle): erst alle Konturringe (halbtransparent, Konturfarbe), dann alle Schatten-, dann alle Lichtflächen deckend, so bleibt die Kontur nur am Umriss; Ballen wachsen und schrumpfen am Ende zu nichts, Wind nach rechts. Fenster- und Laternenschein mit Lichtfleck (additiv), Leuchtfeuer mit zwei flachen Keilen (Saum 45 %, Kern 100 %, quer ohne Verlauf) um die senkrechte Achse (6 s), Möwen als Linienzüge; alles aus der aufsummierten Zeit, Wege wiederholen sich",
+  "shaders/sky_clip.gdshader auf dem Gulls-Knoten: tastet G von bg_mask.png an der Weltlage ab (MODEL_MATRIX im vertex(), nicht SCREEN_UV) und multipliziert Alpha damit",
+  "Textfeld: Panel mit StyleBoxFlat (Creme, 3 px dunkelbraune Kontur), Fredoka als FontVariation (wght 450/500/600), Zeile über visible_characters, Antworten als RichTextLabel, Parserzeile mit blinkender Schreibmarke",
+  "anim.json wird mit FileAccess gelesen (keine Ressource): für einen Export muss *.json in den Exportfilter",
+  "Prüfargumente nach \"--\": --t0=<s>, --badger-only (Figur allein vor einer Grundfarbe), --key=<rrggbb> (Grundfarbe, Standard ff00ff), --raw (große Figur aus der rohen Fassung)"
+ ],
+ "techniques": [
+  "ki-spritesheet",
+  "sprite-animation",
+  "fuss-halten",
+  "mimik-aus-teilen",
+  "shader-wasser",
+  "additiver-lichtkegel",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 3,
+  "consistency": 3,
+  "effort": 3,
+  "text_adventure": 4,
+  "mobile": 5
+ },
+ "ratings_note": "ai_fit 3: Alle fünf Blätter kamen im ersten Versuch mit echtem Alphakanal, Kostüm und Strich wie im Referenzblatt, Farben über alle Blätter praktisch gleich (Oklab ΔL ≤ 0,026, Δa/Δb ≤ 0,011); aber keins war ohne Eingriff verwendbar: doppelte Laufposen, 19–31 % Maßstabsunterschied trotz Referenz, eingezeichnete Sprunghöhe trotz Prompt, Seitenwechsel im Winken in beiden Versuchen, flimmernde Idle-Bilder. Von 32 gelieferten Bildern sind 16 eingebaut (Laufen 4, Stehen 2, davon eines nur als Lid, Sprung 6, Winken 4). consistency 3: Innerhalb eines Zustands nach der Korrektur ruhig (ein Maßstab, fester Kopf bzw. feste Füße), zwischen den Blättern gleicher Strich; die Außenkontur, die den Dachs an den Hintergrund anpasst, ist Code, nicht KI; Kopfgröße schwankt in jedem Blatt um ±2 %, Paket, Arm und Schal wandern zwischen Einzelbildern, Winken flimmert im Rumpf. effort 3: Bilder sind billig (eins je Bewegung, rund eine Minute), die Werkzeuge stehen; je Figur bleiben die Fußtabelle des Laufblatts (von Hand), die Auswahl der Bilder und eine Sichtprüfung. mobile 5 geschätzt: AnimatedSprite2D mit vier kleinen Streifen und ein einfacher Wassershader; gl_compatibility weicht im Mittel 0,11 Tonwerte ab (4 Einzelpixel über 8 in 180 Bildern), ein Test auf einem Telefon fehlt.",
+ "verdict": "Für unser Textadventure brauchbar, wenn wenige Figuren mit wenigen Bewegungen auskommen: Ein KI-Blatt je Bewegung mit dem Referenzblatt (und dem ersten gelungenen Blatt als zweiter Referenz) ergibt Figuren im Strich des Referenzblatts, die im Spiel sauber laufen, stehen und winken. Zum Hintergrund mit seinen 2–3 px starken Konturen passen sie erst mit einer nachträglich gezogenen Außenkontur; nach dem Verkleinern haben die KI-Figuren kaum Umriss. Rohe Blätter direkt einzubauen geht nicht; jedes Blatt braucht den Durchlauf aus Zerlegen, Messen und Aussortieren (Skripte hier), und Stehen und Sprechen sollten aus Teilen gebaut werden statt aus ganzen KI-Bildern. Gesten zur Kamera sind riskant (Seitenwechsel in 2 von 2 Blättern); die Seitenansicht ist verlässlicher. Für viele Bewegungen oder viele Figuren ist eine Posenvorlage (rotoskopie) oder ein Skelett (skelett-2d) vermutlich günstiger. Bewusste Abweichungen vom Auftrag: Die Sprunghöhe stammt aus dem Blatt (das Modell hat sie gegen den Prompt eingezeichnet), das Winken ist in Dreiviertelansicht mit hartem Schnitt aus der Seitenansicht, und das Erklärfeld zeigt die Fehlerbilder in der Szene statt in einer eigenen Ansicht.",
+ "pitfalls": [
+  "Laufblatt: 8 benannte Phasen bestellt, 4 Posen zweimal geliefert (Beinmasken von Bild 5–8 weichen nur 6–16 % von 1–4 ab, alle anderen Paare ≥ 26 %); eigene Tief- und Hochphasen fehlen. Mit 4 Posen bei 6 Bildern/s rückt der Körper je Wechsel 28–39 px vor; der Gang wirkt stufiger als die stufenlose Skelettanimation, und das gemalte Auf und Ab ist mit 176–198 px Figurhöhe (mit Kontur) kräftig.",
+  "Beide Beine sind gleich dunkelgrau; nah und fern lassen sich nicht über die Farbe trennen. Die Fußtabelle (welches Ende des Standfußes bei welchem Wechsel liegen bleibt) wurde an vergrößerten Bodenläufen von Hand abgelesen; ein automatischer Abgleich der Pfoten per Kreuzkorrelation war unzuverlässig, weil das Modell die Pfoten in jedem Bild neu zeichnet.",
+  "Maßstab: Idle-Blatt 31 %, Sprungblatt 19 %, Winkblatt 25 % größer als Laufbild 1 gemalt, obwohl das Laufblatt als zweite Referenz mit „exactly the same scale“ mitging; innerhalb der Blätter schwankt die Kopfgröße (Lauf 1,00–1,045, Idle 0,75–0,78, Sprung 0,815–0,85). Normiert über die Kopfkorrelation; das Winkblatt (Dreiviertelansicht) nur über die Standhöhe, das ist nicht unabhängig geprüft.",
+  "Idle aus ganzen KI-Bildern flimmert: 16–45 % der Figurpixel ändern sich von Bild zu Bild (Paket, Arm, Schalenden, Mütze wandern). Verwendet sind nur Bild 1 als Körper und das Lid aus Bild 4; vier Bilder sind verworfen. Das Atmen ist Code (Oberkörper 0–2 px) und im 6-s-Ausschnitt nicht zu sehen, weil der Idle-Abschnitt dort nur 0,67 s dauert und ganz in das Halten der ausgeatmeten Stufe fällt; im Dauerlauf ab 6 s läuft die 3-s-Schleife. Vorher lag das Blinzeln in der 1,83-s-Idle-Schleife und kam im Dauerlauf mechanisch alle 1,83 s mit demselben Atemmuster; jetzt setzt main.gd es unabhängig vom Atmen alle 3–5 s ein.",
+  "Sprung: Der Prompt verlangte alle Bilder auf der Grundlinie, das Modell malte die Flugbahn ein (bis 89 Blatt-px). Übernommen, weil sie stimmig war. Im Absprungbild ist der Kopf geneigt (Kopfkorrelation 0,74); seine Lage kommt von den Zehen und musste nach dem Skalieren um 6 px nachgesetzt werden. Die Landeweite (8 px) ist gesetzt, nicht aus dem Blatt gemessen.",
+  "Winken: In beiden Blättern winken Bild 3 und 5 mit dem anderen Arm, das Paket springt auf die andere Seite; der zweite Prompt mit ausdrücklich benannten Seiten änderte nichts. Brauchbar sind 4 von 6 Bildern; das Winken ist ein Auf und Ab zwischen hoher und schulterhoher Pfote statt eines Hin und Her. Der Rumpf ist nicht aus Teilen gebaut und ändert sich zwischen den Bildern sichtbar mit (17–36 % geänderte Pixel einschließlich Arm).",
+  "Der Wechsel von der Seitenansicht (Stehen) zur Dreiviertelansicht (Winken) ist ein harter Schnitt ohne Drehbild; ein Drehbild hätte ein weiteres Blatt gebraucht.",
+  "tools/sprites.py slice (rohe Fassung) teilt an der dünnsten Spalte: In 6 von 8 Laufzellen stecken Splitter des Nachbarbilds (Schalfransen, 10–38 px bei 120 px Zellhöhe). Die Ausrichtung am Schwerpunkt lässt den Kopf im Bildmaßstab um 6,8 px springen, das Sprungblatt verliert seine Höhe (alle Bilder auf der Unterkante), und der Maßstab je Blatt über die höchste Zelle lässt die Figur beim Zustandswechsel die Größe ändern.",
+  "Das Erklärfeld ist eine Prüf- und Erklärhilfe, kein Spielbestandteil; es deckt etwa 16 % des Bildes, mit dem Textfeld zusammen etwa 27 %. Zwei Sterne schimmern durch das halbtransparente Feld, und der Leuchtfeuerstrahl nach links verschwindet nach etwa 160 px hinter dem Feld; nach rechts sind es bis zum Bildrand nur 170 px. Deutlich zu sehen ist der Strahl bei 0–1,5 s (links) und 2,5–4,5 s (rechts), dazwischen blitzt die Lampe zur Kamera hin auf.",
+  "Möwen: In der ersten Fassung lagen sie als oberste Effektebene auf festen Höhen über allem; Möwe 1 lag bei 0–0,8 s auf dem Hausdach und kreuzte bei 17–18 s den Laternenpfahl, die kleine, ferne Möwe 2 kroch bei 0–3 s über den Laternenarm im Vordergrund. Jetzt beschneidet sie die Himmelsmaske, sie fliegen hinter Haus, Laterne, Leuchtturm und Felsen durch, und ihre Startlagen liegen im freien Himmel. Rest: Himmel, der ganz von Konturen umschlossen ist (das Dreieck zwischen Laternenarm, Strebe und Pfahl, etwa 20×30 px), gehört nicht zur Maske; eine Möwe verschwindet dort kurz, obwohl dahinter Himmel zu sehen ist.",
+  "Die Außenkontur ist Code, nicht vom Bildmodell: Nach dem Verkleinern (×0,43–0,57 je Blatt) hatte der Dachs kaum Umriss, die dunklen Beine verschwammen mit dem schiefergrauen Pflaster. Die gezogene Kontur (2 px) schließt nur den Umriss; Innenlinien (Arm vor dem Körper, Weste, Paket) bleiben weich gemalt, und das Fell behält seine Textur, der Dachs ist also weiterhin feiner gemalt als der flache Hintergrund.",
+  "Bodenzeile: Die Ausrichtung an der tiefsten Blattzeile (alle Winkbilder 754) und der Beinkorrelation ließ Winkbild 6 rund 0,45 px tiefer sitzen als 1, 2 und 4, weil das Modell dort breitere Sohlen gemalt hat (Zeile 656 mit einem schwachen Pixel, kräftige Fußzeilen 1 px tiefer); im Wechsel C-D wippten die Füße um 1 px. Behoben über die Sohlenkante (siehe pipeline). Dasselbe Verfahren beim Laufen verschob die weichen, je Bild neu gemalten Zehenspitzen um bis zu 3 px und ließ den Standfuß rutschen; dort bleibt die Ausrichtung an der tiefsten Zeile, Laufbild 4 steht dadurch 1 px höher (Sohlenkante 654,7 gegen 655,4–655,8), was im Gang nicht auffällt.",
+  "Rauch: zuerst als weiche, radiale Verlaufsballen gezeichnet, die wie Airbrush aus dem Strich fielen; jetzt flache Ballen in zwei Tonstufen mit dünner Umrisskontur. Sie lösen sich am Ende durch Schrumpfen auf statt durch Ausblenden, weil sich halbtransparente, deckende Flächen sonst gegenseitig die Kontur zeigen würden.",
+  "Die Figur bekommt kein Laternenlicht, nur eine gleichmäßige Dämmerungstönung; der Hintergrund ist um 1,3 % vergrößert und dadurch minimal weicher. Im ersten Bild der Aufnahme ist der Dachs noch nicht zu sehen (er läuft ab 0,3 s ins Bild)."
+ ],
+ "lessons": [
+  "KI-Blätter über Zusammenhangskomponenten des Alphakanals zerlegen, nicht über Spalten: Schalenden und erhobene Pfoten ragen in Nachbarspalten. Berühren sich Figuren, die Maske erodieren, bis die erwartete Zahl Kerne entsteht, und die Kerne in der Maske zurückwachsen lassen.",
+  "Doppelte Posen findet ein Vergleich der Beinmasken aller Bildpaare, am Kopf ausgerichtet: Doppelte lagen bei 6–16 %, echte Phasenunterschiede bei mindestens 26 %. Vor dem Einbau prüfen, nicht nach dem Ansehen des Gangs.",
+  "Kopfanker = Schnauzenspitze, verfeinert per Kreuzkorrelation des Kopfausschnitts; dieselbe Korrelation über eine Reihe von Skalen liefert den Maßstab je Bild und je Blatt (Schritt 0,005, Korrelation 0,81–0,93). So lassen sich Blätter mit 19–31 % Größenunterschied auf eine Figurgröße bringen.",
+  "Vorschub aus dem Standfuß statt konstantem Tempo: eine kleine Fußtabelle (Bild, Bodenlauf, Ferse oder Zehe) je Wechsel ergibt in der Godot-Ausgabe höchstens 1 px Rutschen. Zum Prüfen die Figur allein vor Magenta rendern und die Bodenläufe der untersten 3 Zeilen vergleichen.",
+  "Jede Zelle in einer einzigen Abtastung erzeugen: Pillow resize mit box in Gleitkomma (vormultipliziert, Lanczos) setzt Maßstab und Unterpixel-Lage zugleich; kein zweites Runden, kein Weichzeichnen durch Verschieben in Godot.",
+  "Stehen aus Teilen: Lid aus dem Blinzelbild am Kopf per Korrelation einpassen (hier Maßstab 1,025, Versatz 5/−3 px) und weich in den festen Körper blenden; Atmen als Verschiebung des Oberkörpers mit gedehntem Band darunter, Beine und Füße bleiben pixelgleich.",
+  "Haltezeiten in ganzen Videobildern aus den SpriteFrames-Dauern rechnen und das Bild selbst setzen: AnimatedSprite2D bleibt Datenquelle und Darstellung, aber jedes Bild hält genau 5 bzw. 3 Videobilder, und der Vorschub hängt am Bildwechsel.",
+  "Zustandswechsel an den Füßen ausrichten: zwischen Seitenansichten die Zehenenden am Boden, mit der Dreiviertelansicht die Mitte beider Füße über 24 Zeilen; die unterste Zeile allein trifft dort nur einen Fuß (erster Versuch: 20 px Sprung beim Wechsel).",
+  "Codex mit Referenzblatt hält Farben über Blätter konstant (Bild 1 je Blatt gegen das Laufblatt, je Kostümteil: Oklab ΔL ≤ 0,026, Δa/Δb ≤ 0,011, in sheets.json); eine Farbkorrektur war nicht nötig. Die Probleme liegen in Form, Maßstab und Phasen, nicht in der Farbe.",
+  "Das erste gelungene Blatt als zweite Referenz bindet alle weiteren Aufträge in genimg an dasselbe Modell (hier Codex) und hält den Strich gleich; den Maßstab hält es nicht.",
+  "Prompt-Gegenmittel gegen Seitenwechsel (Seiten aus Sicht des Bildes benennen, Wechsel verbieten) wirkten nicht; Aussortieren wirkt. Eine Geste mit hoch erhobenem Arm „nach links geneigt“ zeichnete das Modell beide Male mit dem anderen Arm.",
+  "Alles, was am Himmel fliegt, mit einer Himmelsmaske beschneiden statt als oberste Ebene zu zeichnen: Flutfüllung von der oberen Kante, die nur an den dunklen Objektkonturen stoppt (hellster Kanal < 70); Wolken mit dünnem, hellerem Rand bleiben Himmel. Im canvas_item-Shader an der Weltlage abtasten (MODEL_MATRIX im vertex()), dann stimmt es auch bei anderer Fenstergröße. Eine Maske über die Farbe (Blau über Rot) taugte nicht: Sie nahm Dach und Felsen mit und ließ den orangen Abendhimmel aus.",
+  "Konturen für KI-Figuren in Code: Alpha der fertig abgetasteten Zelle mit einer Kreisscheibe (r = 2) dilatieren, in der gemessenen Konturfarbe des Hintergrunds unter die Zelle legen und den Anker um r tiefer setzen. Kostet nichts zur Laufzeit und keine zweite Abtastung.",
+  "Stehende Figuren an der Sohlenkante ausrichten, nicht an der tiefsten Zeile über einer Alpha-Schwelle: Spaltendeckung der Sohle aufsummieren, 75. Perzentil, und die Zelle mit verschobener Lage neu abtasten. Für Laufbilder ungeeignet (Zehen verschieben sich); dort hält die tiefste Zeile den Standfuß.",
+  "Alpha im fertigen Godot-Bild messen statt den Abstand zur Grundfarbe: zwei Aufnahmen vor Magenta und Grün, a = 1 − (Magenta-Bild − Grün-Bild) / 255. Weiche Kanten machen Fußmessungen schwellenabhängig, deshalb bei zwei Schwellen (0,3 und 0,5) prüfen.",
+  "Blinzeln gehört nicht in die Atemschleife: eine eigene Animation mit dem Lid je Atemstufe, Zeitpunkte per RandomNumberGenerator mit fester seed, auf das 6-Bilder/s-Raster gerundet. So wiederholt sich im Dauerlauf kein Muster.",
+  "Rauch im Strich einer flachen Szene: erst alle Konturringe, dann alle Schatten-, dann alle Lichtflächen deckend zeichnen; die Kontur bleibt nur am Umriss, und die Ballen verschmelzen zu einer Form."
+ ],
+ "assets": [
+  {
+   "file": "assets/bg.png",
+   "kind": "background",
+   "made_with": "agy (Gemini) + prep_bg.py (1280 Breite, 16:9-Ausschnitt)",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/bg_mask.png",
+   "kind": "mask",
+   "made_with": "prep_bg.py: R Wasser (über die Farbe), G freier Himmel (Flutfüllung bis zu den dunklen Konturen)",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/sky_clip.gdshader",
+   "kind": "shader",
+   "made_with": "von Hand: Möwen mit dem Himmelskanal der Maske beschneiden",
+   "prompt": ""
+  },
+  {
+   "file": "assets/sheets/walk.png",
+   "kind": "sprite-sheet",
+   "made_with": "Codex (gpt-image) mit Referenzblatt; 8 Bilder, 4 Posen; auf 50 % verkleinert (Original in assets/raw/)",
+   "prompt": "assets/raw/walk.json"
+  },
+  {
+   "file": "assets/sheets/idle.png",
+   "kind": "sprite-sheet",
+   "made_with": "Codex mit Referenzblatt + Laufblatt; 6 Bilder, davon Bild 1 (Körper) und das Lid aus Bild 4 verwendet; 50 %",
+   "prompt": "assets/raw/idle.json"
+  },
+  {
+   "file": "assets/sheets/jump.png",
+   "kind": "sprite-sheet",
+   "made_with": "Codex mit Referenzblatt + Laufblatt; 6 Bilder mit eingezeichneter Flughöhe; 50 %",
+   "prompt": "assets/raw/jump.json"
+  },
+  {
+   "file": "assets/sheets/wave.png",
+   "kind": "sprite-sheet",
+   "made_with": "Codex mit Referenzblatt + Laufblatt; erster Versuch, Bild 3 und 5 mit dem anderen Arm; nicht eingebaut; 50 %",
+   "prompt": "assets/raw/wave.json"
+  },
+  {
+   "file": "assets/sheets/wave2.png",
+   "kind": "sprite-sheet",
+   "made_with": "Codex, zweiter Versuch mit benannten Seiten; gleicher Fehler; Bilder 1, 2, 4, 6 eingebaut; 50 %",
+   "prompt": "assets/raw/wave2.json"
+  },
+  {
+   "file": "assets/sprites/badger_walk.png",
+   "kind": "sprite-strip",
+   "made_with": "build_sprites.py: Laufbilder 1–4, Kopfanker, Kopfgröße je Bild, 2-px-Kontur, 125×205 je Zelle",
+   "prompt": "assets/raw/walk.json"
+  },
+  {
+   "file": "assets/sprites/badger_idle.png",
+   "kind": "sprite-strip",
+   "made_with": "build_sprites.py: Körper aus Idle-Bild 1, Atmen 0/1/2 px, je ohne und mit Lid aus Bild 4 (6 Zellen), 2-px-Kontur",
+   "prompt": "assets/raw/idle.json"
+  },
+  {
+   "file": "assets/sprites/badger_jump.png",
+   "kind": "sprite-strip",
+   "made_with": "build_sprites.py: 6 Sprungbilder mit gemalter Höhe, Zehen beim Absprung fest, 2-px-Kontur",
+   "prompt": "assets/raw/jump.json"
+  },
+  {
+   "file": "assets/sprites/badger_wave.png",
+   "kind": "sprite-strip",
+   "made_with": "build_sprites.py: Winkbilder 1, 2, 4, 6 aus Blatt 2, an den Beinen und der Sohlenkante ausgerichtet, 2-px-Kontur",
+   "prompt": "assets/raw/wave2.json"
+  },
+  {
+   "file": "assets/sprites/raw_walk.png",
+   "kind": "sprite-strip",
+   "made_with": "tools/sprites.py slice --frames 8 --height 120 (rohe Vergleichsfassung, mit Splittern der Nachbarbilder)",
+   "prompt": "assets/raw/walk.json"
+  },
+  {
+   "file": "assets/sprites/raw_wave.png",
+   "kind": "sprite-strip",
+   "made_with": "tools/sprites.py slice --frames 6 --height 120 (rohe Vergleichsfassung mit Seitenwechsel)",
+   "prompt": "assets/raw/wave2.json"
+  },
+  {
+   "file": "demo/badger_frames.tres",
+   "kind": "spriteframes",
+   "made_with": "build_sprites.py: AtlasTexture je Zelle, Dauer je Bild, fünf Animationen (walk, idle, blink, jump, wave)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/sprites/anim.json",
+   "kind": "data",
+   "made_with": "build_sprites.py: Anker, Vorschub, Zehen- und Fußmitte, Sohlenkante je Zelle, Vorschau-Status, Erklärzeilen",
+   "prompt": ""
+  },
+  {
+   "file": "assets/sheets.json",
+   "kind": "data",
+   "made_with": "build_sprites.py: alle Messwerte je Blattbild (Lage, Kopfanker, Kopfmaßstab, Bodenläufe, Doppelte, Flimmern)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/check/walk_duplicates.png",
+   "kind": "check",
+   "made_with": "make_checks.py: Laufbilder am Kopf ausgerichtet, 5–8 unter 1–4 mit Abweichung der Beinmasken",
+   "prompt": ""
+  },
+  {
+   "file": "assets/check/walk_feet.png",
+   "kind": "check",
+   "made_with": "make_checks.py: Bodenläufe der Laufbilder 1–4 mit den Enden der Fußtabelle",
+   "prompt": ""
+  },
+  {
+   "file": "assets/check/idle_flicker.png",
+   "kind": "check",
+   "made_with": "make_checks.py: geänderte Pixel je Bild, ganze KI-Bilder gegen gebauten Idle",
+   "prompt": ""
+  },
+  {
+   "file": "assets/check/wave_flip.png",
+   "kind": "check",
+   "made_with": "make_checks.py: beide Winkblätter, Seitenwechsel in Bild 3 und 5 markiert",
+   "prompt": ""
+  },
+  {
+   "file": "assets/check/scale_drift.png",
+   "kind": "check",
+   "made_with": "make_checks.py: je ein Bild jedes Blatts im Blattmaßstab und normiert",
+   "prompt": ""
+  },
+  {
+   "file": "assets/check/metrics.json",
+   "kind": "data",
+   "made_with": "make_checks.py: Kopfzittern und Höhen der rohen gegen die korrigierte Fassung",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Fredoka (variabel)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/fredoka"
+  },
+  {
+   "item": "Schrift JetBrains Mono (variabel)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/jetbrainsmono"
+  },
+  {
+   "item": "Hash without Sine (Shader-Funktion), Copyright (c) 2014 David Hoskins – in demo/shaders/bg.gdshader",
+   "license": "MIT",
+   "source": "https://www.shadertoy.com/view/4djSRW"
+  }
+ ],
+ "image_generations": 6,
+ "tool_issues": [
+  "tools/sprites.py slice teilt Blätter an Spalten: Ragen Schalenden in die Spalte des Nachbarbilds (hier in allen fünf Blättern), teilt es an der dünnsten Spalte und lässt Splitter des Nachbarbilds in der Zelle (6 von 8 Laufzellen, 10–38 px bei 120 px Zellhöhe). Umgangen mit eigenem Zerlegen über Zusammenhangskomponenten (scripts/kss_sheet.py); die rohe Vergleichsfassung zeigt das Verhalten absichtlich.",
+  "tools/sprites.py slice richtet waagerecht am Schwerpunkt aus (Kopf springt, sobald Arm oder Schal sich bewegen) und skaliert je Blatt über die höchste Zelle (Figurgröße hängt von der Pose ab, z. B. Sprung). PIPELINE.md empfiehlt den Kopf; eine Option --align head und ein fester Maßstab (--scale) würden helfen."
+ ],
+ "status": "done"
+}

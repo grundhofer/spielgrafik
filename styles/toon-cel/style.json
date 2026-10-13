@@ -1,0 +1,164 @@
+{
+ "slug": "toon-cel",
+ "name": "Cel-Shading mit Konturen",
+ "family": "modern3d",
+ "kind": "style",
+ "era": "2000–heute",
+ "summary": "Echtzeit-3D mit Stufenlicht statt weicher Verläufe: jede Fläche zeigt zwei bis drei harte Töne (kühler Schatten, Mittelton, Spitzlicht), dazu dunkle Konturen um Silhouetten, an Knicken und an Farbgrenzen, eine helle Lichtkante (Rim-Light) an den Rändern und eine kräftige, warme Palette. Wasser, Himmel, Wolken, Rauch und Lichtkegel sind im selben Stil vereinfacht: Wasser mit Farbstufen, Wellenstrichen und weißen Schaumlinien, Wolken als violette Haufen mit glühender Unterseite, Rauch als Bällchen mit Kontur. Der ganze Look entsteht aus Shadern auf den gemeinsamen Modellen aus shared/3d, ohne Texturen und ohne KI-Bilder.",
+ "references": [
+  "Jet Set Radio (Smilebit 2000): früher Cel-Shading-Titel mit dicken Konturen und flachen, kräftigen Farben",
+  "The Legend of Zelda: The Wind Waker (Nintendo 2002): Stufenlicht, stilisiertes Meer mit Schaum, Wolken als einfache Formen",
+  "Borderlands (Gearbox 2009): Konturen als Nachbearbeitung über die ganze Szene",
+  "The Walking Dead und The Wolf Among Us (Telltale 2012/2013): Adventures mit Cel-Shading, Tuschelinien und festen Kameras",
+  "Ni no Kuni (Level-5 2010) und Genshin Impact (miHoYo 2020): Figuren mit Stufenlicht und Lichtkante",
+  "Sable (Shedworks 2021) und Hi-Fi Rush (Tango Gameworks 2023): flache Farben mit betonten Linien, Comic-Oberflächen"
+ ],
+ "traits": [
+  "Stufenlicht mit drei Tönen je Material (toon.gdshader, eigene light()-Funktion): Schatten = nur Umgebungslicht (kühl violett, 0,60 | 0,53 | 0,76), Mittelton = 55 % Sonne ab N·L 0,02, Spitzlicht = volle Sonne ab N·L 0,55, Übergänge 0,012 breit; der Schlagschatten der Sonne wird ebenso hart abgeschnitten. Gemessen mit Vergleichsschalter --no-toon (weiches Lambert): 28,4 % (Totale, Bild 60) bzw. 15,8 % (Nahaufnahme, Bild 144) der Pixel anders",
+  "Konturen als Nachbearbeitung über die ganze Szene (outline_post.gdshader): Silhouetten aus dem Tiefenpuffer (1/z wird aus Mitte und Gegenseite vorhergesagt, deshalb keine Fehllinien auf flach gesehenem Boden), Knicke aus dem Normalenpuffer, Farbgrenzen aus einer Material-ID im Rauheitskanal; 2 px breit in der Nähe, 1 px ab 30 m, ausgeblendet ab 120–600 m; Linienfarbe = abgedunkelte Farbe darunter, mit violetter Tinte gemischt. Ohne Konturen 17,3 % (Totale) bzw. 8,7 % (Nahaufnahme) der Pixel anders, die Farbgrenzlinien allein 3,4 % bzw. 1,9 %",
+  "Umgedrehte Hülle (inverted hull) um den Dachs als zweiter Durchgang: 2,5 px im Bildraum, höchstens 12 mm; verstärkt nur dessen Silhouette (0,2 % der Pixel in der Totale, 1,0 % in der Nahaufnahme)",
+  "Rim-Light: harte Lichtkante in Abendorange an allen Silhouetten außer der vom Abendhimmel abgewandten Seite (Fresnel-Schwelle 0,5); im Poster deutlich an Mütze, Weste, Winkarm und Beinen des Dachses, schwächer an Booten, Fässern, Leuchtturm und Fels, nicht auf Pflaster, Sand und Gras",
+  "Kräftige Palette: alle 13 Hafen- und 11 Figurenmaterialien per Name durch gesättigtere, wärmere Farben ersetzt (z. B. Gras #76B24C statt #6E8048, Dach #4F5F99 statt #4A5361, Schal #EC3238 statt #A8242A); Abendsonne warm, Schatten violett",
+  "Stilisiertes Wasser (toon_water.gdshader): harte Farbstufen (Türkis bis 1,6 m Wassertiefe entlang des Sehstrahls, sonst Tiefblau), Wellenstriche aus quer gestreckten Voronoi-Kanten, in einzelne Striche zerlegt und treibend; weiße Schaumkante, wo das Wasser Boote, Pfähle, Felsen und Kaimauer berührt (0,32 m), dazu ein abgelöster Schaumring, der alle 2,4 s nach außen wandert und schmaler wird; Himmelsspiegelung nur in der Ferne in zwei Stufen; Glitzern unter Laterne und Leuchtfeuer",
+  "Stilisierte Wolken: vier Haufenwolken aus gestauchten Kugeln (fester Seed), 420–620 m entfernt, drei harte Töne (violett, rosa, orange) nach der Normale eines Ellipsoids um die ganze Wolke, Licht von unten (Sonne schon unter dem Horizont), mit Konturen; treiben mit 2–3,5 m/s nach rechts",
+  "Himmel als Sky-Shader: Glutband am Horizont, Koralle, Violett, Indigo, funkelnde Sterne; die vier Farben sind globale Shader-Uniforms und färben auch die Spiegelung im Wasser",
+  "Effekte im selben Stil: Rauch als Toon-Bällchen mit Kontur, die wachsen, aufsteigen und schrumpfen statt auszublenden; Lichtkegel des Leuchtturms als flache Fläche mit hellem Kern, weich auslaufend; Lichthöfe als zwei harte Ringe (die Laterne flackert, das Leuchtfeuer blitzt bei 5,5 s auf, wenn der Strahl zur Kamera zeigt)",
+  "Zwei Einstellungen mit Fahrt: 0–2,4 s Totale mit der Hauptkamera aus shared/3d (Dachs 67–72 px), 2,4–4,3 s Kamerafahrt, ab 4,3 s feste Nahaufnahme (Dachs 216–220 px, Leuchtturm mit Strahl rechts, Boot und Steg in der Mitte); Poster bei 4,8 s",
+  "Animierte 3D-Figur: Walk mit 0,73 m/s, in den letzten Schritten biegt der Dachs zur Nahaufnahme-Kamera ab (−60°, gedreht nur bei einem Fuß am Boden und um dessen Bodenpunkt), bremst in der Durchgangsphase, Idle, Wave. Gemessen (scripts/measure_badger.py): Standfuß beim Laufen höchstens 7,6 mm je Bild, in der festen Totale höchstens 0,64 px; im Stehen und Winken 0,7 mm; in den gerenderten Silhouetten der Nahaufnahme Fußzeile 644–645, Kopf ohne Sprung über 1 px",
+  "Textoberfläche im Toon-Stil (ui.gd): schräges gelbes Ortsschild (Lilita One) von Anfang an; der Dialogkasten springt bei 3,95 s mit Überschwingen auf, wenn die Kamera beim Dachs ankommt, dicke Tintenkontur, harter Versatzschatten ohne Unschärfe, Text Zeichen für Zeichen (Fredoka), Auswahl als Pillen, gewählte orange mit hüpfendem Pfeil. Kasten 758×168 px (13,8 %), mit Ortsschild etwa 16 % des Bildes"
+ ],
+ "camera": "Bis 2,4 s die Hauptkamera aus shared/3d unverändert (−1,8 | 3,4 | 14,5, 3° nach unten, fov 42). Von 2,4 bis 4,3 s Fahrt (doppelt geglättet, Position linear, Drehung per Slerp, fov 42 → 52) zu einer festen Nahaufnahme bei (−0,52 | 1,4 | 4,99) mit Blick auf (−1,02 | 1,25 | −3,71), fov 52 vertikal; Werte aus scripts/frame_close.py (Füße bei x≈255, y≈640, Leuchtfeuer bei y≈67, Dialogkasten unten rechts frei vom Dachs).",
+ "resolution": "1280×720 nativ, Forward+, SMAA statt MSAA (glättet auch die Konturen der Nachbearbeitung); Linien 1–2 px",
+ "pipeline": [
+  {
+   "step": "KI-Bilder versucht",
+   "tool": "genimg (agy, Gemini-Bildmodell)",
+   "detail": "Geplant waren ein Texturblatt (3×3 Toon-Texturen mit Tuschelinien als Detail für Fels, Dach, Holz, Mauer) und ein Zielbild (die neutrale Blender-Vorschau shared/3d/preview_harbor_main.png als Cel-Shading-Spielbild übermalt) als Farbskript. Beide Aufrufe meldeten usage limit (agy), es entstand kein Bild; laut PIPELINE.md abgebrochen. Prompts liegen in prompts/textures.txt und prompts/paintover.txt. Der Look kommt deshalb vollständig aus Shadern und Code."
+  },
+  {
+   "step": "Stufenshader und Toon-Palette",
+   "tool": "Godot 4.7.2, shaders/toon.gdshader, main.gd",
+   "detail": "Alle glTF-Materialien aus harbor.glb und badger.glb per resource_name durch einen ShaderMaterial mit eigener light()-Funktion ersetzt (Sonne: drei Töne, Punktlichter: zwei Ringe, Glanz als harter Fleck), Farbe, Rim-Stärke, Glanz und Material-ID je Name in PALETTE/BADGER_PALETTE; Modelle unverändert aus shared/3d kopiert"
+  },
+  {
+   "step": "Konturen",
+   "tool": "shaders/outline_post.gdshader + outline_common.gdshaderinc, shaders/outline_hull.gdshader",
+   "detail": "Bildschirmfüllendes QuadMesh vor der Kamera (POSITION im Clip-Raum, render_priority 10 nach dem Wasser) liest hint_depth_texture, hint_normal_roughness_texture und hint_screen_texture; Figur zusätzlich mit umgedrehter Hülle als next_pass. Für Mobile/Compatibility wählt main.gd zur Laufzeit outline_post_depth.gdshader (nur Silhouetten)"
+  },
+  {
+   "step": "Wasser, Himmel, Wolken, Effekte",
+   "tool": "toon_water / toon_sky / toon_cloud / toon_beam / toon_halo.gdshader, main.gd",
+   "detail": "Wasser durchsichtig gerendert (liest den Tiefenpuffer für Schaum), Wellen über Weltkoordinaten, Zeit als globale Uniform toon_time; Wolken und Rauch aus SphereMesh-Kugeln mit festem Seed im Code gebaut; Lichtkegel als CylinderMesh"
+  },
+  {
+   "step": "Licht",
+   "tool": "Godot (DirectionalLight3D ×2, OmniLight3D ×3)",
+   "detail": "Abendsonne von links (Richtung 0,85 | −0,45 | −0,28, ≈27° hoch) mit Schatten für die Szene; eigenes Figurenlicht von links vorn oben nur für den Dachs (Ebene 2, light_cull_mask), damit er in der Nahaufnahme alle drei Töne zeigt; Umgebungslicht als feste Farbe"
+  },
+  {
+   "step": "Bildausschnitt und Laufplan rechnen",
+   "tool": "scripts/frame_close.py, scripts/walk_timing.py (Python, ohne Godot)",
+   "detail": "Nahaufnahme per Projektion (Keep Height) gesucht: Dachs links über dem Kasten, Leuchtfeuer im Bild, Boot über dem Kasten. Laufplan: Bremsbeginn 3,22 s so gewählt, dass der Lauf bei Phase 0,81 (Durchgang) endet; Endpunkt (−2,60 | 0 | 1,50)"
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/measure_badger.py, scripts/compare_switches.py, scripts/compare_renderers.py, tools/capture.py",
+   "detail": "Füße und Kopf über Knochen (Welt- und Bildkoordinaten) und über weiße Silhouetten der gerenderten Bilder gemessen; Vergleichsschalter --no-post, --no-hull, --no-ids, --no-toon (Pixelanteile in traits, Bilder assets/preview/switches_*.png); zwei Läufe ohne Schalter bitgleich (Bild 60 und 144); Probeläufe mit Mobile und Compatibility; capture.py mit --poster-at 0.8"
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, Forward+, MSAA aus, SMAA an (screen_space_aa=2), Shadow-Atlas 8192, globale Shader-Uniforms toon_time, toon_rim_dir, toon_rim_color, sky_top, sky_mid, sky_low, sky_glow",
+  "toon.gdshader: fragment() setzt ALBEDO, SPECULAR 0, Material-ID als ROUGHNESS = (id + 0,5)/16 und das Rim-Light als EMISSION; light() addiert für die Sonne smoothstep-Stufen auf N·L × harter Schattenschwelle (ATTENUATION 0,4–0,6), für Punktlichter zwei Ringe auf ATTENUATION × N·L; Uniform smooth_shading schaltet für den Vergleich auf Lambert",
+  "Environment: Hintergrund Sky mit toon_sky.gdshader, Umgebungslicht als Farbe (0,60 | 0,53 | 0,76), Spiegelungen aus, Tonemapping linear, Glow (Schwelle 1,05, additiv) für Fenster und Lampen, Tiefennebel 60–900 m in Rosaviolett",
+  "outline_post.gdshader: render_mode unshaded, depth_test_disabled, blend_mix; vertex() setzt POSITION = vec4(VERTEX.xy, 1, 1); Silhouette, wenn der Fehler der 1/z-Vorhersage über 3,5 % liegt und der Nachbar weiter hinten ist (Linie liegt auf dem vorderen Objekt); Knick, wenn 1 − N·N > 0,35; ID aus dem Alphakanal dekodiert (Godot speichert für dynamische Objekte 1 − Rauheit und nur 7 Bit); Linien unter y = −0,86 (unter Wasser) und auf dem Himmel unterdrückt",
+  "outline_hull.gdshader: next_pass mit cull_front, Eckpunkte im Clip-Raum entlang der projizierten Normale um width_px verschoben (konstante Pixelbreite), begrenzt auf 12 mm in Weltmaß",
+  "toon_water.gdshader: unshaded, ALPHA = 1 (damit im durchsichtigen Durchgang und mit Zugriff auf den Tiefenpuffer), Wassertiefe = Länge des Sehstrahls bis zur Geometrie dahinter; Dünung als Verschiebung wie in shared/3d; Voronoi-Kanten (F2 − F1) für Wellenstriche; Glitzern als Spiegelung der Lampenpositionen an der Wellennormale mit harter Schwelle",
+  "toon_cloud.gdshader: unshaded, instance uniform cloud_center/cloud_radii je Kugel (set_instance_shader_parameter), Normale = 70 % Ellipsoid + 30 % Kugel; toon_beam.gdshader: additiv, cull_back (sonst addieren sich Vorder- und Rückwand zu hellen Ellipsen); toon_halo.gdshader: Billboard mit zwei harten Ringen",
+  "Figurenlicht: zweites DirectionalLight3D mit light_cull_mask = 2, der Dachs liegt auf Ebene 2; die Sonne hat light_cull_mask ohne Ebene 2, wirft aber weiter dessen Schatten",
+  "Dachs: AnimationPlayer im manuellen Modus (callback_mode_process MANUAL, advance(delta) in main.gd): Pose, dann Vorschub entlang der Blickrichtung (0,367 m/s × speed_scale), dann Drehung um den Bodenpunkt des Standfußes (höchstens 3° je Bild, nur bei einem Fuß am Boden); Walk → Idle (0,3 s) bei 3,57 s, Wave ab 4,0 s; Idle und Walk auf LOOP_LINEAR gesetzt; models/*.glb.import mit generate_lods=false",
+  "Attach-Muster aus shared/3d übernommen (Lichter und Lichtkegel an den Empties); Materialien erst ersetzen, dann umhängen, sonst bekäme der Lichtkegel ein Toon-Material",
+  "ui.gd: Control in einer CanvasLayer, zeichnet in _draw() mit StyleBoxFlat (Ecken 24 px, Rand 5 px, Schatten als versetzte zweite Box), Fredoka als FontVariation (wght 560), Lilita One für das Ortsschild; Zeilenumbruch satzweise",
+  "Alles hängt an aufsummiertem delta und festen Seeds (Wolken, Rauch, Laternenrauschen); Vergleichs- und Messschalter nach -- auf der Kommandozeile: --no-post, --no-hull, --no-ids, --no-toon, --no-shadow, --static-cam, --mask, --measure"
+ ],
+ "techniques": [
+  "cel-shading",
+  "konturen-nachbearbeitung",
+  "inverted-hull",
+  "rim-light",
+  "toon-wasser",
+  "prozedurale-animation",
+  "kamerafahrt",
+  "nachbearbeitung",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 1,
+  "consistency": 5,
+  "effort": 2,
+  "text_adventure": 4,
+  "mobile": 3
+ },
+ "ratings_note": "ai_fit 1, weil die KI hier nichts beigetragen hat: Der Look entsteht vollständig aus Shadern; die zwei geplanten KI-Bilder (Texturblatt, Zielbild als Farbskript) scheiterten am agy-Kontingent. Wie gut ein Bildmodell Cel-Shading trifft, ist damit nicht geprüft. consistency 5 und effort 2: Ein neues Modell braucht nur Materialnamen mit Farbe, Rim-Stärke und ID in der Palette, Linien, Licht und Effekte gelten automatisch; Aufwand entsteht durch die 3D-Modelle und die Kameraeinstellungen je Ort. mobile 3 ist geschätzt: Die Szene ist nicht teuer (66 150 Dreiecke, davon 36 992 in den 34 Wolkenkugeln mit 32 × 16 Segmenten, die sich für Smartphones stark senken ließen; ein Schattenlicht, ein Vollbild-Shader mit etwa 13 Texturzugriffen je Pixel, Wasser mit zwei Voronoi-Mustern), aber die vollen Konturen brauchen den Normalenpuffer von Forward+. Probeläufe auf dem Mac: Mobile läuft ohne Fehler mit der Ersatz-Kontur (nur Silhouetten), 15,0 % (Totale) bzw. 5,8 % (Nahaufnahme) der Pixel weichen um mehr als 8 Stufen ab, vor allem fehlen die Fugen im Pflaster; Compatibility läuft ebenfalls (nur eine Warnung zu SMAA), die Farben weichen aber in 70,8–88,8 % der Pixel ab (Himmel und Fels deutlich greller) und müssten neu abgestimmt werden. Auf einem Smartphone nicht gemessen.",
+ "verdict": "Gut geeignet für unser Textadventure, wenn wir 3D-Orte bauen wollen: Cel-Shading verzeiht einfache Geometrie und kommt ohne Texturen aus, die Konturen machen kleine Szenen und Figuren lesbar, und die Oberfläche passt dazu. Ein Ort kostet ein einfaches 3D-Modell, eine Palette und zwei, drei feste Kameras (Totale, Nahaufnahme); Shader, Licht-Aufbau, Messskripte und Oberfläche sind wiederverwendbar. Der volle Look braucht Forward+ (Desktop); für Smartphones müssten die Knick- und Farbgrenzlinien anders entstehen (Hülle für alles oder eigener Normalen-Durchgang). Alternative mit weniger Laufzeitkosten: je Ort ein Standbild aus dieser Demo plus wenige animierte Teile (Wasser, Lichter, Rauch).",
+ "pitfalls": [
+  "Keine KI-Bilder: Texturblatt und Zielbild meldeten beide usage limit (agy); Codex ist laut PIPELINE.md ohne Guthaben. Ob KI-Detailtexturen (Tuschelinien auf Fels, Dach, Holz) den Look verbessert hätten, ist offen; die großen Flächen (Pflaster, Felsnase, Dach) wirken flach.",
+  "Bewusste Abweichungen vom Auftrag bzw. von shared/3d: Kamerafahrt zu einer Nahaufnahme (in der Totale ist der Dachs nur 67–72 px hoch, Stufen und Rim-Light sind dort kaum zu sehen); Sonne von links statt links vorn; der Dachs startet bei x = −5 statt −6 und dreht sich nur auf −60°; der Dialogkasten erscheint erst bei 3,95 s, damit die Totale frei bleibt (das Ortsschild ist immer zu sehen).",
+  "Mit der Sonne von links vorn fielen alle Schatten nach hinten und waren unsichtbar; von links leicht hinten lag der Dachs im Schatten des Häuschens; in der Nahaufnahme zeigt der Dachs der Sonne ohnehin die Schattenseite. Gelöst mit einem eigenen Figurenlicht (Ebene 2). Damit kommen Figur und Szene aus verschiedenen Richtungen, was physikalisch nicht stimmt, aber kaum auffällt.",
+  "hint_normal_roughness_texture gibt es nur in Forward+. Steht der Shader in der .tscn, bricht Mobile mit SHADER ERROR ab; deshalb lädt main.gd den Konturshader je Renderer. Die Ersatzfassung zeichnet nur Silhouetten: Pflasterfugen und Farbgrenzlinien fehlen, auf dem Pflaster bleiben einzelne Strichel.",
+  "Das Wasser muss durchsichtig gerendert werden, damit es den Tiefenpuffer für den Schaum lesen kann. Es steht deshalb selbst nicht im Tiefenpuffer: Ohne Gegenmaßnahme zeichnete die Kontur die Kanten von Kaimauer und Meeresboden unter Wasser nach. Lösung: keine Linien unterhalb y = −0,86. Die Grenze Wasser–Mauer hat deshalb keine Linie, nur den Schaum.",
+  "Der Rauheitskanal des Normalenpuffers speichert für dynamische Objekte 1 − Rauheit und nur 7 Bit; die Material-ID muss entsprechend dekodiert werden und ist auf 16 Werte begrenzt (Hafen und Figur teilen sich IDs).",
+  "Farbgrenzlinien an winzigen Teilen (Messingknöpfe, Taschenklappen) werden zu dunklen Punkten; an Gras/Fels folgen sie den Dreieckskanten des Geländes und wirken zackig (Low-Poly-Eindruck).",
+  "Das Rim-Light war zuerst unsichtbar, weil die 2-px-Kontur genau den schmalen Fresnel-Rand überdeckte; erst mit Schwelle 0,5 und fast ungerichtet (nur die vom Himmel abgewandte Seite ausgenommen) ist es deutlich.",
+  "Lichtkegel: offener Kegel mit cull_disabled und additiv ergab helle Ellipsen, Stufen entlang des Kegels erschienen als Bögen; jetzt cull_back, heller Kern und weicher Auslauf. Wolken aus Kugeln zeigten mit eigenen Normalen Streifen auf jeder Kugel (Zuckerstangen); erst die Ellipsoid-Normale der ganzen Wolke ergab eine helle Unterseite. Die ersten Voronoi-Wellenlinien sahen wie gesprungene Fliesen aus, erst gestreckt und in Striche zerlegt lesen sie sich als Wellen.",
+  "Die Ringe der Punktlichter (Laterne, Fenster) sind kaum zu sehen, weil die Sonne den Kai schon hell beleuchtet; die Laterne liest sich vor allem über ihr Glas und den Lichthof.",
+  "Füße: Drehen auf der Stelle (wie in shared/3d) zog die Fersen um 8 cm über den Boden; jetzt biegt der Dachs im Laufen ab. Verblieben: Beim Überblenden Walk → Idle (3,6–3,9 s) wandern die Füße bis 14,7 mm je Bild, während die Kamera fährt; beim Bremsen hängt der Schwungfuß etwa 0,17 s still in der Luft.",
+  "Die Hülle um den Dachs bringt neben der Nachbearbeitung wenig (0,2 % bzw. 1,0 % der Pixel); in der Totale wirken der dunkle Fellkörper und 2 px Kontur zusammen als dunkle Form.",
+  "Mit 52° fov ist die Nahaufnahme weitwinkliger als die Totale (42°); die Fahrt hat dadurch einen leichten Zoom-Effekt."
+ ],
+ "lessons": [
+  "Cel-Shading lässt sich vollständig per Shader auf die gemeinsamen Modelle legen: eigene light()-Funktion mit smoothstep-Stufen auf N·L und auf ATTENUATION (harte Schlagschatten), Farben per Materialname aus einer Palette. Neue Modelle brauchen nur Palette-Einträge.",
+  "Silhouetten aus dem Tiefenpuffer über die Vorhersage von 1/z (auf Ebenen im Bildraum linear) statt eines festen Tiefenabstands: keine Fehllinien auf flach gesehenem Boden, keine Abstandsschwellen je Szene.",
+  "Farbgrenzlinien fast umsonst: Material-ID in ROUGHNESS schreiben (Spiegelungen und SPECULAR aus, damit die Rauheit nichts anderes bewirkt) und in der Nachbearbeitung vergleichen.",
+  "Linienfarbe aus der abgedunkelten Farbe darunter, mit Tinte gemischt, wirkt feiner als reines Schwarz; SMAA glättet die Linien der Nachbearbeitung, MSAA nicht.",
+  "Figurenlicht auf eigener Ebene (light_cull_mask) hält die Figur in jeder Einstellung lesbar, ohne die Szene umzuleuchten; ihren Schatten wirft sie weiter über die Sonne.",
+  "Toon-Wasser: durchsichtig rendern, Länge des Sehstrahls bis zur Geometrie als Wassertiefe; harte Schwellen ergeben Schaumkante, Flachwasserband und einen wandernden Schaumring, die auch an schaukelnden Booten mitlaufen.",
+  "Wolken und Rauch aus einfachen Kugeln mit Konturen wirken sofort comicartig; Rauch schrumpfen statt ausblenden spart die Sortierung durchsichtiger Flächen. Für Wolken die Normale eines Ellipsoids um die Gruppe nehmen (instance uniform je Kugel).",
+  "Himmelsfarben als globale Shader-Uniforms: Himmel, Wasserspiegelung und später Nebel bleiben ohne Abgleich gleich.",
+  "Die Figur muss zur Kamera schauen, um Stufen, Rim-Light und Winken zu zeigen: Bildausschnitt vorher in Python rechnen (frame_close.py), Dialogkasten erst einblenden, wenn die Kamera ankommt.",
+  "AnimationPlayer im manuellen Modus (advance) gibt eine feste Reihenfolge Pose → Vorschub → Drehung; Drehen nur bei einem Fuß am Boden und um dessen Bodenpunkt hält den Standfuß im Laufen auf 7,6 mm je Bild; den Bremspunkt so legen, dass der Lauf in einer Durchgangsphase endet (walk_timing.py).",
+  "Füße doppelt messen: über Knochenpunkte (Ferse, Zehe, Kopf; --measure) und in den gerenderten Bildern über eine weiße Silhouette (--mask). Die Fußzeile der Totale schwankt um 5 px, weil abwechselnd der nahe und der ferne Fuß (25 cm auseinander) aufsetzt; das ist Perspektive, kein Fehler.",
+  "Renderer-abhängige Shader nicht in die .tscn schreiben, sondern im Skript nach RenderingServer.get_current_rendering_method() laden; so läuft dieselbe Szene in Forward+, Mobile und Compatibility."
+ ],
+ "assets": [
+  {"file": "demo/shaders/toon.gdshader", "kind": "shader", "made_with": "Stufenlicht (drei Töne), harte Schlagschatten, Punktlicht-Ringe, Rim-Light, Material-ID", "prompt": ""},
+  {"file": "demo/shaders/outline_post.gdshader", "kind": "shader", "made_with": "Konturen als Nachbearbeitung (Forward+): Silhouetten, Knicke, Farbgrenzen", "prompt": ""},
+  {"file": "demo/shaders/outline_common.gdshaderinc", "kind": "shader", "made_with": "gemeinsamer Teil der Konturen: Tiefe, 1/z-Vorhersage, Linienfarbe, Ausblenden unter Wasser", "prompt": ""},
+  {"file": "demo/shaders/outline_post_depth.gdshader", "kind": "shader", "made_with": "Ersatzkontur für Mobile und Compatibility (nur Silhouetten)", "prompt": ""},
+  {"file": "demo/shaders/outline_hull.gdshader", "kind": "shader", "made_with": "umgedrehte Hülle um die Figur, konstante Pixelbreite", "prompt": ""},
+  {"file": "demo/shaders/toon_water.gdshader", "kind": "shader", "made_with": "Toon-Wasser: Farbstufen, Voronoi-Wellenstriche, Schaumkante und Schaumring aus dem Tiefenpuffer, Glitzern", "prompt": ""},
+  {"file": "demo/shaders/toon_sky.gdshader", "kind": "shader", "made_with": "Abendhimmel in Zonen mit Sternen", "prompt": ""},
+  {"file": "demo/shaders/toon_cloud.gdshader", "kind": "shader", "made_with": "Wolken in drei Tönen mit Ellipsoid-Normale", "prompt": ""},
+  {"file": "demo/shaders/toon_beam.gdshader", "kind": "shader", "made_with": "Lichtkegel als flache Fläche mit Kern", "prompt": ""},
+  {"file": "demo/shaders/toon_halo.gdshader", "kind": "shader", "made_with": "Lichthof als Billboard mit zwei harten Ringen", "prompt": ""},
+  {"file": "demo/main.gd", "kind": "code", "made_with": "Toon-Palette je Material, Licht, Wolken, Rauch, Ablauf von Dachs und Kamera, Mess- und Vergleichsschalter", "prompt": ""},
+  {"file": "demo/ui.gd", "kind": "code", "made_with": "Toon-Oberfläche: Ortsschild, aufspringender Dialogkasten, Auswahl-Pillen", "prompt": ""},
+  {"file": "assets/preview/totale_f060.png", "kind": "preview", "made_with": "Godot-Aufnahme, Bild 60 (2,0 s): Totale mit der Hauptkamera aus shared/3d", "prompt": ""},
+  {"file": "assets/preview/badger_close.png", "kind": "preview", "made_with": "Ausschnitt aus dem Poster, 2-fach: Dachs mit drei Tönen, Rim-Light und Konturen", "prompt": ""},
+  {"file": "assets/preview/switches_f060.png", "kind": "preview", "made_with": "compare_switches.py, Totale: oben voll / ohne Nachbearbeitungskontur / ohne Hülle, unten ohne Farbgrenzlinien / weiches Lambert", "prompt": ""},
+  {"file": "assets/preview/switches_f144.png", "kind": "preview", "made_with": "compare_switches.py, Nahaufnahme, gleiche Anordnung", "prompt": ""},
+  {"file": "assets/preview/renderers.png", "kind": "preview", "made_with": "compare_renderers.py: Spalten Forward+, Mobile, Compatibility; Zeilen Bild 60 und 144", "prompt": ""},
+  {"file": "demo/models/harbor.glb", "kind": "model", "made_with": "unveränderte Kopie von shared/3d/harbor.glb (17 932 Dreiecke)", "prompt": ""},
+  {"file": "demo/models/badger.glb", "kind": "model", "made_with": "unveränderte Kopie von shared/3d/badger.glb (7 348 Dreiecke, Idle/Walk/Wave)", "prompt": ""}
+ ],
+ "licenses": [
+  {"item": "Schrift Fredoka (variabel, Strichstärke 560)", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/fredoka (Lizenztext: demo/fonts/OFL-Fredoka.txt)"},
+  {"item": "Schrift Lilita One", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/lilitaone (Lizenztext: demo/fonts/OFL-LilitaOne.txt)"},
+  {"item": "Hafen und Dachs", "license": "eigene Modelle aus shared/3d (Blender-Skripte)", "source": "shared/3d/blender/"},
+  {"item": "Shader, Wolken, Rauch, Oberfläche", "license": "eigener Code, keine fremden Texturen oder Bilder", "source": "styles/toon-cel/demo/"}
+ ],
+ "image_generations": 0,
+ "tool_issues": [
+  "tools/genimg.py (Backend agy): Beide Aufträge aus prompts/jobs1.json endeten ohne Bild mit \"usage limit (agy)\". Der erste Antworttext nennt ausdrücklich \"Image generation failed due to a quota exhaustion error (429)\". Der zweite beginnt mit \"I have dispatched the `image-generator` subagent with your ex…\" und wurde nur über das Stichwort (quota/limit/exhausted) als Limit eingeordnet; ob es wirklich das Kontingent war, ist unklar, weil genimg.py für gescheiterte Aufträge keine .json mit dem vollständigen Antworttext ablegt. Die Ausgabe steht in assets/raw/genimg1.log. Es wurde nicht erneut versucht (PIPELINE.md: bei usage limit von agy aufhören)."
+ ],
+ "status": "done"
+}

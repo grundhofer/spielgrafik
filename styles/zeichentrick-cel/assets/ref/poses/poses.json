@@ -1,0 +1,233 @@
+{
+ "w": 307,
+ "h": 512,
+ "px_per_m": 409.6,
+ "ground_y": 485.37600000000003,
+ "gain": {
+  "leg": 1.7,
+  "arm": 1.6,
+  "body": 1.5
+ },
+ "frames": [
+  {
+   "name": "walk_0",
+   "action": "Walk",
+   "frame": 0.0,
+   "rot": 0.0,
+   "boost": true,
+   "body_shift_m": -0.0266,
+   "feet": {
+    "L": {
+     "z_m": 0.006,
+     "x0_px": 202.3,
+     "x1_px": 216.0,
+     "lift_px": 2.5
+    },
+    "R": {
+     "z_m": 0.003,
+     "x0_px": 150.8,
+     "x1_px": 172.9,
+     "lift_px": 1.2
+    }
+   }
+  },
+  {
+   "name": "walk_1",
+   "action": "Walk",
+   "frame": 3.75,
+   "rot": 0.0,
+   "boost": true,
+   "body_shift_m": -0.0134,
+   "feet": {
+    "L": {
+     "z_m": 0.003,
+     "x0_px": 179.5,
+     "x1_px": 256.1,
+     "lift_px": 1.2
+    },
+    "R": {
+     "z_m": 0.0323,
+     "x0_px": 141.3,
+     "x1_px": 152.9,
+     "lift_px": 13.2
+    }
+   }
+  },
+  {
+   "name": "walk_2",
+   "action": "Walk",
+   "frame": 7.5,
+   "rot": 0.0,
+   "boost": true,
+   "body_shift_m": -0.0062,
+   "feet": {
+    "L": {
+     "z_m": 0.003,
+     "x0_px": 150.2,
+     "x1_px": 226.3,
+     "lift_px": 1.2
+    },
+    "R": {
+     "z_m": 0.1203,
+     "x0_px": 177.8,
+     "x1_px": 199.5,
+     "lift_px": 49.3
+    }
+   }
+  },
+  {
+   "name": "walk_3",
+   "action": "Walk",
+   "frame": 11.25,
+   "rot": 0.0,
+   "boost": true,
+   "body_shift_m": -0.0117,
+   "feet": {
+    "L": {
+     "z_m": 0.003,
+     "x0_px": 120.9,
+     "x1_px": 197.1,
+     "lift_px": 1.2
+    },
+    "R": {
+     "z_m": 0.1086,
+     "x0_px": 163.1,
+     "x1_px": 176.9,
+     "lift_px": 44.5
+    }
+   }
+  },
+  {
+   "name": "walk_4",
+   "action": "Walk",
+   "frame": 15.0,
+   "rot": 0.0,
+   "boost": true,
+   "body_shift_m": -0.0266,
+   "feet": {
+    "L": {
+     "z_m": 0.003,
+     "x0_px": 150.8,
+     "x1_px": 172.9,
+     "lift_px": 1.2
+    },
+    "R": {
+     "z_m": 0.006,
+     "x0_px": 202.3,
+     "x1_px": 216.0,
+     "lift_px": 2.5
+    }
+   }
+  },
+  {
+   "name": "walk_5",
+   "action": "Walk",
+   "frame": 18.75,
+   "rot": 0.0,
+   "boost": true,
+   "body_shift_m": -0.0134,
+   "feet": {
+    "L": {
+     "z_m": 0.0323,
+     "x0_px": 141.3,
+     "x1_px": 152.9,
+     "lift_px": 13.2
+    },
+    "R": {
+     "z_m": 0.003,
+     "x0_px": 179.5,
+     "x1_px": 256.1,
+     "lift_px": 1.2
+    }
+   }
+  },
+  {
+   "name": "walk_6",
+   "action": "Walk",
+   "frame": 22.5,
+   "rot": 0.0,
+   "boost": true,
+   "body_shift_m": -0.0062,
+   "feet": {
+    "L": {
+     "z_m": 0.1203,
+     "x0_px": 177.8,
+     "x1_px": 199.5,
+     "lift_px": 49.3
+    },
+    "R": {
+     "z_m": 0.003,
+     "x0_px": 150.2,
+     "x1_px": 226.3,
+     "lift_px": 1.2
+    }
+   }
+  },
+  {
+   "name": "walk_7",
+   "action": "Walk",
+   "frame": 26.25,
+   "rot": 0.0,
+   "boost": true,
+   "body_shift_m": -0.0117,
+   "feet": {
+    "L": {
+     "z_m": 0.1086,
+     "x0_px": 163.1,
+     "x1_px": 176.9,
+     "lift_px": 44.5
+    },
+    "R": {
+     "z_m": 0.003,
+     "x0_px": 120.9,
+     "x1_px": 197.1,
+     "lift_px": 1.2
+    }
+   }
+  },
+  {
+   "name": "stand",
+   "action": "Idle",
+   "frame": 0.0,
+   "rot": 0.0,
+   "boost": false,
+   "body_shift_m": 0.0,
+   "feet": {
+    "L": {
+     "z_m": 0.003,
+     "x0_px": 137.9,
+     "x1_px": 214.0,
+     "lift_px": 1.2
+    },
+    "R": {
+     "z_m": 0.003,
+     "x0_px": 137.9,
+     "x1_px": 214.0,
+     "lift_px": 1.2
+    }
+   }
+  },
+  {
+   "name": "front",
+   "action": "Idle",
+   "frame": 0.0,
+   "rot": -60.0,
+   "boost": false,
+   "body_shift_m": 0.0,
+   "feet": {
+    "L": {
+     "z_m": 0.003,
+     "x0_px": 181.1,
+     "x1_px": 246.7,
+     "lift_px": 1.2
+    },
+    "R": {
+     "z_m": 0.003,
+     "x0_px": 92.4,
+     "x1_px": 158.1,
+     "lift_px": 1.2
+    }
+   }
+  }
+ ]
+}

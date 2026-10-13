@@ -1,0 +1,226 @@
+{
+ "slug": "comic-panels",
+ "name": "Comic mit Panels & Rasterpunkten",
+ "family": "grafisch",
+ "kind": "style",
+ "era": "US-Comichefte im Vierfarbdruck auf Zeitungspapier (1930er–1980er, Silver Age 1956–1970); Pop-Art-Zitat der Rasterpunkte ab 1961; als Spielgrafik ab den 1990ern (Comic-Spiele, Comic-Zwischensequenzen)",
+ "summary": "Das Bild ist eine Comicseite: drei Panels mit schwarzem Rahmen und weißen Stegen erscheinen nacheinander (Totale, Detail, Nahaufnahme). Kräftige schwarze Tusche liegt über Farbflächen, die ein Shader als grobe Rasterpunkte druckt. Ort und Erzähltext stehen in gelben Kästen, die Figur spricht in einer Sprechblase, ein Geräuschwort und die Auswahl als nummerierte Kästen ergänzen die Seite.",
+ "references": [
+  "US-Comichefte der Silver Age (etwa 1956–1970), z. B. Zeichnungen von Jack Kirby und Steve Ditko: kräftige Pinselkontur, Schwarzflächen, Kolorierung in wenigen Rastertönen auf Zeitungspapier",
+  "Benjamin Day: Rasterfolien für Flächentöne im Druck (ab 1879), daher der Name Ben-Day-Punkte",
+  "Roy Lichtenstein: vergrößerte Rasterpunkte, Sprechblasen und Comicausschnitte in der Pop Art (ab 1961)",
+  "Comix Zone (Sega, 1995): Spiel, das in Comicpanels einer Heftseite abläuft",
+  "Max Payne (Remedy, 2001): Zwischensequenzen als Comicseiten mit Panels, Erzählkästen und Sprechblasen",
+  "XIII (Ubisoft, 2003): Comic-Einschübe und Geräuschwörter im Spielbild",
+  "Framed (Loveshack, 2014): Rätselspiel, in dem Comicpanels umgeordnet werden"
+ ],
+ "traits": [
+  "Seitenaufbau: drei Panels (Totale 822×582, Laterne 412×266, Nahaufnahme 412×302) mit 4-px-Rahmen und 14-px-Stegen auf Papierton, darunter eine Leiste mit Auswahlkästen. Die Panels erscheinen nacheinander (0,0 s, 1,3 s, 2,5 s) mit einer Aufdeckblende aus wachsenden großen Rasterpunkten (26-px-Raster unter 45°, 0,4 s)",
+  "Rasterpunkte per Shader (print.gdshader): Farbflächen werden in C, M, Y und K zerlegt und als runde Punkte auf einem Raster mit 6,5 px Rasterweite gedruckt; alle vier Farben unter 45°, Punktfläche entspricht dem Tonwert, ab 78,5 % wachsen die Punkte zusammen. Gemessen: Das Raster ändert 75 % der Panelpixel um mehr als 24 Stufen gegenüber der ungerasterten Fassung (--probe-flat)",
+  "Kräftige Konturen getrennt vom Raster: Die Tusche jedes KI-Bilds wird per Skript herausgelöst (dunkel und unbunt) und in einem eigenen Viewport in voller Auflösung über die Punkte gelegt, wie die Schwarzplatte im Comicdruck; Schwarzflächen bleiben geschlossen schwarz, Text bleibt scharf. Die kleine Figur hat zusätzlich eine 2 px breite Außenkontur",
+  "Kolorierung des Dachses in wenigen reinen Druckfarben-Mischungen (Totale und Nahaufnahme gleich): Schal M100 Y100 (voll, ohne sichtbare Punkte), Weste und Mütze C43 M13 Y81, Fell blauschwarz C76 M56 Y16, Gesichtsstreif, Bauch und Hemd Papierweiß ohne Punkte",
+  "Erzählkästen in gelbem Rasterton (Y52 M7) mit 3-px-Rahmen: Ort in Bangers, Erzähltext in Kalam Bold, beides in Großbuchstaben; Sprechblase mit Schwanz zum Mund (folgt der Kamerafahrt); Geräuschwort „FLACKER!“ in vollem Gelb mit schwarzer Kontur; drei nummerierte Auswahlkästen und eine Parserzeile, die mit 16 Zeichen/s tippt. Kästen, Blase und Leiste decken etwa 12 % des Bildes ab (aus den Kastengrößen gerechnet) und poppen in sechs Bildern auf (0,55 → 1,1 → 1,0)",
+  "Der Dachs läuft auf Zweien (15 Bilder/s) von links ins Totalen-Panel, hält nach 3,6 s und dreht sich bei 4,0 s zur Kamera. Gemessen (scripts/probe_feet.py): Standfuß in 44 von 45 Laufbildpaaren ≤ 1 px; Fußlinie beim Laufen 564–565, im Stand und nach der Drehung konstant 565",
+  "Nahaufnahme als bewegtes Comicpanel: langsame Kamerafahrt aufs Gesicht (Zoom 1,006 → 1,05 über 3,5 s) und Sprechen auf Dreien (10 Bilder/s) durch Austausch nur des Mundbereichs (2,1 % der Bildfläche)",
+  "Umgebungseffekte als Comic-Kürzel: Rauch als weiße Wölkchen mit gemeinsamer Außenkontur, Leuchtturmstrahl als flacher hellgelber Keil mit Tuschekanten und Aufblitzen mit acht Strichen, zwei Möwen als Tusche-M auf Dreien, weiße Glitzerstriche auf dem Wasser (6-mal pro Sekunde neu), Laterne in der Totale und im Detailpanel als flackernder hellerer Rasterhof (kleinere Punkte, 10-mal pro Sekunde) mit Leuchtstrichen, Fensterlicht"
+ ],
+ "camera": "Feste Comicseite: Totale auf Augenhöhe (Hafen), Detailpanel der Laterne leicht von unten, Nahaufnahme des Dachses mit langsamer Kamerafahrt aufs Gesicht",
+ "resolution": "1280×720, keine Pixelgrafik; Rasterweite 6,5 px (Abstand der Punktmitten); Totale aus 1536×1024 auf 873×582 verkleinert (Ausschnitt 822 breit), Detailpanel 412×275, Nahaufnahme 476×317 (1,05-fach für die Kamerafahrt); Dachs in der Totale 122×184 je Bild (Figur etwa 170 px hoch, Maßstab 0,4 des KI-Bogens)",
+ "pipeline": [
+  {
+   "step": "Hintergrund der Totale erzeugen (1 Versuch)",
+   "tool": "genimg (gpt-image über Codex)",
+   "detail": "assets/raw/bg.png, 1536×1024, 84 s, Prompt aus scripts/make_prompts.py (prompts/bg.txt). Stilblock: Panel aus einem amerikanischen Abenteuer-Comicheft der frühen 1960er, mit Pinsel und Feder getuscht, Vierfarbdruck; kräftige Kontur mit Strichstärkenwechsel, Schwarzflächen auf den Schattenseiten, flache Farben aus einer begrenzten Druckerpalette, ausdrücklich ohne Verläufe und ohne Rasterpunkte (die setzt der Druck später); Verbote: Gemälde, Aquarell, 3D-Render, Foto, Postkarte, Anime, Ligne claire. Dazu Motivblock, Kompositionsblock (Häuschen links, Leuchtturm rechts, Laterne links der Mitte, freier Laufweg im unteren Fünftel, ruhiger Himmel oben links für den Kasten), Hinweis auf später animierte Effekte, background_only_en, Schutzregeln, Format. Erster Versuch übernommen: Tusche und Schwarzflächen wie verlangt, aber mit Farbverläufen im Himmel und gedeckten, schmutzigen Mischtönen."
+  },
+  {
+   "step": "Detail- und Nahaufnahme-Panel erzeugen (je 1 Versuch)",
+   "tool": "genimg (gpt-image über Codex)",
+   "detail": "assets/raw/lantern.png (Referenz raw/bg.png als Stil, 72 s): Laterne groß rechts, Häuschen mit Fenster links, Himmel oben links frei, Glas flach gelb ohne Lichtschein. assets/raw/bust.png (Referenzen shared/badger/master_sheet.png nur für Kostüm und Proportionen, raw/bg.png für Tusche und Farben, 65 s): Dachs von der Hüfte aufwärts in Dreiviertelansicht nach links, Mund geschlossen, Himmel oben links frei für die Blase, Leuchtturm klein im Hintergrund. Beide im ersten Versuch brauchbar."
+  },
+  {
+   "step": "Mundbild (1 Versuch)",
+   "tool": "genimg (gpt-image über Codex)",
+   "detail": "assets/raw/bust_talk.png mit raw/bust.png als Referenz, „as if traced on a clear sheet laid on top of it“, einzige Änderung offener Mund. Deckungsgleich geliefert: Außerhalb des Mundes weichen nur Kantenpixel ab. build_panels.py übernimmt nur den Mundbereich (Differenz > 30, um 6 px erweitert, 2 px weich; 2,1 % der Fläche)."
+  },
+  {
+   "step": "Laufbogen: Layout aus dem 3D-Modell, Übermalen durch das Bildmodell (1 Versuch)",
+   "tool": "Blender 5.2 (blender/pose_layout.py, übernommen aus holzschnitt) + scripts/make_layout.py + genimg (gpt-image über Codex)",
+   "detail": "Zehn Posen von shared/3d/badger.glb orthografisch mit 409,6 px/m auf Magenta (walk_0 … walk_7 bei t = i/8 s, stand, turn um 40° zur Kamera), dazu Fußpunkte je Bild aus den Knochen. assets/raw/walk.png mit den Referenzen Layout (Posen und Lage), Master-Sheet (nur Kostüm), raw/bg.png (Tusche und Druckfarben), 85 s, echter Alphakanal. Posen gehalten (Silhouetten-IoU 0,84–0,91 gegen das Layout, Figuren etwa 3 % größer); die zweite Reihe steht 3 px höher als die erste."
+  },
+  {
+   "step": "Tusche und Farbflächen trennen",
+   "tool": "scripts/inkcolor.py (NumPy, Pillow)",
+   "detail": "Je KI-Bild in Quellauflösung: Tusche-Deckung = smoothstep(0,75; 0,85; k) × (1 − smoothstep(0,16; 0,30; Sättigung)) mit k = 1 − max(RGB); Fell des Dachses (k ≈ 0,71) bleibt Farbe, Nachtblau bleibt Farbe (bunt). Farbflächen unter der Tusche durch schrittweises Füllen aus den Nachbarn (bis 60 Durchgänge). Verkleinern mit Lanczos, danach die Kantenglättung der Tusche zusammenziehen (Deckung 0,08–0,65 → 0–1), damit dünn gewordene Linien satt schwarz bleiben. Ergebnis je Panel zwei Dateien: Farbflächen (werden gerastert) und Tusche (schwarz, Alpha = Deckung)."
+  },
+  {
+   "step": "Figur aufbereiten",
+   "tool": "scripts/build_badger.py",
+   "detail": "Fester Ausschnitt je Zelle; senkrecht jede Zelle auf die Sohlenzeile 485 geschoben, waagerecht auf die Ferse des flach stehenden bzw. aufsetzenden Fußes der Blender-Pose (Verschiebungen −2 … +7 KI-px). Kostümfarben per Tabelle auf reine Druckfarben-Mischungen gesetzt (nächster k-means-Anker), Schwarz und Dunkelbraun werden Tusche, Außenkontur 5 KI-px um die Silhouette. Vorschub aus dem 3D-Modell: 0,367 m / 8 × 409,6 px/m × 0,4 = 7,52 px je Laufbild, Halt aus walk_2 mit 3,0 px. Ergebnis assets/badger.png und badger_ink.png (je 10 Bilder à 122×184). Erste Fassungen, die den Vorschub per Schablonenvergleich der Sohlen maßen, lieferten an den Kontaktwechseln Unsinn (Zyklus 74 statt 150 KI-px) und wurden verworfen."
+  },
+  {
+   "step": "Panels aufbereiten",
+   "tool": "scripts/build_panels.py",
+   "detail": "Ausschnitt und Maßstab je Panel, Trennung in Tusche und Farbflächen, in der Nahaufnahme dieselbe Kostüm-Kolorierung wie bei der kleinen Figur (nur rechts von x = 480 der Quelle und nur Pixel, deren nächster Farbanker ein Kostümteil ist; Himmel- und Meeranker bleiben). Lage von Leuchtfeuer, Schornstein, Laterne, Fenster, Laternenglas, Mund und Leuchtturm von Hand in den Quellbildern abgelesen und in Panel-Koordinaten umgerechnet (assets/scene.json); 60 Glitzerpunkte nur auf Pixeln, deren 9-px-Umgebung offenes Wasser ist."
+  },
+  {
+   "step": "Godot-Demo",
+   "tool": "Godot 4.7.2, GDScript, 3 canvas_item-Shader (print, light, reveal)",
+   "detail": "Zwei Viewports in 1280×720: Seite (nur Farbflächen) und Tusche (Zeichnung, Konturen, Schrift, Deckweiß). print.gdshader rastert die Seite und legt die Tusche darüber. Alles in main.gd aufgebaut, Zeit als Summe der delta-Werte, Zufall nur aus RandomNumberGenerator (Seed 20261012). Neubau aller Assets ohne Bildmodell: sh styles/comic-panels/scripts/build_all.sh (etwa 15 s, zweimal gelaufen, Ausgaben bitgleich)."
+  },
+  {
+   "step": "Messen und Aufnehmen",
+   "tool": "scripts/probe_feet.py, scripts/render_frames.py, tools/capture.py --poster-at 0.92",
+   "detail": "Fußmessung über Differenzbilder zweier Läufe mit --probe-flat --probe-no-shadow (mit und ohne Dachs). Rastervergleich mit --probe-flat. Langzeitlauf mit --t0=31, Probeläufe mit --rendering-method mobile und gl_compatibility, zweiter Forward+-Lauf bitgleich zum Poster (Bild 165). Aufnahme 6 s bei 30 fps, Poster bei 5,5 s."
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, stretch mode canvas_items, Forward+, Löschfarbe Papierton; main.tscn enthält nur den Wurzelknoten mit main.gd",
+  "Zwei SubViewports (UPDATE_ALWAYS, MSAA 2D 4×): „page“ mit weißem Grund und allen Farbflächen (Panelbilder, Lichtkeil, Kastenfüllungen, Blasenfüllung, gelbe Füllung des Geräuschworts, Schatten), „ink“ mit transparentem Grund für Tusche (Panel-Tusche, Figurentusche, Rahmen, Konturen, Schrift). Jedes Panel ist in beiden Viewports ein Control mit clip_contents an derselben Stelle; Sprites, Kästen und Blase existieren paarweise und werden in step() gemeinsam gesetzt",
+  "Kodierung der Tusche-Ebene (vormultipliziert gelesen): Schwarz = Alpha − max(RGB), Deckweiß = min(RGB). Weiß deckt bis aufs Papier (Rauchwölkchen, Glitzern, Ziffern in den Scheiben, Aufdeckblende, Blaseninneres), reines Gelb (1, 1, 0) ist weder Schwarz noch Weiß und lässt die Seite durchscheinen: so überdecken Kästen und Geräuschwort die Panel-Tusche, ohne selbst Tusche zu sein",
+  "print.gdshader auf einem Vollbild-TextureRect: je Druckfarbe ein Raster (Rasterweite 6,5 px, Winkel als Uniform, hier alle 45°, Passerversatz C +1/0, M 0/+1, Y −1/0 px); jede Zelle tastet die Seite in ihrer Mitte ab (4 Nachbarzellen je Farbe, also 16 Abtastungen je Pixel), CMY = 1 − RGB, Grauanteil zu 60 % entfernt (ucr), Schwarz nur für dunkle Töne (k_lo 0,45 … k_hi 0,9), Töne unter 5 % drucken nicht; reinweiße Seitenpixel bleiben punktfrei (Stege, Blase); Farben werden auf Papier multipliziert, leichtes Papierrauschen; danach Tusche und Deckweiß",
+  "light.gdshader auf den Panelbildern: bis zu vier Lichter (Lage, Radius, Stärke, Farbe als Uniform-Felder) mischen die Farbflächen zu Lichtfarbe; im Druck werden die Punkte dort kleiner und heller. Laterne in Totale und Detail flackert 10-mal pro Sekunde (Radius und Stärke aus festen Zufallswerten), das Leuchtfeuer blitzt mit dem Strahl, in der Nahaufnahme blinkt der kleine Leuchtturm mit",
+  "reveal.gdshader: weiße Fläche über jedem Panel (in beiden Viewports) mit wachsenden Löchern auf einem 45°-Raster, diagonal von links oben nach rechts unten in 0,4 s",
+  "Effekte als Drawer-Knoten (Node2D mit Callable in _draw, Zustand nur aus t): Rauch (Wölkchen alle 0,45 s, Lebensdauer 3,2 s), Strahl (Periode 6 s, Länge 360 px × |cos|, Aufblitzen mit 8 Strichen), Möwen (4 Flügelstellungen, 10 Bilder/s), Glitzern (6-mal pro Sekunde), Leuchtstriche an der Laterne (8 seitliche Richtungen, Länge und Sichtbarkeit 10-mal pro Sekunde neu)",
+  "Dachs: zwei Sprite2D (Farbe und Tusche) mit hframes 10, offset −(70, 182,4), Lage ganzzahlig gerundet; Bild aus floor(t × 15): 54 Laufbilder ab walk_5 (endet auf walk_2), dann stand, ab Bild 60 turn; Schatten als flache dunkle Ellipse in der Seite",
+  "Nahaufnahme: zwei Sprite2D, Maßstab k/1,05 und Lage zc·(1−k) − (30, 0)·k mit k = 1,006 … 1,05 (Smoothstep über 2,5–6 s), Mundbild durch Tausch beider Texturen",
+  "Schriften über LabelSettings: Bangers (Ort, Geräuschwort, Ziffern) und Kalam Bold (Erzähltext, Blase, Auswahl, Parser); Parserzeile mit visible_characters (Zeichen nach dem Shaping), Blockcursor blinkt",
+  "Prüfschalter nach --: --probe-flat (Farbflächen ungerastert), --probe-no-badger, --probe-no-shadow, --t0=<s>"
+ ],
+ "techniques": [
+  "rasterpunkte",
+  "tusche-farbflaechen-trennung",
+  "panel-layout",
+  "panel-aufdecken",
+  "druckfarben-kolorierung",
+  "ki-spritesheet",
+  "rotoskopie",
+  "fuss-halten",
+  "lebendes-portraet",
+  "kamerafahrt",
+  "prozedurale-animation",
+  "nachbearbeitung",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 3,
+  "effort": 3,
+  "text_adventure": 4,
+  "mobile": 4
+ },
+ "ratings_note": "ai_fit 4: gpt-image traf die getuschte US-Comiczeichnung in allen fünf Bildern im ersten Versuch (Pinselkontur, Schwarzflächen, Laufbogen in den Posen des Layouts, deckungsgleiches Mundbild). Die Rasterpunkte selbst kommen aus dem Shader, und die KI-Farben waren gedeckt und mit Verläufen; erst eine Skript-Kolorierung in reinen Druckfarben machte die kleine Figur im Raster lesbar. consistency 3: Tusche, Raster und Figurenfarben sind per Skript für alle Bilder gleich, die Laufbilder halten die Posen des 3D-Layouts; aber die Laterne sieht im Detailpanel anders aus als in der Totale, und jede Figur braucht eine eigene Farbtabelle. effort 3: je Ort mehrere Bilder (Totale, Detail, Nahaufnahme) und Kästen, Blase und Lichter von Hand gesetzt; Trennung, Raster und Kolorierung laufen automatisch. text_adventure 4: Erzählkästen, Sprechblase, Panelfolge und Auswahlkästen passen genau zur Erzählform; das dichte Punktraster ist aber auf Dauer unruhig, und jeder Ort kostet mehrere Bilder. mobile 4 geschätzt: --rendering-method mobile ist pixelgleich zu Forward+; gl_compatibility meldet „2D MSAA is not yet supported for GLES3“, dadurch weichen 4,3 % der Pixel um mehr als 16 Stufen ab (ungeglättete Kanten von Kästen, Blase, Keil). Zwei Vollbild-Viewports mit MSAA und 16 Texturabtastungen je Pixel im Druck-Shader; auf einem echten Gerät nicht gemessen.",
+ "verdict": "Gut geeignet für unser Textadventure, wenn wir die Erzählform übernehmen: Jede Szene wird eine Seite, deren Panels nacheinander erscheinen; der Erzähltext steht in Kästen, Figuren sprechen in Blasen, die Auswahl liegt in nummerierten Kästen unter den Panels. Wiederholbar ist der Weg über drei getrennte Schritte: KI zeichnet getuschte Panels ohne Raster, ein Skript trennt Tusche und Farbflächen und setzt Figuren auf eine feste Druckfarben-Tabelle, ein Shader druckt die Punkte. So bleiben Linien und Schrift scharf, und der Look lässt sich zentral einstellen (Rasterweite, Winkel, Farbstärke). Figuren für Laufbilder sollten aus einem 3D-Layout übermalt werden (Füße halten). Vorsicht: Bei 6,5 px Rasterweite verschwindet eine Figur unter etwa 150 px Höhe im Raster, wenn sie nicht in kräftigen, reinen Farben koloriert ist; für ein Spiel mit vielen Orten sollte ein Ort mit einer Totale plus einem wiederverwendbaren Nahaufnahme-Panel je Figur auskommen.",
+ "pitfalls": [
+  "Erster Ansatz: die ganze Seite einschließlich Tusche rastern und Linien über eine Helligkeitsschwelle schwarz halten. Das scheiterte doppelt: Die kantengeglätteten, verkleinerten KI-Linien lagen zum Teil unter der Schwelle und zerfielen in Punkte, und die Schrift wurde an den Rändern angefressen. Eine Schwelle tiefer hätte das dunkle Fell (k ≈ 0,72) schwarz gemacht. Gelöst durch die Trennung in zwei Ebenen schon im Asset (Tusche und Farbflächen) und einen eigenen Tusche-Viewport.",
+  "Mit den Standard-Rasterwinkeln (C 15°, M 75°, Y 0°, K 45°) und vollem Unbuntaufbau wurde das Bild schmutzig: Die gedeckten KI-Farben (Steine, Fell, Weste) ergaben Rosetten aus allen vier Farben, viel Schwarzraster im Himmel, und die kleine Figur ging im Pflaster unter. Jetzt alle Raster unter 45° (Punkte liegen ineinander, ruhiger, näher am Ben-Day-Bild als am Offsetdruck), Grauanteil nur zu 60 % entfernt, Schwarz nur für dunkle Töne. Die Dämmerung wirkt dadurch heller und farbiger als im KI-Bild.",
+  "Die kleine Figur (etwa 170 px) hat bei 6,5 px Rasterweite nur rund 26 Punktreihen. Mit den KI-Farben war sie zwischen den Punkten des Pflasters nicht zu erkennen (Befund der ersten Aufnahme). Gelöst mit 2 px Außenkontur und einer Kolorierung in reinen Druckfarben. Das Fell ist dabei blauschwarz statt dunkelgrau (Comic-Konvention für Schwarz mit Glanz); der Dachs wirkt dadurch blauer als im Referenzblatt. Ein erster Versuch mit Fell als Schwarzfläche ließ in der Vorschau des Blatts beide Beine zu einer schwarzen Fläche verschmelzen (Laufbewegung nur noch am Umriss lesbar) und wurde verworfen.",
+  "Das Bildmodell malte trotz „no gradients“ Verläufe im Himmel und auf dem Wasser. Im Druck werden daraus Verläufe der Punktgröße, eher Offsetdruck als flache Ben-Day-Töne. Ein Runden der Tonwerte auf Stufen (Uniform levels, 4 bzw. 5 Stufen) wurde in einem NumPy-Prototyp getestet: flacher und näher an Ben-Day, aber grob und blass, die Dämmerung ging verloren; abgeschaltet (levels = 0).",
+  "Kontinuität zwischen den Panels: Die Laterne im Detailpanel (runder Käfig mit Ring) ist ein anderes Modell als in der Totale (kleine eckige Laterne am Arm), obwohl raw/bg.png als Referenz mitging. Für ein Spiel müssten Requisiten, die in mehreren Panels vorkommen, als eigenes Referenzbild festgelegt werden.",
+  "Fußmessung: 44 von 45 Laufbildpaaren halten den Standfuß auf ≤ 1 px. Am Kontaktwechsel walk_0 → walk_1 (Ferse setzt auf, beide Sohlen bilden in den untersten Zeilen einen Lauf) ist die Messung über Laufenden nicht eindeutig; bei 2,33 s ergab sie 4 px an der Spitze, bei 0,73 s und 1,27 s 0 px. Die Fußlinie schwankt beim Laufen um 1 px (564–565). Die KI-Laufbilder unterscheiden sich in Einzelheiten der Zeichnung (Falten, Fellzacken); das leichte Zeichnungsflimmern bei 15 Bildern/s ist nicht gemessen.",
+  "Halt und Drehung: Der Halt geht aus walk_2 direkt in stand; der Schwungfuß setzt dabei in einem Bild auf. Die Drehung zur Kamera ist ein einzelnes Bild (turn), ohne Zwischenstufen.",
+  "Die Nahaufnahme spricht nur über den Mund; ein Blinzelbild wurde nicht erzeugt. Die Kamerafahrt schneidet den Mützenrand am oberen Panelrand an.",
+  "Kästen, Blase, Geräuschwort und Lichtpunkte sind von Hand in Panel-Koordinaten gesetzt und müssen je Ort neu gemessen werden. Der Ortskasten der Totale liegt über dem aufsteigenden Rauch, der Erzählkasten im Detailpanel über dem Schornstein.",
+  "Die Boote schaukeln nicht (fester Teil des KI-Bilds). Der Lichtkeil des Leuchtturms liegt auch dann vor dem Turm, wenn er nach hinten zeigt (nur blasser gefärbt).",
+  "Nach dem Verkleinern waren die Linien des Detail- und des Nahaufnahme-Panels (Maßstab 0,27 bzw. 0,31) grau und dünn; erst das Zusammenziehen der Kantenglättung (Deckung 0,08–0,65 → 0–1) machte sie wieder satt. Linien werden dadurch etwa einen halben Pixel dicker."
+ ],
+ "lessons": [
+  "Comicdruck als zwei Ebenen bauen: Farbflächen rastern, Tusche in voller Auflösung darüberlegen. Nur so bleiben Kontur, Schwarzflächen und Schrift scharf, während die Flächen grob gerastert sind. Die Trennung eines KI-Comicbilds klappt mit einer schmalen Schwelle auf Dunkelheit und Unbuntheit (k 0,75–0,85, Sättigung unter 0,16–0,30) und Auffüllen der Farbflächen unter den Linien.",
+  "Eine transparente Tusche-Ebene kann drei Dinge kodieren: Schwarz (Alpha − max RGB), Deckweiß bis aufs Papier (min RGB) und „nichts“ in reinem Gelb. Damit lassen sich Kästen und Geräuschwörter über die Panel-Tusche legen und Rauch, Glitzern oder weiße Ziffern als Papier aussparen, ohne einen dritten Viewport.",
+  "Rasterpunkte im Shader: Zellmitte abtasten, Radius flächenrichtig (sqrt(t/π) bis zum Berühren, dann zusammenwachsen), die vier Nachbarzellen prüfen, sonst werden große Punkte an den Zellgrenzen abgeschnitten. Reinweiße Seitenpixel ausnehmen, sonst laufen Punkte bis zu einer halben Zelle in Stege und Sprechblasen.",
+  "Für einen klaren Comic-Look die Farben vor dem Rastern aufräumen: Grauanteil teilweise entfernen (ucr 0,6), Schwarz nur für dunkle Töne, alle Raster unter einem Winkel. Figuren bekommen eine feste Tabelle reiner Druckfarben (Rot voll, Oliv, Blauschwarz, Papierweiß); das macht sie im Raster lesbar und über alle Bilder gleich.",
+  "Stilblock, der bei gpt-image im ersten Versuch traf: „American adventure comic book of the early 1960s, pencilled and then inked by hand with a brush and a dip pen“, „strong line-weight variation“, „large shapes of solid black for the shadow sides (spotted blacks)“, „flat colour fills from a limited printer's palette“, „no halftone dots or screen tones (the dot screen is added later in the printing step)“ und die Verbotsliste bis „not a European clear-line album page“.",
+  "Laufbogen über ein Blender-Layout (Skript aus holzschnitt übernommen) und Übermalen durch gpt-image: Posen und Füße bleiben auf wenige Pixel genau, der Vorschub kommt aus dem 3D-Modell (7,52 px je Bild bei Maßstab 0,4). Jede Zelle senkrecht auf die Sohle und waagerecht auf die Ferse des stehenden Fußes legen; die zweite Reihe eines KI-Bogens stand 3 px höher.",
+  "Mundbild als „traced on a clear sheet“-Variante: deckungsgleich im ersten Versuch; nur den Mundbereich aus der Differenz übernehmen, dann ändert sich beim Sprechen sonst kein Pixel.",
+  "Panels nacheinander aufdecken mit großen Rasterpunkten, die wachsen, passt zum Stil und braucht nur einen kleinen Shader auf einer weißen Fläche je Panel (in beiden Ebenen).",
+  "Licht im Comicdruck: Farbflächen zur Lichtfarbe mischen, nicht additiv aufhellen. Im Raster werden die Punkte dort kleiner; Flackern ändert die Punktgröße, die Tusche bleibt unberührt. Leuchtstriche als Tusche ergänzen.",
+  "Ein Neubau aller Assets ohne Bildmodell (build_all.sh) erzeugt bitgleiche Dateien; Raster, Winkel und Farbstärke sind Shader-Uniforms und lassen sich ohne neue Bilder ändern."
+ ],
+ "assets": [
+  {
+   "file": "assets/panel_a.png",
+   "kind": "background",
+   "made_with": "gpt-image 1536×1024 + inkcolor.py: Farbflächen der Totale ohne Tusche, 822×582",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/panel_a_ink.png",
+   "kind": "mask",
+   "made_with": "inkcolor.py: Tusche der Totale (schwarz, Alpha = Deckung), 822×582",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/panel_b.png",
+   "kind": "background",
+   "made_with": "gpt-image 1536×1024 (Referenz bg.png) + inkcolor.py: Farbflächen des Laternen-Panels, 412×266",
+   "prompt": "assets/raw/lantern.json"
+  },
+  {
+   "file": "assets/panel_b_ink.png",
+   "kind": "mask",
+   "made_with": "inkcolor.py: Tusche des Laternen-Panels",
+   "prompt": "assets/raw/lantern.json"
+  },
+  {
+   "file": "assets/panel_c.png",
+   "kind": "portrait",
+   "made_with": "gpt-image 1536×1024 (Referenzen Master-Sheet, bg.png) + inkcolor.py + Kostüm-Kolorierung: Farbflächen der Nahaufnahme, 476×317",
+   "prompt": "assets/raw/bust.json"
+  },
+  {
+   "file": "assets/panel_c_ink.png",
+   "kind": "mask",
+   "made_with": "inkcolor.py: Tusche der Nahaufnahme",
+   "prompt": "assets/raw/bust.json"
+  },
+  {
+   "file": "assets/panel_c_talk.png",
+   "kind": "portrait",
+   "made_with": "gpt-image (Referenz bust.png, nachgezeichnet mit offenem Mund), nur Mundbereich in bust.png eingesetzt, dann wie panel_c.png",
+   "prompt": "assets/raw/bust_talk.json"
+  },
+  {
+   "file": "assets/panel_c_talk_ink.png",
+   "kind": "mask",
+   "made_with": "inkcolor.py: Tusche des Mundbilds",
+   "prompt": "assets/raw/bust_talk.json"
+  },
+  {
+   "file": "assets/badger.png",
+   "kind": "spritesheet",
+   "made_with": "Blender-Layout + gpt-image (Referenzen Layout, Master-Sheet, bg.png) + build_badger.py: 10 Bilder à 122×184 (walk_0 … walk_7, stand, turn), Farbflächen in reinen Druckfarben",
+   "prompt": "assets/raw/walk.json"
+  },
+  {
+   "file": "assets/badger_ink.png",
+   "kind": "mask",
+   "made_with": "build_badger.py: Tusche der Laufbilder samt 2-px-Außenkontur",
+   "prompt": "assets/raw/walk.json"
+  },
+  {
+   "file": "assets/ref/walk_layout.png",
+   "kind": "reference",
+   "made_with": "Blender 5.2 (blender/pose_layout.py, shared/3d/badger.glb) + make_layout.py: 10 Posen auf Magenta, 409,6 px/m",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Bangers",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/bangers"
+  },
+  {
+   "item": "Schrift Kalam Bold",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/kalam"
+  },
+  {
+   "item": "3D-Modell Dachs-Kurier (shared/3d/badger.glb, nur als Posen-Layout)",
+   "license": "eigenes Modell des Katalogs",
+   "source": "shared/3d/blender/build_badger.py"
+  }
+ ],
+ "image_generations": 5,
+ "tool_issues": [],
+ "status": "done"
+}

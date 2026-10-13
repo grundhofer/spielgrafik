@@ -1,0 +1,21 @@
+[
+ {
+  "out": "styles/parallax-2-5d/assets/raw/depth.png",
+  "size": "1536x1024",
+  "prompt": "Turn the reference painting into its depth map. Output a grayscale depth map of exactly the same picture: identical composition, framing, perspective, object positions and object outlines, aligned pixel for pixel with the reference painting, same image size. Encoding: brightness means nearness. The nearest things (the quay paving at the bottom edge and the barrels, crates and rope at the lower right) are white or very light grey; everything gets gradually darker with distance; the horizon line and the distant islands are nearly black; the whole sky including clouds and stars is pure black. Surfaces that recede from the viewer (the quay paving, the sea surface, the jetty planks) are smooth continuous gradients that get darker toward the horizon. Every standing object (cottage, chimney, lantern and its post, barrels, crates, rope coil, boats, masts, jetty posts, headland, lighthouse) is a solid shape with a smooth tone that matches its distance, a little lighter on parts that reach toward the viewer, with crisp sharp edges exactly along the silhouette of the object in the painting, and a clear step in brightness wherever a nearer object overlaps something farther away. Thin things like the masts, ropes and the lantern post keep their exact position and width. No colours, no texture, no brush strokes, no lighting, no shadows, no glow, no outlines, no text: a clean, noise-free depth image like the output of a depth-estimation network. Image format: landscape 3:2.\nNo text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.",
+  "refs": [
+   "styles/parallax-2-5d/assets/raw/bg.png"
+  ],
+  "ref_note": ""
+ },
+ {
+  "out": "styles/parallax-2-5d/assets/raw/badger.png",
+  "size": "1024x1024",
+  "prompt": "Repaint the character of the first reference image in exactly the same pose, size and position on the canvas: a stout badger courier walking to the right, seen from the side, mid-stride with the near leg straight under the body and the far leg lifted behind. Keep the silhouette, the pose of the legs and arms, the parcel under the arm, the satchel, the scarf ends, the cap and every costume detail where they are. Change only the painting technique: paint it in the technique of the second reference image (a painted harbour at dusk for a narrative adventure game): visible confident brushwork like gouache and oil sketching, simplified shapes, a few clear value steps, painterly edges, only a little fine fur detail. No dark ink outlines around the figure or inside it: shapes are separated by changes of value and colour like the painted objects in the second reference image. No cel shading, no 3D render look, no plastic shading, no comic look. The outer silhouette stays clear, simple and readable. Light: soft, even, slightly cool dusk light from above, mid values; no strong light from one side and no rim light (the game adds the lights). The dark green cap and vest stay clearly green, the scarf red, the cream shirt light, the black-and-white face stripes and the eye readable. The third reference image is only a check for the costume and its colours: do not copy its layout, its several views or its drawing style. The badger courier: an original mascot character, a stout, short-legged badger with a broad black-and-white striped face, wearing a dark green peaked cap with a brass button, a dark green vest with pockets over a cream shirt with rolled-up sleeves, a long red knitted scarf, a brown leather satchel on a shoulder strap, and a brown paper parcel tied with string under one arm. One single figure, isolated on a fully transparent background, no ground, no shadow.\nNo text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.\nImage format: square 1:1.",
+  "refs": [
+   "styles/parallax-2-5d/assets/ref/badger_layout.png",
+   "styles/parallax-2-5d/assets/raw/bg.png",
+   "shared/badger/master_sheet.png"
+  ]
+ }
+]

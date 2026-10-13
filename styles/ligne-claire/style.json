@@ -1,0 +1,194 @@
+{
+ "slug": "ligne-claire",
+ "name": "Ligne claire",
+ "family": "grafisch",
+ "kind": "style",
+ "era": "1950er–1980er (europäischer Comic, Begriff 1977); als Spielgrafik in Album-Umsetzungen seit den 1990ern",
+ "summary": "Alles ist mit einer gleich starken schwarzen Tuschelinie umrissen und flach koloriert, ohne Schraffur und fast ohne Schatten. Der Hintergrund ist klar und detailreich gezeichnet, die Figur einfacher. Text steht wie im Album in einem gelben Bildunterschrift-Kasten und einer Sprechblase in Großbuchstaben, die Auswahl in einer Leiste unter dem Panel, die Nahaufnahme erscheint als eingeschobenes Panel.",
+ "references": [
+  "Hergé: Tim und Struppi (Alben ab den 1940ern in Farbe): gleichmäßige Kontur, flache Farben, dokumentarisch genaue Hintergründe",
+  "Edgar P. Jacobs: Blake und Mortimer (ab 1946)",
+  "Joost Swarte (prägte 1977 den Begriff), Yves Chaland und Ted Benoit (Erneuerung in den 1980ern)",
+  "Tintin: Prisoners of the Sun (Infogrames, 1997): Spiel in Albumgrafik nach Hergé",
+  "XIII (Ubisoft, 2003): Comic-Einschübe als Panels im Spielbild (Vorbild für den Nahaufnahme-Einschub)",
+  "Valiant Hearts: The Great War (Ubisoft, 2014): franko-belgischer Comicstil mit klaren Konturen und flachen Farben"
+ ],
+ "traits": [
+  "Eine Linienstärke für die Zeichnung: schwarze Kontur ohne Schraffur und ohne Strichstärkenwechsel. Gemessen mit scripts/line_width.py (Läufe dunkler Pixel quer zur Linie): Hintergrund, kleine Figur, Nahaufnahme und Effektlinien je Median 2 px (Mittelwerte 2,1 / 2,7 / 2,7 / 2,1–2,6 px). Panelrahmen 4 px sowie Rahmen von Kästen, Sprechblase und Einschub bewusst 3 px",
+  "Flache Farben: Der Hintergrund ist auf 50 Farben eingerastet (129 nach Rundung, nahe Töne zusammengelegt) und je von Tusche umschlossener Fläche auf deren Hauptfarbe geflutet; 63 % der Pixel liegen in exakt einfarbigen 3×3-Umgebungen (Rohbild 5 %). Die Figur hat 10 Flächenfarben ohne Licht und Schatten",
+  "Kaum Schatten: Im Hintergrund nur einzelne flache dunklere Töne, unter der Figur ein flacher Kontaktschatten ohne Verlauf",
+  "Klarer, detailreicher Hintergrund: einzelne Steine von Häuschen und Kaimauer, Dachschiefer, Planken, Fender und Takelage der Boote, Fassreifen, Tau, Felsen, alles gleich scharf; Himmel in vier flachen Farbbändern mit geraden 2-px-Trennlinien",
+  "Figur als Tuschezeichnung aus dem 3D-Modell: runde Umrisse (Subdivision statt Low-Poly-Facetten), Linie am Handgelenk, in der kleinen Figur Auge und Nase als Punkte ohne Linienknäuel im Gesicht",
+  "Textoberfläche als Comic: gelber Bildunterschrift-Kasten oben links (Ort, erster Satz), Sprechblase mit Schwanz im Einschub (zweiter Satz), Auswahl und Parserzeile in einem Kasten unter dem Panel; Comic-Großbuchstaben (Comic Neue Bold)",
+  "Album-Seitenaufbau: Papierrand, 4 px schwarzer Panelrahmen (1248×632), Nahaufnahme des Dachses als Einschub-Panel mit weißem Steg (280×299 px), das ab 4,3 s dasselbe Winken zeigt wie die Figur im Panel; Kästen, Sprechblase und Einschub halten etwa 8 px oder mehr Abstand zueinander und zur Laterne",
+  "Umgebungseffekte als Comic-Kürzel in derselben 2-px-Linie: Rauchwölkchen mit gemeinsamer Außenkontur, Leuchtstriche um Laterne und Lampe, flacher Lichtkegel in drei Tonstufen mit schwarzen Kanten, Möwen als weiße M-Formen mit Kontur, weiße Glitzerstriche auf dem Wasser",
+  "Der Dachs läuft auf Zweien (15 Bilder/s) von links ins Bild, bleibt stehen, dreht sich zur Kamera und winkt; der Standfuß bleibt in allen 42 Standphasen-Bildpaaren auf 1 px stehen (scripts/probe_feet.py)"
+ ],
+ "camera": "Feste Kamera auf Augenhöhe, Seitenansicht des Hafens als ein breites Panel. Figur aus dem 3D-Modell orthografisch gerendert, 5° von oben; Nahaufnahme-Einschub auf Augenhöhe ab 4,3 s",
+ "resolution": "1280×720; Panel 1248×632 (Ausschnitt der Zeilen 46–678 aus dem aufbereiteten 1248×688-Hintergrund, Quelle 1264×848); Dachs im Panel 109 px/m (etwa 110 px hoch, Bild 119×137), Nahaufnahme 420 px/m (Bild 280×319, im Einschub 280×299 sichtbar); Linien etwa 2 px",
+ "pipeline": [
+  {
+   "step": "Hintergrund erzeugen (1 Versuch)",
+   "tool": "genimg (agy, Gemini-Bildmodell)",
+   "detail": "Codex hatte kein Guthaben, genimg nahm automatisch agy. 1536×1024 angefragt, 1264×848 geliefert. Stilblock: Panel eines europäischen Comicalbums der 1960er, Tuschekontur mit Röhrchenfeder in einer konstanten Stärke, keine Schraffur, flache Farben wie Flächentöne im Offsetdruck, keine Verläufe, fast keine Schatten, alles gleich scharf, Himmel in vier flachen waagerechten Bändern; dazu Motivblock, background_only_en, Layoutvorgaben für die Oberfläche, Hinweis auf später animierte Effekte (Lampe ohne Strahl, kein Rauch, keine Vögel), Schutzregeln, Format. Erster Versuch übernommen. agy-Protokoll kürzt den Prompt (verbatim: false), ob Layout- und Rauchhinweis ankamen, ist nicht prüfbar; es kam Rauch, und die Layoutvorgaben wurden nur grob befolgt."
+  },
+  {
+   "step": "Hintergrund aufbereiten",
+   "tool": "scripts/build_bg.py (NumPy, Pillow)",
+   "detail": "Mitgemalten Rauch entfernen: Maske aus hellgrauen, unbunten Pixeln über dem Schornstein (11 px aufgedickt) plus die Zeilen direkt über den Aufsätzen; jedes Maskenpixel übernimmt das Pixel derselben Zeile 150 px weiter rechts (Himmel aus waagerechten Bändern, die Bandlinien laufen durch). Flach einrasten: Tuschedeckung aus der Helligkeit (dunkel und unbunt); Palette aus den häufigsten Farben (4 bit je Kanal gerundet, 99,5 % der Flächenpixel, 129 Farben), Farben mit RGB-Abstand < 16 zur häufigeren zusammengelegt (50 Farben); nächste Palettenfarbe, 5×5-Mehrheitsfilter. Nach der ersten Prüfung ergänzt: Flutfüllung je von Tusche umschlossener Fläche (Töne mit Abstand < 40 zur Hauptfarbe der Fläche werden zur Hauptfarbe, z. B. graublaue Wischflecken im Wasser), Flecken ohne Kontur bis 400 px auflösen (im Himmel bis 3000 px bei Abstand < 40), Grenzen zwischen Himmelsfarben per Gauß-Mehrheit (Radius 5) glätten, die vier waagerechten Bandlinien als gerade 2-px-Tuschelinien neu ziehen (im KI-Bild rotbraun und halb geglättet, die halbe Zeile wurde sonst zu braunen Flecken). Danach unter den Linien die Farbe der Nachbarfläche, Tusche (#141416) mit ihrer Kantenglättung darüber. Gezeichnete Rahmenlinie (4 px) abschneiden, Zeilen 92–784 auf 1248×688 skalieren."
+  },
+  {
+   "step": "Figur rendern",
+   "tool": "Blender 5.2, EEVEE, blender/render_badger.py",
+   "detail": "shared/3d/badger.glb importieren (Punkte an Nähten verschmolzen), alle Materialien durch Emission in einer flachen Palette ersetzen (Fell dunkel als Schiefergrau #5d5c66, damit das schwarze Auge sichtbar bleibt; Auge mit eigener Renderfarbe, gefüllt wie die Nase). Nach der ersten Prüfung: Dreiecke je Material zu Vierecken zusammengefasst, Smooth Shading und Subdivision Surface Stufe 2 hinter dem Armature-Modifier, damit die Umrisse rund statt facettiert sind; das Handgewicht der Knochen als Punktattribut, das Fellmaterial schaltet bei Gewicht > 0,5 auf eine Hilfsfarbe für die Pfote (Linie am Handgelenk). Orthografische Kamera, 1 Abtastung, Filtergröße 0 (keine Kantenglättung). Je Bild ein Farbpass (Palettenfarben exakt) und ein 16-bit-Tiefenpass (Kameratiefe über Material-Override). Reihen: Walk in 8 Bildern je 1-s-Zyklus, Stand plus Drehung um 55° zur Kamera (5 Bilder), Wave (23 Bilder) und Idle (30 Bilder) bei 15 Bildern/s; dieselben Wave/Idle-Reihen als Brustbild mit zweiter Kamera (1260 px/m, Augenhöhe). Der Fußpunkt wird per Kameraverschiebung auf ein Vielfaches von 3 px gelegt. Alle 238 Pässe rendern mit Subdivision in etwa einer Minute. Freestyle wurde getestet und verworfen (siehe pitfalls)."
+  },
+  {
+   "step": "Tusche-Pass",
+   "tool": "scripts/ink_badger.py (NumPy, Pillow)",
+   "detail": "Jedes Pixel einer Palettenfarbe zuordnen; Kante, wo ein Nachbar eine andere Farbe hat oder bei gleicher Farbe mehr als 4 cm weiter vorn oder hinten liegt (Bein vor Bein, Arm vor Körper). Kante mit einer Kreisscheibe aufdicken (Brustbild 6 Renderpixel = 2 px, kleine Figur 5 = 1,7 px), schwarz über die Flächen legen, premultipliziert um den Faktor 3 verkleinern (Lanczos). Kleine Figur mit --face-simple: im Kopfbereich keine Linie zwischen hellem und dunklem Fell und keine Kontur um Auge und Nase, beide als schwarze Punkte (Auge um 4 Renderpixel aufgedickt). Alle Bilder einer Kamera im selben Rahmen, Fußpunkt ganzzahlig. Ausgabe: Blätter badger_*.png (119×137 je Bild), closeup_*.png (280×319) und JSON mit Fußpunkt und Fußpositionen aus den Knochen."
+  },
+  {
+   "step": "KI-Neuzeichnung der Figur und zweiter Ort (versucht, nicht verwendet)",
+   "tool": "scripts/layout_ref.py, genimg (agy)",
+   "detail": "Plan 1: die getuschten 3D-Laufbilder als Layout-Referenz (assets/raw/layout_walk.png) von agy als Ligne-claire-Zeichnung übermalen lassen, um zu sehen, ob die KI die Figur lebendiger zeichnet. Plan 2: zweiter Ort (Innenraum des Häuschens) mit bg.png als Stilreferenz, um die Konsistenz über mehrere Hintergründe zu prüfen. Beide Läufe endeten laut erstem Durchgang mit „usage limit (agy)“; belegt ist das nur für den Laufzyklus (assets/raw/walk.log). Für den Innenraum fehlen Log, .json und .fail.json. Nach PIPELINE.md keine weiteren Versuche. Prompts liegen in prompts/walk.txt und prompts/bg_interior.txt. In der Nachbesserung kein neues KI-Bild: alle Prüfmängel ließen sich in Skripten beheben."
+  },
+  {
+   "step": "Godot-Demo",
+   "tool": "Godot 4.7.2, GDScript, keine Shader",
+   "detail": "Ein Skript baut Panel, Effekte, Figur, Einschub und Oberfläche; alle Effekte sind _draw()-Formen mit flacher Füllung und derselben Tuschefarbe und Linienstärke (FX_LINE_W = 2 px)."
+  },
+  {
+   "step": "Messen und Aufnehmen",
+   "tool": "scripts/probe_feet.py, scripts/line_width.py, tools/capture.py --poster-at 0.87",
+   "detail": "Fußmessung über Differenzbilder zweier Godot-Läufe (mit und ohne Figur): Streifenabgleich des Fußstreifens und Vergleich der Enden der Bodenläufe (Zehenspitze/Ferse), ein Bildpaar gilt als stehend, wenn eine der beiden Messungen höchstens 1 px ergibt; Linienstärken von Hintergrund, Sprites und Effekten; Aufnahme 6 s bei 30 fps, Poster bei 5,2 s (Winken, Sprechblase, Einschub, Parserzeile). Ein unabhängiger Lauf ergibt ein zum Poster bitgleiches Bild 156. Probeläufe mit --rendering-method mobile und gl_compatibility. Neubau aller Assets ohne Bildmodell: sh styles/ligne-claire/scripts/build.sh (etwa 90 s)."
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, stretch mode canvas_items, Renderer Forward+, MSAA 2D 4× (glättet die Kanten der gezeichneten Polygone), Löschfarbe = Papierton",
+  "main.tscn enthält nur den Wurzelknoten mit main.gd; das Skript baut alles in _ready(). Hauptpanel = Control mit clip_contents bei (16,16), 1248×632; darin ein Node2D „world“ bei y = −46 (Bildausschnitt), an dem Hintergrund-Sprite2D, Effektknoten, Kontaktschatten und Dachs-Sprite2D in Hintergrundkoordinaten hängen; darüber ein Box-Knoten als 4-px-Panelrahmen",
+  "Effekte als innere Klassen (Node2D mit _draw, Zustand nur aus t), Linien mit FX_LINE_W = 2 px: Smoke (Wölkchen alle 0,42 s, Lebensdauer 3,3 s, steigt 18 px/s mit Wind nach rechts, vorgewärmt; erst alle Konturkreise, dann alle Füllkreise, so entsteht eine gemeinsame Außenkontur), Beam (Periode 7 s, drei flache Tonstufen statt Verlauf mit schwarzen Kanten, Länge = 430 px × |cos|, Aufblitzen mit 8 Leuchtstrichen, wenn der Strahl zur Kamera zeigt), LanternFx (zwei flache Lichtscheiben, Radius springt 10-mal pro Sekunde, 6 Leuchtstriche nach unten zufällig an/aus), Gulls (2 Möwen, 4 Flügelstellungen bei 10 Bildern/s), Glints (26 Striche auf Pixeln, die im Hintergrundbild offenes Wasser sind, wechseln 6-mal pro Sekunde)",
+  "Dachs: Sprite2D mit wechselnden Blättern (hframes), centered = false, offset = −Fußpunkt, Position ganzzahlig. Bildnummer f = floor(t × 15): 0–58 Laufen (Zyklus 8, Vorschub 5 px je Bild = 0,367 m/8 × 109 px/m), 59 Stand seitlich (+2 px, weil der Standfuß im letzten Laufbild bei +2 px steht), 60–63 Drehung, 64–86 Winken, danach Idle in Schleife",
+  "Nahaufnahme: Control mit clip_contents bei (406,30), 280×299 (Brustbild unten um 20 px gekürzt), zwei flache Farbflächen (Abendhimmel, Meer) mit Horizontlinie, Sprite2D mit closeup_wave/closeup_idle im selben Takt wie die Figur, weißer Steg 5 px und Kontur 3 px",
+  "Sprechblase: ein Polygon aus Ellipse (Radien 130×36, ganz im Einschub) und Schwanz (Spitze zeigt zum Kopf), draw_colored_polygon plus geglättete draw_polyline; Label zentriert; springt in zwei Bildern von 90 % auf 100 % auf",
+  "Kästen: Bildunterschrift (gelb, 376×74, Ort klein in Rotbraun, erster Satz), Auswahlleiste unter dem Panel (14,662, 1252×46) mit runden Nummern, Antwort 2 ab 4,6 s rot, Parserzeile tippt ab 4,45 s mit 18 Zeichen/s (visible_characters_behavior = Zeichen nach dem Shaping), Blockcursor blinkt. Schrift Comic Neue Bold über LabelSettings",
+  "Zufall nur aus RandomNumberGenerator mit seed 20261010 (vorab gezogene Felder); Zeit t als Summe der delta-Werte",
+  "Prüfschalter auf der Kommandozeile (nach --): --probe-no-shadow und --probe-no-badger blenden Schatten bzw. Figur aus; scripts/probe_feet.py misst so die Figur über Differenzbilder"
+ ],
+ "techniques": [
+  "textoberflaeche",
+  "kinemagramm",
+  "prozedurale-animation",
+  "3d-zu-sprite",
+  "tusche-pass",
+  "palette-einrasten",
+  "einschub-panel",
+  "sprite-animation"
+ ],
+ "ratings": {
+  "ai_fit": 3,
+  "consistency": 3,
+  "effort": 3,
+  "text_adventure": 5,
+  "mobile": 5
+ },
+ "ratings_note": "ai_fit 3: agy traf den Hintergrund im ersten Versuch (gleichmäßige Kontur, flache Farbbänder, klare Details), aber mit mitgemaltem Rauch trotz Hinweis, nur grob befolgten Layoutvorgaben, geringerer Auflösung und Verläufen, die ein Skript erst flach machen musste; die Figur kommt nicht aus dem Bildmodell (3D-Render plus Tusche-Pass in Code), der KI-Versuch für die Figur scheiterte am Limit. Der Wert beruht auf einem einzigen KI-Bild; Figur und zweiter Ort blieben ohne Bild, die Bewertung ist deshalb nur an diesem einen Bild geprüft. image_generations 3 zählt Aufrufe, nicht Bilder: bg.png (mit bg.json die einzige Begleitdatei in assets/raw) und zwei Aufrufe ohne Bild (Laufbilder, zweiter Ort; siehe pitfalls). consistency 3: Figur und Nahaufnahme sind aus einem Modell gerechnet und in allen Bildern gleich, die Linienstärke ist gemessen angeglichen; ob mehrere KI-Hintergründe gleich aussehen, ist nicht geprüft (zweiter Ort blockiert), daher geschätzt. effort 3: neue Animationen kosten nur einen Renderlauf, neue Orte aber Handarbeit (mitgemalte Effekte flicken, Lichtpositionen messen, Oberfläche um das feste Bild legen, Abstände prüfen). mobile 5: nach der Nachbesserung erneut geprüft: --rendering-method mobile ist bitgleich zu Forward+; gl_compatibility meldet „2D MSAA is not yet supported for GLES3“, dadurch weichen 2,5 % der Pixel ab (0,7 % um mehr als 16 Stufen: ungeglättete Kanten von Kästen, Sprechblase, Lichtkegel und Schrift). Kein Shader, eine Hintergrundtextur, wenige Sprites und Polygone; die Leistung auf einem echten Gerät ist geschätzt, nicht gemessen.",
+ "verdict": "Sehr gut geeignet für unser Textadventure. Ligne claire bringt die Erzählform gleich mit: Ort und Erzähltext im Bildunterschrift-Kasten, Figurenrede in der Sprechblase, Nahaufnahmen als Einschub-Panel, Auswahl in einer Leiste unter dem Panel, und die klare Linie bleibt auch hinter Text gut lesbar. Hintergründe liefert agy mit einem strengen Stilblock in guter Qualität; ein Skript macht sie danach flach und sauber (Flutfüllung je umrissener Fläche, gerade Bandlinien). Figuren sollten nicht frei von der KI gezeichnet, sondern aus einem 3D-Modell gerendert und per Tusche-Pass umrissen werden: das ist wiederholbar, jede Animation passt zur nächsten, und Linienstärke und Palette lassen sich messen. Das Modell muss dafür geglättet werden (Subdivision), sonst liest sich die Figur als Cel-Shading-Render. Für das Spiel braucht es ein für klare Konturen modelliertes Figurenmodell (großes Gesicht, sichtbare Augen, Hände mit Fingern); das gemeinsame Katalogmodell bleibt auch geglättet steif.",
+ "pitfalls": [
+  "agy malte Rauch aus dem Schornstein, obwohl der Prompt „the chimney without smoke“ verlangte (der Motivblock nennt „a smoking chimney“). Entfernt in build_bg.py durch zeilenweises Kopieren des Himmels; das geht nur so einfach, weil der Himmel aus flachen waagerechten Bändern besteht. Ob der Hinweis agy erreichte, lässt sich nicht prüfen (Protokoll gekürzt).",
+  "agy lieferte 1264×848 statt 1536×1024. Für ein 1280×720-Panel reicht das knapp (Maßstab 0,99), Reserve für Zoom oder Parallaxe gibt es nicht. Layoutvorgaben wurden nur grob befolgt: Horizont bei 58 % statt 45 %, Laterne bei 56 % statt links der Mitte, Leuchtturm bei 86 % statt 80 % der Breite.",
+  "Freestyle (Blender-Konturen) getestet und verworfen: Es übersieht Grenzen zwischen sich durchdringenden Teilen (Schal auf Weste, Gesichtsstreifen), zeichnet unruhig, und mit Subdivision wurde es schlechter. Der eigene Tusche-Pass aus Farb- und Tiefenpass findet jede Farbgrenze und jeden Tiefensprung und verträgt die Subdivision.",
+  "Facetten: Das gemeinsame 3D-Modell ist ein Echtzeitmodell (10-eckige Arme, kantige Mützenschirme, Manschetten und Schalenden). Im ersten Durchgang las sich der Nahaufnahme-Einschub dadurch wie ein Cel-Shading-Render mit Outline, der erhobene Arm war ein eckiger Stumpf (Befund der Prüfung). Behoben mit Subdivision Stufe 2 und Smooth Shading hinter dem Armature-Modifier sowie einer Linie am Handgelenk. Reste: kleine Knicke an den Ärmelenden, Arme wie Röhren, Pfoten ohne Finger (das Modell hat keine). Die Figur wirkt dadurch steifer und runder als eine gezeichnete Comicfigur.",
+  "Bei der Pfotenlinie ergab eine Zuordnung über ganze Flächen nach der Subdivision eine Zickzacklinie; erst die Schwelle auf dem geglätteten Handgewicht (Punktattribut im Material) ergab einen runden Ring.",
+  "Gesicht der kleinen Figur: Bei 110 px Höhe fielen Auge, Nase und Gesichtsstreifen zwischen Mützenschirm und Schal in der Dreh- und Winkpose zu einem schwarzen Linienknäuel zusammen, in der Seitenansicht war das Auge kaum zu sehen. Jetzt ohne Linie zwischen hellem und dunklem Fell im Kopfbereich, Auge und Nase als schwarze Punkte. Das weicht von der reinen Ligne claire ab (dort ist jede Fläche umrissen), und das helle Ohr hat zur Kopfseite keine Linie mehr; das Gesicht liest sich aber. Nebenbei gefunden: Auge und Nase hatten dieselbe Renderfarbe, der Tusche-Pass konnte das Auge nie getrennt behandeln (jetzt eigene Renderfarbe).",
+  "Maßstab gegen den Hintergrund: Bei der Perspektive des KI-Bildes wären am Kai etwa 105 px/m richtig. Ein großer Dachs (190 px hoch, erster Versuch) hätte neben Fässern und Laternenpfahl wie ein Riese gewirkt. Deshalb ist die Figur im Panel klein (110 px), und den Stil der Figur zeigt der Nahaufnahme-Einschub.",
+  "Linienstärke: Der erste Tusche-Pass ergab 3,3 px, gemessen doppelt so dick wie die Hintergrundlinien. Mit 2 px stimmten die Medianwerte (2 px), im Mittel maß die kleine Figur aber 3,1 px gegen 2,1 px im Hintergrund, weil bei 110 px Höhe viele Linien dicht beieinanderliegen und als ein Lauf zählen. Jetzt kleine Figur 1,7 px (Mittel 2,7 px), Nahaufnahme 2 px (Mittel 2,7 px). Die Hintergrundlinien schwanken stärker (gezeichnet, 23 % der Läufe nur 1 px), die Figurlinien sind exakt gleich. Kästen, Sprechblase und Einschub haben bewusst 3 px, der Panelrahmen 4 px.",
+  "Laufzyklus: Der Standfuß bleibt in den Standphasen auf 1 px stehen (42 Bildpaare). Nach der Glättung meldete der bisherige Streifenabgleich bei abhebender Ferse (Zyklusbild 7→0) 2 px, obwohl die Zehenspitze stand; probe_feet.py vergleicht jetzt zusätzlich die Enden der Bodenläufe, ein Paar gilt als stehend, wenn eine Messung höchstens 1 px ergibt (der Kantenvergleich allein versagt, wenn beide Füße zu einem Lauf verschmelzen). An den Kontaktwechseln (Zyklusbild 0→1 und 4→5) steht kein Fuß in beiden Bildern. Die Fußlinie schwankt beim Laufen um 2 px (605–607), weil die Kamera 5° von oben schaut (hinterer Fuß steht im Bild höher); beim Anhalten (letztes Laufbild → Stand) fällt der Standfuß dadurch 2 px auf die Standlinie. Beim Drehen, Stehen, Winken und Sprechen ist sie konstant.",
+  "Die Drehung zur Kamera dreht die ganze Figur um ihren Fußpunkt: Die Füße schwenken auf der Stelle, statt umzutreten. Bei vier Bildern fällt das kaum auf, aus der Nähe schon.",
+  "KI-Neuzeichnung der Laufbilder und der zweite Ort scheiterten: genimg meldete laut erstem Durchgang zweimal „usage limit (agy)“; die agy-Antwort für den Laufzyklus lautete aber „I have delegated the task to the image generation subagent …“. Ob es ein echtes Limit war, ist ungeklärt. Für den Innenraum-Lauf fehlen Log, .json und .fail.json; dass er stattfand und so endete, ist nur die Angabe des ersten Durchgangs und nicht nachprüfbar (er ist in image_generations mitgezählt). Damit ist nicht geprüft, wie gut die KI Figuren in diesem Stil zeichnet, und die Konsistenz über mehrere KI-Hintergründe ist nicht gemessen.",
+  "Palette-Einrastung: Die Prüfung fand braune Flecken auf der Bandlinie Rosa/Orange (die rotbraune, halb geglättete Linie fiel zur Hälfte durch den Tuschetest), ausgefranste orange Säume unter den Wolken und graublaue Wischflecken im Wasser vor den Booten. Behoben durch neu gezogene Bandlinien, Zusammenlegen naher Palettenfarben, Flutfüllung je umrissener Fläche, Auflösen kleiner Flecken ohne Kontur und geglättete Himmelsgrenzen (flach: 59 % → 63 %). Bewusst gelassen: einzelne graue Säume in Kaifarbe an der Kaikante unter den Booten (hängen über Lücken in der Kaikante mit dem Kai zusammen und liegen weiter als 40 von der Wasserfarbe), die pfirsichfarbene Unterseite einer Wolke und orange Lichtstreifen unter den Wolken (im KI-Bild so gemalt, jetzt flache Flächen mit glattem Rand, aber ohne Kontur). Ein Versuch, auch Flecken mit überwiegend Tuscherand aufzulösen, machte Wolken fleckig und hellte Himmelskeile zwischen den Wanten auf und wurde verworfen. Nach dem Einrasten skaliert build_bg.py noch um 0,99; Lanczos erzeugt an Kanten wieder Mischfarben.",
+  "Die Oberfläche muss um ein festes KI-Bild herum gelegt werden. Im ersten Durchgang verdeckte die Auswahlleiste Kairand, Taurolle und Kistenfuß, die Sprechblase stieß an den Bildunterschrift-Kasten und die Einschub-Ecke an den Laternenarm, die Figur lief auf der Unterkante. Jetzt liegt die Leiste unter dem Panel (dafür zeigt das Panel 46 Zeilen weniger Himmel), der Kasten ist 16 px schmaler, der Einschub 12 px weiter links und unten 20 px kürzer, die Sprechblase kleiner und ganz im Einschub; der Rauch steigt flacher (sonst unter den Kasten) und die Leuchtstriche der Laterne zeigen nur nach unten (sonst unter dem Einschub). Alle Positionen stehen als Zahlen in main.gd und müssen je Ort neu gemessen werden.",
+  "Der Lichtkegel liegt auch dann vor dem Turm, wenn er nach hinten zeigt (nur abgeschwächt). Seine Kanten sind jetzt schwarze 2-px-Linien wie alle Zeichenlinien; das liest sich als gezeichneter Kegel, ist aber kräftiger als ein Lichtschein. Die flachen Lichtscheiben an der Laterne hellen auch die Hintergrundlinien auf, die dort grau statt schwarz wirken.",
+  "Die Boote schaukeln nicht; dafür müssten sie aus dem Bild gelöst werden. Bewusst ausgelassen, fünf andere Umgebungsanimationen laufen."
+ ],
+ "lessons": [
+  "Stilblock für Ligne claire, der bei agy im ersten Versuch traf: „technical pen, one constant, uniform thickness“, „flat, solid printed colour fills like flat tints in offset printing“, „no hatching, no gradients, no glow, almost no shadows“, „everything equally sharp“, „sky in four flat horizontal bands“ und „not a painting, not a 3D render, not a sketch“.",
+  "Flache Himmelsbänder machen Retusche trivial: Mitgemalte Effekte lassen sich durch zeilenweises Kopieren aus derselben Zeile entfernen.",
+  "Palette einrasten mit getrennter Tusche (Deckung aus der Helligkeit), Zusammenlegen naher Töne, Mehrheitsfilter, Flutfüllung je von Tusche umschlossener Fläche und Nachbarfarbe unter den Linien macht KI-Flächen druckflach, ohne die geglätteten Linien zu zerstören; jeder umrissene Stein behält seine eigene Farbe (exakt flache 3×3-Umgebungen: 5 % → 63 %).",
+  "3D-Modell → Ligne-claire-Sprite: Farbpass ohne Kantenglättung plus Tiefenpass, Kanten aus Materialgrenzen und Tiefensprüngen, mit einer Kreisscheibe aufdicken, um 3 verkleinern. Eine einzige Zahl steuert die Linienstärke, jede Animation des Rigs wird in Sekunden zur Sprite-Reihe, alle Bilder passen zueinander. Das ist für ein echtes Spiel wiederholbar.",
+  "Linienstärke messen statt schätzen: line_width.py misst Hintergrund und Sprites gleich; so lässt sich der Tusche-Pass auf das KI-Bild abstimmen.",
+  "Fußpunkt per Kameraverschiebung auf ein Vielfaches des Verkleinerungsfaktors legen: Der Anker bleibt ganzzahlig, die Figur wird nie subpixelweise verschoben. Den Vorschub je Laufbild aus 0,367 m/N × px/m ganzzahlig wählen (hier 5 px) und auf einem Laufbild anhalten, dessen Standfuß nahe am Ursprung steht (plus Restversatz), dann rutscht beim Anhalten nichts.",
+  "Ist die Figur in der Totale zu klein, ist ein Einschub-Panel die comicgerechte Nahaufnahme: zweite Kamera, gleiche Animation, synchron abgespielt.",
+  "Comic-Effekte prozedural in Godot: Rauch als Kreise mit gemeinsamer Außenkontur (erst alle Konturen, dann alle Füllungen), Leuchtstriche statt Glow, Lichtkegel in flachen Tonstufen statt Verlauf, Möwen als M-Polygone mit Kontur. Alles mit derselben Tuschefarbe und Linienstärke wie Figur und Hintergrund.",
+  "Figur messen über Differenzbilder: zwei deterministische Godot-Läufe, einmal mit ausgeblendeter Figur. Die Differenz ist genau die Figur; ein Abgleich des Fußstreifens zwischen aufeinanderfolgenden Bildern zeigt, ob der Standfuß steht.",
+  "Glitzerpunkte nur auf Pixeln setzen, die im Hintergrundbild offenes Wasser sind (Farbtest per Image.get_pixel), dann landen sie nicht auf Booten oder Pfählen.",
+  "Comic Neue Bold in Großbuchstaben liest sich als Comic-Lettering, Umlaute sind vorhanden; für einen echten Albumlook wäre eine eigens gezeichnete Lettering-Schrift besser.",
+  "Facettierte Echtzeitmodelle vor dem Tusche-Pass glätten: glTF mit merge_vertices importieren, Dreiecke je Material zu Vierecken zusammenfassen, Smooth Shading und Subdivision Stufe 2 hinter dem Armature-Modifier (erst verformen, dann glätten). Ohne das liest sich die Kontur als Cel-Shading-Render.",
+  "Fehlende Farbgrenzen (Pfote am Arm) aus Knochengewichten erzeugen: Gewicht als Punktattribut, im Emissionsmaterial „größer als 0,5“ auf eine Hilfsfarbe schalten, gefüllt wird über eine Zuordnungstabelle mit der echten Farbe. Die Grenze wird eine glatte Höhenlinie.",
+  "Jede Rolle im Farbpass braucht eine eigene Renderfarbe (Auge ≠ Nase), auch wenn beide gleich gefüllt werden; sonst kann der Tusche-Pass sie nicht unterscheiden.",
+  "Kleine Figuren (um 110 px): im Gesicht keine Linien zwischen Fellfarben, Auge und Nase als Punkte, und die Linie etwas dünner als in der Nahaufnahme; beim Vergleich mit dem Hintergrund Mittelwert und Verteilung ansehen, nicht nur den Median.",
+  "Comic-Layout: Kästen, Blasen und Einschübe mit etwa 8 px Abstand zueinander und zu Bildobjekten setzen; Berührungen sehen wie Fehler aus. Die Auswahlleiste unter das Panel legen statt in das Bild, dann bleibt der Vordergrund ganz sichtbar.",
+  "Fußmessung: Ein Abgleich des Fußstreifens allein meldet bei abhebender Ferse falsche Verschiebungen, ein Vergleich der Fußenden allein versagt, wenn beide Füße zu einem Lauf verschmelzen. Beide messen und je Bildpaar den kleineren Wert nehmen."
+ ],
+ "assets": [
+  {
+   "file": "assets/bg.png",
+   "kind": "background",
+   "made_with": "agy (Gemini) 1264×848, build_bg.py: Rauch entfernt, Palette eingerastet (50 Farben), Flutfüllung je Fläche, Bandlinien neu gezogen, auf 1248×688",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/badger_walk.png",
+   "kind": "spritesheet",
+   "made_with": "Blender (shared/3d/badger.glb geglättet, Walk) + ink_badger.py: 8 Bilder à 119×137, 109 px/m, Linie 1,7 px",
+   "prompt": ""
+  },
+  {
+   "file": "assets/badger_turn.png",
+   "kind": "spritesheet",
+   "made_with": "Blender (Idle-Pose, Drehung 0–55°) + ink_badger.py: 5 Bilder",
+   "prompt": ""
+  },
+  {
+   "file": "assets/badger_wave.png",
+   "kind": "spritesheet",
+   "made_with": "Blender (Wave) + ink_badger.py: 23 Bilder bei 15 Bildern/s",
+   "prompt": ""
+  },
+  {
+   "file": "assets/badger_idle.png",
+   "kind": "spritesheet",
+   "made_with": "Blender (Idle) + ink_badger.py: 30 Bilder bei 15 Bildern/s",
+   "prompt": ""
+  },
+  {
+   "file": "assets/closeup_wave.png",
+   "kind": "portrait",
+   "made_with": "Blender (Wave, Brustbild 420 px/m, Augenhöhe, geglättet) + ink_badger.py: 23 Bilder à 280×319, Linie 2 px",
+   "prompt": ""
+  },
+  {
+   "file": "assets/closeup_idle.png",
+   "kind": "portrait",
+   "made_with": "Blender (Idle, Brustbild) + ink_badger.py: 30 Bilder à 280×319",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Comic Neue Bold",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/comicneue"
+  },
+  {
+   "item": "3D-Modell Dachs-Kurier (shared/3d/badger.glb)",
+   "license": "eigenes Modell des Katalogs",
+   "source": "shared/3d/blender/build_badger.py"
+  }
+ ],
+ "image_generations": 3,
+ "tool_issues": [
+  "tools/genimg.py mit agy: Zwei Läufe endeten nach 35–39 s ohne Bild mit „usage limit (agy)“. Die agy-Antworten selbst lauteten „I have delegated the task to the image generation subagent an…“ und „I have started the image generation subagent. I'm waiting for…“; genimg wertet jede bildlose Antwort, die „limit“, „quota“ oder „exhausted“ enthält, als Limit. Ob agy wirklich am Limit war oder nur zurückkehrte, bevor der Unteragent fertig war, ließ sich nicht klären (agy-Protokolle nicht ausgewertet). Vorschlag: bei bildloser Antwort die Unteragenten-Ordner nach Bildern durchsuchen bzw. warten und die volle Antwort in die Meldung schreiben.",
+  "tools/genimg.py mit agy: actual_calls enthält den Prompt im agy-Protokoll gekürzt („<truncated 1211 bytes>“), daher verbatim: false. Der gekürzte Teil enthält Layoutvorgaben, das Rauchverbot, Schutzregeln und Format; ob agy ihn erhielt, ist nicht prüfbar."
+ ],
+ "status": "done"
+}

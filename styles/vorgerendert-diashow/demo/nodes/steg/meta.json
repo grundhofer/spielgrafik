@@ -1,0 +1,45 @@
+{
+ "name": "Steg",
+ "base": "base.png",
+ "clips": [
+  {
+   "file": "clip_0.png",
+   "rect": [
+    274,
+    0,
+    91,
+    52
+   ],
+   "frames": 30,
+   "cols": 22,
+   "loop_from": 0,
+   "kind": "ambient"
+  },
+  {
+   "file": "clip_1.png",
+   "rect": [
+    0,
+    119,
+    509,
+    213
+   ],
+   "frames": 30,
+   "cols": 4,
+   "loop_from": 0,
+   "kind": "ambient"
+  },
+  {
+   "file": "badger.png",
+   "rect": [
+    193,
+    184,
+    257,
+    148
+   ],
+   "frames": 117,
+   "cols": 7,
+   "loop_from": 87,
+   "kind": "badger"
+  }
+ ]
+}

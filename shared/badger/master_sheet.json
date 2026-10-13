@@ -1,0 +1,10 @@
+{
+ "prompt": "Game character reference sheet, 2D hand-painted cartoon style with clean dark outlines and flat cel shading. An original mascot character: a stout, short-legged badger who works as a village courier, peaked cap, green vest with pockets, red knitted scarf, brown parcel tied with string under one arm. Show the same character three times side by side, full body, same scale: front view, side view facing right, back view. Neutral standing pose, arms relaxed. Plain flat solid pure magenta background (#FF00FF) behind everything, no shadows on the ground, no text, no labels, no frames.",
+ "size": "1536x1024",
+ "refs": [],
+ "seconds": 46.4,
+ "generated_at": "2026-10-10T15:52:48+00:00",
+ "tool": "Codex CLI built-in image_gen",
+ "codex_version": "codex-cli 0.162.0",
+ "pngs_in_thread": 1
+}

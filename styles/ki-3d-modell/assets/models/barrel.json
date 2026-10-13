@@ -1,0 +1,30 @@
+{
+ "name": "Barrel",
+ "dir": "styles/ki-3d-modell/work/tsr/barrel",
+ "input_faces": 199796,
+ "input_vertices": 99900,
+ "components": [
+  199796
+ ],
+ "components_removed": 0,
+ "faces_removed": 0,
+ "projected_share": 0.263,
+ "projection": {
+  "D": 2.0,
+  "iou": 0.9852,
+  "iou_default_1.9m_40deg": 0.9128
+ },
+ "tilt_deg": -30.5,
+ "yaw_deg": 0.0,
+ "scale": 0.9185,
+ "size_m": [
+  0.762,
+  0.763,
+  0.9
+ ],
+ "tris": 4000,
+ "vertices": 2002,
+ "t_bake": 0.31,
+ "glb_bytes": 1391840,
+ "t_total": 1.89
+}

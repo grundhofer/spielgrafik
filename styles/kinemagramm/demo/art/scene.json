@@ -1,0 +1,107 @@
+{
+ "lamp": [
+  1136.7,
+  196.8
+ ],
+ "chimney": [
+  107.5,
+  118.5
+ ],
+ "horizon_y": 332,
+ "quay_y": 602,
+ "beam_len": 800,
+ "ui": {
+  "x": 645,
+  "y": 532,
+  "w": 615,
+  "h": 176
+ },
+ "gulls": [
+  {
+   "start": [
+    282,
+    100
+   ],
+   "vel": [
+    26,
+    -2
+   ],
+   "size": 10
+  },
+  {
+   "start": [
+    947,
+    173
+   ],
+   "vel": [
+    -18,
+    1
+   ],
+   "size": 7
+  }
+ ],
+ "lights": [
+  {
+   "name": "window",
+   "pos": [
+    136.8,
+    392.7
+   ],
+   "channel": "window",
+   "glow": 70,
+   "glow_k": 0.16
+  },
+  {
+   "name": "lantern",
+   "pos": [
+    312.0,
+    355.9
+   ],
+   "channel": "lantern",
+   "glow": 80,
+   "glow_k": 0.16
+  },
+  {
+   "name": "lamp",
+   "pos": [
+    1136.7,
+    196.8
+   ],
+   "channel": "lamp",
+   "glow": 40,
+   "glow_k": 0.16
+  }
+ ],
+ "boats": [
+  {
+   "pivot": [
+    560.0,
+    520.0
+   ],
+   "amp_deg": 1.0,
+   "period": 4.2,
+   "phase": 0.0,
+   "bob": 1.0
+  },
+  {
+   "pivot": [
+    820.0,
+    532.0
+   ],
+   "amp_deg": 0.8,
+   "period": 5.0,
+   "phase": 1.7,
+   "bob": 1.0
+  }
+ ],
+ "badger": {
+  "x": 536,
+  "feet_y": 658,
+  "height": 230,
+  "tint": [
+   0.84,
+   0.82,
+   0.9
+  ]
+ }
+}

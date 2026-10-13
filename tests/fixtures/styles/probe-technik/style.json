@@ -1,0 +1,12 @@
+{
+ "slug": "probe-technik",
+ "name": "Probe-Technik",
+ "family": "technik",
+ "kind": "technique",
+ "summary": "Eine Technik mit eigener Demo.",
+ "techniques": ["probe-technik"],
+ "ratings": {"ai_fit": 3, "consistency": 4, "effort": 1, "text_adventure": 5, "mobile": 3},
+ "verdict": "Für Hintergründe brauchbar.",
+ "image_generations": 1,
+ "status": "done"
+}

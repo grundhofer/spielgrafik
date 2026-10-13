@@ -1,0 +1,76 @@
+{
+ "horizon": 109,
+ "quay_rows": [
+  154,
+  185
+ ],
+ "lamp": [
+  365.0,
+  54.5
+ ],
+ "lantern": [
+  116,
+  89
+ ],
+ "lantern_glass": [
+  116.0,
+  88.8
+ ],
+ "window": [
+  49.0,
+  120.0
+ ],
+ "chimney": [
+  22.5,
+  8
+ ],
+ "boats": [
+  {
+   "file": "boat_a.png",
+   "pos": [
+    172,
+    128
+   ],
+   "size": [
+    42,
+    19
+   ]
+  },
+  {
+   "file": "boat_b.png",
+   "pos": [
+    244,
+    131
+   ],
+   "size": [
+    41,
+    19
+   ]
+  }
+ ],
+ "parcel": [
+  160,
+  168,
+  15,
+  9
+ ],
+ "size": [
+  400,
+  240
+ ],
+ "crop_row": 14,
+ "rows_source": 268,
+ "levels": "R/15",
+ "family": "G/85",
+ "region": "B/30",
+ "regions": {
+  "object": 0,
+  "sky": 1,
+  "water": 2,
+  "ground": 3,
+  "glass": 4,
+  "star": 5,
+  "lamp": 6,
+  "window": 7
+ }
+}

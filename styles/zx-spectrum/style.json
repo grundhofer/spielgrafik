@@ -1,0 +1,224 @@
+{
+ "slug": "zx-spectrum",
+ "name": "Attribut-Clash (Spectrum)",
+ "family": "computer",
+ "kind": "style",
+ "era": "1982–1990",
+ "summary": "Grafik eines britischen 8-Bit-Heimcomputers: 256×192 Pixel mit 1 Bit je Pixel, die Farbe kommt aus einem Attributbyte je 8×8-Zelle (INK, PAPER, BRIGHT, FLASH) aus 15 kräftigen Grundfarben. Typisch sind schwarze Flächen mit einfarbigen Linien, Farbwechsel in 8-px-Blöcken, Figuren, die die Zellen um sich herum umfärben (Attribut-Clash), der farbige Rahmen und die Ladestreifen vom Band. Die Demo bildet die Videologik im Shader nach und arbeitet auf einem echten 6912-Byte-Bildschirmabbild.",
+ "references": [
+  "ZX Spectrum (Sinclair, 1982): Bildschirm 256×192, Attribute 32×24, Rahmenfarbe über Port 254, FLASH-Takt 16 Halbbilder",
+  "Ladebilder von Kassettenspielen 1983–1988 (SCREEN$ mit 6912 Bytes, das zeilenweise verschränkte Einladen gehört zum Bild)",
+  "The Hobbit (Beam Software/Melbourne House, 1982): illustriertes Textadventure, Bild oben, Text darunter",
+  "Knight Lore (Ultimate, 1984) und Head over Heels (Ocean, 1987): einfarbige Sprites zur Vermeidung von Clash",
+  "Jet Set Willy (Software Projects, 1984) und Rex (Martech, 1988): farbige Sprites mit sichtbarem Clash"
+ ],
+ "traits": [
+  "Bildschirm 256×192 in einem 320×240-Bild mit Rahmen (32 px seitlich, 24 px oben und unten), ×3 = 960×720 in der 1280×720-Aufnahme; Pixel quadratisch",
+  "nur die 15 Farben der Hardware (tools/sprites.py --palette zx, normal 0xD7, hell 0xFF, Schwarz ohne helle Variante): probe.py findet in 180 Bildern (0–6 s) und 60 Bildern ab t = 30 s 0 fremde Farben, 13 der 15 Farben kommen vor (normales Magenta und Grün nicht)",
+  "Zellregel am gerenderten Bild geprüft: in keiner der 768 Zellen und keinem der 240 Bilder mehr als 2 Farben, nie normal und hell gemischt; der Rahmen zeigt nur die 8 Grundfarben ohne BRIGHT (0 Verstöße)",
+  "Attribut-Clash sichtbar: der Dachs setzt INK und BRIGHT aller Zellen, die seine Maske berührt (je nach x 4×5 oder 5×5 Zellen); Ziegel, Kisten, Fässer, Steg und Kaikante in diesen Zellen wechseln beim Laufen blockweise die Farbe, über dem Wasser wird das Papier hinter Kopf und Mütze hellblau (BRIGHT gilt für die ganze Zelle); Vergleich mit und ohne Attributwechsel in assets/clash_compare.png",
+  "Szene als echtes Bildschirmabbild demo/rom/harbour.scr (6144 Bytes Bitmap in der verschränkten Zeilenfolge, 768 Attributbytes); der Shader rechnet die Adresse wie die Hardware aus Zeile und Spalte",
+  "Laden vom Band als Anfang der Demo (0–1,1 s): Leitton als rot-cyane Streifen, Kopfblock, „Bytes: lornholm“, dann blau-gelbe Datenstreifen aus den echten Bits mit echten Pulslängen (855/1710 T-Takte je Halbwelle) und die Bitmap in Speicherreihenfolge (je Bild 307 Bytes: die Zeilen erscheinen jalousieartig drittelweise), zuletzt die Attribute; etwa zehnmal schneller als echt",
+  "FLASH als Leuchtfeuer: die zwei Zellen des Laternenraums tauschen INK und PAPER alle 0,32 s (Gelb/Blau), ohne dass das Programm etwas schreibt",
+  "Umgebung fast nur über Attribute: Laterne flackert über BRIGHT und INK ihrer Zelle (die ganze Zelle wird heller, Zufall mit Seed 1982), Sonnenglitzern unter dem Horizont in 6 Zellen (INK Gelb/Weiß/Blau), Sterne in Zeile 0 funkeln (Weiß/Cyan/Blau); Wellenstriche wandern in 65 Wasserzellen um 1 px je 4–8 Bilder",
+  "Rauch und Möwen übernehmen die Zellfarbe statt sie zu setzen: in leeren Himmelszellen ist INK vorab Weiß, so erscheinen sie weiß ohne Clash; Möwen pendeln (Flügelschlag 6 Bilder/s), Rauch alle 0,5 s ein Wölkchen, 4 gleichzeitig",
+  "Dachs-Kurier 24×40 Pixel, 1 Bit mit Maske (Umriss + 1 px Papierrand), Farbbänder je Zellzeile: Mütze Grün, Kopf Weiß mit schwarzem Augenstreif, Schal Rot, Weste Grün mit Paket und Tasche, Beine Weiß mit Fellraster (nahes Bein gerastert, fernes nur Umriss); Füße auf der Zellgrenze (Zeile 135), damit die Bänder beim Laufen stehen bleiben",
+  "Laufzyklus aus 4 Posen bei 10 Posen/s, Vorschub 6 px je Pose aus festgelegten Fersen (Kontakt 0 und 12, Durchgang 6); gemessen über 27 Posenwechsel: Standfuß 0 px Abweichung, Fußzeile immer 135, Kopfzeile immer 97; steht ab 3,3 s bei x = 96, Schalende flattert, Blinzeln bei 4,4 s und 5,6 s",
+  "Text im 32×24-Zeichenraster mit 8×8-Zellen und eigenen Attributen je Zeichen: Ortsname gelb in der obersten Bildzeile, Beschreibung weiß (40 Zeichen/s), Auswahl mit gelben Ziffern und cyanem Text, Eingabe „> nimm paket“ mit blinkendem „L“-Cursor (FLASH wie der Eingabecursor des Rechners); Textbereich 6 von 24 Zeilen = 20 % der Bildhöhe mit Rahmen",
+  "Rahmen nach dem Laden Blau (BORDER 1), Bild oben 18 Zeichenzeilen, darunter 6 Textzeilen, getrennt durch eine weiße Linie"
+ ],
+ "camera": "Seitenansicht wie ein Ortsbild eines Heimcomputer-Abenteuers, feste Kamera, Text unter dem Bild",
+ "resolution": "320×240 mit Rahmen, Bildschirm 256×192 (Bild 256×144, Text 32×6 Zeichen), 15 Farben, je 8×8-Zelle 2 Farben gleicher Helligkeit",
+ "pipeline": [
+  {
+   "step": "Hintergrund erzeugen",
+   "tool": "genimg (agy, Gemini-Bildmodell, Prompt wörtlich übergeben)",
+   "detail": "Stilblock: Ladebild eines Kassettenspiels der frühen 80er, 256 Pixel breit, 8×8-Zellen mit je zwei Farben, die 15 Farben als Hex-Liste, „large areas of solid black with thin one-pixel outlines“, Himmel als Bänder mit Raster, Komposition zwischen 11 und 89 % der Höhe (prompts/bg.txt). Ein Versuch, 1264×848 geliefert. Wirkt sofort wie ein Spectrum-Ladebild, hält die Zellregel aber nicht ein; Boote, Steg, Fässer und Laterne sind ein brauner Knäuel, der Kai ist perspektivisch"
+  },
+  {
+   "step": "Auf 256×144 und Palette einrasten",
+   "tool": "scripts/build_scr.py",
+   "detail": "Jeder Quellpixel auf die nächste Palettenfarbe (Oklab, Braun -> Gelb, Grau -> Weiß), je Zielpixel die häufigste Farbe im Blockinneren; Maßstab 4,94 × 5,08 Quellpixel, so dass Horizont (Zeile 72) und Kaikante (Zeile 112) auf Zellgrenzen fallen"
+  },
+  {
+   "step": "Szene zellgenau neu aufbauen",
+   "tool": "scripts/build_scr.py, scripts/props.py",
+   "detail": "Aus dem KI-Bild bleiben Aufbau, Kai mit Plattenfugen, Fels der Landzunge, Wellenstriche und der Umriss der Wolke (etwa 10 % der Linien- und Requisitenpixel). Neu per Code: Himmel als Farbbänder je Zellzeile (Schwarz mit Sternen, Raster, Blau, Blau mit Magentalinien, Rot mit gelben Linien), die Wolke in der Linienfarbe Magenta, Häuschen (Dach, Schornstein, Ziegelwand, Tür, Fenster), Leuchtturm mit Achse auf der Zellgrenze x = 232, zwei Boote, Steg, Laterne in einer eigenen Zelle; Fässer, Kisten und Tau als Pixeltext (massiv gelb, Details in Papierfarbe)"
+  },
+  {
+   "step": "Zellregel einrasten",
+   "tool": "scripts/build_scr.py",
+   "detail": "Je 8×8-Zelle das Paar INK/PAPER mit dem kleinsten Oklab-Fehler (alle 36 Paare), BRIGHT nach der Mehrheit der farbigen Quellpixel; feste Attribute für Leuchtfeuer (FLASH) und Laterne, INK Weiß in leeren Himmelszellen, INK Cyan in allen Wasserzellen. Nach dem Neuaufbau ändert die Zellregel nur noch 314 von 36 864 Bildpixeln (erste direkte Umsetzung: 5 276). Ausgabe demo/rom/harbour.scr und scene.json (Wasser-, Glitzer-, Stern-, Laternenzellen)"
+  },
+  {
+   "step": "Figurenblatt erzeugen (nur Ansicht)",
+   "tool": "genimg (agy), Referenzen shared/badger/walk_painted.png und master_sheet.png",
+   "detail": "Verlangt war ein Laufzyklus in 6 Bildern als 24×40-Sprites mit Farbbändern je 8 Zeilen (prompts/badger.txt). Geliefert wurde ein Dreiansichten-Blatt nach dem Aufbau der zweiten Referenz, gut im Stil (Raster für Fell, Bänder Rot/Grün), aber etwa 30×65 Kunstpixel je Figur und ohne Laufposen. Nur als Sichtvorlage für Kopf und Bänder genutzt"
+  },
+  {
+   "step": "Dachs als Pixeltext setzen",
+   "tool": "scripts/badger.txt, scripts/build_sprites.py",
+   "detail": "Oberkörper 31 Zeilen + 5 Beinposen à 9 Zeilen, Blinzeln (1 Zeile) und Schalflattern (3 Zeilen); Zeichen '#' Pixel, ':' Fellraster, 'o' Lücke unter der Maske. build_sprites.py baut 32 px breite Bytezeilen mit Maske (Umriss um 1 px erweitert), dazu 3 Möwen- und 4 Rauchformen; Vorschau assets/badger_sheet.png vor Schwarz und Blau"
+  },
+  {
+   "step": "Zeichensatz",
+   "tool": "scripts/font8.py",
+   "detail": "Pixel Operator 8 (CC0, proportional) Glyphe für Glyphe in 8×8-Zellen gesetzt (Tinte mittig, Großbuchstaben ab Zeile 0, Unterlängen in Zeile 7), 96 Zeichen + Ä Ö Ü ä ö ü ß als benutzerdefinierte Zeichen ab Code 144, 824 Bytes im Format des Rechners (demo/rom/charset.bin)"
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/probe.py, scripts/clash_compare.py, tools/capture.py",
+   "detail": "probe.py rendert mit --only=badger (Füße, Kopf, Standfuß je Posenwechsel), den Lauf 0–6 s und einen Dauerlauf ab 30 s (Palette, Zellregel, Rahmenfarben je Bild) sowie gl_compatibility und mobile gegen Forward+; Ergebnis media/probe.json und media/probe_t30.png. clash_compare.py stellt den Dachs mit und ohne Attributwechsel gegenüber"
+  }
+ ],
+ "godot": [
+  "Viewport 320×240, stretch mode viewport, scale_mode integer, Standardfilter Nearest, Fenster 960×720; ein ColorRect mit shaders/ula.gdshader",
+  "ula.gdshader ist die Videologik: Rahmen oder Bildschirm je Bildpunkt; Bitmap-Adresse ((y & 0xC0) << 5) | ((y & 7) << 8) | ((y & 0x38) << 2) | (x >> 3) in einer 32×192-Textur (ein Byte je Texel), Attribut aus 32×24, FLASH tauscht INK und PAPER bei gesetztem Bit 7 und flash_phase, BRIGHT wählt die helle Palettenhälfte; Rahmenfarbe je Bildzeile aus einer 1×240-Textur (nur Bits 0–2); alles mit texelFetch, Palette als Konstante",
+  "scripts/main.gd ist das Spielprogramm auf einem 6912-Byte-Speicher: lädt harbour.scr, charset.bin, sprites.json, scene.json; je Bild Kopie des Abbilds, dann Wellen (Bitreihen der Wasserzellen rotieren), Attributanimationen (Laterne, Glitzern, Sterne), Rauch und Möwen (ODER ohne Attribut), Dachs (Bildschirm = Bildschirm UND NICHT Maske ODER Daten, um x & 7 verschoben auf 5 Bytes je Zeile, danach INK/BRIGHT der berührten Zellen), Text (8 Bytes je Zeichen + Attribut), Upload als R8-Texturen",
+  "Ladeablauf (Bild 0–32): Leitton (Halbwelle 2168 T, Zeile 224 T, Bild 312 Zeilen, daher wandernde Streifen), Kopfblock mit Prüfsumme als Daten, Bitmap in 20 Bildern, Attribute in 4 Bildern; Spiel ab Bild 33 (1,1 s); Poster bei 5,0 s (capture.py --poster-at 0.828, FLASH-Phase invertiert, Cursor als Block sichtbar)",
+  "Zeit über delta aufsummiert, Bewegungen aus der ganzzahligen Bildnummer (Posen alle 3 Bilder, Möwen 1 px je 2 bzw. 3 Bilder, Rauch 1 px je 2 Bilder seitlich und je 5 Bilder hoch); Zufall nur aus RandomNumberGenerator mit Seed 1982, je Bild ein fester Satz Werte, bei --t0 vorgespult",
+  "Prüfschalter nach --: --t0=<s>, --only=badger (Dachs vor schwarzem Papier), --only=bg (ohne Sprites), --noclash (Sprite ohne Attributwechsel), --border=<0..7>, --probe=<datei> (Pose und x je Bild)"
+ ],
+ "techniques": [
+  "textoberflaeche",
+  "sprite-animation",
+  "fuss-halten",
+  "palette-einrasten",
+  "dithering"
+ ],
+ "ratings": {
+  "ai_fit": 2,
+  "consistency": 4,
+  "effort": 4,
+  "text_adventure": 4,
+  "mobile": 5
+ },
+ "ratings_note": "Das KI-Bild traf die Anmutung eines Ladebilds im ersten Versuch (schwarze Flächen, einfarbige Linien, Himmel in Bändern), hält aber die Zellregel nicht ein: Von den Linien- und Requisitenpixeln der fertigen Szene stammen nur etwa 10 % direkt aus dem KI-Bild, Häuschen, Leuchtturm, Boote, Steg, Laterne und Himmel sind zellgenau per Code gesetzt, das KI-Figurenblatt war nicht verwendbar und der Dachs ist Handarbeit; der Look kommt aus Wandler, Shader und Pixeltext (ai_fit 2). Palette, Zellregel, Shader, Spielprogramm, Zeichensatz und die Requisiten in props.py bleiben für weitere Orte gleich, die Regeln sind gemessen (consistency 4). Jeder Ort braucht aber eine zellgerechte Planung (Horizont und Kanten auf Zellgrenzen, Requisiten neu), jede Figur Pose für Pose Pixeltext (effort 4). Der Stil ist das historische Vorbild illustrierter Textadventures, die dünne Schrift ist gut lesbar; mit 6 Textzeilen à 32 Zeichen unter dem Bild reicht der Platz aber nur knapp, der Ortsname musste in die oberste Bildzeile (text_adventure 4). Mobil nur über die Renderer geprüft: gl_compatibility und mobile pixelgleich zu Forward+ (160 Bilder), ein Draw-Call, drei kleine Texturen; nicht auf einem Telefon getestet.",
+ "verdict": "Sofort als Spectrum-Spiel erkennbar: Ladestreifen, Rahmen, die 15 grellen Farben, Farbwechsel in 8-px-Blöcken, dünne Schrift im Zeichenraster und der Clash um die laufende Figur. Für unser Textadventure ist der Weg wiederholbar: KI-Bild als Aufbau, build_scr.py mit Requisiten aus props.py, und der Shader samt Spielprogramm bleibt gleich; das Ergebnis ist ein echtes 6912-Byte-Bild, das die Regeln nachweislich einhält. Teuer ist das Zeichnen für das Zellraster: Die KI liefert Stimmung und Aufbau, aber fast jedes Objekt muss zellgerecht neu gesetzt werden, und Figuren sind Pixelarbeit. Wer den Clash zeigen will, braucht Figuren mit Farbbändern je Zellzeile auf fester Höhe; wer ihn vermeiden will, nimmt einfarbige Figuren auf schwarzem Grund (dann übernimmt die Figur die Zellfarben, siehe assets/clash_compare.png). Für längere Texte wäre ein Wechsel auf eine reine Textseite oder eine 64-Spalten-Schrift (4 px breit) zu prüfen.",
+ "pitfalls": [
+  "Direkte Umsetzung des KI-Bilds war unbrauchbar: 5 276 von 36 864 Pixeln mussten für die Zellregel umgefärbt werden, Wolkenkonturen verschwanden, der Horizont wurde zu einem gelben Balken, Boote und Steg zu einem gelb-cyanen Durcheinander mit hellblauen Kästen, der Leuchtturm verlor Band und Laternenraum. Erst der zellgenaue Neuaufbau (Kanten auf Zellgrenzen, Requisiten neu gezeichnet) brachte es auf 314 umgefärbte Pixel.",
+  "Das KI-Figurenblatt folgte der zweiten Referenz (Dreiansichten-Blatt) statt der ersten (Laufblatt), obwohl der Prompt die erste ausdrücklich als Aufbau nannte; genimg.py hat die Referenzen in der richtigen Reihenfolge übergeben. Die Figuren waren mit etwa 30×65 Kunstpixeln viel zu fein; eine automatische Material-Umsetzung des gemalten Laufblatts auf 24×40 (Hilfsskript, danach verworfen) verwechselte Augenstreif und Fell. Der Dachs ist deshalb von Hand als Pixeltext gesetzt; zwei Bildaufträge, nur einer im Bild verwendet.",
+  "Drei Farben in einer Zelle gehen nicht: Die Magentalinien enden an der Zellgrenze neben Leuchtturm und Schornstein (sichtbar als blaue Säule hinter dem Turm), die Wolke ist eine Magentafläche ohne Kontur, Dach- und Turmkanten haben keine Umrisslinie, der Turmsockel steht in einer schwarzen Zelle.",
+  "Der Clash nimmt die Papierfarbe der Zellen: Der schwarze Augenstreif des Dachses erscheint vor dem Wasser blau und für etwa 0,3 s vor der oberen Kiste gelb (deren Zelle hat gelbes Papier), und über dem Wasser steht ein hellblauer Kasten aus den Zellen um Kopf und Mütze (BRIGHT der Figur gilt für die ganze Zelle). Das ist hardwaregetreu, wirkt aber unruhig; ein Spiel würde die Figur eher auf schwarzem Grund halten.",
+  "Der Dachs ist mit 40 Pixeln etwa 28 % der Bildhöhe groß, Gesicht und Paket bestehen trotzdem nur aus wenigen Pixeln; der Kopf liest sich als weißer Keil mit Streifen. Beine haben nur 2 Stellungen plus Durchgang, Arme schwingen nicht, der Körper wippt nicht. Er läuft in Schritten von 6 px alle 3 Bilder, also sichtbar ruckweise wie viele Spiele der Zeit.",
+  "Die Bildfläche ist 3:2-KI-Bild auf 256×144: Oben fehlen Sterne und Rasterband der Quelle (neu gesetzt), unten ein Teil des Kais; der Kai bleibt perspektivisch, obwohl der Prompt eine strenge Seitenansicht verlangte.",
+  "Der Textbereich hat nur 6 Zeilen à 32 Zeichen; der Ortsname steht deshalb als Titel in der obersten Bildzeile. Die Beschreibung bricht genau bei 32 Zeichen um. Pixel Operator 8 hat 7 Zeilen hohe Großbuchstaben: Unterlängen in Zeile 7 stoßen ohne Abstand an die Großbuchstaben der nächsten Zeile; M, W, m, w sind 7 px breit und lassen nur 1 px Abstand; Ä, Ö, Ü haben einen auf 5 Zeilen gestauchten Körper (der Demotext enthält keine Umlaute).",
+  "Der Rahmen ist nach dem Laden normales Blau, dieselbe Farbe wie das Wasser: Rechts, wo das Wasser bis an den Bildschirmrand reicht, verschwimmt die Bildkante mit dem Rahmen.",
+  "Wellenstriche rotieren innerhalb zusammenhängender Wasserzellen; am Ende eines Laufs springen sie an den Anfang, und Zellen mit Booten, Steg oder Glitzern bleiben stehen. Leere Wasserzellen hatten anfangs INK Schwarz, wandernde Striche wurden dort schwarz; jetzt haben alle Wasserzellen INK Cyan.",
+  "Der Zellwandler wählte für Zellen mit Weiß auf Blau zuerst BRIGHT (Weiß liegt näher an Hellblau als an Blau), dadurch hellblaue Kästchen im Wasser; gelöst mit BRIGHT nach der Mehrheit der farbigen Quellpixel.",
+  "Vereinfacht gegenüber der Hardware: 30 statt 50 Bilder/s (FLASH alle 9 oder 10 Bilder statt genau 16 Halbbilder), Laden etwa zehnmal schneller als echt (6912 Bytes brauchen sonst rund 14 s plus Leitton), Rahmenfarbe nur je ganze Zeile (echte Streifen wechseln mitten in der Zeile), kein Speicherzugriffs-Timing, kein Flackern oder Zerreißen beim Zeichnen der Sprites, keine Bildröhren-Nachbildung; die Pixel bleiben quadratisch. harbour.scr ist im Format des Rechners geschrieben, aber nicht in einem Emulator geladen worden.",
+  "Die Möwen pendeln auf festen Wegen, damit sie nicht durch die Zellen von Leuchtturm und Schornstein fliegen: Dort hätten sie als Sprites ohne Attributwechsel die Zellfarbe (Schwarz bzw. blinkendes Gelb) angenommen."
+ ],
+ "lessons": [
+  "Prompt für ein Spectrum-Ladebild ohne Markennamen: „loading screen of an early 1980s 8-bit home computer adventure game on cassette“, 256 Pixel breit, 8×8-Zellen mit zwei Farben, die 15 Farben als Hex-Liste, „large areas of solid black with thin one-pixel outlines“ und „Not a photograph, not a 3D render“. Das Gemini-Modell (agy) traf den Look im ersten Versuch; die Zellregel muss trotzdem ein Skript herstellen.",
+  "Für das Zellraster entwerfen statt umrechnen: Horizont, Kaikante und Füße auf Zellgrenzen legen, schmale Objekte mit der Achse auf eine Zellgrenze setzen (jede Hälfte hat ihr eigenes Farbpaar), animierte Dinge (Leuchtfeuer, Laterne) in eigene Zellen, Wolken in der Linienfarbe ihres Himmelsbands statt mit Kontur.",
+  "Requisiten massiv in INK zeichnen und Details in Papierfarbe aussparen (props.py): So sehen Kisten und Fässer vor Wasser (Papier Blau) und Kai (Papier Schwarz) gleich aus, und die Zelle braucht nie eine dritte Farbe.",
+  "Zellwandler-Rezept: Palettenzuordnung in Oklab, Mehrheit je Zielpixel, je Zelle alle 36 INK/PAPER-Paare durchrechnen, BRIGHT nach Mehrheit der farbigen Pixel festlegen statt mitsuchen; feste Attribute für Animationszellen danach setzen. Die Zahl der umgefärbten Pixel ist ein gutes Maß, wie zellgerecht ein Bild schon ist.",
+  "Videologik als Shader plus Bildschirmspeicher: Palette, Zellregel, BRIGHT, FLASH und Rahmenfarben sind Bauweise statt Absicht, das Spielprogramm schreibt nur Bytes. Die Prüfung am gerenderten Bild (0 Verstöße in 240 Bildern) bestätigt das.",
+  "Clash zeigen heißt Figuren in Farbbändern je Zellzeile entwerfen und auf fester Höhe laufen lassen (Füße auf einer Zellgrenze): Die Bänder bleiben stehen, nur in der Laufrichtung färben sich Zellen um. Die Maske mit 1 px Papierrand hält die Figur lesbar, auch wenn die Zelle umgefärbt wird.",
+  "Zwei Sprite-Strategien nebeneinander: Figuren, die Attribute setzen (Clash), und Effekte, die die Zellfarbe übernehmen. Mit INK Weiß in allen leeren Himmelszellen erscheinen Rauch und Möwen weiß, ohne eine einzige Zelle umzufärben.",
+  "Umgebung über Attribute kostet fast nichts und ist typisch: FLASH für das Leuchtfeuer, BRIGHT für die flackernde Laterne (die ganze Zelle leuchtet auf), INK-Wechsel für Glitzern und Sterne.",
+  "Das Laden vom Band ist ein starkes Erkennungszeichen: Streifen aus den echten Bits mit echten Pulslängen und die Bitmap in Speicherreihenfolge ergeben das bekannte Jalousie-Bild, ohne eigene Grafik.",
+  "Sprites als Pixeltext mit festgelegten Fersen (Kontakt 0 und 12, Durchgang 6, alle Füße 8 px lang) ergeben gemessen 0 px Standfuß-Abweichung; das nahe Bein gerastert, das ferne nur als Umriss unterscheidet die Beine in 1 Bit.",
+  "Eine freie Pixelschrift (Pixel Operator 8, CC0) lässt sich Glyphe für Glyphe in 8×8-Zellen setzen und als Zeichensatz im Format des Rechners ablegen; damit steht der Text im Attributraster, und Umlaute kommen als benutzerdefinierte Zeichen dazu."
+ ],
+ "assets": [
+  {
+   "file": "assets/raw/bg.png",
+   "kind": "background",
+   "made_with": "Gemini-Bildmodell (agy); nur Aufbau, Kai, Fels, Wellen und Wolkenumriss übernommen",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/raw/badger.png",
+   "kind": "sprite-sheet",
+   "made_with": "Gemini-Bildmodell (agy), Referenzen walk_painted und master_sheet; nur Sichtvorlage",
+   "prompt": "assets/raw/badger.json"
+  },
+  {
+   "file": "assets/bg_mapped.png",
+   "kind": "background",
+   "made_with": "build_scr.py: neu aufgebaute Szene in Palettenfarben vor der Zellregel (×3)"
+  },
+  {
+   "file": "assets/bg_preview.png",
+   "kind": "background",
+   "made_with": "build_scr.py: Bildschirm nach Zellregel, wie harbour.scr ihn zeigt (×3, ohne Text und Sprites)"
+  },
+  {
+   "file": "demo/rom/harbour.scr",
+   "kind": "data",
+   "made_with": "build_scr.py: Bildschirmabbild 6912 Bytes (Bitmap verschränkt + Attribute)"
+  },
+  {
+   "file": "demo/rom/scene.json",
+   "kind": "data",
+   "made_with": "build_scr.py: Zellen für Wellen, Glitzern, Sterne, Laterne, Leuchtfeuer, Schornstein"
+  },
+  {
+   "file": "scripts/props.py",
+   "kind": "data",
+   "made_with": "Pixeltext: Fass, Kiste, Tau, Laterne, Möwe (3 Flügelstellungen)"
+  },
+  {
+   "file": "scripts/badger.txt",
+   "kind": "sprite-sheet",
+   "made_with": "von Hand gesetzter Pixeltext des Dachses (Oberkörper, 5 Beinposen, Blinzeln, Schalflattern)"
+  },
+  {
+   "file": "assets/badger_sheet.png",
+   "kind": "sprite-sheet",
+   "made_with": "build_sprites.py: Stehen, 4 Laufposen, Blinzeln, Flattern in den Zellfarben vor Schwarz und Blau (×6)"
+  },
+  {
+   "file": "demo/rom/sprites.json",
+   "kind": "data",
+   "made_with": "build_sprites.py: Bytezeilen mit Maske für 7 Dachsformen, 3 Möwen, 4 Rauchwölkchen"
+  },
+  {
+   "file": "demo/rom/charset.bin",
+   "kind": "font",
+   "made_with": "font8.py: Zeichensatz 8×8 aus Pixel Operator 8, 103 Zeichen inkl. Umlauten als UDG"
+  },
+  {
+   "file": "assets/font_preview.png",
+   "kind": "font",
+   "made_with": "font8.py: Vorschau des Zeichensatzes (×6)"
+  },
+  {
+   "file": "assets/clash_compare.png",
+   "kind": "comparison",
+   "made_with": "clash_compare.py: Dachs mit Attribut-Clash und ohne Attributwechsel, vor der Wand (2,0 s) und am Ziel (5,0 s)"
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Pixel Operator 8 (Jayvee Enaguas), als Zeichensatz in 8×8-Zellen gesetzt",
+   "license": "CC0-1.0",
+   "source": "https://www.dafont.com/pixel-operator.font (Lizenztext: demo/fonts/PixelOperator-LICENSE.txt; Datei aus styles/amiga-illustration/demo/fonts kopiert)"
+  },
+  {
+   "item": "Figurenblatt und Laufblatt Dachs-Kurier (Referenzen)",
+   "license": "eigenes Motiv des Katalogs",
+   "source": "shared/badger/master_sheet.png, shared/badger/walk_painted.png"
+  },
+  {
+   "item": "Hintergrund und Figurenblatt",
+   "license": "eigene KI-Bilder (Gemini-Bildmodell über agy)",
+   "source": "assets/raw/"
+  },
+  {
+   "item": "Szene, Requisiten, Dachs-Sprites, Möwen, Rauch, Shader, Skripte",
+   "license": "eigener Code und eigene Pixel, keine fremden Grafiken und kein ROM-Zeichensatz",
+   "source": "styles/zx-spectrum/"
+  },
+  {
+   "item": "Palette",
+   "license": "Farbwerte der Hardware-Palette aus tools/sprites.py (palette zx)",
+   "source": "tools/sprites.py"
+  }
+ ],
+ "image_generations": 2,
+ "tool_issues": [],
+ "status": "done"
+}

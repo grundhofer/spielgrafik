@@ -1,0 +1,32 @@
+{
+ "name": "Leuchtturmtür",
+ "base": "base.png",
+ "clips": [
+  {
+   "file": "clip_0.png",
+   "rect": [
+    398,
+    214,
+    146,
+    118
+   ],
+   "frames": 30,
+   "cols": 14,
+   "loop_from": 0,
+   "kind": "ambient"
+  },
+  {
+   "file": "clip_1.png",
+   "rect": [
+    0,
+    215,
+    241,
+    117
+   ],
+   "frames": 30,
+   "cols": 8,
+   "loop_from": 0,
+   "kind": "ambient"
+  }
+ ]
+}

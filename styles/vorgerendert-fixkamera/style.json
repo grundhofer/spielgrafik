@@ -1,0 +1,167 @@
+{
+ "slug": "vorgerendert-fixkamera",
+ "name": "Vorgerenderte Hintergründe, feste Kamera",
+ "family": "retro3d",
+ "kind": "style",
+ "era": "1996–2001",
+ "summary": "Der Hafen ist offline in Blender (Cycles) mit weichem Licht, Spiegelungen, volumetrischem Leuchtturmstrahl und Rauch gerendert und steht in Godot als 320×240-Bild hinter einer Kamera, die exakt der Renderkamera entspricht. Davor läuft die Low-Poly-Figur in Echtzeit und wird über ein Tiefenbild aus demselben Render vom Häuschen verdeckt. Bewegung kommt aus einer vorgerenderten Bildfolge und einer flackernden Lichtebene; zwei feste Einstellungen mit hartem Schnitt und ein Dialogfenster wie in Rollenspielen und Survival-Horror-Spielen der späten Neunziger.",
+ "references": [
+  "Alone in the Dark (Infogrames 1992): Polygonfiguren vor festen, vorgezeichneten Kameraeinstellungen, Ursprung des Prinzips",
+  "Resident Evil (Capcom 1996) und Resident Evil 2 (1998): vorgerenderte Räume, feste Kameras mit Schnitt, Figuren werden von Möbeln und Mauern verdeckt",
+  "Final Fantasy VII (Square 1997): vorgerenderte Feldbildschirme, Low-Poly-Figuren, animierte Hintergrundteile, Orts- und Dialogfenster",
+  "Final Fantasy VIII (1999) und IX (2000): detailreichere Renderhintergründe, ganze Hintergründe als Filmschleife",
+  "Grim Fandango (LucasArts 1998): vorgerenderte Hintergründe mit Tiefenmasken und 3D-Figuren",
+  "Fear Effect (Kronos 2000): Hintergründe als laufende Videoschleifen hinter Echtzeitfiguren",
+  "Parasite Eve (Square 1998): vorgerenderte Schauplätze bei Nacht mit Lichtstimmungen"
+ ],
+ "traits": [
+  "Bild 320×240 (4:3), alles in dieser Auflösung (Renderbild, 3D-Figur ohne Kantenglättung, Oberfläche), ganzzahlig ×3 hochskaliert; capture.py füllt die Ränder auf 1280×720 schwarz",
+  "Hintergründe offline gerendert (Blender 5.2, Cycles, 64 Samples, entrauscht) in 1280×960 und in linearem Licht auf 320×240 gemittelt (16 Strahlen je Pixel): weiche Schatten, indirektes Licht, Schmutz und Moos in den Fugen, Spiegelungen auf nassem Pflaster und Wasser, volumetrischer Strahl und Rauch, also sichtbar mehr Aufwand als die Echtzeitfigur davor (der typische Bruch des Stils)",
+  "Godot zeigt das Renderbild unverändert: außerhalb von Figur, Rundschatten und Laternenlicht weichen 50 000–75 000 verglichene Pixel je Bild um 0 Stufen von den gebackenen Dateien ab (Bilder 0, 45, 90, 150, scripts/probe.py)",
+  "Zwei feste Einstellungen: erhöhte Schrägansicht über das Häuschen auf Kai, Boote und Leuchtturm (0–2,1 s), harter Schnitt auf eine niedrige Kamera vor der Figur mit Leuchtturm im Hintergrund (2,1–6 s); die Godot-Kamera übernimmt Lage und Bildwinkel aus dem Render (camera.json); Projektion und Tiefenbild stimmen überein (Kaiebene y = 0 gegen Tiefenbild: Median 0,6 mm in der Nahaufnahme, 11 mm in der Totale, wo die Platten bis 8 mm hoch liegen; scripts/check_camera.py)",
+  "Verdeckung über das Tiefenbild (24 Bit in RGB, Abstand entlang der Blickachse, im Shader in den Tiefenpuffer geschrieben): Der Dachs tritt hinter dem Häuschen hervor. Gegen den Schalter --no-depth gemessen: Bild 0 zu 100 % verdeckt, 0,6 s 64 %, 1,0 s 38 %, ab 1,6 s frei; ohne Tiefenbild steht er ab Bild 0 sichtbar vor der Hauswand",
+  "Bildfolge je Einstellung: 90 Bilder (6 s, 15 Bilder/s, bei 30 fps jedes Bild zwei Takte) als Raster 2880×2400, nahtlos (Render bei 6,0 s gleicht Bild 0 bis auf 1 Stufe); gegenüber dem ruhenden Median-Bild ändert sie im Mittel 6,8 % der Pixel je Bild, höchstens 22 %: Leuchtturmstrahl samt Spiegelung im Pflaster, Wellen, schaukelnde Boote, Rauch (Totale), Blitz der Lampe, wenn der Strahl zur Kamera zeigt (Totale bei 1,0 s)",
+  "Lichtebene der Laterne (Render mit minus ohne Laterne) wird in Godot linear addiert und flackert mit festem Seed; in der Totale schwankt die mittlere Helligkeit der 215 Laternenpixel zwischen 61 und 75",
+  "Echtzeitfigur badger_low.glb (876 Dreiecke, ohne Texturen), Licht nur je Eckpunkt in einem eigenen Gouraud-Shader nach den Lichtern des Renders (Restlicht von hinten, Fenster, Laterne, Aufhellung); harte Treppenkanten gegen den weichen Hintergrund; 24–28 px hoch in der Totale, 65 px in der Nahaufnahme",
+  "Rundschatten unter der Figur, vom Tiefenbild verdeckt wie die Figur, dezent (dunkelt das Pflaster um bis zu 10 Stufen ab)",
+  "Oberfläche: Ortstitel in gesperrten Versalien (Cinzel) unten rechts in der Totale; Dialogfenster 300×66 px (26 % des Bildes) halbtransparent mit hellem Metallrahmen, Fira Sans 11 px mit Schatten, Text Zeichen für Zeichen, danach drei Auswahlpunkte mit pulsierendem Zeiger"
+ ],
+ "camera": "Zwei feste Einstellungen (Godot-Koordinaten, vertikaler Bildwinkel, Keep Height, 4:3). Totale 0–2,1 s: Position (−10,5 | 4,0 | 7,5), Ziel (2,0 | 1,0 | −10,0), fov 52°. Nahaufnahme ab 2,1 s nach hartem Schnitt: Position (−4,92 | 0,78 | 4,93), Ziel (−3,78 | 0,44 | −5,00), fov 56°, 3,6 m vor dem Haltepunkt des Dachses. Beide weichen bewusst von der Hauptkamera aus shared/3d ab (siehe pitfalls).",
+ "resolution": "320×240, 24 Bit; Hintergründe aus 1280×960-Renders (4×4 gemittelt), Tiefenbild 320×240 mit 24 Bit, Bildfolge 90 × 320×240",
+ "pipeline": [
+  {
+   "step": "Einstellungen suchen",
+   "tool": "Blender EEVEE (blender/scout.py) + Python (scripts/frame.py)",
+   "detail": "16 Kamerakandidaten mit Dachs-Platzhaltern in Sekunden gerendert; Bildlage von Dachs (Start, Knick, Halt), Leuchtfeuer, Laterne und Fenster für 320×240 ausgerechnet (Godots looking_at, Keep Height) und die Nahaufnahme so gelöst, dass die Füße beim Halt über dem Dialogfenster stehen (Zeile 162) und Leuchtturm samt Spitze im Bild bleibt. Bahn des Dachses so gelegt, dass er in der Totale hinter dem Häuschen hervortritt."
+  },
+  {
+   "step": "Szene und Materialien",
+   "tool": "Blender 5.2 (blender/render_bg.py)",
+   "detail": "shared/3d/harbor.glb unverändert importiert (nur gelesen), alle 14 Materialien nach Namen durch prozedurale Cycles-Materialien ersetzt, ohne Texturdateien: Granitplatten mit Tönung je Zelle, Moos und Schmutz in den 5 cm tiefen Fugen (nach Welthöhe), nassen Flecken mit geringer Rauheit; Bruchsteinwand des Häuschens aus Voronoi-Zellen mit Mörtel; Schiefer aus dem Brick-Knoten; Algenkante an der Kaimauer; Holz, Farbe mit Abplatzern, Rost; Ambient Occlusion als Schmutz in Ecken. Wasser glänzend mit Wellen aus 5 periodischen Bändern und 4D-Rauschen auf einem Kreis (nahtlose Schleife)."
+  },
+  {
+   "step": "Licht und Effekte",
+   "tool": "Blender 5.2 (blender/render_bg.py)",
+   "detail": "Abendhimmel als eigener Knotenbaum (Verlauf nach Höhe, oranges Band zum Nachglühen hin, flache Schichtwolken, schwache Sterne; Kamera- und Spiegelstrahlen sehen Wolken, die Szene wird vom glatten Verlauf in 3-facher Stärke beleuchtet), Restsonne 3° über dem Horizont von hinten rechts, Laterne 90 W, Flächenlichter vor beiden Fenstern, Leuchtfeuer als Punktlicht plus 34 m langer Kegel mit reinem Emissionsvolumen (eine Umdrehung je Schleife, Lampe blitzt, wenn der Strahl zur Kamera zeigt), Schornsteinrauch als Volumen aus zwei überblendeten, aufsteigenden Rauschfeldern. Alle Bewegungen periodisch in 6 s."
+  },
+  {
+   "step": "Rendern",
+   "tool": "Blender 5.2 Cycles (Metal, Apple M4 Pro)",
+   "detail": "Je Einstellung 90 Bilder 1280×960, 64 Samples adaptiv, OpenImageDenoise, AgX Medium High Contrast; dazu Bild 0 ohne Laterne (Lichtebene) und ein Tiefenbild (Material-Override mit View Z Depth als Emission, 1 Strahl je Pixel, Filterbreite 0,01, EXR 32 Bit, Strahl und Rauch ausgeblendet, Himmel = 10 000 m). Etwa 7 s je Bild (Totale 90 Bilder in 10,7 min, Nahaufnahme in 10,0 min) auf dem gemeinsam genutzten Rechner; der erste Cycles-Start kompilierte die Metal-Kernel (2 min). Rohbilder 964 MB unter assets/raw/render/ (nicht im Git)."
+  },
+  {
+   "step": "Backen",
+   "tool": "scripts/bake.py (NumPy, Pillow; EXR über Blender gelesen)",
+   "detail": "4×4 in linearem Licht gemittelt; ruhendes Bild = Median über die 90 Bilder (entfernt Strahl und Rauschen); bewegte Pixel = Abweichung vom Median > 3/255, um 1 px erweitert, als weiche Maske im Alphakanal; Bildfolge als 9×10-Raster; Tiefe je Pixel als Median der 16 Strahlen (ein echter Flächenwert, kein Mittel über Kanten) mit 24 Bit in RGB (0–1000 m); Lichtebene = Bild 0 − Bild ohne Laterne, Rauschen unter 0,003 linear verworfen, leer, wenn die Laterne nicht im Bild ist. Wiederholter Lauf ergibt bitgleiche Dateien."
+  },
+  {
+   "step": "KI-Bilder versucht",
+   "tool": "genimg (agy)",
+   "detail": "Geplant waren ein Himmelsbild und ein Texturblatt (prompts/sky.txt, prompts/textures.txt) und später eine KI-Übermalung des Nahaufnahme-Renders bei gleichbleibender Geometrie (prompts/paintover.txt). Alle drei Aufrufe endeten mit „usage limit (agy)“ bzw. „quota exhaustion (429)“; kein Bild entstand. Der Eintrag ist vollständig ohne KI gebaut (Himmel und Materialien prozedural in Blender)."
+  },
+  {
+   "step": "Godot-Demo",
+   "tool": "Godot 4.7.2 (Forward+), handgeschriebene Shader",
+   "detail": "Vollbild-Viereck an der Kamera zeigt Renderbild, Bildfolge und Lichtebene pixelgenau (texelFetch) und schreibt die Tiefe aus dem Tiefenbild; davor die geriggte Low-Poly-Figur mit eigenem Gouraud-Shader, Rundschatten und Oberfläche; Kamerawechsel lädt die Daten der zweiten Einstellung."
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/probe.py, scripts/check_camera.py, tools/capture.py",
+   "detail": "probe.py nimmt verlustfrei in 320×240 auf (normal ×2, --key, --key --no-depth, --no-anim, --per-pixel, --no-ui, --feet-log) und misst Reproduzierbarkeit (bitgleich), Verdeckung, Bildtreue, Overlay-Anteil, Flackern, Schatten und Füße; Ergebnis in assets/probe/probe.json. capture.py mit --poster-at 0,82 (Bild 147, 4,9 s: Dachs winkt, Strahl quer über dem Himmel, Auswahl sichtbar). Probeläufe mit --rendering-method mobile und gl_compatibility (siehe ratings_note)."
+  }
+ ],
+ "godot": [
+  "project.godot: Viewport 320×240, stretch mode viewport, scale_mode integer, Fenster 960×720, MSAA/FXAA/TAA aus, 2D-Filter Nearest, Forward+",
+  "main.tscn: Camera3D mit Kind Background (QuadMesh 2×2, extra_cull_margin 16384, shaders/bg.gdshader); Badger (models/badger_low.glb, unveränderte Kopie, generate_lods=false); Blob (QuadMesh 1,1×0,9 m liegend, shaders/blob.gdshader); Lichtknoten Dusk, Fill, WindowSide, WindowFront, Lantern sind ausgeblendet und liefern nur die Werte für den Figurenshader; WorldEnvironment mit Tonemapping linear (Umgebungsfarbe = Grundlicht der Figur); CanvasLayer mit ui.gd",
+  "shaders/bg.gdshader: vertex() setzt POSITION auf die Bildfläche; fragment() holt Renderbild, Bildfolge-Kachel (anim_frame, anim_cols, anim_rect) und Lichtebene mit texelFetch, mischt im linearen Raum (lantern_k), rekonstruiert aus dem 24-Bit-Wert die Tiefe entlang des Sehstrahls (INV_PROJECTION_MATRIX) und schreibt DEPTH = (PROJECTION_MATRIX·p).z/w; für den Compatibility-Renderer eigener Zweig (#if CURRENT_RENDERER) mit NDC-Tiefe ·0,5+0,5 und ohne sRGB-Umrechnung; Schalter use_depth, use_anim, key_mode",
+  "shaders/gouraud.gdshader: unbeleuchtet, Licht in vertex() aus Grundlicht, 2 Richtungs- und 3 Punktlichtern (Abfall wie Godots Omni-Licht), main.gd setzt die Werte jedes Bild aus den Lichtknoten; per_pixel = 1 rechnet dasselbe je Pixel (Vergleich)",
+  "shaders/blob.gdshader: Alpha-Mischung, dunkler Kreis mit weichem Rand, 2,5 cm über dem Kai, vom Tiefenbild verdeckt",
+  "main.gd: liest shots.json (Bahn, Einstellungen) und bg/<shot>/meta.json; _set_shot() setzt Kamera aus camera.json (Basis-Spalten und Ursprung wie gerendert), Texturen und Richtung des Aufhelllichts; Bahn als Polylinie mit gerundetem Knick (Radius 0,8 m, 5-cm-Abtastung), Walk mit speed_scale 2 (0,73 m/s), Bremszeit so berechnet, dass er genau am Bahnende steht (Halt 3,73 s), dann Idle, Drehung zur Nahkamera, Wave ab 4,38 s; Bildfolgen-Takt int(t·15) mod 90; Flackern über FastNoiseLite (Seed 20261010); Schnitt bei 2,1 s",
+  "ui.gd: zeichnet in _draw() bei 320×240; FontFile mit Graustufen-Glättung, leichtem Hinting, ohne Subpixel-Positionierung; Cinzel als variable Schrift auf wght 600 gesetzt; Titel blendet bei 0,25–0,75 s ein und vor dem Schnitt aus; Text ab 2,45 s mit 38 Zeichen/s, Auswahl danach",
+  "Importeinstellungen der Hintergrunddateien (bg/*/*.png.import): verlustfrei, ohne Mipmaps, detect_3d/compress_to=0, process/fix_alpha_border=false (sonst werden Tiefe, Maske und Raster verändert)",
+  "Vergleichsschalter nach --: --no-depth, --no-anim, --key, --no-ui, --per-pixel, --feet-log, --shot=<name>"
+ ],
+ "techniques": [
+  "vorgerenderter-hintergrund",
+  "tiefenbild-verdeckung",
+  "bildfolge-overlay",
+  "lichtebenen",
+  "feste-kameras",
+  "kameraschnitt",
+  "gouraud-vertexlicht",
+  "rundschatten",
+  "blender-cycles",
+  "prozedurale-materialien",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 1,
+  "consistency": 5,
+  "effort": 4,
+  "text_adventure": 4,
+  "mobile": 4
+ },
+ "ratings_note": "ai_fit 1, weil die KI zum Look der Demo nichts beiträgt: Alle drei KI-Aufrufe scheiterten am Kontingent, Himmel und Materialien sind prozedural, der Look kommt ganz aus Blender und Shadern. Ob ein Bildmodell hier helfen könnte, ist nicht erprobt: Es liefert von sich aus kein passendes Tiefenbild und keine exakt bekannte Kamera; nutzbar wäre es für Texturen oder als Übermalung eines Renders, ob die Geometrie dabei pixelgenau bleibt, ist offen. consistency 5: Jede weitere Einstellung ist nur eine Kamera in derselben Szene mit denselben Materialien und Lichtern. effort 4: Jeder Ort braucht ein 3D-Modell, Kamerawahl und etwa 11 min Rendern je Einstellung mit 6-s-Schleife (automatisch). mobile 4 geschätzt: Laufzeitkosten sind gering (ein Vollbild-Viereck mit 4 Texturzugriffen, 876 Dreiecke), aber die zwei Bildfolgen-Raster belegen unkomprimiert etwa 55 MB Grafikspeicher. Probeläufe auf dem Mac: --rendering-method mobile ohne ERROR/WARNING, im Mittel 0,8 Stufen und höchstens 6 Stufen Abweichung zu Forward+; gl_compatibility erst nach eigenem Shader-Zweig richtig (vorher Hintergrund und Figur viel zu dunkel), danach im Mittel 2,5 Stufen, 0,4 % der Pixel über 8 Stufen. Auf einem Smartphone wurde nicht gemessen.",
+ "verdict": "Für unser Textadventure gut geeignet und gut wiederholbar: Ein Ort ist ein Blender-Modell, jede Ansicht eine Kamera, daraus entstehen per Skript Standbild, Tiefenbild, Lichtebenen und kurze Schleifen. Ohne laufende Figur genügt ein gerendertes Standbild mit Lichtebene und einer kleinen Schleife (Wasser, Licht) hinter dem Textfenster; das ist zur Laufzeit billig und sieht reich aus. Soll eine Figur durch die Szene gehen, löst das Tiefenbild die Verdeckung ohne Kollisionsgeometrie; die Figur bleibt dabei sichtbar einfacher als der Hintergrund, was zum Stil gehört. Der Preis ist die Modellierung jedes Orts und die Speicherplanung für Bildfolgen; KI ist hier höchstens Zulieferer für Texturen.",
+ "pitfalls": [
+  "KI nicht erprobt: Drei genimg-Aufrufe (Himmel, Texturblatt, Übermalung des Renders) endeten mit „usage limit (agy)“ bzw. „quota exhaustion (429)“. Der Eintrag ist deshalb ohne KI gebaut; die Frage, ob eine KI-Übermalung die Geometrie für das Tiefenbild pixelgenau einhält, ist offen (Prompt liegt in prompts/paintover.txt).",
+  "Der Leuchtturmstrahl spiegelt sich im nassen Pflaster und im Wasser: Über die Schleife ändern sich 68 % (Totale) bzw. 77 % (Nahaufnahme) aller Pixel um mehr als 3 Stufen. Das Overlay-Rechteck ist deshalb das ganze Bild, die Bildfolge also eine Vollbild-Schleife wie bei den Filmhintergründen der Zeit: 2 Raster à 2880×2400 RGBA, je etwa 5 MB als PNG und 27 MB unkomprimiert im Grafikspeicher. Mit einem kleinen Bereich (nur Wasser) wäre es ein Bruchteil; dafür müsste der Strahl in Echtzeit oder als eigene additive Ebene laufen.",
+  "Die Schleife ist so lang wie die Demo (6 s, eine Strahlumdrehung); jede Einstellung zeigt davon nur einen Teil (Totale 2,1 s, Nahaufnahme 3,9 s), gerendert wurden trotzdem beide Schleifen ganz (180 Bilder, zusammen etwa 21 min).",
+  "Godots SHADING_MODE_PER_VERTEX änderte in Godot 4.7.2 nichts am Bild: Forward+, Mobile und Compatibility ergaben je Pixel bitgleiche Bilder gegenüber SHADING_MODE_PER_PIXEL, auch mit rendering/shading/overrides/force_vertex_shading. Deshalb rechnet ein eigener Shader das Licht je Eckpunkt; Godots Lichter wirken nicht mehr auf die Figur, ihre Werte werden aus den Knoten kopiert.",
+  "Der Unterschied Gouraud gegen dieselbe Rechnung je Pixel ist klein: 23 % der Figurenpixel weichen um mehr als 3 Stufen ab, mit bloßem Auge kaum zu sehen. Den Low-Poly-Eindruck machen vor allem Silhouette, fehlende Kantenglättung und fehlende Texturen.",
+  "blend_mul für den Rundschatten blieb in Forward+ unsichtbar und gab im Mobile-Renderer eine harte, gleichmäßig dunkle Fläche; ersetzt durch Alpha-Mischung. Der Schatten bleibt auf dem dunklen Pflaster dezent (höchstens 10 Stufen).",
+  "Compatibility-Renderer: texelFetch-Farben und unbeleuchtete Shader-Ausgaben werden dort nicht umgerechnet; ohne eigenen Zweig waren Hintergrund und Figur deutlich zu dunkel. Die Lichtebene addiert dort in sRGB statt linear.",
+  "Beide Einstellungen und die Bahn weichen von der Hauptkamera und vom Laufweg aus shared/3d ab (Dachs kommt hinter dem Häuschen hervor und läuft auf die Nahkamera zu): Eine feste, dramatische Kamera und die Verdeckung sind der Kern des Stils, die frontale Hauptkamera zeigt beides nicht. Direkt vergleichbar mit anderen 3D-Einträgen ist nur die Geometrie, nicht der Ausschnitt.",
+  "In der Totale ist der Dachs nur 24–28 px hoch und die ersten 1,5 s teilweise verdeckt; erkennbar wird er erst nach dem Schnitt (65 px). In der Vorderansicht liest sich das Gesicht des Low-Poly-Modells als dunkle Maske, die Augen sind kaum zu sehen.",
+  "Licht der Figur ist von Hand an den Render angeglichen (Richtung der Restsonne, Fenster, Laterne aus der Blender-Szene übernommen, Stärken nach Augenmaß); dazu kommt ein Aufhelllicht aus Kamerarichtung, das es im Render nicht gibt. Die Figur wirft außer dem Rundschatten keinen Schatten auf den Hintergrund und wird von Häuschen oder Fässern nicht beschattet.",
+  "Das Laternenflackern ist nur in der Totale zu sehen und dort klein (Laterne am rechten Rand); in der Nahaufnahme liegt die Laterne außerhalb des Bildes, ihre Lichtebene bleibt leer.",
+  "Tiefe je Pixel ist eine Entscheidung (Median der 16 Strahlen), die Farbe am Rand ein Mittel: An Objektkanten kann die Verdeckung um 1 px neben der sichtbaren Kante liegen. In der Aufnahme nicht aufgefallen, aber nicht gezielt gemessen.",
+  "Rohrender belegen 964 MB (assets/raw/render, nicht im Git); Neubacken braucht sie, Neurendern dauert rund 25 min."
+ ],
+ "lessons": [
+  "Eine Einstellungsdatei in Godot-Koordinaten (demo/shots.json) für Blender und Godot, Blender schreibt die tatsächlich gerenderte Kamerabasis zurück (camera.json) und Godot setzt genau diese; sensor_fit VERTICAL in Blender entspricht Keep Height in Godot. Prüfung ohne Godot: Kaiebene gegen Tiefenbild (scripts/check_camera.py).",
+  "Tiefenbild aus Cycles: Material-Override mit Camera Data → View Z Depth als Emission, 1 Strahl je Pixel, Filterbreite 0,01, EXR 32 Bit; beim Verkleinern den Median der Strahlen nehmen statt zu mitteln. Als 24 Bit in RGB-PNG gespeichert reicht es bis 1000 m mit 0,06 mm Auflösung und funktioniert in allen drei Renderern.",
+  "Im Shader: Sehstrahl über INV_PROJECTION_MATRIX, auf die Tiefe skalieren, mit PROJECTION_MATRIX zurück und DEPTH schreiben; das Vollbild-Viereck hängt an der Kamera (sonst wird es weggeschnitten). Die Tiefenvorstufe von Forward+ verträgt das (Verdeckung gemessen).",
+  "texelFetch mit SCREEN_UV·Texturgröße zeigt den Render pixelgenau (gemessen: 0 Stufen Abweichung), wenn die PNGs verlustfrei, ohne Mipmaps, mit detect_3d/compress_to=0 und fix_alpha_border=false importiert sind.",
+  "Lichtebenen statt Lichtsprites: Bild mit und ohne Lichtquelle rendern, Differenz linear speichern und in Godot mit einem Faktor addieren; Rauschgrenze setzen, sonst flackert Renderrauschen mit.",
+  "Nahtlose Schleifen: jede Bewegung mit ganzzahliger Zahl an Perioden je Schleife (Wellenbänder 2–7 Umläufe, Boote 2 und 3, Strahl 1), Feinrauschen als 4D-Rauschen auf einem Kreis, aufsteigender Rauch als Überblendung zweier um eine Schleifenlänge versetzter Felder; Render bei 6,0 s gleicht Bild 0 bis auf 1 Stufe.",
+  "Median über alle Schleifenbilder als ruhendes Bild: entfernt bewegte Teile und Renderrauschen; die Abweichung vom Median ergibt direkt die Overlay-Maske.",
+  "Eine Lichtquelle, die durch das Bild streicht, verändert über Spiegelungen fast jedes Pixel; wer kleine Overlays will, plant solche Lichter als eigene Ebene oder in Echtzeit.",
+  "Kamerasuche billig halten: EEVEE-Scout mit Platzhalterfiguren in Sekunden, Bildlage per Python ausrechnen und Kamerawinkel nach Zielpixeln (Füße über dem Textfenster) lösen; erst dann Cycles.",
+  "Prozedurale Cycles-Materialien reichen bei 320×240 völlig: Voronoi-Bruchstein, Brick-Knoten als Schiefer, Fugen und Algenkante nach Welthöhe, nasse Flecken über Rauheit. Keine Texturdateien, keine Lizenzfragen, jede Kamera sieht gleich aus.",
+  "Bahn mit gerundetem Knick nach Bogenlänge, Lauftempo und Animationstempo gekoppelt, Bremszeitpunkt aus der Bahnlänge berechnet: Die Figur steht genau am Ziel, der Standfuß bewegt sich im Bild im Median um 0,02 px je Bild (90 %: 0,14 px), die Fußzeile im Stand ist in allen Bildern 162.",
+  "Vergleichsschalter (--no-depth, --no-anim, --key, --per-pixel, --feet-log) machen jedes Merkmal messbar; ein magentafarbener Hintergrund mit aktiver Tiefe liefert die Figurenmaske samt Verdeckung."
+ ],
+ "assets": [
+  {"file": "assets/bg/totale/base.png", "kind": "background", "made_with": "Blender/Cycles-Render 1280×960 + bake.py: Median der 90 Schleifenbilder, 320×240", "prompt": ""},
+  {"file": "assets/bg/totale/depth.png", "kind": "depth", "made_with": "Cycles, View Z Depth je Strahl + bake.py: Median 4×4, 24 Bit in RGB (0–1000 m)", "prompt": ""},
+  {"file": "assets/bg/totale/anim.png", "kind": "animation", "made_with": "Cycles-Bildfolge 90 Bilder (6 s, 15/s) + bake.py: Raster 9×10 à 320×240, Alpha = Bewegungsmaske", "prompt": ""},
+  {"file": "assets/bg/totale/lantern.png", "kind": "light-layer", "made_with": "Cycles: Bild 0 minus Bild ohne Laterne, linear, sRGB-kodiert", "prompt": ""},
+  {"file": "assets/bg/totale/depth_preview.png", "kind": "preview", "made_with": "bake.py: Tiefenbild logarithmisch als Graustufen", "prompt": ""},
+  {"file": "assets/bg/totale/meta.json", "kind": "data", "made_with": "bake.py: Kamera, Raster, Kennzahlen", "prompt": ""},
+  {"file": "assets/bg/nah/base.png", "kind": "background", "made_with": "Blender/Cycles-Render 1280×960 + bake.py: Median der 90 Schleifenbilder, 320×240", "prompt": ""},
+  {"file": "assets/bg/nah/depth.png", "kind": "depth", "made_with": "Cycles, View Z Depth je Strahl + bake.py: Median 4×4, 24 Bit in RGB", "prompt": ""},
+  {"file": "assets/bg/nah/anim.png", "kind": "animation", "made_with": "Cycles-Bildfolge 90 Bilder + bake.py: Raster 9×10 à 320×240", "prompt": ""},
+  {"file": "assets/bg/nah/lantern.png", "kind": "light-layer", "made_with": "bake.py: leer, Laterne liegt außerhalb des Bildes", "prompt": ""},
+  {"file": "assets/bg/nah/depth_preview.png", "kind": "preview", "made_with": "bake.py", "prompt": ""},
+  {"file": "assets/bg/nah/meta.json", "kind": "data", "made_with": "bake.py", "prompt": ""},
+  {"file": "assets/preview/layers_totale.png", "kind": "preview", "made_with": "scripts/layers_preview.py: Renderbild, Tiefenbild, Lichtebene ×4, Bewegungsmaske", "prompt": ""},
+  {"file": "assets/preview/layers_nah.png", "kind": "preview", "made_with": "scripts/layers_preview.py", "prompt": ""},
+  {"file": "assets/preview/nah_hires_median.png", "kind": "preview", "made_with": "Median der 90 Cycles-Bilder der Nahaufnahme in voller Renderauflösung 1280×960 (vor dem Verkleinern)", "prompt": ""},
+  {"file": "assets/probe/probe.json", "kind": "data", "made_with": "scripts/probe.py: Messwerte (Verdeckung, Bildtreue, Füße, Overlay, Flackern)", "prompt": ""},
+  {"file": "demo/models/badger_low.glb", "kind": "model", "made_with": "unveränderte Kopie von shared/3d/badger_low.glb (876 Dreiecke)", "prompt": ""},
+  {"file": "demo/shots.json", "kind": "data", "made_with": "von Hand: Bahn und Einstellungen (Godot-Koordinaten), gemeinsam für Blender und Godot", "prompt": ""}
+ ],
+ "licenses": [
+  {"item": "Schrift Fira Sans Medium", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/firasans (Lizenztext: demo/fonts/OFL-FiraSans.txt)"},
+  {"item": "Schrift Cinzel (variabel)", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/cinzel (Lizenztext: demo/fonts/OFL-Cinzel.txt)"},
+  {"item": "Hafen und Dachs", "license": "eigene Modelle aus shared/3d (Blender-Skripte)", "source": "shared/3d/blender/"},
+  {"item": "Himmel und Materialien", "license": "eigene prozedurale Blender-Knoten, keine fremden Texturen", "source": "blender/render_bg.py"}
+ ],
+ "image_generations": 0,
+ "tool_issues": [
+  "tools/genimg.py (agy): Drei Aufrufe ohne Bild wegen Kontingent („usage limit (agy)“, „quota exhaustion (429)“; zwei um 20:58 parallel, einer um 21:46). Kein Werkzeugfehler, aber: genimg.py legt für gescheiterte Aufrufe keine .json mit Prompt und Status ab, nur die Konsolenzeile. Die Versuche stehen deshalb nur in assets/raw/genimg1.log, assets/raw/genimg2.log und prompts/*.txt, nicht in prompts.json.",
+  "tools/capture.py: keine Probleme; die Bewegungsmessung zählt den Kameraschnitt (0,518 bei 2,0–2,5 s) wie Animation mit."
+ ],
+ "status": "done"
+}

@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="badger" width="200" height="200" viewBox="0 0 200 200">
+<defs>
+  <linearGradient id="g_satchel" gradientUnits="userSpaceOnUse" x1="-46" y1="0" x2="-14" y2="0"><stop offset="0" stop-color="#8d5238"/><stop offset="1" stop-color="#5c3326"/></linearGradient>
+  <linearGradient id="g_torso" gradientUnits="userSpaceOnUse" x1="-38" y1="0" x2="40" y2="0"><stop offset="0" stop-color="#2b2633"/><stop offset="1" stop-color="#57506a"/></linearGradient>
+  <linearGradient id="g_vest" gradientUnits="userSpaceOnUse" x1="-34" y1="0" x2="38" y2="0"><stop offset="0" stop-color="#234c3d"/><stop offset="1" stop-color="#2f6650"/></linearGradient>
+  <linearGradient id="g_parcel_b" gradientUnits="userSpaceOnUse" x1="0" y1="14" x2="0" y2="40"><stop offset="0" stop-color="#e2ad73"/><stop offset="1" stop-color="#c48852"/></linearGradient>
+</defs>
+  <g id="shadow">
+    <ellipse cx="0" cy="0" rx="36" ry="4.5" fill="#1d1838" opacity="0.45"/>
+  </g>
+  <g id="leg_far">
+    <rect x="-11" y="-6" width="22" height="38" rx="11" fill="#2b2633"/>
+  </g>
+  <g id="paw_far">
+    <path d="M-12,5 C-13,-3 -6,-7 2,-7 C10,-7 16,-2 16,5 Z" fill="#2b2633"/>
+  </g>
+  <g id="leg_near">
+    <rect x="-11" y="-6" width="22" height="38" rx="11" fill="#3e3848"/>
+  </g>
+  <g id="paw_near">
+    <path d="M-12,5 C-13,-3 -6,-7 2,-7 C10,-7 16,-2 16,5 Z" fill="#3e3848"/>
+  </g>
+  <g id="body">
+    <g id="arm_far" transform="translate(-2,-70)">
+      <rect x="-8" y="-4" width="16" height="46" rx="8" fill="#2b2633"/>
+    </g>
+    <rect x="-46" y="-40" width="32" height="32" rx="5" fill="url(#g_satchel)"/>
+    <path d="M-46,-35 C-46,-42 -14,-42 -14,-35 L-14,-23 L-46,-23 Z" fill="#7a4632"/>
+    <circle cx="-30" cy="-25" r="2.3" fill="#e8b54e"/>
+    <path d="M-34,-2 C-42,-40 -30,-82 -2,-88 C26,-92 42,-64 41,-32 C40,-10 28,2 8,4 C-10,6 -28,10 -34,-2 Z" fill="url(#g_torso)"/>
+    <path d="M6,3 C26,0 39,-14 39,-36 C37,-46 27,-48 19,-42 C12,-30 4,-12 6,3 Z" fill="#f3e7d3"/>
+    <path d="M-33,-22 C-36,-54 -27,-82 -2,-86 C20,-89 36,-74 37,-52 L36,-30 C27,-22 4,-18 -33,-22 Z" fill="url(#g_vest)"/>
+    <path d="M37,-52 C34,-62 27,-68 22,-72 L18,-36 L36,-30 Z" fill="#f0e2cc"/>
+    <rect x="4" y="-44" width="15" height="10" rx="2" fill="#234c3d"/>
+    <circle cx="29" cy="-46" r="2.2" fill="#e8b54e"/>
+    <circle cx="29" cy="-34" r="2.2" fill="#e8b54e"/>
+    <path d="M-28,-38 L-23,-42 L26,-84 L21,-80 Z" fill="#7a4632"/>
+    <g id="scarf_tail" transform="translate(-14,-82)">
+      <path d="M-4,-4 L6,-2 C2,14 0,30 -2,46 L-12,44 C-10,26 -8,10 -4,-4 Z" fill="#b8323a"/>
+      <rect x="-12.5" y="43" width="1.8" height="7" fill="#b8323a"/>
+      <rect x="-9.9" y="43" width="1.8" height="7" fill="#b8323a"/>
+      <rect x="-7.3" y="43" width="1.8" height="7" fill="#b8323a"/>
+      <rect x="-4.7" y="43" width="1.8" height="7" fill="#b8323a"/>
+    </g>
+    <path d="M-26,-86 C-22,-96 28,-98 32,-88 C34,-80 26,-74 4,-73 C-14,-72 -28,-76 -26,-86 Z" fill="#e0443d"/>
+    <path d="M15,-78 C21,-76 25,-68 23,-52 L15,-52 C15,-62 13,-70 15,-78 Z" fill="#e0443d"/>
+    <rect x="15.5" y="-53" width="1.8" height="6" fill="#e0443d"/>
+    <rect x="18.1" y="-53" width="1.8" height="6" fill="#e0443d"/>
+    <rect x="20.7" y="-53" width="1.8" height="6" fill="#e0443d"/>
+    <g id="head" transform="translate(4,-90)">
+      <path id="head_back" d="M-24,-10 C-26,-30 -10,-42 6,-40 L2,2 C-10,4 -22,2 -24,-10 Z" fill="#3e3848"/>
+      <circle id="ear" cx="-14" cy="-27" r="8.5" fill="#3e3848"/>
+      <circle cx="-14" cy="-27" r="4.2" fill="#f3e7d3"/>
+      <path id="face" d="M-12,-8 C-14,-30 2,-44 18,-40 C32,-36 42,-26 52,-14 C56,-10 52,-4 46,-4 C32,-2 12,4 -2,4 C-10,4 -12,-2 -12,-8 Z" fill="#f3e7d3"/>
+      <path id="eye_stripe" d="M-8,-24 C2,-31 18,-31 31,-23 C39,-19 45,-15 49,-13 C41,-13 31,-12 23,-10 C13,-8 2,-8 -6,-11 C-12,-14 -12,-20 -8,-24 Z" fill="#3e3848"/>
+      <g id="eye" transform="translate(24,-20)">
+        <circle cx="0" cy="0" r="3.4" fill="#fff6e6"/>
+        <circle cx="0.9" cy="0" r="2.1" fill="#1a1622"/>
+      </g>
+      <circle id="nose" cx="52" cy="-12" r="4.4" fill="#1a1622"/>
+      <path id="cap" d="M-24,-30 C-26,-47 -5,-58 16,-54 C31,-52 36,-43 34,-32 Z" fill="#2f6650"/>
+      <rect x="-24" y="-35" width="58" height="6" rx="2" fill="#7a4632"/>
+      <path id="cap_peak" d="M26,-33 C36,-35 48,-33 52,-29 C46,-27 36,-27 24,-28 Z" fill="#234c3d"/>
+      <circle cx="24" cy="-32" r="2.8" fill="#e8b54e"/>
+    </g>
+    <g id="arm_near" transform="translate(10,-68)">
+      <rect x="-6" y="14" width="34" height="24" rx="2.5" fill="url(#g_parcel_b)"/>
+      <rect x="9.5" y="14" width="3" height="24" fill="#fbe6c4"/>
+      <rect x="-6" y="24.5" width="34" height="2.6" fill="#fbe6c4"/>
+      <rect x="-9" y="-6" width="18" height="22" rx="8" fill="#f0e2cc"/>
+      <path d="M-7,10 C-8,20 -2,30 12,34 C20,36 26,34 28,30 C26,24 18,22 10,20 C6,18 6,14 7,10 Z" fill="#3e3848"/>
+      <circle cx="27" cy="28" r="6.5" fill="#3e3848"/>
+    </g>
+  </g>
+</svg>

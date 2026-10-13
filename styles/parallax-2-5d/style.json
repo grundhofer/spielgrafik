@@ -1,0 +1,275 @@
+{
+ "slug": "parallax-2-5d",
+ "name": "2,5D-Parallax aus einem Gemälde",
+ "family": "technik",
+ "kind": "technique",
+ "era": "seit den 2000ern (Ken-Burns-2,5D im Film), in Spielen bei gemalten Erzähl- und Adventure-Szenen",
+ "summary": "Ein einziges fertiges KI-Gemälde wird zur Kamerafahrt mit echter Tiefe: Eine zweite KI-Ausgabe liefert die Tiefenkarte, Godot schiebt ein fein unterteiltes Gitter entlang der Sehstrahlen der Gemälde-Kamera auf diese Tiefe. Bild 0 ist das Gemälde; beim Vorfahren laufen Kai und Meer als Ebenen in die Tiefe, Laterne, Häuschen und Fässer verschieben sich gegeneinander. Was sich hinter Kanten öffnet, kommt aus zwei weiteren Schichten: einer Zwischenfüllung (fernere Gegenstände hinter näheren fortgesetzt) und einer sauberen Platte (drittes KI-Bild: dasselbe Gemälde ohne Gegenstände).",
+ "references": [
+  "Ken-Burns- bzw. 2,5D-Kamerafahrten aus Fotos und Gemälden in Dokumentarfilmen (Kamera-Projektion von Standbildern in Compositing-Programmen)",
+  "Gemalte Hintergründe mit langsamen Kamerafahrten in erzählerischen Spielen, z. B. Kentucky Route Zero (2013–2020) und Gris (2018)",
+  "Mehrebenen-Kamera klassischer Zeichentrickstudios (Multiplane) als Vorläufer",
+  "Vergleich im Katalog: painterly-digital (Kamerafahrt mit getrennt erzeugten flachen Ebenen)"
+ ],
+ "traits": [
+  "Ein einziges KI-Gemälde ist die ganze Szene: detailreiche Digitalmalerei mit sichtbarer Tupfer- und Pinseltextur, Dämmerungspalette aus Blau, Violett und Petrol mit Orange am Horizont und in den Lampen. Bild 0 der Aufnahme deckt sich mit dem Gemälde (gemessen mit --nofx: mittlere Abweichung 1,9/255, 0,65 % der Pixel über 24 Stufen, fast nur an Kanten).",
+  "Echte Tiefe je Pixel statt flacher Ebenen: Die Kamera fährt in 6 s 0,9 m vor, 0,3 m zur Seite und 0,25 m abwärts. Verschiebung erstes gegen letztes Bild, in Godot per Blockvergleich gemessen (Kameramodell in Klammern): Laterne in 11,7 m −48/−31 px (−47,3/−30,9), Kai oberhalb des Textfelds (Quellzeile 740, 7,7 m) −56/−3 (−57,3/−2,9), Fass rechts in 5,5 m +6/−8 (+5,4/−7,9), Boot rechts in 22,9 m −10/−7 (−10,4/−6,5), Leuchtturm in 68 m +2/−7 (+2,1/−6,5), Turmspitze +2/−7 (+2,1/−6,7) und Schornstein des Wärterhauses +3/−5 (+2,6/−5,7) wie der Turm, Himmel 0. Der Kai läuft als Ebene in die Tiefe: Zeile 700 (8,9 m) gerechnet −49/−7, Zeile 740 (7,7 m) −57/−3.",
+  "Verdeckungskanten aus drei Schichten statt Schlieren: vorn das Gemälde-Relief, das über Tiefensprünge gespannte Dreiecke verwirft; dahinter eine Zwischenfüllung, die fernere Gegenstandsflächen hinter näheren fortsetzt (Haustür hinter Kiste und Pflanzkübel, Mauerstein hinter dem vorderen Fass, Hauswand unter der Traufe); ganz hinten die saubere Platte (Himmel mit Inseln, Meer, Kai). Am Ende der Fahrt stammen 5,2 % des Bildes aus der Platte und 0,6 % aus der Zwischenfüllung; mit dem Vergleichsschalter „Streckung“ sind 3,1 % des Bildes anders (lange Farbschlieren; assets/compare_fill.png mit Laterne, Steg, Fässern, Hausfront und Leuchtturm). Kleine Reste (einige Farbflecken an der Ecke von Kiste und Pflanzkübel, vereinzelte 1-px-Krümel, gestrichelte Taue) stehen in den pitfalls.",
+  "Der Dachs-Kurier steht als Schnittfigur im Raum (8,6 m vor der Kamera auf der Kai-Ebene), läuft von links ins Bild und bleibt vor dem Laternenpfahl stehen. Bei fester Kamera 127–132 px hoch, mit der Fahrt beim Halt gerechnet ≈144 px, die Füße dann ≈50 px über dem Textfeld. Gemessen im Prüfmodus: Sohlenzeile beim Gehen in allen Bildern 543, jeder Fuß einzeln in allen 9 Standphasen höchstens 1 px Bewegung, Kopf pendelt beim Gehen 3 px.",
+  "Umgebung animiert: Laterne, Fenster und Wandlampe flackern (Lampenmaske aus dem Gemälde + additive Lichthöfe mit Glow), Leuchtfeuer mit zwei drehenden Strahlen und Aufblitzen, wenn ein Strahl zur Kamera zeigt, Wasser wogt zeilenweise und glitzert im Abendlicht, gemalte Sterne funkeln, drei Möwen mit Flügelschlag (6 Bilder/s) ziehen mit eigener Parallaxe, Rauch aus dem Schornstein.",
+  "Textfeld unten links im Stil einer erzählerischen Spielszene: Ortsname in gesperrten Versalien (EB Garamond 600), getippte Zeile, drei Antworten (eine hervorgehoben), Parserzeile mit Cursor; 920×112 px, 11,2 % des Bildes. Es endet bei x = 960, damit Fässer, Kisten und Taurolle rechts unten, wo die Parallaxe am stärksten ist, sichtbar bleiben."
+ ],
+ "camera": "Augenhöhe auf dem Kai (2 m über dem Pflaster), Blick waagerecht aufs Meer. Die Gemälde-Kamera ist eine Lochkamera mit verschobenem Hauptpunkt (Horizont Zeile 421, Brennweite 1236 px); in Godot Camera3D mit Frustum-Projektion und frustum_offset, ohne Drehung, damit Senkrechte senkrecht bleiben. Fahrt in 6 s: 0,9 m vor, 0,3 m seitlich, 0,25 m abwärts (weich an- und auslaufend).",
+ "resolution": "1280×720 ohne Pixelraster; Gemälde 1536×1024, Ausschnitt 1408×792 Quellpixel (Faktor 0,909); Relief-Gitter 769×513 Punkte je Schicht (alle 2 Quellpixel), drei Schichten mit zusammen 2,36 Mio. Dreiecken, Tiefe 16 bit; Dachs-Teile mit 320 px Figurenhöhe (Mipmaps), im Bild 127–146 px",
+ "pipeline": [
+  {
+   "step": "Gemälde erzeugen (1 Bild)",
+   "tool": "genimg (Codex, gpt-image)",
+   "detail": "assets/prompts/bg.txt aus tools/prompts.py: Stilblock (fertiger gemalter Adventure-Hintergrund, verlangt war sichtbarer Pinselduktus wie Gouache/Ölskizze, begrenzte Dämmerungspalette, „not a postcard“), Tiefenblock (für eine Kamerafahrt in die Tiefe gebaut: klar getrennte Tiefenebenen mit lesbaren Silhouetten, kein Nebel an den Kanten; Augenhöhe auf dem Kai, Horizont waagerecht bei 40 %; Fässer und Kisten vorn rechts, Kai in der Mitte frei, Laterne bei 40 %, Häuschen links, Leuchtturm bei 80 %; 6 % Rand), animierte Effekte nicht malen (Lampe ohne Strahl, kein Rauch, keine Vögel) + Motivblock wörtlich + Hintergrund- und Schutzregeln. 1536×1024, 164 s, erster Versuch. Geliefert: detailreiche, eher glatte Digitalmalerei mit Tupfertextur (keine Gouache-Skizze). Gemessen: Horizont Zeile 421 (41 %), Laterne bei 36 %, Leuchtturm bei 88 %."
+  },
+  {
+   "step": "Tiefenkarte erzeugen (1 Bild)",
+   "tool": "genimg (Codex, gpt-image), Gemälde als Referenz",
+   "detail": "assets/prompts/depth.txt: „Turn the reference painting into its depth map“, Graustufen, hell = nah, Himmel reines Schwarz, Bodenflächen (Kai, Meer, Steg) als glatte Verläufe, stehende Dinge als Flächen mit scharfen Kanten genau an der Silhouette, dünne Dinge (Masten, Taue, Pfahl) an derselben Stelle, „like the output of a depth-estimation network“. Kein lokaler Tiefenschätzer (laut Auftrag). 1536×1024, 72 s, erster Versuch, pixelgenau deckungsgleich (Kantenüberlagerung geprüft)."
+  },
+  {
+   "step": "Dachs im Gemäldestil (1 Bild)",
+   "tool": "genimg (Codex, gpt-image), Referenzen: Pose-Vorlage, Gemälde, Figurenblatt",
+   "detail": "assets/prompts/badger.txt: Bild 3 (Durchgang) aus shared/badger/walk_painted.png auf Magenta als Pose-Vorlage (assets/ref/badger_layout.png), das Gemälde als Stilreferenz, das Figurenblatt nur als Kostümprüfung; Übermalung in derselben Pose ohne Konturen, ohne Seitenlicht. 1024×1024 angefragt, 1254×1254 geliefert, echter Alphakanal, erster Versuch."
+  },
+  {
+   "step": "Saubere Platte erzeugen (1 Bild)",
+   "tool": "genimg (Codex, gpt-image), Gemälde als Referenz",
+   "detail": "assets/prompts/plate.txt: dasselbe Gemälde ohne Häuschen, Laterne, Steg, Boote, Fässer, Kisten, Taurolle und Poller; dahinter Himmel, Meer und Kai nahtlos weitermalen, Licht und Spiegelungen behalten. 1536×1024, 129 s, erster Versuch; deckungsgleich (Blockvergleich an Himmel und Landzunge: Versatz 0 px). Die KI entfernte zusätzlich die Steinblöcke der Mauerecke rechts."
+  },
+  {
+   "step": "Tiefe kalibrieren und aufräumen",
+   "tool": "tools/prep.py (NumPy, Pillow)",
+   "detail": "Die KI tont den Kai logarithmisch: Zeilenmediane folgen g = 98,6·ln(y − 421) − 371,9 (Rest 1,3 Graustufen); damit wird jeder Grauwert ≥ 84 in eine Entfernung umgerechnet. Das Meer ist in einer eigenen, flacheren Skala getont und wird durch eine Ebene 3,12 m unter dem Auge ersetzt (aus der Wasserlinie der Boote, Zeile 618, und ihrer Kai-Entfernung 19,6 m). Landzunge: Entfernung aus ihrer Wasserlinie je Spalte (62–81 m); alles Nicht-Himmel oberhalb der Wasserlinie rechts von x = 1100 gehört dazu (946 px; Turmspitze und Schornstein des Wärterhauses hatte die KI hell = 22 m getont). Himmel 4000 m. Aufräumen der Reihe nach: 127 234 Kantenpixel an die Farbkanten des Gemäldes gerastet, Zwischenwerte auf Extremwerte, kantenerhaltende Diffusion (80 Durchgänge); dann neu: Säume aus Zwischenwerten an starken Sprüngen im 7×7-Fenster per Farbvergleich zur nahen oder fernen Seite (10 632 px), kleine Tiefensegmente unter 50 px, die mehr als 15 % von ihren Nachbarn abweichen, zur farblich passenden Nachbarfläche (1 022 Segmente, 4 184 px), 3×3-Median über Gegenstandspixel (4 008 px), Inselprüfung (< 300 px, > 40 % näher als alle Nachbarn, außerhalb der Takelage: nur noch eine 13-px-Insel am Dachfirst vor Himmel, bleibt), Himmelstaschen zwischen Blättern zum nächsten Gegenstand (2 044 px), Verdeckungskanten um einen Texel nach außen (9 103 px) und Mischfarben im zweiten Ring per Farbvergleich (5 124 px); Himmels-, Meer- und Landzungenpixel mit Gegenstandstiefe gelten danach als Gegenstand (5 326 px). Alle Zahlen in assets/scene/calib.json → cleanup."
+  },
+  {
+   "step": "Hintere Schicht (saubere Platte) bauen",
+   "tool": "tools/prep.py",
+   "detail": "Hinter jedem Gegenstandspixel liegt Himmel, Landzunge, Meer oder Kai; die Grenze Meer/Kai wird je Spalte gemessen, wo sie sichtbar ist, sonst an der KI-Platte abgelesen (links) bzw. an zwei Stützpunkten der Mauerecke (rechts). Tiefe = analytische Ebene. Farbe = KI-Platte, lokal an die Tonwerte des Gemäldes angeglichen (normierte Faltung, Kasten 49 px), zum Rand der verdeckten Fläche in 3 px in eine Code-Füllung überblendet (zeilenweise gespiegelte Fortsetzung derselben Fläche, schließt exakt an; mit 10 px blieben schmale Dinge wie der Laternenpfahl fast ganz Code-Füllung, Querstreifen). Rechts von x = 1170 nur Code-Füllung (die KI hat dort die Mauerecke weggemalt). Ohne plate.png läuft dieselbe Kette nur mit Code-Füllung (--plate=code)."
+  },
+  {
+   "step": "Mittlere Schicht (Zwischenfüllung) bauen",
+   "tool": "tools/prep.py",
+   "detail": "Die Platte kennt weder Haus noch Mauerecke: Öffnete sich eine Lücke zwischen zwei Gegenständen (Kiste vor der Haustür), erschienen dort Himmel und Meer mitten in der Hauswand. An jedem Sprung zwischen zwei Gegenständen (Disparität > 3 % und > 0,005 größer, an der 3×3-Median-Tiefe gesucht) wird die fernere Fläche zeilen- bzw. spaltenweise hinter die nähere fortgesetzt: Farbe an ihr gespiegelt (2 px vom Rand weg), Tiefe der ferneren Seite, nur in die Richtung, in der sich bei der Fahrt eine Lücke öffnet, und nur so breit wie diese (Kameramodell mit dem Endpunkt der Fahrt, ×1,25 + 2 px, höchstens 48 px). Dazu die ersten 3 Texel der ferneren Seite selbst, weil die vordere Schicht sie an der Kante verwirft. Eigene Schicht (mid_*.png, 38 023 px): in die Platte eingesetzt, entstanden dort neue Sprünge und darüber gespannte Schlieren."
+  },
+  {
+   "step": "Lampen, Sterne, Raumpunkte",
+   "tool": "tools/prep.py",
+   "detail": "Helle warme Pixel in festen Suchkreisen um Laterne, Fenster, Wandlampe und Leuchtfeuer als Lampen-Nummer im Alphakanal der Tiefenkarte (585, 1658, 458, 74 px), Sterne als helle Punkte im Himmel (1820 px). Raumlage von Lampen und Schornstein aus der Tiefe (calib.json → points) für Lichthöfe, Strahlen und Rauch."
+  },
+  {
+   "step": "Dachs zerlegen",
+   "tool": "tools/build_badger.py",
+   "detail": "Rumpf (mit gezackter Fellkante), Bein bis zum Knöchel, Fuß und hinteres Schalende aus einer gemeinsamen, einmal vormultipliziert verkleinerten Farbebene (keine Nähte); Drehpunkte in assets/badger/rig.json."
+  },
+  {
+   "step": "Effekt-Texturen",
+   "tool": "tools/build_fx.py",
+   "detail": "Lichthof, Lichtkegel, Rauchballen, Kontaktschatten, Möwe in 3 Flügelstellungen; per Code, feste Seeds."
+  },
+  {
+   "step": "Godot-Demo",
+   "tool": "Godot 4.7.2 (Forward+), 5 eigene Shader",
+   "detail": "relief.gdshader (Gitter auf Tiefe, Verwerfen gestreckter Dreiecke, dünn besetzte mittlere Schicht, Wasser, Lampen, Sterne), badger.gdshader (Figur), glow.gdshader (Lichthöfe, Strahlen), soft.gdshader (Rauch, Möwen), soft_nodepth.gdshader (Kontaktschatten des Dachses ohne Tiefentest, sonst halb im Kai-Relief); Ablauf in main.gd. Aufnahme mit tools/capture.py (Poster bei 3,6 s)."
+  },
+  {
+   "step": "Prüfen",
+   "tool": "tools/render_check.py, tools/measure_badger.py, tools/shot.py",
+   "detail": "render_check.py: Bildtreue bei Kamera 0, Streckung gegen Zwischenfüllung + Platte am Ende der Fahrt mit Anteilen je Schicht (--tint) und Vergleichsbild mit fünf Ausschnitten (assets/compare_fill.png), Parallaxe im Modell und in Godot per Blockvergleich (auch Turmspitze, Schornstein des Wärterhauses, Kai-Zeile 740), zwei Läufe bitgleich, Mobile und Compatibility gegen Forward+ (assets/render_check.json). measure_badger.py: Figur vor Magenta, Sohlenzeile, Kopf, jeder Fuß einzeln (assets/measure_badger.json). Fehlersuche: Einzelschichten mit --only=front|mid|back am Ende der Fahrt rendern und dunkle Punkte der Schicht zuordnen."
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, stretch canvas_items/keep, Forward+, MSAA 2×. Wurzel Node3D, WorldEnvironment mit einfarbigem Hintergrund, Glow (Schwelle 1,0, Mischung Screen), ohne Tonemapping, damit das Gemälde unverfälscht bleibt.",
+  "Camera3D mit projection Frustum: size und frustum_offset aus Bildausschnitt (Mitte 768/506, Höhe 792 Quellpixel) und Brennweite berechnet (Objektivverschiebung statt Drehung). Bei Position 0 entspricht sie exakt der Gemälde-Kamera.",
+  "Relief: drei MeshInstance3D (Front, Mid, Back) mit demselben PlaneMesh 1×1, subdivide 767×511 (769×513 Punkte). relief.gdshader verschiebt im vertex() jeden Punkt entlang seines Sehstrahls: z = z_min / s, VERTEX = ((px − cx)·z/f, −(py − yh)·z/f, −z); s kommt per texelFetch aus einer 16-bit-Textur (R hoch, G niedrig), Filter Nearest, ohne Kompression (.import von prep.py geschrieben).",
+  "Vordere Schicht: Gitterpunkte an Kanten mit der nächsten Disparität der 5×5-Umgebung (dünne Dinge bekommen Geometrie). Im fragment() wird verworfen, was über einen Tiefensprung gespannt ist (fwidth der Disparität je Texel > 0,008) oder nicht zur Tiefe des eigenen Texels passt (> 10 %). Mittlere Schicht (sparse = true, depth_push 1,001): verwirft genauso, außerdem Texel ohne Zwischenfüllung (Tiefe 0) und Dreiecke mit einem Gitterpunkt ohne Zwischenfüllung (Kennung im Kanal B der Gitter-Textur); ihre Farbtextur trägt außerhalb der Füllung die Plattenfarbe, sonst mischen Mipmaps Schwarz in die Ränder. Hintere Schicht: Platten-Texturen, 0,2 % weiter hinten, 6 % Rand über das Bild hinaus, verwirft nichts.",
+  "Texturabtastung immer vor Verzweigungen: In einem if fehlen die Ableitungen für die Mipmap-Stufe; das ergab einen hellen Strich quer über den Arm des Dachses und Ränder im Wasser.",
+  "Wasser im selben Shader nur in der Wassermaske (Kanal B): Zeilen waagerecht verschieben (vorn stärker, nur innerhalb des Wassers, damit Bootsränder nicht mitwandern) und Glitzern in Zellen, nur wo das Wasser schon hell und warm ist. Lampen: Nummer im Alphakanal, Helligkeit je Lampe als uniform lamp_gain (Flackern aus unharmonischen Sinusschwingungen mit kurzen Einbrüchen). Sterne: Funkeln je 3-px-Zelle.",
+  "Dachs: sechs QuadMesh-Teile (ferner Fuß, fernes Bein, Schalende, naher Fuß, nahes Bein, Rumpf) unter einem Node3D 8,6 m vor der Kamera auf der Kai-Ebene, 1 m hoch, Laufweg von x = −5,6 m bis −1,6 m. badger.gdshader: unshaded, depth_test_disabled, Reihenfolge über render_priority (vor dem Dachs liegt nichts), Umgebungstönung kühl bis warm je nach Abstand zur Laterne, Lichtkanten aus dem Alpha zur Laterne hin und von oben.",
+  "Gang in main.gd: Standfuß flach und fest am Boden, Bein dreht um die Hüfte und reicht bis zum Knöchel, Hüfthöhe aus dem Standbein (umgekehrtes Pendel), Schwungbein hebt 13 px und setzt senkrecht auf; Beinwinkel ±26°, Laufweg ganze Doppelschritte + ¼, damit das nahe Bein am Ende senkrecht steht; danach setzt das ferne Bein in 0,3 s neben ihm ab (Hub und Fußneigung gehen dabei auf 0) und die Figur atmet. Fernes Bein dieselbe Kinematik, eine halbe Periode versetzt, 5 px weiter hinten, abgedunkelt. Schalende an einer gedämpften Feder (ω 9 rad/s, ζ 0,25), angetrieben von Tempo und Beschleunigung der Hüfte.",
+  "Effekte im Raum an den Raumpunkten aus calib.json: Lichthöfe als additive Quads (glow.gdshader, Werte über 1 blühen im Glow), zwei Strahlen des Leuchtfeuers als zur Kamera gedrehte Quads (Umlauf 8 s, Länge nach seitlicher Ausrichtung, Aufblitzen des Feuers, wenn ein Strahl zur Kamera zeigt), 9 Rauchballen im Kreislauf und 3 Möwen in 21–30 m (soft.gdshader, Bilder 0-1-2-1 mit 6 Bildern/s, Gleitphasen), Kontaktschatten unter dem Dachs (soft_nodepth.gdshader).",
+  "Oberfläche: CanvasLayer 10 (außerhalb des Glows), Panel 920×112 px unten links mit StyleBoxFlat (fast schwarzes Blau, 80 % deckend, goldene Oberkante), Labels mit FontVariation von EB Garamond (wght 450/600, Ortsname gesperrt), visible_characters für das Tippen, Parserzeile rechts neben den Antworten.",
+  "Alles hängt nur von der aufsummierten Zeit ab, Zufall mit festem Seed; zwei Aufnahmen bitgleich. Prüfmodi nach „--“: --cam=x,y,z, --t0, --fill=stretch, --only=front|mid|back, --tint (vorn rot, Mitte grün, hinten blau), --nowave, --nofx, --noui, --badger-only, --parts=…"
+ ],
+ "techniques": [
+  "parallax-2-5d",
+  "ki-tiefenkarte",
+  "relief-gitter",
+  "geschichtete-tiefe",
+  "saubere-platte",
+  "ki-bildbearbeitung",
+  "kamerafahrt",
+  "skelett-2d",
+  "fuss-halten",
+  "prozedurale-animation",
+  "shader-wasser",
+  "additiver-lichtkegel",
+  "rim-light",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 3,
+  "effort": 3,
+  "text_adventure": 4,
+  "mobile": 2
+ },
+ "ratings_note": "ai_fit 4: Alle vier KI-Bilder kamen im ersten Versuch und brauchbar: Gemälde im verlangten Aufbau, eine pixelgenau deckungsgleiche Tiefenkarte und eine deckungsgleiche saubere Platte. Abzug, weil die Tiefenkarte nicht metrisch ist (Kai logarithmisch, Meer in eigener Skala, Turmspitze und Schornstein viel zu nah, weiche Kanten und Rampen zwischen Gegenständen) und erst kalibriert und lange aufgeräumt werden muss, weil die KI in der Platte auch die Mauerecke entfernt hat und weil das Gemälde glatter und romantischer ausfiel als die verlangte Gouache-Skizze. Die Bewegung selbst (Relief, Schichten, Kamera, Licht, Wasser, Figur) kommt aus Godot-Shadern und Code. consistency 3: In dieser Szene passen Gemälde, Tiefe und Platte genau zusammen; die Figur ist feiner und glatter gemalt als das Gemälde; über mehrere Orte ungetestet, und jede Tiefenkarte braucht eine eigene Kalibrierung. effort 3: drei KI-Bilder je Ort und ein Skriptlauf von rund 15 s, aber einige Werte je Szene von Hand (Horizontzeile, Meeres-Schwelle, Bereich der Landzunge und der Takelage, Lampenpositionen, Stützpunkte der Kai-Kante) und eine Sichtprüfung der Kanten mit --tint. mobile 2: Probeläufe mit --rendering-method mobile (mittlere Abweichung zum Forward+-Bild 0,38/255, kein Pixel über 24) und gl_compatibility (3,2/255, 1,7 % der Pixel über 24: Lichthöfe, Leuchtfeuerstrahl, Figur und Lampen heller bzw. anders, dazu eine leichte Tonwertverschiebung im ganzen Bild) laufen ohne Fehler; die Leistung auf einem Gerät ist nicht gemessen (geschätzt). Abzug gegenüber der ersten Fassung, weil jetzt drei Schichten mit zusammen 2,36 Mio. Dreiecken für ein Standbild gerendert werden, alle mit discard im Fragment-Shader (gröberes Gitter ungetestet).",
+ "verdict": "Für unser Textadventure geeignet als Einstieg in einen Ort: ein KI-Gemälde, eine KI-Tiefenkarte und eine KI-Platte reichen für eine langsame Kamerafahrt mit echter Tiefe, über die die Figur laufen kann, und die Kette läuft bis auf wenige Szenenwerte automatisch. Der Preis liegt an den Kanten: Die erste Fassung mit zwei Schichten zeigte ein Loch mit Himmel und Meer in der Hauswand und eine abgelöste Leuchtturmspitze; erst eine dritte Schicht (Zwischenfüllung für Lücken zwischen zwei Gegenständen) und eine Reihe allgemeiner Prüfungen der KI-Tiefe (Inseln, kleine Segmente, Säume, Mischfarben) machten die Fahrt weitgehend sauber; kleine Reste bleiben. Vergleich mit painterly-digital (flache Ebenen, seitliche Kamerafahrt): Dort sind seit dem 12.10. fünf getrennt erzeugte Codex-Ebenen eingebaut (Himmel und Meer, Landzunge, Hafen, Boote, Vordergrund; je im ersten Versuch, mit echtem Alphakanal), das Hauptbild diente als Stilvorlage; die frühere, aus einem Gemälde mit rund 20 Polygonen und einer Clean Plate von Hand geschnittene Fassung ist dort nur noch Vergleich. Getrennte Ebenen sind einfacher zu verstehen, billiger zu rendern, haben keine Kantenreste, brauchen weder Polygone noch Clean Plate, bewegliche Teile (Boote) lassen sich einzeln animieren, und sie sind für seitliche Schwenks ideal. Dafür ist jede Ebene eine flache Karte, Boden und Meer brauchen Sonderlösungen (zeilenweise Parallaxe), und die Ebenen hielten Lage und Maßstab des Hauptbilds nicht ein: Die Szene wurde mit gemessenen Koordinaten neu komponiert, die Komposition des Hauptbilds ist nur sinngemäß erhalten; je Ort sind es sechs KI-Bilder (Hauptbild und fünf Ebenen) statt drei. Die Tiefenkarte gibt jedem Pixel seine Entfernung: Vorfahren und Absenken wirken räumlich, Boden und Meer laufen von selbst in die Tiefe, und das Gemälde bleibt mit seiner Komposition Bild 0; dafür muss die KI-Tiefe kalibriert und an Kanten aufgeräumt werden, und der Bewegungsspielraum ist klein (etwa 1 m, sonst werden die aufgedeckten Flächen groß). Streckung statt Platte ist nur für sehr kleine Bewegungen tragbar; die KI-Platte ist der wichtigste Baustein. Empfehlung: Tiefenkarte + Zwischenfüllung + KI-Platte für Orte mit Fahrt in die Tiefe, getrennt erzeugte flache Ebenen wie in painterly-digital für Seitenansichten mit Schwenk; jede neue Szene mit --tint am Ende der Fahrt an allen Kanten prüfen, nicht nur an Laterne und Steg.",
+ "pitfalls": [
+  "Die erste Fassung dieses Eintrags war an den Kanten nicht so sauber, wie style.json behauptete: Ab etwa 3 s öffnete sich zwischen Pflanzkübel/Kiste und Haustür ein Loch mit rosa-blauen Himmel- und Meerstreifen aus der Platte (die Platte kennt kein Haus), Turmspitze und Schornstein des Wärterhauses lagen in der Tiefe bei 22 m statt 67 m und schwebten am Ende 25–30 px über Turm und Dach, am vorderen Fass stand ein Geisterstreifen, um Laterne und Ranken lagen Krümel, an der Traufe war ein Loch. compare_fill.png zeigte nur Ausschnitte ohne diese Fehler. Behoben durch die Landzungen-Regel, die Zwischenfüllung und die Aufräumschritte in prep.py; compare_fill.png zeigt jetzt auch Hausfront und Leuchtturm.",
+  "Kleine Reste nach der Behebung (am Ende der Fahrt vergrößert geprüft): An der Ecke von Kiste und Pflanzkübel vor der Haustür bleiben einige orange und rosa Flecken (zusammen etwa 10×10 px). Die KI-Tiefe hat dort keinen Sprung, sondern eine Rampe von 12 auf 15 m; Blätter des Kübels liegen auf Türtiefe und bleiben an der Tür. Vereinzelte 1-px-Krümel im Himmel an den Ranken und rechts der Laterne, ein schmaler rosa Fleck unter der Traufe (etwa 3 px), Taue der Takelage stellenweise gestrichelt mit kleinen Plattenflecken am Horizont, an Kisten und Taurolle rechts unten einzelne helle Kantenstriche. Wo Laternenpfahl und Stegpfähle standen, zeigt die Platte eine etwas andere Wasserstruktur und schwache Reste der Pfahlfüße (dort hatte die KI-Tiefe Teile des Stegs auf Kai-Höhe, die Platte behält dann die Gemäldefarbe). Die Ranken tragen beim Fahren einen hellen 1-px-Saum, weil ihre Kantenpixel (Mischfarbe mit Himmel) jetzt mit ihnen wandern.",
+  "Die KI-Tiefenkarte ist nicht metrisch. Der Kai ist logarithmisch getont (g = 98,6·ln(y − 421) − 371,9), das Meer in einer eigenen, viel flacheren Skala (Grauwerte 14–70 vom Horizont bis zum Kai), der Himmel schwarz; Turmspitze und Schornstein des Wärterhauses sind heller getont als der Turm. Meer und Landzunge sind deshalb durch Ebenen ersetzt; die Meereshöhe stammt aus der Wasserlinie der Boote. Jede neue Szene braucht diese Kalibrierung, dazu einige Werte von Hand (Horizontzeile 421, Meeres-Schwelle 84, Landzunge ab x = 1050 bzw. 1100, Takelage-Bereich, Lampenkreise).",
+  "Weiche Kanten der KI-Tiefe (1–3 px Zwischenwerte, bei Kübel und Tür auch 20 px lange Rampen) ergaben „fliegende Pixel“: Säume um Laterne, Pfahl und Häuschen hingen beim Fahren in der Luft. Eine Aufräumstufe reichte nicht; es brauchte sieben (Einrasten, Säume im 7×7-Fenster, kleine Segmente, Median, Inseln, Himmelstaschen, Kante um einen Texel, Mischfarben im zweiten Ring). Jede Stufe hat Schwellen, die an dieser Szene eingestellt sind.",
+  "Eine erste Zwischenfüllung direkt in der Platte erzeugte neue Fehler: Die Fortsetzungen lagen auf Gegenstandstiefe neben Himmel in 4000 m, die Platte spannte darüber lange Schlieren (Streifen rechts vom Haus). Auch zu weit gezogene Fortsetzungen (pauschal 48 px) erschienen dort, wo hinter dem nahen Gegenstand Himmel liegt (Dach hinter Ranken). Lösung: eigene mittlere Schicht, die selbst verwirft, und Breite aus dem Kameramodell. Dadurch hängt prep.py vom Endpunkt der Fahrt ab (CAM_END doppelt in prep.py und main.gd); eine andere Fahrt braucht einen neuen prep-Lauf.",
+  "Dunkle Punkte, die am Ende der Fahrt im Himmel stehen blieben, kamen aus drei verschiedenen Quellen und waren nur durch Einzelschicht-Renders (--only=front|mid|back) zu trennen: Mischfarben der Dachkante mit Himmelstiefe (vordere Schicht), Schwarz der Farbtextur der mittleren Schicht, das Mipmaps in die Ränder mischten, und Zwischenfüllungen an Pixeln mit Zwischentiefe.",
+  "Die KI-Platte hat rechts auch die Steinblöcke der Mauerecke entfernt und dort Wasser gemalt. Hinter den Fässern öffnete sich dadurch eine helle Wasserlücke; rechts von x = 1170 gilt deshalb die Code-Füllung mit zwei am Gemälde abgelesenen Stützpunkten der Kai-Kante. Ohne lokale Tonwertangleichung war das Meer der Platte etwas heller.",
+  "Der Bewegungsspielraum ist klein: Bei 0,9 m vor und 0,3 m seitlich stammen am Ende 5,8 % des Bildes aus mittlerer und hinterer Schicht. Größere Fahrten decken mehr auf, und die Platte ist nur so gut wie ihre Lage der Kai-Kante unter den Gegenständen (unter dem Häuschen geraten). Die Fahrt führt bewusst leicht abwärts: Dann deckt die Kai-Kante das Wasser dahinter zu, statt es aufzudecken (gerechnet).",
+  "gpt-image zog trotz „not a postcard“ und ausdrücklichem Gouache-/Ölskizzen-Stilblock zur Postkarten-Romantik: Das Gemälde ist eine detailreiche, eher glatte Digitalmalerei mit Tupfertextur, keine lockere Skizze. Die Figur folgt dem Gemälde nur teilweise: gpt-image hat das Laufbild sauber und mit feinem Fell übermalt, eher Bilderbuch. Tönung und Lichtkanten binden sie ein, aus der Nähe bleibt sie glatter als der Hintergrund. Der Gang mit geraden Beinen (ohne Knie) und starrem Rumpf wirkt etwas steif.",
+  "Der Dachs stand zuerst in 7,6 m; seine Füße endeten am Ende der Fahrt nur 10 px über dem Textfeld, und das Textfeld über die ganze Breite verdeckte ab 1,7 s Taurolle und vorderen Kai. Jetzt steht er in 8,6 m (bei fester Kamera 127–132 px hoch, beim Halt ≈144 px, Füße ≈50 px über dem Textfeld), und das Textfeld endet bei x = 960. Der vordere Kai links unten liegt weiter unter dem Textfeld.",
+  "Die Figur steht auf der rechnerischen Kai-Ebene (8,6 m), die KI-Tiefe des Pflasters liegt an ihrer Fußzeile an der Haltestelle 0,5 % näher (8,56 m), weiter links 4 % (8,28 m). Über die ganze Fahrt verschiebt sich der Fuß dadurch gerechnet um höchstens 0,3 Quellpixel (Halt) bzw. 4 Quellpixel (links, dort ist die Kamera erst am Anfang der Fahrt) gegen das Pflaster; in der Aufnahme nicht sichtbar.",
+  "Messung im Stand: Die Sohlenzeile der ganzen Figur springt nach dem Halt von 543 auf 544. Jeder Fuß einzeln bleibt bei 543; die weichen Unterkanten beider Füße überlagern sich, wenn das ferne Bein neben dem nahen steht, und überschreiten dann die Magenta-Schwelle der Messung. Die Fußneigung des fernen Beins wird beim Absetzen jetzt ebenfalls auf 0 geführt.",
+  "Bodenkontakte der KI-Tiefe gegen die Ebene: Laternenpfahl 0,94, Fass 0,95, Kiste 1,05, aber der Bereich vor dem Häuschen 0,62 (die KI tont ihn deutlich heller). Weil das Pflaster davor in derselben Karte stetig anschließt, gleitet bei dieser Fahrt nichts sichtbar; bei größeren Fahrten könnte das Häuschen gegen den Kai verrutscht wirken.",
+  "Rauch trägt wenig bei: Der Schornstein steht im Ausschnitt bei Zeile 79, der Rauch steigt schnell aus dem Bild. Möwen und Lichtkegel sind per Code gezeichnet und schlichter als das Gemälde.",
+  "Ein normaler Godot-Lauf importiert geänderte PNGs nicht neu; Prüfbilder zeigten zuerst noch die alte Tiefe. tools/shot.py importiert deshalb vor jedem Lauf (capture.py tut das ohnehin)."
+ ],
+ "lessons": [
+  "Tiefenkarte per Bildmodell: Gemälde als Referenz, „turn the reference painting into its depth map“, hell = nah, Himmel reines Schwarz, Bodenflächen als glatte Verläufe, scharfe Kanten genau an den Silhouetten, dünne Dinge an derselben Stelle, „like the output of a depth-estimation network“. gpt-image lieferte im ersten Versuch eine deckungsgleiche Karte.",
+  "Kalibrieren statt Grauwerte direkt nehmen: Für eine Bodenebene gilt Disparität ~ (y − Horizont). An den Zeilenmedianen des Kais eine Tonkurve anpassen (hier logarithmisch, Rest 1,3 Graustufen) und alle Grauwerte darüber in Entfernungen umrechnen; Meer, Himmel und ferne Landzungen als analytische Ebenen bzw. aus ihrer Wasserlinie, und dort alles Nicht-Himmel auf diese Tiefe setzen (die KI tont kleine Aufbauten wie Turmspitze und Schornstein zu nah).",
+  "Relief in Godot: PlaneMesh mit vielen Punkten, im Vertex-Shader entlang der Sehstrahlen der Gemälde-Kamera auf die Tiefe geschoben; Kamera ohne Drehung mit Frustum-Projektion und frustum_offset. Bild 0 ist dann das Gemälde, jede Kamerabewegung ergibt echte Parallaxe, und Figuren und Effekte lassen sich einfach im selben Raum platzieren.",
+  "Drei Schichten wie ein geschichtetes Tiefenbild: vorn das Relief, das gestreckte Dreiecke verwirft; in der Mitte die Fortsetzung fernerer Gegenstände hinter näheren (nur in Öffnungsrichtung und so breit wie die Lücke, plus die Randtexel der ferneren Seite, die vorn an der Kante verworfen werden); hinten die saubere Platte auf den Szenenebenen. Die mittlere Schicht muss selbst verwerfen und eine eigene Mesh-Instanz sein; die KI-Platte (dasselbe Gemälde ohne Gegenstände, Gemälde als Referenz) kam deckungsgleich und ergänzt, was Code nicht kann (Inseln, Kai-Kante).",
+  "Allgemeine Prüfungen der KI-Tiefe statt Einzelkorrekturen: Inseln (< 300 px, > 40 % näher als alle Nachbarn) an die nächste angrenzende Fläche hängen und melden; kleine abweichende Segmente (< 50 px) zur farblich passenden Nachbarfläche; Verdeckungskanten um einen Texel nach außen schieben, damit Mischfarben mit dem Gegenstand wandern statt als Geisterlinie stehen zu bleiben; Klassen (Himmel, Meer, Gegenstand) nach dem Aufräumen an die Tiefe anpassen, sonst behält die Platte Mischfarben.",
+  "Prüfen mit --tint am Ende der Fahrt (vorn rot, Mitte grün, hinten blau) über das ganze Bild und mit Einzelschicht-Renders (--only=…), um jeden Fleck einer Schicht zuzuordnen; Vergleichsausschnitte dort wählen, wo Fehler zu erwarten sind (Gegenstand vor Gegenstand, kleine Aufbauten vor Himmel), nicht an den schönsten Stellen.",
+  "Vergleichsschalter in der Demo (--fill=stretch, --tint, --only, --nofx, --cam) machen die Technik messbar: Anteil der aufgedeckten Fläche je Schicht, Bildtreue, Parallaxe per Blockvergleich gegen das Kameramodell (stimmte auf 1 px, auch an Turmspitze und Schornstein).",
+  "Kamerafahrt aus der Geometrie wählen: vorher rechnen, welche Kanten sich öffnen (hier deckt eine leichte Abwärtsfahrt das Wasser hinter der Kai-Kante zu); dieselbe Rechnung bestimmt die Breite der Zwischenfüllung.",
+  "Lampen im Gemälde flackern lassen, ohne Ebene: Lampen-Nummer im Alphakanal der Tiefentextur, Helligkeit je Lampe als uniform, dazu additive Lichthöfe an den Raumpunkten aus der Tiefe.",
+  "Schnittfigur im 3D-Raum: Teile als Quads, Fuß flach und fest am Boden, Bein bis zum Knöchel als umgekehrtes Pendel. Ergibt gemessen höchstens 1 px Fußbewegung in allen Standphasen, und die Figur bekommt die Parallaxe ihres Standorts von selbst.",
+  "Texturen in Shadern vor Verzweigungen abtasten (Mipmap-Ableitungen); sonst entstehen helle Striche an Grenzen. Dünn besetzte Farbtexturen außerhalb der genutzten Texel mit einer passenden Farbe füllen, nicht mit Schwarz.",
+  "Daten-Texturen (16-bit-Tiefe in zwei Kanälen, Masken im Alpha bzw. Kanal B) brauchen eigene .import-Dateien: ohne Kompression, ohne Mipmaps, Filter Nearest im Shader, sonst verrauscht die Tiefe."
+ ],
+ "assets": [
+  {
+   "file": "assets/scene/color.png",
+   "kind": "background",
+   "made_with": "gpt-image (Codex), unverändert",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/scene/front_depth.png",
+   "kind": "depth",
+   "made_with": "gpt-image (Codex, Gemälde als Referenz) + prep.py: kalibriert, Landzunge auf Spaltentiefe, an Farbkanten gerastet und aufgeräumt; 16 bit in R/G, Wassermaske in B, Lampen im Alpha",
+   "prompt": "assets/raw/depth.json"
+  },
+  {
+   "file": "assets/scene/debug_disparity.png",
+   "kind": "depth",
+   "made_with": "prep.py: Ansicht der aufgeräumten Disparität (Quadratwurzel)",
+   "prompt": "assets/raw/depth.json"
+  },
+  {
+   "file": "assets/scene/back_color.png",
+   "kind": "background",
+   "made_with": "gpt-image (Codex, saubere Platte) + prep.py: Tonwerte angeglichen, Rand und rechte Seite aus Code-Füllung",
+   "prompt": "assets/raw/plate.json"
+  },
+  {
+   "file": "assets/scene/back_color_code.png",
+   "kind": "background",
+   "made_with": "prep.py: Platte nur aus Code (zeilenweise gespiegelte Fortsetzung), Vergleich",
+   "prompt": ""
+  },
+  {
+   "file": "assets/scene/back_depth.png",
+   "kind": "depth",
+   "made_with": "prep.py: analytische Ebenen (Himmel, Meer, Kai) und Landzunge",
+   "prompt": ""
+  },
+  {
+   "file": "assets/scene/mid_color.png",
+   "kind": "background",
+   "made_with": "prep.py: Zwischenfüllung (fernere Gegenstandsflächen hinter näheren gespiegelt fortgesetzt), außerhalb Plattenfarbe",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/scene/mid_depth.png",
+   "kind": "depth",
+   "made_with": "prep.py: Tiefe der Zwischenfüllung (0 = keine), aus der aufgeräumten KI-Tiefe",
+   "prompt": "assets/raw/depth.json"
+  },
+  {
+   "file": "assets/badger/body.png",
+   "kind": "sprite",
+   "made_with": "gpt-image (Übermalung im Gemäldestil) + build_badger.py: Rumpf der Schnittfigur",
+   "prompt": "assets/raw/badger.json"
+  },
+  {
+   "file": "assets/badger/leg.png",
+   "kind": "sprite",
+   "made_with": "gpt-image + build_badger.py: Bein bis zum Knöchel (nah, fern abgedunkelt)",
+   "prompt": "assets/raw/badger.json"
+  },
+  {
+   "file": "assets/badger/foot.png",
+   "kind": "sprite",
+   "made_with": "gpt-image + build_badger.py: Fuß",
+   "prompt": "assets/raw/badger.json"
+  },
+  {
+   "file": "assets/badger/scarf.png",
+   "kind": "sprite",
+   "made_with": "gpt-image + build_badger.py: hinteres Schalende (Feder)",
+   "prompt": "assets/raw/badger.json"
+  },
+  {
+   "file": "assets/fx/halo.png",
+   "kind": "effects",
+   "made_with": "build_fx.py: Lichthof",
+   "prompt": ""
+  },
+  {
+   "file": "assets/fx/beam.png",
+   "kind": "effects",
+   "made_with": "build_fx.py: Lichtkegel des Leuchtfeuers",
+   "prompt": ""
+  },
+  {
+   "file": "assets/fx/puff.png",
+   "kind": "effects",
+   "made_with": "build_fx.py: Rauchballen",
+   "prompt": ""
+  },
+  {
+   "file": "assets/fx/gull1.png",
+   "kind": "effects",
+   "made_with": "build_fx.py: Möwe (eine von 3 Flügelstellungen gull0–gull2)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/fx/shadow.png",
+   "kind": "effects",
+   "made_with": "build_fx.py: Kontaktschatten",
+   "prompt": ""
+  },
+  {
+   "file": "assets/compare_fill.png",
+   "kind": "comparison",
+   "made_with": "render_check.py: Ende der Fahrt, Streckung | Zwischenfüllung + Platte | Schichten eingefärbt; Laterne, Steg, Fässer, Hausfront, Leuchtturm",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift EB Garamond (variabel)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/ebgaramond"
+  }
+ ],
+ "image_generations": 4,
+ "tool_issues": [],
+ "status": "done"
+}

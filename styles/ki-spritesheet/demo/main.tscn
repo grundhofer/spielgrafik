@@ -1,0 +1,195 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="Texture2D" path="res://art/bg.png" id="2_bg"]
+[ext_resource type="Texture2D" path="res://art/bg_mask.png" id="3_mask"]
+[ext_resource type="Shader" path="res://shaders/bg.gdshader" id="4_bgsh"]
+[ext_resource type="SpriteFrames" path="res://badger_frames.tres" id="5_frames"]
+[ext_resource type="FontFile" path="res://fonts/Fredoka-var.ttf" id="6_fredoka"]
+[ext_resource type="Script" path="res://fx.gd" id="7_fx"]
+[ext_resource type="Script" path="res://sheet_panel.gd" id="8_panel"]
+[ext_resource type="Shader" path="res://shaders/sky_clip.gdshader" id="9_skyclip"]
+
+[sub_resource type="ShaderMaterial" id="bgmat"]
+shader = ExtResource("4_bgsh")
+shader_parameter/mask_tex = ExtResource("3_mask")
+
+[sub_resource type="ShaderMaterial" id="gullmat"]
+shader = ExtResource("9_skyclip")
+shader_parameter/mask_tex = ExtResource("3_mask")
+
+[sub_resource type="FontVariation" id="fv_title"]
+base_font = ExtResource("6_fredoka")
+variation_opentype = {
+2003265652: 600
+}
+spacing_glyph = 2
+
+[sub_resource type="FontVariation" id="fv_text"]
+base_font = ExtResource("6_fredoka")
+variation_opentype = {
+2003265652: 450
+}
+
+[sub_resource type="FontVariation" id="fv_choice"]
+base_font = ExtResource("6_fredoka")
+variation_opentype = {
+2003265652: 500
+}
+
+[sub_resource type="StyleBoxFlat" id="sb_dialog"]
+bg_color = Color(0.96, 0.91, 0.80, 0.97)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.17, 0.11, 0.09, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0.04, 0.03, 0.08, 0.45)
+shadow_size = 6
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="sb_pill"]
+bg_color = Color(0.86, 0.62, 0.36, 0.30)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxEmpty" id="sb_empty"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="Bg" type="Sprite2D" parent="."]
+material = SubResource("bgmat")
+texture = ExtResource("2_bg")
+centered = false
+
+[node name="Smoke" type="Node2D" parent="."]
+script = ExtResource("7_fx")
+kind = "smoke"
+
+[node name="Glow" type="Node2D" parent="."]
+script = ExtResource("7_fx")
+kind = "glow"
+
+[node name="Gulls" type="Node2D" parent="."]
+material = SubResource("gullmat")
+script = ExtResource("7_fx")
+kind = "gulls"
+
+[node name="Shadow" type="Node2D" parent="."]
+
+[node name="Badger" type="AnimatedSprite2D" parent="."]
+position = Vector2(-200, 656)
+sprite_frames = ExtResource("5_frames")
+animation = &"walk"
+centered = false
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="SheetPanel" type="Node2D" parent="UI"]
+position = Vector2(330, 10)
+script = ExtResource("8_panel")
+
+[node name="RawMini" type="AnimatedSprite2D" parent="UI/SheetPanel"]
+
+[node name="FixMini" type="AnimatedSprite2D" parent="UI/SheetPanel"]
+
+[node name="Dialog" type="Panel" parent="UI"]
+offset_left = 704.0
+offset_top = 530.0
+offset_right = 1264.0
+offset_bottom = 704.0
+theme_override_styles/panel = SubResource("sb_dialog")
+
+[node name="Title" type="Label" parent="UI/Dialog"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 12.0
+offset_right = 540.0
+offset_bottom = 34.0
+theme_override_colors/font_color = Color(0.58, 0.20, 0.12, 1)
+theme_override_fonts/font = SubResource("fv_title")
+theme_override_font_sizes/font_size = 15
+text = "HAFEN VON LORNHOLM"
+
+[node name="Line" type="Label" parent="UI/Dialog"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 35.0
+offset_right = 540.0
+offset_bottom = 93.0
+theme_override_colors/font_color = Color(0.16, 0.11, 0.09, 1)
+theme_override_constants/line_spacing = -3
+theme_override_fonts/font = SubResource("fv_text")
+theme_override_font_sizes/font_size = 20
+text = "Die Laterne flackert im Wind.
+Am Kai wartet ein Paket auf dich."
+autowrap_mode = 2
+visible_characters_behavior = 1
+
+[node name="C1" type="RichTextLabel" parent="UI/Dialog"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 98.0
+offset_right = 330.0
+offset_bottom = 122.0
+theme_override_colors/default_color = Color(0.26, 0.19, 0.15, 1)
+theme_override_fonts/normal_font = SubResource("fv_choice")
+theme_override_font_sizes/normal_font_size = 17
+theme_override_styles/normal = SubResource("sb_empty")
+bbcode_enabled = true
+text = "[color=#a8461f]1[/color]   Zum Leuchtturm gehen"
+scroll_active = false
+
+[node name="C2" type="RichTextLabel" parent="UI/Dialog"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 122.0
+offset_right = 236.0
+offset_bottom = 146.0
+theme_override_colors/default_color = Color(0.20, 0.13, 0.10, 1)
+theme_override_fonts/normal_font = SubResource("fv_choice")
+theme_override_font_sizes/normal_font_size = 17
+theme_override_styles/normal = SubResource("sb_pill")
+bbcode_enabled = true
+text = "[color=#a8461f]2[/color]   Das Paket ansehen"
+scroll_active = false
+
+[node name="C3" type="RichTextLabel" parent="UI/Dialog"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 146.0
+offset_right = 330.0
+offset_bottom = 170.0
+theme_override_colors/default_color = Color(0.26, 0.19, 0.15, 1)
+theme_override_fonts/normal_font = SubResource("fv_choice")
+theme_override_font_sizes/normal_font_size = 17
+theme_override_styles/normal = SubResource("sb_empty")
+bbcode_enabled = true
+text = "[color=#a8461f]3[/color]   Mit dem Dachs sprechen"
+scroll_active = false
+
+[node name="Parser" type="Label" parent="UI/Dialog"]
+layout_mode = 0
+offset_left = 380.0
+offset_top = 146.0
+offset_right = 540.0
+offset_bottom = 170.0
+theme_override_colors/font_color = Color(0.20, 0.30, 0.42, 1)
+theme_override_fonts/font = SubResource("fv_choice")
+theme_override_font_sizes/font_size = 17
+text = "> nimm paket"
+
+[node name="Cursor" type="ColorRect" parent="UI/Dialog"]
+layout_mode = 0
+offset_left = 480.0
+offset_top = 150.0
+offset_right = 488.0
+offset_bottom = 167.0
+color = Color(0.20, 0.30, 0.42, 0.9)

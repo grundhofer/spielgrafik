@@ -1,0 +1,28 @@
+{
+ "source": "assets/raw/bg.png",
+ "crop": [
+  12,
+  57,
+  1239,
+  747
+ ],
+ "scale": 1.04348,
+ "horizon_y": 384,
+ "lamp": [
+  1117.6,
+  95.0
+ ],
+ "lantern": [
+  848.3,
+  357.9
+ ],
+ "window": [
+  196.2,
+  427.8
+ ],
+ "chimney": [
+  146.1,
+  80.3
+ ],
+ "smoke_pixels_removed": 6105
+}

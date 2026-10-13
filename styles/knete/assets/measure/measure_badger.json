@@ -1,0 +1,94 @@
+{
+ "walk_stance": {
+  "pairs": 44,
+  "max_mm": 1.2,
+  "mean_mm": 0.43,
+  "max_px": 2.95,
+  "mean_px": 0.56,
+  "worst_pairs": [
+   [
+    35,
+    36,
+    "foot.L.toe",
+    0.5,
+    2.95,
+    12.4
+   ],
+   [
+    39,
+    40,
+    "foot.R.toe",
+    0.5,
+    2.18,
+    -8.7
+   ],
+   [
+    27,
+    28,
+    "foot.L.toe",
+    0.5,
+    1.61,
+    -6.7
+   ],
+   [
+    7,
+    8,
+    "foot.R.toe",
+    0.5,
+    1.46,
+    5.4
+   ],
+   [
+    28,
+    29,
+    "foot.R.heel",
+    1.2,
+    1.41,
+    -5.5
+   ]
+  ],
+  "note": "Animationsbilder 0-44, je Paar der kleinste Weg (Bild, px) eines Sohlenpunkts, der in beiden Bildern trägt; worst_pairs: Schritt, Schritt, Punkt, mm waagrecht, px, mm senkrecht"
+ },
+ "pivot": {
+  "ankle_L_max_mm": 0.1,
+  "toe_R_path_px": 104.6,
+  "toe_R_height_max_mm": 71.2,
+  "note": "Drehung um den linken Knöchel (fest), der rechte Fuß ist dabei in der Luft und setzt erst am Ende auf"
+ },
+ "stand_sole_drift_px": 0.31,
+ "silhouette": {
+  "feet_row_stand_min_max": [
+   671,
+   672
+  ],
+  "feet_row_walk_min_max": [
+   666,
+   692
+  ],
+  "head_row_walk_min_max": [
+   431,
+   438
+  ],
+  "head_row_stand_min_max": [
+   433,
+   435
+  ],
+  "height_px_stand": 239
+ },
+ "boil_outline": {
+  "mean_offset_px": 0.505,
+  "max_offset_px": 0.705,
+  "mean_changed_px": 422
+ },
+ "stand_outline_change_per_step": {
+  "no_boil_mean": 1010,
+  "boil_mean": 1433
+ },
+ "holds": {
+  "frames_without_new_step": 61,
+  "of_those_changed": [],
+  "frames_new_fig_step": 89,
+  "frames_new_env_step": 59,
+  "note": "Bilder ohne neues Figuren- oder Umgebungsbild müssen pixelgleich zum Vorgänger sein"
+ }
+}

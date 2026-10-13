@@ -1,0 +1,109 @@
+{
+ "cell": [
+  40,
+  36
+ ],
+ "anchor": [
+  20,
+  34
+ ],
+ "frames": [
+  {
+   "kind": "walk",
+   "index": 0,
+   "scale": 13.667,
+   "head_cx": 15,
+   "offset": [
+    5,
+    5
+   ]
+  },
+  {
+   "kind": "walk",
+   "index": 1,
+   "scale": 13.733,
+   "head_cx": 14,
+   "offset": [
+    6,
+    5
+   ]
+  },
+  {
+   "kind": "walk",
+   "index": 2,
+   "scale": 13.767,
+   "head_cx": 14,
+   "offset": [
+    6,
+    5
+   ]
+  },
+  {
+   "kind": "walk",
+   "index": 3,
+   "scale": 13.967,
+   "head_cx": 14,
+   "offset": [
+    6,
+    5
+   ]
+  },
+  {
+   "kind": "front",
+   "index": 0,
+   "scale": 14.433,
+   "head_cx": 12,
+   "offset": [
+    8,
+    5
+   ]
+  },
+  {
+   "kind": "front",
+   "index": 1,
+   "scale": 14.433,
+   "head_cx": 11,
+   "offset": [
+    9,
+    5
+   ]
+  },
+  {
+   "kind": "front",
+   "index": 2,
+   "scale": 14.4,
+   "head_cx": 11,
+   "offset": [
+    9,
+    5
+   ]
+  }
+ ],
+ "order": [
+  "walk0",
+  "walk1",
+  "walk2",
+  "walk3",
+  "walk4",
+  "walk5",
+  "walk6",
+  "walk7",
+  "front",
+  "front_blink",
+  "front_wave"
+ ],
+ "walk_frames": 8,
+ "walk_fps": 15,
+ "walk_advance_px": 2,
+ "stride_px": 8,
+ "walk_lift": [
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+ ]
+}

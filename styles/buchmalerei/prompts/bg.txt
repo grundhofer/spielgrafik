@@ -1,0 +1,21 @@
+A miniature painting from a Gothic illuminated manuscript, a Book of Hours made around 1400, used as the background of a 2D narrative game.
+
+Technique: opaque egg tempera and gouache on parchment, applied in flat, even areas of pure mineral colour: deep lapis-lazuli ultramarine, vermilion, rose pink, malachite and verdigris green, yellow ochre, lead white and soft blue-greys. Every shape is outlined with a fine, even dark-brown pen line. Modelling only with a few flat darker strokes and fine parallel white highlight lines on folds and edges, as in manuscript painting; no cast shadows, no soft gradients, no atmospheric haze, no light effects, no glow.
+
+Space and drawing: flat medieval space without true perspective. The ground plane tilts steeply upward as if seen from high above, so the sea rises like a wall behind the quay. Buildings are small, simplified doll's-house blocks shown from two sides at once in naive perspective, smaller than they would really be. The sea is a flat surface of deep blue-green covered with neat, repeating rows of small curled white wavelets, like a decorative pattern. The rocky headland is built of stylized stepped rock ledges with flat tops and vertical faces, pale grey-violet and ochre, with a few tufts of grass. The boats are simple wooden hulls with one mast each, drawn in side view.
+
+Sky: instead of a natural sky, the upper part of the picture is a flat burnished gold-leaf ground: a smooth, bright yellow-gold area with a fine tooled diaper pattern of small punched stars and dots (the first stars are these punched gold stars). Between the gold ground and the horizon lies a band of stylized ultramarine clouds with scalloped edges, and directly above the horizon a narrow, flat vermilion-orange band for the dusk.
+
+Effects: the lighthouse lamp is only a small flat gold-and-vermilion flame in its lantern room, without any beam, rays or halo; no smoke from the chimney; no birds in the sky (these are animated separately).
+
+Composition (percentages of the image size): the horizon lies at about 40 % of the image height; the gold ground fills the image above about 22 % of the height. The cottage stands on the left, from the left edge to about 20 % of the width. The headland with the lighthouse fills the right side from about 70 % of the width; the lighthouse stands at about 82 % of the width. The quay is a tilted paved band across the whole width from about 72 % of the image height to the bottom edge; the middle of the quay from 22 % to 50 % of the width is completely empty, because a large figure will stand there. The jetty and the two boats lie on the water between about 45 % and 68 % of the width. The lantern post stands at the back edge of the quay at about 60 % of the width; the barrels, the crates and the coil of rope stand at the right end of the quay, from about 75 % to 97 % of the width. The picture runs edge to edge: no border, no frame, no margin and no parchment around it (the game adds its own page, frame and lettering).
+
+Not a photograph, not a 3D render, not a modern fantasy illustration, not a children's book, not an oil painting with realistic light: a flat, decorative, precisely painted Gothic manuscript miniature with clear outlines and gleaming gold.
+
+Location: the small harbour of Lornholm, a fictional island in a northern sea, at dusk. A stone quay with a short wooden jetty runs along the lower third of the picture. Two small wooden fishing boats are moored at the jetty. On a rocky headland on the right stands a white lighthouse with one red band, its lamp lit. On the left a small stone harbour-master's cottage with a lit window and a smoking chimney. On the quay: two barrels, a stack of crates, a coil of rope and an iron lantern on a wooden post. Calm sea, low clouds, a band of orange light at the horizon, the first stars.
+
+Leave the quay in the foreground free of characters: it is a game background, characters are added later as separate sprites.
+
+No text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.
+
+Image format: landscape 3:2.

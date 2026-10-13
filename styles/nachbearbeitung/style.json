@@ -1,0 +1,248 @@
+{
+ "slug": "nachbearbeitung",
+ "name": "Nachbearbeitung & Look-Filter",
+ "family": "technik",
+ "kind": "technique",
+ "era": "seit Mitte der 2000er (Bloom, Filmkorn und Farb-LUTs in 3D-Spielen); CRT-, Raster- und Paletten-Filter als Retro-Zitat seit den 2010ern",
+ "summary": "Eine 3D-Hafenszene, sechs Looks allein durch Nachbearbeitung: Bloom aus dem HDR-Glow, Filmkorn mit Vignette, eine 32³-Farb-LUT, CRT mit Scanlines, Krümmung und Lochmaske, ein Comic-Punktraster und eine 16-Farben-Palette mit Bayer-Dithering. Die Demo zeigt 0,6 s die Totale des ganzen Hafens und schneidet dann auf eine Nahkamera; der Look wechselt jede Sekunde und ist beschriftet. Modelle, Licht, Animation und Textbox bleiben gleich.",
+ "references": [
+  "Bloom und HDR-Glow als Kennzeichen vieler 3D-Spiele um 2005–2008 (z. B. The Elder Scrolls IV: Oblivion)",
+  "Filmkorn als zuschaltbarer Filter (z. B. Mass Effect, Left 4 Dead) und als Horror-Look (Silent Hill)",
+  "Farb-LUTs als Gradierung je Ort oder Stimmung in Unity- und Unreal-Spielen; im Katalog auch tageszeit-wetter",
+  "CRT-Shader aus Emulatoren und Retro-Sammlungen (quelloffene RetroArch-Shader wie CRT-Royale, crt-lottes, crt-geom)",
+  "Ben-Day-Punkte und Rasterdruck alter Comics und der Pop-Art (Roy Lichtenstein)",
+  "Paletten-Reduktion mit geordnetem Dithering als Gesamtlook (Return of the Obra Dinn, 1-Bit) und in Retro-3D-Indiespielen"
+ ],
+ "traits": [
+  "Eine 3D-Szene (shared/3d), sechs Looks, die nur aus Nachbearbeitung entstehen; Modelle, Materialien, Licht, Animation und Textbox sind in allen Looks gleich",
+  "Szene erkennbar: 0–0,6 s die Totale aus shared/3d (Kamera unverändert) mit Häuschen samt erleuchtetem Fenster und Schornsteinrauch, beiden Booten, Fässern, Kisten, Steg, Laterne und Leuchtturm; ab 0,6 s Nahkamera mit Kai, Wasser, Boot A, Steg, Laterne und Leuchtturm. In der Nahkamera sind Häuschen, Fenster, Kisten und Boot B nicht zu sehen (siehe camera)",
+  "Wechsel im Sekundentakt mit hartem Schnitt (Bild 30, 60 … nachgeprüft: Beschriftung und Bild wechseln im selben Bild); Beschriftung oben links mit Nummer, Name, Kennwerten und Fortschrittsleiste, ungefiltert; bei Farb-LUT und Palette zeigt ein zweites Schild das Asset selbst (LUT-Streifen, 16 Farbfelder)",
+  "Bloom (0–1 s, in Totale und Nahkamera): weite Lichthöfe um das Fenster des Häuschens, Leuchtfeuer, Laterne, Strahl, Sterne und Horizont (Glow im HDR-Puffer, Schwelle 0,7, sechs Stufen); wenn der Strahl zur Kamera zeigt (0,7 s), überstrahlt die Turmspitze",
+  "Filmkorn & Vignette: Korn in jedem Bild neu (in Schatten stärker), rötliche Halation an hellen Stellen, angehobenes Schwarz, leicht warme Filmkurve, Belichtung schwankt um ±1,75 %, einzelne Staubpunkte, ovale Vignette (Ecken bis 70 % dunkler)",
+  "Farb-LUT „Kalte Nacht“: Schatten und Mitten kalt (Blaugrün), entsättigt und dunkler (oberer Bildteil bis Zeile 460 im Mittel RGB 108,73,80 → 47,55,72); Laterne (215,159,112 → 168,148,114) und Leuchtfeuer (198,168,138 → 166,160,127) bleiben warm. Das orange Horizontband wird fast neutral (Mittel 202,150,113 → 131,127,117), nur sein hellster Streifen bleibt blassgelb (152,140,119); gemessen bei 2,5 s",
+  "CRT: 240 Zeilen mit Strahlprofil (helle Zeilen breiter), Lochmaske aus RGB-Punkten (Tripel 3 px, versetzte Reihen), gewölbte Röhre mit runden Ecken und schwarzem Rand, Nachleuchten und leichte Randabschattung; wirkt auch auf die Textbox, deren Text lesbar bleibt",
+  "Halbton: ein Punktraster unter 45° mit 8 px Weite; Punktfläche nach Helligkeit (flächentreu), Punkte in der dunkleren, gesättigten Farbe ihrer Zelle auf cremefarbenem Papier mit leichter Struktur; vom Dachs bleibt nur eine rot-cremefarbene Form (siehe pitfalls)",
+  "Paletten-Reduktion: 4-px-Raster (320×180 Punkte), 16 Farben per k-means in OKLab aus einem Bild der Szene, davon zwei fest für Mütze und Weste (dunkles Oliv #292b07 und #443e0f), geordnetes Bayer-Dithering 4×4",
+  "Umgebung: Wellen, kreisender Leuchtturmstrahl mit Aufblitzen, flackernde Laterne (Glas, Licht, Lichtfarbe und Lichthof gemeinsam; Helligkeit am Glas schwankt um 23 %, am Pfahl um 29 %), schaukelnde Boote, funkelnde Sterne, ziehende Wolkenbänder und Schornsteinrauch (nur in der Totale im Bild)",
+  "Dachs läuft von links in die Nahkamera, bremst, dreht sich auf dem linken Fuß zur Kamera, setzt den rechten Fuß auf und winkt; Standfuß in allen Phasen ortsfest (gemessen höchstens 0,29 px bzw. 2,9 mm je Bild, je Bodenkontakt höchstens 3,5 mm)",
+  "Textbox unten rechts (Ort, Zeile, drei Auswahlen, Parserzeile mit blinkendem Cursor) deckt etwa 11 % des Bildes, die Beschriftung oben links etwa 5 %; in der Totale ist die Textbox ausgeblendet und blendet nach dem Schnitt in 0,2 s ein"
+ ],
+ "camera": "Zwei feste Einstellungen mit hartem Schnitt bei 0,6 s (Bild 18), beide vorab mit scripts/frame_shot.py ausgerechnet. 0–0,6 s die Totale aus shared/3d, unverändert (Position (−1,8; 3,4; 14,5), Neigung −3°, fov 42°): ganzer Hafen mit Häuschen, erleuchtetem Fenster (Projektion x ≈ 147), Rauch, Booten A und B, Fässern, Kisten, Laterne und Leuchtturm; der Dachs ist dort etwa 69 px hoch (gerechnet). Die Textbox ist in der Totale ausgeblendet, weil sie Boot B (1021/476) und die Kisten (1183/500) verdecken würde. Ab 0,6 s feste Nahkamera auf Augenhöhe: Position (−0,3; 1,9; 7,6), Blick auf (3; 2,4; −20), fov 42°, Dachs 153–166 px hoch. In der Nahkamera fehlen Teile der Szene: Häuschen, Fenster, First und Rauch liegen links außerhalb (Projektion x = −882 … −477), ebenso Fass 1 (x = −133) und die Kisten (x = 1323); Boot B (981/517) liegt vollständig hinter der Textbox. Grund für die Nahkamera: In der Totale ist der Dachs nur 69–71 px hoch, Raster, Palette und Lochmaske ließen an der Figur nichts erkennen.",
+ "resolution": "1280×720 (3D im SubViewport, MSAA 4×); CRT bildet 240 Zeilen nach, die Paletten-Reduktion rastert auf 320×180, das Punktraster hat 8 px Weite; Dachs in der Nahkamera 153–166 px hoch beim Laufen, 155–158 px im Stehen (gemessen), in der Totale etwa 69 px (gerechnet)",
+ "pipeline": [
+  {
+   "step": "3D-Grundlage",
+   "tool": "shared/3d (Blender-Skripte), Kopien",
+   "detail": "harbor.glb und badger.glb unverändert nach demo/models/ kopiert (mit cmp geprüft); Licht, Wasser-Shader, Lichtkegel, Schornsteinrauch (Billboards) und das Attach-Muster aus der Probeszene shared/3d/demo übernommen."
+  },
+  {
+   "step": "Bildausschnitt",
+   "tool": "scripts/frame_shot.py",
+   "detail": "Projektion der wichtigen Punkte (Leuchtfeuer, Laterne, Boote, Häuschen, Fenster, Rauch, Fässer, Kisten, Laufweg) für Kamerakandidaten. Nahkamera so gewählt, dass der Dachs bei x = −4 außerhalb startet, bei etwa x = −1,8 stehen bleibt und Leuchtturm, Laterne und Wasser im Bild sind; dieselbe Rechnung für die Totale aus shared/3d zeigt alle Pflichtelemente im Bild und Boot B und Kisten im Bereich der Textbox."
+  },
+  {
+   "step": "Abendhimmel",
+   "tool": "Code (shaders/sky.gdshader)",
+   "detail": "Verlauf Nachtblau–Violett–Orange, Wolkenbänder dicht über dem Horizont (Rauschen auf einer Ebene, waagerecht gestreckt, langsam ziehend), Sterne mit Helligkeit über 1 (für Bloom), nicht in der Radiance-Cubemap."
+  },
+  {
+   "step": "Farb-LUT erzeugen",
+   "tool": "Code (scripts/make_lut.py, NumPy)",
+   "detail": "Gradierung als Formel auf ein 32³-Identitäts-LUT angewendet (Split-Toning: kalter, entsättigter Zweig für Schatten und Mitten, warmer Zweig ab sRGB-Helligkeit 0,5–0,92, S-Kurve, bläulich angehobenes Schwarz), gespeichert als 1024×32-Streifen. Offline auf ein Rohbild angewendet und angesehen; Godot-Ergebnis gegen die Offline-Anwendung: im Mittel 0,12, höchstens 1 Stufe Abweichung (geprüft in der ersten Fassung; LUT und LUT-Shader seitdem unverändert, nicht erneut gemessen)."
+  },
+  {
+   "step": "Palette gewinnen",
+   "tool": "Code (scripts/make_palette.py, NumPy)",
+   "detail": "Rohbild der Welt ohne Oberfläche bei t = 5,5 s, dazu dasselbe Bild ohne Dachs (Figurmaske) und mit --badger-ids (Mütze grün, Weste blau). Zwei Mitten fest: Median (OKLab) der Mützen- bzw. Westenpixel, im Farbton um 0,045 Richtung Grün verschoben (--green-shift 0.045, siehe pitfalls). Die übrigen 14 per k-means in OKLab (a, b 1,4-fach gewichtet wie im Shader), Pixel der Figur 12-fach gewichtet (sonst fehlt der Schal-Rot-Ton), dunkelste und hellste Mitte auf das 0,5- bzw. 99,5-Perzentil gezogen; 16×1-PNG, nach Helligkeit sortiert."
+  },
+  {
+   "step": "Godot-Demo",
+   "tool": "Godot 4.7.2, GDScript, canvas_item- und sky-Shader",
+   "detail": "WorldVP (3D) in ScreenVP (Welt-Looks + Textbox), darüber Final (CRT) und die ungefilterte Beschriftung; Look-Tabelle in main.gd, Glow-Werte je Look am Environment; Schnitt Totale → Nahkamera und Einblenden der Textbox in main.gd."
+  },
+  {
+   "step": "Dachs-Animation",
+   "tool": "GDScript (main.gd), Animationen aus badger.glb",
+   "detail": "AnimationPlayer von Hand fortgeschaltet; Fuß-Sperre: Die Wurzel folgt der Zehe des Standfußes (Laufen, Bremsen, Drehen, Übergang). Laufpose beim Stillstand eingefroren und über eine eigene Übergangsanimation (smoothstep, rechter Unterschenkel früher) in Idle überführt; Drehung zur Kamera auf dem linken Standfuß, solange der rechte in der Luft ist."
+  },
+  {
+   "step": "Aufnahme und Prüfung",
+   "tool": "tools/capture.py, scripts/snap.py, scripts/measure_badger.py, scripts/measure_lantern.py, scripts/measure_looks.py",
+   "detail": "capture.py ohne Fehler und ohne Warnungen; Einzelbilder am Kameraschnitt und an den Look-Wechseln, Langlauf bei 20 und 40 s (Totale und Nahkamera); Standfuß über alle 180 Bilder vermessen; Flackern der Laterne je Bereich mit und ohne Flackern gemessen; Stärke jedes Looks gegen das Rohbild; Mobile und Compatibility gegen Forward+; zwei Läufe à 20 Bilder bytegleich, das vorgespulte Bild bei 3,6 s gleicht Bild 108 der Aufnahme (mittlere Abweichung unter 0,01, höchstens 2 Stufen)."
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, Forward+, MSAA 4×, Sonnenschatten 8192 px, physics/common/physics_jitter_fix = 0 (sonst weichen mit --fixed-fps 30 die ersten sieben Zeitschritte von 1/30 s ab); keine Plugins",
+  "Knoten: Main (Node, main.gd) → ScreenVP (SubViewport, 2D) → WorldVP (SubViewport, own_world_3d, MSAA 4×, 3D-Szene mit Kamera, Sonne, Environment, Hafen, Dachs, Lichtern) + WorldView (TextureRect mit world_post.gdshader) + UI (ui.gd); darüber Final (TextureRect mit screen_post.gdshader) und LabelLayer (CanvasLayer 10, label.gd). WorldVP als Kind von ScreenVP wird vor diesem gerendert, deshalb wechseln Bild und Beschriftung im selben Bild.",
+  "Zwei Stufen: Welt-Looks (Film, LUT, Halbton, Palette) wirken nur auf das 3D-Bild, die Textbox wird danach gezeichnet und bleibt sauber; der Bildschirm-Look CRT wirkt auf Welt und Textbox. Bloom ist kein Bildschirm-Shader, sondern der Glow des Environments (HDR, vor dem Tonemapping): main.gd setzt je Look Intensität, Stärke, Bloom, Schwelle, HDR-Skala, Mischmodus und die sieben Glow-Stufen.",
+  "Die Viewport-Textur geht als eigenes Uniform (src_tex) in beide Nachbearbeitungs-Shader: TEXTURE ist in eigenen Funktionen eines canvas_item-Shaders nicht verfügbar. Alle Abtastungen mit textureLod(…, 0.0).",
+  "world_post.gdshader: Film (12 Richtungen × 2 Abstände für Halation, Wertrauschen in zwei Größen für Korn, Seed aus der Bildnummer, vier mögliche Staubpunkte je Bild, ovale Vignette); LUT (trilinear: zwei bilineare Abtastungen im Streifen, Mischung zwischen den Blau-Kacheln); Halbton (vier nächste Rasterpunkte, Zellfarbe aus vier Abtastungen, Radius r = Weite · √(Deckung/π), darüber schnelleres Zusammenwachsen); Palette (Blockmittel aus vier Abtastungen, Bayer-Schwelle in Blockkoordinaten, nächste Palettenfarbe in OKLab)",
+  "screen_post.gdshader: Krümmung als quadratische Verzerrung (0,045 / 0,06), je Röhrenzeile Mittel ihrer drei Quellzeilen (sonst verschwinden dünne Striche der Schrift), waagerecht ±0,6 px verwaschen, Gauß-Strahlprofil mit helligkeitsabhängiger Breite über die zwei nächsten Zeilen, Nachleuchten aus 8 Abtastungen, Lochmaske im Ausgabepixel-Raster (hell 1,32, dunkel 0,62, jede zweite Pixelzeile 0,78), Helligkeitsausgleich ×1,5, runde Ecken, schwarzer Rand",
+  "Palette als Uniform-Felder: main.gd liest palette16.png, rechnet jede Farbe nach OKLab um und setzt pal_rgb[16] und pal_lab[16]; LUT- und Palettenbild verlustfrei, ohne Mipmaps, detect_3d/compress_to = 0",
+  "Zeit: t beginnt bei −1/30 s, damit Bild i der Aufnahme t = i/30 zeigt (sonst zeigt das letzte der 180 Bilder t = 6,0 und schon wieder den ersten Look); Look-Index mit floor(t + 1e-6), weil 30 × (1/30) in double 0,99999… ergibt",
+  "Kamera: 0–0,6 s Totale (Position und Drehung aus shared/3d), dann Nahkamera per look_at; die Textbox (UI) ist bis 0,6 s ausgeblendet und blendet über modulate in 0,2 s ein",
+  "Dachs: AnimationPlayer mit callback_mode_process = MANUAL, advance(delta) in _update_badger, damit Pose und Wurzel im selben Schritt stehen. Walk mit speed_scale 2,4, ab 2,45 s in 0,4 s auf 0 gebremst. Fuß-Sperre (_lock_feet): Wurzel waagerecht so gesetzt, dass die Zehe des Standfußes liegen bleibt (X_neu = X_alt + R_alt · p_alt − R_neu · p_neu, damit dreht die Figur auch um diese Zehe); in Wechselbildern ohne festen Fuß mit 0,367 m/s × speed_scale. Beim Stillstand wird die Walk-Pose als Animation „Settle“ eingefroren und in 0,42 s mit smoothstep in die erste Idle-Pose überführt (rechter Unterschenkel schon nach 60 %), dann Idle; Drehung zur Kamera 2,62–3,18 s, Wave ab 3,36 s, dann Idle; Idle und Walk im Code auf Schleife",
+  "Umgebung: Boote schaukeln um die Wasserlinie, Wasser-Shader und Himmel mit der Zeit als Uniform, Rauch aus dem Schornstein (neun Billboards wie in shared/3d), Leuchtfeuer dreht in 8 s und blitzt beim Blick zur Kamera auf. Laterne (FastNoiseLite, Seed 20261013): Flamme f zwischen 0,45 und 1, Glas-Emission 1,7 × f (shared/3d: 4, dort läuft das Glas in Weiß aus), Licht 2,6 × f, Lichtfarbe von Orange zu Gelbweiß, Lichthof als additives Billboard (1,5 m, ohne Tiefentest) mit 0,5 × f²",
+  "Oberfläche: ui.gd und label.gd zeichnen in _draw() (StyleBoxFlat, draw_string); Textbox in Alegreya (variabel, Gewicht 450 und 700), Parserzeile und Auswahlnummern in JetBrains Mono 500, Beschriftung in JetBrains Mono 480 und 760",
+  "Schalter nach --: --look=N (−1 ohne Nachbearbeitung, 0–5 fest), --t0=SEK (spult in 1/30-s-Schritten vor, auch die Animation), --cam=total|nah, --no-badger, --no-ui, --no-label, --no-flicker, --badger-mask (Figur unbeleuchtet magenta), --badger-ids (Mütze grün, Weste blau, Rest magenta), --log-feet (Zehenspitzen beider Fußknochen je Bild in Welt- und Bildkoordinaten, Einstellung, Standfuß, Wurzel)"
+ ],
+ "techniques": [
+  "nachbearbeitung",
+  "hdr-glow",
+  "filmkorn",
+  "farb-lut",
+  "crt-maske",
+  "rasterpunkte",
+  "palette-einrasten",
+  "ordered-dithering",
+  "farbverlauf-himmel",
+  "shader-wasser",
+  "additiver-lichtkegel",
+  "fuss-halten",
+  "prozedurale-animation",
+  "textoberflaeche",
+  "kameraschnitt"
+ ],
+ "ratings": {
+  "ai_fit": 1,
+  "consistency": 4,
+  "effort": 1,
+  "text_adventure": 4,
+  "mobile": 3
+ },
+ "ratings_note": "ai_fit 1, weil die KI hier nichts beigetragen hat: Laut Auftrag wurde kein Bild erzeugt; Szene und Figur kommen aus shared/3d, LUT und Palette aus Skripten, die Looks aus Shadern und den Glow-Einstellungen. Wie gut ein Bildmodell solche Filter-Looks trifft, ist nicht geprüft. consistency 4: Ein Filter wirkt auf alles im Bild gleich und bindet unterschiedliche Assets zusammen; nicht 5, weil Halbton (Aufhellung 1,3), Palette (aus dieser Szene gewonnen, Kostümfarben von Hand verschoben) und LUT auf die dunkle Abendszene abgestimmt sind und für helle Orte nachgestellt werden müssen. effort 1: Je Asset entsteht kein Aufwand; einmalig sind Shader, LUT und Palette. text_adventure 4: Ein Look über allen Bildern vereinheitlicht wechselnde Quellen, und Looks lassen sich als Einstellung oder Stimmung je Ort umschalten; ein Filter ersetzt aber keinen Grundstil, der Halbton löscht die Kostümdetails einer 160 px hohen Figur, und die Palette lässt davon nur grobe Farbflächen. mobile 3 ist geschätzt, auf keinem Telefon gemessen: Drei Vollbild-Durchgänge (3D, Welt-Look, CRT), je Pixel braucht der Film-Look rund 25 Texturzugriffe, der Halbton 16, die Palette 4 plus eine Suche über 16 Farben, der CRT 21. Probeläufe auf dem Mac bei t = 3,6 s: Mobile weicht in allen Looks im Mittel um höchstens 1,1 Stufen ab, nur Bloom um 4,5 (3 % der Pixel über 24 Stufen); Compatibility zeigt schon ohne Filter ein dunkleres, kontrastreicheres Bild (im Mittel 11 Stufen, 28 % der Pixel über 24) und kaum Bloom.",
+ "verdict": "Nachbearbeitung ist für das Textadventure die billigste Art, allen Bildern einen gemeinsamen Look zu geben oder Stimmungen umzuschalten: Eine LUT je Ort oder Tageszeit, Filmkorn für Rückblenden, ein CRT- oder Paletten-Filter als Option für Spielerinnen. Sie ersetzt keinen Grundstil, sondern liegt darüber; am meisten bringt sie bei gemischten Quellen (KI-Bilder, 3D, Code), deren Unterschiede ein gemeinsamer Filter überdeckt. Für den Bau gilt: Bloom aus dem HDR-Glow der Engine nehmen, alles andere als Shader auf einem SubViewport; Textbox zwischen Welt- und Bildschirmstufe legen, damit Halbton und Palette die Schrift nicht zerstören. Halbton und Palette eignen sich für Hintergründe; Figuren verlieren darin ihre Kostümdetails. Bewusste Abweichungen vom Auftrag: Die ganze Szene ist nur in der Totale der ersten 0,6 s zu sehen; die Nahkamera danach (Figur groß genug für Raster und Palette) zeigt Häuschen, Fenster, Rauch und Kisten nicht, und Boot B liegt dort hinter der Textbox. Die Looks wechseln mit harten Schnitten im Sekundentakt, damit alle sechs in 6 s zu sehen sind; im Spiel würde man einen Look wählen oder langsam überblenden.",
+ "pitfalls": [
+  "Nahkamera zeigt nicht die ganze Szene: Häuschen mit Fenster und Rauch, Fass 1 und die Kisten liegen außerhalb, Boot B liegt vollständig hinter der Textbox. Die erste Fassung nannte nur den fehlenden Rauch. Jetzt zeigt die Totale der ersten 0,6 s (frames.jpg, erstes Feld) alle Elemente; dort ist dafür die Textbox ausgeblendet, weil sie Boot B und die Kisten verdecken würde. Für ein Spiel müssen Textbox und Bildausschnitt gemeinsam geplant werden.",
+  "Füße in der ersten Fassung: Die Figur wurde mit festem Tempo geschoben und um ihre Wurzel gedreht. Beim Bremsen glitt der linke Standfuß rund 5 px rückwärts, beim Überblenden auf Idle sprang er 1,9 px (die ausgeblendete Walk lief mit Tempo 1,0 weiter), und bei der Drehung glitten beide Füße 20–30 cm (rechts etwa 36 px). Die Ursache des Gleitens beim Bremsen ist nicht einzeln nachgewiesen (vermutlich getrennte Fortschaltung von Animation und Wurzel); behoben durch Fuß-Sperre, eingefrorene Laufpose mit eigenem Übergang und Drehung auf dem Standfuß. Rest, gemessen (scripts/measure_badger.py): Der rechte Fuß bewegt sich beim Aufsetzen im ersten Kontaktbild noch 2,9 mm (Zehe 1,5 mm über der Ruhehöhe, 0,08 px); die Zehe des linken Fußes rollt beim Übergang 2 mm tiefer, über den ganzen Bodenkontakt (2,5–6 s) höchstens 0,3 mm waagerecht und 0,6 px auf dem Bildschirm.",
+  "Laterne in der ersten Fassung: Das Glas (Emission 4) lief im Tonemapping in Weiß aus, die Helligkeit schwankte nur um 2,6 % (Glas) bzw. 1 % (Umgebung). Jetzt (scripts/measure_lantern.py, Nahkamera 0,6–6 s, ohne Nachbearbeitung): Glas 23 %, Pfahl 29 %, Umgebung 4 % (ohne Flackern 0,1 %). Der vom Licht getroffene Boden liegt in der Nahkamera hinter der Textbox (dort 3,6 % gegen 1,9 % ohne Flackern); in der Totale ist er frei. In der vollen Flamme ist das Glas gelbweiß, nicht reinweiß.",
+  "Farb-LUT: Der warme Zweig wird erst zwischen sRGB-Helligkeit 0,5 und 0,92 übergeblendet; das orange Horizontband (Helligkeit um 0,6) wird deshalb fast neutral, nur der hellste Streifen bleibt blassgelb. Die erste Fassung versprach warme Fenster und ein warmes Horizontband; im Bild der LUT (2–3 s, Nahkamera) gibt es kein Fenster. Für eine Nacht mit glühendem Horizont den warmen Zweig früher einsetzen lassen.",
+  "Der erste Halbton-Versuch als echter Vierfarbdruck (C, M, Y, K je eigenes Raster) wirkte auf der dunklen Abendszene wie schlammiges Rauschen: Die Punkte waren zu groß gerechnet (Radius ∝ √Tonwert · 0,74 deckte bei 50 % Tonwert 86 % der Zelle), und auch nach der flächentreuen Formel überlagerten sich die vier Raster zu dunklen Klumpen. Ersetzt durch ein einziges 45°-Raster mit farbigen Punkten; das ist ein Comic-Punktraster, kein Vierfarbdruck. Die dunkle Szene ergibt trotz Aufhellung einen bräunlich-dunklen Druck.",
+  "Halbton und Figur: Bei 8 px Rasterweite hat der 160 px hohe Dachs rund 20 Rasterzeilen. Mütze, Weste, Tasche und Gesichtsstreifen verschwinden; es bleibt ein rot-cremefarbener Fleck (Schal, Hemd, Bauch). Nicht behoben: Ein feineres Raster schwächt den Look, ein Raster nur für den Hintergrund bräuchte eine Figurmaske. Für Figuren ungeeignet.",
+  "Paletten-Reduktion: Mütze und Weste sind im Abendlicht olivbraun, nicht grün (OKLab a ≈ 0,02–0,03; im ganzen Rohbild hat kein Pixel a < −0,01). Der k-means fand deshalb kein Grün, Mütze und Weste fielen auf ein rötliches Braun und verschmolzen mit Gesicht und Fell. Auch eine feste Mitte aus dem Median ihrer Pixel blieb braun (#3b2206, #57340e). Jetzt sind beide Mitten um 0,045 in a Richtung Grün verschoben (#292b07, #443e0f): Mütze und Weste lesen sich als dunkles Oliv. Das ist ein bewusster Eingriff (die Palette zeigt die Kostümfarbe, nicht die gemessene Lichtfarbe). Das Gesicht bleibt im 4-px-Raster ein heller Fleck ohne Streifen, und das Meer bleibt braun, weil die Palette keine dunkle Blaugrün-Farbe enthält.",
+  "Die Paletten-Reduktion verändert das Bild am wenigsten (20 % der Pixel über 24 Stufen gegen das Rohbild, Bloom 31 %, LUT 83 %), weil die Palette aus der Szene stammt; man erkennt den Look am 4-px-Raster und am Dithermuster.",
+  "Die erste Lochmaske (Leuchtpunkte 2 px breit, Reihen 2 px hoch, Versatz 3 px) ergab ein grobes Schachbrett, das die Scanlines verdeckte; erst die feine Maske mit 3-px-Tripeln wirkt wie eine Röhre. In frames.jpg (halbe Größe) werden Maske und Zeilen zu Moiré bzw. Grau; sichtbar sind sie nur 1:1 (Poster, Video).",
+  "Bloom: Wenn der Leuchtturmstrahl zur Kamera zeigt (um 0,7 s), überstrahlt die Turmspitze vollständig, und in der Totale überstrahlt das Fenster des Häuschens. Für die Demo gewollt (zeigt den HDR-Glow), für ein Spiel zu stark; dort Lampenhelligkeit oder Glow-Intensität senken.",
+  "Compatibility-Renderer: Schon das Rohbild ist dunkler und kontrastreicher, der Strahl schwächer, und Bloom ist kaum zu sehen (Glow dort schwächer umgesetzt); die Shader-Looks selbst laufen. Wer auf Compatibility zielt, braucht eigene Glow-Werte oder einen Bloom im Shader.",
+  "Mobile-Renderer: Im allerersten Bild ist die Schattenkarte der Sonne noch leer, die ganze Szene liegt im Schatten; ab dem zweiten Bild stimmt es. Ein Einzelbild-Vergleich mit --quit-after 1 hatte deshalb zunächst 22 % Abweichung vorgetäuscht; die Messskripte werten jetzt das zweite Bild aus. Die Aufnahme (Forward+) ist nicht betroffen.",
+  "Raster, Palette und Lochmaske liegen fest auf dem Bildschirm: Bewegt sich die Kamera, gleitet die Welt unter den Punkten durch (Fliegengitter-Effekt). Hier stehen beide Einstellungen fest, der Schnitt liegt im Bloom-Look ohne Bildschirmmuster; mit Kamerafahrt nicht geprüft.",
+  "Filmkorn ändert sich in jedem Bild und wird in demo.mp4 und vor allem im GIF (15 Bilder/s, 128 Farben) weicher und fleckiger als in Godot; Halation und Staub sind dezent und auf dem Poster kaum zu sehen.",
+  "Harte Schnitte im Sekundentakt sind für die Demo: Eine Sekunde ist kurz, um einen Look zu beurteilen; im ersten Look (Bloom) sieht man 0,6 s die Totale und 0,4 s die Nahkamera, in die der Dachs gerade hineinläuft.",
+  "LUT, Halbton-Aufhellung und Palette sind nur an dieser einen Abendszene abgestimmt; an hellen oder anders gefärbten Orten nicht geprüft."
+ ],
+ "lessons": [
+  "Zwei Stufen trennen: Welt-Looks auf das 3D-Bild, dann die Oberfläche, dann Bildschirm-Looks (CRT). So bleibt die Schrift unter Halbton und Palette sauber, und der CRT-Look krümmt trotzdem alles wie ein echter Bildschirm.",
+  "Bloom kommt in Godot am besten aus dem Glow des Environments (HDR, vor dem Tonemapping): Nur dort leuchten Lampe (Emission 4–30) und Sterne (Helligkeit 2,2) stärker als weiße Farbe. Die Glow-Werte lassen sich je Bild per Skript umschalten.",
+  "Eine Farb-LUT als 1024×32-Streifen (32 Kacheln, x = Rot, y = Grün, Kachel = Blau, sRGB) ist ein Asset wie jedes andere: hier per Formel erzeugt, ebenso aus einem in einem Bildprogramm gradierten Identitäts-LUT. Godot-Ergebnis und Offline-Anwendung wichen höchstens 1 Stufe ab.",
+  "Palette aus der eigenen Szene per k-means in OKLab, kleine wichtige Teile (Figur) stärker gewichten, Farbe im Shader in OKLab suchen; Bayer-Schwelle in Blockkoordinaten, damit das Muster am 4-px-Raster bleibt. Kostümfarben, die im Szenenlicht kippen, als feste Mitten vorgeben; die Pixel dafür über ein ID-Bild (Materialien unbeleuchtet in Signalfarben, nur innerhalb der Figurmaske auswerten, weil der Himmel auch blau ist) auswählen.",
+  "Halbtonpunkte flächentreu rechnen: r = Rasterweite · √(Deckung/π) bis sich die Punkte berühren; sonst wird das Bild viel zu dunkel. Ein einzelnes Raster mit farbigen Punkten liest sich ruhiger als vier CMYK-Raster.",
+  "CRT mit 240 Zeilen bleibt für Text lesbar, wenn jede Röhrenzeile das Mittel ihrer drei Quellzeilen zeigt (ein Abtastpunkt je Zeile verschluckt dünne waagerechte Striche) und die Maske fein ist (3-px-Tripel).",
+  "In canvas_item-Shadern ist TEXTURE nur in fragment() erreichbar; für Hilfsfunktionen die Viewport-Textur als eigenes sampler2D-Uniform übergeben.",
+  "SubViewport im SubViewport rendert das Kind zuerst: Wechselt der Look, zeigen Beschriftung und Bild ihn im selben Bild (an den Schnitten nachgeprüft). Zwei Läufe ergaben 20 bytegleiche Bilder, das vorgespulte Bild bei 3,6 s gleicht Bild 108 der Aufnahme.",
+  "Fuß-Sperre statt festem Tempo: AnimationPlayer auf MANUAL stellen, advance(delta) selbst aufrufen und danach die Wurzel so verschieben, dass die Zehe des Standfußes liegen bleibt (X_neu = X_alt + R_alt · p_alt − R_neu · p_neu). Das deckt Laufen, Bremsen, Überblenden und Drehen ab und dreht die Figur automatisch um den Standfuß. Standfuß wechseln, wenn seine Zehe über 2,5 cm steigt; in Wechselbildern ohne festen Fuß mit dem Lauftempo schieben (sonst stockt die Figur um bis zu 10 mm), im Stehen aber immer sperren (sonst wandert sie, gemessen 11 mm in 34 s). Gemessen: höchstens 0,29 px bzw. 2,9 mm je Bild über alle 180 Bilder.",
+  "Überblenden mit play(name, Zeit) mischt linear, und die ausgeblendete Animation läuft mit dem neuen Tempo weiter. Für einen sauberen Stillstand die Laufpose als eigene Animation einfrieren und mit smoothstep-Schlüsseln (alle 1/30 s) in die erste Pose der Zielanimation führen; den Unterschenkel des Schwungbeins früher ans Ziel bringen, dann setzt der Fuß fast senkrecht auf (größte Restbewegung am Boden 2,9 statt 9,3 mm je Bild). Den Bremsbeginn so legen, dass das Schwungbein beim Stillstand oben ist (hier 2,45 s; mit 2,5 s war es schon halb unten, bis 15 mm je Bild).",
+  "Standfuß bei 3D-Figuren über die Fußknochen messen, nicht über die unterste Zeile der Figurmaske, und über alle Phasen samt Drehung, nicht nur beim Laufen; je Bodenkontakt auch die Abweichung vom ersten Kontaktbild auswerten, sonst fällt langsames Gleiten nicht auf.",
+  "Mit --fixed-fps 30 weichen in Godot 4.7 die ersten sieben Zeitschritte von 1/30 s ab (0,025 / 0,033 / 0,042 / 0,029 … s), solange physics/common/physics_jitter_fix nicht 0 ist. Außerdem zeigt das erste geschriebene Bild schon t = 1/30; t bei −1/30 beginnen lassen, damit Bild i genau t = i/30 zeigt, und Zeitgrenzen mit einem kleinen Zuschlag vergleichen.",
+  "Flackern muss unterhalb der Sättigung des Tonemappings liegen: Ein Glas mit Emission 4 ist in AgX schon weiß, dann ändert auch ein starkes Flackern kaum etwas. Emission senken, Lichtfarbe mitflackern lassen und mit einer Bereichsmessung (mit und ohne Flackern) prüfen.",
+  "Effektstärke messen statt schätzen: Anteil der Pixel über 24 Stufen gegen das Rohbild (scripts/measure_looks.py) zeigte, dass die Palette mit 3-px-Raster und schwachem Dithering nur 11 % änderte; mit 4-px-Raster und stärkerem Dithering 16–20 % und deutlich sichtbar.",
+  "Totale und Nahkamera kombinieren: Eine kurze Totale zu Beginn zeigt die ganze Szene (Pflichtelemente), die Nahkamera danach die Figur groß genug für die Looks. Die Oberfläche erst nach dem Schnitt einblenden, wenn sie in der Totale wichtige Teile verdecken würde."
+ ],
+ "assets": [
+  {
+   "file": "assets/lut_kalte_nacht.png",
+   "kind": "lut",
+   "made_with": "scripts/make_lut.py: 32³-LUT „Kalte Nacht“ als 1024×32-Streifen (Kopie in demo/textures/)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/palette16.png",
+   "kind": "palette",
+   "made_with": "scripts/make_palette.py: 16 Farben per k-means in OKLab aus einem Rohbild der Szene, Figur 12-fach gewichtet, zwei feste Mitten für Mütze und Weste (Median ihrer Pixel, 0,045 Richtung Grün verschoben); Kopie in demo/textures/",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/world_post.gdshader",
+   "kind": "shader",
+   "made_with": "Welt-Looks: Filmkorn & Vignette, Farb-LUT, Halbton-Punktraster, Paletten-Reduktion",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/screen_post.gdshader",
+   "kind": "shader",
+   "made_with": "Bildschirm-Look CRT: Krümmung, 240 Zeilen mit Strahlprofil, Lochmaske, Nachleuchten, Rand",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/sky.gdshader",
+   "kind": "shader",
+   "made_with": "Abendhimmel mit Verlauf, Wolkenbändern und Sternen",
+   "prompt": ""
+  },
+  {
+   "file": "demo/main.gd",
+   "kind": "code",
+   "made_with": "Look-Tabelle, Glow je Look, Palette als Uniform, Kameraschnitt, Dachs mit Fuß-Sperre und Übergangsanimation, Umgebungsanimation, Prüfschalter",
+   "prompt": ""
+  },
+  {
+   "file": "demo/models/harbor.glb",
+   "kind": "model",
+   "made_with": "unveränderte Kopie von shared/3d/harbor.glb",
+   "prompt": ""
+  },
+  {
+   "file": "demo/models/badger.glb",
+   "kind": "model",
+   "made_with": "unveränderte Kopie von shared/3d/badger.glb (Idle, Walk, Wave)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/measure_badger.json",
+   "kind": "data",
+   "made_with": "scripts/measure_badger.py: Höhe und Fußlinie des Dachses je Bild, Standfuß je Bildpaar und je Bodenkontakt über alle 180 Bilder",
+   "prompt": ""
+  },
+  {
+   "file": "assets/measure_looks.json",
+   "kind": "data",
+   "made_with": "scripts/measure_looks.py: Stärke jedes Looks gegen das Rohbild und Abweichung Mobile/Compatibility gegen Forward+",
+   "prompt": ""
+  },
+  {
+   "file": "assets/measure_lantern.json",
+   "kind": "data",
+   "made_with": "scripts/measure_lantern.py: Helligkeit von Glas, Pfahl, Umgebung und Boden je Bild, mit und ohne Flackern",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Alegreya (variabel, Gewicht 450 und 700)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/alegreya (Lizenztext: demo/fonts/OFL-Alegreya.txt)"
+  },
+  {
+   "item": "Schrift JetBrains Mono (variabel, Gewicht 480, 500 und 760)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/jetbrainsmono (Lizenztext: demo/fonts/OFL-JetBrainsMono.txt)"
+  },
+  {
+   "item": "Hafen und Dachs",
+   "license": "eigene Modelle aus shared/3d (Blender-Skripte)",
+   "source": "shared/3d/blender/"
+  },
+  {
+   "item": "Shader, Himmel, LUT, Palette, Oberfläche",
+   "license": "eigener Code, keine fremden Texturen oder Bilder; das Lochmasken-Muster ist nach der Beschreibung quelloffener CRT-Shader neu geschrieben, kein Code übernommen",
+   "source": "styles/nachbearbeitung/demo/, styles/nachbearbeitung/scripts/"
+  },
+  {
+   "item": "Hash without Sine (Shader-Funktion), Copyright (c) 2014 David Hoskins – in demo/shaders/sky.gdshader, demo/shaders/world_post.gdshader",
+   "license": "MIT",
+   "source": "https://www.shadertoy.com/view/4djSRW"
+  }
+ ],
+ "image_generations": 0,
+ "tool_issues": [],
+ "status": "done"
+}

@@ -1,0 +1,31 @@
+{
+ "cell": 64,
+ "anchor": [
+  26,
+  52
+ ],
+ "cycle_px": [
+  10,
+  5
+ ],
+ "scale_px_per_m": 38.56961701952089,
+ "stride_m": 0.36666518147103505,
+ "rows": {
+  "walk_se": {
+   "row": 0,
+   "frames": 10
+  },
+  "idle_se": {
+   "row": 1,
+   "frames": 12
+  },
+  "idle_s": {
+   "row": 2,
+   "frames": 12
+  },
+  "wave_s": {
+   "row": 3,
+   "frames": 16
+  }
+ }
+}

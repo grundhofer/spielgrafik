@@ -1,0 +1,42 @@
+[
+ {
+  "file": "assets/raw/barrel.png",
+  "prompt": "Style: one single stylised 3D game prop for a cosy harbour scene of a modern indie adventure game, rendered like a clean asset preview. Chunky simplified forms with slightly exaggerated proportions, soft matte materials with hand-painted colour and wood grain, gentle ambient occlusion, soft even studio light from the front and slightly above, no harsh shadows, no rim light, no outlines. Three-quarter view from slightly above, the whole object fully visible and centred with a generous margin on all sides, nothing cropped. Not a 2D illustration, not a drawing, not a photograph, no depth of field.\nObject: a single sturdy wooden barrel standing upright, curved oak staves in warm brown tones, two dark iron hoops near the top and the bottom and one in the middle, a round wooden lid with a few planks, slightly weathered edges.\nIsolated on a fully transparent background, no floor, no ground shadow, no reflection, no other objects.\nNo text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.\nImage format: square 1:1.",
+  "refs": [],
+  "size": "1024x1024",
+  "backend": "codex"
+ },
+ {
+  "file": "assets/raw/badger_front.png",
+  "prompt": "Style: one single stylised 3D game character model, rendered like a clean asset preview for a modern indie adventure game. Chunky simplified rounded forms, soft matte materials with hand-painted colour (short fur, felt, knitted wool, leather, paper), gentle ambient occlusion, soft even studio light from the front and slightly above, no harsh shadows, no rim light, no outlines. Clear readable silhouette. Not a 2D illustration, not a drawing, not a photograph, not a figurine on a base, no motion blur, no depth of field.\nCharacter: The badger courier: an original mascot character, a stout, short-legged badger with a broad black-and-white striped face, wearing a dark green peaked cap with a brass button, a dark green vest with pockets over a cream shirt with rolled-up sleeves, a long red knitted scarf, a brown leather satchel on a shoulder strap, and a brown paper parcel tied with string under one arm.\nView and pose: straight front view at chest height, the character faces the viewer and looks into the camera. Standing upright in a calm neutral pose, both feet flat on the same level and a little apart, legs clearly separated. The parcel is held under the right arm against the side of the body; the left arm hangs relaxed, slightly away from the body, with a small gap between arm and body. The whole figure is fully visible and centred with a generous margin on all sides, nothing cropped.\nThe reference sheet only defines the costume, the colours and the body proportions; the rendering follows the style above (a 3D model, not a drawing).\nIsolated on a fully transparent background, no floor, no ground shadow, no reflection, no other objects.\nNo text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.\nImage format: square 1:1.",
+  "refs": [
+   "shared/badger/master_sheet.png"
+  ],
+  "size": "1024x1024",
+  "backend": "codex"
+ },
+ {
+  "file": "assets/raw/lantern.png",
+  "prompt": "Style: one single stylised 3D game prop for a cosy harbour scene of a modern indie adventure game, rendered like a clean asset preview. Chunky simplified forms with slightly exaggerated proportions, soft matte materials with hand-painted colour and wood grain, gentle ambient occlusion, soft even studio light from the front and slightly above, no harsh shadows, no rim light, no outlines. Three-quarter view from slightly above, the whole object fully visible and centred with a generous margin on all sides, nothing cropped. Not a 2D illustration, not a drawing, not a photograph, no depth of field.\nObject: a short sturdy weathered wooden post standing upright on a small square foot, with a wooden arm at the top from which an old black iron harbour lantern with four glass panes hangs. The lantern is unlit: dark glass, no flame, no glow (the light is added later in the game). The post is thick and chunky so that it reads well as a 3D object.\nIsolated on a fully transparent background, no floor, no ground shadow, no reflection, no other objects.\nNo text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.\nImage format: square 1:1.",
+  "refs": [],
+  "size": "1024x1024",
+  "backend": "codex"
+ },
+ {
+  "file": "assets/raw/boat.png",
+  "prompt": "Style: one single stylised 3D game prop for a cosy harbour scene of a modern indie adventure game, rendered like a clean asset preview. Chunky simplified forms with slightly exaggerated proportions, soft matte materials with hand-painted colour and wood grain, gentle ambient occlusion, soft even studio light from the front and slightly above, no harsh shadows, no rim light, no outlines. Three-quarter view from slightly above, the whole object fully visible and centred with a generous margin on all sides, nothing cropped. Not a 2D illustration, not a drawing, not a photograph, no depth of field.\nObject: a small open wooden fishing rowing boat, empty, clinker-built hull of overlapping planks painted dark teal-blue above and dark red below the waterline, a natural wood rim and two wooden thwarts inside, a short stubby mast without sail, seen from the front-left at three-quarters and slightly from above so the inside is visible. The boat stands upright on its keel, not on water.\nIsolated on a fully transparent background, no floor, no ground shadow, no reflection, no other objects.\nNo text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.\nImage format: square 1:1.",
+  "refs": [],
+  "size": "1024x1024",
+  "backend": "codex"
+ },
+ {
+  "file": "assets/raw/badger_34.png",
+  "prompt": "Style: one single stylised 3D game character model, rendered like a clean asset preview for a modern indie adventure game. Chunky simplified rounded forms, soft matte materials with hand-painted colour (short fur, felt, knitted wool, leather, paper), gentle ambient occlusion, soft even studio light from the front and slightly above, no harsh shadows, no rim light, no outlines. Clear readable silhouette. Not a 2D illustration, not a drawing, not a photograph, not a figurine on a base, no motion blur, no depth of field.\nCharacter: The badger courier: an original mascot character, a stout, short-legged badger with a broad black-and-white striped face, wearing a dark green peaked cap with a brass button, a dark green vest with pockets over a cream shirt with rolled-up sleeves, a long red knitted scarf, a brown leather satchel on a shoulder strap, and a brown paper parcel tied with string under one arm.\nView and pose: three-quarter view at chest height: the whole character, body and head together, is turned about 40 degrees towards the right side of the image, so that its right side with the parcel is clearly visible and the snout shows in partial profile; the eyes look in the walking direction, not into the camera. Standing upright in a calm neutral pose, both feet flat on the same level and a little apart, legs clearly separated. The parcel is held under the right arm against the side of the body; the left arm hangs relaxed, slightly away from the body. The whole figure is fully visible and centred with a generous margin on all sides, nothing cropped.\nThe first reference sheet only defines the costume and the body proportions (its side view shows the snout); the second reference is the same 3D character from the front: keep its rendering, materials and colours exactly.\nIsolated on a fully transparent background, no floor, no ground shadow, no reflection, no other objects.\nNo text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.\nImage format: square 1:1.",
+  "refs": [
+   "shared/badger/master_sheet.png",
+   "styles/ki-3d-modell/assets/raw/badger_front.png"
+  ],
+  "size": "1024x1024",
+  "backend": "codex"
+ }
+]

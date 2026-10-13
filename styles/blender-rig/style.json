@@ -1,0 +1,152 @@
+{
+ "slug": "blender-rig",
+ "name": "3D-Figur riggen und animieren per Skript",
+ "family": "technik",
+ "kind": "technique",
+ "era": "Technik: skelettbasierte Figurenanimation in Spielen seit Ende der 1990er; hier mit Blender 5.2 (nur per Skript) und Godot 4.7",
+ "summary": "Eine 3D-Figur entsteht vollständig aus einem Python-Skript in Blender: Grundformen statt Modellieren, ein schlankes Deform-Rig mit 21 Knochen statt Rigify, Posen aus Formeln mit Zwei-Gelenk-IK, jedes Bild als Schlüssel (gesampelt) und ein glTF mit drei Animationen. In Godot setzt der Code die Schleifen, ein AnimationTree blendet Idle und Walk (Blend2, TimeScale) und spielt das Winken als OneShot; der Vorschub folgt Tempo und Gewicht, beim Abbiegen bleibt der Standfuß stehen. Die Demo zeigt den Dachs aus shared/3d im Hafen und blendet Drahtgitter und Knochen ein, dazu ein Debug-Fenster mit dem AnimationTree. Kein neues Modell, kein neues Rig, keine KI-Bilder.",
+ "references": [
+  "Half-Life (Valve 1998) und spätere 3D-Spiele: Figuren mit Skelett und Gewichten statt Einzelbild-Meshes, Animationen werden zur Laufzeit überblendet",
+  "Grim Fandango (LucasArts 1998) und Adventures von Telltale (2005–2019): 3D-Figuren mit wenigen, wiederverwendeten Gesten- und Laufanimationen",
+  "Zustandsautomaten und Blend-Bäume als Standard der Engines (Godot AnimationTree, Unity Mecanim, Unreal Animation Blueprint)",
+  "Rigify (Blender): Vergleich, nicht genutzt; erzeugt Steuer-, Mechanik- und Deform-Knochen für Animation in Blender selbst"
+ ],
+ "traits": [
+  "Dachs unverändert aus shared/3d: badger.glb mit 7 348 Dreiecken (Badger 7 032, Parcel 316), 21 Knochen als Skin-Gelenke, Idle 2,0 s, Walk 1,0 s, Wave 1,5 s; je Animation 63 Kanäle (21 × Verschiebung, Drehung, Größe), gesampelt mit 61, 31 bzw. 46 Schlüsseln je Kanal, Interpolation LINEAR (scripts/glb_report.py)",
+  "Bauweg reproduzierbar: blender/stages.py ruft shared/3d/blender/build_badger.py mit eigenem --out in einen Temp-Ordner auf; das neue badger.glb ist Byte für Byte gleich dem gemeinsamen (geprüft); Neubau und alle Renders zusammen etwa 3 s",
+  "Zwischenstufen als Bilder (assets/stages/blender_stages.png): 66 geschlossene Grundformen, das Rig in der Ruhepose, Gewichte als Mischfarbe der Knochen, Walk an sechs Schlüsseln mit Knöchelhöhe über alle 31 Schlüssel",
+  "Schleifen im Code: Idle und Walk auf LOOP_LINEAR, Wave bleibt einmalig (glTF hat kein Loop-Flag)",
+  "AnimationTree im Code gebaut: Idle und Walk → TimeScale → Blend2 → OneShot (Wave, Einblenden 0,25 s, Ausblenden 0,3 s) → Ausgang; manuell weitergeschaltet (advance), damit Pose, Vorschub, Drehung, Fußhalten und Overlay in fester Reihenfolge laufen. Das Debug-Fenster oben links zeigt blend_amount, Tempo, Laufphase und den Fortschritt des OneShot live",
+  "Vorschub = 0,367 m/s × Tempo × Gewicht von Walk. Gemessen (scripts/measure_feet.py, Knochenpunkte Ferse und Ballen, aufgesetzt = höchstens 6 mm über dem Kai): im Laufen höchstens 0,49 px bzw. 2,1 mm je Bild, Standphasen über 5–6 Bilder mit höchstens 0,05 px Spanne; Bremsen und Überblenden höchstens 0,44 px; im Stehen und Winken höchstens 0,25 px",
+  "Abbiegen um 80° in 1,6 s: gedreht wird nur, wenn genau ein Fuß am Boden steht, um dessen Knöchel, höchstens 2,8° je Bild; der Fußknochen wird um die Senkrechte zurückgedreht (Fußhalten, höchstens 10°) und richtet sich in der folgenden Schwungphase neu aus",
+  "Bremsen so gelegt, dass der Lauf in der Durchgangsphase endet (Walk-Zeit 0,8: rechter Fuß steht, linker schwingt): Tempo 2 → 0 ab 3,15 s in 0,5 s, Blend2 1 → 0 von 3,35 bis 3,77 s; der Schwungfuß setzt beim Überblenden auf",
+  "Silhouetten derselben Aufnahme (weiß auf Schwarz): Fußzeile im Stehen 666–667, oberste Zeile im Stehen 384–386, größter Sprung von Bild zu Bild 1 px",
+  "Drahtgitter 0,7–2,7 s im Laufen: zweites Mesh am selben Skin (22 044 Eckpunkte, baryzentrische Koordinaten in COLOR), 6 030 von 7 032 Dreiecken der Figur und 244 von 316 des Pakets zu Vierecken zusammengefasst, so erscheinen die Ring-Lofts aus Blender statt der exportierten Dreiecke; 4 mm zur Kamera gezogen gegen Z-Fighting",
+  "Knochen 0,7–2,7 s und 4,3–5,65 s als Oktaeder wie in Blender (Anzeige „In Front“), Farben nach Seite (Mitte gelb, .L cyan, .R rosa, Schal und Schwanz grün); Spitzen aus badger_notes.md, weil glTF nur Gelenke speichert",
+  "Feste Nahaufnahme: Dachs am Ende etwa 280 px hoch (in der Totale von shared/3d 71 px), dahinter Boot, Steg, Felsnase mit Leuchtturm, rechts die Laterne; Poster bei 4,73 s im Winken",
+  "Umgebungsanimationen: Wasser (Dünung und Kräuselung), zwei schaukelnde Boote, flackernde Laterne (Rauschen mit festem Seed), drehendes Leuchtfeuer mit Lichtkegel, das bei 5,2 s zur Kamera aufblitzt",
+  "Oberfläche: Dialogkasten unten rechts (dunkel, Nunito, Ort, Zeile Zeichen für Zeichen, drei Auswahlpunkte, Parser „> nimm paket“ mit Cursor) und AnimationTree-Fenster oben links (IBM Plex Mono, Knoten wie im Godot-Editor); zusammen etwa 21 % des Bildes"
+ ],
+ "camera": "Feste Nahaufnahme statt der Hauptkamera aus shared/3d: Position (−1,2 | 1,25 | 4,6), Neigung −3°, Gieren −14°, fov 52 vertikal; Werte und Laufweg aus scripts/frame_shot.py. Der Dachs kommt von links ins Bild (Start x −3,5, z 0,8), biegt zur Kamera ab und bleibt bei etwa (−1,53 | 0 | 1,68) stehen.",
+ "resolution": "1280×720 nativ, Forward+, MSAA 2× (3D und 2D); Dachs im Laufen etwa 215–265 px, am Ende etwa 280 px hoch; Linien des Drahtgitters 0,9 px, Knochen mit 1–2 px Kanten",
+ "pipeline": [
+  {
+   "step": "Figur per Skript bauen (vorhanden, nicht neu gemacht)",
+   "tool": "Blender 5.2, shared/3d/blender/build_badger.py",
+   "detail": "Grundformen aus Ring-Lofts, Ellipsoiden, Röhren und gefasten Quadern; Armature mit 21 Knochen im Skript (Köpfe, Spitzen, Eltern), root ohne Gewichte; Gewichte je Körperteil per Bone Heat nur mit den passenden Knochen, Kopf, Paket und Krallen starr, Schal nach Höhe; Posen je Bild aus Formeln (Becken wippt und dreht, Oberkörper gegen, Zwei-Gelenk-IK der Beine mit Fersen- und Ballenabrollen) als Schlüssel in drei Aktionen; Export als glb mit export_force_sampling, export_def_bones=False, NLA-Spuren je Aktion"
+  },
+  {
+   "step": "Bauweg sichtbar machen",
+   "tool": "blender/stages.py (Workbench), scripts/compose_stages.py (Pillow)",
+   "detail": "Neubau in einen Temp-Ordner mit --out, --no-preview, --no-notes, --save-blend (shared/ bleibt unberührt), Byte-Vergleich mit shared/3d/badger.glb; aus der .blend: Figur nach losen Teilen getrennt und eingefärbt, Knochen als Oktaeder-Meshes, Farbattribut aus Gewichten × Knochenfarbe, Walk an Bild 0, 5, …, 25 als Meshes nebeneinander, Knöchelhöhe aller 31 Schlüssel; Tafeln mit Beschriftung"
+  },
+  {
+   "step": "Export prüfen",
+   "tool": "scripts/glb_report.py (liest den JSON-Teil der glb)",
+   "detail": "21 Skin-Gelenke, 63 Kanäle je Animation, 61/31/46 Schlüssel je Kanal, keine Erweiterungen, kein Schleifen-Flag"
+  },
+  {
+   "step": "Demo",
+   "tool": "Godot 4.7.2: main.gd, wire_mesh.gd, rig_overlay.gd, ui.gd, shaders/wire.gdshader",
+   "detail": "Probeszene aus shared/3d/demo kopiert (Hafen, Licht, Wasser, Leuchtfeuer, Attach-Muster); dazu Schleifen, AnimationTree, Vorschub, Abbiegen mit Fußhalten, Figurenlicht, Drahtgitter-Mesh, Knochen-Overlay, Oberfläche"
+  },
+  {
+   "step": "Bildausschnitt und Laufweg rechnen",
+   "tool": "scripts/frame_shot.py (Python, ohne Godot)",
+   "detail": "Laufweg wie main.gd simuliert, Kamera nach Bildlage von Dachs, Leuchtfeuer, Laterne, Booten und den beiden Fenstern gewählt; Bremsbeginn aus der Bedingung 2 × 3,15 s + 0,5 s = 6,8 Walk-Zyklen (Durchgangsphase)"
+  },
+  {
+   "step": "Prüfen und aufnehmen",
+   "tool": "scripts/measure_feet.py, scripts/compare_renderers.py, tools/capture.py --poster-at 0.79",
+   "detail": "Füße und Kopf über Knochenpunkte (Welt und Bild) und über weiße Silhouetten derselben Aufnahme gemessen (Bericht assets/measure/feet_report.txt, Kurve feet_plot.png); Probeläufe mit Mobile und Compatibility (assets/measure/renderers.png); zwei Läufe ergaben Bild 142 pixelgleich"
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, Forward+, MSAA 2× für 3D und 2D; Hauptszene main.tscn mit Kamera, Sonne, WorldEnvironment, Hafen- und Dachs-Instanz, Attach-Knoten und CanvasLayer Overlay (Rig, UI)",
+  "models/badger.glb.import: meshes/generate_lods=false, damit das Drahtgitter genau auf der vollen Figur liegt; harbor.glb unverändert",
+  "Schleifen: player.get_animation(\"Idle\"/\"Walk\").loop_mode = Animation.LOOP_LINEAR vor dem Aufbau des Baums",
+  "AnimationTree: AnimationNodeBlendTree mit AnimationNodeAnimation (Idle, Walk, WaveAnim), AnimationNodeTimeScale (WalkSpeed), AnimationNodeBlend2 (Blend), AnimationNodeOneShot (Wave); Parameter parameters/WalkSpeed/scale, parameters/Blend/blend_amount, parameters/Wave/request = ONE_SHOT_REQUEST_FIRE; callback_mode_process = MANUAL, tree.advance(delta) in _process",
+  "Abbiegen: badger.global_transform um die Senkrechte durch den Knöchel des Standfußes drehen; Fußhalten mit skeleton.set_bone_pose_rotation(foot, parent⁻¹ · R(+Winkel) · parent · lokal) nach advance(); in der Schwungphase klingt der Winkel mit smoothstep ab",
+  "Drahtgitter (wire_mesh.gd): surface_get_arrays je Fläche, Dreiecke entflochten, ARRAY_BONES/ARRAY_WEIGHTS mitkopiert, baryzentrische Koordinaten in ARRAY_COLOR; Vierecke durch Paarung benachbarter Dreiecke (Normalen innerhalb von 20°, alle vier Ecken innerhalb 90° ± 38°, beste zuerst); MeshInstance3D unter Skeleton3D mit skin und skeleton der Figur",
+  "wire.gdshader: unshaded, blend_mix, cull_back, depth_draw_never; Linie aus fwidth der baryzentrischen Koordinaten (0,9 px), Farbe hellblau mit 38 % Deckkraft, POSITION 4 mm zur Kamera gezogen",
+  "Knochen (rig_overlay.gd): je Knochen Kopf und Spitze über get_bone_global_pose · get_bone_global_rest⁻¹ aus Ruhepunkten, Querring aus einer in Ruhe berechneten Querachse; Camera3D.unproject_position, Geometry2D.convex_hull, draw_colored_polygon, draw_polyline und draw_circle mit Kantenglättung, nach Tiefe sortiert",
+  "Figurenlicht: Dachs-Meshes auf Ebene 2, Sonne mit light_cull_mask ohne Ebene 2 (wirft weiter seinen Schatten), eigenes Führungs- und Kantenlicht (DirectionalLight3D, sky_mode LIGHT_ONLY, sonst erscheint eine zweite Sonne im Himmel)",
+  "Umgebung aus shared/3d/demo: Wasser-Shader mit Zeit als Uniform, Boote schaukeln um ihre Wasserlinie, Laterne mit FastNoiseLite (Seed 20261011), Leuchtfeuer mit SpotLight3D und additivem Kegel; Rauch weggelassen, der Schornstein liegt außerhalb des Ausschnitts",
+  "ui.gd: zeichnet beide Fenster in _draw() mit StyleBoxFlat; Nunito als FontVariation (wght 600 und 800), IBM Plex Mono für das Debug-Fenster; Zustand je Bild aus main.gd (set_state), parameters/Wave/active aus dem Baum gelesen",
+  "Schalter nach --: --measure (Fuß- und Kopfpunkte je Bild), --mask (Dachs weiß auf Schwarz), --no-rig, --t0=S (Standbild bei S Sekunden), --cam=x,y,z,neigung,gieren,fov"
+ ],
+ "techniques": [
+  "blender-rig",
+  "skelett-animation",
+  "animation-tree",
+  "fuss-halten",
+  "drahtgitter-overlay",
+  "figurenlicht",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 1,
+  "consistency": 4,
+  "effort": 4,
+  "text_adventure": 3,
+  "mobile": 4
+ },
+ "ratings_note": "ai_fit 1, weil Bildmodelle hier nichts beigetragen haben: Der Eintrag nutzt nach Auftrag keine KI-Bilder (genimg.py nicht aufgerufen), Figur, Rig, Animationen und Darstellung entstehen aus Blender-Skript, Godot-Code und Shadern; geschrieben wurden Demo, Mess- und Blender-Skripte dieses Eintrags von einem KI-Coding-Agenten. consistency 4: Die Figur ist deterministisch (Neubau bytegleich) und alle Animationen teilen Rig und Code; ob eine zweite Figur mit vertretbarem Aufwand gleich gut wird, ist nicht geprüft, build_badger.py ist 2 000 Zeilen auf den Dachs zugeschnitten. effort 4: Jede neue Figur braucht ein eigenes Bauskript und jede Animation eine eigene Posenformel; der Godot-Teil (Schleifen, AnimationTree, Vorschub, Fußhalten) ist dagegen in wenigen Zeilen übertragbar. text_adventure 3: Für ein Textadventure mit 3D-Figuren reicht dieser Weg für wenige Figuren mit Idle, Gehen und einer Geste; für viele Figuren oder Mimik ist er zu teuer. mobile 4 ist geschätzt: Probeläufe auf dem Mac mit Mobile (3,1 bzw. 3,6 % der Pixel weichen um mehr als 8 Stufen vom Forward+-Bild ab) und Compatibility (68,6–70,6 %, deutlich hellere und andere Farben, Warnung „2D MSAA is not yet supported for GLES3“) laufen ohne Fehler; eine Figur mit 7 348 Dreiecken und 21 Knochen ist für Smartphones klein, Drahtgitter (zweites geskinntes Mesh mit 22 044 Eckpunkten) und Overlay sind nur Anschauung. Auf einem Smartphone nicht gemessen.",
+ "verdict": "Der skriptbasierte Weg liefert eine Figur, die sich Byte für Byte neu bauen lässt und deren Animationen ohne Nachbearbeitung in Godot laufen: kleines Deform-Rig, Posen aus Formeln, gesampelter Export, in Godot Schleifen im Code und ein AnimationTree mit Blend2 und OneShot. Für unser Textadventure ist das die Grundlage, falls wir 3D-Figuren zeigen (zum Beispiel im Toon- oder PS1-Stil): wenige Figuren mit Idle, Gehen und ein, zwei Gesten pro Figur. Der Godot-Teil ist allgemein und sofort übertragbar, auch für Figuren aus anderen Quellen; der Blender-Teil kostet je Figur viel Code und eignet sich eher für stilisierte Figuren aus Grundformen. Für viele Figuren, Mimik oder feines Schauspiel braucht es einen anderen Weg (fertiges Rig-Werkzeug oder 2D). Abweichung vom Auftrag der Probeszene: feste Nahaufnahme statt der Hauptkamera, weil Knochen und Gitter in der Totale (Dachs 71 px) nicht zu erkennen wären.",
+ "pitfalls": [
+  "Keine KI-Bilder: Nach Auftrag wurde genimg.py nicht aufgerufen; Bewertungen zum Bildmodell sind deshalb nicht möglich (ai_fit 1).",
+  "glTF speichert nur Gelenke, keine Knochenspitzen und keine Anzeigeform. Das Overlay braucht die Spitzen aus badger_notes.md als Tabelle in main.gd; ändert sich build_badger.py, muss die Tabelle von Hand nachgezogen werden (das Bauskript exportiert ohne extras).",
+  "Der Export besteht aus Dreiecken. Das Viereck-Gitter ist rekonstruiert: 1 002 von 7 032 Dreiecken der Figur (Polkappen, Spitzen, Fächer) bleiben ungepaart und zeigen ihre Diagonalen; eine Fehlpaarung wäre möglich, ist im Bild aber nicht aufgefallen.",
+  "Abbiegen war der schwierigste Teil: Drehen um den Fußmittelpunkt ohne Fußhalten ließ den Standfuß in der Kurve um bis zu 4 px je Standphase wandern; Drehen auf der Stelle im Stehen (wie in der Probeszene von shared/3d) schleift die Füße um mehrere Zentimeter. Erst Drehen um den Knöchel plus Zurückdrehen des Fußknochens hält ihn fest. Dafür verdreht sich das Fußgelenk während eines Schritts um bis zu 10° gegen das Schienbein (gemessen mit --measure, Zeilen „F“); in der Nahaufnahme ist das nicht aufgefallen. Eine Kurve um 80° kostet so 1,6 s Laufen; engere Kurven bräuchten eine eigene Drehanimation, die badger.glb nicht hat.",
+  "Beim Überblenden Walk → Idle wandert der stehende Fuß noch bis 2,6 mm je Bild (0,44 px) und sinkt um etwa 1 mm, weil Blend2 Drehungen mischt, nicht Fußpositionen; ohne passenden Bremspunkt hinge der Schwungfuß sonst in der Luft (wie in toon-cel beschrieben).",
+  "Gemessen wurde zuerst mit 12 mm als Grenze für „aufgesetzt“; dann zählten landende Fersen (9,8 → 2,8 mm Höhe) als Rutschen (bis 2,5 px). Die Sohle steht in Ruhe bei 3 mm, 6 mm trennt Stehen und Landen sauber.",
+  "In der Demo ist nur Walk → Idle zu sehen; der umgekehrte Weg (aus dem Stehen loslaufen) ist derselbe Blend2-Parameter, wurde aber nicht aufgenommen. Der Dachs läuft von Anfang an.",
+  "Bewusste Abweichungen: Nahaufnahme statt Hauptkamera (Häuschen und Rauch sind nicht im Bild, Rauch deshalb weggelassen); eigenes Figurenlicht auf Ebene 2, das physikalisch nicht zur Sonne passt; Laufweg beginnt bei z 0,8 statt auf dem Weg der Probeszene (z 1,2) und biegt zur Kamera ab.",
+  "Compatibility-Renderer: Die Szene läuft, Farben und Helligkeit weichen aber in rund 70 % der Pixel deutlich ab und müssten für Web oder schwache Geräte neu abgestimmt werden.",
+  "Grenzen der Figur aus shared/3d bleiben: keine Mimik, keine Finger, Winken nur von vorn sichtbar, Durchdringungskanten an Schulter und Hüfte bei starkem Beugen.",
+  "Rigify wurde hier nicht ausprobiert; der Vergleich (Steuer- und Mechanikknochen, Constraints, die vor dem Export gebacken und auf Deform-Knochen reduziert werden müssten) stammt aus dem Auftrag und der Bauweise von shared/3d, nicht aus einer eigenen Messung."
+ ],
+ "lessons": [
+  "Reines Deform-Rig plus Posen aus Python: Die Zwei-Gelenk-IK der Beine wird im Skript gelöst, nicht mit Constraints; es gibt nichts zu backen, der Export ist sauber, und ein Neubau ist bytegleich.",
+  "Gesampelter Export (jedes Bild ein Schlüssel, LINEAR) bringt genau die in Blender berechneten Posen nach Godot; drei Animationen liegen als Aktionen mit eigener NLA-Spur in einer glb.",
+  "AnimationTree im manuellen Modus (advance) gibt eine feste Reihenfolge in einem Bild: Parameter setzen → Pose → Vorschub → Drehung → Fußhalten → Overlay. So passen Knochen-Overlay und Figur immer zusammen, und Aufnahmen sind pixelgleich.",
+  "Vorschub = Laufgeschwindigkeit × TimeScale × blend_amount hält den Standfuß auch während des Überblendens fest; den Bremsbeginn so legen, dass die Walk-Zeit am Ende im Durchgang steht (hier 2 · t + 0,5 s = 6,8).",
+  "Abbiegen ohne Rutschen: nur in Einbein-Standphasen drehen, um den Knöchel, und den Fußknochen um denselben Winkel zurückdrehen; der Winkel klingt in der Schwungphase ab. Das sind etwa 20 Zeilen und gilt für jede Figur mit gleichem Laufzyklus.",
+  "Drahtgitter für geskinnte Figuren in Godot: Flächen über surface_get_arrays samt Knochen und Gewichten kopieren, Dreiecke entflechten, baryzentrische Koordinaten in COLOR, gleicher skin und skeleton; Diagonalen über Paarung fast rechtwinkliger, fast ebener Dreieckspaare ausblenden.",
+  "Knochen als 2D-Overlay statt 3D-Meshes: unproject_position, konvexe Hülle, geglättete Linien, nach Tiefe sortiert; die Pose kommt aus get_bone_global_pose · get_bone_global_rest⁻¹ angewandt auf Ruhepunkte.",
+  "Füße doppelt messen: Knochenpunkte (Ferse, Ballen) in Welt und Bild und weiße Silhouetten derselben Aufnahme; die Grenze für „aufgesetzt“ knapp über die Sohlenhöhe legen.",
+  "Wo KI den Weg verbessern könnte: ein Referenzblatt aus dem Bildmodell (wie shared/badger/master_sheet.png) als Vorlage für Proportionen neuer Figuren; ein Bildmodell als Ideengeber für Posen und Gesten (Schlüsselposen als Skizze, dann als Formel nachgebaut); KI-3D-Modelle (Eintrag ki-3d-modell) statt Grundformen, die dann aber Retopologie und Gewichte bräuchten; Code-Agenten zum Schreiben der Bau- und Posenskripte."
+ ],
+ "assets": [
+  {"file": "assets/stages/blender_stages.png", "kind": "preview", "made_with": "Blender Workbench (blender/stages.py) + Pillow (scripts/compose_stages.py): Übersicht Grundformen, Rig, Gewichte, Walk mit Knöchelhöhe", "prompt": ""},
+  {"file": "assets/stages/1_grundformen.png", "kind": "preview", "made_with": "Blender Workbench: Figur nach 66 losen Teilen getrennt und eingefärbt", "prompt": ""},
+  {"file": "assets/stages/2_rig.png", "kind": "preview", "made_with": "Blender Workbench: Figur grau, 21 Knochen als Oktaeder in Ruhepose", "prompt": ""},
+  {"file": "assets/stages/3_gewichte.png", "kind": "preview", "made_with": "Blender Workbench: Farbattribut = Gewichte × Knochenfarbe", "prompt": ""},
+  {"file": "assets/stages/4_walk.png", "kind": "preview", "made_with": "Blender Workbench: Walk an Bild 0, 5, 10, 15, 20, 25 mit Knochen, darunter Knöchelhöhe aller 31 Schlüssel", "prompt": ""},
+  {"file": "assets/measure/feet_report.txt", "kind": "report", "made_with": "scripts/measure_feet.py: Füße und Kopf über Knochenpunkte und Silhouetten", "prompt": ""},
+  {"file": "assets/measure/feet_plot.png", "kind": "preview", "made_with": "scripts/measure_feet.py: Bildlage der Ballen je Bild, Punkte = am Boden", "prompt": ""},
+  {"file": "assets/measure/renderers.png", "kind": "preview", "made_with": "scripts/compare_renderers.py: Forward+, Mobile, Compatibility bei Bild 50 und 142", "prompt": ""},
+  {"file": "demo/main.gd", "kind": "code", "made_with": "Schleifen, AnimationTree, Vorschub, Abbiegen mit Fußhalten, Figurenlicht, Umgebung, Mess-Schalter", "prompt": ""},
+  {"file": "demo/wire_mesh.gd", "kind": "code", "made_with": "Drahtgitter-Mesh am selben Skin, Vierecke aus Dreieckspaaren", "prompt": ""},
+  {"file": "demo/rig_overlay.gd", "kind": "code", "made_with": "Knochen als Oktaeder im 2D-Overlay", "prompt": ""},
+  {"file": "demo/ui.gd", "kind": "code", "made_with": "AnimationTree-Fenster und Dialogkasten", "prompt": ""},
+  {"file": "demo/shaders/wire.gdshader", "kind": "shader", "made_with": "Linien aus baryzentrischen Koordinaten, zur Kamera gezogen", "prompt": ""},
+  {"file": "blender/stages.py", "kind": "code", "made_with": "Neubau des Dachses in einen Temp-Ordner, Byte-Vergleich, Workbench-Renders der Zwischenstufen", "prompt": ""},
+  {"file": "scripts/frame_shot.py", "kind": "code", "made_with": "Laufweg simulieren, Bildausschnitt rechnen", "prompt": ""},
+  {"file": "scripts/measure_feet.py", "kind": "code", "made_with": "Fuß- und Kopfmessung (Knochen und Silhouetten)", "prompt": ""},
+  {"file": "scripts/glb_report.py", "kind": "code", "made_with": "Inhalt der glb: Gelenke, Meshes, Animationen, Schlüssel je Kanal", "prompt": ""},
+  {"file": "scripts/compare_renderers.py", "kind": "code", "made_with": "Probeläufe Forward+, Mobile, Compatibility", "prompt": ""},
+  {"file": "scripts/compose_stages.py", "kind": "code", "made_with": "Tafeln aus den Blender-Renders", "prompt": ""},
+  {"file": "demo/models/badger.glb", "kind": "model", "made_with": "unveränderte Kopie von shared/3d/badger.glb (7 348 Dreiecke, 21 Knochen, Idle/Walk/Wave)", "prompt": ""},
+  {"file": "demo/models/harbor.glb", "kind": "model", "made_with": "unveränderte Kopie von shared/3d/harbor.glb (17 932 Dreiecke)", "prompt": ""}
+ ],
+ "licenses": [
+  {"item": "Schrift Nunito (variabel, Strichstärke 600 und 800)", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/nunito (Lizenztext: demo/fonts/OFL-Nunito.txt)"},
+  {"item": "Schrift IBM Plex Mono (Regular, SemiBold)", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/ibmplexmono (Lizenztext: demo/fonts/OFL-IBMPlexMono.txt)"},
+  {"item": "Hafen und Dachs", "license": "eigene Modelle aus shared/3d (Blender-Skripte)", "source": "shared/3d/blender/"},
+  {"item": "Shader, Overlay, Oberfläche, Blender-Auswertung", "license": "eigener Code, keine fremden Texturen oder Bilder", "source": "styles/blender-rig/"}
+ ],
+ "image_generations": 0,
+ "tool_issues": [],
+ "status": "done"
+}

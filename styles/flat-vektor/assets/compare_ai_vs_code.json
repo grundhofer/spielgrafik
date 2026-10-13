@@ -1,0 +1,38 @@
+{
+ "bg_ai_vec": {
+  "polygons": 452,
+  "points": 11103,
+  "groups": 1,
+  "gradients": 0,
+  "svg_bytes": 298912,
+  "tscn_bytes": 237955,
+  "self_intersecting": null
+ },
+ "badger_ai_vec": {
+  "polygons": 696,
+  "points": 8609,
+  "groups": 1,
+  "gradients": 0,
+  "svg_bytes": 357631,
+  "tscn_bytes": 228803,
+  "self_intersecting": null
+ },
+ "code_harbor": {
+  "polygons": 231,
+  "points": 4060,
+  "groups": 63,
+  "gradients": 26,
+  "svg_bytes": 34683,
+  "tscn_bytes": 122567,
+  "self_intersecting": null
+ },
+ "code_badger": {
+  "polygons": 45,
+  "points": 724,
+  "groups": 11,
+  "gradients": 4,
+  "svg_bytes": 4977,
+  "tscn_bytes": 20371,
+  "self_intersecting": null
+ }
+}

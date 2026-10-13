@@ -1,0 +1,80 @@
+{
+ "bones": {
+  "Laufen": {
+   "flach": {
+    "pairs": 73,
+    "max_mm": 3.5,
+    "max_px": 0.63
+   },
+   "Zehe": {
+    "pairs": 21,
+    "max_mm": 18.89,
+    "max_px": 3.32
+   },
+   "Ferse": {
+    "pairs": 1,
+    "max_mm": 2.48,
+    "max_px": 1.05
+   }
+  },
+  "Überblendung": {
+   "flach": {
+    "pairs": 12,
+    "max_mm": 0.63,
+    "max_px": 0.97
+   }
+  },
+  "Stehen/Winken": {
+   "flach": {
+    "pairs": 136,
+    "max_mm": 0.76,
+    "max_px": 0.21
+   }
+  },
+  "lowest_mm": [
+   -0.5,
+   3.2
+  ],
+  "end": {
+   "rot_deg": -78.0,
+   "x": -1.3842,
+   "z": 1.6287
+  }
+ },
+ "silhouette": {
+  "Laufen": {
+   "frames": 98,
+   "foot_row": [
+    575,
+    608
+   ],
+   "head_row": [
+    376,
+    381
+   ],
+   "max_jump_foot_px": 6,
+   "max_jump_head_px": 2,
+   "height_px": [
+    199,
+    229
+   ]
+  },
+  "Stehen/Winken": {
+   "frames": 67,
+   "foot_row": [
+    616,
+    616
+   ],
+   "head_row": [
+    378,
+    379
+   ],
+   "max_jump_foot_px": 0,
+   "max_jump_head_px": 1,
+   "height_px": [
+    237,
+    238
+   ]
+  }
+ }
+}

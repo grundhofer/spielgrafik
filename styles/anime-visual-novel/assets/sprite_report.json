@@ -1,0 +1,194 @@
+{
+ "sheet": "sheet.png (Alpha wie geliefert, >= 250 -> 255, <= 2 -> 0: 46.8 % transparent, 51.5 % deckend, 1.6 % dazwischen)",
+ "faces": "faces.png (Alpha wie geliefert, >= 250 -> 255, <= 2 -> 0: 46.5 % transparent, 52.1 % deckend, 1.4 % dazwischen)",
+ "source_size": [
+  1536,
+  1024
+ ],
+ "sheet_cut": 762,
+ "geometry": {
+  "figure": [
+   154,
+   64,
+   795,
+   1026
+  ],
+  "height": 962,
+  "head": [
+   293,
+   64,
+   654,
+   311
+  ],
+  "cap_bottom": 168,
+  "scarf_top": 311,
+  "face_box": [
+   354,
+   163,
+   592,
+   340
+  ],
+  "measured": {
+   "scarf": true,
+   "cap": true
+  },
+  "regions": {
+   "eyes": [
+    362,
+    186,
+    602,
+    283
+   ],
+   "mouth": [
+    376,
+    316,
+    580,
+    386
+   ]
+  }
+ },
+ "registration": {
+  "A1": {
+   "scale": 1.0,
+   "tx": 90.02,
+   "ty": 0.02,
+   "residual": 0.0409
+  },
+  "B0": {
+   "scale": 0.99586,
+   "tx": 1.71,
+   "ty": 2.42,
+   "residual": 0.104
+  },
+  "B1": {
+   "scale": 0.99586,
+   "tx": 92.47,
+   "ty": 2.45,
+   "residual": 0.1017
+  }
+ },
+ "masks": {
+  "B0": {
+   "split_y": 193,
+   "split_from": "Zeilenl\u00fccke",
+   "runs": [
+    [
+     134,
+     191
+    ],
+    [
+     196,
+     369
+    ]
+   ],
+   "changed_px": 12052
+  },
+  "B1": {
+   "split_y": 193,
+   "split_from": "Vorgabe",
+   "runs": [
+    [
+     134,
+     177
+    ],
+    [
+     182,
+     369
+    ]
+   ],
+   "changed_px": 14699
+  },
+  "regions": {
+   "B0->A0": {
+    "eyes": 4525,
+    "mouth": 4466
+   },
+   "A1->A0": {
+    "eyes": 4329,
+    "mouth": 5299
+   },
+   "B1->A0": {
+    "eyes": 5038,
+    "mouth": 3872
+   }
+  }
+ },
+ "split_y": 193,
+ "variants": {
+  "neutral": [],
+  "blink": [
+   "B0/eyes (Bereich)"
+  ],
+  "talk": [
+   "B0/mouth (Bereich)"
+  ],
+  "happy": [
+   "A1/face (Bereich)"
+  ],
+  "happy_closed": [
+   "A1/eyes (Bereich)"
+  ],
+  "surprised": [
+   "B1/face (Bereich)"
+  ]
+ },
+ "display_scale": 0.79,
+ "crop": [
+  148,
+  58,
+  801,
+  1032
+ ],
+ "display_size": [
+  516,
+  769
+ ],
+ "display_pos": [
+  342,
+  67
+ ],
+ "face_box_display": [
+  163,
+  83,
+  351,
+  223
+ ],
+ "head_display": [
+  115,
+  5,
+  400,
+  200
+ ],
+ "changed_box_display": {
+  "blink": [
+   163,
+   103,
+   364,
+   185
+  ],
+  "talk": [
+   172,
+   197,
+   347,
+   259
+  ],
+  "happy": [
+   168,
+   104,
+   365,
+   259
+  ],
+  "happy_closed": [
+   168,
+   104,
+   365,
+   186
+  ],
+  "surprised": [
+   163,
+   97,
+   365,
+   265
+  ]
+ }
+}

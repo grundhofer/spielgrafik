@@ -1,0 +1,33 @@
+{
+ "t": 3.0,
+ "base_issues": [],
+ "share_on_5bit_grid": 0.9925,
+ "colors_in_frame": 276,
+ "smooth": {
+  "changed_share": 0.0905,
+  "issues": []
+ },
+ "nostripes": {
+  "changed_share": 0.2305,
+  "issues": []
+ },
+ "nohill": {
+  "changed_share": 0.1858,
+  "issues": []
+ },
+ "mobile": {
+  "changed_share": 0.0,
+  "max_diff": 0,
+  "issues": []
+ },
+ "gl_compatibility": {
+  "changed_share": 0.0029,
+  "max_diff": 1,
+  "issues": []
+ },
+ "t30": {
+  "frames": 60,
+  "issues": [],
+  "motion_share": 0.2359
+ }
+}

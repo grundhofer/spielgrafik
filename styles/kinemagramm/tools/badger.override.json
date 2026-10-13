@@ -1,0 +1,7 @@
+{
+ "_comment": "Codex liefert echten Alphakanal: kein Magenta-Saum. Schalende = nur das nach rechts wehende Ende (das vorn hängende bleibt fest im Körper, sonst wird dahinter Aufgefülltes sichtbar); Achse vom Ansatz am Hals zur Mitte der Fransen. height 198 statt 230: Bei 230 war der Dachs so hoch wie die Haustür und mehr als doppelt so hoch wie die Fässer; 198 bleibt etwas über Maßstab, damit Gesicht und Kostüm lesbar sind.",
+ "despill": false,
+ "height": 198,
+ "tail": [[690, 512], [1023, 530], [1023, 845], [848, 845], [815, 745], [762, 655], [720, 590], [700, 550]],
+ "tail_axis": [[705, 540], [960, 735]]
+}

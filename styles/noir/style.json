@@ -1,0 +1,236 @@
+{
+ "slug": "noir",
+ "name": "Film noir",
+ "family": "grafisch",
+ "kind": "style",
+ "era": "Film noir 1941–1958; in Spielen seit den 1990ern (Abenteuer- und Actionspiele), ab etwa 2010 wieder häufig in Erzählspielen",
+ "summary": "Schwarzweiß mit tiefem Schwarz, harten Lichtkanten und Gegenlicht: nasses Pflaster spiegelt Laterne und Fenster, Nebel liegt im Gegenlicht, Regen ist nur dort zu sehen, wo Licht ihn trifft. Einzige Farbe ist der rote Schal des Dachses, auch im Dunkeln. Licht ist das Gestaltungsmittel: Jalousienstreifen aus dem Fenster fallen auf Pflaster und Figur, die Laterne flackert, die Figur hat eine schmale Lichtkante, und der Text steht auf einer schwarzen Titelkarte in Schreibmaschinenschrift.",
+ "references": [
+  "Der dritte Mann (1949, Kamera Robert Krasker): Gegenlicht, nasses Pflaster, riesige Schatten in nächtlichen Straßen",
+  "Frau ohne Gewissen / Double Indemnity (1944, Kamera John F. Seitz): Jalousienschatten im Innenraum",
+  "John Alton, Kamera für T-Men (1947) und The Big Combo (1955); sein Buch Painting with Light (1949)",
+  "Schindlers Liste (1993): Schwarzweißfilm mit einer einzigen Farbe (der rote Mantel) als Vorbild für den roten Schal",
+  "Frank Miller: Sin City (Comics ab 1991, Film 2005): reines Schwarzweiß mit einzelnen Akzentfarben",
+  "Grim Fandango (LucasArts, 1998): Noir-Adventure, Figuren vor festen, vorgerenderten Hintergründen",
+  "Max Payne (Remedy, 2001): Noir-Erzählung in Comic-Panels mit Erzählerstimme",
+  "White Night (OSome Studio, 2015): Schwarzweiß-Spiel, in dem Licht die Spielmechanik ist",
+  "Chicken Police – Paint it RED! (The Wild Gentlemen, 2020): schwarzweißes Detektiv-Adventure mit Tierfiguren",
+  "Backbone (EggNut, 2021): Noir-Adventure mit einem Waschbären als Detektiv"
+ ],
+ "traits": [
+  "Streng schwarzweiß mit einer Akzentfarbe: Im Poster haben 0,16 % der Pixel eine Sättigung über 0,15; alle sind rot und liegen im Bereich des Schals und seiner Spiegelung (x 273–353, y 509–717). In allen 180 Bildern höchstens 0,18 %, kein farbiges Pixel mit anderem Farbton. Der Schal bleibt auch im Dunkeln rot: 95–99 % der Schalpixel und 95–98 % des hinteren Schalendes haben in der fertigen Aufnahme eine Sättigung über 0,3 (scripts/measure_scarf.py; vorher im Dunkeln 0,8–2,0 s nur 5–12 % am hinteren Ende). Der KI-Hintergrund kam schon fast unbunt (Sättigung im 99. Perzentil 5/255), der Nachbearbeitungs-Shader setzt alles außer gesättigtem Rot auf Graustufen",
+  "Tiefes Schwarz und harte Lichtkanten: 42 % der Szenenpixel (ohne Titelkarte) sind dunkler als 10 % Helligkeit, 3,8 % heller als 75 %, Median 0,13. Licht auf der Figur mit enger Schwelle auf N·L (smoothstep über ±0,04), dadurch harte Grenze zwischen Licht und Schatten; die Figur selbst ist in flachen, gemalten Tonflächen angelegt",
+  "Gegenlicht: Masten, Boote, Steg, Laternenpfahl und Häuschenkante stehen als Silhouetten vor hellem Nebel (aus dem KI-Bild). Die Figur läuft im Dunkeln als Silhouette mit schmaler, harter Lichtkante oben und hinten: 61–69 % der Figurenpixel (ohne Schal) sind zwischen 0,7 und 1,7 s dunkler als 0,10 (Median 0,05–0,07; vorher 40–48 %, Median 0,11–0,13); nur 5,5–6,6 % der Figurenpixel bekommen mehr als 0,08 Kantenlicht (vorher 44 %), auf dem Schal in dessen Rot",
+  "Jalousienstreifen: neun Lichtstreifen auf dem Pflaster vor dem Fenster (Viereck A–D, Streifen parallel zum Wandfuß, zur Wand hin heller) und Streifen im Abstand von 13 px auf der Figur in derselben Neigung, sobald sie im Strahl steht (x 178–429); der Schatten der Figur schneidet die Streifen auf dem Boden aus",
+  "Regen animiert: drei Tiefenlagen schräger Striche, Helligkeit aus einem Lichtfeld (Gegenlicht am Horizont, Laterne flackernd, Fenster), dazu Spritzer auf dem Pflaster und Ringe auf dem Wasser, perspektivisch kleiner zum Horizont hin",
+  "Laternenlicht animiert: Glas, Lichthof und Spiegelung auf dem nassen Pflaster flackern (Helligkeit im Lichthof über 6 s zwischen 112 und 135 von 255), die Spiegelung zittert waagerecht; die Laterne beleuchtet auch die Figur mit",
+  "Nebel zieht in zwei Rauschlagen über Horizont und Meer, der Leuchtturmstrahl schwenkt durch den Nebel und blitzt auf, wenn er zur Kamera zeigt (bei 1,45 s)",
+  "Filmlook: Korn je Bild (zwei Oktaven, in den Mitteltönen stärker), Lichthof um helle Lichter (Halation aus den Mipmaps des Bildschirms), Vignette, Belichtung schwankt um ±0,9 %",
+  "Oberfläche als Titelkarte: schwarze Karte mit doppeltem Rahmen und Art-déco-Ecken (je Ecke drei ineinanderliegende Winkel aus ganzen Pixeln) im dunklen Himmel (412×224 px, 10 % des Bildes), Ort in Limelight, Text in Courier Prime mit Schreibmaschinen-Einblendung, Parserzeile mit unregelmäßigem Tipprhythmus und Blockcursor"
+ ],
+ "camera": "Feste Kamera wie im KI-Bild: Blick entlang des Kais aus etwa Augenhöhe eines stehenden Erwachsenen (aus dem Bild geschätzt 1,6–1,9 m), Horizont bei y 346; die Figur läuft vorn auf dem Pflaster in Seitenansicht (Fußlinie y 645) und dreht sich am Ende zur Kamera. Keine Kamerabewegung",
+ "resolution": "1280×720 (Ausschnitt 1536×864 ab Quellzeile 100 der 1536×1024-Quelle, Faktor 0,833); Figur 120×186 je Bild, etwa 179 px hoch (rund 177 px/m); Graustufen plus Rot, Filmkorn",
+ "pipeline": [
+  {
+   "step": "Hintergrund erzeugen (1 Versuch)",
+   "tool": "genimg (gpt-image über Codex)",
+   "detail": "assets/raw/bg.png, 1536×1024, 77 s, Prompt assets/prompts/bg.txt. Stilblock: Bild aus einem Schwarzweiß-Film noir der 1940er als gemalter Spielhintergrund, streng schwarzweiß, mehr als die Hälfte tiefes Schwarz, harte Schattenformen, Gegenlicht durch leuchtenden Nebel (Silhouetten), Regennacht mit nassem, spiegelndem Pflaster, vereinfacht gemalt; Verbote: Foto, 3D-Render, Bleistift, Comic mit Konturen, Farbe, Filmkorn, Vignette. Kompositionsblock mit Prozentangaben (Breitbild-Band 17–80 %, Häuschen links mit Jalousienfenster, freies Pflaster 5–48 %, Laterne bei 56 %, Steg und Boote 62–80 %, Leuchtturm bei 87 %, Fässer rechts), Motivblock wörtlich, Hinweise auf animierte Teile (kein Regen, kein Strahl, kein Rauch, keine Lichtstreifen auf dem Boden, orange Horizontlinie als silbergraues Band), background_only_en, Schutzregeln, Format. Ergebnis im ersten Versuch übernommen."
+  },
+  {
+   "step": "Hintergrund aufbereiten",
+   "tool": "scripts/build_bg.py (NumPy, Pillow)",
+   "detail": "16:9-Ausschnitt ab Quellzeile 100, Lanczos auf 1280×720, Helligkeit nach Rec. 601, S-Kurve (65 % linear, 35 % smoothstep), Schwarzpunkt 0,015. Lage von Laterne, Leuchtfeuer, Jalousienfenster, Horizont und Kaikante von Hand in der Quelle abgelesen (assets/scene.json). Masken: fx_mask.png (R Laterne: Glas, Lichthof und Spiegelstreifen, nur helle Pixel; G Lichtfeld für den Regen: helle Flächen mit 28 und 70 px weichgezeichnet plus Lichtkegel der Laterne; B offenes Wasser ohne dunkle Silhouetten) und floor_mask.png (Pflaster ohne Häuschen, Fässer, Kisten)."
+  },
+  {
+   "step": "Code-Assets",
+   "tool": "scripts/build_fx.py",
+   "detail": "noise.png: kachelbares Wertrauschen (fBm aus 4 Oktaven, Seed 20261012) für Nebel; aux_mask.png: R = Ferne (Polygone von Hand für Häuschen, Schornstein, Laterne mit Pfahl, Fässer und Kai), G = Pflaster aus floor_mask.png. Nebel und Leuchtturmstrahl liegen nur auf der Ferne."
+  },
+  {
+   "step": "Layout der Figur",
+   "tool": "Blender 5.2 (blender/pose_layout.py) + scripts/make_layouts.py",
+   "detail": "Posen von shared/3d/badger.glb orthografisch mit 409,6 px/m (Skript aus bilderbuch-gouache übernommen, Licht auf hartes Führungslicht von rechts oben vorn und Kantenlicht von hinten geändert), 2×5 Zellen auf Magenta: walk_0 … walk_7 (Walk bei t = i/8 s), stand, turn (40° zur Kamera). make_layouts.py entsättigt alles außer dem roten Schal, damit das Bildmodell Tonwerte und Akzentfarbe schon im Layout sieht."
+  },
+  {
+   "step": "Laufbogen erzeugen (Grundlage für Layout und Posen)",
+   "tool": "genimg (gpt-image über Codex)",
+   "detail": "assets/raw/walk.png, 94,5 s, Referenzen: Layout, Master-Sheet (nur Kostüm), raw/bg.png (Maltechnik). Prompt: Layout und Posen exakt übernehmen, nur Malweise und Licht ändern; streng schwarzweiß außer rotem Schal; hartes Führungslicht von rechts oben, Rückseite im Schatten, Kantenlicht; keine Konturen, kein Fell, kein 3D-Render. Ergebnis: echter Alphakanal, Posen gehalten (Silhouetten-IoU 0,91–0,95 gegen die Blender-Posen, Figuren etwa 2 % größer, Sohlen 2–3 px tiefer), schwarzweiß mit rotem Schal; die verlangte harte Noir-Lichtsetzung kam nicht, die Figur wirkte wie ein weich beleuchtetes 3D-Rendering bzw. eine Plüschfigur. Bis zur Überarbeitung im Spiel verwendet; jetzt nur noch Vorlage (auf Magenta als assets/ref/walk_clean.png) für die Übermalung raw/walk3.png. build_badger.py --src walk baut die alte Fassung weiterhin."
+  },
+  {
+   "step": "Laufbogen übermalen, erster Versuch (nicht verwendet)",
+   "tool": "genimg (gpt-image über Codex)",
+   "detail": "assets/raw/walk2.png, 81 s, Referenzen: assets/ref/walk_clean.png (raw/walk.png auf Magenta) und raw/bg.png; Prompt: dieselben zehn Figuren als gemalte Figur mit Pinselstruktur und gleichmäßigem Licht (das harte Licht setzt das Spiel). Ergebnis malerischer, aber weiterhin runde CG-Formen; Figuren etwa 2,5 % größer und der Standfuß rückt je Bild 18–25 px statt gleichmäßig 21 px (im Spiel 8–11 px statt 9). Hätte einen eigenen Vorschub je Bild gebraucht; bei 179 px Figurenhöhe ist der Unterschied in der Malweise kaum zu sehen. Nicht übernommen; der zweite Versuch über agy hielt die Silhouetten und wurde malerischer."
+  },
+  {
+   "step": "Laufbogen übermalen, zweiter Versuch (verwendet)",
+   "tool": "genimg --backend agy (Gemini-Bildmodell)",
+   "detail": "assets/raw/walk3.png, 77 s, bewusst über agy (verbatim: true): Referenzen assets/ref/walk_clean.png (zu übermalender Bogen) und raw/bg.png (Maltechnik). Prompt (assets/prompts/walk3.txt): Layout, Posen, Füße und Umrisse exakt halten, nur die Malweise ändern; flache Gouache mit breitem Pinsel, jede Form aus zwei bis drei flachen Tonflächen mit harten Kanten, wenige trockene Pinselstriche, keine weichen Verläufe, kein Fell, kein Filz; streng schwarzweiß außer flachem dunkelrotem Schal; flaches, gleichmäßiges Licht ohne Kantenlicht (das Spiel setzt das Licht); kein 3D-Render, keine Plüschfigur. genimg.py ersetzte „transparent“ durch Magenta und stellte frei (57 % transparent). Geliefert 1264×848 statt 1536×1024: gleichmäßig auf 1024 px Höhe skaliert und mittig gesetzt, decken sich die Silhouetten je Zelle zu 98,1–98,5 % mit raw/walk.png ohne Verschiebung (Sohlen 1 px tiefer). Ergebnis: gemalte Figur in flachen Tonflächen statt CG-Plüsch, Kostüm und Gesicht gehalten."
+  },
+  {
+   "step": "Figur aufbereiten",
+   "tool": "scripts/build_badger.py (NumPy, Pillow)",
+   "detail": "scripts/build_badger.py: raw/walk3.png auf das Layoutraster gebracht (gleichmäßig auf 1024 px Höhe, vormultipliziert, mittig auf 1536 px), Magenta-Reste vom Freistellen entfernt (Rot und Blau um ihren gemeinsamen Überschuss über Grün gesenkt). Fester Ausschnitt je Zelle (x 14–294, y 56–490, Vielfache von 7) ohne Einzelverschiebung. Graustufen außer Rot (Gewicht aus Sättigung und Farbton), S-Kurve. Kissen-Normalen: Alpha binarisiert (> 0,5), Höhe = Maske mit σ 22 px weichgezeichnet mal Maske, Kante mit σ 1,5 px geglättet, alles in Gleitkomma, Gradient × 9; vormultipliziert mit Lanczos um 3/7 auf 120×186. Blinzelbild aus der Dreiviertelansicht: beide Augen (Lage in walk3 von Hand gemessen) mit dem Median des umgebenden dunklen Fells übermalt, Lid als dunkler Strich. Ergebnis: badger.png und badger_n.png (11 Bilder), badger.json (Fußpunkt 61,9/184,3, Vorschub 9 px = gemessene 21 px × 3/7, für walk3 durch die Silhouettendeckung bestätigt)."
+  },
+  {
+   "step": "Zusammenstellen",
+   "tool": "scripts/stage.py, scripts/build_all.sh",
+   "detail": "stage.py kopiert die Assets nach demo/art und schreibt ui_text.json aus data/motif.json. build_all.sh baut alles ohne Bildmodell neu (Blender-Posen, Layout, Hintergrund, Masken, Figur aus raw/walk3.png, Godot-Import); ein Neubau ergab bitgleiche Dateien in demo/art."
+  },
+  {
+   "step": "Godot-Demo",
+   "tool": "Godot 4.7.2, GDScript, 6 Shader + 1 Include",
+   "detail": "scene.gdshader (Hintergrund, Laterne, Fensterlicht, Nebel, Strahl, Flimmern), badger.gdshader (Figurenlicht), badger_shadow.gdshader und badger_refl.gdshader (Schatten im Fensterlicht, Spiegelung), rain.gdshader, post.gdshader (Filmlook), window.gdshaderinc (gemeinsame Geometrie des Jalousienlichts). Oberfläche aus Label- und Control-Knoten."
+  },
+  {
+   "step": "Messen und Aufnehmen",
+   "tool": "scripts/render_frames.py, scripts/measure_badger.py, scripts/measure_scarf.py, tools/capture.py --poster-at 0.87",
+   "detail": "Figur mit --probe-badger-only (nur Figur auf Magenta) gerendert und gemessen (assets/measure_badger.json: Füße, Kopf); measure_scarf.py legt den Bogen per Schablonenvergleich auf die Prüfbilder und misst in der fertigen Aufnahme, ob Schal und hinteres Schalende rot bleiben, wie dunkel die Figur ist und wie viel Kantenlicht sie bekommt (assets/measure_scarf.json). Umgebungsanimationen mit --probe-no-rain --probe-no-badger je Bereich gemessen; Probeläufe mit --rendering-method mobile und gl_compatibility; zweiter Forward+-Lauf bitgleich zum Poster (Bild 156). Aufnahme 6 s bei 30 fps, Poster bei 5,2 s (Dreiviertelansicht im Jalousienlicht, Strahl nach links, Parserzeile fertig getippt), ohne Warnungen."
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, stretch mode canvas_items, Forward+, ohne MSAA; main.tscn enthält nur den Wurzelknoten mit main.gd, das Skript baut alles in _ready()",
+  "Hintergrund: Sprite2D mit scene.gdshader. Laterne: fx_mask.r × (flicker − 1) × (Farbe × 1,5 + 0,06) plus zwei gaußförmige Lichthöfe (46 und 150 px); Spiegelungen auf Wasser und Pflaster waagerecht um bis zu 2 px versetzt (Sinus über y und t); Nebel aus zwei Rauschlagen (9,6 und 22 px/s nach rechts) im Band y 170–475, nur auf der Ferne, Anteil höchstens 28 %; Leuchtturmstrahl als Keil vom Leuchtfeuer, Länge 980 × |sin φ| + 40 px, heller zur Kamera hin, φ = 2π(t − 5,2)/5 − π/2; Aufblitzen der Lampe mit cos(φ)^10",
+  "Jalousienlicht (window.gdshaderinc): Viereck A(95|566) B(205|543) C(560|705) D(300|760), AB und DC parallel zum Wandfuß; Parameter s = Abstand zu AB / Abstand D zu AB; 9 Streifen mit 52 % Lichtanteil, kantengeglättet über fwidth; Licht = Streifen × (1 → 0,62 nach vorn) × (Untergrund × 3 + 0,14), nur auf dem Pflaster",
+  "Figur: Sprite2D (11 Bilder als hframes), Lage ganzzahlig (Ursprung − Fußpunkt gerundet). badger.gdshader: Umgebungslicht 0,17; Laterne mit Kissen-Normale, Lichtvektor (Laterne − Pixel, 160), Schwelle 0,34 ± 0,04, Abfall 1/(1 + (d/520)²), × Flackern × 1,7; Fenster: Lichtvektor (Fenster − Pixel, 90), Schwelle 0,26, × Streifen (13 px, Neigung −0,21 wie auf dem Pflaster, 50 %) × Strahlbereich x 178–429 (weich über 12 px); Kantenlicht hart geschwellt: smoothstep(0,74; 0,80) auf 1 − N.z (nur die äußeren 1–2 px der Kissen-Normalen) × 0,65 × Richtungsgewicht (oben 1, hinten 0,85, vorn und unten 0,15), im Strahl halbiert. Auf gesättigten Flächen (Sättigung der Albedo 0,3–0,6 weich) nimmt das Kantenlicht den Farbton der Albedo an (rim_col = Albedo / größter Kanal), und das Umgebungslicht wird um 80 % angehoben, damit der Schal im Dunkeln rot und lesbar bleibt",
+  "Schatten im Fensterlicht: dieselbe Bildfolge als Sprite2D, Transform mit y-Achse −(0,62; 0,40) je Pixel Körperhöhe (auf das Pflaster geschert), blend_sub zieht genau das Fensterlicht ab, das scene.gdshader dort addiert. Spiegelung: gespiegelt (y × −0,85) ab der Fußlinie, additiv mit 0,26–0,50, nach 110 px ausgeblendet, vom Regen gekräuselt. Kontaktschatten: weiche Ellipse 96×14 (Bild im Code erzeugt)",
+  "Regen: ColorRect über der Szene mit rain.gdshader (blend_add). Drei Lagen in einem schrägen Gitter (Wind 0,16): Zellen 9×110, 17×170, 41×300 px, Strichlängen 26/46/90 px, 820/1150/1650 px/s, 45 % der Zellen leer; Helligkeit = 0,10 + 1,25 × Lichtfeld + 0,9 × Laternenkegel × Flackern. Spritzer als kurze Ringe in Zellen 26×12 px (perspektivisch skaliert, 0,16 s sichtbar); Ringe auf dem Wasser als flache Ellipsen ab 22 px unter dem Horizont",
+  "Filmlook: CanvasLayer 1 mit ColorRect und post.gdshader (hint_screen_texture, filter_linear_mipmap): Halation aus textureLod 3 und 5 über Schwellen 0,62/0,55 × 0,30; Rot bleibt, wenn Sättigung > 0,22–0,42 und R deutlich über G und B, sonst Graustufen; Belichtung 1 ± 0,009 je Bild; Vignette 0,42; Korn aus zwei Hash-Oktaven je Bildnummer, Stärke 0,055, in den Mitteltönen voll",
+  "Oberfläche: CanvasLayer 2 über dem Filmlook (Text bleibt scharf). Karte 412×224 bei (300|16): Control mit _draw (Fläche schwarz 88 %, Außenrahmen, Innenrahmen 5 px eingerückt, Art-déco-Ecken: je Ecke drei geschlossene Winkel (Schenkel 4, 8, 12 px, Eckpunkt auf der Diagonale, mit draw_rect aus ganzen Pixeln, Schenkel enden am Innenrahmen)). Ort in Limelight 17 px mit Zeichenabstand 3 (FontVariation), Erzähltext Courier Prime 18 px, 34 Zeichen/s ab 0,45 s (visible_characters), Auswahl Courier Prime 16 px ab 2,35 s eingeblendet, Markierung an Antwort 2 ab 3,4 s, Parserzeile Courier Prime Bold 17 px ab 3,7 s mit Tippzeiten aus dem RNG (Abstand 1/9 s × 0,7–1,35), Blockcursor blinkt mit 0,6 s",
+  "Ablauf: Figur auf Zweien (15 Bilder/s). Laufbild k zeigt walk_((1 + k) % 8) bei x = −69 + 9k (Ursprung des Rigs), 42 Laufbilder bis walk_2 bei x 300 (2,8 s); stand bei x 304 (+4 px, gemessener Versatz des Standfußes zwischen walk_2 und stand) bis 3,2 s; danach Dreiviertelansicht mit Atmen (Skalierung 1 ± 0,0045 um den Fußpunkt, Periode 2,2 s) und Blinzeln bei 4,40 und 5,70 s",
+  "Flackern der Laterne: Stützwerte alle 1/12 s (±9 %, mit 9 % Wahrscheinlichkeit Einbruch auf 0,62–0,78), linear verbunden plus Sinus 41 rad/s × 0,025, begrenzt auf 0,55–1,12; derselbe Wert geht an Hintergrund, Figur und Regen",
+  "Determinismus: t ist die Summe der delta-Werte, Zufall nur aus RandomNumberGenerator mit Seed 20261012, Korn und Belichtung aus der Bildnummer. Prüfschalter nach --: --probe-badger-only, --probe-no-badger, --probe-no-rain"
+ ],
+ "techniques": [
+  "textoberflaeche",
+  "ki-spritesheet",
+  "normalmap-licht-2d",
+  "rim-light",
+  "figurenlicht",
+  "jalousienlicht",
+  "regen-shader",
+  "shader-nebel",
+  "additiver-lichtkegel",
+  "kinemagramm",
+  "nachbearbeitung",
+  "sprite-animation",
+  "fuss-halten",
+  "prozedurale-animation"
+ ],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 3,
+  "effort": 3,
+  "text_adventure": 5,
+  "mobile": 4
+ },
+ "ratings_note": "ai_fit 4: Codex lieferte den Hintergrund im ersten Versuch streng schwarzweiß mit Gegenlicht, Nebel, nassem Pflaster und Jalousienfenster; zwei Codex-Laufbögen hielten Posen und den roten Schal, wirkten aber wie weich beleuchtete 3D- bzw. Plüschfiguren. Die Übermalung über agy hielt die Silhouetten (98 %) und ergab eine gemalte Figur in flachen Tonflächen. Das harte Licht auf der Figur, die Jalousienstreifen, Regen, Nebelzug, Leuchtturmstrahl, Flackern und Filmlook kommen aus Shadern. consistency 3: Figur und Hintergrund sind jetzt beide gemalt, aber von zwei Bildmodellen und mit unterschiedlichem Detailgrad (Figur flach und grafisch, Hintergrund fein und fast fotografisch); Graustufen außer Rot, Licht und Korn gleichen das an; die Konsistenz über mehrere Orte ist nicht gemessen. effort 3: je Ort ein KI-Bild, aber Lagen von Lichtern und Fenster, das Viereck des Jalousienlichts und die Fernmaske werden von Hand gesetzt; Figuren brauchen Layout, einen Bogen und eine Übermalung (zwei Bilder), danach läuft build_badger.py automatisch. mobile 4: Probeläufe mit mobile und gl_compatibility ergeben fast dasselbe Bild (mittlere Abweichung 0,26 bzw. 0,53 von 255, Unterschiede im Lichthof der Laterne, an der Figur 0,0 bzw. 0,31); die Bildrate auf einem Telefon ist nicht gemessen, drei Vollbild-Shader und ein Bildschirm-Mipmap-Durchgang kosten Füllrate.",
+ "verdict": "Gut geeignet für ein Detektiv-Textadventure. Die dunklen Bilder lassen viel ruhige Fläche für Text, die Titelkarte mit Schreibmaschinenschrift passt zum Genre, und eine einzige Akzentfarbe ist ein starkes Erzählmittel (Hinweise, Figuren, Gegenstände). Hintergründe trifft gpt-image mit einem klaren Stilblock zuverlässig; der eigentliche Noir-Eindruck entsteht aber erst im Spiel: Licht (Jalousienstreifen, Laterne, Gegenlicht), Regen und Filmkorn sind Shader und lassen sich auf jeden Ort übertragen. Figuren flach beleuchtet in wenigen gemalten Tonflächen erzeugen (Bogen über ein 3D-Layout, dann über agy übermalen) und im Spiel hart beleuchten; jedes zusätzliche Licht auf der Akzentfarbe muss deren Farbton tragen, sonst macht der Schwarzweiß-Filter sie grau. Für Nahaufnahmen oder Porträts müsste die Figur detailreicher gemalt werden, damit sie zum feinen Hintergrund passt.",
+ "pitfalls": [
+  "Die beiden Codex-Laufbögen (raw/walk.png, raw/walk2.png) übernahmen die glatte, plastische Anmutung des Blender-Layouts (weiches Licht, plüschartiges Fell) und ignorierten die verlangte harte Noir-Lichtsetzung; vor dem gemalten Hintergrund blieb die Figur als CG-Rendering erkennbar. Die Übermalung über agy (raw/walk3.png) behebt das weitgehend: flache, gemalte Tonflächen statt Plüsch. Ein Bruch bleibt: Die Figur ist flacher und grafischer als der fein gemalte, fast fotografische Hintergrund, und beide kommen aus verschiedenen Bildmodellen.",
+  "Der erste Übermalungsversuch über Codex (raw/walk2.png) wurde nicht übernommen: Pinselstruktur ja, aber weiter runde CG-Formen, Figuren 2,5 % größer und ein ungleichmäßiger Vorschub des Standfußes (18–25 px statt 21 px im Bogen), der einen eigenen Vorschub je Bild gebraucht hätte. agy lieferte die Übermalung dagegen in 1264×848 statt 1536×1024 (genimg.py warnte); erst gleichmäßig auf die Layouthöhe skaliert passt sie ins Raster.",
+  "Komposition des KI-Hintergrunds nur grob nach Vorgabe: Kaihinterkante bei 65 % statt 57 % der Höhe, Laternenpfahl bei 63 % statt 56 % der Breite, Blick aus Erwachsenen-Augenhöhe statt aus Figurenhöhe. Das geplante Breitbild-Band (Text in schwarzen Balken unter und über dem Bild) passte deshalb nicht: Laterne, Leuchtturm und eine ausreichend große Figur liegen nicht zusammen im Band 17–80 %. Die Oberfläche sitzt stattdessen als Titelkarte im dunklen Himmel.",
+  "Figurengröße durch die Perspektive des KI-Bildes begrenzt: Auf der Fußlinie y 645 passen etwa 179 px (Fässer am Kai etwa 112 px hoch). Eine größere Figur müsste weiter vorn laufen und läge dann außerhalb des Jalousienlichts.",
+  "Das Jalousienlicht ist nicht physikalisch projiziert: Viereck auf dem Pflaster und Strahlbereich auf der Figur (x 178–429, senkrecht) sind nach Augenmaß gesetzt; die Streifen auf der Figur liegen im Bildschirmraum (13 px, gleiche Neigung wie auf dem Boden) und folgen der Körperform nur über die Lichtschwelle auf den Kissen-Normalen. Der Schatten der Figur im Fensterlicht ist ein gescherter Abzug des Sprites und nur als Lücke in den Streifen zu lesen.",
+  "Kissen-Normalen kennen nur die Silhouette: Innenformen (Arm vor dem Bauch, Paket, Schnauze) bekommen kein eigenes Licht; Gesicht und Vorderseite bleiben flach. Das ist jetzt Absicht: Vorher wurde die Höhe aus dem Roh-Alpha berechnet, dessen kleine Schwankungen im Innern (0,957–1,0) und 8-bit-Stufen mit der Steilheit 9 × 22 ein Relief aus Paket, Knöpfen und Arm ergaben; die harte Lichtschwelle machte daraus ein Sprenkelmuster am Lichtrand (Bein, Bauch, Paket). Seit dem Binarisieren des Alphas ist die Normalenkarte innen glatt und das Muster weg.",
+  "Füße: In 21 Bildwechseln der Standphase bleibt der Standfuß stehen, größte Verschiebung 1 px (walk_5 → walk_6, Bild 26 und 42; Prüfmodus, Bodenkontakt der unteren 3 Zeilen, assets/measure_badger.json). Derselbe Wechsel wird in Bild 58 und 74 als Kontaktwechsel gezählt, weil die Kontaktfläche vorn um 2 px wächst (93 von 96 Kontaktpixeln bleiben liegen). An den Kontaktwechseln (walk_3→4, 4→5, 7→0, 0→1) ist der Halt nicht automatisch auf ±1 px geprüft; die Enden der Kontaktflächen liegen dort höchstens 2 px neben denen des früheren Codex-Bogens, der per Überlagerung geprüft war. Der Codex-Bogen hielt den Standfuß auf 0 px; der übermalte Bogen kostet an walk_5 → walk_6 1 px.",
+  "Kopf: Im Laufen wippt der Kopf zwischen y 466 und 469 (aus der KI-Zeichnung); beim Wechsel zur Dreiviertelansicht (3,2 s) steht der Kopf 3 px höher (anderer Posenumriss).",
+  "Godot-Label mit Autowrap wurde trotz custom_minimum_size auf die volle Textbreite (681 px) gesetzt; der Erzähltext ist deshalb von Hand nach dem ersten Satz umbrochen. Für andere Texte muss der Umbruch im Code gesetzt oder ein Container mit fester Breite verwendet werden.",
+  "Godot überschreibt beim Import die Farbe voll transparenter Pixel (process/fix_alpha_border). Die erste Maske mit dem Pflaster im Alphakanal ergab deshalb kein Fensterlicht; jetzt liegen alle Masken in RGB-Kanälen ohne Alpha (fx_mask.png, aux_mask.png).",
+  "Die Spiegelung der Figur auf dem nassen Pflaster ist größtenteils vom unteren Bildrand abgeschnitten (sichtbar sind Beine und das Schalende). Im Laternenlicht wirft die Figur keinen Schatten, die Laterne ist dafür zu weit entfernt.",
+  "Boote schaukeln nicht (Teil des Hintergrundbildes), kein Rauch (der Schornstein ist vom 16:9-Ausschnitt oben abgeschnitten), keine Möwen. Umgebungsanimationen sind Laterne, Leuchtturm, Wasserflimmern samt Regenringen, Nebel und Regen.",
+  "Im Gegenlicht am Horizont ist der Regen sehr dicht und hell; in den kleinen Bildern von frames.jpg liest sich das je nach Zeitpunkt als Blendung.",
+  "Atmen als Skalierung um den Fußpunkt tastet das Sprite in jedem Bild neu ab (sehr leichte Unschärfe der stehenden Figur).",
+  "Das Kantenlicht folgt der Pixelsilhouette (äußere 1–2 px): An Tasche und Rücken sind in starker Vergrößerung Treppenstufen zu sehen, und es liegt schwach (15 %) auch an Vorder- und Unterkante. Es ist eine Gestaltungsentscheidung (oben und hinten), keine aus der Lichtrichtung des Hintergrunds berechnete Kante.",
+  "Der Schal bekommt bewusst 80 % mehr Umgebungslicht als der Rest der Figur und ein Kantenlicht in seinem eigenen Rot; das ist nicht physikalisch, sondern hält die Akzentfarbe im Dunkeln lesbar. Ohne das wurde das dünne hintere Schalende im Dunkeln grau (weißes Kantenlicht auf dunkelroter Albedo ergab Grau, das der Filmlook entsättigte), was bis zur Überarbeitung nicht dokumentiert war.",
+  "Sobald die Figur in den Fensterstrahl tritt (1,8–2,0 s), sinkt der Anteil der Figurenpixel unter 0,10 auf 50–58 %; danach steht sie im Licht. Die Figur ist im Dunkeln also nur zu etwa zwei Dritteln Silhouette: weißer Gesichtsstreifen, Hemd und Bauch bleiben mit 0,17 Umgebungslicht als dunkles Grau lesbar.",
+  "Das Blinzelbild übermalt die Augen an von Hand gemessenen Stellen der Zelle turn; mit jedem neuen Bogen (walk → walk3) müssen die Augenlagen neu gemessen werden (stehen je Quelle in build_badger.py)."
+ ],
+ "lessons": [
+  "Stilblock für Noir-Hintergründe bei gpt-image: „frame from a black-and-white film noir … strictly monochrome … more than half deep solid black … backlit luminous fog, silhouettes … soaking wet glossy cobbles with long reflections … not a photograph, no film grain, no vignette“. Ergebnis im ersten Versuch unbunt (Sättigung im 99. Perzentil 5/255) und mit Silhouetten im Gegenlicht.",
+  "Alles, was im Noir-Bild Licht ist und sich bewegen soll, aus dem Prompt herausnehmen (Regen, Leuchtturmstrahl, Rauch, Lichtstreifen auf dem Boden): Codex hielt sich daran, und alle Lichteffekte konnten im Spiel aufgebaut werden.",
+  "Noir-Licht gehört in die Engine: flaches, gleichmäßig beleuchtetes Sprite plus Kissen-Normalen aus der binarisierten, weichgezeichneten Silhouette (σ 22 px in Quellgröße, in Gleitkomma) und eine enge smoothstep-Schwelle auf N·L ergeben harte Lichtkanten aus jeder Richtung. Dasselbe Sprite läuft so als Silhouette durchs Dunkel, wird im Fenster gestreift und von der Laterne angeleuchtet, ohne neue Bilder. Das Roh-Alpha eines KI-Bilds nie direkt als Höhe nehmen: kleine Schwankungen werden mit der Steilheit zu Relief und unter der harten Schwelle zu Sprenkeln.",
+  "Jalousienlicht als gemeinsame Funktion (gdshaderinc) für Boden, Figur und Schatten: Der Schatten der Figur zieht mit blend_sub genau das Licht ab, das der Boden-Shader addiert, und ist deshalb nur dort zu sehen, wo Licht fällt.",
+  "Eine Akzentfarbe über die Nachbearbeitung erzwingen: alles außer gesättigtem Rot auf Graustufen. Das hält die Regel über alle Assets ein, auch bei Farbresten aus dem Bildmodell. Aber jedes additive Licht auf der Akzentfläche muss deren Farbton tragen (Kantenlicht × Albedo / größter Kanal): weißes Licht auf dunklem Rot ergibt Grau, und der Filter entsättigt es. Prüfen in der fertigen Aufnahme und gerade in den dunklen Abschnitten, nicht nur im Poster (measure_scarf.py: 95–99 % des Schals rot).",
+  "Das Layout schon in Graustufen mit rotem Schal mitgeben: Codex übernahm die Tonwerte und ließ den Schal als einzige Farbe stehen.",
+  "Regen als ein Vollbild-Shader mit Zellen-Hashes und einem vorberechneten Lichtfeld (helle Flächen des Hintergrunds weichgezeichnet, plus Laternenkegel): Der Regen leuchtet genau dort, wo Noir ihn zeigt, im Gegenlicht und im Laternenschein; Spritzer und Wasserringe über Masken und perspektivisch skaliert.",
+  "Masken für Godot ohne Alphakanal speichern (RGB bzw. L), sonst überschreibt der Import die Farbe transparenter Pixel; alternativ process/fix_alpha_border=false in der .import-Datei.",
+  "Halation billig über die Mipmaps des Bildschirms (hint_screen_texture mit filter_linear_mipmap, textureLod 3 und 5): gibt Laterne, Fenster und Leuchtfeuer den Lichthof alter Filme und verhält sich in mobile und gl_compatibility gleich.",
+  "Ein gelungener Laufbogen lässt sich über agy in eine andere Malweise übertragen, ohne die Animation zu verlieren: Mit dem Bogen auf Magenta als erster und dem Hintergrund als zweiter Referenz hielt agy die Silhouetten zu 98 % (nach gleichmäßiger Skalierung von 1264×848 auf die Layouthöhe), Vorschub (21 px im Bogen = 9 px im Spiel) und Ausschnitte blieben gültig. Bewusst agy gewählt, weil es sich eng an das Layout einer Referenz hält und mit „flat gouache, two or three flat tonal planes, hard edges“ flache Malerei lieferte, wo Codex zweimal zur weichen CG-Anmutung zurückfiel.",
+  "Titelkarte im dunklen Himmel statt Textbox am Bildrand: Bei Noir-Hintergründen gibt es fast immer ruhige schwarze Flächen; Limelight für den Ort und Courier Prime mit Schreibmaschinen-Einblendung und unregelmäßigem Tipprhythmus (feste Seeds) tragen den Detektiv-Ton.",
+  "Prüfschalter auf der Kommandozeile (--probe-badger-only, --probe-no-badger, --probe-no-rain) machen Figur und Umgebungsanimationen getrennt messbar; Knoten dafür im Baum lassen und nur ausblenden, sonst meldet Godot beim Beenden verwaiste Materialien als ERROR.",
+  "Lichtkante als harte Schwelle auf 1 − N.z der Kissen-Normalen (smoothstep 0,74–0,80) statt als Potenz: Nur die äußeren 1–2 px leuchten, die Figur bleibt im Dunkeln eine Silhouette (Anteil der Pixel mit mehr als 0,08 Kantenlicht 6 % statt 44 %).",
+  "Pixelgenaue Rahmen und Ornamente in Godot mit draw_rect auf ganzen Pixeln zeichnen statt mit draw_line über Halbpixel: Linien, die über den gemeinsamen Eckpunkt hinauslaufen, kreuzen sich und lesen sich in kleinen Ecken wie Schriftzeichen."
+ ],
+ "assets": [
+  {
+   "file": "assets/bg.png",
+   "kind": "background",
+   "made_with": "gpt-image (Codex) 1536×1024, build_bg.py: 16:9-Ausschnitt, Graustufen, S-Kurve, 1280×720",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/fx_mask.png",
+   "kind": "mask",
+   "made_with": "build_bg.py aus dem Hintergrund: R Laterne, G Lichtfeld für Regen, B Wasser",
+   "prompt": ""
+  },
+  {
+   "file": "assets/aux_mask.png",
+   "kind": "mask",
+   "made_with": "build_fx.py: R Ferne (Polygone von Hand), G Pflaster",
+   "prompt": ""
+  },
+  {
+   "file": "assets/noise.png",
+   "kind": "texture",
+   "made_with": "build_fx.py: kachelbares Wertrauschen (fBm) für den Nebel, Seed 20261012",
+   "prompt": ""
+  },
+  {
+   "file": "assets/badger.png",
+   "kind": "spritesheet",
+   "made_with": "gpt-image (Codex) über Blender-Layout, übermalt mit agy (Gemini-Bildmodell), build_badger.py: 11 Bilder à 120×186 (walk_0–7, stand, turn, turn_blink), Graustufen außer Rot",
+   "prompt": "assets/raw/walk3.json"
+  },
+  {
+   "file": "assets/badger_n.png",
+   "kind": "normalmap",
+   "made_with": "build_badger.py: Kissen-Normalen aus der binarisierten, weichgezeichneten Silhouette, gleiches Raster wie badger.png",
+   "prompt": ""
+  },
+  {
+   "file": "assets/ref/walk_layout.png",
+   "kind": "reference",
+   "made_with": "Blender 5.2 (blender/pose_layout.py, shared/3d/badger.glb) + make_layouts.py, Graustufen außer Rot",
+   "prompt": ""
+  },
+  {
+   "file": "assets/ref/walk_clean.png",
+   "kind": "reference",
+   "made_with": "gpt-image (Codex, raw/walk.png) auf Magenta: erste Referenz für die Übermalung über agy",
+   "prompt": "assets/raw/walk.json"
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Courier Prime (Regular, Bold)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/courierprime"
+  },
+  {
+   "item": "Schrift Limelight",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/limelight"
+  },
+  {
+   "item": "3D-Modell Dachs-Kurier (shared/3d/badger.glb, nur als Posen-Layout)",
+   "license": "eigenes Modell des Katalogs",
+   "source": "shared/3d/blender/build_badger.py"
+  }
+ ],
+ "image_generations": 4,
+ "tool_issues": [
+  "genimg.py/sprites.py key (agy-Weg): Halbtransparente Randpixel kommen nach dem Herausrechnen der Schlüsselfarbe Magenta oft grünstichig zurück (raw/walk3.png: 9760 Pixel mit Alpha 0,03–0,97, mittlere Farbe 0,27/0,47/0,20, 36 % grün dominiert). Hier ohne Folgen, weil die Figur in Graustufen umgesetzt wird; in farbigen Stilen dürfte ein grüner Saum sichtbar werden. Nicht im Werkzeug geändert."
+ ],
+ "status": "done"
+}

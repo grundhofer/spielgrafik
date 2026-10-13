@@ -1,0 +1,27 @@
+{
+ "wasser": {
+  "pixels": 111826,
+  "share_mean": 0.3646,
+  "share_max": 0.3687
+ },
+ "strahl_himmel": {
+  "pixels": 116307,
+  "share_mean": 0.0432,
+  "share_max": 0.1166
+ },
+ "laterne_himmel": {
+  "pixels": 16367,
+  "share_mean": 0.0736,
+  "share_max": 0.1907
+ },
+ "rauch": {
+  "pixels": 12264,
+  "share_mean": 0.0668,
+  "share_max": 0.0731
+ },
+ "rest_ohne_effekte": {
+  "pixels": 343655,
+  "share_mean": 0.0032,
+  "share_max": 0.0117
+ }
+}

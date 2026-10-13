@@ -1,0 +1,159 @@
+{
+ "slug": "hintergrund-serie",
+ "name": "Hintergrund-Serie & Szenenwechsel",
+ "family": "technik",
+ "kind": "technique",
+ "era": "Technik für gemalte 2D-Adventures (1990er bis heute)",
+ "summary": "Vier Orte von Lornholm (Hafen, Lampenraum im Leuchtturm, Stube des Hafenmeisters, Klippenpfad) als gemalte Serie aus einer Hand: Das erste KI-Bild (Hafen) ist der Stilanker und geht als einzige Referenz an die drei anderen, danach gleicht je Ort eine 3D-LUT die Farben an die Palette des Ankers an. Die Demo zeigt 2 s Hafen mit laufendem und anhaltendem Dachs und drei Szenenwechsel mit je eigenem Shader-Übergang (nasse Überblendung, Seitenumblättern, Dither- und Pixelauflösung); die Textbox bleibt stehen, nur der Ortsname wechselt. Alle vier Hintergründe gelangen beim ersten Versuch und wirken zusammengehörig, sind aber detailreiche digitale Malerei mit Zellstruktur statt des verlangten losen Aquarells.",
+ "references": [
+  "Point-and-Click-Adventures mit gemalten Hintergründen, die beim Ortswechsel schneiden oder überblenden (1990er bis heute)",
+  "Illustrierte Kinderbücher in Aquarell und Gouache, bei denen alle Bilder aus einer Hand wirken (Vorbild für den Stilblock, nur als Text)",
+  "Erzählspiele mit gemalten Standbildern und Seitenumblätter- oder Tuscheblenden"
+ ],
+ "traits": [
+  "Vier Hintergründe 1280×720 aus vier Codex-Bildern (gpt-image, je 1536×1024), auf 1280 px Breite skaliert und je Ort mit eigenem Versatz auf 16:9 geschnitten (Hafen ab 9,6 %, Leuchtturm 10,6 %, Stube 5,9 %, Klippe 7,3 % der Bildhöhe), sodass der Horizont überall auf Bildschirmzeile 256–258 liegt",
+  "Ein Stilblock und ein Serienblock für alle Bilder: Aquarell mit etwas Gouache auf rauem Papier, späte Dämmerung, Hauptlicht von links, Augenhöhe 40 %, Laufstreifen 58–72 %, ruhiges unteres Viertel. Gemessen: Licht kommt in allen vier Bildern von links (linkes Drittel um 10–14 L heller als das rechte)",
+  "Stilanker: assets/raw/hafen.png geht als einzige Referenz an die drei Folgebilder; keines übernimmt Kai, Boote oder Bildaufbau des Hafens",
+  "Farbabgleich: 24-Farben-Palette des Ankers (tools/sprites.py palette), je Ort eine 32³-LUT als 1024×32-Streifen, im Übergangs-Shader angewandt, abschaltbar mit „-- --no-lut“. Abstand der Lab-Mittel zum Anker vorher/nachher: Leuchtturm 13,9 → 5,0, Stube 13,6 → 4,3, Klippe 5,0 → 1,4",
+  "Messwerte zur Stildrift je Ort in assets/drift.json (ΔE zum Anker, Abstand zur Ankerpalette, Texturmaß, Lichtrichtung, Buntheit, warme Lichtinseln, Horizontzeile); assets/lut_compare.png zeigt roh gegen abgeglichen, assets/series_sheet.png die vier Orte mit Hilfslinien",
+  "Zeitplan: 0–2,0 s Hafen mit Dachs; 2,0–2,5 s nasse Überblendung zum Leuchtturm; 3,2–4,0 s Seitenumblättern zur Stube; 4,7–5,15 s Dither- und Pixelauflösung zum Klippenpfad",
+  "Textbox als Papierkarte mit Aquarellrand (Alegreya, Alegreya SC), Karte 1232×156 px (etwa 21 % des Bildes), bleibt stehen; nur der Ortsname blendet um die Mitte jedes Wechsels um",
+  "Dachs 140 px hoch auf der Kaimauer, Laufzyklus aus 4 Bildern des Codex-Blatts mit 10 Bildern/s, Vorschub je Bildwechsel aus dem Standfuß gemessen (15 / 6,5 / 30 / 2 px). Er hält nach 1,8 s auf einem aus Teilen gebauten Stehbild an. Im gerenderten Bild gemessen: Fußzeile in allen 60 Bildern auf y = 492, Standfuß höchstens 1 px versetzt, kein Rückwärtsschritt",
+  "Umgebungsanimationen aus prozeduralen Aquarell-Texturen: Hafen mit flackernder Laterne und Fensterlicht, Leuchtturmstrahl, Wasserglitzern und Möwen; Leuchtturm mit Lichtwanderung in der Linse, Lichtfleck an der Wand und Lichtteilchen; Stube mit Feuer, Feuerschein und Kerze; Klippe mit Leuchtfeuer, Fenstern im Dorf, Glitzern und Möwe"
+ ],
+ "camera": "Feste Kamera je Ort, gerade Ansicht auf Augenhöhe ohne Neigung; Horizont nach dem Schnitt überall auf Bildschirmzeile 256–258",
+ "resolution": "1280×720. Hintergründe aus 1536×1024 skaliert; LUT 32³; Dachs 140 px hoch",
+ "pipeline": [
+  {
+   "step": "Bildaufträge planen",
+   "tool": "styles/hintergrund-serie/tools/prompts.py → assets/image_jobs.json",
+   "detail": "Fünf Aufträge in Prioritätsreihenfolge: hafen (Stilanker, ohne Referenz), leuchtturm, stube und klippe (je mit raw/hafen.png als einziger Referenz), walk (Laufzyklus). Ein Hintergrund-Prompt besteht aus Ankerabsatz (nur Folgebilder: Maltechnik und Farben übernehmen, Aufbau und Inhalt nicht), Stilblock, Serienregeln (Tageszeit, Licht von links, Augenhöhe 40 %, Laufstreifen 58–72 %, ruhiges unteres Viertel), Ortsblock, background_only_en bzw. dieselbe Regel für Boden und Weg, Liste der nicht mitzumalenden Effekte, guards_en und Format. Der Ortsblock des Hafens ist wörtlich aus data/motif.json, die drei neuen Orte folgen demselben Muster. Lesbare Fassungen liegen in assets/prompts/."
+  },
+  {
+   "step": "Bilder erzeugen",
+   "tool": "tools/imagequeue.py mit genimg.py, Backend Codex (gpt-image) laut .json neben jedem Bild",
+   "detail": "Alle fünf Bilder kamen über Codex, nicht über agy wie in Phase 1 erwartet. Versuche je Ort: Hafen 1, Leuchtturm 1, Stube 1, Klippe 1, Laufzyklus 1 (image_jobs.status.json). Alle in voller Größe 1536×1024 (actual_size), 66–128 s je Bild. Der Laufzyklus kam mit echtem Alphakanal (Alpha höchstens 254, kein Magenta im Randstreifen: mittlerer Überschuss min(R,B)−G 1,8). Er hatte drei Referenzen: raw/walk_layout_ref.png (Layout), raw/hafen.png (Maltechnik), shared/badger/master_sheet.png (Kostüm). Keine Nachbesserung mit genimg.py, also 5 Bilderzeugungen insgesamt."
+  },
+  {
+   "step": "Hintergründe schneiden",
+   "tool": "styles/hintergrund-serie/tools/prep.py bg",
+   "detail": "Rohbild auf 1280 px Breite (Lanczos), Ausschnitt 1280×720 ab CROP_TOP × Bildhöhe. Gemessene Horizonte im Rohbild: Hafen 39,6 %, Klippe 37,3 %, Meer in den Leuchtturmfenstern 40,5 %, Meer im Stubenfenster 35,8 % (verlangt 40 %). Der Schnitt je Ort legt den Horizont auf Zeile 256; drift.json misst danach 258 (Hafen) und 257 (Klippe). Beim Hafen ist der Schnitt ein Kompromiss: Lampe und Schornstein stehen ganz oben im Bild; mit dem Standard 0,117 läge die Lampe bei y = 8."
+  },
+  {
+   "step": "Farbabgleich auf den Anker",
+   "tool": "prep.py lut (Palette über tools/sprites.py palette)",
+   "detail": "Median-Cut-Palette mit 24 Farben aus dem geschnittenen Anker. Je Ort eine LUT aus zwei Teilen: ein globaler Lab-Abgleich von Mittelwert und Streuung (L zu 50 %, a/b zu 60 %) und ein weicher Zug zur Ankerpalette (Gauß-Mittel mit σ = 10 ΔE, zu 50 %, für L zu 40 % davon). Für den Anker ist die LUT die Identität. Ergebnis (drift.json): Die Innenräume kamen deutlich wärmer als der Anker (Lab-b +7,2 und +7,4 gegen −5,8). Die LUT zieht sie auf −1,4 und −1,7, der mittlere Abstand zur Ankerpalette sinkt von 7,9–8,6 auf 4,6–4,7 ΔE. Die Klippe war am nächsten am Anker und wird vor allem entsättigt (Buntheit 27,7 → 21,9). Je Ort ändert die LUT 73–90 % der Pixel um mehr als 5 ΔE."
+  },
+  {
+   "step": "Laufzyklus aufbereiten",
+   "tool": "prep.py walk",
+   "detail": "Figuren über Zusammenhangskomponenten zerlegt. Der Magenta-Saumabzug läuft jetzt nur bei Bildern, die über eine Schlüsselfarbe freigestellt wurden (agy, .json mit „transparency“ oder <name>.keyed-src.png); beim Codex-Blatt entfällt er. Am Kopf ausgerichtet, vormultipliziert auf 140 px verkleinert. Das Blatt hat sechs Posen, aber keinen sauberen Zyklus: 0 und 4 sind beide Kontakt, 5 ähnelt 3. Gewählt wurde 0 Kontakt, 1 Abheben, 2 Durchgang, 3 Ausholen (WALK_ORDER), nach einer Messung aller Paare von Standfuß-Verschiebungen. Mit 5 oder 4 im Zyklus rutschte der Körper um 1,5–2,5 px zurück. Ein Stehbild gibt es im Blatt nicht. Es entsteht aus Bild 2: Das erhobene hintere Bein wird abgeschnitten (je Zeile an der Grenze zum Standbein), eine abgedunkelte Kopie des Standbeins liegt 40 Rohpixel weiter hinten (WALK_STAND). Weil der Standfuß gleich bleibt, ersetzt das Stehbild beim Anhalten den Durchgang ohne Fußsprung."
+  },
+  {
+   "step": "Effekt-Texturen und Textbox",
+   "tool": "prep.py fx ui (NumPy, Pillow, feste Seeds)",
+   "detail": "Aquarell-Flecken mit Trockenrand und Granulation für Lichthof, Rauch und Schatten. Dazu ein Lichtkegel mit Längsstreifen, ein Glanzstrich, eine Möwe in 3 Flügelstellungen und Flammen als 4 Tropfenbilder. Rauschen (Rangausgleich) für die nasse Überblendung, Papier für die Blattrückseite. Die Textbox ist eine Papierkarte mit ausgefranster Kante, kühler Lasur am Rand und einem Pinselstrich als Spaltentrenner. Ein zweiter Lauf von prep.py all ergibt bitgleiche Dateien (geprüft per md5 über assets/ und demo/art/)."
+  },
+  {
+   "step": "Effekt-Lagen messen",
+   "tool": "tools/lights.py, Rasterausschnitte, demo/locations.gd",
+   "detail": "lights.py schlägt helle, warme Flecken vor. Laterne und Fenster im Hafen fand es nicht: Die Laterne verschmilzt mit dem Horizontband zu einem 784 px breiten Fleck, der als Band verworfen wird, das Fenster liegt unter der Helligkeitsschwelle (L ≈ 47 statt > 60). Diese Lagen wurden in Ausschnitten mit Pixelraster abgelesen. Der Dachs steht auf der Oberkante der Kaimauer, auf der Fußhöhe der Poller (y = 492). Im Hafen gibt es keinen Rauch: Die Schornsteinkrone liegt über dem Bildrand, ein Versuch mit Rauch am oberen Rand war nicht zu sehen. Die Flammen in der Stube sind additiv, auf der gemalten orangen Glut waren deckende Flammen kaum zu sehen (nur 22–44 Pixel änderten sich zwischen zwei Zeitpunkten um mehr als 24/255)."
+  },
+  {
+   "step": "Prüfen",
+   "tool": "measure_walk.py, render_check.py, tools/capture.py",
+   "detail": "measure_walk.py prüft die Demo im Prüfmodus (Dachs vor Magenta). Fußzeile in allen 60 Bildern y = 492, 18 Bildwechsel, Standfuß höchstens 1 px versetzt (Mittel 0,22 px), kein Rückwärtsschritt (assets/walk_measure.json). render_check.py: zwei Forward+-Aufnahmen bitgleich (180/180), mobile ohne Abweichung, gl_compatibility im Mittel 0,15–0,21/255, kein Pixel über 8/255 (assets/render_check.json). capture.py endet mit ok, Godot meldet keine Fehler."
+  }
+ ],
+ "godot": [
+  "Projekt 1280×720, stretch canvas_items/keep, Forward+; main.tscn mit Views (Orte), ColorRect Screen (Übergangs-ShaderMaterial) und CanvasLayer UI",
+  "main.gd erzeugt je Ort eine SubViewport (1280×720, disable_3d) mit location.gd. Nur die zwei am Wechsel beteiligten Viewports stehen auf UPDATE_ALWAYS, die übrigen auf UPDATE_DISABLED.",
+  "shaders/composite.gdshader wendet je Ort die LUT an (from_lut/to_lut). mode 1 ist die nasse Überblendung: Rauschmaske plus Verlauf von links, dunkler Trockenrand über fwidth, leichte Verzerrung an der Front. mode 2 ist das Seitenumblättern: Zylinder-Rolle mit Papierrückseite, verkürzter Klappe und Schlagschatten. mode 3 ist die Dither- und Pixelauflösung: Blockgröße 1–8 px, Wechsel je Block nach 8×8-Bayer-Schwelle.",
+  "location.gd baut Hintergrund und Effekte aus locations.gd: additive Lichthöfe mit Flackern, Flammen mit 15 Bildern/s (optional additiv), einen Rauch-Pool mit fposmod, einen Leuchtturmstrahl mit Kosinus-Verkürzung und Aufblitzen zur Kamera, Lichtwanderung, Lichtteilchen, Wasserglitzern auf ganzen Pixeln und Möwen. Alles ist eine reine Funktion der aufsummierten Zeit, Zufall gibt es nur mit festen Seeds.",
+  "badger.gd: Die Position springt nur beim Bildwechsel um den gemessenen Vorschub. Die Schrittzahl ist die zu walk_time nächste, die auf dem Durchgang endet; dort zeigt die Figur das Stehbild (walk.json stand_frame) und atmet um den Fußpunkt. Dämmerungstönung über modulate (0,84 / 0,8 / 0,9).",
+  "Gemessene Haltezeiten des Laufzyklus: das erste Bild 2, das zweite 4, danach je 3 Aufnahmebilder (10 Bilder/s). Die Ursache der Unregelmäßigkeit am Anfang ist nicht untersucht (vermutlich zeigt die SubViewport-Textur ab dem zweiten Bild den Stand des Vorbilds); sie ist in jeder Aufnahme gleich.",
+  "Prüfmodi nach „--“: --badger-only (nur der Dachs vor Magenta, für measure_walk.py) und --no-lut (Vergleich ohne Farbabgleich)"
+ ],
+ "techniques": [
+  "hintergrund-serie",
+  "ki-spritesheet",
+  "nachbearbeitung",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 3,
+  "consistency": 4,
+  "effort": 2,
+  "text_adventure": 5,
+  "mobile": 4
+ },
+ "ratings_note": "ai_fit 3: Die Serie selbst gelingt der KI sehr gut. Mit dem Hafen als einziger Referenz kamen alle drei Folgebilder beim ersten Versuch in derselben Handschrift, mit Licht von links, Dämmerung und eigenem Bildaufbau. Den verlangten Stil trifft sie aber nur teilweise: statt loser Lasuren mit wenigen Formen detailreiche digitale Malerei mit zelliger Papierstruktur, Takelage trotz Verbot, und der Dachs in sauberer Bilderbuch-Technik statt Aquarell. consistency 4: Die vier Hintergründe wirken nach dem Farbabgleich wie aus einer Hand (Farbabstand zum Anker 1,4–5,0 ΔE). Abzüge gibt es für die gröbere Struktur der Folgebilder (Texturmaß 21–30 % über dem Anker, die LUT ändert das nicht) und für die sauberere Figur. effort 2: je Ort ein Prompt aus festen Bausteinen und ein Bild, Schnitt und LUT laufen per Skript; von Hand kamen die Schnittlage je Ort und die Effekt-Lagen dazu. Der Laufzyklus kostete mehr: Reihenfolge messen, Stehbild aus Teilen. text_adventure 5: genau das, was das erste Spiel braucht (Ortsserie, Übergänge, stehende Textbox). mobile 4: geprüft mit mobile (bitgleich zu Forward+) und gl_compatibility (mittlere Abweichung 0,15–0,21/255) an der fertigen Demo. Abzug, weil während eines Wechsels zwei 1280×720-SubViewports plus ein Vollbild-Shader mit zwei LUT-Abtastungen je Pixel laufen; Bildraten auf Geräten sind nicht gemessen.",
+ "verdict": "Für unser Textadventure ist das der empfohlene Weg zu einer Ortsserie: ein gelungenes Ankerbild, die übrigen Orte mit dem Anker als einziger Referenz und festen Serienregeln im Prompt, danach Schnitt je Ort auf eine gemeinsame Horizontzeile und eine Farb-LUT auf den Anker. Mit gpt-image kostete das je Ort einen Versuch, und die Bilder passen zusammen; die LUT gleicht Farbtemperatur und Palette an (Innenräume kamen deutlich wärmer), nicht aber Detailgrad und Pinselstruktur. Den Stil selbst legt das Ankerbild fest: Wer loses Aquarell will, muss am Anker nachbessern, bevor die Serie entsteht, denn die Folgebilder übernehmen auch dessen Postkarten-Detail. Die Übergänge als ein Shader über zwei SubViewports sind billig und austauschbar; die Textbox als stehende Ebene darüber trägt die Orientierung. Die Figur braucht einen eigenen Weg in den Serienstil (sie bleibt sauberer als die Hintergründe), und KI-Laufblätter liefern selten einen sauberen Zyklus oder ein Stehbild.",
+ "pitfalls": [
+  "Der Stilblock (loses Aquarell, wenige große Formen, keine Takelage, kein Postkarten-Detail) wurde nicht getroffen: gpt-image lieferte detailreiche digitale Malerei mit zelliger Papierstruktur, Seilen und Takelage an den Booten. Weil die Folgebilder den Anker übernehmen, gilt das für die ganze Serie. Keine Nachbesserung, weil die Serie damit stimmig ist und eine neue Serie fünf Bilder gekostet hätte.",
+  "Stildrift, die die LUT nicht rettet: Die Folgebilder haben eine gröbere Zellstruktur als der Anker (Texturmaß Anker 7,2, Leuchtturm 9,3, Stube 8,8, Klippe 8,7). Die Innenräume sind wärmer gemalt; die LUT kühlt sie, nimmt dabei aber auch Licht weg (Anteil warmer Lichtinseln im Leuchtturm 11,3 % → 7,9 %, Buntheit 22,6 → 19,8). Ohne LUT wirken die Innenräume amberfarben gegenüber dem blauvioletten Hafen.",
+  "Horizont verfehlt um gut 4 Prozentpunkte (Stube 35,8 %, Klippe 37,3 % statt 40 %). Ausgeglichen durch den Schnitt je Ort, das geht nur innerhalb des Rands, den das 3:2-Bild über 16:9 hinaus hat (bis 15,6 % der Höhe).",
+  "Hafen: Leuchtturmlampe und Schornstein stehen ganz oben im Bild, obwohl der Prompt das obere Zehntel frei verlangte. Die Lampe sitzt nach dem Schnitt bei y = 27, die Schornsteinkrone liegt über dem Bildrand. Deshalb steigt im Hafen kein Rauch auf.",
+  "Stube: Die Wanduhr trägt ziffernähnliche Zeichen und die Seekarte kleine Randmarken. Beides ist unlesbar und auf dem Bildschirm etwa 50 px groß, verletzt aber streng genommen die Schutzregel „no numbers“.",
+  "Die Figur folgt nicht dem Serienstil: Das Laufblatt ist saubere Bilderbuch-Malerei mit feinem Fell, näher am Referenzblatt als am Aquarell-Anker. Eine Dämmerungstönung in Godot bindet sie ein, aus der Nähe bleibt sie glatter als der Hintergrund.",
+  "Das KI-Laufblatt ist kein sauberer Zyklus: zwei Kontaktposen, eine fast doppelte Ausholpose, kein Stehbild. Die Posen sind zeitlich ungleich verteilt: Beim Wechsel Durchgang → Ausholen rückt der Körper 30 px vor, beim Wechsel Ausholen → Kontakt 2 px. Mit festgehaltenem Standfuß macht der Dachs deshalb einmal je Schritt einen sichtbaren Satz nach vorn. Gleichmäßiger Vorschub (13,4 px je Bild) hätte die Füße je Bildwechsel um bis zu 17 px rutschen lassen.",
+  "Das Stehbild ist aus Teilen gebaut (Durchgang ohne erhobenes Bein, Standbein als fernes Bein kopiert). An der Schnittkante über dem fernen Bein bleibt eine kleine Stufe von etwa 2 px.",
+  "Der Dachs kommt nicht von außen ins Bild, er läuft ab x ≈ 285 los: Mit 53,5 px je Schritt (2,5 Schritte/s, 134 px/s) reichen 2 s Hafen nicht, um vom Bildrand bis vor den Steg zu laufen.",
+  "Die Wechsel kommen schnell: Leuchtturm und Stube sind nur je 0,7 s ganz zu sehen, weil der Auftrag 2 s Hafen und drei Wechsel in 6 s verlangt.",
+  "media/capture.json meldet für 4,0–4,5 s 0 % Bewegung, obwohl Feuer und Kerze in der Stube laufen (4,2 gegen 4,6 s: 5358 Pixel ändern sich um mehr als 24/255). capture.py vergleicht nur Bilder im Abstand von 0,5 s, und mehrere Flacker- und Flammenfunktionen haben Perioden nahe 0,5 s.",
+  "Phase 1 rechnete mit agy (Magenta-Freistellung). Codex lieferte echten Alphakanal; prep.py hätte trotzdem einen Magenta-Saum abgezogen und bläuliches Grau am Fellrand verfälscht. Jetzt nur noch bei Schlüsselfarben-Bildern."
+ ],
+ "lessons": [
+  "Stilanker als einzige Referenz plus Ankerabsatz („nur Maltechnik und Farben übernehmen, nicht Aufbau und Inhalt“): gpt-image übernahm in keinem Folgebild Kai, Boote oder Komposition des Hafens, alle drei gelangen beim ersten Versuch.",
+  "Horizont im Rohbild messen und den 16:9-Schnitt je Ort darauf legen, statt neu zu erzeugen: Das 3:2-Format gibt dafür 15 % Spielraum, die KI traf die 40-%-Vorgabe auf gut ±4 Prozentpunkte.",
+  "Eine Farb-LUT je Ort auf die Ankerpalette rettet Farbtemperatur und Palette (Abstand zum Anker etwa halbiert, Innenräume von amber zu blauviolett), aber nicht Detailgrad, Pinselstruktur oder Bildaufbau. Den Stil am Ankerbild entscheiden, nicht in der Nachbearbeitung.",
+  "Übergänge als ein canvas_item-Shader über zwei SubViewport-Texturen: Jeder Ort bleibt eine eigenständige Szene, ein neuer Übergang ist eine Funktion im Shader.",
+  "Farb-LUT als 1024×32-Streifen (32 Scheiben für b, Zeile g, Spalte r) mit trilinearer Abtastung im Shader. Dieselbe Rechnung in Python liefert Vergleichsbilder und Messwerte, ohne Godot zu starten.",
+  "Bei einem KI-Laufblatt die Standfuß-Verschiebung für alle Bildpaare messen (Matrix) und daraus die Reihenfolge wählen: So fallen doppelte Posen und Rückwärtsrutscher auf, bevor die Figur in Godot läuft.",
+  "Ein fehlendes Stehbild lässt sich aus dem Durchgang bauen: erhobenes Bein je Zeile an der Grenze zum Standbein abschneiden, Standbein abgedunkelt und versetzt als fernes Bein dahinterlegen. Weil der Standfuß gleich bleibt, ersetzt es den Durchgang beim Anhalten ohne Fußsprung.",
+  "Animiertes Feuer auf eine gemalte Glut additiv legen: Deckende Flammen in derselben Farbe verschwinden im Bild.",
+  "Herkunft der Freistellung aus der .json neben dem Rohbild lesen (Codex: echter Alphakanal, agy: Schlüsselfarbe) und Saumabzug nur bei Schlüsselfarben anwenden.",
+  "Platzhalter und Ersatzbilder nie nach assets/ schreiben: prep.py legt sie nur in demo/art ab und führt sie in demo/art/placeholders.json. Mit --raw lässt sich die ganze Kette an fremden Bildern testen, ohne Ergebnisse zu verfälschen.",
+  "Folgeaufträge können mit refs auf das Ziel eines früheren Auftrags derselben Datei zeigen (Stilanker). imagequeue.py arbeitet eine Datei der Reihe nach ab."
+ ],
+ "assets": [
+  {"file": "assets/bg_hafen.png", "kind": "background", "made_with": "gpt-image (Codex), Stilanker, 1 Versuch; prep.py bg (Schnitt ab 9,55 %)", "prompt": "assets/raw/hafen.json"},
+  {"file": "assets/bg_leuchtturm.png", "kind": "background", "made_with": "gpt-image (Codex) mit raw/hafen.png als Referenz, 1 Versuch; prep.py bg (Schnitt ab 10,55 %)", "prompt": "assets/raw/leuchtturm.json"},
+  {"file": "assets/bg_stube.png", "kind": "background", "made_with": "gpt-image (Codex) mit raw/hafen.png als Referenz, 1 Versuch; prep.py bg (Schnitt ab 5,86 %)", "prompt": "assets/raw/stube.json"},
+  {"file": "assets/bg_klippe.png", "kind": "background", "made_with": "gpt-image (Codex) mit raw/hafen.png als Referenz, 1 Versuch; prep.py bg (Schnitt ab 7,27 %)", "prompt": "assets/raw/klippe.json"},
+  {"file": "assets/lut/lut_hafen.png", "kind": "lut", "made_with": "prep.py lut: Identität (Anker)", "prompt": ""},
+  {"file": "assets/lut/lut_leuchtturm.png", "kind": "lut", "made_with": "prep.py lut: Lab-Abgleich und Zug zur Ankerpalette, 32³ als 1024×32", "prompt": ""},
+  {"file": "assets/lut/lut_stube.png", "kind": "lut", "made_with": "prep.py lut: Lab-Abgleich und Zug zur Ankerpalette, 32³ als 1024×32", "prompt": ""},
+  {"file": "assets/lut/lut_klippe.png", "kind": "lut", "made_with": "prep.py lut: Lab-Abgleich und Zug zur Ankerpalette, 32³ als 1024×32", "prompt": ""},
+  {"file": "assets/palette_anchor.png", "kind": "palette", "made_with": "tools/sprites.py palette: 24 Farben aus bg_hafen.png", "prompt": ""},
+  {"file": "assets/walk.png", "kind": "sprite", "made_with": "gpt-image (Codex, echter Alphakanal), 1 Versuch; prep.py walk: 4 Laufbilder und ein Stehbild aus Teilen, 140 px", "prompt": "assets/raw/walk.json"},
+  {"file": "assets/walk.json", "kind": "data", "made_with": "prep.py walk: Reihenfolge, Vorschub je Bildwechsel aus dem Standfuß, Stehbild", "prompt": ""},
+  {"file": "assets/drift.json", "kind": "report", "made_with": "prep.py lut: Messwerte zur Stildrift je Ort vor und nach der LUT", "prompt": ""},
+  {"file": "assets/lut_compare.png", "kind": "report", "made_with": "prep.py lut: je Ort links roh, rechts nach LUT, oben die Ankerpalette", "prompt": ""},
+  {"file": "assets/series_sheet.png", "kind": "report", "made_with": "prep.py lut: die vier Orte nach dem Farbabgleich mit Hilfslinien (Augenhöhe, Laufstreifen, Textbox)", "prompt": ""},
+  {"file": "assets/walk_measure.json", "kind": "report", "made_with": "measure_walk.py: Fußzeile, Standfuß und Kopf je Bild in der Godot-Ausgabe", "prompt": ""},
+  {"file": "assets/render_check.json", "kind": "report", "made_with": "render_check.py: Wiederholbarkeit Forward+, Abweichung mobile und gl_compatibility", "prompt": ""},
+  {"file": "assets/render_check.png", "kind": "report", "made_with": "render_check.py: dasselbe Bild in Forward+, mobile und gl_compatibility", "prompt": ""},
+  {"file": "assets/image_jobs.json", "kind": "data", "made_with": "tools/prompts.py: fünf Bildaufträge (vier Orte, Laufzyklus) für tools/imagequeue.py", "prompt": ""},
+  {"file": "assets/raw/walk_layout_ref.png", "kind": "reference", "made_with": "prep.py layout: shared/badger/walk_painted.png mittig auf Magenta (3:2), Layout-Referenz für den Laufzyklus", "prompt": ""},
+  {"file": "assets/ui/textbox.png", "kind": "ui", "made_with": "prep.py ui: Papierkarte mit ausgefranster Kante, Lasur am Rand und Pinselstrich als Spaltentrenner", "prompt": ""},
+  {"file": "assets/fx/glow.png", "kind": "effects", "made_with": "prep.py fx: Aquarell-Lichthof (weicher Kern, schwacher Trockenrand)", "prompt": ""},
+  {"file": "assets/fx/smoke1.png", "kind": "effects", "made_with": "prep.py fx: Rauchfleck mit Trockenrand (1 von 3; in dieser Demo nicht benutzt)", "prompt": ""},
+  {"file": "assets/fx/beam.png", "kind": "effects", "made_with": "prep.py fx: Leuchtturmstrahl als Keil mit Längsstreifen", "prompt": ""},
+  {"file": "assets/fx/glint.png", "kind": "effects", "made_with": "prep.py fx: Glanzstrich für Wasserglitzern", "prompt": ""},
+  {"file": "assets/fx/gull.png", "kind": "effects", "made_with": "prep.py fx: Möwe in drei Flügelstellungen, 4-fach überabgetastet", "prompt": ""},
+  {"file": "assets/fx/flame.png", "kind": "effects", "made_with": "prep.py fx: vier Flammenbilder als Tropfen-Lasuren (Kamin, Kerze)", "prompt": ""},
+  {"file": "assets/fx/shadow.png", "kind": "effects", "made_with": "prep.py fx: Kontaktschatten unter der Figur", "prompt": ""}
+ ],
+ "licenses": [
+  {"item": "Schrift Alegreya (Regular und Italic, variabel)", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/alegreya"},
+  {"item": "Schrift Alegreya SC (Medium)", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/alegreyasc"}
+ ],
+ "image_generations": 5,
+ "tool_issues": [
+  "tools/capture.py schreibt immer nach media/ und kennt keinen Ausgabeordner. Ein Integrationstest mit Platzhaltern oder Ersatzbildern hinterlässt deshalb eine Probeaufnahme in media/, die der Katalog als Ergebnis zeigt. Die eigenen Messskripte haben dafür --out.",
+  "tools/capture.py misst Bewegung nur an Bildpaaren im Abstand von 0,5 s. Bei Animationen mit Perioden nahe 0,5 s kann ein Abschnitt als unbewegt erscheinen; hier meldet capture.json für 4,0–4,5 s 0 %, obwohl die Stube animiert ist.",
+  "PIPELINE.md (Stand 11.10.2026) sagt, Codex habe kein Guthaben und alle Bilder kämen über agy. Die Warteschlange erzeugte diese fünf Bilder aber über Codex; Skripte, die agy-Eigenheiten voraussetzen (Magenta-Saum, *.keyed-src.png), müssen die .json neben dem Bild lesen."
+ ],
+ "status": "done"
+}

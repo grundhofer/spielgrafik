@@ -1,0 +1,14 @@
+{
+ "errors": [],
+ "colours": [
+  "#1B1916",
+  "#E9E3D3"
+ ],
+ "fx_changed_mean": 0.0078,
+ "fx_changed_max": 0.0158,
+ "fx_changed_frame_144": 0.0146,
+ "late_colours": 2,
+ "late_motion": 0.001,
+ "mobile_diff_max": 0.0,
+ "compat_diff_max": 0.0
+}

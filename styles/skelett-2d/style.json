@@ -1,0 +1,246 @@
+{
+ "slug": "skelett-2d",
+ "name": "Puppen- und Skelettanimation 2D",
+ "family": "technik",
+ "kind": "technique",
+ "era": "seit etwa 2000 (Puppenanimation in Flash), als Mesh-Skinning verbreitet seit den 2010ern (Spine, DragonBones, Skeleton2D in Godot)",
+ "summary": "Der gemalte Dachs ist kein Bildstreifen, sondern ein Rig: sieben gemalte Teile aus einem einzigen KI-Teileblatt liegen als Polygon2D-Gitter auf einem Skeleton2D mit 23 Knochen und werden über weiche Gewichte verformt (Mesh-Skinning). Laufen, Abbremsen und Stehen spielt der AnimationPlayer; die Schlüssel sind aus Fußbahnen mit Zwei-Gelenk-IK berechnet, die Standfüße bleiben stehen. Schalenden und Tasche schwingen als Federn nach. Eine Rig-Ansicht oben zeigt live Gitter, Gewichte und Knochen derselben Bewegung.",
+ "references": [
+  "Vanillaware: Odin Sphere (2007), Dragon's Crown (2013) – gemalte Figuren aus vielen Teilen, weich verformt",
+  "UbiArt Framework: Rayman Origins (2011), Child of Light (2014) – gemalte Teile auf verformten Gittern",
+  "Broken Age (Double Fine, 2014) – Point-and-Click-Adventure mit gemalten Skelettfiguren",
+  "Spine-Spiele wie Darkest Dungeon (2016) und Slay the Spire (2019) – Gitterverformung, Knochen, Federbeschränkungen"
+ ],
+ "traits": [
+  "Figur aus sieben gemalten Teilen (Rumpf mit Kopf, naher und ferner Arm, nahes und fernes Bein, zwei Schalenden), getrennt nur dort, wo sich Glieder überdecken; Kopf, Hals, Bauch, Schwanz und Tasche sind Teile desselben Rumpfgitters und biegen sich weich",
+  "Skeleton2D mit 23 Bone2D, sieben Polygon2D mit zusammen 1498 Gitterpunkten und 2528 Dreiecken; je Punkt höchstens 3 Knochen mit Gewicht (gemessen aus badger.tscn)",
+  "Laufen ohne Rutschen: Standfuß in der Godot-Ausgabe über jede Standphase ortsfest (Ferse und Zehe höchstens 1 px Spanne, auch beim Abrollen über den Ballen und beim Bremsen), im Stand 0 px",
+  "Kopf ruhig: Mützenspitze springt von Bild zu Bild höchstens 1 px (Zeilen 503–507 über 6 s)",
+  "Bewegung zwischen den Schlüsseln stufenlos (60 Schlüssel/s, Wiedergabe mit 30 Bildern/s ohne gehaltene Bilder) – anders als Bild-für-Bild auf Zweien",
+  "Textur in jedem Bild dieselbe: kein Flimmern von Kostüm oder Gesicht zwischen den Posen",
+  "Federn nach der Animation: je Schalglied eine gedämpfte Drehfeder (Wind, Fahrtwind, Wippen und Bremsen des Aufhängepunkts), Tasche als Pendel an der Hüfte; das hintere Schalende biegt sich beim Gehen sichtbar nach hinten und schwingt beim Anhalten nach vorn",
+  "Rig-Ansicht: zweite Instanz der Figur mit Gewichtsfarben, Gitter und Knochen; das auf der CPU verformte Gitter liegt zu 96–97 % der Linienpixel innerhalb 1 px auf der GPU-Verformung",
+  "Hafenszene mit Wasserbewegung und Glitzer, Laternenspiegelung, Laternen- und Fensterflackern, kreisendem Leuchtfeuer, Rauch und zwei Möwen; Textfeld mit ui_text in Godot gesetzt"
+ ],
+ "camera": "Feste Seitenansicht über den Kai wie im Hintergrundbild, keine Kamerafahrt; der Dachs läuft seitlich von links unter die Laterne und bleibt stehen",
+ "resolution": "1280×720. Hintergrund aus dem agy-Bild (1264×848 mit gemalten Balken) auf 1227×690 beschnitten und auf 1280×720 vergrößert (×1,04). Figurentexturen im Rig-Maßstab 0,30 des Teileblatts (Figur 256 px hoch, 116 KB für alle sieben PNG), im Bild auf 0,70 verkleinert mit Mipmaps (174–182 px hoch), in der Rig-Ansicht 0,84 (≈215 px)",
+ "pipeline": [
+  {
+   "step": "Prompts bauen",
+   "tool": "scripts/make_prompts.py",
+   "detail": "Stilblock + Motivblock und Schutzregeln wörtlich aus data/motif.json + Formatangabe; Ergebnis in assets/prompts/bg.txt und parts.txt."
+  },
+  {
+   "step": "Hintergrund",
+   "tool": "genimg (agy, verbatim: true), 1536×1024 bestellt",
+   "detail": "Gemalter Abendhafen auf Augenhöhe einer kleinen Figur, leerer Kai als Laufweg, Lichter ohne Strahl und Rauch (werden animiert). Erster Versuch, 60 s. Geliefert 1264×848 JPEG; das Modell hat das Bild als 16:9 mit hellgrauen Balken oben und unten gemalt und trotz Prompt eine Rauchfahne über den Schornstein gesetzt."
+  },
+  {
+   "step": "Hintergrund aufbereiten",
+   "tool": "scripts/prep_bg.py (Pillow, NumPy)",
+   "detail": "Balken weg (Zeilen 57–746), Schnitt auf 16:9, Lanczos auf 1280×720. Rauch entfernt: Maske = heller als der Himmel derselben Zeile (6105 px), zeilenweise aus den Nachbarn gefüllt, Pinselstruktur als Hochpass aus einem Himmelsstück 230 px daneben. Wassermaske über die Farbe (blau/türkis unter dem Horizont, über der Kaikante) für den Shader; Lichtpunkte in assets/scene.json."
+  },
+  {
+   "step": "Teileblatt der Figur",
+   "tool": "genimg mit --backend codex (gpt-image), 1536×1024, Referenzen shared/badger/master_sheet.png (Kostüm) und assets/raw/bg.png (Malweise)",
+   "detail": "Ein Bild: links die zusammengesetzte Figur in Seitenansicht als Vorlage, rechts dieselbe Figur in sechs Teile zerlegt, alle im selben Maßstab, Rumpf ohne Arme und Beine mit ausgemalten Ansatzstellen, Schalenden einzeln. Codex bewusst gewählt: Mit dem agy-Hintergrund als Referenz hätte genimg den Auftrag an agy gebunden (kein echter Alphakanal). Erster Versuch, 74 s, echter Alphakanal (deckend nur 253/254, auf 255 gesetzt)."
+  },
+  {
+   "step": "Teile ausschneiden und zusammensetzen",
+   "tool": "scripts/build_rig.py, rig_def.py, sk_label.py",
+   "detail": "Zusammenhangskomponenten des Alphakanals (eigene Breitensuche, ohne SciPy) liefern genau 7 Teile; die beiden oben verbundenen Schalenden bei x = 1350 getrennt. Lage der Teile über Ankerpunkte, die an Rasterausschnitten des Blatts abgelesen wurden (Kugel des Oberschenkels, Ärmelrundung, Schalwicklung); Prüfbild assets/check/rig_rest.png neben der KI-Gesamtfigur."
+  },
+  {
+   "step": "Gitter und Gewichte",
+   "tool": "scripts/mesh_export.py",
+   "detail": "Je Teil vormultipliziert mit Lanczos auf Rig-Maßstab 0,30; Dreiecksgitter als Raster (5–8 px Zellen, nur Zellen mit Deckung, Diagonalen abwechselnd). Gewichte aus Formeln statt Malen: entlang jeder Gliedmaße eine Teilung der Eins aus smoothstep-Übergängen an Knie (±26 Blatt-px), Knöchel (±14), Ellbogen (±26) und Schalgelenken (±34), oben an Bein und Arm bis 50 % bzw. 60 % Hüfte/Rumpf; im Rumpf Kopf/Hals/Rumpf/Hüfte über die schräge Schalkante, dazu weiche Kreise für Bauch und Schwanz und ein Kasten für die Tasche."
+  },
+  {
+   "step": "Animationen berechnen",
+   "tool": "scripts/bake_anims.py",
+   "detail": "walk (2/3 s, Standanteil 60 %, Knöchelweg 27 px, Hub 9 px, Abrollen über den Ballen in den letzten 12 % der Standphase), stop (0,5 s, Wurzel bremst linear, ferner Fuß setzt nach) und idle (2,4 s: zwei Atemzüge über den Bauchknochen, Blick zur Laterne mit weichem Hals, Schwanzwedeln). Knie per Zwei-Gelenk-IK nach vorn, Hüfthöhe so gesenkt, dass kein Bein über 94 % gestreckt ist; Oberkörper, Kopf und Arme als phasenverschobene Schwingungen. 60 Schlüssel/s; Nähte walk→walk, walk→stop und stop→idle je 0,000°."
+  },
+  {
+   "step": "Szene schreiben",
+   "tool": "scripts/tscn_writer.py",
+   "detail": "demo/badger.tscn: Skeleton2D mit Bone2D-Baum (rest = Ruhelage, Länge und Winkel fest), sieben Polygon2D (polygon, uv, polygons, bones), AnimationPlayer mit AnimationLibrary; Wurzeltempo (67,5 Rig-px/s) und Bremsweg als Metadaten. Zwei Läufe ergeben dieselbe Datei (md5)."
+  },
+  {
+   "step": "Prüfung",
+   "tool": "scripts/measure_badger.py, check_overlay.py, compare_rigid.py",
+   "detail": "Figur allein vor Magenta (--badger-only), Beine einzeln (--only=leg_n/leg_f): Ferse und Zehe in festen Zeilen 2–4 px über der Bodenzeile je Standphase ≤ 1 px Spanne; Kopfsprung ≤ 1 px. Rig-Ansicht gegen GPU: rote Rasterlinien als Textur (GPU) gegen grüne CPU-Kanten, 96–97 % innerhalb 1 px, 98,5 % innerhalb 2 px. Starr gegen weich: 2,9 % der Figurpixel anders (max. 3,8 %). Renderer: mobile pixelgleich, gl_compatibility mittlere Abweichung 0,07 Tonwerte (max. 2). Zwei Läufe bitgleich (120 Bilder, md5). Langzeitlauf 45 s ohne Weglaufen der Federn (Schalwinkel im Stand 1–6°), Bild ab --t0=30 angesehen."
+  },
+  {
+   "step": "Aufnahme",
+   "tool": "tools/capture.py --poster-at 0.535",
+   "detail": "6 s, 30 fps, ohne Godot-Fehler und -Warnungen; Poster bei 3,2 s mitten im Schritt mit vollständigem Textfeld."
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, stretch mode canvas_items, Forward+, nur 2D; keine Plugins",
+  "badger.tscn (erzeugt): Badger (Node2D, Metadaten walk_speed/walk_cycle/stop_time/stop_dist) → Skeleton2D → hip → thigh/shin/foot je Bein, belly, tail, satchel, spine → arm/fore je Seite, neck → head, scarf_b1–3, scarf_f1–3. Polygon2D und Skeleton2D liegen im selben Raum (Einheitstransformation), damit die Gitterpunkte direkt im Knochenraum stehen",
+  "Polygon2D: texture_filter LINEAR_WITH_MIPMAPS, Mipmaps in den .import-Dateien eingeschaltet (Figur wird auf 0,70 verkleinert); internal_vertex_count 0, Dreiecke über polygons; ferne Teile mit color 0,86 abgedunkelt",
+  "Zeichenreihenfolge: ferner Arm, fernes Bein, nahes Bein, Rumpf, hinteres Schalende, naher Arm mit Paket, vorderes Schalende. Beide Beine liegen hinter dem Rumpf: die gerundeten Oberschenkel verschwinden unter der Bauchkante, so öffnet sich beim Schwingen keine Lücke",
+  "AnimationPlayer im Modus ANIMATION_CALLBACK_MODE_PROCESS_MANUAL: main.gd ruft je Bild advance(delta), beim Wechsel play() + seek(); danach rechnet es die Federn, damit die Reihenfolge feststeht. Die Wurzel bewegt sich mit Metadaten-Tempo × 0,70 (Bremsen: v·(τ − τ²/2T))",
+  "Federn: je Schalglied eine gedämpfte Drehfeder auf den lokalen Winkel (Eigenfrequenz 9/8/7 rad/s, Dämpfung 0,35, vier Unterschritte je Bild, Grenze ±34°). Ziel = Auslenkung aus Wind (−40 ± 25 ± 15 px/s²) und Fahrtwind (−1,2·v), verteilt 45/33/22 % auf die Glieder; das erste Glied gleicht 80 % der Halsdrehung aus; Antrieb durch die waagerechte Beschleunigung des Aufhängepunkts (Wippen, Bremsen). Startwerte passend zum Tempo bei t0, sonst gibt es im ersten Bild einen Stoß. Tasche: gedämpftes Pendel aus der Beschleunigung des Aufhängepunkts",
+  "shaders/badger.gdshader: Dämmerungstönung (0,84/0,82/0,92) und warmer Laternenschein nach Bildschirmabstand (FRAGCOORD, damit unabhängig von der Knochenverformung)",
+  "rig_view.gd: zweite Instanz von badger.tscn (AnimationPlayer aus), Bone2D-Transformationen jedes Bild aus der Hauptfigur kopiert; Gewichtsfarben als Polygon2D.vertex_colors mit shaders/weights.gdshader (40 % Mischung, nur wo die Textur deckt); Gitter und Knochen auf der CPU verformt: Endlage = aktuelle Knochenlage im Skelettraum × inverse get_skeleton_rest(), gewichtet gemittelt",
+  "shaders/bg.gdshader: Wasser nur in der Wassermaske, zeilenweise Verschiebung um ganze Pixel (vorn stärker), gelesen nur aus Wasserpixeln; Glitzerstriche aus einem Hash ohne sin; Laternenspiegelung als flackernde Bänder",
+  "fx.gd: Rauchballen (weiche Radialtextur, vorgewärmt), Fenster- und Laternenschein mit Lichtfleck auf dem Kai (additiv), Leuchtfeuer mit zwei Keilen, die sich um die senkrechte Achse drehen (7 s), Möwen als Linienzüge mit Flügelschlag; Wege wiederholen sich, damit die Szene beliebig lange läuft",
+  "Oberfläche: Panel mit StyleBoxFlat, Fredoka als FontVariation (wght 400/500/600), Tipptext über visible_characters, Antworten als RichTextLabel, Parserzeile mit blinkender Schreibmarke; Rig-Ansicht mit JetBrains Mono. Alle Zeichen gegen die cmap geprüft (FontFile.has_char)",
+  "Prüfargumente nach \"--\": --badger-only, --only=<Teile>, --rigid, --no-springs, --t0=<s>, --overlay-check=gpu|cpu"
+ ],
+ "techniques": [
+  "skelett-2d",
+  "mesh-verformung",
+  "ki-teileblatt",
+  "bein-ik",
+  "fuss-halten",
+  "prozedurale-animation",
+  "drahtgitter-overlay",
+  "shader-wasser",
+  "additiver-lichtkegel",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 4,
+  "effort": 3,
+  "text_adventure": 4,
+  "mobile": 4
+ },
+ "ratings_note": "ai_fit 4: Das KI-Teileblatt lieferte im ersten Versuch sieben saubere, gleich große Teile mit Alphakanal und ausgemalten Ansatzstellen, der Hintergrund kam ebenfalls im ersten Versuch; Abzug für den gemalten Rauch, die Balken im Hintergrund, einen praktisch unsichtbaren fernen Arm und Beine ohne erkennbares Knie. Die gesamte Bewegung kommt aus Code (IK, Federn), nicht von der KI. consistency 4: Innerhalb der Animation ist die Figur vollkommen gleich (eine Textur), zwischen Figur und Hintergrund bleibt ein Stilunterschied (feinere Fellstriche und dunklere Linien an der Figur); ob weitere Figuren und Ansichten im selben Strich gelingen, ist nicht geprüft. effort 3: Die Werkzeuge sind gebaut; je weitere Figur bleiben ein Teileblatt, rund 50 abgelesene Anker-, Gelenk- und Sohlenpunkte und das Abstimmen der Bewegungswerte, je Blickrichtung ein eigenes Blatt. mobile 4 geschätzt: GPU-Skinning von 2528 Dreiecken ist billig, mobile pixelgleich und gl_compatibility nahezu gleich (0,07 Tonwerte), aber kein Test auf einem Telefon; die Rig-Ansicht verdoppelt die Figur und verformt ihr Gitter in GDScript.",
+ "verdict": "Für unser Textadventure gut geeignet, wenn wenige wiederkehrende Figuren an Orten laufen, stehen und atmen sollen: Aus einem einzigen KI-Bild entsteht eine Figur, die beliebig viele, weich überblendbare Bewegungen bekommt, ohne dass Kostüm oder Gesicht zwischen Bildern springen, und die Standfüße stehen messbar still. Für Mimik und Gesten zur Kamera reicht eine Seitenansicht nicht; dafür bräuchte es ein zweites Teileblatt (Vorderansicht) oder Bild-für-Bild-Einsätze für Gesicht und Hände, wie sie lebendes-portraet zeigt. Bewusste Abweichung vom Maßstab: Der Dachs ist mit 174–182 px fast so hoch wie die Haustür (196 px), damit Strickschal, Weste und Gesicht lesbar bleiben; die Rig-Ansicht zeigt das Gitter zusätzlich größer.",
+ "pitfalls": [
+  "Hintergrund (agy): bestellt 3:2, gemalt als 16:9 mit hellgrauen Balken oben und unten; beschnitten und dadurch um 4 % vergrößert (leicht weicher). Trotz „no smoke from the chimney“ war eine Rauchfahne gemalt (6105 px), per Zeilenfüllung entfernt.",
+  "Ferner Arm: In der reinen Seitenansicht verdeckt der breite Rumpf ihn fast vollständig, auch beim Schwingen um 22° nach vorn. Ein Sechstel des Teileblatts trägt sichtbar kaum etwas bei; nur in der Rig-Ansicht sind seine Knochen zu sehen.",
+  "Beine: Die KI malte kurze, kugelige Beine ohne Knie, beide fast gleich. Das Knie biegt sich zwar weich, ist bei 180 px Figurenhöhe aber kaum als Gelenk zu erkennen; der Schritt bleibt ein Watscheln mit 27 px Knöchelweg (im Bild 47 px/s, 170 px Weg in 3,3 s).",
+  "Rumpfteil und KI-Gesamtfigur stimmen nicht überein: Der zerlegte Rumpf ist etwa 45 Blatt-px kürzer als der Rumpf der zusammengesetzten Vorlage. Das Rig folgt den Teilen, der Dachs wird dadurch etwas gedrungener als die Vorlage. Die Lage der Teile musste von Hand an Rasterausschnitten abgelesen werden (rund 50 Koordinaten für Anker, Gelenke, Spitzen und Sohlen), nicht automatisch.",
+  "Stil: Die Figur ist feiner gezeichnet (Fellstriche, dünne dunkle Konturen) als der flächige Hintergrund und wirkt ohne Tönung aufgeklebt; die Dämmerungstönung im Shader mildert das nur.",
+  "Fehler im erzeugten tscn: Zahlen ohne Nachkommastelle („0“) liest Godot als int. Eine Werte-Spur mit gemischten int- und float-Schlüsseln (Hüftdrehung, Schwanz im Idle) wurde beim Abspielen übergangen; die Hüfte drehte sich nicht, die IK-Winkel der Beine passten nicht mehr und die Standfüße wanderten 2–3 px. Behoben, indem der Schreiber immer „0.0“ schreibt; danach Spanne ≤ 1 px.",
+  "Starr gegen weich unterscheidet sich bei den hier kleinen Gelenkwinkeln nur in 2,9 % der Figurpixel (max. 3,8 %). Sichtbar ist es an Knöchel, Knie, Hüftrand und Schal: Die starre Fassung reißt dort Löcher von im Mittel 215 px (max. 282 px je Bild) und zeigt treppige Kanten der Gitterzellen (assets/check/vergleich_starr_weich.png). In der Aufnahme selbst sieht man den Unterschied nur, wenn man darauf achtet.",
+  "Gitter als Raster statt entlang der Kontur: 2528 Dreiecke, viele Zellen nur teilweise gedeckt; Werkzeuge wie Spine legen eine Hülle um den Umriss und kommen mit deutlich weniger Punkten aus. In der Rig-Ansicht wirkt das Gitter dadurch kastig.",
+  "Die Rig-Ansicht ist eine Prüf- und Erklärhilfe, kein Spielbestandteil: Sie verdoppelt die Figur, überdeckt etwa 9 % des Bildes und kostet CPU-Zeit (Verformung von 1498 Punkten in GDScript je Bild). Durch das halbtransparente Feld schimmert eine Wolkenlinie des Hintergrunds.",
+  "Keine Mimik und kein Blinzeln: Das Auge ist bei 180 px Figurenhöhe etwa 4 px groß; ein Lid aus Teilen wurde nicht gebaut. Drehungen aus der Bildebene (zur Kamera, Umdrehen) kann das Rig grundsätzlich nicht.",
+  "Tasche: Das Pendel schwingt höchstens 4,6°; im Bild ist die Nachbewegung der Tasche kaum wahrnehmbar, deutlich sind nur die Schalenden.",
+  "Federn, erste Fassung: Die Schalenden als Verlet-Kette mit Rückstellkraft schaukelten sich beim Gehen auf (Gliedwinkel bis ±130°, hinteres Ende eingerollt), dazu ein Stoß im ersten Bild, weil die Wurzelgeschwindigkeit von 0 auf Lauftempo sprang. Ersetzt durch Drehfedern je Glied und Startwerte passend zum Tempo; gemessen danach höchstens 10° je Glied (Summe über die drei Glieder bis etwa 25°), Tasche höchstens 4,6°."
+ ],
+ "lessons": [
+  "Ein KI-Teileblatt mit der zusammengesetzten Figur als Vorlage links und den Teilen rechts („same scale, clear empty space between all pieces, painted complete where limbs attach“) liefert mit Codex in einem Bild konsistente, freigestellte Teile; die Komponentensuche fand ohne Nacharbeit genau sieben Teile. Lücken mussten nicht gefüllt werden, weil das Modell den Rumpf ohne Arme und Beine vollständig ausmalte.",
+  "Gelenke rund anlegen und hinter den Rumpf legen: Kugel-Oberschenkel und gerundete Ärmel verschwinden unter Bauch- und Westenkante; dreht man um den Kugelmittelpunkt, öffnet sich keine Lücke. Teile nur trennen, wo sich Glieder überdecken; Kopf, Hals, Bauch, Schwanz und Tasche bleiben ein Gitter.",
+  "Gewichte aus Formeln statt aus einem Malwerkzeug: eine Teilung der Eins aus smoothstep-Übergängen entlang der Gliedmaße (w0 = 1−a0, w1 = a0(1−a1), …) ist reproduzierbar, höchstens drei Knochen je Punkt, und die starre Vergleichsfassung entsteht automatisch (Dreieck ganz am stärksten Knochen).",
+  "Animationen aus Fußbahnen berechnen und dicht schlüsseln (60/s): Standfuß im Weltraum festhalten (im Figurenraum mit −v), Zwei-Gelenk-IK mit Knie nach vorn, Abrollen um den Fußballen statt um die Knochenspitze, Schwungbahn als Hermite-Kurve mit Weltgeschwindigkeit 0 an Abheben und Aufsetzen. Wurzeltempo und Bremsformel als Metadaten in die Szene schreiben, dann rutscht nichts (gemessen ≤ 1 px).",
+  "In erzeugten .tscn-Dateien Gleitkommawerte immer mit Dezimalpunkt schreiben; eine Werte-Spur mit gemischten Typen spielt Godot nicht ab, ohne eine Meldung auszugeben. Prüfen mit einem kleinen SceneTree-Skript, das nach seek() die Knochenlagen ausgibt.",
+  "AnimationPlayer im manuellen Modus (advance je Bild) macht die Reihenfolge Animation → Federn → Zeichnen fest; Nachschwingen von Schal und Tasche nach der Animation entspricht den Federbeschränkungen in Spine 4.2. Je Glied eine gedämpfte Drehfeder ist leicht abzustimmen und kann nicht umklappen; eine erste Fassung als Verlet-Kette mit Rückstellkraft schwang beim Gehen auf und knickte das hintere Schalende um bis zu 130°.",
+  "Rig-Ansicht ohne Editor: zweite Instanz, Bone2D-Transformationen kopieren, Gewichte als vertex_colors mit einem kleinen Mischshader; die CPU-Verformung (aktuelle Lage × inverse get_skeleton_rest()) stimmt mit der GPU überein und lässt sich mit Rasterlinien als Textur nachmessen.",
+  "Bone2D.bone_angle steht in der .tscn in Grad, get_bone_angle() liefert Bogenmaß.",
+  "Polygon2D mit Skeleton2D läuft in gl_compatibility praktisch gleich (0,07 Tonwerte Abweichung) – die Technik ist für schwache Geräte und den Web-Export geeignet.",
+  "Wenn ein Hintergrund als Stilreferenz eines freizustellenden Bildes dient, bindet genimg den Auftrag an dessen Backend; für echten Alphakanal bewusst --backend codex wählen und den Grund in pipeline nennen."
+ ],
+ "vergleich_starr_weich_bild_fuer_bild": [
+  "Weich verformt (diese Demo): ein KI-Bild für die ganze Figur, 23 Knochen, sieben Gitter. Neue Bewegungen kosten keine Bilder, nur Schlüssel (hier berechnet, im Editor von Hand möglich); zwischen den Schlüsseln wird stufenlos interpoliert, Übergänge lassen sich überblenden. Kostüm und Gesicht sind in jedem Bild identisch. Grenzen: nur Bewegungen in der Bildebene, Silhouette und Faltenwurf bleiben die des einen Bildes, Mimik fehlt.",
+  "Starr (dieselben Teile, jedes Dreieck ganz am stärksten Knochen, --rigid): gleicher Aufwand, aber an Knöchel, Knie, Hüftrand und Schal öffnen sich Fugen von im Mittel 215 px und die Zellkanten treppen; 2,9 % der Figurpixel weichen ab. Echte Puppenanimation braucht deshalb eigens überlappend gezeichnete Gelenke und sieht dann nach Papierpuppe aus (papier-collage, silhouette-scherenschnitt).",
+  "Bild-für-Bild (z. B. zeichentrick-cel, bilderbuch-gouache): jede Pose ein eigenes Bild, dadurch lebendigere Silhouetten, Überschneidungen und Verkürzungen; aber jede neue Bewegung kostet neue KI-Bilder, KI-Laufzyklen enthalten oft fast gleiche oder doppelte Posen, und ganze KI-Bilder unterscheiden sich in vielen Einzelpixeln (Flimmern von Kostüm und Gesicht, siehe PIPELINE.md). Wiedergabe auf Zweien (15 Bilder/s) statt stufenlos.",
+  "Für unser Spiel: Skelett für wiederkehrende Grundbewegungen (Gehen, Stehen, Atmen, Kopfwenden), Bild-für-Bild oder Teiletausch nur für einzelne ausdrucksstarke Momente (Gesten, Mimik)."
+ ],
+ "assets": [
+  {
+   "file": "assets/bg.png",
+   "kind": "background",
+   "made_with": "agy (Gemini) + prep_bg.py (Balken weg, Rauch entfernt, 16:9, 1280×720)",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/bg_mask.png",
+   "kind": "mask",
+   "made_with": "prep_bg.py: R Wasser (über die Farbe), G Himmel",
+   "prompt": ""
+  },
+  {
+   "file": "assets/badger_body.png",
+   "kind": "character-part",
+   "made_with": "Codex (gpt-image) Teileblatt + build_rig.py: Rumpf mit Kopf, Schalwicklung, Tasche, Schwanz; Rig-Maßstab 0,30",
+   "prompt": "assets/raw/parts.json"
+  },
+  {
+   "file": "assets/badger_arm_n.png",
+   "kind": "character-part",
+   "made_with": "Codex Teileblatt + build_rig.py: naher Arm mit Paket",
+   "prompt": "assets/raw/parts.json"
+  },
+  {
+   "file": "assets/badger_arm_f.png",
+   "kind": "character-part",
+   "made_with": "Codex Teileblatt + build_rig.py: ferner Arm",
+   "prompt": "assets/raw/parts.json"
+  },
+  {
+   "file": "assets/badger_leg_n.png",
+   "kind": "character-part",
+   "made_with": "Codex Teileblatt + build_rig.py: nahes Bein",
+   "prompt": "assets/raw/parts.json"
+  },
+  {
+   "file": "assets/badger_leg_f.png",
+   "kind": "character-part",
+   "made_with": "Codex Teileblatt + build_rig.py: fernes Bein (im Blatt schon dunkler)",
+   "prompt": "assets/raw/parts.json"
+  },
+  {
+   "file": "assets/badger_scarf_b.png",
+   "kind": "character-part",
+   "made_with": "Codex Teileblatt + build_rig.py: hinteres Schalende",
+   "prompt": "assets/raw/parts.json"
+  },
+  {
+   "file": "assets/badger_scarf_f.png",
+   "kind": "character-part",
+   "made_with": "Codex Teileblatt + build_rig.py: vorderes Schalende",
+   "prompt": "assets/raw/parts.json"
+  },
+  {
+   "file": "demo/badger.tscn",
+   "kind": "rig",
+   "made_with": "build_rig.py → mesh_export.py, bake_anims.py, tscn_writer.py: Skeleton2D, Polygon2D-Gitter mit Gewichten, AnimationPlayer (walk, stop, idle)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/rig.json",
+   "kind": "data",
+   "made_with": "build_rig.py: Knochen, Gitterzahlen, Gang- und Prüfwerte",
+   "prompt": ""
+  },
+  {
+   "file": "assets/check/rig_rest.png",
+   "kind": "check",
+   "made_with": "build_rig.py: Ruhelage der zusammengesetzten Teile mit Knochen neben der KI-Gesamtfigur",
+   "prompt": ""
+  },
+  {
+   "file": "assets/check/vergleich_starr_weich.png",
+   "kind": "check",
+   "made_with": "compare_rigid.py: Godot-Ausgabe weich | starr | Unterschied (Bilder 18, 102, 150)",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Fredoka (variabel)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/fredoka"
+  },
+  {
+   "item": "Schrift JetBrains Mono (variabel)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/jetbrainsmono"
+  },
+  {
+   "item": "Hash without Sine (Shader-Funktion), Copyright (c) 2014 David Hoskins – in demo/shaders/bg.gdshader",
+   "license": "MIT",
+   "source": "https://www.shadertoy.com/view/4djSRW"
+  }
+ ],
+ "image_generations": 2,
+ "tool_issues": [],
+ "status": "done"
+}

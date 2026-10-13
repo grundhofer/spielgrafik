@@ -1,0 +1,117 @@
+{
+ "slug": "browser-vektor",
+ "name": "Vektor-Cartoon der Browserspiel-Ära",
+ "family": "grafisch",
+ "kind": "style",
+ "era": "2000–2012",
+ "summary": "Cartoon aus Vektorformen, wie ihn Browserspiele und Raum-Fluchtspiele der 2000er Jahre zeigten: flache Füllungen mit wenigen linearen und radialen Verläufen, fast schwarze Konturen, die wie Pinselstriche an- und abschwellen, Glanzlichter als helle Formen. Die Figur ist eine Symbol-Puppe aus wenigen Teilen, bewegt über Bewegungs-Tweens mit Easing und Stauchen/Strecken, Wellen und Segel über Form-Tweens, alles auf 24 Bilder/s gerastert. Die Bühne 550×400 steht mittig mit grauem Rand, darin eine Raum-Fluchtspiel-Oberfläche mit Hand-Mauszeiger, Inventarleiste und Textzeile. Szene, Figur und Oberfläche sind vollständig aus GDScript-Code gezeichnet (Polygon2D), ohne KI-Bild.",
+ "references": [
+  "Crimson Room (Toshimitsu Takagi 2004): Raum-Fluchtspiel im Browser, ein Raum, Klickpunkte, Inventarleiste",
+  "Submachine-Reihe (Mateusz Skutnik ab 2005): Point-and-Click-Rätsel im Browser mit Inventar und Pfeilen zum Weitergehen",
+  "Grow-Reihe (Eyezmaze, On Yamamoto ab 2002): runde Vektor-Cartoonfiguren, Klickobjekte, Tween-Animation",
+  "The Fancy Pants Adventures (Brad Borne 2006): Konturen mit Pinseldruck, spitze Strichenden",
+  "Alien Hominid (Browserfassung, Tom Fulp und Dan Paladin 2002): dicke schwarze Konturen, flache Farben",
+  "Macromedia/Adobe Flash als Werkzeug: Standardbühne 550×400, Pinselwerkzeug speichert Striche als Füllflächen, Symbol-Instanzen mit Bewegungs- und Form-Tween"
+ ],
+ "traits": [
+  "Bühne 550×400 (11:8) mittig: auf 1280×720 mit Faktor 1,8 als 990×720 gezeichnet, links und rechts je 145 px grauer Rand (#8f8f91). Alles außerhalb der Bühne ist über ein Control mit clip_contents abgeschnitten (Rauch und Strahl laufen sauber am Bühnenrand aus).",
+  "Alles ist Vektorform: 611 Formen als Polygon2D aus Code (260 Füllungen, 351 Konturbänder, 15 904 Punkte), keine Bilddatei in der Demo (assets/scene_stats.json). 21 Verläufe: Himmel (5 Stufen von #1c1745 bis #ffb560), Meer (4 Stufen, am Horizont rosa gespiegelt), Kaifläche, radial-additive Lichtscheine (Leuchtfeuer, Laterne, Fenster), Fensterglas und Laternenglas, dazu in der Oberfläche Leiste, 7 Inventarfelder, Tonknopf und 3 Hinweisschilder. Alle übrigen Flächen sind flach.",
+  "Konturen wie mit dem Pinselwerkzeug: fast schwarz (#1a1320), als gefülltes Band mit eigener Breite je Punkt. Geschlossene Konturen sind auf der Schattenseite (unten rechts) dick und auf der Lichtseite dünn, z. B. Hauswand 2,2 Bühnenpixel (4,0 px im Bild) unten rechts und 0,9 (1,6 px) oben links; an einzelnen Stellen setzt der Strich fast ab (Fass, Weste, Felsnase). Offene Striche (Fugen, Dachschiefer, Felsrisse, Falten, Mund, Krallen, Wellenkämme) laufen an beiden Enden spitz aus. Hintergrund (Wolken, Inseln) mit dünnerer, violett getönter Kontur.",
+  "Glanzlichter als helle Formen statt Verlauf: Mützenkrone, Nase, Augenpunkt, Fass, Fenster- und Leuchtturmscheibe, Bootsrumpf, Kistenecke, Schlüssel, Kompass, Tonknopf; Eigenschatten als dunklere Fläche ohne Kontur (Wand unter der Traufe, Turmseite, Fels, Weste, Schal, Paket).",
+  "Symbol-Puppe aus 9 Teilen mit Drehpunkt (Kopf, Rumpf, Arm nah, Arm fern, Schalende, 2 Beine, 2 Füße) plus Auge (Blinzeln über scale.y, 2 Bilder lang) und Pupille (Blick zum Paket, dem fliegenden Paket nach, zum Zeiger); Teilebogen in assets/puppet_parts.png. Gang: 11 Schritte zu 18 Bühnenpixeln plus Schlussschritt, je 5 Bilder bei 24 fps (0–2,5 s); bei jedem Aufsetzen staucht der Rumpf um 2,2 %, beim Anhalten um 8,5 % mit elastischem Nachfedern, beim Freudenhüpfer (5,3 s) Ausholen 10 %, Strecken 9 %, 9 Bühnenpixel Sprunghöhe.",
+  "Gemessen (scripts/measure_badger.py, assets/badger_measure.json): Jeder Fuß einzeln eingefärbt gerendert, in allen 32 (naher Fuß) und 34 (ferner Fuß) Folgebild-Paaren mit aufstehendem Fuß 0 px Versatz; Fußzeile im Differenzbild in allen 61 Gangbildern und 65 Standbildern Zeile 581; Kopf wippt im Gang zwischen Zeile 421 und 429, höchstens 4 px je Bild; im Stand atmet er zwischen 421 und 425; beim Hüpfer hebt die Fußzeile bis 565 ab und landet wieder auf 581.",
+  "Animation auf 24 Bilder/s gerastert: Alle Tweens sind angehalten und werden je 1/24 s mit custom_step weitergeschaltet. In der 30-fps-Aufnahme gleichen 36 von 179 Bildern exakt ihrem Vorgänger (jedes fünfte, Bild 4, 9, 14 …).",
+  "Form-Tweens (gleiche Punktzahl, Kontrollpunkte linear verschoben, Kurve und Kontur neu berechnet): 26 Wellenkämme, 6 Bänder der Sonnenspiegelung, 2 Wasserlinien an den Rümpfen, Segel bläht sich, Wimpel flattert, Flügelschlag der 2 Möwen. Bewegungs-Tweens mit Easing: Boote schaukeln (Drehung ±0,045 und ±0,06 rad plus Hub), Laterne pendelt (±0,07 rad), 4 Rauchkringel steigen, wachsen, drehen und verblassen, Wolken treiben, Sterne funkeln, Möwen ziehen im Bogen; Leuchtfeuer dreht sich (Strahl als Projektion scale.x = cos θ, Umlauf 4,4 s, Blitz, wenn er zum Betrachter zeigt); Laterne flackert je Bild mit fester Saat.",
+  "Raum-Fluchtspiel-Oberfläche: Pfeil-Mauszeiger, der über Klickpunkten zur weißen Zeigehand wird; Hinweisschild mit Überschwingen an Leuchtturm, Paket und Dachs (die drei choices aus ui_text); Klick mit Druck auf die Hand und auslaufendem Ring; das Paket staucht, streckt sich, fliegt im Bogen mit einer Drehung ins fünfte Inventarfeld, das elastisch nachfedert. Leiste unten mit Textzeile (ui_text.line), Inventar mit Schlüssel, Brief, Kompass und Karte als Vektor-Icons, Ortsname in Gelb, runder Tonknopf mit Glanz, Pfeile links und rechts zum Weitergehen. Schrift Baloo 2 (500 und 800). Die Leiste deckt 12,8 % des Bildes, mit Hinweisschild und Pfeilen etwa 14 %."
+ ],
+ "camera": "Seitenansicht, feste Kamera auf die ganze Bühne. Häuschen links angeschnitten, Steg führt leicht verkürzt aufs Wasser, zwei Boote links und rechts davon, Felsnase mit Leuchtturm rechts, Laterne, Fässer und Kisten rechts vorn; der Dachs läuft von links ins Bild und hält bei x 170 (Bühne), das Paket liegt bei x 304 auf dem Kai.",
+ "resolution": "Bühne 550×400 (11:8) in Vektorformen, gezeigt als 990×720 mittig auf 1280×720 mit grauem Rand; Kantenglättung 8×-MSAA (Forward+, Mobile) bzw. 2×2-Überabtastung im SubViewport (Compatibility); Animation 24 Bilder/s. Quadratische Pixel.",
+ "pipeline": [
+  {"step": "Vektor-Bibliothek", "tool": "demo/vec.gd (GDScript)", "detail": "Formen: abgerundete Polygone (rpoly), glatte Kurven (Catmull-Rom, doppelter Punkt = Ecke), Kapseln, Ellipsen. Füllung flach oder als Verlauf über GradientTexture2D mit UV je Punkt (linear 512×4, radial 128×128; UV ist affin zur Lage, daher exakt). Konturen: ink() für geschlossene Formen mit Breite nach Lichtrichtung und optionalen Absetzstellen, stroke() für offene Pinselstriche mit spitzen Enden. Beide als Band aus Vierecken (Polygon2D.polygons), damit enge Kurven nicht zu sich selbst schneidenden Polygonen werden, die Godot ohne Meldung verwirft. Polygon-Bänder statt Line2D mit width_curve gewählt, weil die Breite je Punkt aus der Lichtrichtung kommt; Line2D wurde nicht verglichen."},
+  {"step": "Szene zeichnen", "tool": "demo/harbor.gd (468 Zeilen, Bühnenkoordinaten 550×400)", "detail": "Himmel, Sterne, Wolken, Strahl, Inseln, Meer mit Wellen und Spiegelung, Felsnase mit Leuchtturm, Steg und zwei Boote, Häuschen mit Schornstein, Fenster und Tür, Kai mit Fugen, Laternenpfahl, Laterne, Tau, Fässer, Kisten, Paket. Koordinaten von Hand, etwa sechs Durchgänge Rendern (scripts/still.sh) – Ansehen – Ändern; dabei Boote und Laternenpfahl versetzt, weil Mütze und Rumpf des Dachses sonst vor dem Bootsrumpf standen und der Pfahl Boot B durchschnitt."},
+  {"step": "Figur als Symbol-Puppe", "tool": "demo/badger.gd", "detail": "Jedes Teil ist ein Drehpunkt-Knoten mit einer Gegen-Verschiebung darunter, so wird alles in Puppen-Koordinaten (Boden y = 0) gezeichnet und nur über position/rotation/scale bewegt. Gang als umgekehrtes Pendel mit festem Standfuß (Hüfte sinkt um 60 % des Pendelwegs), Beine zwischen Hüfte und Knöchel gedreht und gestreckt, Füße als eigene Knoten, Schwungfuß mit Sinus-Easing und 3,6 Bühnenpixeln Hub. Ferne Gliedmaßen mit modulate (0,68/0,68/0,76) abgedunkelt."},
+  {"step": "Oberfläche", "tool": "demo/ui.gd", "detail": "Leiste, Inventarfelder, Icons, Tonknopf, Pfeile, Hinweisschilder und beide Mauszeiger als Vektorformen in der Bühne; Label mit Baloo 2 als FontVariation (wght über TextServer.name_to_tag). Weil die Labels mit der Bühne um 1,8 vergrößert werden, rastert die Schrift mit oversampling = 2 (Import-Einstellung, im SubViewport 4)."},
+  {"step": "Animation", "tool": "demo/main.gd, demo/morph.gd (Tween, custom_step)", "detail": "Alle Abläufe sind Godot-Tweens (Bewegungs-Tweens mit TRANS_SINE/CUBIC/BACK/ELASTIC, Form-Tweens über tween_method auf morph.gd), sofort angehalten und in _process je 1/24 s weitergeschaltet. Endlosschleifen mit Phasenversatz über custom_step beim Anlegen. --t0 spult in 1/24-Schritten vor, daher gleiches Ergebnis wie ein Lauf von Anfang an."},
+  {"step": "Zusammenfassen", "tool": "vec.gd bake()", "detail": "Unbewegte, einfarbige Polygon2D einer Gruppe werden in Zeichenreihenfolge zu MeshInstance2D mit Eckpunktfarben zusammengefasst; Verläufe, additive Scheine, animierte Teile und Labels bleiben eigene Knoten an derselben Stelle der Reihenfolge. 509 Formen werden zu 64 Netzen, Zeichenaufrufe je Bild 591 → 159. scripts/compare_bake.py: höchstens 0,006 % der Pixel (rund 55 Kantenpixel) weichen um mehr als 24 ab, durch andere Dreieckszerlegung."},
+  {"step": "Kantenglättung je Renderer", "tool": "project.godot msaa_2d = 8×; main.gd SubViewport", "detail": "Compatibility (Web-Export) kann kein 2D-MSAA. Dort zeichnet die Demo die Bühne doppelt so groß in einen SubViewport (1980×1440) und zeigt ihn als Sprite2D mit Faktor 0,5 und linearer Filterung (2×2-Mittelwert). scripts/compare_renderers.py bei t = 3,4 s: Mobile pixelgleich mit Forward+; Compatibility weicht bei 1,43 % der Pixel um mehr als 24 ab (Kanten), ohne Überabtastung waren es 2,27 % mit sichtbaren Treppen."},
+  {"step": "Prüfen", "tool": "scripts/measure_badger.py, compare_renderers.py, compare_bake.py, still.sh", "detail": "Fußmessung mit --probe-feet=near|far (ein Fuß eingefärbt, der andere und was ihn verdeckt ausgeblendet), Kopf- und Fußzeile über Differenzbild mit und ohne Dachs (--probe-measure, --probe-no-badger), Doppelbilder des 24-fps-Rasters in der normalen Aufnahme. Einzelbilder von Klick, Paketflug und Hüpfer gerendert und angesehen. Langlauf ab t0 = 30 s gesichtet: Schleifen laufen weiter (Möwen kehren zurück, Wolken pendeln, Rauch steigt nach), keine Lücken oder Sprünge; die Handlung bleibt im letzten Zustand (Hand auf dem Dachs) stehen."},
+  {"step": "Teilebogen", "tool": "demo/puppet.tscn", "detail": "Rendert die Puppe zusammengesetzt und auseinandergezogen mit Drehpunkten nach assets/puppet_parts.png (nur Doku)."},
+  {"step": "Aufnahme", "tool": "tools/capture.py --poster-at 0.567", "detail": "Poster = Bild 102 (t = 3,4 s): Dachs steht nach dem Anhalten, Zeigehand auf dem Paket mit Schild „Das Paket ansehen“, Strahl des Leuchtturms nach links, Rauch steigt. Keine Godot-Fehler oder -Warnungen in Forward+."}
+ ],
+ "godot": [
+  "project.godot: 1280×720, stretch disabled, anti_aliasing/quality/msaa_2d = 3 (8×), Hintergrund #8f8f91 als default_clear_color (grauer Rand), Forward+; keine Bilddateien, keine Shader, keine Plugins",
+  "main.tscn enthält nur den Wurzelknoten; main.gd baut Bühne, Szene, Puppe und Oberfläche beim Start aus Code. Bühne = Node2D mit scale 1,8 in einem Control (clip_contents) an x 145",
+  "Konturbänder: Polygon2D mit polygon = linke + rechte Kante und polygons = ein Viereck je Abschnitt; Verläufe: GradientTexture2D + Polygon2D.uv in Texturpixeln; Lichtscheine mit CanvasItemMaterial blend_mode Add",
+  "24-fps-Raster: frame = floor(t·24); bei jedem neuen Bild custom_step(1/24) auf alle angehaltenen Tweens, danach Posen und Flackern anwenden. --probe-cont schaltet das Raster zum Vergleich ab",
+  "Schrift: fonts/Baloo2-wght.ttf, Import mit oversampling = 2.0. MSDF wurde verworfen (Artefakte in der variablen Schrift, siehe pitfalls)",
+  "Compatibility: automatisch SubViewport 2× + Sprite2D 0,5 (RenderingServer.get_current_rendering_method()); --probe-ssaa erzwingt das auch in Forward+",
+  "Zeichenaufrufe bei Bild 20: 159 (Forward+) bzw. 160 (Compatibility), 269 Objekte, rund 14 300 Primitive; ohne bake 591 (--probe-nobake)",
+  "Prüfschalter nach --: --t0=<s>, --probe-measure, --probe-no-badger, --probe-feet=near|far, --probe-nobake, --probe-ssaa, --probe-cont, --probe-stats"
+ ],
+ "techniques": [
+  "textoberflaeche",
+  "gliederpuppe",
+  "bewegungs-tween",
+  "form-tween",
+  "pinselkontur",
+  "fuss-halten",
+  "prozedurale-animation",
+  "additiver-lichtkegel",
+  "farbverlauf-himmel",
+  "grundformen-per-code",
+  "vertexfarben-backen"
+ ],
+ "ratings": {
+  "ai_fit": 1,
+  "consistency": 4,
+  "effort": 4,
+  "text_adventure": 4,
+  "mobile": 4
+ },
+ "ratings_note": "ai_fit 1, weil die KI zu diesem Eintrag nichts beigetragen hat: Es wurde kein Bild erzeugt (image_generations 0), Szene, Figur und Oberfläche sind Code; ob ein Bildmodell als Vorlage zum Nachzeichnen hilft, wie der Auftrag es vorsieht, ist nicht geprüft. consistency 4: Alle Formen gehen durch dieselben Hilfsfunktionen (Konturfarbe, Lichtrichtung, Strichenden), dadurch passen Strichstärke und Glanzlichter über Szene, Figur und Icons zusammen; Farben stehen aber je Datei frei im Code, ein Palettenprüfer fehlt. effort 4: Der Hafen sind rund 470 Zeilen von Hand gesetzter Koordinaten und etwa sechs Durchgänge Rendern–Ansehen–Ändern; jeder weitere Raum kostet ähnlich viel, solange kein Vektorprogramm mit Import angebunden ist. Die Puppe ist dagegen schnell neu animiert. text_adventure 4: Die Oberfläche eines Raum-Fluchtspiels (Klickpunkte, Inventar, Textzeile) passt direkt zu einem Adventure, und Puppe, Hinweisschilder und Inventarflug kosten fast nichts; der Aufwand je Raum spricht gegen viele Orte. mobile 4 ist geschätzt, nicht auf Telefonen gemessen: Mobile ist pixelgleich mit Forward+, Compatibility läuft mit Überabtastung (vierfache Pixelfläche der Bühne) fehlerfrei; nach dem Zusammenfassen 159 Zeichenaufrufe je Bild.",
+ "verdict": "Für unser Godot-Textadventure ist der Stil eine gute Wahl, wenn das Spiel wie ein Raum-Fluchtspiel bedient wird: wenige, liebevoll gezeichnete Orte, Klickpunkte mit Zeigehand, Inventar und eine Textzeile. Die Grafik bleibt bei jeder Auflösung scharf, läuft auch im Web-Export (Compatibility, mit Überabtastung) und braucht keine Bilddateien. Teuer ist das Zeichnen der Orte: Koordinaten von Hand im Code sind für einen Probeort tragbar, für ein ganzes Spiel sollten Räume in einem Vektorprogramm gezeichnet und importiert werden. Weil Pinselstriche dort ohnehin als Füllflächen gespeichert werden können (Kontur in Pfad umwandeln), würde ein SVG-Import wie in flat-vektor reichen; das ist hier nicht erprobt. Figuren als Symbol-Puppen mit Tweens sind billig zu animieren und wiederzuverwenden; Mimik geht über Teile (Blinzeln, Pupille, Kopfneigung).",
+ "pitfalls": [
+  "Labels in der um 1,8 vergrößerten Bühne waren unscharf, weil die Schrift in Grundgröße gerastert und dann hochskaliert wurde. MSDF (multichannel_signed_distance_field) machte sie scharf, zeigte aber Punkte in den Innenräumen von e und o, weil sich die Umrisse der variablen Schrift überlappen. Gelöst über oversampling = 2.0 im Import (im SubViewport 4).",
+  "Compatibility (also auch der Web-Export, der Nachfolger des Browser-Plugins) kann kein 2D-MSAA (Warnung „2D MSAA is not yet supported for GLES3“): 2,27 % der Pixel wichen mit Treppenkanten ab. Behoben über einen doppelt großen SubViewport; der kostet die vierfache Pixelfläche der Bühne. Der erste Versuch mit TextureRect zeigte den SubViewport ungeschrumpft und angeschnitten (Größe wurde beim Setzen von expand_mode zurückgesetzt); mit Sprite2D und scale 0,5 klappt es.",
+  "Jede Form ein Polygon2D ergab 591 Zeichenaufrufe je Bild. Das Zusammenfassen zu Netzen mit Eckpunktfarben senkt das auf 159, ändert aber rund 55 Kantenpixel je Bild, weil Vierecke und Polygone anders in Dreiecke zerlegt werden. Formen mit Verlauf bleiben einzelne Knoten und unterbrechen die Netze.",
+  "24 Bilder/s gehen nicht in 30 fps auf: In der Aufnahme wiederholt sich jedes fünfte Bild (36 von 179), gleichmäßige Bewegungen (Zeiger, Paketflug, Gang) laufen im Takt 4:1 leicht ungleichmäßig, bei 60 Hz wären es 3:2. PIPELINE.md empfiehlt 15, 10 oder 6 Bilder/s; der Auftrag verlangt ausdrücklich 24 Bilder/s, weil das zum Stil gehört. Dem Auftrag gefolgt und hier gemeldet; für ein Spiel wäre zu entscheiden, ob 24 oder 15 Bilder/s gelten sollen.",
+  "Tween-Reihenfolge: Nach tween_interval() und set_parallel(true) lief der nächste Tweener im selben Schritt wie die Pause, also ab 0 s (Kopfdrehung zum Paket); es braucht chain(). PropertyTweener.from() mit set_delay() setzt den Startwert erst nach der Verzögerung: Die Rauchkringel blieben 1,8 s je Umlauf unsichtbar und tauchten nur oben am Bildrand auf. Ersetzt durch tween_method für die Deckkraft.",
+  "Nach --t0 stand der Dachs am linken Bildrand, weil die Standpose die Hüfte aus der letzten Gangpose las, die beim Vorspulen nie berechnet wurde. Die Standpose rechnet jetzt immer zuerst die Endpose des Gangs.",
+  "Die Fußzeile sprang im Gang zwischen Zeile 581 und 582: Die Kapsel des Beins ragte 0,6 Bühnenpixel unter die Pfotensohle. Kapsel um 1,5 Bühnenpixel gekürzt, seitdem 581 in allen Gang- und Standbildern. Die erste Fußmessung über Bodenkontakt-Gruppen meldete bis 33 px Versatz, weil sich die Pfoten berühren und das nahe Bein die ferne Pfote verdeckt; erst die Messung je Fuß mit ausgeblendetem Gegenstück ergab die 0 px.",
+  "Der ferne Arm liegt in der Seitenansicht fast immer hinter dem Rumpf und ist nur im Teilebogen zu sehen; der nahe Arm hält das Paket und schwingt kaum. Die kurzen Beine sind unter dem Rumpf fast verdeckt, der Gang liest sich als Watscheln mit sichtbaren Pfoten.",
+  "Erste Fassung: Mütze und Kopf des Dachses standen genau vor dem Rumpf von Boot A, der Laternenpfahl schnitt Boot B in der Mitte; die Felsbrocken an der Wasserlinie lagen hinter der Kaikante und waren unsichtbar. Boote, Pfahl, Fässer und Kisten verschoben, Brocken über die Kaikante gesetzt.",
+  "Inhaltlich doppelt: Der Dachs trägt laut Figurenvorgabe ein eigenes Paket unter dem Arm, und auf dem Kai liegt ein zweites, das der Spieler aufnimmt. Für das Spiel sollte eines davon wegfallen.",
+  "Bewusste Abweichung: Die Parserzeile (ui_text.parser_prompt „> nimm paket“) fehlt, weil Raum-Fluchtspiele keine Eingabezeile haben; die drei Auswahlen erscheinen stattdessen als Hinweisschilder an den Klickpunkten.",
+  "Maßstab: Der Dachs ist mit Mütze 160 px hoch, die Haustür 155 px; als Cartoon tragbar, für ein Spiel mit Türen, durch die er gehen soll, knapp."
+ ],
+ "lessons": [
+  "Pinselstriche als gefüllte Bänder mit Breite je Punkt: ein Viereck je Abschnitt in Polygon2D.polygons ist robust (kein Selbstschnitt, den Godot still verwirft) und gibt volle Kontrolle über an- und abschwellende Striche. Die Breite aus der Lichtrichtung abzuleiten (dick unten rechts, dünn oben links) wirkt sofort wie getuscht, ohne jeden Strich einzeln zu setzen.",
+  "Tweens als Zeitleiste: Godot-Tweens mit Easing entsprechen den Bewegungs-Tweens des alten Werkzeugs. Angehalten und mit custom_step(1/24) weitergeschaltet, ergeben sie ein exaktes 24-fps-Raster, sind deterministisch und lassen sich für Prüfungen in Bildschritten vorspulen.",
+  "Form-Tween ohne Spezialwerkzeug: zwei Schlüsselformen mit gleicher Punktzahl, Kontrollpunkte linear mischen, Catmull-Rom-Kurve und Konturband je Bild neu rechnen (morph.gd, 56 Zeilen). Reicht für Wellen, Segel, Wimpel und Flügel.",
+  "Drehpunkt-Knoten mit Gegen-Verschiebung: Alle Teile werden in einem gemeinsamen Puppen-Koordinatensystem gezeichnet, der Drehpunkt ist nur die Lage des äußeren Knotens. So lassen sich Gelenke nachträglich verschieben, ohne Formen umzurechnen.",
+  "Fester Standfuß über umgekehrtes Pendel und Füße als eigene Knoten: 0 px Rutschen gemessen. Messen je Fuß in eigener Probe (Fuß eingefärbt, Gegenstück und Verdeckendes ausgeblendet), sonst verfälschen Berührung und Verdeckung das Ergebnis.",
+  "Vektorformen vor dem Spiel zusammenfassen: Polygon2D ist bequem zum Zeichnen und Animieren, kostet aber einen Zeichenaufruf je Form. Unbewegte Folgen als ein Netz mit Eckpunktfarben (MeshInstance2D) behalten die Zeichenreihenfolge und senken die Aufrufe auf ein Viertel.",
+  "Kleine Bühne groß zeigen: Bühne als skalierter Node2D in einem Control mit clip_contents, Schrift mit oversampling passend zum Faktor; für Compatibility 2×-SubViewport mit halbiertem Sprite2D statt MSAA.",
+  "Raum-Fluchtspiel-Oberfläche als Handlungsträger: Hinweisschild am Zeiger nimmt die Auswahlen auf, Paketflug ins Inventar mit Stauchen, Strecken und elastischem Feld zeigt den Stil in einer Sekunde."
+ ],
+ "assets": [
+  {"file": "demo/vec.gd", "kind": "code", "made_with": "GDScript: Formen, Verläufe, Pinselkonturen als Bänder, Zusammenfassen zu Netzen", "prompt": ""},
+  {"file": "demo/harbor.gd", "kind": "code", "made_with": "GDScript: Hafenszene in Bühnenkoordinaten 550×400", "prompt": ""},
+  {"file": "demo/badger.gd", "kind": "code", "made_with": "GDScript: Symbol-Puppe des Dachses, Gang und Standpose", "prompt": ""},
+  {"file": "demo/ui.gd", "kind": "ui", "made_with": "GDScript: Leiste, Inventar-Icons, Hinweisschilder, Mauszeiger", "prompt": ""},
+  {"file": "demo/morph.gd", "kind": "code", "made_with": "GDScript: Form-Tween", "prompt": ""},
+  {"file": "demo/main.gd", "kind": "animation", "made_with": "GDScript: Zeitleiste aus Tweens im 24-fps-Raster, Prüfschalter", "prompt": ""},
+  {"file": "assets/puppet_parts.png", "kind": "character-part", "made_with": "demo/puppet.tscn (Godot), Teilebogen der Puppe", "prompt": ""},
+  {"file": "assets/badger_measure.json", "kind": "measurement", "made_with": "scripts/measure_badger.py", "prompt": ""},
+  {"file": "assets/renderers.json", "kind": "measurement", "made_with": "scripts/compare_renderers.py", "prompt": ""},
+  {"file": "assets/bake_check.json", "kind": "measurement", "made_with": "scripts/compare_bake.py", "prompt": ""},
+  {"file": "assets/scene_stats.json", "kind": "data", "made_with": "--probe-stats", "prompt": ""}
+ ],
+ "licenses": [
+  {"item": "Schrift Baloo 2 (variabel)", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/baloo2 (Lizenztext: demo/fonts/OFL-Baloo2.txt)"},
+  {"item": "Szene, Figur, Oberfläche, Icons", "license": "eigener Code, keine fremden Bilder oder Texturen", "source": "styles/browser-vektor/demo/*.gd"}
+ ],
+ "image_generations": 0,
+ "tool_issues": [],
+ "status": "done"
+}

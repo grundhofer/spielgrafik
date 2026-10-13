@@ -1,0 +1,12 @@
+Style: a sheet of separate visual-effect elements for a 2D game whose art is expressive oil painting. Every element is painted with thick impasto oil paint: clearly visible bristle marks, loaded single strokes and palette-knife dabs, bold colour, no line art, no smooth digital gradients, no airbrush.
+
+Elements, arranged in a clear grid of three rows with generous empty space around each element, nothing touching or overlapping:
+Row 1: a seagull in flight seen from the side, flying to the right, painted with a few quick strokes of white and pale grey with dark grey wingtips, shown three times in three wing positions: wings raised high, wings level, wings lowered.
+Row 2: four separate soft puffs of chimney smoke, each a cluster of round-brush strokes in grey-violet and blue-grey with warm orange light on one edge, of slightly different shapes.
+Row 3: four short horizontal glints of light on water, each one or two loaded palette-knife strokes of cadmium orange, lemon yellow and pale cream; and one long tapered ray of pale yellow light, a wide dry-brush stroke that fades out towards its far end, lying horizontally.
+
+Isolated on a fully transparent background, no ground, no shadows, no frame borders, no labels.
+
+No text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.
+
+Image format: square 1:1.

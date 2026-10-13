@@ -1,0 +1,184 @@
+{
+ "slug": "bleistift-skizze",
+ "name": "Bleistiftskizze & Notizbuch",
+ "family": "gemalt",
+ "kind": "style",
+ "era": "Skizzenbuch- und Doodle-Spiele seit etwa 2006; Bleistiftanimation mit Line-Boil seit den 1980ern",
+ "summary": "Die Szene ist eine Grafitzeichnung mit wenigen Buntstift-Akzenten auf einer karierten Skizzenbuchseite mit Spiralbindung; die Zeichnung läuft zum Rand hin in Strichen aus. Alles lebt durch Line-Boil: Zeichnung und Figur wechseln zehnmal pro Sekunde zwischen drei leicht verschobenen Fassungen, Effekte sind als Striche dazugezeichnet. Der Text steht als Kugelschreiber-Notiz darunter.",
+ "references": [
+  "Musikvideo „Take On Me“ von a-ha (1985, Regie Steve Barron): rotoskopierte Bleistiftzeichnung, die mit Line-Boil lebt",
+  "Line Rider (Boštjan Čadež, 2006): Bleistiftstriche auf weißem Papier als Spielwelt",
+  "Doodle Jump (Lima Sky, 2009): Kritzelfiguren auf kariertem Papier",
+  "Crayon Physics Deluxe (Petri Purho, 2009): Zeichnung auf Papier als Spielfläche",
+  "Hidden Folks (Adriaan de Jongh, Sylvain Tegroeg, 2017): Strichzeichnungen, Animation aus wenigen handgezeichneten Fassungen",
+  "Reise-Skizzenbücher (Urban Sketching): Schraffur, wenige Buntstift-Akzente, auslaufende Ränder"
+ ],
+ "traits": [
+  "Skizzenbuchseite: karierte Seite mit 20-px-Karo (blaugraue 1-px-Linien), Spiralbindung oben, leichte Faser- und Wolkentöne, alles aus Code (scripts/make_paper.py, fester Seed). Die KI-Zeichnung wird auf dieses Papier multipliziert, das Karo scheint überall durch; auch im Dachs liegt das Papier derselben Bildschirmstelle (Karo läuft ohne Versatz durch die Figur).",
+  "Grafit mit wenigen Buntstift-Akzenten: Tonwerte nur aus Grafitgrau (dunkelster Ton #33343C, keine Tusche-Schwarz) und Schraffur; Farbe nur als Buntstift an festgelegten Stellen: Rot (Leuchtturmband, Schal des Dachses), Gelb (Fenster, Laternenglas, Laternenschein, Leuchtturmstrahl), Orange (Horizontstreifen und seine Spiegelung). Die leichte Sepialasur des Bildmodells auf Holz und Fässern ist auf Grau gezogen (scripts/build_drawing.py).",
+  "Line-Boil: drei Fassungen, Wechsel alle 3 Takte (10/s). Der Shader tastet Zeichnung und Figur um ganze Pixel versetzt ab (Versatz aus weichem, kachelbarem Rauschen, je Fassung an anderer Stelle gelesen, Standardabweichung 1,0 px in der Zeichnung und 0,8 px in der Figur, dazu Druckschwankung ±10 %); ganze Pixel, damit nichts weichgezeichnet wird. Gemessen (scripts/measure_fx.py): Je Fassungswechsel ändern sich 20,7 % der Zeichnungspixel um mehr als 24 Stufen. Alle Striche, die Godot zeichnet, wechseln mit (Zufallsseed je Fassung). Die Notizen bleiben ruhig.",
+  "Auslaufender Rand: Die Zeichnung endet nicht an einer Kante. Zum Rand hin steigt eine Schwelle (Breite links 46, oben 22, rechts 56, unten 40 px, mit Rauschen ±18 px), helle Striche verschwinden zuerst, satte reichen weiter; dazu Papierzahn: helle Striche brechen auf dem Korn auf (tooth.png), dunkle bleiben geschlossen.",
+  "Effekte als Zeichnung, auf Dreien animiert (10 Bilder/s): Rauch als eine durchgehende Kringellinie, deren Schlaufen aufsteigen, wachsen und blasser werden (6,9 % der Pixel im Rauchbereich ändern sich je 0,5 s); Leuchtturmstrahl als Keil aus zwei Grafitlinien mit schräger gelber Schraffur, Umlauf 6 s mit Kranz aus Strichen beim Aufblitzen (bis 15,7 % im Himmel); Laterne als flackernder Hof aus gelber Schraffur mit kurzen Strahlen (4,1 %, bis 5,5 %); Wasser: Wellenstriche aus Grafit (3,5 %) und aus dem dunklen Grafit unter den Booten herausradierte Lichter (1,6 %); zwei Möwen als Häkchenpaare (vier Flügelstellungen, Wechsel 10- bzw. 5-mal pro Sekunde). Gemessen ohne Boil; ein Kontrollbereich ohne Effekte ändert sich um 0,00 %.",
+  "Der Dachs ist selbst eine Buntstift-/Grafitzeichnung (KI-Laufbogen, im Spiel 196 px hoch), nur der Schal rot, mit Schraffurschatten unter den Füßen. Laufen: 8 Laufbilder mit je 3 Takten (10 Bilder/s), 97 px/s über 4,4 s vom linken Bildrand bis rechts neben den Laternenpfahl; das Sprite springt beim Bildwechsel um den gemessenen Vorschub des Standfußes (−3 bis +22 px), der Oberkörper ist so geschert, dass der Kopf gleichmäßig vorrückt. Gemessen im Godot-Bild ohne Boil (scripts/probe_feet.py): Standfuß in 40 von 40 Bildwechseln höchstens 1 px, Kopf rückt je Laufbildwechsel 8,8 bis 10,8 px vor (nie zurück), Sohlenzeile in allen 180 Bildern 546 oder 547. Danach 0,3 s Stehen, ab 4,7 s Dreiviertelansicht zur Kamera, Blinzeln bei 5,2 und 5,7 s (Körper identisch, nur die Augen übermalt).",
+  "Textoberfläche als Notiz auf derselben Seite (y 560–715, etwa 21 % der Bildhöhe): Handschrift Caveat in Kugelschreiberblau; Ort als Überschrift, zweimal von Hand unterstrichen; Zeile als Notiz; Auswahl als Liste mit gezeichneten Kästchen, bei 4,1 s wird ein Häkchen in 0,2 s gezogen; Parserzeile „> nimm paket“ wird ab 4,5 s Buchstabe für Buchstabe geschrieben; senkrechter Trennstrich. Rechts unten liegt ein gelber Bleistift auf dem Blatt (aus Polygonen, mit weichem Schatten)."
+ ],
+ "camera": "Feste Kamera, Seitenansicht des Hafens vom Kai auf Augenhöhe einer kleinen Figur; die Szene ist eine Zeichnung auf einer Skizzenbuchseite, darunter die Notizen",
+ "resolution": "1280×720; Zeichnung 1216×538 bei (32, 38) (Ausschnitt 1536×680 aus dem 1536×1024-KI-Bild, Faktor 0,792); Karo 20 px; Dachs 196 px hoch (Bogenfiguren etwa 330 px, Faktor 0,59); Notizen y 560–715",
+ "pipeline": [
+  {
+   "step": "Hintergrund erzeugen",
+   "tool": "genimg (gpt-image über Codex)",
+   "detail": "assets/raw/bg.png, 1536×1024, 75 s, ein Versuch (Prompt assets/prompts/bg.txt). Stilblock: Seite aus einem Reise-Skizzenbuch, weicher Grafit 2B–4B, leicht zittrige, an Ecken überschießende Konturen, Hilfslinien, Schraffur und Kreuzschraffur statt Flächen, Wischspuren, Radierspuren, kräftige Striche (Kontur 3–4 px, Schraffurabstand 6–9 px), wenige Buntstift-Akzente an genannten Stellen; Komposition (Skizze nur über die mittleren 60 % der Höhe mit auslaufenden Rändern, naher Kai, Laterne vor dem Himmel, Leuchtturm bei 85 % der Breite); animierte Effekte ausdrücklich nicht zeichnen; Verbote (Foto, 3D, Malerei, Tusche, Stich, Comic, fertige Illustration, Postkarte, Karo, Papierstruktur, Bindung); dann Motivblock, background_only_en, Schutzregeln. Ergebnis: Szene vollständig und gut lesbar, keine Strahlen, kein Rauch, keine Vögel; aber randvoll statt mit auslaufenden Rändern und eher fertige Feder-und-Bleistift-Illustration als lockere Skizze."
+  },
+  {
+   "step": "Zeichnung aufbereiten",
+   "tool": "scripts/build_drawing.py (NumPy, Pillow)",
+   "detail": "Papierweiß auf 1,0 (Mittel des leeren Himmels), Farbe nur in festgelegten Rechtecken behalten (Laternenglas, Fenster, Leuchtturm ganz; Horizont und Spiegelung nur kräftige Farbe), sonst Grau; Deckung linear auf Grafit #33343C begrenzt; Ausschnitt Zeilen 140–820, Lanczos auf 1216×538. Schreibt demo/art/layout.json mit Ankerpunkten (Schornstein, Laterne, Leuchtfeuer, Fenster) in Bildschirmkoordinaten."
+  },
+  {
+   "step": "Papier, Papierzahn, Boil-Rauschen",
+   "tool": "scripts/make_paper.py (NumPy, Pillow)",
+   "detail": "paper.png 1280×720 (Karo 20 px ab y 40, Spiralbindung 4-fach überabgetastet, Wolkigkeit, Fasern, leicht dunklere Ränder), tooth.png 256×256 (kachelbares Korn), boil.png 256×256 (R/G Versatz, B Druck; FFT-gefiltertes Rauschen, periodisch). Fester Seed, bitgleich reproduzierbar."
+  },
+  {
+   "step": "Figur: Layout aus dem 3D-Modell",
+   "tool": "Blender 5.2 (blender/pose_layout.py, übernommen aus kupferstich) + scripts/make_layout.py",
+   "detail": "Posen von shared/3d/badger.glb orthografisch (--ortho 2.5, 204,8 px/m) auf Magenta, 2×5 Zellen: 8 Laufbilder (Walk bei t = 0 … 7/8 s), Stehen, Dreiviertel (Idle, 40° zur Kamera)."
+  },
+  {
+   "step": "Laufbogen erzeugen",
+   "tool": "genimg (gpt-image über Codex), Referenzen Layout, Master-Sheet, raw/bg.png",
+   "detail": "assets/raw/walk.png, 1536×1024, 87 s, ein Versuch (Prompt assets/prompts/walk.txt): Posen und Zellen aus dem Layout, Kostüm aus dem Master-Sheet, Strichtechnik wie im Hintergrund; nur Grafit, Schal in rotem Buntstift. Codex hielt Zellen, Posen, Grundlinien und lieferte echten Alphakanal, zeichnete aber vollfarbig in Buntstift (grüne Mütze und Weste, braune Tasche) und größer als verlangt (Figuren etwa 330 statt 250 px)."
+  },
+  {
+   "step": "Bogen zerlegen und vermessen",
+   "tool": "scripts/split_sheet.py, foot_match.py, overlay_pairs.py; assets/walk_advance.json von Hand",
+   "detail": "Zusammenhangsflächen der Alphamaske → zehn Figuren mit Hüllrechteck, Sohlenzeile und Bodenkontakt (assets/sheet_cells.json). Vorschub je Bildwechsel aus vergrößerten Fußausschnitten abgelesen (Anker: Zehenspitze bzw. Ferse des Fußes, der in beiden Bildern am Boden ist): −4 bis 36 Quellpixel, 132 je Zyklus; dazu Schritt ins Stehen aus walk_2 und walk_6."
+  },
+  {
+   "step": "Figur aufbereiten",
+   "tool": "scripts/build_badger.py (NumPy, Pillow)",
+   "detail": "Ausschnitt fester Größe mit Sohle auf gemeinsamer Zeile; walk_5–7 Beine um 10 px gestreckt (zweite Bogenreihe kürzer gezeichnet); Oberkörper gegen die Beine geschert (bis 8,5 Quellpixel), damit der Kopf je Bild gleich weit vorrückt; Farbe → Grafit, nur Rot bleibt; vormultipliziert ×0,59 auf 147×245 je Bild; Blinzelbild aus der Dreiviertelansicht (Augen mit Fell daneben überdeckt, Lidstrich). Bogen badger.png, 11 Bilder in einer Reihe."
+  },
+  {
+   "step": "Ablauf",
+   "tool": "scripts/choreo.py",
+   "detail": "Tabelle für 200 Takte (demo/art/timeline.json): 44 Laufbilder zu je 3 Takten ab walk_3, Start bei x = −45 (am Bildrand angeschnitten), Sprite-Lage aus der Summe der Vorschübe auf ganze Pixel gerundet (Fehler höchstens 0,5 px, summiert sich nicht), Stehen rechts neben dem Laternenpfahl, Dreiviertelansicht, zwei Blinzler."
+  },
+  {
+   "step": "Godot-Demo",
+   "tool": "Godot 4.7.2 (GDScript, canvas_item-Shader)",
+   "detail": "Papier-Sprite, Zeichnung mit Multiplikations-Shader (Boil, Zahn, auslaufender Rand), Effekte als Knoten mit selbstgezeichneten Bleistiftstrichen (pencil.gd), Radierer-Shader für die Lichter, Dachs mit Papier-im-Inneren-Shader, Notizen aus Labels und Kugelschreiberstrichen, Bleistift aus Polygonen."
+  },
+  {
+   "step": "Prüfen und aufnehmen",
+   "tool": "scripts/probe_feet.py, scripts/measure_fx.py, tools/capture.py --poster-at 0.92",
+   "detail": "Füße mit und ohne Boil im Godot-Bild gemessen, Effekte und Boil mit und ohne Boil-Schalter gemessen, Renderer mobile und gl_compatibility gegen Forward+ verglichen (13 Bilder). Poster bei 5,53 s: Dreiviertelansicht, Strahl ganz links, Häkchen gesetzt, Parserzeile geschrieben. Gesamter Neubau der Assets: scripts/build_all.sh."
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, stretch mode canvas_items, Hintergrundfarbe Papier; Hauptszene main.tscn mit einem Node2D, alles Weitere baut main.gd im Code.",
+  "shaders/drawing.gdshader (render_mode blend_mul): KI-Zeichnung per texelFetch mit ganzpixeligem Boil-Versatz, Papierzahn über world_pos, auslaufender Rand als steigende Schwelle; Weiß ändert das Papier nicht.",
+  "shaders/boil.gdshaderinc: gemeinsamer Boil-Versatz (boil.png, je Fassung um (97, 61)·phase verschoben gelesen) und Papierzahn; phase (0–2) setzt main.gd alle 3 Takte.",
+  "shaders/badger.gdshader: Bogen mit hframes; Boil im Bildraster des Bogens verankert (die Verzerrung wandert nicht mit der Figur), Versatz auf das eigene Bild begrenzt; innen Papier aus paper.png an derselben Bildschirmstelle (world_pos aus MODEL_MATRIX), Figur 15 % kräftiger (ink_gain), damit sie neben der Zeichnung trägt.",
+  "pencil.gd: statische Funktion für Bleistiftstriche (Neuabtastung auf 4 px, weicher Querversatz alle ~22 px, Druckschwankung, auslaufende Enden, draw_polyline_colors mit Kantenglättung); Seed je Fassung ergibt den Boil der gezeichneten Striche. Material pencil.gdshader macht die Deckung körnig (Papierzahn), eraser.gdshader holt das Papier samt Karo zurück (Radierer).",
+  "Effekte (Water ×2, Smoke, Beam, Glow, Gulls) sind innere Klassen in main.gd und werden nur neu gezeichnet, wenn ein neuer Schritt (alle 3 Takte) beginnt; etwa 230 Striche je Schritt.",
+  "Deterministisch: Zeit über delta aufsummiert, Takt = round(t·30), alle Zufallswerte aus RandomNumberGenerator mit festem Seed je Strich, Schritt und Fassung.",
+  "Prüfschalter (nach --): --probe-badger-only (nur Figur auf Magenta, ohne Boil), --boil-probe (dabei Boil an), --no-boil, --probe-log."
+ ],
+ "techniques": [
+  "line-boil",
+  "ki-spritesheet",
+  "sprite-animation",
+  "fuss-halten",
+  "mimik-aus-teilen",
+  "prozedurale-animation",
+  "nachbearbeitung",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 3,
+  "effort": 3,
+  "text_adventure": 5,
+  "mobile": 5
+ },
+ "ratings_note": "ai_fit 4: gpt-image traf Bleistift, Schraffur, Buntstift-Akzente und die Szene in beiden Bildern im ersten Versuch (2 Bilder, beide im Spiel), hielt sich aber nicht an die Komposition mit auslaufenden Rändern, zeichnete den Hintergrund fertiger und härter als eine lockere Skizze und die Figur vollfarbig statt in Grafit; Rand und Grafit macht ein Skript bzw. der Shader. Der Look kommt aus dem KI-Bild; Papier, Karo, Boil, Effekte und Notizen kommen aus Code. consistency 3: Line-Boil, Papier und Grafit-Umrechnung binden Zeichnung und Figur zusammen, aber die Figur ist weicher und heller gezeichnet als der Hintergrund (Buntstiftfell gegen harte, fast tuschedunkle Konturen), und ob zwei Hintergründe gleich dicht ausfallen, ist nicht geprüft. effort 3: Ein neuer Ort kostet ein Bild plus Rechtecke für die Farbstellen und Ankerpunkte in layout.json; jede neue Animation braucht ein Layout aus Blender, einen Bogen und eine von Hand gelesene Vorschubtabelle. mobile 5: --rendering-method mobile ist bitgleich zu Forward+, gl_compatibility weicht um höchstens 2 Stufen ab (Mittel 0,13; 13 Bilder verglichen); drei Texturzugriffe je Pixel, keine Nachbearbeitung; die etwa 230 GDScript-Striche je Schritt kosten CPU, auf einem echten Gerät ist die Leistung geschätzt, nicht gemessen.",
+ "verdict": "Gut geeignet für unser Textadventure, besonders als Reisetagebuch: Die Szene ist eine Zeichnung im Notizbuch, Text, Auswahl und Parser sind Notizen auf derselben Seite, und der Line-Boil hält jeden Ort lebendig, ohne dass etwas animiert werden muss. Ein neuer Ort kostet ein KI-Bild und ein Skript; Figurenanimation bleibt teuer wie in allen gezeichneten Stilen. Für das Spiel: Boil-Stärke und -Takt einstellbar machen (bei langem Lesen kann das Flimmern ermüden), Figuren gleich in Grafit verlangen oder wie hier umrechnen, Requisiten wie den Bleistift lieber vom Bildmodell zeichnen lassen.",
+ "pitfalls": [
+  "Der Hintergrund kam randvoll: Die Bitte, die Skizze nur über die mittleren 60 % der Höhe zu legen und die Ränder auslaufen zu lassen, hat gpt-image ignoriert; der auslaufende Rand entsteht deshalb im Shader (Schwelle zum Rand hin). Unten liegt der Auslauf nur 28 px unter den Füßen des Dachses, der Kai unter ihm wird schon heller.",
+  "Der Hintergrund ist eher eine fertige Feder-und-Bleistift-Illustration als eine lockere Skizze: dichte Schraffur und fast tuschedunkle Konturen, obwohl der Prompt „not an ink drawing, not a finished polished illustration“ sagt.",
+  "Der Laufbogen kam vollfarbig (grüne Mütze und Weste, braune Tasche, beiges Paket) statt in Grafit mit rotem Schal und größer als verlangt (etwa 330 statt 250 px); build_badger.py rechnet ihn auf Grafit um. Die Figur bleibt weicher und heller als der Hintergrund; der Shader verstärkt sie um 15 %, der Unterschied ist neben der Zeichnung noch sichtbar.",
+  "Die KI-Schritte sind ungleich (Standfuß wandert je Bild −4 bis 36 Quellpixel), und die zweite Bogenreihe hat kürzere Beine: Vorschubtabelle von Hand, Beine von walk_5–7 um 10 px gestreckt, Oberkörper bis 8,5 Quellpixel gegen die Beine geschert, damit der Kopf gleichmäßig vorrückt. Bei walk_0 → walk_1 (Doppelstand) verschmelzen beide Füße in den untersten 4 Zeilen; die Messung erkennt den stehenden Fuß nur über einzelne Zeilen (Spitze 160 → 161).",
+  "Line-Boil und ortsfester Standfuß widersprechen sich: Mit Boil wandern auch die Füße mit den Strichen. Gemessen mit Boil: 37 von 40 Bildwechseln höchstens 1 px, zwei mit 2 px, einer nicht messbar (Füße verschmolzen, Messwert 10 px); Sohlenzeilen 545–547.",
+  "Der Boil ist kräftig: 20,7 % der Zeichnungspixel ändern sich je Wechsel, weil die KI-Zeichnung so dicht schraffiert ist, dass schon 1 px Versatz viele Pixel ändert. Wie das beim langen Lesen wirkt, ist nicht mit Spielern geprüft.",
+  "Das Karo scheint auch durch den Dachs (Papier mit Karo im Inneren der Silhouette). Das ist gewollt (auf dasselbe Blatt gezeichnet), lässt das weiße Hemd aber leicht durchsichtig wirken.",
+  "Die herausradierten Lichter auf dem Wasser sind schwach: Das Wasser ist im KI-Bild meist hell, Radieren ändert dort wenig; unter den Booten ändern sich nur 1,6 % der Pixel je 0,5 s. Sichtbarer sind die Wellenstriche aus Grafit (3,5 %).",
+  "Der Bleistift rechts unten ist aus flachen Polygonen gebaut und wirkt neben der Zeichnung wie Clipart; eine KI-gezeichnete Requisite hätte besser gepasst (kein Bild dafür verwendet).",
+  "Die gelbe Schraffur von Laternenschein und Strahl hat auf dem cremefarbenen Papier wenig Kontrast; sie musste kräftiger und orangestichiger werden (Bernstein statt Gelb), damit sie trägt."
+ ],
+ "lessons": [
+  "KI-Zeichnung auf leerem Weiß verlangen und Papier, Karo und Bindung aus Code darunter multiplizieren: Papier und Karo sind dann in Hintergrund, Figur und Notizen identisch und passen zur Oberfläche.",
+  "Line-Boil als Shader: Rauschtextur je Fassung an anderer Stelle lesen und um ganze Pixel versetzt mit texelFetch abtasten. Nichts wird weich, Knicke an den Grenzen der Versatzfelder sehen wie neu nachgezogene Striche aus. Für Figuren das Rauschen im Bildraster des Bogens verankern, sonst wandert die Verzerrung beim Laufen über die Figur.",
+  "Code-Striche mit einem Seed je Fassung zeichnen: Sie bekommen den Boil im selben Takt wie die Zeichnung. Effekte auf Dreien (10/s) bewegen, das wirkt gezeichnet und passt zum Boil-Takt.",
+  "Auslaufende Ränder über eine steigende Schwelle statt über Transparenz: Helle Striche hören zuerst auf, dunkle reichen weiter, das sieht nach Skizze aus und nicht nach Vignette.",
+  "Im Prompt die animierten Effekte ausschließen (Lampe ohne Strahl, Laterne ohne Glanzstriche, kein Rauch, keine Vögel) hat bei gpt-image vollständig funktioniert.",
+  "Ein farbig gelieferter Laufbogen lässt sich auf Grafit umrechnen (Helligkeit, eine Farbmaske für den Schal behalten); Posen, Zellen und Alphakanal von Codex bleiben brauchbar.",
+  "Kopf gleichmäßig, Füße fest: Oberkörper gegen die Beine scheren, dann reicht eine konstante Haltezeit (3 Takte) und das Sprite springt nur um den gemessenen Vorschub des Standfußes.",
+  "Fußmessung im Doppelstand zeilenweise machen: In den untersten 4 Zeilen verschmelzen die Spitze des hinteren und die Ferse des landenden Fußes zu einem Kontaktlauf."
+ ],
+ "assets": [
+  {
+   "file": "assets/drawing.png",
+   "kind": "background",
+   "made_with": "gpt-image (Codex) 1536×1024 + scripts/build_drawing.py: Farbe nur an Buntstiftstellen, Grafit begrenzt, Ausschnitt 1536×680, ×0,792 auf 1216×538",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/badger.png",
+   "kind": "sprite-sheet",
+   "made_with": "gpt-image (Codex) Laufbogen + scripts/build_badger.py: 11 Bilder 147×245 (8 Laufen, Stehen, Dreiviertel, Blinzeln), Grafit + roter Schal",
+   "prompt": "assets/raw/walk.json"
+  },
+  {
+   "file": "assets/ref/walk_layout.png",
+   "kind": "reference",
+   "made_with": "Blender 5.2 (blender/pose_layout.py, shared/3d/badger.glb) + scripts/make_layout.py: Posen-Layout für den Laufbogen"
+  },
+  {
+   "file": "assets/paper.png",
+   "kind": "texture",
+   "made_with": "scripts/make_paper.py: kariertes Skizzenbuchblatt 1280×720 mit Spiralbindung"
+  },
+  {
+   "file": "assets/tooth.png",
+   "kind": "texture",
+   "made_with": "scripts/make_paper.py: kachelbares Papierkorn 256×256"
+  },
+  {
+   "file": "assets/boil.png",
+   "kind": "texture",
+   "made_with": "scripts/make_paper.py: kachelbares Rauschen 256×256 für Line-Boil (R/G Versatz, B Druck)"
+  },
+  {
+   "file": "assets/walk_advance.json",
+   "kind": "data",
+   "made_with": "von Hand aus scripts/split_sheet.py, foot_match.py und overlay_pairs.py: Vorschub, Kopflage, Beinstreckung, Augen"
+  },
+  {
+   "file": "assets/timeline.json",
+   "kind": "data",
+   "made_with": "scripts/choreo.py: Bild und Lage des Dachses je Takt"
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Caveat (The Caveat Project Authors)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts (ofl/caveat); Lizenztext demo/fonts/OFL-Caveat.txt"
+  }
+ ],
+ "image_generations": 2,
+ "tool_issues": [],
+ "status": "done"
+}

@@ -1,0 +1,10 @@
+{
+ "location": "Hafen von Lornholm",
+ "line": "Die Laterne flackert im Wind. Am Kai wartet ein Paket auf dich.",
+ "choices": [
+  "Zum Leuchtturm gehen",
+  "Das Paket ansehen",
+  "Mit dem Dachs sprechen"
+ ],
+ "parser_prompt": "> nimm paket"
+}

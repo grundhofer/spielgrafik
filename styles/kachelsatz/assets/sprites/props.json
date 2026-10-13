@@ -1,0 +1,201 @@
+{
+ "boat_split_row": 725,
+ "props": {
+  "cottage": {
+   "size": [
+    95,
+    76
+   ],
+   "source_box": [
+    104,
+    56,
+    676,
+    516
+   ],
+   "scale": 6.0,
+   "colors": 24
+  },
+  "lighthouse": {
+   "size": [
+    43,
+    110
+   ],
+   "source_box": [
+    680,
+    36,
+    1032,
+    916
+   ],
+   "scale": 8.0,
+   "colors": 20
+  },
+  "gull": {
+   "size": [
+    32,
+    15
+   ],
+   "source_box": [
+    1248,
+    92,
+    1512,
+    216
+   ],
+   "scale": 8.0,
+   "colors": 8
+  },
+  "barrel_a": {
+   "size": [
+    16,
+    22
+   ],
+   "source_box": [
+    1068,
+    256,
+    1180,
+    404
+   ],
+   "scale": 6.5,
+   "colors": 10
+  },
+  "barrel_b": {
+   "size": [
+    16,
+    22
+   ],
+   "source_box": [
+    1208,
+    256,
+    1316,
+    404
+   ],
+   "scale": 6.5,
+   "colors": 10
+  },
+  "boat_a": {
+   "size": [
+    70,
+    23
+   ],
+   "source_box": [
+    88,
+    556,
+    624,
+    725
+   ],
+   "scale": 7.5,
+   "colors": 14
+  },
+  "boat_b": {
+   "size": [
+    71,
+    33
+   ],
+   "source_box": [
+    88,
+    725,
+    624,
+    972
+   ],
+   "scale": 7.5,
+   "colors": 16
+  },
+  "crates": {
+   "size": [
+    29,
+    27
+   ],
+   "source_box": [
+    1068,
+    424,
+    1292,
+    628
+   ],
+   "scale": 7.5,
+   "colors": 12
+  },
+  "rope": {
+   "size": [
+    20,
+    18
+   ],
+   "source_box": [
+    1340,
+    476,
+    1492,
+    612
+   ],
+   "scale": 7.5,
+   "colors": 8
+  },
+  "lantern": {
+   "size": [
+    23,
+    32
+   ],
+   "source_box": [
+    1092,
+    648,
+    1220,
+    824
+   ],
+   "scale": 5.5,
+   "colors": 14
+  },
+  "parcel": {
+   "size": [
+    18,
+    14
+   ],
+   "source_box": [
+    1328,
+    700,
+    1456,
+    800
+   ],
+   "scale": 7.0,
+   "colors": 8
+  },
+  "rock_a": {
+   "size": [
+    26,
+    24
+   ],
+   "source_box": [
+    1048,
+    836,
+    1220,
+    992
+   ],
+   "scale": 6.5,
+   "colors": 8
+  },
+  "rock_b": {
+   "size": [
+    20,
+    17
+   ],
+   "source_box": [
+    1244,
+    864,
+    1376,
+    976
+   ],
+   "scale": 6.5,
+   "colors": 8
+  },
+  "rock_c": {
+   "size": [
+    13,
+    11
+   ],
+   "source_box": [
+    1404,
+    900,
+    1496,
+    972
+   ],
+   "scale": 6.5,
+   "colors": 6
+  }
+ }
+}

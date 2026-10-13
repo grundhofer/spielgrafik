@@ -1,0 +1,71 @@
+{
+ "layout_ncc_raw": 0.599,
+ "layout_ncc_best": 0.664,
+ "scale": 0.996,
+ "shift_px_1536": [
+  0,
+  1
+ ],
+ "crop_raw_box": [
+  -2.54,
+  130.5,
+  1266.54,
+  848.87
+ ],
+ "lights_ai": {
+  "lighthouse": [
+   966.9,
+   59.2,
+   245
+  ],
+  "lantern": [
+   1214.1,
+   362.3,
+   327
+  ],
+  "side_window": [
+   279.2,
+   388.7,
+   299
+  ]
+ },
+ "marks_3d": {
+  "LanternLight": [
+   1212.4,
+   362.7
+  ],
+  "LighthouseLight": [
+   966.6,
+   64.9
+  ],
+  "ChimneySmoke": [
+   38.0,
+   107.0
+  ],
+  "CottageWindow": [
+   -37.3,
+   396.9
+  ],
+  "BoatA": [
+   769.1,
+   504.3
+  ],
+  "BoatB": [
+   1144.2,
+   501.4
+  ],
+  "WalkStart": [
+   245.5,
+   551.3
+  ],
+  "WalkEnd": [
+   1076.0,
+   551.3
+  ]
+ },
+ "water_rows": [
+  349,
+  511
+ ],
+ "water_px": 49221
+}

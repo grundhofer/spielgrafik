@@ -1,0 +1,29 @@
+; Engine configuration file.
+; Von Hand geschrieben: Katalogeintrag nachbearbeitung (Nachbearbeitung & Look-Filter), Godot 4.7, Forward+.
+; Die 3D-Szene (shared/3d) rendert in einen SubViewport; zwei Nachbearbeitungsstufen (Welt, Bildschirm)
+; legen darüber sechs umschaltbare Looks. Siehe main.gd und shaders/.
+
+config_version=5
+
+[application]
+
+config/name="Nachbearbeitung & Look-Filter – Hafen von Lornholm"
+run/main_scene="res://main.tscn"
+config/features=PackedStringArray("4.7", "Forward Plus")
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+
+[rendering]
+
+anti_aliasing/quality/msaa_3d=2
+lights_and_shadows/directional_shadow/size=8192
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality=3
+
+[physics]
+
+; Ohne Ausgleich: Sonst weichen mit --fixed-fps 30 die ersten sieben Zeitschritte von 1/30 s ab
+; (0,025 / 0,033 / 0,042 / 0,029 … s); die Szene hat keine Physik.
+common/physics_jitter_fix=0.0

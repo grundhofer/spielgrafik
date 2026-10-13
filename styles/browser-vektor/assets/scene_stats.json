@@ -1,0 +1,8 @@
+{
+ "_comment": "Ausgabe von --probe-stats (Forward+, Bild 20) vor und nach dem Zusammenfassen (vec.gd bake); Compatibility in Klammern",
+ "shapes_created": {"fills": 260, "brush_bands": 351, "points": 15904, "gradients": 21},
+ "unbaked": {"polygon2d": 611, "draw_calls": 591, "draw_calls_compatibility": 586, "primitives": 14272},
+ "baked": {"polygon2d": 102, "meshinstance2d": 64, "polygons_merged": 509, "triangles_merged": 11893, "draw_calls": 159, "draw_calls_compatibility": 160, "primitives": 14322},
+ "morph_shapes": {"wave_crests": 26, "sun_streaks": 6, "waterlines": 2, "sail": 1, "pennant": 1, "gull_wings": 2},
+ "code_lines": {"vec.gd": 392, "harbor.gd": 468, "badger.gd": 328, "ui.gd": 218, "morph.gd": 56, "main.gd": 472}
+}

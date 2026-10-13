@@ -1,0 +1,85 @@
+{
+ "_comment": "Einstellungen für prep_actor.py. Boxen, Schalachse und Linien in Pixeln des Rohbilds (1024x1536), Größen in Bildschirmpixeln.",
+ "height_px": 245,
+ "tex_scale": 2,
+ "feet_screen": [
+  600,
+  693
+ ],
+ "alpha_floor": 0.02,
+ "alpha_full": 0.985,
+ "key_ramp": {
+  "gain_left": 0.5,
+  "u0": 0.15,
+  "u1": 0.65
+ },
+ "ref_white_box": [
+  420,
+  1000,
+  560,
+  1150
+ ],
+ "target_white_srgb": [
+  76,
+  83,
+  100
+ ],
+ "saturation": 0.75,
+ "foot_ao": [
+  0.8,
+  0.6
+ ],
+ "soften_sigma": 0.0,
+ "rim": {
+  "width": 3,
+  "normal_r": 3
+ },
+ "wrap_width": 3,
+ "scarf": {
+  "root": [
+   660,
+   500
+  ],
+  "tip": [
+   1000,
+   610
+  ],
+  "dilate": 3,
+  "clip_below": [
+   [
+    640,
+    560
+   ],
+   [
+    800,
+    610
+   ]
+  ]
+ },
+ "shadow": {
+  "margin_x": 60,
+  "canvas_h": 90,
+  "contact_y": 12,
+  "contact_blur": 3,
+  "contact_k": 1.0,
+  "cast_squash": 0.2,
+  "cast_shear": 1.6,
+  "cast_blur": 6,
+  "cast_k": 0.6
+ },
+ "head": {
+  "search_y0": 300,
+  "y_max": 420,
+  "feather": 3,
+  "overlap_b": 10
+ },
+ "top_gain": [
+  0.62,
+  0.18,
+  0.5
+ ],
+ "sharpen": [
+  0.8,
+  1.4
+ ]
+}

@@ -1,0 +1,12 @@
+[
+ {
+  "out": "styles/painterly-digital/assets/raw/badger.png",
+  "size": "1536x1024",
+  "prompt": "Sprite sheet for a 2D side-scrolling game. The first reference image gives only the layout and the poses: ten figures in two rows of five, evenly spaced, same scale, feet on the same baseline in each row. Row 1: four walk-cycle frames and a standing pose, all in side view facing right; row 2: four more walk-cycle frames and a standing pose in three-quarter view. Keep exactly these poses, the leg and arm positions, and the size and position of all ten figures. Repaint every figure completely as an atmospheric 2D digital painting in the technique of the second reference image: soft digital brushes, soft painted shading in a few big value shapes, little fine fur detail, no ink outlines, no 3D render look, no plastic shading. Character design, face and costume follow the third reference image: The badger courier: an original mascot character, a stout, short-legged badger with a broad black-and-white striped face, wearing a dark green peaked cap with a brass button, a dark green vest with pockets over a cream shirt with rolled-up sleeves, a long red knitted scarf, a brown leather satchel on a shoulder strap, and a brown paper parcel tied with string under one arm. Light: warm lantern light from the front left and cool dusk light from the sky, mid values; cap and vest clearly dark green, scarf red, the white face stripes and the eye readable; a clear, readable silhouette. All ten figures look identical in design, colours and painting style. Each figure isolated on a fully transparent background, no ground, no shadows, no frame borders.\nNo text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.\nImage format: landscape 3:2.",
+  "refs": [
+   "styles/painterly-digital/assets/raw/pose_layout.png",
+   "styles/painterly-digital/assets/raw/master.png",
+   "shared/badger/master_sheet.png"
+  ]
+ }
+]

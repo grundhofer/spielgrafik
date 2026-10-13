@@ -1,0 +1,196 @@
+{
+ "t0": 0.0,
+ "frames": 180,
+ "near_leg": {
+  "stance_phases": 7,
+  "max_span_px": {
+   "heel": 0,
+   "toe": 0,
+   "bottom": 0
+  },
+  "phases": [
+   {
+    "frames": [
+     4,
+     15
+    ],
+    "heel": 0,
+    "toe": 0,
+    "bottom": 0
+   },
+   {
+    "frames": [
+     23,
+     33
+    ],
+    "heel": 0,
+    "toe": 0,
+    "bottom": 0
+   },
+   {
+    "frames": [
+     41,
+     52
+    ],
+    "heel": 0,
+    "toe": 0,
+    "bottom": 0
+   },
+   {
+    "frames": [
+     60,
+     71
+    ],
+    "heel": 0,
+    "toe": 0,
+    "bottom": 0
+   },
+   {
+    "frames": [
+     79,
+     90
+    ],
+    "heel": 0,
+    "toe": 0,
+    "bottom": 0
+   },
+   {
+    "frames": [
+     98,
+     108
+    ],
+    "heel": 0,
+    "toe": 0,
+    "bottom": 0
+   },
+   {
+    "frames": [
+     116,
+     179
+    ],
+    "heel": 0,
+    "toe": 0,
+    "bottom": 0
+   }
+  ],
+  "idle_bottom_rows": [
+   585
+  ],
+  "godot_errors": []
+ },
+ "far_leg": {
+  "stance_phases": 7,
+  "max_span_px": {
+   "heel": 0,
+   "toe": 0,
+   "bottom": 0
+  },
+  "phases": [
+   {
+    "frames": [
+     0,
+     6
+    ],
+    "heel": 0,
+    "toe": 0,
+    "bottom": 0
+   },
+   {
+    "frames": [
+     14,
+     25
+    ],
+    "heel": 0,
+    "toe": 0,
+    "bottom": 0
+   },
+   {
+    "frames": [
+     33,
+     44
+    ],
+    "heel": 0,
+    "toe": 0,
+    "bottom": 0
+   },
+   {
+    "frames": [
+     52,
+     63
+    ],
+    "heel": 0,
+    "toe": 0,
+    "bottom": 0
+   },
+   {
+    "frames": [
+     71,
+     81
+    ],
+    "heel": 0,
+    "toe": 0,
+    "bottom": 0
+   },
+   {
+    "frames": [
+     89,
+     100
+    ],
+    "heel": 0,
+    "toe": 0,
+    "bottom": 0
+   },
+   {
+    "frames": [
+     108,
+     179
+    ],
+    "heel": 0,
+    "toe": 0,
+    "bottom": 0
+   }
+  ],
+  "idle_bottom_rows": [
+   583
+  ],
+  "godot_errors": []
+ },
+ "head": {
+  "cap_top_range": [
+   406,
+   416
+  ],
+  "cap_top_max_step": 4,
+  "cap_top_max_2nd_diff": 3,
+  "nose_max_2nd_diff": 2,
+  "godot_errors": []
+ },
+ "chains": {
+  "scarf_deg_walking": [
+   -31.1,
+   -26.1
+  ],
+  "scarf_deg_after_stop": {
+   "max_forward": 11.4,
+   "at_t": 4.067,
+   "min": -15.9
+  },
+  "bag_x_rel_hip_after_stop_tex": [
+   -57.9,
+   -41.8
+  ],
+  "last_step_t": 3.867
+ },
+ "state": {
+  "steps_first": 9,
+  "steps_total": 22,
+  "sy_range": [
+   0.964,
+   1.0179
+  ],
+  "tilt_deg_range": [
+   -2.59,
+   9.14
+  ]
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "errors_forward_plus": [],
+ "mobile": {
+  "errors": [],
+  "frame_60": {
+   "mean": 0.0,
+   "max": 0,
+   "share_gt8": 0.0
+  },
+  "frame_141": {
+   "mean": 0.0,
+   "max": 0,
+   "share_gt8": 0.0
+  }
+ },
+ "gl_compatibility": {
+  "errors": [],
+  "frame_60": {
+   "mean": 0.208,
+   "max": 3,
+   "share_gt8": 0.0
+  },
+  "frame_141": {
+   "mean": 0.204,
+   "max": 2,
+   "share_gt8": 0.0
+  }
+ }
+}

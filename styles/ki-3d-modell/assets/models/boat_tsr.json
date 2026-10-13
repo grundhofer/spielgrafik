@@ -1,0 +1,45 @@
+{
+ "image": "styles/ki-3d-modell/assets/raw/boat.png",
+ "device": "mps",
+ "mc_resolution": 256,
+ "threshold": 25.0,
+ "ratio": 0.85,
+ "torch": "2.7.1",
+ "revision": "5b521936b01fbe1890f6f9baed0254ab6351c04a",
+ "t_load": 1.66,
+ "crop": {
+  "src_bbox": [
+   81,
+   94,
+   1238,
+   1095
+  ],
+  "square": 1361,
+  "offset": [
+   102,
+   180
+  ],
+  "ratio": 0.85
+ },
+ "t_model": 1.12,
+ "t_render": 7.0,
+ "t_mesh": 2.58,
+ "vertices": 56524,
+ "faces": 113052,
+ "bounds": [
+  [
+   -0.3222,
+   -0.3834,
+   -0.399
+  ],
+  [
+   0.3721,
+   0.4929,
+   0.3373
+  ]
+ ],
+ "watertight": true,
+ "signed_volume": 0.09867586878786816,
+ "components": 3,
+ "t_total": 13.04
+}

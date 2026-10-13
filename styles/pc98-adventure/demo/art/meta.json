@@ -1,0 +1,113 @@
+{
+ "palette": [
+  "000000",
+  "eeddbb",
+  "993322",
+  "556633",
+  "ee9977",
+  "aa8866",
+  "778899",
+  "aa6688",
+  "776666",
+  "775599",
+  "553333",
+  "444488",
+  "221122",
+  "222266",
+  "ffeeaa",
+  "ffffcc"
+ ],
+ "names": [
+  "black",
+  "cream",
+  "red",
+  "green",
+  "peach",
+  "k0",
+  "k1",
+  "k2",
+  "k3",
+  "k4",
+  "k5",
+  "k6",
+  "k7",
+  "k8",
+  "glow",
+  "lamp"
+ ],
+ "index": {
+  "black": 0,
+  "cream": 1,
+  "red": 2,
+  "green": 3,
+  "peach": 4,
+  "k0": 5,
+  "k1": 6,
+  "k2": 7,
+  "k3": 8,
+  "k4": 9,
+  "k5": 10,
+  "k6": 11,
+  "k7": 12,
+  "k8": 13,
+  "glow": 14,
+  "lamp": 15
+ },
+ "glow_steps": [
+  "ffeeaa",
+  "ffdd99",
+  "eecc88",
+  "ffffbb"
+ ],
+ "lamp_on": "ffffcc",
+ "lamp_off": "222266",
+ "lamp_off_index": 13,
+ "mediancut_14": [
+  "c2a89c",
+  "7f849e",
+  "a57182",
+  "737893",
+  "7c557c",
+  "5a4f4c",
+  "444a80",
+  "612c30",
+  "352f4f",
+  "282b5b",
+  "201740",
+  "17244e",
+  "090003",
+  "000000"
+ ],
+ "scene": [
+  12,
+  12,
+  416,
+  256
+ ],
+ "badger_pos": [
+  212,
+  72
+ ],
+ "badger_size": [
+  172,
+  196
+ ],
+ "water_frames": 3,
+ "water_dashes": 98,
+ "stats": {
+  "glow_px": 304,
+  "lamp_px": 223,
+  "water_px": 9922,
+  "water_changed_px": 379
+ },
+ "eyes_pos": [
+  64,
+  44
+ ],
+ "eyes_frames": 2,
+ "mouth_pos": [
+  82,
+  72
+ ],
+ "mouth_frames": 2
+}

@@ -1,0 +1,35 @@
+; Engine configuration file.
+; Von Hand geschrieben: Realistisches PBR (Spielgrafik-Katalog), Godot 4.7, Forward+.
+
+config_version=5
+
+[application]
+
+config/name="Spielgrafik - Realistisches PBR"
+run/main_scene="res://main.tscn"
+config/features=PackedStringArray("4.7", "Forward Plus")
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+
+[rendering]
+
+anti_aliasing/quality/use_taa=true
+anti_aliasing/quality/msaa_3d=0
+anti_aliasing/screen_space_roughness_limiter/enabled=true
+textures/default_filters/anisotropic_filtering_level=4
+lights_and_shadows/directional_shadow/size=8192
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality=4
+lights_and_shadows/positional_shadow/soft_shadow_filter_quality=4
+lights_and_shadows/positional_shadow/atlas_size=8192
+environment/volumetric_fog/volume_size=128
+environment/volumetric_fog/volume_depth=96
+environment/volumetric_fog/use_filter=1
+environment/ssao/quality=3
+environment/ssil/quality=2
+environment/screen_space_reflection/roughness_quality=2
+global_illumination/sdfgi/probe_ray_count=2
+global_illumination/sdfgi/frames_to_converge=0
+global_illumination/sdfgi/frames_to_update_lights=0

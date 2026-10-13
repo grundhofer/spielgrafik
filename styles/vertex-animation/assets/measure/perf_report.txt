@@ -1,0 +1,9 @@
+mobile: WARNING: Screen-space reflections (SSR) are only available when using the Forward+ renderer.
+gl_compatibility: WARNING: Screen-space reflections (SSR) are only available when using the Forward+ renderer.
+mobile gegen Forward+ (Bild 90): mittlere Abweichung 1.22, Anteil > 24 Stufen 0.012
+gl_compatibility gegen Forward+ (Bild 90): mittlere Abweichung 13.88, Anteil > 24 Stufen 0.326
+Forward+ voll: PERF sea_vertices=46440 sea_triangles=92020 script_ms=0.351 / PERF variant=full static=false frames=590 frame_ms_median=2.089 gpu_ms=0.000 cpu_ms=0.171 prims=238566 draws=290
+Forward+ flach (ohne Wellen): PERF sea_vertices=46440 sea_triangles=92020 script_ms=0.441 / PERF variant=flat static=false frames=590 frame_ms_median=2.138 gpu_ms=0.000 cpu_ms=0.240 prims=245188 draws=300
+Forward+ grobes Gitter: PERF sea_vertices=0 sea_triangles=0 script_ms=0.358 / PERF variant=coarse static=false frames=590 frame_ms_median=2.048 gpu_ms=0.000 cpu_ms=0.182 prims=148546 draws=294
+Mobile voll: PERF sea_vertices=46440 sea_triangles=92020 script_ms=0.406 / PERF variant=full static=false frames=590 frame_ms_median=2.036 gpu_ms=0.000 cpu_ms=0.142 prims=238566 draws=97
+Compatibility voll: PERF sea_vertices=46440 sea_triangles=92020 script_ms=0.261 / PERF variant=full static=false frames=590 frame_ms_median=4.030 gpu_ms=0.000 cpu_ms=3.021 prims=245188 draws=325

@@ -1,0 +1,80 @@
+[gd_scene load_steps=25 format=3]
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="Texture2D" path="res://art/photo.png" id="2_photo"]
+[ext_resource type="Texture2D" path="res://art/plate.png" id="3_plate"]
+[ext_resource type="Texture2D" path="res://art/mask_a.png" id="4_ma"]
+[ext_resource type="Texture2D" path="res://art/mask_b.png" id="5_mb"]
+[ext_resource type="Texture2D" path="res://art/mask_c.png" id="6_mc"]
+[ext_resource type="Texture2D" path="res://art/noise.png" id="7_noise"]
+[ext_resource type="Shader" path="res://shaders/photo.gdshader" id="8_photo_sh"]
+[ext_resource type="Texture2D" path="res://art/actor.png" id="9_actor"]
+[ext_resource type="Texture2D" path="res://art/actor_look.png" id="10_look"]
+[ext_resource type="Texture2D" path="res://art/actor_aux.png" id="11_aux"]
+[ext_resource type="Texture2D" path="res://art/actor_shadow.png" id="12_shadow"]
+[ext_resource type="Texture2D" path="res://art/photo_blur.png" id="13_blur"]
+[ext_resource type="Texture2D" path="res://art/actor_aux2.png" id="18_aux2"]
+[ext_resource type="Shader" path="res://shaders/actor.gdshader" id="14_actor_sh"]
+[ext_resource type="Shader" path="res://shaders/shadow.gdshader" id="15_shadow_sh"]
+[ext_resource type="Shader" path="res://shaders/post.gdshader" id="16_post_sh"]
+[ext_resource type="Shader" path="res://shaders/panel.gdshader" id="17_panel_sh"]
+
+[sub_resource type="ShaderMaterial" id="M_photo"]
+shader = ExtResource("8_photo_sh")
+shader_parameter/plate = ExtResource("3_plate")
+shader_parameter/mask_a = ExtResource("4_ma")
+shader_parameter/mask_b = ExtResource("5_mb")
+shader_parameter/mask_c = ExtResource("6_mc")
+shader_parameter/noise_tex = ExtResource("7_noise")
+
+[sub_resource type="ShaderMaterial" id="M_actor"]
+shader = ExtResource("14_actor_sh")
+shader_parameter/actor_tex = ExtResource("9_actor")
+shader_parameter/aux_tex = ExtResource("11_aux")
+shader_parameter/aux2_tex = ExtResource("18_aux2")
+shader_parameter/look_tex = ExtResource("10_look")
+shader_parameter/bg_blur = ExtResource("13_blur")
+
+[sub_resource type="ShaderMaterial" id="M_shadow"]
+shader = ExtResource("15_shadow_sh")
+
+[sub_resource type="ShaderMaterial" id="M_post"]
+shader = ExtResource("16_post_sh")
+
+[sub_resource type="ShaderMaterial" id="M_panel"]
+shader = ExtResource("17_panel_sh")
+shader_parameter/blur_tex = ExtResource("13_blur")
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="Photo" type="Sprite2D" parent="."]
+material = SubResource("M_photo")
+texture = ExtResource("2_photo")
+centered = false
+
+[node name="Shadow" type="Sprite2D" parent="."]
+material = SubResource("M_shadow")
+texture = ExtResource("12_shadow")
+centered = false
+
+[node name="Actor" type="Sprite2D" parent="."]
+material = SubResource("M_actor")
+texture = ExtResource("9_actor")
+centered = false
+
+[node name="Post" type="CanvasLayer" parent="."]
+layer = 1
+
+[node name="Grain" type="ColorRect" parent="Post"]
+material = SubResource("M_post")
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Panel" type="ColorRect" parent="UI"]
+material = SubResource("M_panel")
+mouse_filter = 2

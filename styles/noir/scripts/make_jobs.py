@@ -1,0 +1,194 @@
+#!/usr/bin/env python3
+"""Schreibt die Bildaufträge des Eintrags "noir" (Format genimg.py --jobs, Pfade relativ zum Projektordner) und legt
+jeden Prompt zusätzlich als Text unter assets/prompts/<name>.txt ab.
+
+    .venv/bin/python styles/noir/scripts/make_jobs.py            # schreibt assets/jobs_<name>.json + prompts
+    .venv/bin/python tools/genimg.py --jobs styles/noir/assets/jobs_bg.json --workers 1
+
+Prompt = Stilblock + Kompositions-/Layoutblock + Motivblock (wörtlich aus data/motif.json) + Hinweise zu später
+animierten Teilen + Schutzregeln + Formatangabe.
+
+Aufträge (Reihenfolge = Abhängigkeit):
+  bg     raw/bg.png    Hintergrund 1536x1024, Schwarzweiß, ohne Regen, Strahl, Rauch; keine Referenz
+  walk   raw/walk.png  Bogen 2x5: 8 Laufbilder, Stehen, Dreiviertel. Referenzen: Blender-Layout (Posen),
+                       Master-Sheet (Kostüm), raw/bg.png (Maltechnik und Tonwerte)
+  walk2  raw/walk2.png Übermalung von walk.png (auf Magenta: assets/ref/walk_clean.png) als gemalte Figur mit
+                       gleichmäßigem Licht; Referenzen: walk_clean.png (Layout, Posen, Kostüm), raw/bg.png (Technik)
+  walk3  raw/walk3.png Zweite Übermalung, bewusst über agy (Gemini-Bildmodell hält das Layout einer Referenz eng):
+                       flache Gouache-Flächen mit harten Kanten statt runder CG-Schattierung, flaches Licht;
+                       Referenzen wie walk2
+Die Layouts erzeugen blender/pose_layout.py und scripts/make_layouts.py (assets/ref/).
+"""
+import json, pathlib
+
+ROOT = pathlib.Path(__file__).resolve().parents[3]
+S = "styles/noir"
+RAW = f"{S}/assets/raw"
+M = json.loads((ROOT / "data/motif.json").read_text())
+
+# --- Hintergrund -------------------------------------------------------------------------------------------------
+STYLE_BG = (
+    "A frame from a black-and-white film noir of the 1940s, re-created as a hand-painted background for a narrative "
+    "adventure game. Strictly monochrome: only pure black, white and neutral greys; no colour at all, no sepia, no "
+    "blue or warm tint. Very high contrast chiaroscuro lighting: more than half of the picture is deep, solid black "
+    "shadow, with hard, sharp-edged shadow shapes and only a few bright light sources. Strong backlight: a bank of "
+    "luminous grey fog over the sea is lit from behind, so the masts, the boats, the jetty posts, the lantern post and "
+    "the edge of the cottage stand as crisp black silhouettes against the glowing fog. Rainy night: the cobbled quay "
+    "is soaking wet and glossy black, with long, sharp vertical reflections of every light. Atmospheric depth: "
+    "distant shapes fade into grey fog in clear, separate layers. Painted in a clean, simplified, graphic way: big "
+    "simple shapes, crisp edges, smooth tonal gradations only in the fog and in the glow of the lights, little "
+    "texture, no fussy detail. Low cinematic camera at the eye height of a small figure standing on the quay, "
+    "looking along the quay. Not a photograph, not a 3D render, not a pencil drawing, not a comic with black "
+    "outlines, no colour, no film grain, no scratches, no vignette, no frame."
+)
+COMPOSITION_BG = (
+    "Composition for a fixed side-view adventure game screen in a wide cinema format: the picture will be cropped "
+    "to a wide band, the top 17% and the bottom 20% are cut off, so keep everything important between 17% and 80% "
+    "of the picture height. Horizon at about 46% of the picture height. The quay runs as one level band across the "
+    "whole width of the picture: its back edge at the water runs straight at about 57% of the picture height, and "
+    "its wet, flat cobbled surface fills the picture from there down to the bottom edge, free and walkable from left "
+    "to right. On the left (the left fifth of the width) stands the stone harbour-master's cottage, seen a little "
+    "from the side, with its side wall facing the middle of the picture; in this wall one tall window fitted with "
+    "closed venetian blinds: the light from inside shines between the horizontal slats as bright parallel lines. "
+    "The top of its chimney at about 20% of the picture height. The quay to the right of the cottage, from 5% to "
+    "48% of the width, stays plain dark wet cobbles without any objects (the striped light falling from the window "
+    "onto the quay is added later by the game). The lantern post stands at the back edge of the quay at about 56% of "
+    "the width, its lantern at about 27% of the picture height. The short wooden jetty with the two moored boats "
+    "leads out into the water between 62% and 80% of the width, half lost in the fog. On the right the rocky "
+    "headland with the lighthouse at about 87% of the width, the top of the lighthouse at about 21% of the picture "
+    "height. The two barrels, the stack of crates and the coil of rope stand together at the right edge of the quay, "
+    "from 84% of the width to the right edge. A small figure about 25% of the picture height tall will later walk "
+    "along the quay from the left and stop at about 42% of the width, its feet at about 76% of the picture height; "
+    "the scale of the cottage, the lantern post and the barrels must fit such a figure."
+)
+ANIM_BG = (
+    "Important for the game version: some things move in the game and are added later as separate animated "
+    "layers, so paint them exactly as described here, even where the description above says otherwise. Everything "
+    "is in black and white: the band of light at the horizon is a pale silver-grey glow, the red band of the "
+    "lighthouse a dark grey band, the stars only a few faint white points in a gap between the clouds. No falling "
+    "rain and no rain streaks anywhere (the rain is animated), but every surface is wet. The lighthouse lamp only as "
+    "a small bright spot without any beam (the rotating beam is animated). The lantern glass bright with only a "
+    "small soft glow around it, no light rays, and its bright reflection on the wet cobbles below it. No smoke above "
+    "the chimney, no birds. The window blinds bright as described, but no striped light on the ground."
+)
+
+# --- Figur ---------------------------------------------------------------------------------------------------------
+STYLE_FIG = (
+    "Painting technique: the same black-and-white film-noir painting as the background of the game (third "
+    "reference): strictly monochrome, only black, white and neutral greys, with one single exception: the knitted "
+    "scarf is a strong, saturated deep red, the only colour in the whole picture. Hard theatrical lighting, "
+    "identical on all ten figures: a hard key light from the upper right and slightly in front (a street lantern "
+    "ahead of the character) brightly lights the face, the chest, the parcel and the front leg; the back of each "
+    "figure falls into deep, almost black shadow with a crisp, sharp-edged boundary; a thin bright white rim light "
+    "runs along the top of the cap, the back of the head and the back. Clean, simplified painted shapes with crisp "
+    "edges, few big tonal areas instead of fine texture: the fur in flat dark grey and light grey shapes, the broad "
+    "black-and-white stripes of the face clearly readable, a small bright catchlight in the eye, the cap and the vest "
+    "dark grey, the shirt light grey, satchel and parcel mid grey, the red scarf modelled only by light and shadow. "
+    "No outlines, no fur texture, no individual hairs, no soft airbrush, no glossy plastic highlights, no colour "
+    "except the red scarf. It must look like a painted character of a noir adventure game: not a 3D render, not a "
+    "photograph, not a plush toy, not a cartoon with outlines."
+)
+SHEET_END = (
+    "Each figure isolated on a fully transparent background, with clear empty space between the figures; no ground, "
+    "no cast shadow, no frame borders, nothing cut off at the edge of the sheet."
+)
+WALK_LAYOUT = (
+    "Sprite sheet for a 2D side-view narrative game: ten figures of the same character, painted by hand. The first "
+    "reference image gives the exact layout and the exact poses: ten figures in two "
+    "rows of five, all at the same scale, the feet of each row on the same baseline. Figures one to eight (in "
+    "reading order) are a walk cycle to the right in strict side view; figure nine stands still in side view, both "
+    "feet flat on the ground; figure ten has turned three-quarters towards the viewer. Copy every pose, the "
+    "positions of both legs and feet, the arms, the parcel and the satchel, and the place and size of each figure "
+    "exactly from the first reference; only the painting and the lighting change. The first reference is a plain "
+    "grey 3D render: take only the layout and the poses from it, never its smooth plastic shading or its soft, even "
+    "light. The second reference image only shows the costume, the face and the proportions of "
+    "the character: do not copy its colours, its drawing style, its outlines or its three-view layout. The third "
+    "reference image shows the black-and-white noir painting technique and the tonal range of the game: paint the "
+    "figures with exactly this technique, but do not copy any of its content."
+)
+
+
+REPAINT = (
+    "Repaint this sprite sheet as hand-painted character art for a black-and-white film-noir adventure game. The "
+    "first reference image is the sprite sheet to repaint: keep its layout, all ten figures, their poses, the "
+    "positions of both legs and feet, the parcel, the satchel and the scarf, the place, size and silhouette of each "
+    "figure and the baselines of the feet exactly; only the painting technique changes. The second reference image "
+    "is the background of the same game: paint the figures with exactly its painting technique and tonal range, but "
+    "do not copy any of its content."
+)
+STYLE_REPAINT = (
+    "Painting technique: a hand-painted matte painting like the background: confident, simplified brush shapes, a "
+    "few big tonal planes, subtle visible brush texture, soft painterly transitions inside the figure but a crisp, "
+    "clean silhouette. Strictly monochrome: only black, white and neutral greys; the only colour is the knitted "
+    "scarf, a deep, saturated red. Fur in a few flat dark grey and light grey shapes, the broad black-and-white face "
+    "stripes clearly readable, cap and vest dark grey, shirt light grey, satchel and parcel mid grey. Lighting: soft, "
+    "even, neutral light from the front, mid-grey values, no strong cast shadows, no rim light, no glow, no "
+    "highlights on the edges (the game adds hard noir lighting in real time). Not a 3D render, not smooth CG shading, "
+    "not a plush toy or felt, no fine fur hairs, no outlines."
+)
+
+REPAINT3 = (
+    "Repaint this sprite sheet in a different painting technique. The first reference image is the sprite sheet to "
+    "repaint: keep its layout exactly, all ten figures in two rows of five, their poses, the positions of both legs "
+    "and feet, the arms, the parcel, the satchel and the scarf, the place, size and outline of each figure and the "
+    "baselines of the feet; change only how the figures are painted. The second reference image is the painted "
+    "background of the same game: match its painting technique and tonal range, but do not copy any of its content."
+)
+STYLE_REPAINT3 = (
+    "Painting technique: flat gouache painting with a broad brush, like a hand-painted matte painting for a 1940s "
+    "black-and-white film. Every form is built from only two or three flat tonal planes with crisp, hard edges "
+    "between them, with a few visible dry brush strokes inside the planes; no smooth gradients, no soft round "
+    "airbrush shading, no fur texture, no individual hairs, no fuzzy felt surface. Strictly monochrome: only black, "
+    "white and neutral greys; the only colour is the knitted scarf, a flat, deep, saturated red. Tonal design: cap, "
+    "vest and the fur of body and legs in flat dark greys, the broad face stripes clearly black and white, the shirt "
+    "sleeves light grey, satchel and parcel mid grey, the eye a small black dot. Lighting: flat and even, as on an "
+    "overcast day; no cast shadows, no rim light, no glow, no bright highlights on the edges (the game adds hard noir "
+    "lighting in real time). It must look painted by hand with a brush: not a 3D render, not a photograph, not a "
+    "plush toy, not smooth CG shading, no outlines."
+)
+
+
+def bg_prompt():
+    return "\n\n".join([STYLE_BG, COMPOSITION_BG, M["scene"]["block_en"], ANIM_BG, M["scene"]["background_only_en"],
+                        M["guards_en"], "Image format: landscape 3:2."])
+
+
+def fig_prompt(layout):
+    return "\n\n".join([layout, STYLE_FIG, M["character"]["block_en"], SHEET_END, M["guards_en"],
+                        "Image format: landscape 3:2."])
+
+
+def repaint_prompt():
+    return "\n\n".join([REPAINT, STYLE_REPAINT, M["character"]["block_en"], SHEET_END, M["guards_en"],
+                        "Image format: landscape 3:2."])
+
+
+def repaint3_prompt():
+    return "\n\n".join([REPAINT3, STYLE_REPAINT3, M["character"]["block_en"], SHEET_END, M["guards_en"],
+                        "Image format: landscape 3:2."])
+
+
+def jobs():
+    sheet = M["character"]["reference_sheet"]
+    return {
+        "bg": {"out": f"{RAW}/bg.png", "size": "1536x1024", "prompt": bg_prompt(), "refs": []},
+        "walk": {"out": f"{RAW}/walk.png", "size": "1536x1024", "prompt": fig_prompt(WALK_LAYOUT),
+                 "refs": [f"{S}/assets/ref/walk_layout.png", sheet, f"{RAW}/bg.png"]},
+        "walk2": {"out": f"{RAW}/walk2.png", "size": "1536x1024", "prompt": repaint_prompt(),
+                  "refs": [f"{S}/assets/ref/walk_clean.png", f"{RAW}/bg.png"]},
+        "walk3": {"out": f"{RAW}/walk3.png", "size": "1536x1024", "prompt": repaint3_prompt(), "backend": "agy",
+                  "refs": [f"{S}/assets/ref/walk_clean.png", f"{RAW}/bg.png"]},
+    }
+
+
+def main():
+    out = ROOT / S / "assets"
+    (out / "prompts").mkdir(parents=True, exist_ok=True)
+    for name, job in jobs().items():
+        (out / "prompts" / f"{name}.txt").write_text(job["prompt"] + "\n")
+        (out / f"jobs_{name}.json").write_text(json.dumps([job], indent=1, ensure_ascii=False) + "\n")
+        print("ok", name, len(job["prompt"]), "Zeichen")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,134 @@
+[gd_scene load_steps=19 format=3]
+
+; Katalogeintrag moebius-linien: Hafen und Dachs aus shared/3d (unveränderte glb-Kopien); der Look
+; entsteht nur über Materialien, Licht, Himmel und Nachbearbeitung. main.gd ersetzt alle glTF-Materialien
+; nach Namen durch shaders/ink.gdshader, hängt die Knoten unter "Attach" an die Empties des Hafens und
+; animiert alles über die aufsummierte Zeit t.
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://models/harbor.glb" id="2_harbor"]
+[ext_resource type="PackedScene" path="res://models/badger.glb" id="3_badger"]
+[ext_resource type="Shader" path="res://shaders/ink_water.gdshader" id="4_water"]
+[ext_resource type="Shader" path="res://shaders/ink_beam.gdshader" id="5_beam"]
+[ext_resource type="Shader" path="res://shaders/ink_sky.gdshader" id="6_sky"]
+[ext_resource type="Script" path="res://ui.gd" id="7_ui"]
+
+[sub_resource type="ShaderMaterial" id="SkyMat"]
+shader = ExtResource("6_sky")
+
+[sub_resource type="Sky" id="Sky"]
+sky_material = SubResource("SkyMat")
+radiance_size = 0
+
+; Kein Umgebungslicht, keine Spiegelungen, kein Glow: Farben kommen nur aus ink.gdshader.
+; Tiefennebel in der Horizontfarbe lässt ferne Inseln blass werden (Luftperspektive wie bei Aquarell).
+[sub_resource type="Environment" id="Env"]
+background_mode = 2
+sky = SubResource("Sky")
+ambient_light_source = 1
+reflected_light_source = 1
+tonemap_mode = 0
+glow_enabled = false
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.96, 0.86, 0.74, 1)
+fog_density = 1.0
+fog_sky_affect = 0.0
+fog_depth_begin = 70.0
+fog_depth_end = 900.0
+fog_depth_curve = 1.4
+
+[sub_resource type="ShaderMaterial" id="WaterMat"]
+render_priority = 0
+shader = ExtResource("4_water")
+
+[sub_resource type="CylinderMesh" id="BeamMesh"]
+top_radius = 2.8
+bottom_radius = 0.3
+height = 28.0
+radial_segments = 32
+rings = 1
+cap_top = false
+cap_bottom = false
+
+; render_priority über dem der Linien (100): die Nachbearbeitung liest den Bildschirm vor dem
+; durchsichtigen Durchgang und würde den Kegel sonst übermalen
+[sub_resource type="ShaderMaterial" id="BeamMat"]
+render_priority = 110
+shader = ExtResource("5_beam")
+shader_parameter/length_m = 28.0
+
+[sub_resource type="QuadMesh" id="ScreenQuad"]
+size = Vector2(2, 2)
+
+; Shader setzt main.gd je nach Renderer (Forward+: ink_lines, sonst ink_lines_depth)
+[sub_resource type="ShaderMaterial" id="LinesMat"]
+render_priority = 100
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_main")
+water_material = SubResource("WaterMat")
+lines_material = SubResource("LinesMat")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Env")
+
+; Abendsonne von links vorn; Richtung setzt main.gd (SUN_TRAVEL)
+[node name="Sun" type="DirectionalLight3D" parent="."]
+light_energy = 1.0
+shadow_enabled = true
+shadow_bias = 0.04
+shadow_normal_bias = 1.6
+directional_shadow_max_distance = 80.0
+
+; Hauptkamera wie in shared/3d/harbor_notes.md: Position (-1.8, 3.4, 14.5), rotation_degrees (-3, 0, 0),
+; fov 42 (vertikal). main.gd schneidet bei CUT_T auf die Nahaufnahme.
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.9986295, 0.05233596, 0, -0.05233596, 0.9986295, -1.8, 3.4, 14.5)
+current = true
+fov = 42.0
+near = 0.1
+far = 3000.0
+
+[node name="Lines" type="MeshInstance3D" parent="Camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+cast_shadow = 0
+extra_cull_margin = 16384.0
+mesh = SubResource("ScreenQuad")
+surface_material_override/0 = SubResource("LinesMat")
+
+[node name="Harbor" parent="." instance=ExtResource("2_harbor")]
+
+[node name="Badger" parent="." instance=ExtResource("3_badger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.6, 0, 1.2)
+
+[node name="Effects" type="Node3D" parent="."]
+
+; Alles unter "Attach" hängt main.gd an ein Empty des Hafens (Name des Knotens = Ziel).
+[node name="Attach" type="Node3D" parent="."]
+
+[node name="LighthouseLight" type="Node3D" parent="Attach"]
+
+; Drehteil des Leuchtfeuers: main.gd dreht "Rotor" um Y; "Tilt" neigt den Strahl 4° nach unten
+[node name="Rotor" type="Node3D" parent="Attach/LighthouseLight"]
+
+[node name="Tilt" type="Node3D" parent="Attach/LighthouseLight/Rotor"]
+transform = Transform3D(1, 0, 0, 0, 0.9975641, 0.06975647, 0, -0.06975647, 0.9975641, 0, 0, 0)
+
+[node name="Beam" type="MeshInstance3D" parent="Attach/LighthouseLight/Rotor/Tilt"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, -14)
+cast_shadow = 0
+mesh = SubResource("BeamMesh")
+surface_material_override/0 = SubResource("BeamMat")
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="UILayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("7_ui")

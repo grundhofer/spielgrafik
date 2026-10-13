@@ -1,0 +1,133 @@
+{
+ "target_height": 150.0,
+ "walk_sheet": {
+  "size": [
+   1536,
+   1024
+  ],
+  "keyed": "genimg",
+  "missing": [],
+  "touching_split": 0,
+  "scale": 0.3614,
+  "heights_raw": [
+   414,
+   414,
+   415,
+   414,
+   410,
+   418,
+   420,
+   416,
+   420
+  ]
+ },
+ "eyes": {
+  "front_eyes_px": [
+   [
+    250,
+    124,
+    266,
+    135
+   ],
+   [
+    317,
+    124,
+    327,
+    136
+   ]
+  ],
+  "wave_raise": "Augen ersetzt (Gesicht um -18,0 px versetzt, Restabweichung L 6.3)",
+  "wave_out": "Augen ersetzt (Gesicht um -34,0 px versetzt, Restabweichung L 10.0)",
+  "wave_in": "Augen ersetzt (Gesicht um -15,-28 px versetzt, Restabweichung L 8.8)",
+  "blink": "Augen ersetzt (Gesicht um -19,-28 px versetzt, Restabweichung L 8.8)"
+ },
+ "front_sheet": {
+  "size": [
+   1536,
+   1024
+  ],
+  "keyed": "genimg",
+  "missing": [],
+  "touching_split": 0,
+  "scale": 0.3226
+ },
+ "walk_dx": [
+  4,
+  8,
+  6,
+  8,
+  4,
+  8,
+  7,
+  9
+ ],
+ "walk_dx_votes": [
+  0,
+  1,
+  2,
+  0,
+  0,
+  2,
+  2,
+  0
+ ],
+ "walk_dx_expected": 6.86,
+ "stand_dx": -5,
+ "stand_votes": 2,
+ "walk_dx_manual": [
+  4,
+  8,
+  6,
+  8,
+  4,
+  8,
+  7,
+  9
+ ],
+ "parts": {
+  "wave_raise": "Teil übertragen: 30.1% der Figur (Versatz 1,0, IoU Unterkörper 0.88)",
+  "wave_out": "Teil übertragen: 32.3% der Figur (Versatz 0,0, IoU Unterkörper 0.89)",
+  "wave_in": "Teil übertragen: 32.9% der Figur (Versatz 1,0, IoU Unterkörper 0.88)",
+  "blink": "ganzes Bild: 'front' mit geschlossenen Augen aus 'blink' (siehe fix_eyes)",
+  "talk": "Teil übertragen: 10.9% der Figur (Versatz 0,0, IoU Unterkörper 0.97)"
+ },
+ "frame": [
+  148,
+  163
+ ],
+ "anchor": [
+  63,
+  157
+ ],
+ "clips": {
+  "walk": {
+   "file": "badger_ai_walk.png",
+   "frames": 8,
+   "names": [
+    "walk_0",
+    "walk_1",
+    "walk_2",
+    "walk_3",
+    "walk_4",
+    "walk_5",
+    "walk_6",
+    "walk_7"
+   ]
+  },
+  "stand": {
+   "file": "badger_ai_stand.png",
+   "frames": 8,
+   "names": [
+    "stand",
+    "turn",
+    "front",
+    "wave_raise",
+    "wave_out",
+    "wave_in",
+    "blink",
+    "talk"
+   ]
+  }
+ },
+ "notes": []
+}

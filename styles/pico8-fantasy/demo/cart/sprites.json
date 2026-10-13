@@ -1,0 +1,122 @@
+{
+ "actors": {
+  "badger_stand_a": {
+   "sx": 16,
+   "sy": 0,
+   "w": 16,
+   "h": 16,
+   "key": 14
+  },
+  "badger_stand_b": {
+   "sx": 32,
+   "sy": 0,
+   "w": 16,
+   "h": 16,
+   "key": 14
+  },
+  "badger_breath_a": {
+   "sx": 48,
+   "sy": 0,
+   "w": 16,
+   "h": 16,
+   "key": 14
+  },
+  "badger_breath_b": {
+   "sx": 64,
+   "sy": 0,
+   "w": 16,
+   "h": 16,
+   "key": 14
+  },
+  "badger_blink": {
+   "sx": 80,
+   "sy": 0,
+   "w": 16,
+   "h": 16,
+   "key": 14
+  },
+  "badger_contact": {
+   "sx": 96,
+   "sy": 0,
+   "w": 16,
+   "h": 16,
+   "key": 14
+  },
+  "badger_pass": {
+   "sx": 112,
+   "sy": 0,
+   "w": 16,
+   "h": 16,
+   "key": 14
+  },
+  "badger_contact2": {
+   "sx": 80,
+   "sy": 16,
+   "w": 16,
+   "h": 16,
+   "key": 14
+  },
+  "badger_pass2": {
+   "sx": 96,
+   "sy": 16,
+   "w": 16,
+   "h": 16,
+   "key": 14
+  },
+  "boat_a": {
+   "sx": 0,
+   "sy": 16,
+   "w": 22,
+   "h": 7,
+   "key": 14
+  },
+  "boat_b": {
+   "sx": 24,
+   "sy": 16,
+   "w": 21,
+   "h": 10,
+   "key": 14
+  },
+  "gull_0": {
+   "sx": 48,
+   "sy": 16,
+   "w": 7,
+   "h": 3,
+   "key": 14
+  },
+  "gull_1": {
+   "sx": 56,
+   "sy": 16,
+   "w": 7,
+   "h": 3,
+   "key": 14
+  },
+  "parcel": {
+   "sx": 64,
+   "sy": 16,
+   "w": 7,
+   "h": 6,
+   "key": 14
+  },
+  "lantern": {
+   "sx": 72,
+   "sy": 16,
+   "w": 5,
+   "h": 8,
+   "key": 14
+  }
+ },
+ "map_sy": -3,
+ "map_rows": 12,
+ "badger_poses": [
+  "stand_a",
+  "stand_b",
+  "breath_a",
+  "breath_b",
+  "blink",
+  "contact",
+  "pass",
+  "contact2",
+  "pass2"
+ ]
+}

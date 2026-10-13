@@ -1,0 +1,53 @@
+{
+ "horizon_y": 289,
+ "quay_y": 580,
+ "lights": {
+  "window": [
+   195.8,
+   323.9
+  ],
+  "lantern": [
+   320.0,
+   314.7
+  ],
+  "lamp": [
+   1088.0,
+   158.5
+  ]
+ },
+ "chimney": [
+  130,
+  76
+ ],
+ "boats": [
+  {
+   "pivot": [
+    734,
+    474
+   ],
+   "amp_deg": 1.4,
+   "period": 4.6,
+   "phase": 0.0,
+   "bob": 1.8
+  },
+  {
+   "pivot": [
+    962,
+    499
+   ],
+   "amp_deg": 1.2,
+   "period": 5.3,
+   "phase": 1.9,
+   "bob": 1.6
+  }
+ ],
+ "mask_align": {
+  "sx": 1.0,
+  "sy": 0.996,
+  "dx": -1.0,
+  "dy": 1.0,
+  "score": 0.6763,
+  "score_identity": 0.6708,
+  "edge_points": 3750
+ }
+}

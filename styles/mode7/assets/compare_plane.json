@@ -1,0 +1,28 @@
+{
+ "times": [
+  {
+   "t": 0.5,
+   "fixed_vs_float": 0.1132,
+   "nearest_vs_supersampled": 0.114,
+   "nearest_vs_supersampled_far40": 0.1166,
+   "frame_change_far40_hardware": 0.1441,
+   "frame_change_far40_supersampled": 0.0211
+  },
+  {
+   "t": 2.0,
+   "fixed_vs_float": 0.1104,
+   "nearest_vs_supersampled": 0.1063,
+   "nearest_vs_supersampled_far40": 0.1367,
+   "frame_change_far40_hardware": 0.1455,
+   "frame_change_far40_supersampled": 0.0176
+  },
+  {
+   "t": 3.6,
+   "fixed_vs_float": 0.119,
+   "nearest_vs_supersampled": 0.0935,
+   "nearest_vs_supersampled_far40": 0.1459,
+   "frame_change_far40_hardware": 0.0919,
+   "frame_change_far40_supersampled": 0.006
+  }
+ ]
+}

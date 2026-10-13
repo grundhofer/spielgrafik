@@ -1,0 +1,37 @@
+[
+ {
+  "out": "styles/painterly-digital/assets/raw/badger_side.png",
+  "status": "skip",
+  "tries": 0
+ },
+ {
+  "out": "styles/painterly-digital/assets/raw/foreground.png",
+  "status": "ok",
+  "tries": 1
+ },
+ {
+  "out": "styles/painterly-digital/assets/raw/badger.png",
+  "status": "ok",
+  "tries": 1
+ },
+ {
+  "out": "styles/painterly-digital/assets/raw/backdrop.png",
+  "status": "ok",
+  "tries": 1
+ },
+ {
+  "out": "styles/painterly-digital/assets/raw/headland.png",
+  "status": "ok",
+  "tries": 1
+ },
+ {
+  "out": "styles/painterly-digital/assets/raw/harbour.png",
+  "status": "ok",
+  "tries": 1
+ },
+ {
+  "out": "styles/painterly-digital/assets/raw/boats.png",
+  "status": "ok",
+  "tries": 1
+ }
+]

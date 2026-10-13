@@ -1,0 +1,610 @@
+{
+ "inputs": {
+  "bg_flat.png": {
+   "kind": "Farbbild",
+   "size": [
+    1536,
+    1024
+   ],
+   "crop_top": 0.06,
+   "ega_distance": 0.0638,
+   "mapping": "clusters",
+   "backend": "codex",
+   "verbatim": null,
+   "light_scale": 1.041,
+   "chroma_gain": 1.0,
+   "groups": [
+    {
+     "group": 0,
+     "rgb": "020227",
+     "share": 0.0053,
+     "ega": 1,
+     "ega_name": "Dunkelblau",
+     "manual": false
+    },
+    {
+     "group": 1,
+     "rgb": "a8adb0",
+     "share": 0.1311,
+     "ega": 7,
+     "ega_name": "Hellgrau",
+     "manual": false
+    },
+    {
+     "group": 2,
+     "rgb": "930299",
+     "share": 0.1064,
+     "ega": 5,
+     "ega_name": "Dunkelmagenta",
+     "manual": false
+    },
+    {
+     "group": 3,
+     "rgb": "525354",
+     "share": 0.0423,
+     "ega": 8,
+     "ega_name": "Dunkelgrau",
+     "manual": false
+    },
+    {
+     "group": 4,
+     "rgb": "702e03",
+     "share": 0.0189,
+     "ega": 6,
+     "ega_name": "Braun",
+     "manual": false
+    },
+    {
+     "group": 5,
+     "rgb": "fa1a1e",
+     "share": 0.1005,
+     "ega": 12,
+     "ega_name": "Hellrot",
+     "manual": false
+    },
+    {
+     "group": 6,
+     "rgb": "0347e0",
+     "share": 0.0084,
+     "ega": 9,
+     "ega_name": "Hellblau",
+     "manual": false
+    },
+    {
+     "group": 7,
+     "rgb": "030656",
+     "share": 0.0063,
+     "ega": 1,
+     "ega_name": "Dunkelblau",
+     "manual": false
+    },
+    {
+     "group": 8,
+     "rgb": "fbf707",
+     "share": 0.0206,
+     "ega": 14,
+     "ega_name": "Gelb",
+     "manual": false
+    },
+    {
+     "group": 9,
+     "rgb": "c90825",
+     "share": 0.0082,
+     "ega": 4,
+     "ega_name": "Dunkelrot",
+     "manual": false
+    },
+    {
+     "group": 10,
+     "rgb": "000000",
+     "share": 0.0263,
+     "ega": 0,
+     "ega_name": "Schwarz",
+     "manual": false
+    },
+    {
+     "group": 11,
+     "rgb": "757d80",
+     "share": 0.0131,
+     "ega": 7,
+     "ega_name": "Hellgrau",
+     "manual": false
+    },
+    {
+     "group": 12,
+     "rgb": "000000",
+     "share": 0.0565,
+     "ega": 0,
+     "ega_name": "Schwarz",
+     "manual": false
+    },
+    {
+     "group": 13,
+     "rgb": "cedddd",
+     "share": 0.0093,
+     "ega": 15,
+     "ega_name": "Weiß",
+     "manual": false
+    },
+    {
+     "group": 14,
+     "rgb": "faa803",
+     "share": 0.0312,
+     "ega": 14,
+     "ega_name": "Gelb",
+     "manual": false
+    },
+    {
+     "group": 15,
+     "rgb": "0c0804",
+     "share": 0.0177,
+     "ega": 0,
+     "ega_name": "Schwarz",
+     "manual": false
+    },
+    {
+     "group": 16,
+     "rgb": "24170b",
+     "share": 0.0148,
+     "ega": 0,
+     "ega_name": "Schwarz",
+     "manual": true
+    },
+    {
+     "group": 17,
+     "rgb": "040202",
+     "share": 0.0258,
+     "ega": 0,
+     "ega_name": "Schwarz",
+     "manual": false
+    },
+    {
+     "group": 18,
+     "rgb": "045315",
+     "share": 0.0151,
+     "ega": 2,
+     "ega_name": "Dunkelgrün",
+     "manual": false
+    },
+    {
+     "group": 19,
+     "rgb": "000285",
+     "share": 0.176,
+     "ega": 1,
+     "ega_name": "Dunkelblau",
+     "manual": false
+    },
+    {
+     "group": 20,
+     "rgb": "441e0c",
+     "share": 0.0223,
+     "ega": 0,
+     "ega_name": "Schwarz",
+     "manual": true
+    },
+    {
+     "group": 21,
+     "rgb": "a6560c",
+     "share": 0.0164,
+     "ega": 6,
+     "ega_name": "Braun",
+     "manual": false
+    },
+    {
+     "group": 22,
+     "rgb": "000006",
+     "share": 0.0138,
+     "ega": 0,
+     "ega_name": "Schwarz",
+     "manual": false
+    },
+    {
+     "group": 23,
+     "rgb": "010898",
+     "share": 0.1134,
+     "ega": 1,
+     "ega_name": "Dunkelblau",
+     "manual": false
+    }
+   ]
+  },
+  "bg_lines.png": {
+   "kind": "Strichvorlage",
+   "size": [
+    1536,
+    1024
+   ],
+   "crop_top": 0.06,
+   "ink_threshold": 137,
+   "ink_share": 0.1617,
+   "line_pixels": 4330,
+   "backend": "codex",
+   "verbatim": null,
+   "alignment": 0.735,
+   "regions": 233,
+   "regions_without_colour": 0,
+   "detail": {
+    "detail_pixels": 2987,
+    "detail_undone": 113,
+    "detail_theta": 0.25
+   },
+   "touchup_ops": 139
+  }
+ },
+ "variants": {
+  "ai_bg_flat": {
+   "regions": 70,
+   "commands": 975,
+   "visual_commands": 929,
+   "lines": 822,
+   "fill_seeds": 125,
+   "json_bytes": 20361,
+   "colours": 12,
+   "replay_diff_visual": 0,
+   "replay_diff_priority": 0,
+   "build_cost": 38258,
+   "build_rate": 798,
+   "layout": {
+    "floor_colours": [
+     7
+    ],
+    "quay_top": 141,
+    "water": 1,
+    "walk_y": 156,
+    "horizon": 83,
+    "sky_colours": [
+     0,
+     1,
+     5,
+     12,
+     14
+    ],
+    "lamp": [
+     147,
+     39,
+     148,
+     41
+    ],
+    "lantern": [
+     17,
+     103,
+     17,
+     108
+    ],
+    "chimney_top": [
+     1,
+     61
+    ],
+    "glints": 12,
+    "gull_y": 91
+   },
+   "priority_objects": [
+    {
+     "box": [
+      0,
+      122,
+      34,
+      147
+     ],
+     "band": 13,
+     "area": 655,
+     "front_of_badger": false
+    },
+    {
+     "box": [
+      36,
+      122,
+      41,
+      141
+     ],
+     "band": 12,
+     "area": 66,
+     "front_of_badger": false
+    },
+    {
+     "box": [
+      116,
+      134,
+      120,
+      142
+     ],
+     "band": 12,
+     "area": 37,
+     "front_of_badger": false
+    },
+    {
+     "box": [
+      123,
+      122,
+      155,
+      167
+     ],
+     "band": 14,
+     "area": 1049,
+     "front_of_badger": false
+    },
+    {
+     "box": [
+      29,
+      151,
+      47,
+      151
+     ],
+     "band": 13,
+     "area": 19,
+     "front_of_badger": false
+    }
+   ],
+   "occluders_on_walk_path": 0,
+   "warnings": [
+    "kein Gegenstand vor dem Laufweg: Prioritätsbänder nicht sichtbar (walk_y/start_x oder priority_objects setzen)",
+    "Kaikante bei y=141 unplausibel"
+   ]
+  },
+  "ai_bg_flat_lines": {
+   "regions": 75,
+   "commands": 1244,
+   "visual_commands": 1194,
+   "lines": 1080,
+   "fill_seeds": 118,
+   "json_bytes": 25850,
+   "colours": 14,
+   "replay_diff_visual": 0,
+   "replay_diff_priority": 0,
+   "build_cost": 41332,
+   "build_rate": 862,
+   "layout": {
+    "floor_colours": [
+     7,
+     8
+    ],
+    "quay_top": 140,
+    "water": 1,
+    "walk_y": 156,
+    "horizon": 82,
+    "sky_colours": [
+     0,
+     1,
+     5,
+     12,
+     14
+    ],
+    "lamp": [
+     148,
+     39,
+     148,
+     41
+    ],
+    "lantern": [
+     17,
+     103,
+     17,
+     107
+    ],
+    "chimney_top": [
+     1,
+     61
+    ],
+    "glints": 12,
+    "gull_y": 90
+   },
+   "priority_objects": [
+    {
+     "box": [
+      9,
+      122,
+      41,
+      142
+     ],
+     "band": 12,
+     "area": 515,
+     "front_of_badger": false
+    },
+    {
+     "box": [
+      117,
+      134,
+      120,
+      142
+     ],
+     "band": 12,
+     "area": 28,
+     "front_of_badger": false
+    },
+    {
+     "box": [
+      123,
+      122,
+      159,
+      166
+     ],
+     "band": 14,
+     "area": 908,
+     "front_of_badger": false
+    }
+   ],
+   "occluders_on_walk_path": 0,
+   "warnings": [
+    "kein Gegenstand vor dem Laufweg: Prioritätsbänder nicht sichtbar (walk_y/start_x oder priority_objects setzen)"
+   ]
+  },
+  "ai_bg_flat_detail": {
+   "regions": 75,
+   "commands": 1609,
+   "visual_commands": 1564,
+   "lines": 1440,
+   "fill_seeds": 125,
+   "json_bytes": 34297,
+   "colours": 12,
+   "replay_diff_visual": 0,
+   "replay_diff_priority": 0,
+   "build_cost": 47156,
+   "build_rate": 983,
+   "layout": {
+    "floor_colours": [
+     7,
+     8
+    ],
+    "quay_top": 140,
+    "water": 1,
+    "walk_y": 152,
+    "horizon": 82,
+    "sky_colours": [
+     0,
+     1,
+     5,
+     12,
+     14
+    ],
+    "lamp": [
+     147,
+     39,
+     148,
+     41
+    ],
+    "lantern": [
+     116,
+     83,
+     120,
+     93
+    ],
+    "chimney_top": [
+     12,
+     21
+    ],
+    "glints": 12,
+    "gull_y": 90
+   },
+   "priority_objects": [
+    {
+     "box": [
+      8,
+      118,
+      41,
+      143
+     ],
+     "band": 12,
+     "area": 684,
+     "front_of_badger": false
+    },
+    {
+     "box": [
+      116,
+      133,
+      120,
+      142
+     ],
+     "band": 12,
+     "area": 40,
+     "front_of_badger": false
+    },
+    {
+     "box": [
+      123,
+      118,
+      155,
+      167
+     ],
+     "band": 14,
+     "area": 1053,
+     "front_of_badger": true
+    }
+   ],
+   "occluders_on_walk_path": 1,
+   "warnings": []
+  },
+  "ai_bg_flat_touchup": {
+   "regions": 71,
+   "commands": 1486,
+   "visual_commands": 1437,
+   "lines": 1314,
+   "fill_seeds": 107,
+   "json_bytes": 31382,
+   "colours": 13,
+   "replay_diff_visual": 0,
+   "replay_diff_priority": 0,
+   "build_cost": 46643,
+   "build_rate": 972,
+   "layout": {
+    "floor_colours": [
+     7,
+     8
+    ],
+    "quay_top": 140,
+    "water": 1,
+    "walk_y": 152,
+    "horizon": 82,
+    "sky_colours": [
+     0,
+     1,
+     5,
+     12,
+     14
+    ],
+    "lamp": [
+     147,
+     39,
+     148,
+     41
+    ],
+    "lantern": [
+     116,
+     83,
+     120,
+     93
+    ],
+    "chimney_top": [
+     12,
+     21
+    ],
+    "glints": 12,
+    "gull_y": 90
+   },
+   "priority_objects": [
+    {
+     "box": [
+      8,
+      118,
+      41,
+      143
+     ],
+     "band": 12,
+     "area": 521,
+     "front_of_badger": false
+    },
+    {
+     "box": [
+      116,
+      133,
+      120,
+      142
+     ],
+     "band": 12,
+     "area": 40,
+     "front_of_badger": false
+    },
+    {
+     "box": [
+      122,
+      118,
+      156,
+      164
+     ],
+     "band": 14,
+     "area": 958,
+     "front_of_badger": true
+    }
+   ],
+   "occluders_on_walk_path": 1,
+   "warnings": []
+  }
+ },
+ "use": "ai_bg_flat_touchup",
+ "godot": {
+  "ok": true,
+  "diff_visual": 0,
+  "diff_priority": 0,
+  "built_at_frame": 47,
+  "errors": []
+ }
+}

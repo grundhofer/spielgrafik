@@ -1,0 +1,32 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="Texture2D" path="res://art/bg.png" id="2_bg"]
+[ext_resource type="Shader" path="res://shaders/map.gdshader" id="3_map"]
+[ext_resource type="Texture2D" path="res://art/badger.png" id="4_badger"]
+[ext_resource type="Shader" path="res://shaders/badger.gdshader" id="5_badger"]
+
+[sub_resource type="ShaderMaterial" id="SM_map"]
+shader = ExtResource("3_map")
+
+[sub_resource type="ShaderMaterial" id="SM_badger"]
+shader = ExtResource("5_badger")
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Map" type="Sprite2D" parent="World"]
+material = SubResource("SM_map")
+texture = ExtResource("2_bg")
+centered = false
+
+[node name="Badger" type="Sprite2D" parent="World"]
+material = SubResource("SM_badger")
+texture = ExtResource("4_badger")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 112, 76)
+
+[node name="UI" type="CanvasLayer" parent="."]

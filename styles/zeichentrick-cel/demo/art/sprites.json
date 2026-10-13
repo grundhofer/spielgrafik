@@ -1,0 +1,197 @@
+{
+ "scale": 0.5,
+ "cell": [
+  154.0,
+  256.0
+ ],
+ "baseline": 252.0,
+ "root_x": 79.2076,
+ "frames": [
+  {
+   "name": "walk_0",
+   "index": 0,
+   "lost_px": 0,
+   "src_bottom": 485,
+   "bbox": [
+    20,
+    53,
+    145,
+    253
+   ]
+  },
+  {
+   "name": "walk_1",
+   "index": 1,
+   "lost_px": 0,
+   "src_bottom": 485,
+   "bbox": [
+    12,
+    49,
+    142,
+    253
+   ]
+  },
+  {
+   "name": "walk_2",
+   "index": 2,
+   "lost_px": 0,
+   "src_bottom": 485,
+   "bbox": [
+    6,
+    47,
+    143,
+    253
+   ]
+  },
+  {
+   "name": "walk_3",
+   "index": 3,
+   "lost_px": 0,
+   "src_bottom": 485,
+   "bbox": [
+    17,
+    51,
+    144,
+    253
+   ]
+  },
+  {
+   "name": "walk_4",
+   "index": 4,
+   "lost_px": 0,
+   "src_bottom": 486,
+   "bbox": [
+    18,
+    53,
+    143,
+    253
+   ]
+  },
+  {
+   "name": "walk_5",
+   "index": 5,
+   "lost_px": 0,
+   "src_bottom": 978,
+   "bbox": [
+    9,
+    52,
+    146,
+    253
+   ]
+  },
+  {
+   "name": "walk_6",
+   "index": 6,
+   "lost_px": 0,
+   "src_bottom": 978,
+   "bbox": [
+    11,
+    49,
+    146,
+    253
+   ]
+  },
+  {
+   "name": "walk_7",
+   "index": 7,
+   "lost_px": 0,
+   "src_bottom": 977,
+   "bbox": [
+    17,
+    53,
+    146,
+    253
+   ]
+  },
+  {
+   "name": "stand",
+   "index": 8,
+   "lost_px": 0,
+   "src_bottom": 978,
+   "bbox": [
+    27,
+    48,
+    143,
+    253
+   ]
+  },
+  {
+   "name": "front",
+   "index": 9,
+   "lost_px": 0,
+   "src_bottom": 978,
+   "bbox": [
+    15,
+    47,
+    146,
+    253
+   ]
+  },
+  {
+   "name": "front_talk_a",
+   "index": 10,
+   "lost_px": 0,
+   "src_bottom": 978,
+   "bbox": [
+    15,
+    47,
+    146,
+    253
+   ]
+  },
+  {
+   "name": "front_talk_b",
+   "index": 11,
+   "lost_px": 0,
+   "src_bottom": 978,
+   "bbox": [
+    15,
+    47,
+    146,
+    253
+   ]
+  },
+  {
+   "name": "front_blink",
+   "index": 12,
+   "lost_px": 0,
+   "src_bottom": 978,
+   "bbox": [
+    15,
+    47,
+    146,
+    253
+   ]
+  }
+ ],
+ "boats": {
+  "boat_a": {
+   "size": [
+    168,
+    135
+   ],
+   "scale": 0.22,
+   "src_bbox": [
+    37,
+    145,
+    801,
+    758
+   ],
+   "waterline_y": 135
+  },
+  "boat_b": {
+   "size": [
+    104,
+    59
+   ],
+   "scale": 0.17,
+   "src_bbox": [
+    890,
+    420,
+    1500,
+    769
+   ],
+   "waterline_y": 59
+  }
+ }
+}

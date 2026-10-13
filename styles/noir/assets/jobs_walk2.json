@@ -1,0 +1,11 @@
+[
+ {
+  "out": "styles/noir/assets/raw/walk2.png",
+  "size": "1536x1024",
+  "prompt": "Repaint this sprite sheet as hand-painted character art for a black-and-white film-noir adventure game. The first reference image is the sprite sheet to repaint: keep its layout, all ten figures, their poses, the positions of both legs and feet, the parcel, the satchel and the scarf, the place, size and silhouette of each figure and the baselines of the feet exactly; only the painting technique changes. The second reference image is the background of the same game: paint the figures with exactly its painting technique and tonal range, but do not copy any of its content.\n\nPainting technique: a hand-painted matte painting like the background: confident, simplified brush shapes, a few big tonal planes, subtle visible brush texture, soft painterly transitions inside the figure but a crisp, clean silhouette. Strictly monochrome: only black, white and neutral greys; the only colour is the knitted scarf, a deep, saturated red. Fur in a few flat dark grey and light grey shapes, the broad black-and-white face stripes clearly readable, cap and vest dark grey, shirt light grey, satchel and parcel mid grey. Lighting: soft, even, neutral light from the front, mid-grey values, no strong cast shadows, no rim light, no glow, no highlights on the edges (the game adds hard noir lighting in real time). Not a 3D render, not smooth CG shading, not a plush toy or felt, no fine fur hairs, no outlines.\n\nThe badger courier: an original mascot character, a stout, short-legged badger with a broad black-and-white striped face, wearing a dark green peaked cap with a brass button, a dark green vest with pockets over a cream shirt with rolled-up sleeves, a long red knitted scarf, a brown leather satchel on a shoulder strap, and a brown paper parcel tied with string under one arm.\n\nEach figure isolated on a fully transparent background, with clear empty space between the figures; no ground, no cast shadow, no frame borders, nothing cut off at the edge of the sheet.\n\nNo text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.\n\nImage format: landscape 3:2.",
+  "refs": [
+   "styles/noir/assets/ref/walk_clean.png",
+   "styles/noir/assets/raw/bg.png"
+  ]
+ }
+]

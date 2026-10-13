@@ -1,0 +1,242 @@
+{
+ "slug": "oelmalerei",
+ "name": "Expressive Ölmalerei",
+ "family": "gemalt",
+ "kind": "style",
+ "era": "2010er bis heute (Erzählspiele mit gemalten Standbildern)",
+ "summary": "Orte und Figuren sehen aus wie Ölgemälde auf Leinwand: breite Pinsel- und Spachtelstriche, große vereinfachte Flächen, gedämpfte gebrochene Farben mit wenigen warmen Akzenten an den Lichtquellen. Die Bewegung ist sparsam (Licht, Rauch, Glanzlichter, Pinselstrich-Flimmern). Rechts liegt ein dunkles Dialogpanel mit gemaltem Porträt und Text wie in einem Erzähl-Rollenspiel.",
+ "references": [
+  "Disco Elysium (2019): ölgemalte Orte und Porträts, Dialogpanel rechts mit nummerierten Antworten",
+  "Loving Vincent (Film, 2017): Bewegung als flimmernde, Bild für Bild neu gesetzte Pinselstriche"
+ ],
+ "traits": [
+  "Im Hintergrund sind breite Pinsel- und Spachtelstriche zu sehen, Himmel, Kai und Felsen sind aus großen Flächen gebaut, Konturlinien fehlen",
+  "Gedämpfte, gebrochene Farben (Grau-Grün, Ocker, stumpfes Violett, Schieferblau) mit wenigen warmen Komplementär-Akzenten: Horizontband, Fenster, Laterne, Lampenhaus, roter Schal",
+  "Der Dachs erscheint als gemaltes Brustbild im Dialogpanel, mit ausgefranstem Pinselrand statt Rahmen",
+  "Dialogpanel rechts (362 px, etwa 28 % der Breite), fast schwarz, mit gemalter Kante; Serifenschrift, Ortsname in gesperrten Versalien, nummerierte Antworten in Rostorange mit bündigem Textanfang, Parserzeile",
+  "Spielfigur mit Pinselstrichen neu gemalt (Strichmaler in prep.py, in doppelter Spielgröße gemalt): Striche etwa so breit wie die Spachtelstriche des Kais, ausgefranste Silhouette statt Freistellkante; Farben im Shader leicht zur Szenenpalette gezogen, Schatten ins Violett; Mütze grün, Hemd hell, Augenstreifen lesbar; jedes Laufbild hat eigene Striche",
+  "Dunkelvioletter, gemalter Kontaktschatten unter dem Dachs, leicht zur laternenabgewandten Seite versetzt",
+  "Sparsame Bewegung: Leuchtturmstrahl als kegelförmige Lasur mit Borstenspuren (am Lampenhaus warm und deckend), gemalte Lichthöfe an Lampe, Laterne und Fenster, Schornsteinrauch, Glanzlichter auf Wasser und nassem Kai, zum Himmel getönte Möwen, Pinselstrich-Flimmern in ganzen Pixeln, das lange Linien (Masten, Leuchtturmkante, Laternenpfahl) ausspart",
+  "Leinwandstruktur und warme Vignette liegen nur über dem Gemälde, nicht über der Oberfläche"
+ ],
+ "camera": "Leicht erhöhte Seitenansicht mit fester Kamera; der Kai läuft waagerecht durch das untere Drittel, der Dachs läuft von links herein und bleibt im linken Drittel stehen (Fußpunkt x = 385 von 1080 px Gemäldebreite, rechts neben der Laterne), nicht in der Bildmitte",
+ "resolution": "1280×720 Ausgabe; Gemälde 1080×720 (aus 1536×1024 skaliert), das Dialogpanel überdeckt rechts den Rand des Gemäldes; Dachs 152 px hoch",
+ "pipeline": [
+  {
+   "step": "Hintergrund erzeugen (3 Versuche)",
+   "tool": "genimg (gpt-image)",
+   "detail": "1536×1024. Versuch 1 (bg.png) mit Stilblock „Impasto, kühne Komplementärfarben“ ergab detailreiche Postkarten-Romantik. Versuche 2 und 3 mit unverändertem Kompositionsblock und geschärftem Stilblock: sehr große flache Pinsel und Spachtel, wenige große Striche, große Flächen, kaum Details, gedämpfte gebrochene Farben mit wenigen Akzenten, „not a postcard sunset“, keine Blumen, keine feine Takelage. Zusätzlich: Licht und Rauch kommen später als Animation, also Lampe ohne Strahl und nur eine schwache Rauchfahne. bg3 (der gröbere) wurde genommen."
+  },
+  {
+   "step": "Porträt erzeugen",
+   "tool": "genimg (gpt-image) mit --ref shared/badger/master_sheet.png",
+   "detail": "1024×1024 angefordert, 1254×1254 geliefert. Brustbild im Dreiviertelprofil nach links, warmes Licht von rechts, dunkler gemalter Grund. Erster Versuch brauchbar, unverändert übernommen."
+  },
+  {
+   "step": "Walk-Sheet erzeugen (2 Bilder)",
+   "tool": "genimg: gpt-image, dann agy (Gemini) mit 3 Referenzen",
+   "detail": "walk.png (gpt-image, Master-Sheet + Porträt als Referenz) kam dunkel, mit Gegenlicht und Plüsch-Look. Neues Blatt walk3.png über agy, weil Codex kein Guthaben mehr hatte: alter Bogen auf Magenta als Layout-Referenz, Porträt als einzige Stilreferenz, Master-Sheet nur für Kostümdetails; Zusatz „mid-light values, front-lit from the upper left, no backlight, no rim light, cap and vest clearly dark green“. agy behielt Layout und Posen, Farben und Gesicht sind deutlich lesbarer."
+  },
+  {
+   "step": "Effekt-Sheet erzeugen",
+   "tool": "genimg (gpt-image)",
+   "detail": "1024×1024, transparent: Möwe in 3 Flügelstellungen, 4 Rauchwolken, 4 Glanzlichter, 1 Lichtstrahl, alle als Ölfarbe gemalt. Unverändert aus dem ersten Durchgang."
+  },
+  {
+   "step": "Aufbereitung",
+   "tool": "styles/oelmalerei/tools/prep.py (Pillow, NumPy)",
+   "detail": "Hintergrund auf 1080×720; gemalte Rauchfahne mit Himmel von rechts übermalen (weiche Maske); Normalmap aus dem Hochpass der Helligkeit; Kantenmaske für das Flimmern (Linienfilter 41 px über dünne Linien und starke Kanten, 45–135°, senkrechtes Closing, 2 px Rand; 7,9 % der Fläche). Walk-Sheet: Magenta-Saum entfernen, über Zusammenhangskomponenten zerlegen, Kostümfarben korrigieren (Oliv → Dunkelgrün, Schatten Gamma 0,9), auf doppelte Spielgröße (304 px) bringen und mit einem Strichmaler neu malen (4 Schichten R = 16/9/4/2 px entlang der Kanten, nach Hertzmann 1998; R = 2 nur im oberen Drittel: Mütze, Gesicht; Silhouette aus den Strichen), dann auf 152 px halbieren, schwach nachschärfen, am Schwerpunkt von Kopf und Rumpf ausrichten. Vorschub je Bildwechsel aus dem Standfuß gemessen (IoU der Fußsilhouetten, bei Gleichstand Mitte des Plateaus) und in walk.json geschrieben. Effekte: feste Ausschnitte; Möwen in Anzeigegröße (41 px) gebacken, entsättigt, zum Himmelston gestaucht, leicht weichgezeichnet; daraus abgeleitet ein kegelförmiger Strahl (beam_cone.png: Farbe aus dem gemalten Strich, Deckung mit 18 in Strahlrichtung gestreckten Borstenspuren), ein Lichthof aus gestapelten Spachtel-Tupfern (halo.png) und ein Kontaktschatten (shadow.png, dunkelviolette Spachtel-Tupfer). Ein voller Lauf von prep.py erzeugt bitgleiche Dateien."
+  },
+  {
+   "step": "Godot-Demo",
+   "tool": "Godot 4.7.2, GDScript, 4 eigene Shader",
+   "detail": "Gemälde mit Normalmap und PointLight2D, Figur mit Boil-, Farbangleichungs- und Kantenlicht-Shader, gemalter Kontaktschatten, Nachbearbeitung mit Kantenmaske nur über dem Gemälde, Dialogpanel als CanvasLayer mit echter Schrift."
+  },
+  {
+   "step": "Prüfung der Laufanimation",
+   "tool": "styles/oelmalerei/tools/measure_walk.py + demo/check/measure_walk.tscn",
+   "detail": "Die Prüfszene rendert nur den Dachs auf Magenta (ohne Nachbearbeitung), das Skript misst je Bild Füße und Kopf. Ergebnis: Standfuß bei allen 22 Bildwechseln ±1 px ortsfest, in den Haltebildern 0 px, unterste Zeile beim Stehen immer 675. Vor der Nachbesserung schob die Demo die Figur mit konstantem Tempo (122 px/s bei 8 Bildern/s), der Standfuß rutschte dabei je Zeichnung bis zu 15 px."
+  },
+  {
+   "step": "Probelauf andere Renderer",
+   "tool": "godot --rendering-method mobile / gl_compatibility",
+   "detail": "Aufnahme in ein Temp-Verzeichnis, Vergleich mit Forward+ an 4 Zeitpunkten: mittlere Abweichung 0,3 (mobile) bzw. 0,5 (gl_compatibility) von 255, unter 1 % der Pixel weichen um mehr als 8 ab. Keine Fehlermeldungen."
+  },
+  {
+   "step": "Aufnahme",
+   "tool": "tools/capture.py",
+   "detail": "6 s bei 30 fps, 1280×720; Poster bei 3,6 s. Ein Kontrolllauf außerhalb von capture.py ergibt für das Posterbild dieselben Pixel (größte Abweichung 0)."
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, stretch mode canvas_items, Renderer Forward+ (Standard), kein 3D",
+  "Gemälde: Sprite2D mit CanvasTexture (diffuse bg.png + normal bg_normal.png). Drei PointLight2D (Laterne, Fenster, Lampenhaus, height 24) flackern über energy; durch die Normalmap glänzen die Farbgrate im flackernden Licht auf. Lichtpositionen von Hand im Bild gemessen (LAMP 801/183, LANTERN 228/352, CHIMNEY 86/186, Fenster 78/380)",
+  "Leuchtturmstrahl: beam_cone.png (am Lampenhaus schmal, warmes Gold und fast deckend, zur Spitze breiter, helles Creme und in Borstenspuren aufgerissen) als Sprite2D am Lampenhaus, scale.x = cos(Drehwinkel), Lasur in normaler Mischung; die Farbe steckt in der Textur, modulate setzt nur die Deckung (0,2 + 0,6·|cos| + 0,1·Vorderseite, Rückseite ×0,7). Periode 9 s, Phase π/3: Der Strahl zeigt am Anfang (0–0,75 s, zur Kamera hin) und am Ende (5,25–6 s, von der Kamera weg, schwächer) nach rechts, dazwischen nach links, bei 3 s ganz nach links. Kein Flicken nötig, weil der Hintergrund keinen gemalten Strahl hat",
+  "Lichthöfe an Lampe, Laterne und Fenster: halo.png in normaler Mischung (warm getönt) statt glattem Radialverlauf; Drehung springt 6-mal pro Sekunde leicht, wie neu gemalt",
+  "Dachs: Sprite2D mit hframes=6, light_mask 0 (die PointLight2D hellten ihn sonst bis zum Ausbleichen auf), Versatz aus walk.json. Bildfolge 0,1,2,3,4,5,2,1 und Vorschub je Bildwechsel (10, 8, 21, 20, 9, 8, 22, 24 px) aus walk.json: Der Körper rückt nur beim Bildwechsel vor, so bleibt der Standfuß stehen. Haltezeit je Bild = nächster Vorschub / 4,2 px in ganzen Bildern bei 30 fps (2, 5 oder 6 Bilder, Schnitt 126 px/s, etwa 2 Schritte/s), die letzten beiden Bilder 35 % länger (Abbremsen). Die Schrittfolge wird vom Halt (x = 385, Bild 2, Füße beieinander) rückwärts bis außerhalb des Bilds aufgebaut. Danach atmet er (scale.y um den Fußpunkt)",
+  "shaders/oil_sprite.gdshader: Boil 8-mal pro Sekunde mit Sprüngen um ganze Texel in strichförmigen Flecken, die Füße (unterste 14 px) springen nicht; Farbangleichung an das Gemälde (16 % entsättigen, 6 % zur mittleren Kaifarbe, dunkle Töne zu 32 % ins stumpfe Violett, Lichter um bis zu 12 % gedämpft); schwaches Relief-Rauschen; warmes Kantenlicht auf der Seite zur Laterne (Richtung und Stärke vom Skript); Umgebungsfarbe vom Skript. Die Vertexfarbe wird über ein varying übergeben, weil COLOR in fragment() schon die Texturfarbe enthält",
+  "Kontaktschatten: Sprite2D mit shadow.png (dunkelviolette Spachtel-Tupfer), modulate-Alpha 0,75, 131×22 px, light_mask 0; folgt dem Dachs und liegt bis 8 px zur laternenabgewandten Seite versetzt",
+  "shaders/canvas_post.gdshader auf einem ColorRect mit hint_screen_texture, als letztes Element der Welt (vor dem UI-CanvasLayer, light_mask 0): Boil in ganzen Pixeln bei 6 Schritten/s, Sprungweite mit der Kantenmaske (edge_mask.png) multipliziert, sodass Masten, Laternenpfahl und Leuchtturmkante nicht mehr zu Zickzack zerfallen; Leinwandbindung, warme Vignette. Gemessen gegen eine Aufnahme ohne Boil: in der Maske ändern sich 1,6 % der Pixel, außerhalb 28,6 %",
+  "Rauch, Glanzlichter und Möwen sind Sprite2D-Pools, ihr Zustand ist eine reine Funktion von t (fposmod, vorgewärmter Rauch). Zufall kommt nur aus RandomNumberGenerator mit seed 20261010. Glanzlichter als Lasur in fünf gemessenen Zonen (Leuchtturm-Spiegelung, Boote, Horizontband, nasser Kai unter der Laterne, Becken). Möwe 1 fliegt rechts der Rauchsäule auf y = 140 über das Becken (x 330 → 700), Möwe 2 höher und kleiner (Maßstab 0,74); Positionen auf ganze Pixel gerundet, modulate-Alpha 0,92",
+  "UI: CanvasLayer. panel.gdshader (ausgefranste linke Kante, Trockenpinsel-Streifen), portrait.gdshader (Rissrand, Licht von rechts flackert synchron zur Laterne). Labels in Libre Baskerville (Text, Antworten, kursive Parserzeile) und Oswald (FontVariation wght 500, Laufweite 3)",
+  "Antworten: Nummer als eigenes, rechtsbündiges Label fester Breite (Kind des Antwort-Labels), damit alle Antworttexte bündig beginnen. In der Textzeile hält ein geschütztes Leerzeichen „auf dich.“ zusammen (kein Hurenkind)",
+  "Schreibmaschinentext über Label.visible_characters mit visible_characters_behavior = 1 (nach dem Shaping). Antwort 2 wird ab 4,4 s hervorgehoben, ab 4,75 s tippt die Parserzeile „> nimm paket“",
+  "Prüfszene check/measure_walk.tscn: instanziert main.tscn, blendet alles außer dem Dachs aus und zeichnet auf Magenta; mit OEL_NO_BOIL=1 auch ohne Texel-Boil. Nur für tools/measure_walk.py, nicht Teil der Demo"
+ ],
+ "techniques": [
+  "ki-spritesheet",
+  "sprite-animation",
+  "nachbearbeitung",
+  "textoberflaeche",
+  "kinemagramm",
+  "normalmap-licht-2d",
+  "strichmaler",
+  "pinselstrich-flimmern"
+ ],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 3,
+  "effort": 3,
+  "text_adventure": 5,
+  "mobile": 4
+ },
+ "ratings_note": "gpt-image trifft Ölmalerei für Hintergrund und Porträt sofort, aber den lockeren, groben Duktus erst mit einem ausdrücklich reduzierenden Stilblock; einzelne Objekte (Boote, Fässer, Laterne) bleiben auch dann recht sauber gezeichnet. Hintergrund, Porträt und Effekte der Demo sind KI-Bilder und tragen den Look. Laufende Figuren kamen nicht im Stil zurück: Das agy-Laufblatt bekommt seinen Ölmalerei-Look erst durch Code (Strichmaler in doppelter Größe, Farbkorrektur in prep.py und Farbangleichung im Shader), deshalb ai_fit 4 statt 5 und consistency 3. Pro neuem Ort fallen Handarbeiten an: Lichtpositionen ausmessen, mitgemalte Effekte per Prompt vermeiden oder per Flicken entfernen, Glanzlicht-Zonen festlegen; Normalmap und Kantenmaske rechnet prep.py automatisch; daher effort 3. mobile 4: Probelauf mit --rendering-method mobile und gl_compatibility ohne Fehler und fast pixelgleich zu Forward+ (mittlere Abweichung 0,3 bzw. 0,5 von 255); die Leistung auf echten Smartphones ist nicht gemessen. Teuer sind das Vollbild-Postprocessing mit Screen-Texture und die drei normalgemappten Lichter, beides lässt sich abschalten.",
+ "verdict": "Für unser Textadventure sehr gut geeignet. Ein erzeugtes Gemälde pro Ort plus eine Handvoll Licht- und Effektebenen in Godot ergibt ruhige, unverwechselbare Szenen. Entscheidend ist der Stilblock: große flache Pinsel, Spachtel, wenige Objekte, gebrochene Farben und der Hinweis, dass Licht und Rauch als Animation dazukommen, sonst entsteht Postkarten-Romantik mit mitgemalten Effekten. Bewusste Abweichung vom Auftrag: statt kühner Farben gedämpfte, gebrochene Farben mit wenigen kräftigen Akzenten (Horizontband, Lichter, roter Schal). Der erste Hintergrund mit „kühnen Komplementärfarben“ wurde zur gesättigten Postkarte; erst die gedämpfte Palette lässt die Lichtquellen leuchten, trägt einen Abend und hält lange Lesestrecken im Panel ruhig. Gemalte Brustbilder tragen die Gespräche, das Panel rechts nimmt Text, Auswahl und Parser auf. Laufende Figuren braucht das Spiel kaum; wo doch, ist die Kette agy-Neumalung + Strichmaler + gemessener Vorschub wiederholbar, aber Handarbeit.",
+ "pitfalls": [
+  "gpt-image liefert ohne Gegensteuern detailreiche Postkarten-Romantik (viele Objekte, gleichmäßig kleine Striche, voll gesättigter Sonnenuntergang). Getestet, Ergebnis: Mit geschärftem Stilblock („very large flat brushes and palette knife, few big strokes, large planes, almost no small detail, muted broken colours … not a postcard sunset“, „no flowers, no fine rigging“) kamen beide Versuche deutlich gröber und gedämpfter; Himmel, Kai und Felsen sind breite Spachtelflächen. Boote (mit etwas Takelage), Fässer und Laterne bleiben aber recht sauber gezeichnet, ganz frei-expressiv wird es nicht.",
+  "Das Bildmodell malt Lichteffekte und Rauch statisch mit (im ersten Hintergrund Strahl und Rauchfahne). Mit dem Satz „light effects and smoke are added later as animated layers: lamp only as a glowing spot without a beam, only a faint wisp of smoke“ kam der Strahl gar nicht mehr, eine schwache Rauchfahne blieb und wird in prep.py mit Himmel übermalt (ein sehr schwacher Schatten bleibt, unter dem animierten Rauch kaum sichtbar). Die Lage aller Lichtquellen muss pro Bild von Hand gemessen werden.",
+  "Kostümfarben der Spielfigur saufen ab. Ursachen: (1) Fehler im eigenen Shader: COLOR enthält in fragment() schon die Texturfarbe, die Multiplikation damit quadrierte alle Farben (Grün wurde fast schwarz). (2) Das gpt-image-Walk-Sheet war dunkel, mit Gegenlicht und Plüsch-Look, die „grüne“ Weste ist eigentlich dunkles Oliv (Farbton etwa 57°). (3) Die PointLight2D hellten die Figur zusätzlich auf. Behoben mit varying für die Vertexfarbe, neuem Blatt, Farbton-Korrektur in prep.py und light_mask 0.",
+  "Kuwahara-Filter mit Radius 2 und 3 auf der 152 px hohen Figur getestet: er löscht den Augenstreifen und die Paketschnur und macht das Gesicht zum weißen Fleck. Stattdessen werden die Striche offline gemalt. Die erste Fassung malte in Rohgröße mit R = 9/5/2 px und schärfte stark nach: Die Figur hatte viel feinere Striche und war heller und bunter als der grob gespachtelte Hintergrund, sie wirkte wie aufgeklebt. Behoben durch Malen in doppelter Spielgröße mit R = 16/9/4/2 (feinste Schicht nur im Kopfbereich), Silhouette aus den Strichen, schwächeres Nachschärfen und Farbangleichung im Shader. Zu grob (R = 18/10/5) ließ Arm, Paket und Tasche zu Matsch verschmelzen; die Weste wirkt jetzt eher grün-ocker gefleckt als klar grün.",
+  "Codex meldete „out of credits“. genimg.py erkennt das nicht als Bildlimit, meldet nur „no-image“ und schaltet nicht auf agy um (zwei Läufe ohne Bild). Umgangen mit --backend agy.",
+  "agy liefert JPEG auf Magenta; nach dem Freistellen bleibt ein 1–2 px breiter Magenta-Saum. prep.py rechnet ihn heraus (min(R,B)−G im Randstreifen) und nimmt den Rand um 1 px zurück.",
+  "Die 6 KI-Laufbilder enthalten nur eine Durchschwungphase (Bild 2) und liegen ungleich weit auseinander: Der Standfuß wandert je Bildwechsel 8 bis 24 px. Die erste Fassung schob mit konstantem Tempo, die Füße rutschten. Jetzt kommt der Vorschub aus dem gemessenen Standfuß, und die Haltezeit ist proportional zum Vorschub. Dadurch springt der Körper bei den großen Wechseln (in und aus der Durchgangspose) um gut 20 px und steht dann 5–6 Bilder: Der Gang wirkt wie Stop-Motion, nicht fließend. In der Durchgangspose verschmelzen beide Füße zu einer Silhouette, der Standfuß ist dort nur auf ein Plateau von etwa 8 px genau bestimmbar (genommen: Mitte).",
+  "Transparente KI-Bilder enthalten im transparenten Bereich farbige RGB-Reste (Glow bei Alpha 0–2). Ohne Bereinigung entstehen beim linearen Filtern Farbsäume.",
+  "Ein Pinselstrich-Flimmern mit Bruchteilen von Pixeln zeichnet über lineare Filterung das ganze Bild weich (Augenstreifen des Dachses verschwamm). Jetzt springen Gemälde und Figur nur um ganze Pixel bzw. Texel. Auch ganze Pixel reichen aber, um lange dünne Linien zu zerstören: Masten, Takelage, Laternenpfahl und Leuchtturmkante zerfielen bei jedem Flimmerschritt zu Zickzack (66–75 % der Zeilen versetzt). Eine Kantenmaske aus allen starken Kanten erfasste 36 % der Fläche und hätte das Flimmern fast abgeschaltet; erst ein Linienfilter nur für lange, eher senkrechte Linien trifft Masten und Kanten (7,9 % der Fläche). Takelage ist zu schwach für die Maske und flimmert weiter leicht; auch die senkrechten Lichtspiegelungen im Wasser fallen in die Maske und flimmern nicht.",
+  "Rauchwolken aus dem Effekt-Sheet sind violett mit orangem Rand; ungetönt wirken sie vor dem grauvioletten Himmel rosa. Sie brauchen einen neutralen Ton und höchstens 55 % Deckkraft.",
+  "Möwen waren mit reinem Weiß die hellsten, schärfsten Punkte im Bild und wirkten fotografisch; Möwe 1 flog durch die Rauchsäule. Ursachen: Weiß aus dem Effekt-Sheet und Verkleinern auf 0,62 bzw. 0,46 ohne Mipmaps (harte, flimmernde Kanten). Jetzt in Anzeigegröße gebacken, zum Himmelston gestaucht und leicht weichgezeichnet, Positionen gerundet, Flugbahn rechts der Rauchsäule. Zu stark getönt (Weichzeichnen 0,7 px, 35 % Himmel) wurden sie zu grauen Flecken ohne Möwenform.",
+  "Der Kontaktschatten war ein glatter, schwacher Radialverlauf (Alpha 0,6, weich auslaufend), die Figur schien zu schweben. Jetzt ein gemalter dunkelvioletter Spachtel-Tupfer mit Alpha 0,75. Ein erster Versuch in Violett (0,15/0,09/0,19) wirkte auf dem warmen Kai wie eine lila Pfütze; dunkler (0,09/0,055/0,12) liest er sich als Schatten.",
+  "Farbangleichung im Shader zuerst zu stark (30 % entsättigen, 12 % zur Kaifarbe, 45 % Violett): Die Weste verlor das Grün, die Figur wirkte blass. Mit 16/6/32 % bleibt das Kostüm erkennbar.",
+  "Der kegelförmige Strahl wirkte als graues, glattes Band (heller, fast weißer Kegel mit weichen Längsstreifen, gelb eingefärbt per modulate: halbdeckend auf Grauviolett wird das grau). Jetzt mit Farbe aus dem gemalten Strich, am Ursprung warm und fast deckend, außen in 18 gestreckte Borstenspuren aufgerissen. Er bleibt eine abgeleitete Textur und keine echte Pinselspur; zeigt er nach hinten oder rechts, ist er bewusst schwach bzw. kurz.",
+  "Boote schaukeln nicht. Dafür müssten sie aus dem Gemälde gelöst werden; bewusst ausgelassen (Bewegung sparsam, sechs andere Umgebungsanimationen laufen)."
+ ],
+ "lessons": [
+  "Stilblock für expressive Ölmalerei: Technik (große flache Pinsel, Spachtel, wenige große Striche), Reduktion (große Flächen, wenige Objekte, kaum Details) und Palette (gebrochene Farben, wenige Akzente, „not a postcard sunset“) ausdrücklich nennen; Verbote wie „no flowers, no fine rigging“ helfen.",
+  "Im Prompt sagen, welche Effekte später animiert werden („lamp as a glowing spot without a beam“). Das spart den Flicken für den mitgemalten Strahl ganz.",
+  "Kompositionsvorgabe im Prompt für die Oberfläche („Leuchtturm bei etwa 2/3 der Breite, rechter Rand nur Meer“) funktioniert in allen drei Hintergründen. Das Gemälde wird auf volle Höhe skaliert (1080×720), das Panel überdeckt nur den rechten Rand.",
+  "Ein Porträt mit Master-Sheet als Referenz und klarer Trennung „Referenz = Kostüm, Prompt = Maltechnik“ gelang im ersten Versuch und trägt den Stil am stärksten.",
+  "agy eignet sich zum Neumalen eines vorhandenen Sprite-Sheets: altes Blatt als Layout-Referenz (auf Magenta), Porträt als Stilreferenz. Layout und Posen bleiben, Farben und Licht folgen dem Prompt. Gewählt, weil Codex kein Guthaben hatte und agy sich eng an Referenz-Layouts hält.",
+  "Ein Strichmaler (Hertzmann 1998: Schichten grob → fein, Striche entlang der Kanten, feine Striche nur wo Details sind) in 80 Zeilen NumPy/Pillow bringt KI-Sprites an die Malweise heran, ohne Gesichtszüge zu löschen. Mit eigenem Seed pro Laufbild flimmern die Striche beim Abspielen wie gemalte Einzelbilder.",
+  "Godot 4: In fragment() von canvas_item-Shadern enthält COLOR bereits die Texturfarbe. Wer die Textur selbst abtastet, muss die Vertexfarbe über ein varying aus vertex() holen.",
+  "Figuren nicht von den PointLight2D des Gemäldes beleuchten lassen (light_mask 0); Licht auf der Figur besser über Shader-Tönung und Kantenlicht zur Lichtquelle steuern.",
+  "Eine Normalmap aus dem Hochpass der Bildhelligkeit plus PointLight2D lässt die Farbgrate im flackernden Licht glänzen; funktioniert für jedes gemalte Bild ohne Handarbeit.",
+  "Licht als Lasur (halbtransparent, normale Mischung) wirkt gemalt, additives Licht wirkt digital. Lichthöfe aus gestapelten, gemalten Glanzlicht-Tupfern statt Radialverlauf.",
+  "Nummerierte Antworten: Nummer als eigenes rechtsbündiges Label fester Breite. Hurenkinder mit geschütztem Leerzeichen vermeiden.",
+  "Läuft alles als Funktion der aufsummierten Zeit (Pools mit fposmod statt Partikelsystemen) und mit festen Seeds, ergeben zwei Aufnahmen bitgleiche Bilder; prep.py ist ebenfalls bitgleich wiederholbar.",
+  "Lauftempo aus der Strecke statt aus der Zeit ableiten und die Gesamtstrecke so wählen, dass die Figur auf dem Bild mit geschlossenen Füßen anhält. So gibt es kein Ruckeln beim Stehenbleiben.",
+  "Für Tipptext visible_characters_behavior = 1 setzen, sonst springen Wörter beim Tippen zwischen den Zeilen.",
+  "Gemalte Figuren in doppelter Spielgröße mit groben Radien (hier R = 16/9/4/2) malen und danach halbieren: Die Strichbreite im Spiel passt dann zum Hintergrund, die Kanten bleiben glatt. Die Silhouette aus den Strichen selbst bilden (innen 2 px deckend, außen bis 2 px über die Freistellkante nur wo Striche liegen), dann wirkt die Figur nicht freigestellt.",
+  "Figuren an das Gemälde angleichen: im Shader leicht entsättigen, Farbton zur gemessenen Szenenfarbe ziehen, dunkle Töne ins Schattenviolett des Hintergrunds drehen, Lichter dämpfen. Wenige Prozent reichen; zu viel nimmt dem Kostüm die Farbe.",
+  "Pinselstrich-Flimmern als Bildschirmeffekt braucht eine Kantenmaske: Linienfilter (41 px, 45–135°) über dünne Linien und starke Kanten, senkrechtes Closing gegen Lücken, 2 px Rand. So bleiben Masten und Kanten gerade, und der Rest flimmert weiter. Die Maske rechnet prep.py aus dem Hintergrund, ein zusätzlicher Texturzugriff im Shader.",
+  "Laufzyklen aus KI-Bildern: Vorschub je Bildwechsel aus dem Standfuß messen und die Haltezeit proportional zum Vorschub in ganzen Bildern bei 30 fps setzen. Bei verschmolzenen Füßen (Durchgangspose) ist die IoU über mehrere Verschiebungen exakt gleich; dann die Mitte des Plateaus nehmen und in der Prüfung jede Verschiebung im Plateau als ortsfest werten.",
+  "Prüfszene für Figuren: main.tscn instanzieren, alles außer der Figur ausblenden und auf Magenta rendern; so misst man Füße und Kopf im echten Godot-Bild, inklusive Shader und Rundung. Texel-Boil in den untersten Pixeln der Figur abschalten, sonst zittern Standfuß und Fußlinie.",
+  "Kleine Sprites (Möwen) in Anzeigegröße backen statt in Godot ohne Mipmaps zu verkleinern; Weiß zum Himmelston stauchen, damit sie nicht die hellsten Punkte im Bild sind."
+ ],
+ "assets": [
+  {
+   "file": "assets/bg.png",
+   "kind": "background",
+   "made_with": "gpt-image (bg3, dritter Versuch), skaliert auf 1080×720, gemalte Rauchfahne übermalt (prep.py)",
+   "prompt": "assets/raw/bg3.json"
+  },
+  {
+   "file": "assets/bg_normal.png",
+   "kind": "normalmap",
+   "made_with": "prep.py: Hochpass der Helligkeit von bg.png → Normalen",
+   "prompt": ""
+  },
+  {
+   "file": "assets/edge_mask.png",
+   "kind": "mask",
+   "made_with": "prep.py (step_edges): Linienfilter über bg.png, Maske für das Pinselstrich-Flimmern",
+   "prompt": ""
+  },
+  {
+   "file": "assets/portrait.png",
+   "kind": "portrait",
+   "made_with": "gpt-image mit Master-Sheet als Referenz, Ausschnitt 300×320 (prep.py)",
+   "prompt": "assets/raw/portrait.json"
+  },
+  {
+   "file": "assets/walk.png",
+   "kind": "spritesheet",
+   "made_with": "agy (Gemini) mit altem Bogen als Layout-, Porträt als Stil- und Master-Sheet als Kostümreferenz; Magenta-Saum entfernt, Farbkorrektur, Strichmaler in doppelter Größe (R = 16/9/4/2), halbiert, 6 Bilder à 121×172, Vorschub je Bildwechsel in walk.json (prep.py)",
+   "prompt": "assets/raw/walk3.json"
+  },
+  {
+   "file": "assets/fx/gull.png",
+   "kind": "effects",
+   "made_with": "gpt-image (ein Blatt), feste Ausschnitte mit prep.py → prep.py: Möwe, 3 Bilder in Anzeigegröße, zum Himmelston getönt und weichgezeichnet",
+   "prompt": "assets/raw/fx.json"
+  },
+  {
+   "file": "assets/fx/smoke1.png",
+   "kind": "effects",
+   "made_with": "gpt-image (ein Blatt), feste Ausschnitte mit prep.py → prep.py: Rauchtupfer (1 von 4)",
+   "prompt": "assets/raw/fx.json"
+  },
+  {
+   "file": "assets/fx/glint1.png",
+   "kind": "effects",
+   "made_with": "gpt-image (ein Blatt), feste Ausschnitte mit prep.py → prep.py: Wasserglitzern (1 von 4)",
+   "prompt": "assets/raw/fx.json"
+  },
+  {
+   "file": "assets/fx/beam_cone.png",
+   "kind": "effects",
+   "made_with": "gpt-image (ein Blatt), feste Ausschnitte mit prep.py → prep.py: Leuchtturmkegel aus beam1, Farbe warm → Creme, Deckung mit gestreckten Borstenspuren",
+   "prompt": "assets/raw/fx.json"
+  },
+  {
+   "file": "assets/fx/halo.png",
+   "kind": "effects",
+   "made_with": "gpt-image (ein Blatt), feste Ausschnitte mit prep.py → prep.py: Lichthof aus gestapelten Tupfern",
+   "prompt": "assets/raw/fx.json"
+  },
+  {
+   "file": "assets/fx/shadow.png",
+   "kind": "effects",
+   "made_with": "gpt-image (ein Blatt), feste Ausschnitte mit prep.py → prep.py: Kontaktschatten aus 5 Glanzlicht-Strichen, dunkelviolett",
+   "prompt": "assets/raw/fx.json"
+  },
+  {
+   "file": "assets/walk.json",
+   "kind": "data",
+   "made_with": "prep.py: Zellgröße, Fußlinie, Bildfolge und gemessener Vorschub je Bildwechsel",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Libre Baskerville (Regular und Italic, variabel)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/librebaskerville"
+  },
+  {
+   "item": "Schrift Oswald (variabel)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/oswald"
+  },
+  {
+   "item": "Hash without Sine (Shader-Funktion), Copyright (c) 2014 David Hoskins – in demo/shaders/noise.gdshaderinc",
+   "license": "MIT",
+   "source": "https://www.shadertoy.com/view/4djSRW"
+  }
+ ],
+ "image_generations": 7,
+ "tool_issues": [
+  "tools/sprites.py slice: Ragen Teile benachbarter Figuren in dieselben Spalten (Schalende des einen Bildes über dem Fuß des vorigen), teilt das Werkzeug senkrecht und schneidet dabei durch deckende Pixel (Meldung „geteilt bei x=279 (Deckung 39 px)“, dort deckend von y=406 bis 705). Lokal umgangen mit Zerlegung über Zusammenhangskomponenten in styles/oelmalerei/tools/prep.py.",
+  "tools/genimg.py: Codex antwortet bei leerem Guthaben mit „out of credits“ (turn.failed). genimg.py prüft nur auf „usage limit“/„429“, meldet daher „no-image“ ohne Text und schaltet nicht auf agy um. Lokal umgangen mit --backend agy. (Stand Nachbesserung: genimg.py erkennt „out of credits“ inzwischen und schaltet um.)",
+  "tools/genimg.py mit agy: actual_calls zeigt den Prompt in Anführungszeichen, mit maskierten Zeilenumbrüchen und im agy-Protokoll gekürzt („<truncated 149 bytes>“), daher „verbatim“: false. Bis zur Kürzung stimmt er mit dem gesendeten Prompt überein; ob agy den Schluss (Schutzregeln, Format) erhielt, ist nicht prüfbar."
+ ],
+ "status": "done"
+}

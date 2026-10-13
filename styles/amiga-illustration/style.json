@@ -1,0 +1,178 @@
+{
+ "slug": "amiga-illustration",
+ "name": "Textadventure-Illustration (16-Bit-Heimcomputer)",
+ "family": "computer",
+ "kind": "style",
+ "era": "1985–1990",
+ "summary": "Illustriertes Textadventure der späten 80er nach den Regeln des Amiga (OCS-Lowres): oben ein fotonahes, gemaltes Ortsbild mit 320×144 Pixeln und 32 aus 4096 Farben, Verläufe als geordnetes Muster-Dithering, darunter ein Textfenster mit Parser in Proportionalschrift. Das Bild wird von oben herabgezogen; nach der Eingabe zieht sich eine Nahaufnahme des Dachses mit eigener Palette darüber. Vorlage für beide Bilder ist ein KI-Gemälde (gpt-image), der Amiga-Look entsteht im eigenen Code (12-Bit-Palette, Dithering, Farbregister-Animation), der laufende Dachs ist ein Blender-BOB in derselben Palette.",
+ "references": [
+  "Illustrierte Textadventures auf Amiga und Atari ST 1986–1990, z. B. The Pawn, The Guild of Thieves, Jinxter, Corruption und Fish! (Magnetic Scrolls) mit herabziehbarem Bildfenster über dem Text",
+  "Knight Orc, Gnome Ranger und Lancelot (Level 9) in den 16-Bit-Fassungen mit Ortsbildern",
+  "Malprogramme der Zeit auf dem Amiga: Palettenregister, Farbzyklus-Bereiche, Muster-Dithering von Hand"
+ ],
+ "traits": [
+  "Bild 320×144 oben, darunter Textfenster mit Raumtext und Parser, Statuszeile mit Ort und Zugzähler",
+  "höchstens 32 Farben je Bild, alle Farben im 12-Bit-Raster (je Kanal 16 Stufen, Werte n·17)",
+  "Verläufe in Himmel, Wasser und Stein als geordnetes Muster-Dithering (Bayer 4×4, Paare ähnlicher Farben), keine weichen Verläufe",
+  "fotonahe, gemalte Bildvorlage (KI-Gemälde) mit Material-Struktur in Granit, Schiefer, Holz, Fell und Strickschal, keine flache Pixelgrafik",
+  "Animation nur über Farbregister (Farbzyklus Wasser, Leuchtfeuer mit Lichthof, flackernde Laterne, glimmendes Fenster) und kleine Blitter-Objekte (Dachs mit Kontaktschatten, Rauch, Möwe)",
+  "Dachs-BOB in der Malweise des Bildes: Töne aus der Bildpalette mit Muster-Dithering, Kontur nur auf der Schattenseite, festes Kopfteil mit gemaltem Gesicht",
+  "Bild wird zu Beginn herabgezogen; nach der Eingabe zieht sich ein zweites Bild mit eigener Palette darüber, Palettenwechsel an der Kante wie per Copper",
+  "Textschirm in 4 Workbench-Farben, proportionale Pixelschrift ohne Kantenglättung, oranger Blockcursor"
+ ],
+ "camera": "Feste Bühnenansicht auf Augenhöhe vom Kai (Totale); nach der Eingabe „nimm paket“ Schnitt auf eine Nahaufnahme des Dachses als zweites Bild (Poster bei 5,1 s in der Nahaufnahme)",
+ "resolution": "320×200 Lowres (NTSC), Bild 320×144 mit 32 aus 4096 Farben, Textschirm mit 4 Farben. Pixel quadratisch dargestellt (auf einem 4:3-Bildschirm wären sie 1,2-mal so hoch wie breit). Abgrenzung Atari ST: dort 320×200 mit 16 aus 512 Farben (3 Bit je Kanal), also halb so viele Register und gröbere Abstufung; dieselben Bilder wirkten auf dem ST stärker gedithert und mit weniger Zwischentönen, und Palettenwechsel je Rasterzeile brauchten dort Interrupt-Tricks statt des Coppers.",
+ "pipeline": [
+  {
+   "step": "Hafenbild erzeugen",
+   "tool": "genimg über tools/imagequeue.py (gpt-image, Backend codex laut assets/raw/bg.json)",
+   "detail": "Auftrag 1 aus assets/image_jobs.json (prompts/make_jobs.py, Prompt prompts/bg.txt): gemalte, fotonahe Gouache/Acryl-Buchillustration mit klaren Silhouetten, mittleren Tonwerten und glatten Verläufen in Himmel und Wasser, ausdrücklich keine Pixel-Art und kein Dithering vom Modell, Lampe ohne Strahl, kein Rauch, Lichter ohne Glühen, Lagen in Prozent vorgegeben. Ein Versuch, 1536×1024 wie verlangt (actual_size = size), RGB ohne Alpha. genimg.py weist Codex an, den Prompt wörtlich weiterzugeben, prüft das bei Codex aber nicht (die .json hat kein verbatim-Feld)."
+  },
+  {
+   "step": "Nahaufnahme erzeugen",
+   "tool": "genimg über tools/imagequeue.py (gpt-image, Backend codex laut assets/raw/closeup.json)",
+   "detail": "Auftrag 2 (prompts/closeup.txt), Referenzen: das eigene Hafenbild (Technik, Palette, Ort) und shared/badger/master_sheet.png (nur Kostüm und Proportionen). Ein Versuch, 1536×1024. Ergebnis: ein Dachs ab der Hüfte, reicht das Paket, derselbe Hafen dahinter, kein Dreiansichten-Blatt. Bei der Nachbesserung kein neues Bild erzeugt."
+  },
+  {
+   "step": "KI-Vorlage verkleinern und ausschneiden",
+   "tool": "scripts/load_ai.py + assets/ai_layout.json bzw. assets/closeup_layout.json",
+   "detail": "In linearem Licht auf 320 Breite (213 Zeilen), 144 Zeilen ab crop_y (Hafen 16, Nahaufnahme 22, statt der geplanten Mitte 34), Unschärfemaske 0,5 (Nahaufnahme 0,3). Horizont, Himmel und Schornstein automatisch; Leuchtfeuer, Laterne, Fenster als Rechtecke mit Helligkeitsschwelle, Wasser als Polygon, Boote, Masten, Laternenpfahl und Poller als Ausschluss-Polygone entlang der Umrisse (von Hand abgelesen). Neu: paint (Rechteck bekommt nach dem Dithering ein festes Register: rotes Band des Leuchtturms) und green_poly (Weste und Mütze der Nahaufnahme)."
+  },
+  {
+   "step": "Palette und Dithering",
+   "tool": "scripts/build_assets.py, scripts/amiga.py",
+   "detail": "32 Register im 12-Bit-Raster: 23 feste, davon im Hafenbild 10 feste Dachs-Töne (Grün in drei Stufen mit festem Farbton, Oklab a −0,045 / b 0,025; Tasche ohne eigenes Register) und 13 aus k-means in Oklab, bester von 10 festen Starts (kleinster Fehler im 12-Bit-Raster); 5 Farbzyklus Wasser, Lampe, Laterne, Fenster, Lichthof. Muster-Dithering mit Bayer 4×4 über Farbpaare (Mischung in linearem Licht, Strafwert für unähnliche Paare); Wellenstriche, deren Register entlang des Strichs weiterzählen. Rotes Leuchtturmband per paint auf 772222/BB2233."
+  },
+  {
+   "step": "Dachs als BOBs",
+   "tool": "Blender 5.2 (blender/render_badger.py) + scripts/badger_cells.py + scripts/badger_paint.py",
+   "detail": "shared/3d/badger.glb mit 15 Bildern/s gerendert (Laufen, Abbremsen, Drehen, Winken), je Zielpixel gewinnt das Material mit den meisten Renderpixeln (ID-Pass). badger_paint.py: Kopf als festes Teil aus einem Referenzbild je Ansicht (Seite, vorn) mit von Hand gesetztem Gesicht (weiße Wangen und Schnauze, schwarzer Augenstreifen, Nase 2×2, Schnauze 2 px kürzer), ganzzahlig an der Mütze ausgerichtet und nach dem Malen pixelgleich in alle Bilder der Ansicht gestempelt; Töne je Material aus festen Figurenregistern plus Bildregistern mit passendem Farbton (2–6 Stufen), Schattierung des Renderings ×1,5 verstärkt plus Lichtverlauf von links oben (Laterne), Bayer-4×4-Dithering mit 4 Mischstufen; Paket mit heller Oberkante und cremeweißer Schnur; Kontur nur rechts und unten im dunkelsten Ton der eigenen Gruppe, links eine Stufe heller (Kantenlicht). 41 px hoch, Haltepunkt x 108 neben der Laterne."
+  },
+  {
+   "step": "Nahaufnahme einbauen",
+   "tool": "scripts/build_assets.py --picture closeup",
+   "detail": "eigene 32 Register, davon 2 feste Grüntöne für Weste und Mütze (Helligkeit aus green_poly, Farbton wie die Figurenregister der Totale), Wasser um die Boote mit Farbzyklus, Laterne, Fenster und Leuchtfeuer animiert."
+  },
+  {
+   "step": "Prüfen und aufnehmen",
+   "tool": "scripts/finish.py, scripts/probe.py, scripts/compare_renderers.py, tools/capture.py --poster-at 0.85",
+   "detail": "probe.py: 14–29 Farben je Bildstück, Textschirm 4 Farben, 0 Pixel außerhalb des 12-Bit-Rasters; Fußzeile des Dachses ab Bild 28 durchgehend 149, Standfuß je Schritt über 1–3 Zeichnungen auf denselben Spalten. Kopf zwischen aufeinanderfolgenden Zeichnungen (Kopfzeilen, nach Ausgleich der Verschiebung): Seite im Mittel 4,2 statt 13,7 geänderte Pixel, vorn 1,2 statt 6,5 (Rest: Schal und Gurt in denselben Zeilen). Leuchtfeuer in der Aufnahme gemessen: Blitze in den Bildern 49–55 und 67–73 (Totale) sowie 139–145 und 157–163 (Nahaufnahme). Forward+ zweimal bitgleich, Mobile und Compatibility 0 abweichende Pixel."
+  }
+ ],
+ "godot": [
+  "Viewport 320×200, stretch viewport/integer, Nearest, Snap auf Pixel; Fenster 1280×800 (×4), Aufnahme ×3 auf 1280×720",
+  "Bild als Indextextur (Register im Rotkanal), Shader indexed.gdshader liest mit texelFetch die Farbe aus einer 32×1-Palettentextur; main.gd schreibt die Register jedes Bild neu (Farbzyklus, Blinken, Flackern ohne Pixeländerung)",
+  "Zweites Bild (Nahaufnahme) als eigener Clip-Knoten mit eigener Palettentextur, ab 3,85 s herabgezogen; oberhalb der Kante gelten seine Register, darunter die des Hafenbilds",
+  "Herabziehen: Clip-Control 320×145 ab Zeile 10, Bild wandert in ganzen Zeilen nach unten, schwarze Kantenzeile",
+  "Leuchtfeuer: zwei Blitze alle 3 s mit Versatz 1,6 s (Blitze bei 1,6/2,2 s in der Totale und 4,6/5,2 s, wenn die Nahaufnahme ganz unten ist)",
+  "Rauch (smoke.gd) und Möwe (gull.gd) mit _draw in Bildregistern, ganze Pixel, gedithertes Ausblenden; Rauch steigt mit 2,2 px/s und treibt mit 9 px/s nach rechts, weil der Schornstein nur 6 Zeilen unter der Bildkante sitzt",
+  "Kontaktschatten (shadow.gd) als Blitter-Objekt vor dem Dachs: zwei Zeilen Schachbrett im Register 333322, Breite je Bild aus badger.json (feet), Raster fest am Bildschirm",
+  "Textschirm (text_screen.gd): 5 Zeilen à 9 px, Pixel Operator 8 ohne Kantenglättung, Tastendrücke mit festen Abständen, Antwortzeile und Zugzähler nach der Eingabetaste",
+  "Zeit über delta, Flackern aus RandomNumberGenerator mit Seed 1987"
+ ],
+ "techniques": [
+  "farbzyklus",
+  "textoberflaeche",
+  "hintergrund-serie",
+  "dithering"
+ ],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 3,
+  "effort": 2,
+  "text_adventure": 5,
+  "mobile": 5
+ },
+ "ratings_note": "ai_fit 4: gpt-image lieferte beide Vorlagen im ersten Versuch genau als gemaltes, fotonahes Bild mit Materialstruktur, das nach Verkleinern und Dithering wie eine Illustration der späten 80er wirkt; der Amiga-Look selbst (12-Bit-Palette, Dithering, Farbregister) kommt aus dem eigenen Code, und die verlangten Lagen hielt das Modell nur grob ein (Schornstein, Horizont). consistency 3: Die Nahaufnahme mit dem Hafenbild als Referenz trifft Technik, Licht und Ort, und der Dachs der Totale nutzt jetzt dieselbe Palette, dasselbe Muster-Dithering und dieselben Kostümfarben; er bleibt aber ein Blender-BOB mit anderen Proportionen und einem von Hand gesetzten Pixelgesicht, die Nahaufnahme ein KI-Gemälde mit großen Augen. effort 2: je Bild ein KI-Auftrag und eine kleine Layout-Datei (Ausschnitt, Lichter, Wasser- und Ausschluss-Polygone, ggf. paint und green_poly), der Rest läuft durch; das Dachs-Gesicht ist einmal je Ansicht gesetzt. mobile 5 ist geprüft (Mobile und Compatibility bitgleich zu Forward+).",
+ "verdict": "Sehr passend für unser Textadventure: Ein KI-Gemälde je Ort genügt, die Verarbeitung macht daraus ohne Malarbeit ein glaubwürdiges 32-Farben-Bild, und Bewegung entsteht fast nur über Farbregister. Nahaufnahmen als eigene Bilder (mit dem Ortsbild als Referenz erzeugt) zeigen Figuren besser als Sprites. Je Bild bleibt eine Viertelstunde Handarbeit für Ausschnitt und Masken. Laufende Figuren als BOBs aus Blender passen nach der Überarbeitung (Bildpalette, Dithering, selektive Kontur, festes Kopfteil) deutlich besser ins Bild, bleiben aber schlichter und anders gestaltet als die gemalten Nahaufnahmen; für ein Spiel mit vielen Figuren müsste man die Figur einmal als eigenes Pixelmodell in der Malweise anlegen.",
+ "pitfalls": [
+  "Die Lagen aus dem Prompt hielt gpt-image nur grob ein: Schornsteinspitze bei 10 % statt 22 % der Höhe, Meereshorizont bei 46 % statt 50 %, Kaikante bei 68 % statt 64 %. Damit der Schornstein im 2,2:1-Band bleibt, beginnt der Ausschnitt bei Zeile 16 statt 34: vom Pflaster bleiben nur 14 Zeilen, das Tauknäuel ist unten abgeschnitten, und der Rauch hat nur 6 Zeilen Platz (er treibt deshalb flach nach rechts und ist klein).",
+  "Die automatische Erkennung aus Phase 1 reichte am eigenen Bild nicht: Leuchtfeuer 1 px, Laterne 2 px, Wasser nur oben links (die orange Spiegelung unterbrach die Flutfüllung). Lichter, Wasser und die Umrisse der Boote stehen jetzt von Hand in assets/ai_layout.json und assets/closeup_layout.json.",
+  "Zwei Figurenfassungen bleiben: In der Totale läuft ein 41 px hoher Blender-Dachs (Proportionen des 3D-Modells, Gesicht von Hand auf 15×5 bzw. 16×5 Pixeln gesetzt), die Nahaufnahme zeigt einen gemalten Dachs mit großen, etwas niedlichen Augen. Palette, Dithering und Kostümfarben stimmen jetzt überein, die Gestaltung nicht. Von der Seite liest sich das Gesicht noch als weiße Wange mit dunkler Augenbinde; die beiden Zwischenbilder der Drehung (3,47–3,6 s) behalten den Kopf aus dem Rendering.",
+  "Der Kontaktschatten ist nur ein zweizeiliges Schachbrett im Register 333322 und auf dem unruhigen Pflaster in der Aufnahme schwach zu sehen.",
+  "Der Leuchtturm wirkt in der Totale weiterhin blaugrau (weißer Turm im Abendschatten, so schon im KI-Bild). Das rote Band war nach der Quantisierung fast schwarz (Vorlage etwa 3E1A19); es wird jetzt per paint fest auf 772222/BB2233 gesetzt, also von Hand und nur für dieses Bild.",
+  "Das Grün der Kostüme ist erzwungen: Im Rendering ist die Weste oliv, in der Nahaufnahme warm beleuchtet. Totale und Nahaufnahme bekommen deshalb Grüntöne mit festem Farbton (Hafen 132/354/576, Nahaufnahme 113322/334433). In der Totale wirkt die Weste dadurch eher salbeigrün als dunkelgrün; in der Nahaufnahme liegen nur 16 % der Pixel in den Polygonen um Weste und Mütze auf den beiden Grünregistern, der Rest bleibt warm-oliv.",
+  "Die Palettenwahl mit 10 k-means-Starts (bester Fehler) hat beide Bilder gegenüber dem geprüften Stand verändert: im Hafenbild kräftigeres Blau im Himmel und ein oranger Horizontstreifen (E84), in der Nahaufnahme ist das rote Boot jetzt eher braunrot. Isolierte grelle Orangepixel in der Nahaufnahme (Register ohne gleichfarbigen Nachbarn): vorher 119 EE8833 (36 an Ärmel/Paket, 20 an der Hauswand), jetzt 53 EE7744 (9 an Ärmel/Paket, 0 an der Hauswand); ein zusätzlicher Strafwert für Paare mit großem Helligkeitsabstand änderte daran nichts und wurde wieder entfernt.",
+  "Der Farbzyklus im Wasser zeigt kurze helle Striche; nahe dem Horizont wirkt das eher wie Glitzern als wie lange Wellen. Neben dem zweiten Boot (orange Spiegelung) setzt der Farbfilter kaum Wellenstriche.",
+  "Das Leuchtfeuer ist im 320er-Bild nur 2 px groß; das Blinken sieht man vor allem am geditherten Lichthof. Das Poster (5,1 s) liegt zwischen zwei Blitzen.",
+  "Phase 1 am 10.10.2026: zwei agy-Aufrufe endeten mit „usage limit“ ohne Bild; die beiden Bilder kamen am 11.10.2026 über die zentrale Warteschlange von Codex (gpt-image), nicht wie damals erwartet von agy."
+ ],
+ "lessons": [
+  "Prompt-Aufteilung: Das Modell malt eine fotonahe, glatte Vorlage ohne Pixel-Art und ohne Dithering; Raster, 12-Bit-Palette und Muster-Dithering kommen nur aus dem Code. So gibt es kein Doppel-Dithering und keinen Pixelbrei.",
+  "Zweites Bild einer Serie mit dem ersten als Referenz erzeugen: gpt-image übernahm Technik, Abendlicht und den Hafen (Häuschen, Laterne, Boote, Leuchtturm) so genau, dass beide Bilder wie aus einem Spiel wirken.",
+  "Lagen im Prompt in Prozent helfen, sind aber nur Richtwerte (±5–10 % der Höhe). Den Ausschnitt erst nach dem Ansehen festlegen und je Bild eine kleine Layout-Datei schreiben (crop_y, Lichter als Rechtecke, Wasser und Ausschlüsse als Polygone); scripts/grid_preview.py liefert die Koordinaten.",
+  "k-means für 32 Farben hängt stark vom Start ab: 10 feste Starts und den kleinsten Fehler nehmen ist deterministisch und gab sichtbar kräftigere Paletten als ein einzelner Start.",
+  "Kleine, aber wichtige Farben (rotes Turmband, grüne Weste) gehen bei 32 Registern unter: Kostümfarben als feste Register mit festem Farbton vorgeben, einzelne Flächen per paint auf ein Register setzen.",
+  "Blender-Figuren passen besser zum gemalten Bild, wenn sie dieselben Register und dasselbe Muster-Dithering nutzen, die Schattierung verstärkt und um einen Lichtverlauf ergänzt wird und die Kontur nur auf der Schattenseite im dunkelsten Ton des Materials steht.",
+  "Gesicht als festes Teil: einmal je Ansicht von Hand setzen, ganzzahlig an der Mütze ausrichten und nach dem Malen pixelgleich stempeln. Sonst verschiebt sich das Dither-Raster gegen den Kopf und das Gesicht flimmert (gemessen: Seite 4,2 statt 13,7 geänderte Kopfpixel je Zeichnung).",
+  "Feste Figurenregister aus dem Blender-Dachs in die gemalte Nahaufnahme zu zwingen, verschlechterte Fell und Gesicht; eine Nahaufnahme bekommt besser eine eigene Palette (nur die Kostümgrüns fest), der Copper-artige Wechsel an der Bildkante macht das möglich.",
+  "Die Skripte messen Größe und Farbformat des Rohbilds selbst und hängen nicht am Backend (keine .keyed-src-Dateien nötig); Codex lieferte exakt 1536×1024 als RGB.",
+  "Poster in die Nahaufnahme legen: Dort zeigt die Figur den Stil (Fell, Strickschal, Dither-Übergänge), während die Totale den Ort und den Ablauf zeigt."
+ ],
+ "assets": [
+  {
+   "file": "assets/picture_index.png",
+   "kind": "background",
+   "made_with": "gpt-image (Codex) + load_ai.py + Muster-Dithering auf 32 Register (Indexbild)",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/picture_preview.png",
+   "kind": "background",
+   "made_with": "Vorschau des Hafenbilds in seinen 32 Farben",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/palette.json",
+   "kind": "palette",
+   "made_with": "scripts/build_assets.py (Register, Farbzyklus, Lagen für Rauch, Möwe, Dachs)"
+  },
+  {
+   "file": "assets/ai_layout.json",
+   "kind": "layout",
+   "made_with": "von Hand: Ausschnitt, Lichter, Wasserpolygon, Boots-Umrisse, rotes Turmband (paint), Fußlinie und Haltepunkt des Dachses"
+  },
+  {
+   "file": "assets/closeup_index.png",
+   "kind": "background",
+   "made_with": "gpt-image (Codex, Referenzen: Hafenbild und Referenzblatt) + Muster-Dithering auf eigene 32 Register",
+   "prompt": "assets/raw/closeup.json"
+  },
+  {
+   "file": "assets/closeup_preview.png",
+   "kind": "background",
+   "made_with": "Vorschau der Nahaufnahme in ihren 32 Farben",
+   "prompt": "assets/raw/closeup.json"
+  },
+  {
+   "file": "assets/closeup_palette.json",
+   "kind": "palette",
+   "made_with": "scripts/build_assets.py --picture closeup"
+  },
+  {
+   "file": "assets/closeup_layout.json",
+   "kind": "layout",
+   "made_with": "von Hand: Ausschnitt, Unschärfemaske, Lichter, Fenster, Wasserpolygon, Boots-Umrisse, Weste und Mütze (green_poly)"
+  },
+  {
+   "file": "assets/badger.png",
+   "kind": "sprite-sheet",
+   "made_with": "Blender-Renderings (shared/3d/badger.glb), materialtreu verkleinert, in der Hafenpalette gedithert, festes Kopfteil mit gesetztem Gesicht (scripts/badger_paint.py)"
+  },
+  {
+   "file": "assets/badger.json",
+   "kind": "data",
+   "made_with": "scripts/build_assets.py: Lage je Bild, Fußbreite für den Kontaktschatten, Tonleitern je Material"
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Pixel Operator 8 (Jayvee Enaguas)",
+   "license": "CC0-1.0",
+   "source": "https://www.dafont.com/pixel-operator.font (Lizenztext: demo/fonts/PixelOperator-LICENSE.txt)"
+  }
+ ],
+ "image_generations": 2,
+ "tool_issues": [],
+ "status": "done"
+}

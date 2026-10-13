@@ -1,0 +1,266 @@
+[gd_scene load_steps=43 format=3]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Texture2D" path="res://art/sky.png" id="2_sky"]
+[ext_resource type="Texture2D" path="res://art/far.png" id="3_far"]
+[ext_resource type="Texture2D" path="res://art/far_n.png" id="4_farn"]
+[ext_resource type="Texture2D" path="res://art/near.png" id="5_near"]
+[ext_resource type="Texture2D" path="res://art/near_n.png" id="6_nearn"]
+[ext_resource type="Texture2D" path="res://art/water.png" id="7_water"]
+[ext_resource type="Texture2D" path="res://art/mist.png" id="8_mist"]
+[ext_resource type="Texture2D" path="res://art/smoke.png" id="9_smoke"]
+[ext_resource type="Texture2D" path="res://art/mote.png" id="10_mote"]
+[ext_resource type="Texture2D" path="res://art/halo_lantern.png" id="11_halo"]
+[ext_resource type="Texture2D" path="res://art/halo_window.png" id="12_halow"]
+[ext_resource type="Texture2D" path="res://art/halo_lamp.png" id="13_halol"]
+[ext_resource type="Texture2D" path="res://art/flare_lamp.png" id="14_flare"]
+[ext_resource type="Texture2D" path="res://art/light_soft.png" id="15_light"]
+[ext_resource type="Texture2D" path="res://art/gull.png" id="16_gull"]
+[ext_resource type="Shader" path="res://shaders/lit.gdshader" id="17_lit"]
+[ext_resource type="Shader" path="res://shaders/water.gdshader" id="18_water"]
+[ext_resource type="Shader" path="res://shaders/beam.gdshader" id="19_beam"]
+[ext_resource type="Script" path="res://scripts/sky.gd" id="20_sky"]
+[ext_resource type="Script" path="res://scripts/gulls.gd" id="21_gulls"]
+[ext_resource type="Script" path="res://scripts/ui.gd" id="22_ui"]
+[ext_resource type="Texture2D" path="res://art/near_s.png" id="23_nears"]
+[ext_resource type="Texture2D" path="res://art/shadow.png" id="24_shadow"]
+[ext_resource type="Texture2D" path="res://art/layers.png" id="25_layers"]
+
+[sub_resource type="CanvasTexture" id="ct_far"]
+diffuse_texture = ExtResource("3_far")
+normal_texture = ExtResource("4_farn")
+
+[sub_resource type="CanvasTexture" id="ct_near"]
+diffuse_texture = ExtResource("5_near")
+normal_texture = ExtResource("6_nearn")
+specular_texture = ExtResource("23_nears")
+specular_color = Color(1, 1, 1, 1)
+specular_shininess = 0.5
+
+[sub_resource type="ShaderMaterial" id="mat_lit"]
+shader = ExtResource("17_lit")
+
+[sub_resource type="ShaderMaterial" id="mat_lit_badger"]
+shader = ExtResource("17_lit")
+shader_parameter/bands = 5.0
+shader_parameter/band_width = 0.04
+
+[sub_resource type="ShaderMaterial" id="mat_water"]
+shader = ExtResource("18_water")
+shader_parameter/layer_mask = ExtResource("25_layers")
+
+[sub_resource type="ShaderMaterial" id="mat_beam"]
+shader = ExtResource("19_beam")
+
+[sub_resource type="CanvasItemMaterial" id="mat_unshaded"]
+light_mode = 1
+
+[sub_resource type="CanvasItemMaterial" id="mat_add"]
+blend_mode = 1
+light_mode = 1
+
+[sub_resource type="CanvasItemMaterial" id="mat_smoke"]
+light_mode = 1
+particles_animation = true
+particles_anim_h_frames = 8
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="CanvasItemMaterial" id="mat_mote"]
+light_mode = 2
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="grad_smoke"]
+offsets = PackedFloat32Array(0, 0.12, 0.7, 1)
+colors = PackedColorArray(1, 1, 1, 0.0, 1, 1, 1, 0.9, 1, 1, 1, 0.75, 1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="grad_mote"]
+offsets = PackedFloat32Array(0, 0.2, 0.8, 1)
+colors = PackedColorArray(1, 0.9, 0.7, 0, 1, 0.9, 0.7, 1, 1, 0.9, 0.7, 1, 1, 0.9, 0.7, 0)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="Ambient" type="CanvasModulate" parent="."]
+color = Color(0.6, 0.58, 0.76, 1)
+
+[node name="Sky" type="Sprite2D" parent="."]
+light_mask = 0
+material = SubResource("mat_unshaded")
+texture = ExtResource("2_sky")
+centered = false
+
+[node name="Stars" type="Node2D" parent="."]
+light_mask = 0
+material = SubResource("mat_unshaded")
+script = ExtResource("20_sky")
+
+[node name="Far" type="Sprite2D" parent="."]
+self_modulate = Color(1.3, 1.28, 1.22, 1)
+light_mask = 2
+material = SubResource("mat_lit")
+texture = SubResource("ct_far")
+centered = false
+
+[node name="Beam" type="ColorRect" parent="."]
+light_mask = 0
+material = SubResource("mat_beam")
+offset_right = 640.0
+offset_bottom = 360.0
+mouse_filter = 2
+
+[node name="Gulls" type="Node2D" parent="."]
+light_mask = 0
+material = SubResource("mat_unshaded")
+script = ExtResource("21_gulls")
+
+[node name="Water" type="Sprite2D" parent="."]
+light_mask = 0
+texture_repeat = 2
+material = SubResource("mat_water")
+texture = ExtResource("7_water")
+centered = false
+
+[node name="Mist" type="Sprite2D" parent="."]
+light_mask = 0
+material = SubResource("mat_unshaded")
+texture_repeat = 2
+texture = ExtResource("8_mist")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 640, 28)
+position = Vector2(0, 160)
+
+[node name="Near" type="Sprite2D" parent="."]
+material = SubResource("mat_lit")
+texture = SubResource("ct_near")
+centered = false
+
+[node name="Shadow" type="Sprite2D" parent="."]
+light_mask = 0
+material = SubResource("mat_unshaded")
+texture = ExtResource("24_shadow")
+centered = false
+
+[node name="Badger" type="Sprite2D" parent="."]
+self_modulate = Color(1.22, 1.2, 1.16, 1)
+material = SubResource("mat_lit_badger")
+centered = false
+hframes = 8
+
+[node name="Smoke" type="CPUParticles2D" parent="."]
+light_mask = 0
+material = SubResource("mat_smoke")
+position = Vector2(70, 19)
+amount = 30
+texture = ExtResource("9_smoke")
+lifetime = 5.0
+preprocess = 5.5
+randomness = 0.5
+lifetime_randomness = 0.15
+use_fixed_seed = true
+seed = 11
+emission_shape = 1
+emission_sphere_radius = 1.5
+direction = Vector2(0.35, -1)
+spread = 22.0
+gravity = Vector2(16, 1.5)
+initial_velocity_min = 4.0
+initial_velocity_max = 6.0
+damping_min = 1.2
+damping_max = 1.8
+color_ramp = SubResource("grad_smoke")
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+
+[node name="Motes" type="CPUParticles2D" parent="."]
+material = SubResource("mat_mote")
+position = Vector2(222, 206)
+amount = 30
+texture = ExtResource("10_mote")
+lifetime = 5.0
+preprocess = 6.0
+use_fixed_seed = true
+seed = 23
+emission_shape = 3
+emission_rect_extents = Vector2(70, 60)
+direction = Vector2(0.4, -1)
+spread = 70.0
+gravity = Vector2(0.8, -0.6)
+initial_velocity_min = 1.5
+initial_velocity_max = 4.0
+color_ramp = SubResource("grad_mote")
+anim_offset_min = 0.0
+anim_offset_max = 1.0
+
+[node name="HaloWindow" type="Sprite2D" parent="."]
+light_mask = 0
+material = SubResource("mat_add")
+position = Vector2(96, 179)
+texture = ExtResource("12_halow")
+
+[node name="HaloLantern" type="Sprite2D" parent="."]
+light_mask = 0
+material = SubResource("mat_add")
+position = Vector2(212, 157)
+texture = ExtResource("11_halo")
+
+[node name="HaloLamp" type="Sprite2D" parent="."]
+light_mask = 0
+material = SubResource("mat_add")
+position = Vector2(575, 88)
+texture = ExtResource("13_halol")
+
+[node name="FlareLamp" type="Sprite2D" parent="."]
+light_mask = 0
+material = SubResource("mat_add")
+position = Vector2(575, 88)
+texture = ExtResource("14_flare")
+
+[node name="LanternLight" type="PointLight2D" parent="."]
+position = Vector2(211, 157)
+color = Color(1, 0.7, 0.4, 1)
+energy = 1.85
+range_item_cull_mask = 1
+texture = ExtResource("15_light")
+texture_scale = 1.9
+height = 26.0
+
+[node name="WindowLight" type="PointLight2D" parent="."]
+position = Vector2(96, 196)
+color = Color(1, 0.74, 0.46, 1)
+energy = 0.9
+range_item_cull_mask = 1
+texture = ExtResource("15_light")
+texture_scale = 0.9
+height = 10.0
+
+[node name="LampLight" type="PointLight2D" parent="."]
+position = Vector2(575, 90)
+color = Color(1, 0.9, 0.62, 1)
+energy = 0.0
+range_item_cull_mask = 2
+texture = ExtResource("15_light")
+texture_scale = 0.7
+height = 20.0
+
+[node name="Rim" type="DirectionalLight2D" parent="."]
+rotation = 1.31
+color = Color(1, 0.56, 0.48, 1)
+energy = 0.45
+range_item_cull_mask = 3
+height = 0.3
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="Box" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 640.0
+offset_bottom = 360.0
+mouse_filter = 2
+script = ExtResource("22_ui")

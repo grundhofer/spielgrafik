@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="Shader" path="res://shaders/water.gdshader" id="2_water"]
+[ext_resource type="Script" path="res://ui.gd" id="3_ui"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_water"]
+shader = ExtResource("2_water")
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="Water" type="ColorRect" parent="."]
+z_index = -100
+material = SubResource("ShaderMaterial_water")
+offset_right = 426.0
+offset_bottom = 240.0
+mouse_filter = 2
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Shadows" type="Node2D" parent="."]
+
+[node name="Effects" type="Node2D" parent="."]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Node2D" parent="UI"]
+script = ExtResource("3_ui")

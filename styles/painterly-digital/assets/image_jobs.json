@@ -1,0 +1,62 @@
+[
+ {
+  "out": "styles/painterly-digital/assets/raw/badger_side.png",
+  "size": "1024x1024",
+  "prompt": "Repaint the character of the first reference image in exactly the same pose, size and position on the canvas: a stout badger courier walking to the right, seen from the side, mid-stride with the near leg straight under the body and the far leg lifted behind. Keep the silhouette, the pose of the legs and arms, the parcel under the arm, the satchel, the scarf ends, the cap and every costume detail exactly where they are. Change only the painting technique: paint it as an atmospheric 2D digital painting in the technique of the second reference image (a painted harbour at dusk): large soft digital brushes, soft painted shading in a few big value shapes, soft transitions inside the figure, visible brush texture, little fine fur detail. No dark contour lines: remove every black or dark brown ink outline around the figure and inside it; shapes are separated only by changes of value and colour, like the painted objects in the second reference image. No cel shading with hard shadow edges, no 3D render look, no plastic shading, no comic look. The outer silhouette stays clear, simple and readable. Light: soft, even, slightly cool dusk light from above, mid values; no strong light from one side and no rim light (the game adds the lights). The dark green cap and vest stay clearly green, the scarf red, the cream shirt light, the black-and-white face stripes and the eye readable. The third reference image is only a check for the costume and its colours: do not copy its layout, its several views or its drawing style. The character is the badger courier: an original mascot character, a stout, short-legged badger with a broad black-and-white striped face, wearing a dark green peaked cap with a brass button, a dark green vest with pockets over a cream shirt with rolled-up sleeves, a long red knitted scarf, a brown leather satchel on a shoulder strap, and a brown paper parcel tied with string under one arm. One single figure, isolated on a fully transparent background, no ground, no shadow.\nNo text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.\nImage format: square 1:1.",
+  "refs": [
+   "styles/painterly-digital/assets/raw/badger_layout.png",
+   "styles/painterly-digital/assets/raw/master.png",
+   "shared/badger/master_sheet.png"
+  ]
+ },
+ {
+  "out": "styles/painterly-digital/assets/raw/foreground.png",
+  "size": "1536x1024",
+  "prompt": "Foreground silhouette layer for the 2D side-scrolling game scene in the reference image: the plane closest to the camera, in front of the quay. Same painting technique and palette as the reference, but much darker. Only along the bottom edge and in the lower corners: in the lower left corner a thick weathered wooden mooring post with a loop of heavy rope and a few tufts of tall beach grass, rising to about 40 % of the image height; in the lower right corner a low cluster of dark rounded rocks with tufts of beach grass, rising to about 30 % of the image height; between them only a few low grass tufts along the very bottom edge, so that the upper two thirds and the middle of the image stay empty. All of it as nearly black, deep blue-teal silhouettes, slightly out of focus, with only a thin warm amber rim of light along the upper edges. Isolated on a fully transparent background.\nStyle: Atmospheric digital painting for a 2D side-scrolling adventure game: large soft digital brushes, soft edges, visible brush texture, big simplified shapes, little fine detail, no outlines; limited palette of deep teal, slate blue and dusty violet, with warm amber and orange only at the horizon and in the lights. Not a photograph, not a 3D render, not a postcard.\nNo text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.\nImage format: landscape 3:2.",
+  "refs": [
+   "styles/painterly-digital/assets/raw/master.png"
+  ]
+ },
+ {
+  "out": "styles/painterly-digital/assets/raw/badger.png",
+  "size": "1536x1024",
+  "prompt": "Sprite sheet for a 2D side-scrolling game. The first reference image gives only the layout and the poses: ten figures in two rows of five, evenly spaced, same scale, feet on the same baseline in each row. Row 1: four walk-cycle frames and a standing pose, all in side view facing right; row 2: four more walk-cycle frames and a standing pose in three-quarter view. Keep exactly these poses, the leg and arm positions, and the size and position of all ten figures. Repaint every figure completely in the technique of the second reference image, which shows this character already painted in the target style: an atmospheric 2D digital painting with soft digital brushes, soft painted shading in a few big value shapes, little fine fur detail, no dark contour lines, no cel shading, no 3D render look, no plastic shading; copy its colours and its painting technique exactly. The third reference image is only a check for the costume: do not copy its layout or its drawing style. The badger courier: an original mascot character, a stout, short-legged badger with a broad black-and-white striped face, wearing a dark green peaked cap with a brass button, a dark green vest with pockets over a cream shirt with rolled-up sleeves, a long red knitted scarf, a brown leather satchel on a shoulder strap, and a brown paper parcel tied with string under one arm. Light: soft, even, slightly cool dusk light from above, mid values, no rim light; cap and vest clearly dark green, scarf red, the white face stripes and the eye readable; a clear, readable silhouette. All ten figures look identical in design, colours and painting style. Each figure isolated on a fully transparent background, no ground, no shadows, no frame borders.\nNo text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.\nImage format: landscape 3:2.",
+  "refs": [
+   "styles/painterly-digital/assets/raw/pose_layout.png",
+   "styles/painterly-digital/assets/raw/badger_side.png",
+   "shared/badger/master_sheet.png"
+  ]
+ },
+ {
+  "out": "styles/painterly-digital/assets/raw/backdrop.png",
+  "size": "1536x1024",
+  "prompt": "Edit of the reference image, a painted game background. Paint the farthest parallax layer of this scene: only the sky and the open sea. Keep the sky, the clouds, the first stars, the band of orange light at the horizon and the calm sea exactly as in the reference: same painting technique, same palette, same horizon height (45 % of the image height), same layout. Remove everything else: the cottage, the stone quay with its front wall, the wooden jetty, the two boats, the lantern post, the barrels, crates and rope, the rocky headland with the lighthouse and the rocks in the water. Where they were, continue the sky and the calm sea seamlessly, so that the open sea reaches from the left to the right edge and down to the bottom edge, with a soft reflection of the orange horizon band and thin veils of mist on the water. The horizon is one straight, level line across the whole width.\nStyle: Atmospheric digital painting for a 2D side-scrolling adventure game: large soft digital brushes, soft edges, visible brush texture, big simplified shapes, little fine detail, no outlines; limited palette of deep teal, slate blue and dusty violet, with warm amber and orange only at the horizon and in the lights. Not a photograph, not a 3D render, not a postcard.\nNo text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.\nImage format: landscape 3:2.",
+  "refs": [
+   "styles/painterly-digital/assets/raw/master.png"
+  ]
+ },
+ {
+  "out": "styles/painterly-digital/assets/raw/headland.png",
+  "size": "1536x1024",
+  "prompt": "Edit of the reference image, a painted game background. Paint one parallax layer of this scene: only the rocky headland on the right with the white lighthouse with one red band and the small rocks in the water in front of it, at the same size and position as in the reference, in the same painting technique and palette. Extend the headland a little further to the right so that it runs out of the right edge of the image. The lighthouse lamp is only a small bright spot without beam, halo or glow around it (the light is added in the game). The rocks end at their waterline with a clean edge, without water, mist, reflections or foam. The headland isolated on a fully transparent background: sky, clouds, stars, sea and everything else of the reference are left out.\nStyle: Atmospheric digital painting for a 2D side-scrolling adventure game: large soft digital brushes, soft edges, visible brush texture, big simplified shapes, little fine detail, no outlines; limited palette of deep teal, slate blue and dusty violet, with warm amber and orange only at the horizon and in the lights. Not a photograph, not a 3D render, not a postcard.\nNo text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.\nImage format: landscape 3:2.",
+  "refs": [
+   "styles/painterly-digital/assets/raw/master.png"
+  ]
+ },
+ {
+  "out": "styles/painterly-digital/assets/raw/harbour.png",
+  "size": "1536x1024",
+  "prompt": "Edit of the reference image, a painted game background. Paint the main gameplay layer of this scene: only the stone quay with its front wall, the small stone cottage with its lit window and its chimney, the barrels, the stack of crates, the coil of rope, the iron lantern on its wooden post and the wooden jetty with its posts, at the same size and position as in the reference, in the same painting technique and palette. Leave out the two boats and paint the jetty complete where they covered it. No smoke from the chimney. The lantern and the window are lit as flat warm shapes without any halo or glow around them (the glow is added in the game). All of this isolated on a fully transparent background: sky, clouds, stars, sea, mist, the headland with the lighthouse and the rocks in the water are left out, also the water between the jetty posts. Leave the quay free of characters: characters are added later as separate sprites.\nStyle: Atmospheric digital painting for a 2D side-scrolling adventure game: large soft digital brushes, soft edges, visible brush texture, big simplified shapes, little fine detail, no outlines; limited palette of deep teal, slate blue and dusty violet, with warm amber and orange only at the horizon and in the lights. Not a photograph, not a 3D render, not a postcard.\nNo text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.\nImage format: landscape 3:2.",
+  "refs": [
+   "styles/painterly-digital/assets/raw/master.png"
+  ]
+ },
+ {
+  "out": "styles/painterly-digital/assets/raw/boats.png",
+  "size": "1536x1024",
+  "prompt": "Two small wooden fishing boats for a 2D side-scrolling game, painted in the technique and palette of the reference image. Seen from the side at eye level like in the reference: on the left the small open rowing boat, on the right the small boat with a short mast. Each boat about 40 % of the image width, side by side with a wide gap between them, complete hulls down to the waterline, dark weathered wood with a soft warm rim of evening light along the gunwale. No water, no reflection, no ropes to the shore, no jetty, no people. Both boats isolated on a fully transparent background.\nStyle: Atmospheric digital painting for a 2D side-scrolling adventure game: large soft digital brushes, soft edges, visible brush texture, big simplified shapes, little fine detail, no outlines; limited palette of deep teal, slate blue and dusty violet, with warm amber and orange only at the horizon and in the lights. Not a photograph, not a 3D render, not a postcard.\nNo text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.\nImage format: landscape 3:2.",
+  "refs": [
+   "styles/painterly-digital/assets/raw/master.png"
+  ]
+ }
+]

@@ -1,0 +1,218 @@
+{
+ "frame_w": 144,
+ "frame_h": 224,
+ "frames": 11,
+ "scale": 0.47,
+ "sole_y": 220.9,
+ "names": [
+  "walk_0",
+  "walk_1",
+  "walk_2",
+  "walk_3",
+  "walk_4",
+  "walk_5",
+  "walk_6",
+  "walk_7",
+  "stand",
+  "turn",
+  "blink"
+ ],
+ "measure": [
+  {
+   "name": "walk_0",
+   "sole_ai": 477,
+   "height_ai": 432,
+   "contact_ai": [
+    [
+     145,
+     175
+    ],
+    [
+     188,
+     193
+    ]
+   ],
+   "head_x_ai": [
+    84,
+    281
+   ],
+   "cx_ai": 158.8
+  },
+  {
+   "name": "walk_1",
+   "sole_ai": 474,
+   "height_ai": 429,
+   "contact_ai": [
+    [
+     147,
+     164
+    ],
+    [
+     170,
+     246
+    ]
+   ],
+   "head_x_ai": [
+    92,
+    288
+   ],
+   "cx_ai": 165.6
+  },
+  {
+   "name": "walk_2",
+   "sole_ai": 479,
+   "height_ai": 433,
+   "contact_ai": [
+    [
+     152,
+     231
+    ]
+   ],
+   "head_x_ai": [
+    88,
+    286
+   ],
+   "cx_ai": 166.3
+  },
+  {
+   "name": "walk_3",
+   "sole_ai": 479,
+   "height_ai": 433,
+   "contact_ai": [
+    [
+     120,
+     196
+    ]
+   ],
+   "head_x_ai": [
+    86,
+    278
+   ],
+   "cx_ai": 162.7
+  },
+  {
+   "name": "walk_4",
+   "sole_ai": 479,
+   "height_ai": 431,
+   "contact_ai": [
+    [
+     141,
+     179
+    ],
+    [
+     192,
+     203
+    ]
+   ],
+   "head_x_ai": [
+    86,
+    280
+   ],
+   "cx_ai": 162.4
+  },
+  {
+   "name": "walk_5",
+   "sole_ai": 966,
+   "height_ai": 435,
+   "contact_ai": [
+    [
+     168,
+     240
+    ]
+   ],
+   "head_x_ai": [
+    85,
+    279
+   ],
+   "cx_ai": 159.3
+  },
+  {
+   "name": "walk_6",
+   "sole_ai": 965,
+   "height_ai": 435,
+   "contact_ai": [
+    [
+     140,
+     218
+    ]
+   ],
+   "head_x_ai": [
+    86,
+    280
+   ],
+   "cx_ai": 161.3
+  },
+  {
+   "name": "walk_7",
+   "sole_ai": 966,
+   "height_ai": 429,
+   "contact_ai": [
+    [
+     118,
+     191
+    ]
+   ],
+   "head_x_ai": [
+    89,
+    281
+   ],
+   "cx_ai": 162.3
+  },
+  {
+   "name": "stand",
+   "sole_ai": 965,
+   "height_ai": 435,
+   "contact_ai": [
+    [
+     138,
+     216
+    ]
+   ],
+   "head_x_ai": [
+    85,
+    278
+   ],
+   "cx_ai": 163.7
+  },
+  {
+   "name": "turn",
+   "sole_ai": 966,
+   "height_ai": 439,
+   "contact_ai": [
+    [
+     84,
+     156
+    ],
+    [
+     183,
+     242
+    ]
+   ],
+   "head_x_ai": [
+    71,
+    242
+   ],
+   "cx_ai": 154.1
+  },
+  {
+   "name": "blink",
+   "sole_ai": 966,
+   "height_ai": 439,
+   "contact_ai": [
+    [
+     84,
+     156
+    ],
+    [
+     183,
+     242
+    ]
+   ],
+   "head_x_ai": [
+    71,
+    242
+   ],
+   "cx_ai": 154.1
+  }
+ ]
+}

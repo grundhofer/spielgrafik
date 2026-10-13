@@ -1,0 +1,112 @@
+{
+ "slug": "pc98-adventure",
+ "name": "Japanischer 16-Bit-PC (Befehlsmenü-Adventure)",
+ "family": "computer",
+ "kind": "style",
+ "era": "1987–1997",
+ "summary": "Adventure-Bildschirm der japanischen 16-Bit-PCs: 640×400 Pixel, 16 Farben je Bild frei aus 4096 gewählt (4 Bit je Kanal), Verläufe und Hauttöne nur als feine Schachbrett- und Punktraster, klare dunkle Konturen ohne Kantenglättung. Die Szene steht in einem Bildfenster mit Zierrahmen, daneben Ortsfenster, Befehlsmenü und Objektliste, darunter ein Textfenster, in dem der Satz Zeichen für Zeichen erscheint; die Figur ist ein Brustbild im Bildfenster, das blinzelt und den Mund bewegt.",
+ "references": [
+  "The Portopia Serial Murder Case (Enix, 1983; das Befehlsmenü kam mit der Famicom-Fassung 1985)",
+  "Snatcher (Konami, PC-88/MSX2, 1988)",
+  "Dōkyūsei (ELF, PC-98, 1992)",
+  "Policenauts (Konami, PC-9821, 1994)",
+  "EVE burst error (C's Ware, PC-98, 1995)",
+  "YU-NO (ELF, PC-98, 1996)"
+ ],
+ "traits": [
+  "Bildschirm 640×400, gezeigt als Ausschnitt 640×360 (oben 360 Zeilen), ganzzahlig ×2 auf 1280×720, harte Pixel; quadratische Pixel statt der 1,2-mal höheren Pixel des 4:3-Monitors (siehe pitfalls)",
+  "höchstens 16 Farben je Bild für alles (Szene, Figur, Rahmen, Schrift): gemessen 15–16 Farben in allen 180 Bildern",
+  "jede Farbe liegt auf dem 12-Bit-Raster (4 Bit je Kanal, Vielfache von 0x11, 4096 mögliche Farben), auch die zur Laufzeit gesetzten Werte von Leuchtfeuer und Fensterlicht: gemessen 0 Abweichungen in 180 Bildern",
+  "Verläufe (Himmel, Horizont, Wasser, Fell, Wangen, Schal) nur als geordnete Raster aus zwei benachbarten Palettenfarben in 5 Stufen (0, 25, 50, 75, 100 %), flache Flächen bleiben flach (Kaipflaster: 0 % Nachbarwechsel)",
+  "Bildfenster 416×256 mit Zierrahmen (Doppellinie, Eckbeschläge) links oben, etwa 2/3 der Breite",
+  "rechts Ortsfenster („Hafen von Lornholm“, „Abenddämmerung“), Befehlsmenü (Ansehen, Nehmen, Sprechen, Gehen) mit Dreieck-Cursor und Objektliste (Paket, Laterne, Seil), die erst nach der Befehlswahl aktiv wird; gewählte Einträge als heller Balken mit schwarzer Schrift",
+  "Textfenster unten mit Namensfeld 【Dachs-Kurier】 und dem Satz in 「」, Zeichen für Zeichen (30 Zeichen/s, 0,3 s Pause am Satzende), danach blinkendes ▼",
+  "Bitmapschrift mit 16-px-Punktraster, lateinische Zeichen halbbreit 8 px wie die ANK-Zeichen der Vorbilder, ohne Kantenglättung, Umlaute korrekt",
+  "Dachs als Brustbild (172×196 px) im Bildfenster, erscheint im 4×4-Kachelmuster in 16 Stufen (0,5 s); Blinzeln (halb, zu, halb) und Mund (zu, halb, offen) als kleine Teilbilder auf festem Körper; Körper gemessen unverändert (0 Pixel) in allen Bildern nach dem Einblenden",
+  "Animation sparsam: Leuchtfeuer blitzt alle 3 s über ein Palettenregister (Lampe, Schein und ein spitz zulaufender Rasterstrahl), Fenster und Laterne flackern über ein zweites Register, Wasser über 3 Einzelbilder (Glanzstriche verschwinden, stehen, versetzen sich um 2 px; Wechsel alle 6 Bilder = 5/s)"
+ ],
+ "camera": "Feste Einstellung, Blick vom Kai über den Hafen; Figur als Brustbild im Vordergrund des Bildfensters",
+ "resolution": "640×400 (Ausschnitt 640×360), 16 Farben aus 4096 (12 Bit), quadratische Pixel (×2 = 1280×720)",
+ "pipeline": [
+  {"step": "Hintergrund erzeugen", "tool": "genimg (agy, Gemini)", "detail": "1536×1024 angefragt, 1264×848 geliefert (JPEG). --backend auto nahm agy, weil die Codex-Sperrdatei von genimg.py noch bis 17:45 galt. Stilblock: japanisches Adventure auf 16-Bit-Heimcomputer, 640×400, 16 aus 4096 Farben, 1-px-Konturen, Zellschattierung, Verläufe nur als geordnete Raster, Platz in der Bildmitte für ein Porträt, Leuchtfeuer ohne Strahl, kein Rauch. Ein Versuch, Prompt wörtlich übernommen (verbatim: true). Prompt: prompts/bg.txt"},
+  {"step": "Figur erzeugen", "tool": "genimg (agy, Gemini)", "detail": "Verlangt war ein Blatt mit zwei Brustbildern (Augen offen / Augen zu und Mund offen) im 16-Farben-Stil, Referenz shared/badger/master_sheet.png. agy wiederholte das Dreiansichten-Layout der Referenz als gemalte Ganzfiguren (siehe pitfalls). Prompt: prompts/badger.txt"},
+  {"step": "Nachbesserung Figur (abgebrochen)", "tool": "genimg (agy)", "detail": "Zweites Blatt mit eigenem Layout-Bild (assets/layout_ref.png: Vorderansicht zweimal nebeneinander) und Stilblock für Pixel-Porträts. Endete sofort mit „usage limit (agy, gesperrt bis 17:30)“; laut Auftrag nicht wiederholt. Prompt: prompts/portrait.txt, Antwort in assets/raw/portrait.fail.json"},
+  {"step": "Verkleinern und zuschneiden", "tool": "scripts/build_assets.py", "detail": "Hintergrund BOX auf 416×279, Zeilen 10–265 als Bildfenster 416×256. Das Pseudo-Pixelraster des Bildes ist ungleichmäßig (Periode 3,07 px, in den Bildhälften 3,10 und 2,96), Einrasten per mode passte deshalb nicht; die Schachbrettraster des Modells werden zu Mischtönen und danach exakt neu gerastert. Figur: Vorderansicht x 0–440, y 60–560 des Blatts → 172×196"},
+  {"step": "Palette (16 Register, 12 Bit)", "tool": "sprites.py palette + scripts/build_assets.py", "detail": "sprites.py palette --colors 14 über Hintergrund und Figur liefert Startwerte; Median-Cut allein ergab nur gedeckte Blau- und Violetttöne. k-means in Oklab mit 5 festen Akzentfarben (000 Schwarz, edb Creme, 932 Rot, 563 Grün, e97 Pfirsich) und 9 freien Registern, alles auf 4 Bit je Kanal gerundet. Register 14 (Fenster/Laterne, Grundwert fea) und 15 (Leuchtfeuer, aus 226, an ffc) sind animiert. Ergebnis: 000 edb 932 563 e97 a86 789 a68 766 759 533 448 212 226 + fea/ffc"},
+  {"step": "Musterdithering statt pixelize --dither bayer", "tool": "scripts/pc98lib.py", "detail": "Je Pixel das Farbpaar suchen, dessen Mischung im Raster die Farbe am besten trifft (lineares Licht, Fehler in Oklab, Strafe für weit auseinanderliegende Paare), Mischverhältnis auf 0/25/50/75/100 % runden, Bayer-4×4-Schwelle entscheidet. Raster bildschirmfest (Versatz des Bildfensters). Vergleich in assets/compare_pixelize_vs_pattern.png (oben pixelize --dither bayer, unten dieses Verfahren)"},
+  {"step": "Lichter und Wasser", "tool": "scripts/build_assets.py", "detail": "Fenster und Laternenglas in von Hand gesetzten Kästen mit Register 14 neu gerastert (304 px). Leuchtfeuer: helle Pixel im Lampenraum, ein Rasterring als Schein und ein Strahl (50/25/12,5 %, spitz an der Lampe) auf Register 15, aber nur auf Himmelspixeln, die schon die Aus-Farbe 226 haben (223 px). Wasser: Fläche über Farbton zwischen Horizont und Kai, 5 Polygone für Pfahl, Felsen, Landzunge, Steg/Boote, Poller; 98 Glanzstriche mit Phase und Richtung aus festem Seed ergeben 3 Einzelbilder (379 geänderte Pixel)"},
+  {"step": "Figur materialtreu verkleinern", "tool": "scripts/badger_material.py", "detail": "Vorlagepixel 8 Materialien zuordnen (Kontur, Fell, helles Fell, Rot, Grün, Leder, Paket, Creme; Referenzfarben aus einem k-means über die Vorlage), 5×5-Mehrheitsfilter gegen die feine Fellzeichnung, je Zielpixel Mehrheit (Kontur ab einem Drittel), Farbe nur aus den Pixeln dieses Materials, Musterdithering nur mit den Registern des Materials"},
+  {"step": "Blinzeln und Mund", "tool": "scripts/build_assets.py", "detail": "Augen: Augapfel aus den schwarzen Pixeln bestimmen, halb (obere Hälfte Fell, Lidkante) und zu (Fell, Lidlinie mit leicht hängenden Enden). Mund: halb offen (8×3) und offen (10×4, Schwarz, Rot, Zunge in Pfirsich) von Hand im Indexraster gesetzt. Beide als Überlagerungen mit eigenem Alpha"},
+  {"step": "Bitmapschrift", "tool": "scripts/build_font.py", "detail": "DotGothic16 (OFL) mit Pillow ohne Kantenglättung in 16 px gerastert, 110 Zeichen (ASCII, Umlaute, 【】「」　▼) als Atlas mit Vorschub je Zeichen"},
+  {"step": "Prüfen", "tool": "scripts/check_frames.py", "detail": "Einzelbilder aus Godots Movie Maker: Farben je Bild, 12-Bit-Raster, unveränderter Körper, Haltezeiten von Augen, Mund und Wasser, Vergleich der Renderer"}
+ ],
+ "godot": [
+  "Viewport 640×360, stretch mode viewport, scale_mode integer, Standardfilter Nearest, snap_2d_transforms/vertices_to_pixel an, Fenster 1280×720",
+  "Bildspeicher: SubViewport „VRAM“ 640×360 (disable_3d, update always) enthält nur Palettenindizes, kodiert als Rotkanal = Index/15. Darin Hintergrund, Wasser (hframes 3), Dachs (Body, Eyes hframes 2, Mouth hframes 2) und die Oberfläche (Node2D mit _draw, Zeichenfarbe Color(i/15, 0, 0))",
+  "Ausgabe: Sprite2D „Display“ zeigt die SubViewport-Textur mit shaders/palette.gdshader: Index per texelFetch lesen, Farbe aus einer 16×1-Palettentextur holen. main.gd schreibt jedes Bild alle 16 Register (ImageTexture.update), jeder Kanal über _c12 auf 4 Bit gerundet",
+  "Einblenden des Porträts: shaders/dissolve.gdshader verwirft Pixel nach Bayer-4×4-Schwelle auf FRAGCOORD, reveal steigt in 16 Bildschritten",
+  "Zeitplan in ganzen Bildern (30/s): Wasser alle 6 Bilder, Mund alle 5 Bilder nach festem Muster TALK solange Zeichen erscheinen (in Satzpausen zu), Fensterlicht alle 3 Bilder aus einer Folge mit Seed 11, Leuchtfeuer 90 Bilder Periode mit 4 Stufen hoch, 9 Bilder voll, 4 Stufen runter; Lidschlag ab Bild 66 und 156 (halb 2, zu 3, halb 2)",
+  "Oberfläche: Hintergrund als einmal erzeugte Textur (Schachbrett aus zwei dunklen Registern, Loch für das Bildfenster); Text aus dem Bitmap-Atlas mit draw_texture_rect_region in Registerfarbe; Cursor als 7-px-Dreieck aus Rechtecken",
+  "Renderer geprüft: Aufnahmen mit --rendering-method mobile und gl_compatibility sind bitgleich zu Forward+ (0 abweichende Pixel in 180 Bildern)"
+ ],
+ "techniques": ["textoberflaeche", "befehlsmenue", "dithering", "palette-einrasten", "palettenwechsel", "mimik-aus-teilen"],
+ "ratings": {
+  "ai_fit": 3,
+  "consistency": 4,
+  "effort": 3,
+  "text_adventure": 5,
+  "mobile": 5
+ },
+ "ratings_note": "Der Hintergrund traf im ersten Versuch eine 16-Farben-Pixelszene mit gerasterten Himmelsbändern und dunklen Konturen; die Figur dagegen kam als gemalte Dreiansicht statt als Pixel-Brustbild, und die Nachbesserung scheiterte am Kontingent. Der eigentliche Look (12-Bit-Palette, 5-Stufen-Raster, materialtreue Figur, Blinzeln und Mund) entsteht in den Skripten, deshalb ai_fit 3. Weil alles durch dieselbe 16er-Palette und dasselbe Rasterverfahren geht, passen Figur und Szene ohne Handarbeit zusammen (consistency 4); je Ort fallen aber Kästen für Lichter, Wasserpolygone und für jede Figur Materialfarben und Gesichtsteile an (effort 3). Mobile geprüft: mobile- und gl_compatibility-Aufnahme bitgleich zum Forward+-Bild, die Szene ist ein SubViewport mit wenigen Sprites und ein einfacher Palettenshader.",
+ "verdict": "Sehr gut geeignet für das erste Spiel: Ein Textadventure braucht vor allem Standbilder, Porträts und Text, und genau das ist dieser Stil. Das Befehlsmenü mit Objektliste ist eine dritte Bedienform zwischen Parser und Auswahlliste (Nehmen → Paket entspricht „> nimm paket“, die Auswahlpunkte werden zu Befehl + Ziel) und läuft gut mit Maus und Touch. Je Ort reicht ein KI-Bild plus Skriptlauf, Bewegung kommt billig über Palettenregister und wenige Einzelbilder. Der Engpass sind Figuren: Das Bildmodell liefert sie nicht im Stil, man braucht ein Porträt pro Figur und Gefühl, aus dem die Skripte die Pixelfassung bauen, und Gesichtsteile setzt man von Hand.",
+ "pitfalls": [
+  "Figur: agy (über --backend auto, weil Codex gesperrt war) wiederholte das Layout des Referenzblatts: drei gemalte Ganzfiguren in Vorder-, Seiten- und Rückansicht statt zwei Brustbildern im 16-Farben-Stil, die zweite Figur mit geschlossenen Augen im Profil. Die Nachbesserung mit eigenem Layout-Bild endete mit „usage limit (agy, gesperrt bis 17:30)“ und wurde laut Auftrag nicht wiederholt. Das Porträt ist deshalb ein Ausschnitt der gemalten Vorderansicht, den badger_material.py in den Stil bringt; der Fellrand und das Paket wirken dadurch weicher und unschärfer als von Hand gepixelte Porträts der Vorbilder, das Paket liest sich als graubeige Fläche.",
+  "Blinzeln und Mund sind von Hand gesetzt, nicht vom Bildmodell: Das Auge liegt im dunklen Fellstreifen, die schwarze Lidlinie hebt sich nur schwach vom Fell ab; der offene Mund ist nur 10×4 Pixel groß (20×8 in der Aufnahme), weil zwischen Nase und Schal nur 4 Zeilen frei sind.",
+  "sprites.py palette (Median-Cut) lieferte nur gedeckte Blau- und Violetttöne; Schal, Mütze, Horizontorange und Fensterlicht fehlten. Gelöst mit festen Akzentfarben und k-means. Ein erster Versuch mit einem hellen Lavendelgrau als sechster fester Farbe kostete das Braun für Holz: Fässer, Kisten und Boote wurden zu Rot-Grün-Rastern.",
+  "Abweichung vom Auftrag: statt sprites.py pixelize --dither bayer eigenes Musterdithering. pixelize addiert die Bayer-Schwelle auf jede Farbe und rastert auch flache Flächen: 75 % der Pixel unterscheiden sich vom rechten Nachbarn (Kaipflaster 49 %), mit Musterdithering 25 % (Kaipflaster 0 %). Vergleich: assets/compare_pixelize_vs_pattern.png.",
+  "Einfaches Musterdithering der Figur setzte grüne, blaue und rote Einzelpixel ins Gesicht (Mischfarben der Kanten trafen ferne Paare). Erst die Materialzuordnung mit erlaubten Registern je Material ergab saubere Flächen.",
+  "Godot 4.7 rasterte DotGothic16 bei 16 px mit FONT_ANTIALIASING_NONE und HINTING_NONE mit 2 px breiten senkrechten Strichen und ohne i-Punkt („Dle Laterne“, „Kurler“). Ersetzt durch einen mit Pillow gerasterten Bitmap-Atlas; andere Hinting-Einstellungen wurden nicht mehr probiert.",
+  "Mit dem Dachs in der Bildmitte war fast das ganze Wasser verdeckt und die Wasseranimation kaum zu sehen. Jetzt steht er rechts der Mitte; dafür verdeckt er Steg und Boote fast ganz (sichtbar bleiben ein Heck, ein Mast und Pfähle).",
+  "Die Wasseranimation ist zurückhaltend: 98 Glanzstriche, 379 geänderte Pixel zwischen den 3 Einzelbildern; in der ruhigen Phase der Aufnahme ändern sich zwischen Stichproben im Abstand von 0,5 s nur 0–0,4 % des Bildes (Wasser, Mund, Lichter zusammen). Das entspricht den sparsamen Vorbildern, fällt aber erst im Video auf.",
+  "Der Strahl des Leuchtfeuers darf nur auf Himmelspixeln mit der Aus-Farbe des Registers liegen (sonst bliebe er ausgeschaltet sichtbar); ein erster, breiterer Kegel wurde an der Grenze dieses Himmelsbands (Zeile 38 des Bildfensters) waagrecht abgeschnitten und wirkte wie ein Band. Jetzt ist er schmal (höchstens ±5 Zeilen); sein äußeres Drittel (12,5-%-Raster) liest sich trotzdem eher als Punktwolke denn als Lichtkegel.",
+  "Die Oberfläche (rechte Spalte und Textfenster) nimmt mit Rahmen etwa 40 % des Bildschirms ein und überschreitet damit die etwa 30 % aus dem Motiv-Auftrag; sie verdeckt die Szene aber nicht, und die Aufteilung folgt dem Auftrag und den Vorbildern. Das Bildfenster ist dadurch nur 416×256 groß.",
+  "Pixelseitenverhältnis: Auf dem 4:3-Monitor waren die 640×400-Pixel 1,2-mal so hoch wie breit. Die Demo zeigt quadratische Pixel; die Szene wirkt dadurch etwas flacher als im Original. Gezeigt wird ein Ausschnitt 640×360 des 640×400-Schirms, die untersten 40 Zeilen fehlen.",
+  "Hardware vereinfacht: Die Text-Ebene der Vorbilder (eigener Textspeicher mit 8 festen Farben über der Grafik) ist nicht nachgebildet, der Text steht im 16-Farben-Bild; die Palette wird einmal je Bild gesetzt, nicht zeilenweise.",
+  "Deutscher Text hat keine vollbreiten Zeichen: Die halbbreiten 8-px-Buchstaben füllen das für 16-px-Kanji gedachte Textfenster nur zur Hälfte."
+ ],
+ "lessons": [
+  "Indexbild-Bildspeicher in Godot: alles als Index in einen SubViewport zeichnen (Rotkanal = Index/15, auch Text und Rahmen), ein Shader schlägt 16 Register nach. Damit sind 16 Farben über den ganzen Schirm garantiert, Palettenanimation kostet nichts, und die Ausgabe ist in Forward+, Mobile und Compatibility bitgleich.",
+  "Musterdithering (Farbpaar je Pixel, Mischung in 5 Stufen, Bayer-4×4) ergibt das Rasterbild der 16-Farben-Rechner: flache Flächen bleiben flach, Verläufe werden zu Schachbrett und Punktgitter. pc98lib.pattern_dither ist für jeden weiteren Ort wiederverwendbar.",
+  "Ein Hintergrund-Prompt, der Hardware und Technik beschreibt (16 aus 4096 Farben, 640×400, 1-px-Konturen, Zellschattierung, Verläufe nur als geordnete Raster), brachte von agy im ersten Versuch eine passende Szene; das ungleichmäßige Pseudo-Raster des Modells stört nicht, wenn man BOX-verkleinert und neu rastert.",
+  "Palette: Akzentfarben fest vorgeben, den Rest per k-means aus Median-Cut-Startwerten bestimmen, alles auf 4 Bit runden. Ein Paletteneintrag für Holz/Braun ist unverzichtbar, sonst rastert das Verfahren Rot gegen Grün.",
+  "Materialtreue Verkleinerung mit erlaubten Registern je Material macht aus einem gemalten KI-Bild ein sauberes Pixel-Porträt; Fell- und Hautschatten werden zu Rastern innerhalb eines Materials, Konturen bleiben geschlossen (Kontur gewinnt ab einem Drittel der Zelle).",
+  "Licht über Palettenregister: Strahl- und Scheinpixel nur dort setzen, wo der Himmel schon die Aus-Farbe des Registers hat; dann ist das ausgeschaltete Bild exakt das Original, und ein Register reicht für Lampe, Schein und Strahl.",
+  "Gesichtsteile als kleine Überlagerungen im Indexraster und eine Messung, die den Körper außerhalb der Teilkästen vergleicht (0 Pixel Änderung), verhindern Flimmern; Haltezeiten in ganzen Bildgruppen (5 und 6 Bilder) messen.",
+  "Pixelschrift als Atlas vorrastern (Pillow, fontmode 1) statt Godots Schriftrasterung zu trauen; DotGothic16 liefert den 8×16-Look mit Umlauten und japanischen Klammern 【】「」.",
+  "Das Befehlsmenü bildet Parser-Befehle (Verb + Objekt) ohne Tippen ab und zeigt dem Spieler, was am Ort möglich ist; ui_text-Auswahlpunkte lassen sich als Befehl + Ziel darstellen (Gehen → Leuchtturm, Ansehen → Paket, Sprechen → Dachs)."
+ ],
+ "assets": [
+  {"file": "assets/bg.png", "kind": "background", "made_with": "agy (Gemini) + scripts/build_assets.py (416×256, 16 Register, Musterdithering), Indexbild", "prompt": "assets/raw/bg.json"},
+  {"file": "assets/bg_preview.png", "kind": "background", "made_with": "Indexbild in Echtfarben (Leuchtfeuer aus)"},
+  {"file": "assets/water.png", "kind": "animation", "made_with": "scripts/build_assets.py: 3 Einzelbilder der Glanzstriche, Indexbild"},
+  {"file": "assets/badger_body.png", "kind": "character", "made_with": "agy-Dreiansichtenblatt (Vorderansicht) + scripts/badger_material.py, Indexbild", "prompt": "assets/raw/badger.json"},
+  {"file": "assets/badger_eyes.png", "kind": "character", "made_with": "scripts/build_assets.py: Augen halb und zu, von Hand im Indexraster gesetzt"},
+  {"file": "assets/badger_mouth.png", "kind": "character", "made_with": "scripts/build_assets.py: Mund halb und offen, von Hand im Indexraster gesetzt"},
+  {"file": "assets/badger_faces_preview.png", "kind": "character", "made_with": "Körper, Augen halb/zu, Mund halb/offen in Echtfarben"},
+  {"file": "assets/palette.png", "kind": "palette", "made_with": "16 Register (12 Bit); 14 und 15 sind animiert"},
+  {"file": "assets/palette_mediancut.png", "kind": "palette", "made_with": "sprites.py palette --colors 14 (Startwerte)"},
+  {"file": "assets/compare_pixelize_vs_pattern.png", "kind": "comparison", "made_with": "oben sprites.py pixelize --dither bayer, unten pc98lib.pattern_dither, gleiche 14 Farben"},
+  {"file": "assets/layout_ref.png", "kind": "reference", "made_with": "Layout-Bild für die abgebrochene Nachbesserung (Vorderansicht zweimal)"},
+  {"file": "demo/fonts/dotgothic16_atlas.png", "kind": "font", "made_with": "scripts/build_font.py aus DotGothic16"},
+  {"file": "demo/fonts/OFL-DotGothic16.txt", "kind": "license", "made_with": "Lizenztext SIL Open Font License 1.1 von DotGothic16 (gilt für den Atlas dotgothic16_atlas.png)"}
+ ],
+ "licenses": [
+  {"item": "Schrift DotGothic16 (The DotGothic16 Project Authors) und daraus gerasterter Atlas demo/fonts/dotgothic16_atlas.png", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/dotgothic16 (Lizenztext: demo/fonts/OFL-DotGothic16.txt)"}
+ ],
+ "image_generations": 3,
+ "tool_issues": [
+  "tools/genimg.py --backend auto: Die Codex-Sperrdatei enthielt am 11.10. um 17:00 noch eine Sperre bis 17:45 (gesetzt 11:45, sechs Stunden nach „out of credits“), obwohl der Auftrag sagte, Codex liefere derzeit. Alle drei Aufträge gingen deshalb ohne Codex-Versuch an agy; ob Codex tatsächlich wieder lieferte, ist ungeprüft.",
+  "agy lieferte 1264×848 statt 1536×1024 (genimg.py meldet das korrekt als WARNUNG und in actual_size); die Skripte rechnen mit der gelieferten Größe."
+ ],
+ "status": "done"
+}

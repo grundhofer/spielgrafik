@@ -1,0 +1,53 @@
+{
+ "source": "assets/raw/badger_side.png",
+ "scale": 0.16895,
+ "height_px": 139.7,
+ "body_pivot": [
+  52.0,
+  105.75
+ ],
+ "leg_pivot": [
+  26.0,
+  4.75
+ ],
+ "tail_pivot": [
+  23.12,
+  9.46
+ ],
+ "tail_from_hip": [
+  -32.88,
+  -54.29
+ ],
+ "heel": [
+  -14.39,
+  37.93
+ ],
+ "toe": [
+  14.39,
+  36.89
+ ],
+ "sole_y": 37.93,
+ "half_foot": 14.39,
+ "head_top": [
+  6.8,
+  -101.77
+ ],
+ "eye": [
+  17.0,
+  -76.91
+ ],
+ "body_size": [
+  88,
+  124
+ ],
+ "leg_size": [
+  45,
+  48
+ ],
+ "tail_size": [
+  33,
+  39
+ ],
+ "cut_top_px": 116.48,
+ "despilled_px": 2229
+}

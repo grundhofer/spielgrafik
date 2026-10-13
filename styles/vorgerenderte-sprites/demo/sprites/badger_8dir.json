@@ -1,0 +1,41 @@
+{
+ "origin": [
+  32,
+  60
+ ],
+ "dirs": [
+  "O",
+  "SO",
+  "S",
+  "SW",
+  "W",
+  "NW",
+  "N",
+  "NO"
+ ],
+ "palette_from": "badger",
+ "cell": [
+  64,
+  64
+ ],
+ "columns": 8,
+ "palette": [
+  "422110",
+  "5a3921",
+  "6b4a39",
+  "5a5a29",
+  "9c2921",
+  "7b634a",
+  "c63939",
+  "6b7b42",
+  "ad6339",
+  "9c846b",
+  "ce7b52",
+  "9ca58c",
+  "d69c73",
+  "e7bda5",
+  "ffdec6"
+ ],
+ "colors_used": 15,
+ "all_555": true
+}

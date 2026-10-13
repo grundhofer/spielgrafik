@@ -1,0 +1,20 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui_fullscreen.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/harbor.tscn" id="2_harbor"]
+
+[node name="UIFullscreen" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 640.0
+offset_bottom = 360.0
+script = ExtResource("1_script")
+
+[node name="Picture" type="Control" parent="."]
+clip_contents = true
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="Harbor" parent="Picture" instance=ExtResource("2_harbor")]
+show_parcel = true

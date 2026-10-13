@@ -1,0 +1,7 @@
+{
+ "_comment": "Korrekturen über der automatischen Szene (process.py). ui: kompaktes Textfeld tief auf dem Kai, damit Boot 2 und die Spiegelungen frei bleiben (Ausschnitt bleibt automatisch bei 0.5; tiefer würde die wenigen gemalten Sterne oben abschneiden); unten 12 px Rand. tint: Dachs (heller gemalt als die Szene) dunkler und kühler, passend zur Dämmerung. chimney: die KI-Maske liefert die Mitte zwischen beiden Aufsätzen; Rauch steigt aus dem höheren rechten Aufsatz, Basis auf dessen Oberkante. floor_pools: gemalter Lichtschein der Laterne auf Kai und Steg (flackert mit).",
+ "ui": {"x": 645, "y": 532, "w": 615, "h": 176},
+ "chimney": [107.5, 118.5],
+ "floor_pools": [{"channel": "lantern", "center": [345, 600], "rx": 300, "ry": 125, "k": 0.65}],
+ "badger": {"tint": [0.84, 0.82, 0.9]}
+}

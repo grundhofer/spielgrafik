@@ -1,0 +1,74 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Script" path="res://scripts/ui.gd" id="2_ui"]
+[ext_resource type="Texture2D" path="res://art/bg_tone.png" id="3_tone"]
+[ext_resource type="Texture2D" path="res://art/patterns.png" id="4_pat"]
+[ext_resource type="Texture2D" path="res://art/boat_a.png" id="5_boata"]
+[ext_resource type="Texture2D" path="res://art/boat_b.png" id="6_boatb"]
+[ext_resource type="Texture2D" path="res://art/badger_walk.png" id="7_walk"]
+[ext_resource type="Shader" path="res://shaders/scene.gdshader" id="8_scene"]
+[ext_resource type="Shader" path="res://shaders/palette.gdshader" id="9_pal"]
+[ext_resource type="Texture2D" path="res://art/gull.png" id="10_gull"]
+
+[sub_resource type="ShaderMaterial" id="mat_scene"]
+shader = ExtResource("8_scene")
+shader_parameter/pattern_tex = ExtResource("4_pat")
+
+[sub_resource type="ShaderMaterial" id="mat_pal"]
+shader = ExtResource("9_pal")
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="Scene" type="Sprite2D" parent="."]
+material = SubResource("mat_scene")
+texture = ExtResource("3_tone")
+centered = false
+
+[node name="BoatA" type="Sprite2D" parent="."]
+texture = ExtResource("5_boata")
+centered = false
+
+[node name="BoatB" type="Sprite2D" parent="."]
+texture = ExtResource("6_boatb")
+centered = false
+
+[node name="Gull1" type="Sprite2D" parent="."]
+texture = ExtResource("10_gull")
+centered = false
+offset = Vector2(-5, -4)
+hframes = 3
+
+[node name="Gull2" type="Sprite2D" parent="."]
+texture = ExtResource("10_gull")
+centered = false
+offset = Vector2(-5, -4)
+hframes = 3
+flip_h = true
+
+[node name="Badger" type="Sprite2D" parent="."]
+texture = ExtResource("7_walk")
+centered = false
+offset = Vector2(-28, -64)
+hframes = 8
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 1
+
+[node name="Text" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 400.0
+offset_bottom = 240.0
+mouse_filter = 2
+script = ExtResource("2_ui")
+
+[node name="Palette" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="Rect" type="ColorRect" parent="Palette"]
+material = SubResource("mat_pal")
+offset_right = 400.0
+offset_bottom = 240.0
+mouse_filter = 2

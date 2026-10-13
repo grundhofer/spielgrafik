@@ -1,0 +1,417 @@
+{
+ "job": "props",
+ "ids": {
+  "Stone": [
+   0,
+   0,
+   128
+  ],
+  "StoneDark": [
+   0,
+   0,
+   255
+  ],
+  "Roof": [
+   0,
+   128,
+   0
+  ],
+  "WoodDark": [
+   0,
+   128,
+   128
+  ],
+  "Wood": [
+   0,
+   128,
+   255
+  ],
+  "WhitePaint": [
+   0,
+   255,
+   0
+  ],
+  "RedPaint": [
+   0,
+   255,
+   128
+  ],
+  "Glass": [
+   0,
+   255,
+   255
+  ],
+  "Metal": [
+   128,
+   0,
+   0
+  ],
+  "Rope": [
+   128,
+   0,
+   128
+  ]
+ },
+ "frames": [
+  {
+   "name": "cottage",
+   "scale_px": 14.0,
+   "k": 8,
+   "size": [
+    80,
+    96
+   ],
+   "anchor_px": [
+    40,
+    78
+   ],
+   "anchor_world": [
+    0,
+    0,
+    0
+   ],
+   "materials": {
+    "Stone": [
+     0,
+     0,
+     128
+    ],
+    "StoneDark": [
+     0,
+     0,
+     255
+    ],
+    "Roof": [
+     0,
+     128,
+     0
+    ],
+    "WoodDark": [
+     0,
+     128,
+     128
+    ],
+    "Wood": [
+     0,
+     128,
+     255
+    ],
+    "WhitePaint": [
+     0,
+     255,
+     0
+    ],
+    "RedPaint": [
+     0,
+     255,
+     128
+    ],
+    "Glass": [
+     0,
+     255,
+     255
+    ]
+   },
+   "objects": [
+    "Cottage",
+    "CottageWindow"
+   ],
+   "rot_z": 0.0
+  },
+  {
+   "name": "lighthouse",
+   "scale_px": 8.5,
+   "k": 8,
+   "size": [
+    48,
+    112
+   ],
+   "anchor_px": [
+    24,
+    100
+   ],
+   "anchor_world": [
+    0,
+    0,
+    0
+   ],
+   "materials": {
+    "StoneDark": [
+     0,
+     0,
+     255
+    ],
+    "WhitePaint": [
+     0,
+     255,
+     0
+    ],
+    "RedPaint": [
+     0,
+     255,
+     128
+    ],
+    "Metal": [
+     128,
+     0,
+     0
+    ],
+    "WoodDark": [
+     0,
+     128,
+     128
+    ],
+    "Glass": [
+     0,
+     255,
+     255
+    ]
+   },
+   "objects": [
+    "Lighthouse",
+    "LighthouseLamp"
+   ],
+   "rot_z": 0.0
+  },
+  {
+   "name": "boat_a",
+   "scale_px": 12.0,
+   "k": 8,
+   "size": [
+    64,
+    56
+   ],
+   "anchor_px": [
+    32,
+    36
+   ],
+   "anchor_world": [
+    0,
+    0,
+    0
+   ],
+   "materials": {
+    "RedPaint": [
+     0,
+     255,
+     128
+    ],
+    "WhitePaint": [
+     0,
+     255,
+     0
+    ],
+    "Wood": [
+     0,
+     128,
+     255
+    ],
+    "WoodDark": [
+     0,
+     128,
+     128
+    ],
+    "Metal": [
+     128,
+     0,
+     0
+    ]
+   },
+   "objects": [
+    "BoatA"
+   ],
+   "rot_z": 90.0
+  },
+  {
+   "name": "boat_b",
+   "scale_px": 12.0,
+   "k": 8,
+   "size": [
+    64,
+    64
+   ],
+   "anchor_px": [
+    32,
+    44
+   ],
+   "anchor_world": [
+    0,
+    0,
+    0
+   ],
+   "materials": {
+    "WhitePaint": [
+     0,
+     255,
+     0
+    ],
+    "RedPaint": [
+     0,
+     255,
+     128
+    ],
+    "Wood": [
+     0,
+     128,
+     255
+    ],
+    "WoodDark": [
+     0,
+     128,
+     128
+    ],
+    "Rope": [
+     128,
+     0,
+     128
+    ]
+   },
+   "objects": [
+    "BoatB"
+   ],
+   "rot_z": 90.0
+  },
+  {
+   "name": "barrel",
+   "scale_px": 22.0,
+   "k": 8,
+   "size": [
+    24,
+    32
+   ],
+   "anchor_px": [
+    12,
+    26
+   ],
+   "anchor_world": [
+    0,
+    0,
+    0
+   ],
+   "materials": {
+    "Wood": [
+     0,
+     128,
+     255
+    ],
+    "Metal": [
+     128,
+     0,
+     0
+    ]
+   },
+   "objects": [
+    "Barrel1"
+   ],
+   "rot_z": 0.0
+  },
+  {
+   "name": "crates",
+   "scale_px": 18.0,
+   "k": 8,
+   "size": [
+    48,
+    40
+   ],
+   "anchor_px": [
+    24,
+    30
+   ],
+   "anchor_world": [
+    0,
+    0,
+    0
+   ],
+   "materials": {
+    "Wood": [
+     0,
+     128,
+     255
+    ],
+    "WoodDark": [
+     0,
+     128,
+     128
+    ]
+   },
+   "objects": [
+    "CrateStack"
+   ],
+   "rot_z": 0.0
+  },
+  {
+   "name": "rope",
+   "scale_px": 20.0,
+   "k": 8,
+   "size": [
+    24,
+    16
+   ],
+   "anchor_px": [
+    12,
+    10
+   ],
+   "anchor_world": [
+    0,
+    0,
+    0
+   ],
+   "materials": {
+    "Rope": [
+     128,
+     0,
+     128
+    ]
+   },
+   "objects": [
+    "RopeCoil"
+   ],
+   "rot_z": 0.0
+  },
+  {
+   "name": "lantern",
+   "scale_px": 18.0,
+   "k": 8,
+   "size": [
+    32,
+    56
+   ],
+   "anchor_px": [
+    18,
+    50
+   ],
+   "anchor_world": [
+    0,
+    0,
+    0
+   ],
+   "materials": {
+    "StoneDark": [
+     0,
+     0,
+     255
+    ],
+    "WoodDark": [
+     0,
+     128,
+     128
+    ],
+    "Metal": [
+     128,
+     0,
+     0
+    ],
+    "Glass": [
+     0,
+     255,
+     255
+    ]
+   },
+   "objects": [
+    "LanternPost",
+    "LanternGlass"
+   ],
+   "rot_z": 0.0
+  }
+ ]
+}

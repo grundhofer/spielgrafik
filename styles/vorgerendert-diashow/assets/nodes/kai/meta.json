@@ -1,0 +1,71 @@
+{
+ "name": "Kai",
+ "base": "base.png",
+ "clips": [
+  {
+   "file": "clip_0.png",
+   "rect": [
+    213,
+    0,
+    57,
+    85
+   ],
+   "frames": 30,
+   "cols": 30,
+   "loop_from": 0,
+   "kind": "ambient"
+  },
+  {
+   "file": "clip_1.png",
+   "rect": [
+    325,
+    79,
+    18,
+    24
+   ],
+   "frames": 30,
+   "cols": 30,
+   "loop_from": 0,
+   "kind": "ambient"
+  },
+  {
+   "file": "clip_2.png",
+   "rect": [
+    269,
+    106,
+    15,
+    18
+   ],
+   "frames": 30,
+   "cols": 30,
+   "loop_from": 0,
+   "kind": "ambient"
+  },
+  {
+   "file": "clip_3.png",
+   "rect": [
+    243,
+    107,
+    13,
+    16
+   ],
+   "frames": 30,
+   "cols": 30,
+   "loop_from": 0,
+   "kind": "ambient"
+  },
+  {
+   "file": "clip_4.png",
+   "rect": [
+    410,
+    229,
+    134,
+    103
+   ],
+   "frames": 30,
+   "cols": 15,
+   "loop_from": 0,
+   "kind": "ambient"
+  }
+ ]
+}

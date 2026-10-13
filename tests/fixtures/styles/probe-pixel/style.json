@@ -1,0 +1,37 @@
+{
+ "slug": "probe-pixel",
+ "name": "Probe-Pixel",
+ "family": "pixel",
+ "kind": "style",
+ "era": "1990–1995",
+ "summary": "Testeintrag: grobe Pixel, 16 Farben, feste Kamera.",
+ "references": ["Ein Vorbild als Text"],
+ "traits": ["Merkmal eins", "Merkmal zwei <mit Klammern> & Zeichen"],
+ "camera": "Seitenansicht, feste Kamera",
+ "resolution": "320×180, 16 Farben",
+ "pipeline": [
+  {"step": "Hintergrund erzeugen", "tool": "genimg (gpt-image)", "detail": "Ein Bild, quer."},
+  {"step": "Einrasten", "tool": "gpt-image + pixelize", "detail": "Auf 320×180."}
+ ],
+ "godot": ["Viewport 320×180, Nearest"],
+ "techniques": ["probe-technik", "probe-technik-geplant", "parallax"],
+ "ratings": {"ai_fit": 4, "consistency": 3, "effort": 2, "text_adventure": 5, "mobile": 5},
+ "ratings_note": "Begründung der Bewertungen. ai_fit 4: siehe pitfalls; mobile 5 geschätzt, Renderer mobile und gl_compatibility geprüft (siehe tool_issues).",
+ "verdict": "Gut geeignet für viele Orte.",
+ "pitfalls": ["Ein Fallstrick", "Nach dem Austausch importiert `godot --import` nicht neu (siehe lessons); godot --headless --import hilft."],
+ "lessons": ["Eine Erkenntnis"],
+ "assets": [
+  {"file": "assets/measure.json", "kind": "measurement", "made_with": "scripts/measure.py: Messwerte je Bild"},
+  {"file": "assets/bg.png", "kind": "background", "made_with": "gpt-image + pixelize", "prompt": "assets/raw/bg.json"},
+  {"file": "assets/sprite.png", "kind": "sprite", "made_with": "gpt-image + sprites.py key", "prompt": "assets/raw/sprite.json"},
+  {"file": "assets/palette.gpl", "kind": "palette", "made_with": "sprites.py palette"}
+ ],
+ "licenses": [
+  {"item": "Schrift Silkscreen", "license": "OFL-1.1", "source": "https://github.com/google/fonts (ofl/silkscreen); Lizenztext demo/fonts/OFL.txt"},
+  {"item": "Texturen Seil und Pappe", "license": "CC0", "source": "https://ambientcg.com/view?id=Rope001, https://ambientcg.com/view?id=Cardboard002"},
+  {"item": "Palette", "license": "eigene Arbeit", "source": "Emulator-Tabelle (https://example.org/palette)"}
+ ],
+ "image_generations": 4,
+ "tool_issues": ["Aufrufname agy0 und codex1 werden zum Werkzeugnamen; Datei bg_agy0.png bleibt."],
+ "status": "done"
+}

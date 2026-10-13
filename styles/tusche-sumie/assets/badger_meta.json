@@ -1,0 +1,215 @@
+{
+ "frames": {
+  "walk_0": {
+   "ax": 60.08,
+   "ay": 183.0,
+   "w": 120,
+   "h": 187,
+   "height_px": 180,
+   "sole_y": 183
+  },
+  "walk_1": {
+   "ax": 66.08,
+   "ay": 183.0,
+   "w": 125,
+   "h": 186,
+   "height_px": 179,
+   "sole_y": 182
+  },
+  "walk_2": {
+   "ax": 67.08,
+   "ay": 187.0,
+   "w": 127,
+   "h": 190,
+   "height_px": 182,
+   "sole_y": 186
+  },
+  "walk_3": {
+   "ax": 60.08,
+   "ay": 187.0,
+   "w": 122,
+   "h": 191,
+   "height_px": 183,
+   "sole_y": 187
+  },
+  "walk_4": {
+   "ax": 59.08,
+   "ay": 185.0,
+   "w": 118,
+   "h": 189,
+   "height_px": 181,
+   "sole_y": 185
+  },
+  "walk_5": {
+   "ax": 62.08,
+   "ay": 184.0,
+   "w": 122,
+   "h": 187,
+   "height_px": 180,
+   "sole_y": 183
+  },
+  "walk_6": {
+   "ax": 63.08,
+   "ay": 189.0,
+   "w": 123,
+   "h": 193,
+   "height_px": 185,
+   "sole_y": 189
+  },
+  "walk_7": {
+   "ax": 60.08,
+   "ay": 186.0,
+   "w": 121,
+   "h": 190,
+   "height_px": 183,
+   "sole_y": 187
+  },
+  "stand": {
+   "ax": 53.08,
+   "ay": 186.0,
+   "w": 110,
+   "h": 190,
+   "height_px": 183,
+   "sole_y": 186
+  },
+  "turn": {
+   "ax": 55.08,
+   "ay": 191.0,
+   "w": 115,
+   "h": 194,
+   "height_px": 187,
+   "sole_y": 191
+  },
+  "front": {
+   "ax": 71.86,
+   "ay": 189.0,
+   "w": 143,
+   "h": 193,
+   "height_px": 186,
+   "sole_y": 189
+  },
+  "wave_raise": {
+   "ax": 71.86,
+   "ay": 189.0,
+   "w": 185,
+   "h": 193,
+   "height_px": 186,
+   "sole_y": 189
+  },
+  "wave_out": {
+   "ax": 71.86,
+   "ay": 189.0,
+   "w": 150,
+   "h": 193,
+   "height_px": 186,
+   "sole_y": 189
+  },
+  "wave_in": {
+   "ax": 71.86,
+   "ay": 189.0,
+   "w": 140,
+   "h": 193,
+   "height_px": 186,
+   "sole_y": 189
+  },
+  "blink": {
+   "ax": 71.86,
+   "ay": 189.0,
+   "w": 143,
+   "h": 193,
+   "height_px": 186,
+   "sole_y": 189
+  },
+  "talk": {
+   "ax": 71.86,
+   "ay": 189.0,
+   "w": 143,
+   "h": 193,
+   "height_px": 186,
+   "sole_y": 189
+  }
+ },
+ "walk": [
+  "walk_0",
+  "walk_1",
+  "walk_2",
+  "walk_3",
+  "walk_4",
+  "walk_5",
+  "walk_6",
+  "walk_7"
+ ],
+ "advance": [
+  9.25,
+  9.25,
+  9.25,
+  9.25,
+  9.25,
+  9.25,
+  9.25,
+  9.25
+ ],
+ "plan": {
+  "x_start": -110,
+  "x_stop": 400,
+  "walk_hold": 2,
+  "stop_frames": [
+   "walk_2",
+   "walk_6"
+  ],
+  "after": [
+   [
+    "stand",
+    0.1
+   ],
+   [
+    "turn",
+    0.167
+   ],
+   [
+    "front",
+    0.2
+   ],
+   [
+    "wave_raise",
+    0.1
+   ],
+   [
+    "wave_out",
+    0.2
+   ],
+   [
+    "wave_in",
+    0.2
+   ],
+   [
+    "wave_out",
+    0.2
+   ],
+   [
+    "wave_in",
+    0.2
+   ],
+   [
+    "wave_raise",
+    0.1
+   ],
+   [
+    "front",
+    0.4
+   ],
+   [
+    "blink",
+    0.1
+   ],
+   [
+    "front",
+    1.0
+   ]
+  ]
+ },
+ "scale": 0.45,
+ "advance_layout": 8.456,
+ "advance_note": "Layout: 0,367 m/s / 8 Bilder je Zyklus * px_per_m * scale; verwendet: advance_px",
+ "walk_sole_offset": -1.2199999999999989
+}

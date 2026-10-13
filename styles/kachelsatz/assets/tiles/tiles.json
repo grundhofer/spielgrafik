@@ -1,0 +1,1128 @@
+{
+ "tile_size": 16,
+ "layers": {
+  "sand": {
+   "texture": "sand.png",
+   "frame_duration": 0.2,
+   "tiles": [
+    {
+     "atlas": [
+      0,
+      0
+     ],
+     "corners": [
+      1,
+      0,
+      0,
+      0
+     ],
+     "variant": 0,
+     "frames": 6,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      1
+     ],
+     "corners": [
+      0,
+      1,
+      0,
+      0
+     ],
+     "variant": 0,
+     "frames": 6,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      2
+     ],
+     "corners": [
+      1,
+      1,
+      0,
+      0
+     ],
+     "variant": 0,
+     "frames": 6,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      3
+     ],
+     "corners": [
+      0,
+      0,
+      1,
+      0
+     ],
+     "variant": 0,
+     "frames": 6,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      4
+     ],
+     "corners": [
+      1,
+      0,
+      1,
+      0
+     ],
+     "variant": 0,
+     "frames": 6,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      5
+     ],
+     "corners": [
+      0,
+      1,
+      1,
+      0
+     ],
+     "variant": 0,
+     "frames": 6,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      6
+     ],
+     "corners": [
+      1,
+      1,
+      1,
+      0
+     ],
+     "variant": 0,
+     "frames": 6,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      7
+     ],
+     "corners": [
+      0,
+      0,
+      0,
+      1
+     ],
+     "variant": 0,
+     "frames": 6,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      8
+     ],
+     "corners": [
+      1,
+      0,
+      0,
+      1
+     ],
+     "variant": 0,
+     "frames": 6,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      9
+     ],
+     "corners": [
+      0,
+      1,
+      0,
+      1
+     ],
+     "variant": 0,
+     "frames": 6,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      10
+     ],
+     "corners": [
+      1,
+      1,
+      0,
+      1
+     ],
+     "variant": 0,
+     "frames": 6,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      11
+     ],
+     "corners": [
+      0,
+      0,
+      1,
+      1
+     ],
+     "variant": 0,
+     "frames": 6,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      12
+     ],
+     "corners": [
+      1,
+      0,
+      1,
+      1
+     ],
+     "variant": 0,
+     "frames": 6,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      13
+     ],
+     "corners": [
+      0,
+      1,
+      1,
+      1
+     ],
+     "variant": 0,
+     "frames": 6,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      14
+     ],
+     "corners": [
+      1,
+      1,
+      1,
+      1
+     ],
+     "variant": 0,
+     "frames": 6,
+     "probability": 0.4
+    },
+    {
+     "atlas": [
+      0,
+      15
+     ],
+     "corners": [
+      1,
+      1,
+      1,
+      1
+     ],
+     "variant": 1,
+     "frames": 6,
+     "probability": 0.3
+    },
+    {
+     "atlas": [
+      0,
+      16
+     ],
+     "corners": [
+      1,
+      1,
+      1,
+      1
+     ],
+     "variant": 2,
+     "frames": 6,
+     "probability": 0.3
+    }
+   ],
+   "covers": [
+    "S",
+    "G",
+    "C"
+   ]
+  },
+  "grass": {
+   "texture": "grass.png",
+   "tiles": [
+    {
+     "atlas": [
+      0,
+      0
+     ],
+     "corners": [
+      1,
+      0,
+      0,
+      0
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      1
+     ],
+     "corners": [
+      0,
+      1,
+      0,
+      0
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      2
+     ],
+     "corners": [
+      1,
+      1,
+      0,
+      0
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      3
+     ],
+     "corners": [
+      0,
+      0,
+      1,
+      0
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      4
+     ],
+     "corners": [
+      1,
+      0,
+      1,
+      0
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      5
+     ],
+     "corners": [
+      0,
+      1,
+      1,
+      0
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      6
+     ],
+     "corners": [
+      1,
+      1,
+      1,
+      0
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      7
+     ],
+     "corners": [
+      0,
+      0,
+      0,
+      1
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      8
+     ],
+     "corners": [
+      1,
+      0,
+      0,
+      1
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      9
+     ],
+     "corners": [
+      0,
+      1,
+      0,
+      1
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      10
+     ],
+     "corners": [
+      1,
+      1,
+      0,
+      1
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      11
+     ],
+     "corners": [
+      0,
+      0,
+      1,
+      1
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      12
+     ],
+     "corners": [
+      1,
+      0,
+      1,
+      1
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      13
+     ],
+     "corners": [
+      0,
+      1,
+      1,
+      1
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      14
+     ],
+     "corners": [
+      1,
+      1,
+      1,
+      1
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 0.4
+    },
+    {
+     "atlas": [
+      0,
+      15
+     ],
+     "corners": [
+      1,
+      1,
+      1,
+      1
+     ],
+     "variant": 1,
+     "frames": 1,
+     "probability": 0.15
+    },
+    {
+     "atlas": [
+      0,
+      16
+     ],
+     "corners": [
+      1,
+      1,
+      1,
+      1
+     ],
+     "variant": 2,
+     "frames": 1,
+     "probability": 0.15
+    },
+    {
+     "atlas": [
+      0,
+      17
+     ],
+     "corners": [
+      1,
+      1,
+      1,
+      1
+     ],
+     "variant": 3,
+     "frames": 1,
+     "probability": 0.15
+    },
+    {
+     "atlas": [
+      0,
+      18
+     ],
+     "corners": [
+      1,
+      1,
+      1,
+      1
+     ],
+     "variant": 4,
+     "frames": 1,
+     "probability": 0.15
+    }
+   ],
+   "covers": [
+    "G"
+   ]
+  },
+  "stone": {
+   "texture": "stone.png",
+   "tiles": [
+    {
+     "atlas": [
+      0,
+      0
+     ],
+     "corners": [
+      1,
+      0,
+      0,
+      0
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      1
+     ],
+     "corners": [
+      0,
+      1,
+      0,
+      0
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      2
+     ],
+     "corners": [
+      1,
+      1,
+      0,
+      0
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      3
+     ],
+     "corners": [
+      0,
+      0,
+      1,
+      0
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      4
+     ],
+     "corners": [
+      1,
+      0,
+      1,
+      0
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      5
+     ],
+     "corners": [
+      0,
+      1,
+      1,
+      0
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      6
+     ],
+     "corners": [
+      1,
+      1,
+      1,
+      0
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      7
+     ],
+     "corners": [
+      0,
+      0,
+      0,
+      1
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      8
+     ],
+     "corners": [
+      1,
+      0,
+      0,
+      1
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      9
+     ],
+     "corners": [
+      0,
+      1,
+      0,
+      1
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      10
+     ],
+     "corners": [
+      1,
+      1,
+      0,
+      1
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      11
+     ],
+     "corners": [
+      0,
+      0,
+      1,
+      1
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      12
+     ],
+     "corners": [
+      1,
+      0,
+      1,
+      1
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      13
+     ],
+     "corners": [
+      0,
+      1,
+      1,
+      1
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      14
+     ],
+     "corners": [
+      1,
+      1,
+      1,
+      1
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 0.4
+    },
+    {
+     "atlas": [
+      0,
+      15
+     ],
+     "corners": [
+      1,
+      1,
+      1,
+      1
+     ],
+     "variant": 1,
+     "frames": 1,
+     "probability": 0.6
+    }
+   ],
+   "covers": [
+    "C"
+   ]
+  },
+  "jetty": {
+   "texture": "jetty.png",
+   "tiles": [
+    {
+     "atlas": [
+      0,
+      0
+     ],
+     "corners": [
+      1,
+      0,
+      0,
+      0
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      1
+     ],
+     "corners": [
+      0,
+      1,
+      0,
+      0
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      2
+     ],
+     "corners": [
+      1,
+      1,
+      0,
+      0
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      3
+     ],
+     "corners": [
+      0,
+      0,
+      1,
+      0
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      4
+     ],
+     "corners": [
+      1,
+      0,
+      1,
+      0
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      5
+     ],
+     "corners": [
+      0,
+      1,
+      1,
+      0
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      6
+     ],
+     "corners": [
+      1,
+      1,
+      1,
+      0
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      7
+     ],
+     "corners": [
+      0,
+      0,
+      0,
+      1
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      8
+     ],
+     "corners": [
+      1,
+      0,
+      0,
+      1
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      9
+     ],
+     "corners": [
+      0,
+      1,
+      0,
+      1
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      10
+     ],
+     "corners": [
+      1,
+      1,
+      0,
+      1
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      11
+     ],
+     "corners": [
+      0,
+      0,
+      1,
+      1
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      12
+     ],
+     "corners": [
+      1,
+      0,
+      1,
+      1
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      13
+     ],
+     "corners": [
+      0,
+      1,
+      1,
+      1
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    },
+    {
+     "atlas": [
+      0,
+      14
+     ],
+     "corners": [
+      1,
+      1,
+      1,
+      1
+     ],
+     "variant": 0,
+     "frames": 1,
+     "probability": 1.0
+    }
+   ],
+   "covers": [
+    "J"
+   ]
+  },
+  "water": {
+   "texture": "water.png",
+   "frame_duration": 0.1,
+   "tiles": [
+    {
+     "atlas": [
+      0,
+      0
+     ],
+     "corners": [
+      1,
+      1,
+      1,
+      1
+     ],
+     "variant": 0,
+     "frames": 16,
+     "probability": 1.0
+    }
+   ],
+   "covers": [
+    "*"
+   ]
+  }
+ },
+ "fills": {
+  "grass": {
+   "seam_ratio": 0.52,
+   "base_col": 7,
+   "cut": [
+    1,
+    3,
+    3
+   ],
+   "variant_cols": [
+    3,
+    2,
+    6,
+    5
+   ]
+  },
+  "sand": {
+   "seam_ratio": 0.27,
+   "base_col": 5,
+   "cut": [
+    2,
+    2,
+    4
+   ],
+   "variant_cols": [
+    6,
+    3
+   ]
+  },
+  "water": {
+   "seam_ratio": 0.37,
+   "base_col": 0,
+   "cut": [
+    2,
+    2,
+    4
+   ],
+   "variant_cols": []
+  },
+  "cobble": {
+   "seam_ratio": 0.53,
+   "base_col": 4,
+   "cut": [
+    2,
+    4,
+    4
+   ],
+   "variant_cols": [
+    1
+   ]
+  }
+ },
+ "order": [
+  "water",
+  "sand",
+  "grass",
+  "stone",
+  "jetty"
+ ]
+}

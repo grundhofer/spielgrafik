@@ -1,0 +1,13 @@
+[
+ {
+  "out": "styles/oelmalerei/assets/raw/walk3.png",
+  "size": "1536x1024",
+  "prompt": "Repaint the first attached image, a walk-cycle sprite sheet with six frames of the same character, as an expressive oil painting for a 2D narrative role-playing game. Keep the layout of the first image exactly: the same six frames in one row, the same poses, leg positions, positions on the sheet and scale, feet on the same baseline. Repaint the figure with the painting technique and palette of the second attached image, an oil-painted portrait of the same character: thick impasto, clearly visible broad directional brushstrokes and palette-knife marks, a few large planes of colour, no line art, no cartoon outlines, no cel shading, no soft fur rendering. The third attached image only shows the costume details. Lighting: mid-light values, the figure front-lit from the upper left by a soft warm light, no backlight, no rim light, no glow around the figure; the cap and the vest clearly dark green, the shirt cream, the scarf red, the fur grey-black and white, the black stripe through the eye clearly readable. The near leg is painted a little lighter and warmer than the far leg. Avoid: smooth digital gradients, photorealism, a cute cartoon look, a plush toy or 3D-render look.\n\nThe badger courier: an original mascot character, a stout, short-legged badger with a broad black-and-white striped face, wearing a dark green peaked cap with a brass button, a dark green vest with pockets over a cream shirt with rolled-up sleeves, a long red knitted scarf, a brown leather satchel on a shoulder strap, and a brown paper parcel tied with string under one arm.\n\nSheet layout: one row of 6 animation frames of the badger courier walking to the right in strict side view, evenly spaced, same scale, feet on the same baseline, the whole figure fully visible in every frame with clear empty space between the frames. Isolated on a fully transparent background, no ground, no cast shadow, no frame borders.\n\nNo text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.\n\nImage format: landscape 3:2.",
+  "backend": "agy",
+  "refs": [
+   "styles/oelmalerei/assets/raw/walk_layout_ref.png",
+   "styles/oelmalerei/assets/raw/portrait.png",
+   "shared/badger/master_sheet.png"
+  ]
+ }
+]

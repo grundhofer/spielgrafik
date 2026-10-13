@@ -1,0 +1,241 @@
+{
+ "pairs": [
+  {
+   "from": "walk_0",
+   "to": "walk_1",
+   "advance_px": 10,
+   "rule": "Ferse setzt auf (linkes Ende des vorderen Fu\u00dfes)",
+   "iou": 0.164,
+   "spans_from": [
+    [
+     62,
+     84
+    ],
+    [
+     102,
+     111
+    ]
+   ],
+   "spans_to": [
+    [
+     92,
+     129
+    ]
+   ]
+  },
+  {
+   "from": "walk_1",
+   "to": "walk_2",
+   "advance_px": 17,
+   "rule": "flach (IoU)",
+   "iou": 0.95,
+   "spans_from": [
+    [
+     92,
+     129
+    ]
+   ],
+   "spans_to": [
+    [
+     73,
+     112
+    ]
+   ]
+  },
+  {
+   "from": "walk_2",
+   "to": "walk_3",
+   "advance_px": 15,
+   "rule": "flach (IoU)",
+   "iou": 1.0,
+   "spans_from": [
+    [
+     73,
+     112
+    ]
+   ],
+   "spans_to": [
+    [
+     58,
+     97
+    ]
+   ]
+  },
+  {
+   "from": "walk_3",
+   "to": "walk_4",
+   "advance_px": 15,
+   "rule": "Zehe dr\u00fcckt ab (rechtes Ende des hinteren Fu\u00dfes)",
+   "iou": 0.385,
+   "spans_from": [
+    [
+     58,
+     97
+    ]
+   ],
+   "spans_to": [
+    [
+     63,
+     82
+    ],
+    [
+     102,
+     113
+    ]
+   ]
+  },
+  {
+   "from": "walk_4",
+   "to": "walk_5",
+   "advance_px": 12,
+   "rule": "Ferse setzt auf (linkes Ende des vorderen Fu\u00dfes)",
+   "iou": 0.2,
+   "spans_from": [
+    [
+     63,
+     82
+    ],
+    [
+     102,
+     113
+    ]
+   ],
+   "spans_to": [
+    [
+     90,
+     129
+    ]
+   ]
+  },
+  {
+   "from": "walk_5",
+   "to": "walk_6",
+   "advance_px": 15,
+   "rule": "flach (IoU)",
+   "iou": 0.952,
+   "spans_from": [
+    [
+     90,
+     129
+    ]
+   ],
+   "spans_to": [
+    [
+     73,
+     114
+    ]
+   ]
+  },
+  {
+   "from": "walk_6",
+   "to": "walk_7",
+   "advance_px": 18,
+   "rule": "Ferse hebt ab (rechtes Ende, Zehe)",
+   "iou": 0.69,
+   "spans_from": [
+    [
+     73,
+     114
+    ]
+   ],
+   "spans_to": [
+    [
+     68,
+     96
+    ]
+   ]
+  },
+  {
+   "from": "walk_7",
+   "to": "walk_0",
+   "advance_px": 12,
+   "rule": "Zehe dr\u00fcckt ab (rechtes Ende des hinteren Fu\u00dfes)",
+   "iou": 0.59,
+   "spans_from": [
+    [
+     68,
+     96
+    ]
+   ],
+   "spans_to": [
+    [
+     62,
+     84
+    ],
+    [
+     102,
+     111
+    ]
+   ]
+  }
+ ],
+ "walk_6_to_stand": {
+  "advance_px": 3,
+  "iou": 0.913
+ },
+ "advance_pairs": [
+  10,
+  17,
+  15,
+  15,
+  12,
+  15,
+  18,
+  12
+ ],
+ "stance": [
+  {
+   "drawings": [
+    "walk_0",
+    "walk_1",
+    "walk_2",
+    "walk_3",
+    "walk_4"
+   ],
+   "pairs": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "heel_span_px": 1,
+   "toe_span_px": 1,
+   "before": {
+    "heel": 2,
+    "toe": 0
+   }
+  },
+  {
+   "drawings": [
+    "walk_4",
+    "walk_5",
+    "walk_6",
+    "walk_7",
+    "walk_0"
+   ],
+   "pairs": [
+    4,
+    5,
+    6,
+    7
+   ],
+   "heel_span_px": 1,
+   "toe_span_px": 1,
+   "before": {
+    "heel": 2,
+    "toe": 0
+   }
+  }
+ ],
+ "advance": [
+  10,
+  18,
+  15,
+  15,
+  12,
+  16,
+  18,
+  12
+ ],
+ "cycle_px": 116
+}

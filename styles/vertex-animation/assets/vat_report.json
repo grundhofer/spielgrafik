@@ -1,0 +1,109 @@
+{
+ "flag": {
+  "vertices": 651,
+  "triangles": 1200,
+  "frames": 120,
+  "fps": 30,
+  "loop_seconds": 4.0,
+  "simulated_frames": 250,
+  "warmup": 90,
+  "blend": 40,
+  "texture": {
+   "pos": [
+    651,
+    120,
+    "RGBA16F",
+    627313
+   ],
+   "nrm": [
+    651,
+    120,
+    "RGBA16F",
+    627313
+   ]
+  },
+  "offset_range_m": [
+   -0.4881633222103119,
+   0.2874796390533447
+  ],
+  "half_check_pos_m": {
+   "channel_types": [
+    "half"
+   ],
+   "max_err": 0.00012186169624328613,
+   "mean_err": 6.117160864960169e-06,
+   "alpha_ok": true
+  },
+  "half_check_nrm": {
+   "channel_types": [
+    "half"
+   ],
+   "max_err": 0.000244140625,
+   "mean_err": 6.52805611025542e-05,
+   "alpha_ok": true
+  },
+  "motion_per_frame_mm": {
+   "mean": 24.599037170410156,
+   "p95": 68.81665802001953,
+   "max": 197.3441162109375
+  },
+  "seam_mm": {
+   "max": 116.38896942138672,
+   "mean": 26.221508026123047,
+   "without_blend_max": 279.0654296875
+  },
+  "pinned_max_offset_mm": 5.9604644775390625e-05,
+  "free_edge_mean_x_m": 1.3965836763381958,
+  "free_edge_mean_drop_m": 0.14611691236495972,
+  "wind_strength": 10000.0,
+  "turbulence_strength": 200.0,
+  "ref_frames": [
+   0,
+   37,
+   119
+  ]
+ },
+ "gull": {
+  "vertices": 137,
+  "triangles": 206,
+  "frames": 24,
+  "texture": {
+   "pos": [
+    137,
+    24,
+    "RGBA16F",
+    27121
+   ],
+   "nrm": [
+    137,
+    24,
+    "RGBA16F",
+    27121
+   ]
+  },
+  "offset_range_m": [
+   -0.24202261865139008,
+   0.37830156087875366
+  ],
+  "wingtip_height_m": [
+   -0.229730486869812,
+   0.3904527723789215
+  ],
+  "half_check_pos_m": {
+   "channel_types": [
+    "half"
+   ],
+   "max_err": 0.00012198090553283691,
+   "mean_err": 3.730491471287678e-06,
+   "alpha_ok": true
+  },
+  "half_check_nrm": {
+   "channel_types": [
+    "half"
+   ],
+   "max_err": 0.0002440810203552246,
+   "mean_err": 6.925058551132679e-05,
+   "alpha_ok": true
+  }
+ }
+}

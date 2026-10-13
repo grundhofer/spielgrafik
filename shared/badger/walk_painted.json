@@ -1,0 +1,12 @@
+{
+ "prompt": "Sprite sheet for a 2D side-view game: the exact badger courier character from the reference image (same cap, green vest, red scarf, parcel, same proportions and painting style), walking to the right. One row of 6 animation frames of a walk cycle, evenly spaced, same scale, feet on the same baseline, each frame a distinct leg and arm position (contact, down, passing, up, contact, down). Fully transparent background, no ground, no shadows, no text, no frame borders.",
+ "size": "1536x1024",
+ "refs": [
+  "badger_sheet.png"
+ ],
+ "seconds": 52.2,
+ "generated_at": "2026-10-10T15:54:31+00:00",
+ "tool": "Codex CLI built-in image_gen",
+ "codex_version": "codex-cli 0.162.0",
+ "pngs_in_thread": 1
+}

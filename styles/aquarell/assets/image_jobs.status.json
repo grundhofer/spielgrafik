@@ -1,0 +1,17 @@
+[
+ {
+  "out": "styles/aquarell/assets/raw/bg.png",
+  "status": "ok",
+  "tries": 1
+ },
+ {
+  "out": "styles/aquarell/assets/raw/walk.png",
+  "status": "ok",
+  "tries": 1
+ },
+ {
+  "out": "styles/aquarell/assets/raw/front.png",
+  "status": "ok",
+  "tries": 1
+ }
+]

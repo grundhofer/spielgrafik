@@ -1,0 +1,182 @@
+{
+ "badger": {
+  "frames": 180,
+  "holds_unique": [
+   3,
+   15
+  ],
+  "holds": [
+   2,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   15,
+   15,
+   15,
+   15,
+   15,
+   10
+  ],
+  "foot_drift_per_change_px": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "max_drift_px": 0,
+  "stand_feet_variants": [
+   [
+    [
+     59,
+     61
+    ],
+    [
+     63,
+     65
+    ]
+   ]
+  ],
+  "stand_top_rows": [
+   73,
+   74
+  ],
+  "stand_pose_sequence": [
+   [
+    "stand_a",
+    10
+   ],
+   [
+    "stand_b",
+    5
+   ],
+   [
+    "breath_b",
+    5
+   ],
+   [
+    "breath_a",
+    10
+   ],
+   [
+    "stand_b",
+    4
+   ],
+   [
+    "blink",
+    4
+   ],
+   [
+    "stand_b",
+    2
+   ],
+   [
+    "stand_a",
+    5
+   ],
+   [
+    "breath_a",
+    5
+   ],
+   [
+    "breath_b",
+    10
+   ],
+   [
+    "stand_a",
+    10
+   ],
+   [
+    "stand_b",
+    1
+   ],
+   [
+    "blink",
+    4
+   ],
+   [
+    "breath_b",
+    5
+   ],
+   [
+    "breath_a",
+    4
+   ]
+  ],
+  "bottom_rows": [
+   88
+  ],
+  "top_rows": [
+   73,
+   74
+  ],
+  "errors": []
+ },
+ "scene": {
+  "frames": 180,
+  "foreign_colours": 0,
+  "max_colours_per_frame": 16,
+  "box_share": 0.289,
+  "errors": []
+ }
+}

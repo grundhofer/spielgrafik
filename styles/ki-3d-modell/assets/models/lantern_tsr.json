@@ -1,0 +1,45 @@
+{
+ "image": "styles/ki-3d-modell/assets/raw/lantern.png",
+ "device": "mps",
+ "mc_resolution": 256,
+ "threshold": 25.0,
+ "ratio": 0.85,
+ "torch": "2.7.1",
+ "revision": "5b521936b01fbe1890f6f9baed0254ab6351c04a",
+ "t_load": 1.66,
+ "crop": {
+  "src_bbox": [
+   239,
+   15,
+   1068,
+   1233
+  ],
+  "square": 1433,
+  "offset": [
+   302,
+   107
+  ],
+  "ratio": 0.85
+ },
+ "t_model": 1.1,
+ "t_render": 6.79,
+ "t_mesh": 2.59,
+ "vertices": 32436,
+ "faces": 64860,
+ "bounds": [
+  [
+   -0.1737,
+   -0.323,
+   -0.4398
+  ],
+  [
+   0.3441,
+   0.3373,
+   0.4464
+  ]
+ ],
+ "watertight": true,
+ "signed_volume": 0.031178807372162193,
+ "components": 6,
+ "t_total": 12.66
+}

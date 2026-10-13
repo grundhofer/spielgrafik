@@ -1,0 +1,26 @@
+{
+ "size": [
+  116,
+  175
+ ],
+ "scale": 0.21608,
+ "feet_y": 173.73,
+ "figure_height": 172.0,
+ "scarf_root_y": 64.61,
+ "scarf_tip_y": 104.37,
+ "scarf_x": [
+  62.23,
+  86.0
+ ],
+ "eyes": [
+  [
+   48.56,
+   32.9
+  ],
+  [
+   70.55,
+   33.17
+  ]
+ ],
+ "source": "shared/badger/master_sheet_alpha.png (Vorderansicht)"
+}

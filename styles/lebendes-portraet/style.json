@@ -1,0 +1,220 @@
+{
+ "slug": "lebendes-portraet",
+ "name": "Lebendes Porträt",
+ "family": "technik",
+ "kind": "technique",
+ "era": "seit etwa 2010 (Live2D, E-mote; heute in Visual Novels, Gacha-Spielen und bei VTubern)",
+ "summary": "Ein einziges KI-Porträt des Dachses wird in Ebenen zerlegt und mit Godot-Bordmitteln verformt wie ein Live2D-Modell: Skeleton2D mit Polygon2D-Gittern für Atmen, Wiegen, Kopfdrehen mit Gesichtsparallaxe, Nicken, Neigen, Ohren und ein nachschwingendes Schalende; Lider, Blick und Mund entstehen im Kopf-Shader aus einer zweiten KI-Fassung (Augen zu, Mund offen). Der Dachs spricht die Zeile mit Lippenbewegung aus dem getippten Text.",
+ "references": [
+  "Live2D Cubism (seit 2008): ein in Teile zerlegtes Bild, verformt über Parameter wie Kopfwinkel X/Y/Z, Augen auf/zu, Mund auf/zu, Atem",
+  "E-mote-Figuren in Visual Novels (z. B. Nekopara, 2014)",
+  "Live2D-Figuren in Gacha- und Adventure-Spielen (z. B. Azur Lane) und VTuber-Avatare (ab etwa 2017)",
+  "Dialogporträts klassischer Rollenspiele und Adventures, hier aber ohne Einzelbildwechsel"
+ ],
+ "traits": [
+  "Großes Dialogporträt (Halbfigur, Kopf rund 330 px breit) links vor dem Hafen, rechts unten Textfeld mit Namensschild, rechts darüber die Antworten",
+  "Eine durchgehende Figur ohne Bildwechsel: Körper, Kopf und Schal sind drei Polygon2D-Gitter (16-px-Raster, zusammen 2192 Punkte) an einem Skeleton2D mit 10 Knochen",
+  "Kopfdrehen als Parallaxe: Gesichtsmitte (Augen, Nase, Mund) verschiebt sich bis 16 px, der Umriss kaum, die Ohren gegenläufig; dazu Nicken, Neigen (bis 5°), Ohrzucken",
+  "Atmen hebt Schultern und Kopf um 2,4 px, der Oberkörper wiegt um den Hüftpunkt unter dem Bildrand; das Schalende schwingt als gedämpfte Kette aus drei Knochen im Wind nach",
+  "Blinzeln als Lidbewegung aus dem Porträt: das Oberlid gleitet mit gedehntem Fell und Lidlinie nach unten, das Unterlid steigt mit gedehntem Fell und unterer Kontur; beide treffen sich auf dem Lidbogen der KI-Fassung, geschlossen (Augen < 0,2) steht die KI-Fassung mit geschlossenen Augen (zwei Lidschläge, je 0,24 s, geschlossen in Bild 61–62 und 153–154)",
+  "Blick: die Iris wandert im Augenweiß (bis 3 px), zu Beginn zum Leuchtturm, beim Sprechen zum Gegenüber",
+  "Mund stufenlos: aus der Lachlinie wächst ein Band mit dem gestauchten Mundinnenraum der KI-Bearbeitung, gesäumt von einer Lippenlinie; Öffnung je Zeichen aus dem getippten Text (Vokale weit, m/b/p zu, Pausen nach Satzzeichen)",
+  "Live-Parameterleiste (Kopf X/Y, Neigung, Atem, Augen, Mund) zeigt, dass alles aus wenigen Parametern entsteht",
+  "Hintergrund: ein KI-Gemälde im selben Zeichenstil; Leuchtturmstrahl kreist und läuft weich aus, Lampe blitzt, Laterne flackert, die ganze Wasserfläche bewegt sich zeilenweise mit wandernden Wellenkämmen und Glitzern (Takelage, Masten und Pfahl stehen), zwei Möwen",
+  "Textfeld: Fraunces in Creme auf Marineblau mit Goldrand; Tippeffekt mit festem Zeilenumbruch (kein Wort springt beim Tippen in die nächste Zeile), Weiter-Pfeil als gezeichnetes Dreieck"
+ ],
+ "camera": "Feste Dialogeinstellung: Porträt im Vordergrund links (unten vom Bildrand angeschnitten), Hafen als Hintergrund; keine Kamerafahrt",
+ "resolution": "1280×720; Porträt aus 1024er-Quellraster mit Faktor 0,68 vorverkleinert und 1:1 gezeichnet (Kopftextur 357×312 px, Augenbereich rund 45 px breit, Mund offen bis 32 px hoch); Hintergrund 1536×1024 auf 16:9 geschnitten",
+ "pipeline": [
+  {
+   "step": "Bildaufträge",
+   "tool": "tools/make_jobs.py",
+   "detail": "Prompts aus Bausteinen in assets/prompts/ und data/motif.json (Figuren-, Szenen-, Hintergrund- und Schutzblock wörtlich). Direkt mit tools/genimg.py erzeugt (--backend auto, --workers 2). Codex war laut Sperrdatei (von einem anderen Lauf gesetzt) bis 17:45 gesperrt; gewartet statt auf agy auszuweichen, danach lieferte Codex alle drei Bilder im ersten Versuch."
+  },
+  {
+   "step": "Porträt",
+   "tool": "genimg (gpt-image über Codex), 1024×1024 angefragt, 1254×1254 geliefert, Referenzen assets/ref/badger_bust.png und shared/badger/master_sheet.png",
+   "detail": "Brustbild frontal, Augen offen, Mund zu, Schalende frei hängend, echter Alphakanal. assets/ref/badger_bust.png ist die Vorderansicht des Referenzblatts im gewünschten Bildausschnitt auf Magenta. prep.py verkleinert auf das 1024er-Quellraster."
+  },
+  {
+   "step": "KI-Bearbeitung Augen zu, Mund offen",
+   "tool": "genimg (gpt-image über Codex), Referenz assets/raw/portrait.png",
+   "detail": "Bearbeitung des Porträts im selben Layout. Automatisch ausgerichtet (Maßstab 0,9991, Versatz 0,22/0,59 px, Restfehler 0,017). Die Augen kamen als nach oben gewölbte Lachbögen statt als gesenkte Lider; die Nase ist leicht neu gezeichnet."
+  },
+  {
+   "step": "Hintergrund",
+   "tool": "genimg (gpt-image über Codex), 1536×1024, Referenz assets/raw/portrait.png (nur Stil)",
+   "detail": "Dialog-Komposition: Häuschen links (vom Porträt verdeckt), Laterne bei 45 %, Steg und Boote in der Mitte, Leuchtturm rechts, Lampe ohne Strahl, kein Rauch, keine Vögel. Der Dachs erschien trotz Porträt als Referenz nicht im Bild."
+  },
+  {
+   "step": "Zerlegen und Rig",
+   "tool": "tools/prep.py + tools/prep_config.json (NumPy, Pillow)",
+   "detail": "Schal über r − g > 0,3 (erfasst auch orange angestrahlte und violett beschattete Schalenden, nicht Riemen und Paket), Kopf = Komponente oberhalb des Schals, Rest Körper. Kopf unter dem Schal fortgesetzt (Pull-Push), Randstreifen am Schal neu gefüllt, Körper unter Schalende und Wickel gefüllt. Augen und Mund aus dem Unterschied Porträt/Bearbeitung; je Spalte Augenkanten, innere Öffnung, Lidbogen der Bearbeitung, Lachlinie und Mundinnenraum. Ebenen vormultipliziert auf Anzeigegröße verkleinert. Schreibt demo/portrait.tscn: Skeleton2D, 10 Bone2D, drei Polygon2D mit Gitter, UV und Knochengewichten (Kopf: Kuppel um die Gesichtsmitte für die Parallaxe, Ohren radial), Shader-Daten als zwei vec4-Arrays."
+  },
+  {
+   "step": "Hintergrund vorbereiten",
+   "tool": "tools/prep_bg.py + tools/bg_config.json",
+   "detail": "16:9-Schnitt (ab Zeile 70). Wassermaske: Polygon minus enge Ausschlüsse (Steg, Rümpfe samt Kajüte, Felsfuß entlang der Wasserlinie, Laternenpfahl, Poller), darin nur wasserfarbene Pixel. Takelage, Kran und Masten werden über die Farbe ausgenommen statt über große Polygone: oberhalb des Stegs Pixel, die mehr als 0,1 dunkler sind als das blaue Wasser ringsum, und warme, gesättigte Pixel in senkrechten Läufen ab 8 px (Masten); warme helle Pixel gelten nur in waagerechten Läufen ab 4 px als Spiegelung. Glitzermaske = helle warme Spiegelungen; Lampe und Laterne von Hand gesetzt (bg_debug.png: Wasser blau, Glitzer gelb, ausgenommene Linien rot)."
+  },
+  {
+   "step": "Prüfen",
+   "tool": "tools/pose_sheet.py, tools/measure.py, tools/check_scene.py, tools/capture.py",
+   "detail": "Parameterblatt mit allen Extremen (assets/pose_sheet.png); Figur mit Vergleichsschaltern ohne Blinzeln/Mund (assets/measure.json); ganze Szene (assets/scene_check.json, assets/scene_motion.png): Aussetzer der Aufnahme, Schalende zu Beginn, Strahlkante, Wasserbewegung; Augenausschnitte der Lidschläge 5-fach vergrößert angesehen; Aufnahme 6 s."
+  }
+ ],
+ "godot": [
+  "Godot 4.7, Forward+, 1280×720, stretch canvas_items, nur 2D; alles hängt an der aufsummierten Zeit, kein Zufall",
+  "portrait.tscn (erzeugt): Skeleton2D → Huefte → Brust → Hals → Kopf → Gesicht/Ohr_L/Ohr_R sowie Hals → Schal_1 → Schal_2 → Schal_3; Bone2D mit rest = Ruhelage, Länge fest (keine Warnungen). Polygon2D mit skeleton, polygon, uv, polygons und bones (Gewichte je Punkt); Polygon2D und Skeleton2D liegen im selben Koordinatenraum",
+  "Parallaxe über Knochengewichte: Gesicht ist Kind von Kopf und wird verschoben; Punkte mit Gewicht w wandern um w · Verschiebung (lineares Skinning). Godot normiert die Gewichte und nimmt höchstens 4 Knochen je Punkt; negative Gewichte gehen nicht, deshalb laufen die Ohren über eigene Knochen gegenläufig",
+  "portrait.gd: Live2D-artige Parameter (angle_x/y/z, body_x, breath, eye_l/r, gaze, mouth, ear_l/r, wind) setzen Knochen und Shader-Werte; Schalende als gedämpfte Federkette mit festem Zeitschritt; settle(wind) setzt die Kette vor dem ersten Schritt in die Windlage wind · (0,35 + 0,25 · i)",
+  "head.gdshader auf dem Kopf-Polygon: Lider, Blick und Mund im Texturraum des Kopfes, folgen damit jeder Gitterverformung; Daten je Spalte in eyecols[400]/mouthcols[400] (vec4, 12,8 KB Uniform-Speicher) und die KI-Bearbeitung als zweite Textur. Ober- und Unterlid dehnen nur Porträtpixel (Fell über bzw. unter dem Auge) und treffen sich bei Augen = closed_mix (0,2) auf dem Lidbogen; darunter harter Wechsel zur KI-Fassung, weich nur am Rand der Augenmaske",
+  "main.gd: Ablauf (Kopf, Blick, Nicken auf betonten Silben, zwei Lidschläge, Ohrzucken, Neigen am Ende), Mundform je Zeichen mit zweistufiger exponentieller Glättung, Tippeffekt über visible_characters mit visible_characters_behavior = VC_CHARS_AFTER_SHAPING (Umbruch aus dem ganzen Text), Antworten gleiten auf ganze Pixel herein; Live-Parameterleiste aus ColorRects",
+  "Hintergrund: Sprite2D mit bg.gdshader (Zeilenwellen um ganze Pixel, vorn stärker, gelesen wird nur aus Wasserpixeln; Wellenkämme als kurze helle Striche ±8 % Helligkeit; Glitzer als kurze Striche auf hellen Spiegelungen, Hash ohne sin); Leuchtturmstrahl als additives Polygon2D mit 11 Punkten, Alpha längs und quer weich bis 0; Lampe/Laterne als additive GradientTexture2D; Möwen als Polygon2D-Silhouetten",
+  "Oberfläche: Panel mit StyleBoxFlat (Textfeld, Namensschild, Antwort-Pillen), Fraunces als FontVariation (wght/opsz); Weiter-Pfeil als Polygon2D-Dreieck, weil Fraunces kein ▾ (U+25BE) enthält",
+  "Benutzerargumente: --pose=<name> (Prüfposen), --measure (Figur vor Magenta), --noblink/--nomouth (Vergleichsschalter), --dump (Parameter je Bild)"
+ ],
+ "techniques": [
+  "lebendes-portraet",
+  "skelett-2d",
+  "mesh-verformung",
+  "ki-bildbearbeitung",
+  "mimik-aus-teilen",
+  "lippensynchron",
+  "prozedurale-animation",
+  "shader-wasser",
+  "additiver-lichtkegel",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 3,
+  "effort": 3,
+  "text_adventure": 5,
+  "mobile": 4
+ },
+ "ratings_note": "ai_fit 4: Die KI lieferte Porträt, Bearbeitung und Hintergrund jeweils im ersten Versuch, im selben Zeichenstil und mit sauberem Alphakanal; die Bearbeitung lag fast deckungsgleich auf dem Porträt. Abzug, weil die geschlossenen Augen als Lachbögen kamen und der offene Mund eine andere Geometrie hat als die Lachlinie des Porträts (Umweg im Shader nötig). Die Bewegung selbst stammt ganz aus Skeleton2D, Shader und Code. consistency 3: nur eine Figur gebaut; Schalerkennung (r − g), Mundfarben und Lachlinie sind auf diesen Dachs abgestimmt, eine Figur ohne roten Schal braucht andere Zerlegungsregeln. effort 3: je Figur zwei KI-Bilder und ein prep.py-Lauf (35 s), dazu Sichtprüfung von rig_debug.png und pose_sheet.png und einige Schwellen in prep_config.json; die erste Figur hat den Aufbau des Werkzeugs gekostet. mobile 4 geschätzt: drei Polygon2D mit zusammen 2192 Punkten und 10 Knochen, ein Kopf-Shader mit wenigen Array-Zugriffen, ein Hintergrund-Shader; Forward+, mobile (identisch) und gl_compatibility (höchstens 1 Stufe Abweichung) geprüft, auf einem Smartphone nicht gemessen. text_adventure 5: Ein Porträt und eine Bearbeitung je Figur reichen für lebendige Dialoge; die verbliebenen Fehler (harter Wechsel zur KI-Fassung beim Blinzeln, Konturrest in der Blickweiß-Sichel) betreffen einzelne Bilder bzw. 3 px und fallen im Dialog kaum auf.",
+ "verdict": "Sehr gut geeignet für die Dialoge des Textadventures: Ein Porträt und eine KI-Bearbeitung je Figur ergeben eine durchgehend lebendige Figur, die atmet, blinzelt, den Blick wendet, den Kopf dreht und lippensynchron zum getippten Text spricht, ohne Einzelbildwechsel; gemessenes Flimmern auf der Figur 0,02 % der Figurpixel. Das Rig ist eine normale Godot-Szene (Skeleton2D, Bone2D, Polygon2D) und lässt sich im Editor öffnen und nachgewichten; die Parameter sind dieselben wie in Live2D und können aus dem Dialogsystem gesteuert werden. Bewusste Abweichung vom Auftrag: Der Dachs läuft nicht, er ist ein Dialogporträt (Idle mit Atem, Wiegen, Kopf, Augen, Mund, Ohr und Schal). Grenzen: Drehungen über etwa ±0,7 wirken flach (2D-Bild, keine neue Ansicht), Mimik jenseits von Augen zu/Mund auf braucht weitere KI-Bearbeitungen, jede neue Figur muss einmal durch die Zerlegung geprüft werden, und es bleiben kleine Restfehler: beim Blinzeln ein harter Wechsel vom verengten Porträtauge zum gezeichneten Lidbogen der KI-Fassung, bei vollem Blick zur Seite eine flächige Augenweiß-Sichel mit Konturrest, und das Wasser am Horizont bewegt sich nur um 1 px.",
+ "pitfalls": [
+  "Codex war bei Arbeitsbeginn laut Sperrdatei bis 17:45 gesperrt; auto hätte auf agy umgeschaltet. 45 Minuten gewartet und in der Zeit Rig, Shader und Demo mit einem Platzhalter (Vorderansicht des Referenzblatts, gemalte Fake-Augen/-Mund) gebaut; erst danach die drei Bilder erzeugt.",
+  "Die Bearbeitung zeichnete die geschlossenen Augen als nach oben gewölbte Lachbögen statt als gesenkte Lider (Prompt: „soft downward-curved closed lid line“). Die Lider aus dem Porträt treffen sich deshalb auf der Höhe dieses Bogens (das Unterlid steigt vor allem in der zweiten Hälfte); im geschlossenen Bild sieht der Dachs kurz lächelnd aus.",
+  "Der offene Mund der Bearbeitung beginnt direkt unter der Nase, die Lachlinie des Porträts liegt bis zu 25 Quellpixel tiefer und hat Philtrum und W-Form. Zwei Ansätze scheiterten: Überblenden mit verschobenem Kinn zeigte die graue Füllung unter dem Schal (der offene Mund der Bearbeitung reicht in den Schal), Stauchen des Porträts über und unter dem Band erzeugte senkrechte Streifen an Spalten mit falsch erkannter Lachlinie. Jetzt wächst nur ein Band aus der Mitte der Lachlinie mit gezeichneter Lippenlinie; das Porträt darunter bleibt stehen. Ausreißer der Lachlinie (Nasenkontur) werden über einen gleitenden Median verworfen.",
+  "Die erste Mundglättung war eine steife Feder mit explizitem Zeitschritt (k = 900, c = 60 bei 1/30 s): der Mund sprang Bild für Bild zwischen 0 und 1 (gefunden über --dump und die Flimmermessung, 0,2 % der Figurpixel). Ersetzt durch zweistufige exponentielle Glättung; Flimmern jetzt 0,02 %.",
+  "Schal über den Farbton erkannt verlor die orange angestrahlte und die violett beschattete Schalspitze an den Kopf; beim Drehen schwebten Schalbrocken neben dem Kinn. r − g > 0,3 trennt Schal von Riemen, Paket und Fell sauber.",
+  "Die Schalebene nahm zuerst mit der dilatierten Kontur auch helle Fellspitzen des Kopfes mit; beim Drehen blieben gestreifte Fellreste über dem Schal stehen. Jetzt nur dunkle Konturpixel zum Schal, der Kopfrand am Schal wird neu gefüllt, und die Fortsetzung des Kopfes unter dem Schal endet 28 Quellpixel vor den Schalenden.",
+  "Blick: Die Augen haben nur einen schmalen Weißrand; die erste Öffnungsmaske (helle und Iris-Pixel) riss an der Pupille auf und malte Weiß über Iris und Kontur. Jetzt innere Öffnung aus Konturstärke (Median über die Spalten) und nur in Spalten mit hellen Pixeln. Restfehler: Bei vollem Ausschlag (3 px, Blick zum Leuchtturm am Anfang und während des ersten Lidschlags) entsteht eine flächige Augenweiß-Sichel; oben beschattet und mit 1 px weichem Übergang ist sie weniger hart, aber an der gebogenen Seitenkontur rutscht ein dünner Konturrest mit ins Weiß, weil die Öffnung nur je Spalte (Ober- und Unterkante) bekannt ist. Abhilfe wäre eine Öffnungsmaske je Pixel (Augenumriss um die Konturstärke erodiert) aus prep.py; nicht umgesetzt, weil ein neuer prep.py-Lauf Rig, Ebenen und Shader-Daten neu erzeugt und alles neu geprüft werden müsste.",
+  "Godot importiert geänderte PNGs ohne Editor nicht neu; Testläufe zeigten zuerst alte Texturen (vermeintliche Fehler, die schon behoben waren). Alle eigenen Prüfskripte rufen jetzt erst godot --headless --import auf.",
+  "Wasser: Die erste Maske nahm Takelage und Kran mit großen Polygonen aus; ein Keil zwischen Laternenpfahl und erstem Boot (x 730–880, y 320–440) und der Streifen am Felsfuß standen mit harten Grenzen still, und wo Wasser aus Takelage-Pixeln las, zitterten Doppellinien. Jetzt enge Polygone nur um Rümpfe, Steg, Felsfuß und Pfahl, Linien über die Farbe ausgenommen, und der Shader liest nur aus Wasserpixeln. Glattes Wasser ändert sich beim Verschieben um 1 px kaum; deshalb wandern zusätzlich Wellenkämme (±8 % Helligkeit) mit. Gemessen über 180 Bilder (sichtbares Wasser ohne Textfeld und Antworten): 0,5 % stehen (Helligkeitsstreuung < 0,5), 69 % bewegen sich deutlich (> 1,5). Rest: Am Horizont verschieben sich die Zeilen nur um 1 px, dort ist die Bewegung schwach; Wasserpixel direkt neben Takelage, Masten und Pfahl bleiben in einzelnen Bildern stehen, wenn ihre Quelle eine Linie wäre.",
+  "Im Porträt gibt es kleine Lücken im Umriss, die schon im KI-Bild stehen (zwischen Arm und Weste, zwischen Fellspitzen): 54 px in Ruhe, bei Bewegung höchstens 68 px. Neue Lücken durch die Verformung wurden nicht gefunden.",
+  "Uniform-Arrays brauchen hier 12,8 KB; ein drittes vec4-Array hätte die 16-KB-Grenze mancher Treiber überschritten. Deshalb ist die untere Augenkontur ein einzelner Wert, und Spalten ohne Augenöffnung sind über das Vorzeichen markiert. Für mehr Daten je Spalte wäre eine Datentextur besser.",
+  "Tippeffekt: Mit dem Standard VC_CHARS_BEFORE_SHAPING bricht Label den Text nur aus dem schon sichtbaren Teil um; „Paket“ stand erst am Ende von Zeile 1 und sprang dann in Zeile 2, und das Poster zeigte genau diesen Zwischenstand. Behoben mit visible_characters_behavior = 1 (VC_CHARS_AFTER_SHAPING), jetzt steht „Paket“ vom ersten Buchstaben an in Zeile 2.",
+  "Leuchtturmstrahl: Der Spitzenpunkt hatte noch Alpha 0,1, das Polygon endete gerade; im Poster sprang die Helligkeit an der Strahlspitze um 18–20 Stufen. Jetzt zwei Zwischenreihen (130 und 260 px), Mittelachse 0,42 → 0,36 → 0,21 → 0, Ränder 0; größter Sprung entlang der Achse im Poster 6,7 Stufen (eine Wolkenkante im Bild). Der Strahl wirkt dadurch etwas kürzer.",
+  "Blinzeln: Die erste Fassung zeigte im Unterlid Pixel der KI-Fassung und mischte unter Augen 0,2 das gleitende Lid mit dem KI-Lidbogen. In den Übergangsbildern standen dadurch eine doppelte Lidlinie, Splitter von Augenweiß und Iris und dunkle Wimpernreste unter und neben dem Auge, die Iris war unten waagerecht abgeschnitten. Jetzt dehnen Ober- und Unterlid nur Porträtpixel, darunter harter Wechsel zur KI-Fassung. Rest: Der Wechsel vom fast geschlossenen Porträtauge (Bild 60/63 und 152/155) zum nach oben gewölbten KI-Lidbogen (Bild 61–62, 153–154) ist ein harter Schnitt; der Lidstrich am äußeren Winkel des linken Auges wird mit dem Unterlid nach oben gezogen und wirkt wie eine Falte.",
+  "Weiter-Pfeil: Fraunces enthält kein ▾ (U+25BE); Godot zeichnete es aus einer Systemschrift, die weder mitgeliefert noch lizenziert war (im Export womöglich ein Ersatzkästchen). Jetzt ein Polygon2D-Dreieck.",
+  "Schalende: Es startete senkrecht und schwang in den ersten 12 Bildern in die Windlage (Bildänderung im Schalbereich bis 8,9 Stufen je Bild, sonst im Median 1,6) – ein Ruck zu Beginn jeder Dialogszene. Jetzt setzt portrait.settle(wind) die Kette vor dem ersten Schritt in die Gleichgewichtslage; in den ersten 12 Bildern höchstens 2,8 Stufen.",
+  "Godots Movie Maker schrieb in 2 von 11 Probeaufnahmen, deren Log geprüft wurde, dasselbe Bild mehrfach (godot.log: „151 frames“ bzw. „170 frames“ statt 180, die Zahl der PNG-Dateien stimmte trotzdem). capture.py bemerkt das nicht; tools/check_scene.py prüft deshalb auf identische Folgebilder. Die eingereichte Aufnahme hat 180 aufgenommene Bilder."
+ ],
+ "lessons": [
+  "Polygon2D mit Skeleton2D reicht für Live2D-artige Verformung: ein regelmäßiges Gitter über die Ebene, Gewichte aus einfachen Formeln (Kuppel um die Gesichtsmitte für Drehen und Nicken, radial für Ohren, entlang der Achse für das Schalende) und ein verschobener Kind-Knochen ergeben die Gesichtsparallaxe ohne eigenen Verformer.",
+  "Lider, Blick und Mund im Shader des Kopf-Polygons rechnen statt als eigene Ebenen: Sie liegen im Texturraum des Kopfes und folgen jeder Gitterverformung, es gibt keine Nähte zwischen Ebenen.",
+  "Eine KI-Bearbeitung „Augen zu und Mund offen“ im selben Bild reicht für Blinzeln und Sprechen; gpt-image hielt das Layout fast deckungsgleich (Restfehler 0,017), die Unterschiedsmaske findet Augen und Mund automatisch.",
+  "Stufenlose Mundöffnung: Innenraum der Bearbeitung je Spalte bestimmen (Oberkante, Höhe) und als gestauchtes Band zeichnen; Band aus der Mitte der Lachlinie wachsen lassen und mit einer Lippenlinie säumen. Für sehr schmale Bänder in die Linie überblenden, sonst entstehen Strichellinien.",
+  "Unter allen Ebenen, die sich gegeneinander bewegen, vorher Bildinhalt auffüllen (Kopf unter dem Schal, Weste unter dem Schalende) und Konturen der überdeckenden Ebene zuordnen; seitlich Abstand zu den Rändern der deckenden Ebene halten.",
+  "Für Schalfarben unter farbigem Kantenlicht ist r − g robuster als der Farbton.",
+  "Glättungen bei fester Bildrate nie als steife Feder mit explizitem Schritt rechnen; exponentielle Glättung ist bedingungslos stabil. Parameter mit --dump je Bild ausgeben.",
+  "Messen mit Vergleichsschaltern: dieselbe Aufnahme ohne Blinzeln bzw. ohne Mund; die Differenz zeigt, dass sich nur die Augen- bzw. Mundbereiche ändern (außerhalb 0 px), und welche Bilder vom Lidschlag betroffen sind (60–64, 152–156; ganz geschlossen 61–62, 153–154).",
+  "Ein Platzhalter aus dem Referenzblatt mit grob gemalten Augen und Mund reichte, um die ganze Kette (Zerlegung, Rig, Shader, Messung) vor dem ersten KI-Bild zu bauen; mit den echten Bildern waren nur Schwellen und die Mundgeometrie neu.",
+  "Hintergrund mit dem Porträt als Stilreferenz erzeugen hält beide im selben Zeichenstil, ohne dass die Figur im Hintergrund auftaucht (Prompt sagt das ausdrücklich).",
+  "Tippeffekt mit Label immer mit visible_characters_behavior = VC_CHARS_AFTER_SHAPING: Der Umbruch wird aus dem ganzen Text berechnet, kein Wort springt beim Tippen in die nächste Zeile.",
+  "Wassermasken über die Farbe statt über große Polygone: dünne Linien als „dunkler als das Wasser ringsum“ bzw. „warm in senkrechtem Lauf“ ausnehmen und im Shader nur aus Wasserpixeln lesen; dann zittern keine Doppellinien, und es bleiben keine stehenden Keile mit harten Grenzen. Bewegung über eine Karte der Helligkeitsstreuung je Pixel über alle Bilder prüfen.",
+  "Lidschlag aus Teilen: beide Lider nur aus dem Porträt dehnen (Fell und Kontur über bzw. unter dem Auge) und die KI-Fassung nur für den geschlossenen Zustand zeigen; Mischen zweier Lidbilder ergibt doppelte Linien. Übergangsbilder 5-fach vergrößert ansehen, im Gesamtbild fällt das nicht auf.",
+  "Federketten (Schal, Haare) vor dem ersten Schritt in die Gleichgewichtslage setzen, sonst ruckt jede Szene am Anfang.",
+  "Symbole in Oberflächen (Pfeile, Sterne) gegen die cmap der Schrift prüfen; was fehlt, als Polygon zeichnen oder eine freie Symbolschrift beilegen."
+ ],
+ "assets": [
+  {
+   "file": "assets/bg.png",
+   "kind": "background",
+   "made_with": "gpt-image (Codex) + prep_bg.py (16:9-Schnitt, 1280×720)",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/layer_body.png",
+   "kind": "character",
+   "made_with": "prep.py: Körper, unter Schal und Schalende aufgefüllt, Anzeigegröße",
+   "prompt": "assets/raw/portrait.json"
+  },
+  {
+   "file": "assets/layer_head.png",
+   "kind": "character",
+   "made_with": "prep.py: Kopf mit Fortsetzung unter dem Schal",
+   "prompt": "assets/raw/portrait.json"
+  },
+  {
+   "file": "assets/layer_head_faces.png",
+   "kind": "character",
+   "made_with": "prep.py: KI-Bearbeitung im Zuschnitt des Kopfes (Lider, Mundinnenraum)",
+   "prompt": "assets/raw/faces.json"
+  },
+  {
+   "file": "assets/layer_scarf.png",
+   "kind": "character",
+   "made_with": "prep.py: Schal (Wickel und Schalende) samt Kontur",
+   "prompt": "assets/raw/portrait.json"
+  },
+  {
+   "file": "assets/rig_debug.png",
+   "kind": "reference",
+   "made_with": "prep.py: Ebenen, Gitter, Knochen, Augen- und Mundbereiche",
+   "prompt": ""
+  },
+  {
+   "file": "assets/pose_sheet.png",
+   "kind": "reference",
+   "made_with": "pose_sheet.py: Godot-Renderings aller Parameter-Extreme",
+   "prompt": ""
+  },
+  {
+   "file": "assets/ref/badger_bust.png",
+   "kind": "reference",
+   "made_with": "Ausschnitt der Vorderansicht aus shared/badger/master_sheet_alpha.png im Brustbild-Format auf Magenta (erste Referenz für das Porträt)",
+   "prompt": ""
+  },
+  {
+   "file": "demo/portrait.tscn",
+   "kind": "rig",
+   "made_with": "prep.py: Skeleton2D, 10 Bone2D, 3 Polygon2D mit Gewichten und Shader-Daten",
+   "prompt": ""
+  },
+  {
+   "file": "assets/bg_debug.png",
+   "kind": "reference",
+   "made_with": "prep_bg.py: Wassermaske (blau), Glitzer (gelb), über die Farbe ausgenommene Linien (rot), Lichtpunkte",
+   "prompt": ""
+  },
+  {
+   "file": "assets/scene_motion.png",
+   "kind": "reference",
+   "made_with": "check_scene.py: Helligkeitsstreuung je Pixel über 180 Bilder (Bewegungskarte, 20-fach)",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Fraunces (variabel, Regular und Italic)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/fraunces"
+  },
+  {
+   "item": "Hash without Sine (Shader-Funktion), Copyright (c) 2014 David Hoskins – in demo/shaders/bg.gdshader",
+   "license": "MIT",
+   "source": "https://www.shadertoy.com/view/4djSRW"
+  }
+ ],
+ "image_generations": 3,
+ "tool_issues": [
+  "tools/genimg.py: Codex lieferte 1254×1254 statt 1024×1024 (Warnung korrekt, actual_size in der .json); prep.py verkleinert auf 1024.",
+  "Kein Fehler im Werkzeug, aber ein Fallstrick für alle Einträge: Pillow 12 gibt bei Image.fromarray ein schreibgeschütztes Bild zurück; ImageDraw.floodfill ändert es dann stillschweigend nicht. Eigene Hilfsfunktion kopiert das Bild vorher (tools/imgops.py).",
+  "tools/capture.py: erkennt Aussetzer von Godots Movie Maker nicht. In 2 von 11 Probeaufnahmen mit geprüftem Log meldete godot.log weniger aufgenommene Bilder („151 frames“, „170 frames“), die fehlenden Bilder waren als identische Kopien geschrieben, die Zahl der PNG-Dateien stimmte. Vorschlag: „N frames at“ aus dem Log mit der Sollzahl vergleichen oder identische Folgebilder zählen und warnen. Lokal umgangen mit tools/check_scene.py und Abgleich von media/godot.log (180 Bilder)."
+ ],
+ "status": "done"
+}

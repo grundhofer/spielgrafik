@@ -1,0 +1,84 @@
+Spielgrafik – Lizenzen Dritter
+==============================
+
+Dieses Projekt (Website und Godot-Demos unter styles/<slug>/demo/) enthält Code und Schriften
+Dritter. Die Lizenztexte stehen unten im Wortlaut. Fremde Texturen und die Schriften der Demos
+sind je Eintrag unter „Lizenzen“ auf der Eintragsseite genannt; die Lizenztexte der Demo-Schriften
+liegen im Ordner styles/<slug>/demo/fonts/ des jeweiligen Eintrags.
+
+
+1. Hash without Sine (David Hoskins)
+------------------------------------
+
+Quelle: Shadertoy 4djSRW, https://www.shadertoy.com/view/4djSRW
+Verwendet: Shader mehrerer Demos (styles/*/demo/shaders/) nutzen diese Hash-Funktionen
+(hash11 … hash33) oder Abwandlungen davon.
+
+MIT License
+
+Copyright (c)2014 David Hoskins.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+2. Distanzfunktionen nach Inigo Quilez
+--------------------------------------
+
+Quelle: https://iquilezles.org/articles/distfunctions/ und .../distfunctions2d/. Laut
+https://iquilezles.org/articles/ stehen die technischen Code-Schnipsel dort unter der MIT-Lizenz
+(„all technical code snippets you'll find are under the MIT license“).
+Verwendet: Shader einiger Demos (z. B. styles/raymarching-sdf, styles/jugendstil) nutzen
+Distanzfunktionen nach diesen Vorlagen.
+
+MIT License
+
+Copyright © Inigo Quilez
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+3. Schriften der Website
+------------------------
+
+Die Website liefert Inter und IBM Plex Mono selbst aus (keine Anfrage an Google Fonts).
+Beide stehen unter der SIL Open Font License 1.1. Die vollständigen Lizenztexte liegen neben
+den Schriftdateien:
+
+  Inter          Copyright 2020 The Inter Project Authors (https://github.com/rsms/inter)
+                 assets/fonts/OFL-1.1-Inter.txt     (im Repository: site/fonts/OFL-1.1-Inter.txt)
+  IBM Plex Mono  Copyright © 2017 IBM Corp. with Reserved Font Name "Plex"
+                 assets/fonts/OFL-1.1-IBM-Plex.txt  (im Repository: site/fonts/OFL-1.1-IBM-Plex.txt)
+
+Herkunft und Prüfsummen der Schriftdateien: site/fonts/fonts.json.

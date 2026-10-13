@@ -1,0 +1,11 @@
+Sprite sheet for an early 1980s 8-bit home computer game with attribute colour cells: the badger courier from the second reference image, walking to the right, redrawn as tiny hardware sprites. Take only the costume and the proportions from the reference images; drawing style, resolution and colours follow this description. Use the first reference image only for the layout: one row of 6 animation frames of a walk cycle, evenly spaced, same scale, feet on the same baseline, each frame a distinct leg position (contact, down, passing, up, contact, down).
+
+Every frame is exactly 24 pixels wide and 40 pixels tall in the native resolution, drawn with large hard-edged square pixels (each pixel about 10 by 10 image pixels), no anti-aliasing, no blur, no gradients. The sprite is monochrome per horizontal band, as on that hardware: the lit pixels of each 8-pixel-high band have one single colour on solid black. From top to bottom: band 1 (the cap and the ears) bright green #00FF00; band 2 (the head, side view, with a black stripe through the eye, white cheek and a black nose tip) bright white #FFFFFF; band 3 (the long knitted scarf and the shoulders) bright red #FF0000; band 4 (the vest, the parcel under the arm and the satchel) bright green #00FF00; band 5 (the short legs and feet) bright white #FFFFFF. Inside each band, details are shown only by black gaps and one-pixel black lines between lit pixels; the dark grey fur of the legs and arms is drawn as a checkerboard dither of lit and black pixels with a solid lit outline. Bold, readable silhouette with chunky shapes, like a hand-pixelled game character of that time.
+
+Solid pure black background #000000 everywhere around and between the frames, no ground, no shadows, no frame borders, no grid lines.
+
+The badger courier: an original mascot character, a stout, short-legged badger with a broad black-and-white striped face, wearing a dark green peaked cap with a brass button, a dark green vest with pockets over a cream shirt with rolled-up sleeves, a long red knitted scarf, a brown leather satchel on a shoulder strap, and a brown paper parcel tied with string under one arm.
+
+No text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.
+
+Image format: landscape 3:2.

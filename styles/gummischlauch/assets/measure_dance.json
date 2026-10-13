@@ -1,0 +1,83 @@
+{
+ "frames": 180,
+ "boxes": {
+  "cottage": [
+   0,
+   238,
+   374,
+   550
+  ],
+  "lighthouse": [
+   1093,
+   15,
+   1227,
+   231
+  ],
+  "lantern": [
+   829,
+   262,
+   1006,
+   568
+  ],
+  "barrels": [
+   947,
+   431,
+   1138,
+   564
+  ],
+  "crates": [
+   1090,
+   390,
+   1263,
+   568
+  ],
+  "rope": [
+   732,
+   528,
+   842,
+   582
+  ],
+  "boat_a": [
+   527,
+   300,
+   722,
+   455
+  ],
+  "boat_b": [
+   731,
+   346,
+   879,
+   448
+  ],
+  "jetty": [
+   378,
+   372,
+   561,
+   495
+  ]
+ },
+ "changed_share_image_mean": 0.0695,
+ "changed_share_image_max": 0.1177,
+ "changed_share_per_prop_mean": {
+  "cottage": 0.19,
+  "lighthouse": 0.146,
+  "lantern": 0.255,
+  "barrels": 0.257,
+  "crates": 0.249,
+  "rope": 0.165,
+  "boat_a": 0.19,
+  "boat_b": 0.281,
+  "jetty": 0.129
+ },
+ "changed_share_per_prop_max": {
+  "cottage": 0.385,
+  "lighthouse": 0.234,
+  "lantern": 0.386,
+  "barrels": 0.469,
+  "crates": 0.441,
+  "rope": 0.44,
+  "boat_a": 0.227,
+  "boat_b": 0.351,
+  "jetty": 0.266
+ }
+}

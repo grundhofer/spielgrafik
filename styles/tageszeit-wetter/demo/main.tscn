@@ -1,0 +1,265 @@
+[gd_scene load_steps=40 format=3]
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="Texture2D" path="res://art/bg.png" id="2_bg"]
+[ext_resource type="Texture2D" path="res://art/sky_plate.png" id="3_plate"]
+[ext_resource type="Texture2D" path="res://art/data_a.png" id="4_da"]
+[ext_resource type="Texture2D" path="res://art/data_b.png" id="5_db"]
+[ext_resource type="Texture2D" path="res://art/data_c.png" id="6_dc"]
+[ext_resource type="Texture2D" path="res://art/snow_rgb.png" id="7_snow"]
+[ext_resource type="Texture2D" path="res://art/light.png" id="8_light"]
+[ext_resource type="Texture2D" path="res://art/lut.png" id="9_lut"]
+[ext_resource type="Texture2D" path="res://art/noise.png" id="10_noise"]
+[ext_resource type="Shader" path="res://shaders/bg.gdshader" id="11_bg_sh"]
+[ext_resource type="Texture2D" path="res://art/badger_body.png" id="12_body"]
+[ext_resource type="Texture2D" path="res://art/badger_scarf.png" id="13_scarf"]
+[ext_resource type="Texture2D" path="res://art/badger_lids.png" id="14_lids"]
+[ext_resource type="Shader" path="res://shaders/badger.gdshader" id="15_badger_sh"]
+[ext_resource type="Shader" path="res://shaders/precip.gdshader" id="16_precip_sh"]
+[ext_resource type="Texture2D" path="res://art/fx/rain.png" id="17_rain"]
+[ext_resource type="Texture2D" path="res://art/fx/flake.png" id="18_flake"]
+[ext_resource type="Texture2D" path="res://art/fx/puff.png" id="19_puff"]
+[ext_resource type="Texture2D" path="res://art/fx/splash.png" id="20_splash"]
+[ext_resource type="Texture2D" path="res://art/fx/shadow.png" id="21_shadow"]
+
+[sub_resource type="ShaderMaterial" id="M_bg"]
+shader = ExtResource("11_bg_sh")
+shader_parameter/lut_tex = ExtResource("9_lut")
+shader_parameter/plate_tex = ExtResource("3_plate")
+shader_parameter/data_a = ExtResource("4_da")
+shader_parameter/data_b = ExtResource("5_db")
+shader_parameter/data_c = ExtResource("6_dc")
+shader_parameter/snow_tex = ExtResource("7_snow")
+shader_parameter/light_tex = ExtResource("8_light")
+shader_parameter/noise_tex = ExtResource("10_noise")
+
+[sub_resource type="ShaderMaterial" id="M_badger"]
+shader = ExtResource("15_badger_sh")
+shader_parameter/lut_tex = ExtResource("9_lut")
+shader_parameter/scarf_tex = ExtResource("13_scarf")
+shader_parameter/lids_tex = ExtResource("14_lids")
+shader_parameter/noise_tex = ExtResource("10_noise")
+
+[sub_resource type="ShaderMaterial" id="M_rain_far"]
+shader = ExtResource("16_precip_sh")
+
+[sub_resource type="ShaderMaterial" id="M_rain_near"]
+shader = ExtResource("16_precip_sh")
+
+[sub_resource type="ShaderMaterial" id="M_splash"]
+shader = ExtResource("16_precip_sh")
+
+[sub_resource type="ShaderMaterial" id="M_snow_far"]
+shader = ExtResource("16_precip_sh")
+
+[sub_resource type="ShaderMaterial" id="M_snow_near"]
+shader = ExtResource("16_precip_sh")
+
+[sub_resource type="Curve" id="C_fade"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.12, 1), 0.0, 0.0, 0, 0, Vector2(0.82, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CT_fade"]
+curve = SubResource("C_fade")
+
+[sub_resource type="Curve" id="C_smoke_alpha"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.05, 0.8), 0.0, 0.0, 0, 0, Vector2(0.45, 0.5), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CT_smoke_alpha"]
+curve = SubResource("C_smoke_alpha")
+
+[sub_resource type="Curve" id="C_grow"]
+_data = [Vector2(0, 0.3), 0.0, 1.2, 0, 0, Vector2(1, 1), 0.4, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CT_grow"]
+curve = SubResource("C_grow")
+
+[sub_resource type="Curve" id="C_splash_alpha"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CT_splash_alpha"]
+curve = SubResource("C_splash_alpha")
+
+[sub_resource type="ParticleProcessMaterial" id="P_smoke"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(9, 1, 1)
+direction = Vector3(0, -1, 0)
+spread = 10.0
+initial_velocity_min = 9.0
+initial_velocity_max = 15.0
+gravity = Vector3(15, -2, 0)
+angle_min = -180.0
+angle_max = 180.0
+angular_velocity_min = -12.0
+angular_velocity_max = 12.0
+scale_min = 0.9
+scale_max = 1.25
+scale_curve = SubResource("CT_grow")
+alpha_curve = SubResource("CT_smoke_alpha")
+
+[sub_resource type="ParticleProcessMaterial" id="P_rain_far"]
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(760, 20, 1)
+direction = Vector3(0.1, 1, 0)
+spread = 2.0
+initial_velocity_min = 1000.0
+initial_velocity_max = 1200.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.45
+scale_max = 0.65
+
+[sub_resource type="ParticleProcessMaterial" id="P_rain_near"]
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(780, 20, 1)
+direction = Vector3(0.12, 1, 0)
+spread = 2.0
+initial_velocity_min = 1500.0
+initial_velocity_max = 1800.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.9
+scale_max = 1.35
+
+[sub_resource type="ParticleProcessMaterial" id="P_splash"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(640, 58, 1)
+gravity = Vector3(0, 0, 0)
+scale_min = 0.6
+scale_max = 1.2
+scale_curve = SubResource("CT_grow")
+alpha_curve = SubResource("CT_splash_alpha")
+
+[sub_resource type="ParticleProcessMaterial" id="P_snow_far"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(720, 420, 1)
+direction = Vector3(0.25, 1, 0)
+spread = 15.0
+initial_velocity_min = 30.0
+initial_velocity_max = 55.0
+gravity = Vector3(0, 6, 0)
+scale_min = 0.25
+scale_max = 0.4
+alpha_curve = SubResource("CT_fade")
+
+[sub_resource type="ParticleProcessMaterial" id="P_snow_near"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(720, 420, 1)
+direction = Vector3(0.3, 1, 0)
+spread = 15.0
+initial_velocity_min = 55.0
+initial_velocity_max = 95.0
+gravity = Vector3(0, 10, 0)
+scale_min = 0.6
+scale_max = 1.1
+alpha_curve = SubResource("CT_fade")
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="BG" type="Sprite2D" parent="."]
+material = SubResource("M_bg")
+texture = ExtResource("2_bg")
+centered = false
+
+[node name="Smoke" type="GPUParticles2D" parent="."]
+position = Vector2(133, 40)
+amount = 26
+lifetime = 4.0
+preprocess = 4.0
+fixed_fps = 30
+interpolate = false
+use_fixed_seed = true
+seed = 3
+visibility_rect = Rect2(-200, -300, 600, 400)
+texture = ExtResource("19_puff")
+process_material = SubResource("P_smoke")
+
+[node name="RainFar" type="GPUParticles2D" parent="."]
+material = SubResource("M_rain_far")
+position = Vector2(640, -60)
+amount = 800
+lifetime = 0.85
+preprocess = 1.0
+fixed_fps = 30
+interpolate = false
+use_fixed_seed = true
+seed = 11
+visibility_rect = Rect2(-800, -100, 1700, 950)
+texture = ExtResource("17_rain")
+process_material = SubResource("P_rain_far")
+
+[node name="Splash" type="GPUParticles2D" parent="."]
+material = SubResource("M_splash")
+position = Vector2(640, 662)
+amount = 140
+lifetime = 0.2
+preprocess = 0.5
+fixed_fps = 30
+interpolate = false
+use_fixed_seed = true
+seed = 13
+visibility_rect = Rect2(-700, -100, 1400, 200)
+texture = ExtResource("20_splash")
+process_material = SubResource("P_splash")
+
+[node name="SnowFar" type="GPUParticles2D" parent="."]
+material = SubResource("M_snow_far")
+position = Vector2(640, 360)
+amount = 700
+lifetime = 8.0
+preprocess = 8.0
+fixed_fps = 30
+interpolate = false
+use_fixed_seed = true
+seed = 17
+visibility_rect = Rect2(-800, -500, 1600, 1000)
+texture = ExtResource("18_flake")
+process_material = SubResource("P_snow_far")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 0.35)
+scale = Vector2(0.9, 0.55)
+texture = ExtResource("21_shadow")
+
+[node name="Badger" type="Sprite2D" parent="."]
+material = SubResource("M_badger")
+texture = ExtResource("12_body")
+centered = false
+
+[node name="RainNear" type="GPUParticles2D" parent="."]
+material = SubResource("M_rain_near")
+position = Vector2(640, -60)
+amount = 520
+lifetime = 0.62
+preprocess = 1.0
+fixed_fps = 30
+interpolate = false
+use_fixed_seed = true
+seed = 19
+visibility_rect = Rect2(-800, -100, 1700, 950)
+texture = ExtResource("17_rain")
+process_material = SubResource("P_rain_near")
+
+[node name="SnowNear" type="GPUParticles2D" parent="."]
+material = SubResource("M_snow_near")
+position = Vector2(640, 360)
+amount = 220
+lifetime = 6.0
+preprocess = 6.0
+fixed_fps = 30
+interpolate = false
+use_fixed_seed = true
+seed = 23
+visibility_rect = Rect2(-800, -500, 1600, 1000)
+texture = ExtResource("18_flake")
+process_material = SubResource("P_snow_near")

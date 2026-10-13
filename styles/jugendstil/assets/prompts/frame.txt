@@ -1,0 +1,15 @@
+An ornamental frame for the screen of a 2D narrative game, designed like the decorated border of an Art Nouveau (Jugendstil) poster or book page from around 1900, printed as a colour lithograph from flat, muted inks with gold.
+
+The first reference image is a layout sketch. Follow it exactly and keep every area at the same position and size:
+- The magenta area is the picture window, round-arched at the top. In your image this whole area must be empty and fully transparent (the game shows the scene there). Its edge is lined by a band of the frame: a bold dark key line, then a gold line, then a narrow sage-green band.
+- The light grey rectangle at the bottom is the text panel. Fill it with one plain, flat, light cream ink, completely empty (the game writes the text there), edged by a thin gold line and the dark key line; small symmetric flower ornaments sit on its four corners.
+- The mid grey area is the frame itself: a deep petrol-green ground decorated with Art Nouveau ornament. In the two upper corners above the round arch: stylised poppies and lilies with long whiplash stems, heart-shaped leaves, spiralling tendrils and gold circles, mirror-symmetric left and right. Down both side borders: tall slender stems with leaves rising in gentle S-curves from the bottom up to the corner flowers, with a gold line running parallel to the window edge. At the top centre above the arch: a small symmetric flower crest.
+- The black stripes at the very top and the very bottom are outside the frame: keep them plain flat black, with nothing drawn there.
+
+The second reference image is the scene that the game shows in the window: use the same muted inks (sage green, olive, ochre, dusty rose, petrol blue, deep teal, cream, terracotta and warm gold), the same bold, even, dark brown-green key line and the same flat lithographic manner, so that frame and scene look printed together.
+
+Technique: every shape is enclosed by a bold, even, dark key line of the same thickness everywhere (about 4 pixels) and filled with one flat, matte ink; no gradients, no airbrush, no soft shading, no texture, no grain. Long, elegant, flowing whiplash lines and spirals in the manner of poster art and book decoration around 1900. Gold is a flat warm gold ink. Not a photograph, not a 3D render, no bevels, no embossing, no metallic shine, not a modern vector illustration.
+
+No text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.
+
+Image format: landscape 3:2.

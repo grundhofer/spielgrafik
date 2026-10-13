@@ -1,0 +1,49 @@
+; Engine configuration file.
+; Von Hand geschrieben: Katalogeintrag moebius-linien (Linienzeichnung in 3D), Godot 4.7.
+; Forward+, 1280×720. Flache Pastellfarben mit einer Schattenstufe (shaders/ink.gdshader),
+; Tuschelinien als Nachbearbeitung aus Tiefe, Normalen und Material-ID (shaders/ink_lines.gdshader),
+; Himmel mit gezeichneten Wolken, Mond und Möwen (shaders/ink_sky.gdshader).
+
+config_version=5
+
+[application]
+
+config/name="Linienzeichnung in 3D – Hafen von Lornholm"
+run/main_scene="res://main.tscn"
+config/features=PackedStringArray("4.7", "Forward Plus")
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+
+[rendering]
+
+anti_aliasing/quality/msaa_3d=0
+anti_aliasing/quality/screen_space_aa=2
+environment/defaults/default_clear_color=Color(0.96, 0.9, 0.8, 1)
+lights_and_shadows/directional_shadow/size=8192
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality=2
+
+[shader_globals]
+
+ink_time={
+"type": "float",
+"value": 0.0
+}
+ink_color={
+"type": "color",
+"value": Color(0.012, 0.0095, 0.011, 1)
+}
+ink_shadow={
+"type": "color",
+"value": Color(0.56, 0.52, 0.7, 1)
+}
+ink_hatch={
+"type": "float",
+"value": 1.0
+}
+ink_shade={
+"type": "float",
+"value": 1.0
+}

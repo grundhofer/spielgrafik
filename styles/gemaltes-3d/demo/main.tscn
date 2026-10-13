@@ -1,0 +1,192 @@
+[gd_scene load_steps=20 format=3]
+
+; Gemaltes 3D: 3D-Szene im SubViewport "Color", Steuerkarte im SubViewport "Ctrl" (dieselbe Welt,
+; zweite Kamera), Nachbearbeitung als Kette von SubViewports (post.gd), Endbild auf "Paint",
+; Oberfläche in "UI". Modelle unverändert aus shared/3d.
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://models/harbor.glb" id="2_harbor"]
+[ext_resource type="PackedScene" path="res://models/badger.glb" id="3_badger"]
+[ext_resource type="Shader" path="res://shaders/water.gdshader" id="4_water"]
+[ext_resource type="Shader" path="res://shaders/beam.gdshader" id="5_beam"]
+[ext_resource type="Shader" path="res://shaders/sky.gdshader" id="6_sky"]
+[ext_resource type="Shader" path="res://shaders/ctrl_sky.gdshader" id="7_csky"]
+[ext_resource type="Script" path="res://post.gd" id="8_post"]
+[ext_resource type="Script" path="res://ui.gd" id="9_ui"]
+
+[sub_resource type="ShaderMaterial" id="SkyMat"]
+shader = ExtResource("6_sky")
+
+[sub_resource type="Sky" id="Sky"]
+sky_material = SubResource("SkyMat")
+radiance_size = 0
+
+[sub_resource type="Environment" id="Env"]
+background_mode = 2
+sky = SubResource("Sky")
+ambient_light_source = 2
+ambient_light_color = Color(0.34, 0.40, 0.64, 1)
+ambient_light_energy = 0.8
+ssao_enabled = false
+ssao_radius = 1.2
+ssao_intensity = 2.5
+reflected_light_source = 1
+tonemap_mode = 0
+glow_enabled = true
+glow_intensity = 0.7
+glow_strength = 1.0
+glow_bloom = 0.0
+glow_blend_mode = 1
+glow_hdr_threshold = 1.0
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.80, 0.58, 0.58, 1)
+fog_density = 1.0
+fog_sky_affect = 0.0
+fog_depth_begin = 30.0
+fog_depth_end = 420.0
+fog_depth_curve = 1.0
+
+[sub_resource type="ShaderMaterial" id="CtrlSkyMat"]
+shader = ExtResource("7_csky")
+
+[sub_resource type="Sky" id="CtrlSky"]
+sky_material = SubResource("CtrlSkyMat")
+radiance_size = 0
+
+; Steuerkamera: Werte unverfälscht (kein Umgebungslicht, kein Nebel, kein Glühen, linear)
+[sub_resource type="Environment" id="CtrlEnv"]
+background_mode = 2
+sky = SubResource("CtrlSky")
+ambient_light_source = 1
+reflected_light_source = 1
+tonemap_mode = 0
+glow_enabled = false
+fog_enabled = false
+
+[sub_resource type="ShaderMaterial" id="WaterMat"]
+render_priority = 0
+shader = ExtResource("4_water")
+
+[sub_resource type="CylinderMesh" id="BeamMesh"]
+top_radius = 3.2
+bottom_radius = 0.3
+height = 30.0
+radial_segments = 24
+rings = 1
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="ShaderMaterial" id="BeamMat"]
+render_priority = 0
+shader = ExtResource("5_beam")
+shader_parameter/color = Color(1, 0.8, 0.5, 1)
+shader_parameter/intensity = 0.45
+shader_parameter/length_m = 30.0
+
+[node name="Main" type="Node"]
+script = ExtResource("1_main")
+water_material = SubResource("WaterMat")
+
+[node name="Color" type="SubViewport" parent="."]
+msaa_3d = 1
+size = Vector2i(1280, 720)
+render_target_update_mode = 4
+
+[node name="World" type="Node3D" parent="Color"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Color/World"]
+environment = SubResource("Env")
+
+; Abendsonne tief von links vorn; Richtung setzt main.gd (SUN_TRAVEL)
+[node name="Sun" type="DirectionalLight3D" parent="Color/World"]
+light_color = Color(1, 0.7, 0.46, 1)
+light_energy = 1.7
+shadow_enabled = true
+shadow_blur = 1.5
+directional_shadow_max_distance = 60.0
+
+; Figurenlicht nur für den Dachs (Ebene 2), aus Richtung der Laterne
+[node name="CharKey" type="DirectionalLight3D" parent="Color/World"]
+light_color = Color(1, 0.78, 0.55, 1)
+light_energy = 0.55
+light_cull_mask = 2
+
+; Bildkamera: sieht Ebenen 1 (Hafen), 2 (Dachs) und 3 (Effekte), nicht Ebene 20 (Steuerkennung)
+[node name="Camera" type="Camera3D" parent="Color/World"]
+cull_mask = 7
+current = true
+fov = 46.0
+near = 0.1
+far = 3000.0
+
+[node name="Harbor" parent="Color/World" instance=ExtResource("2_harbor")]
+
+[node name="Badger" parent="Color/World" instance=ExtResource("3_badger")]
+
+[node name="Effects" type="Node3D" parent="Color/World"]
+
+; Alles unter "Attach" hängt main.gd an das gleichnamige Empty im Hafen (Muster aus shared/3d)
+[node name="Attach" type="Node3D" parent="Color/World"]
+
+[node name="LanternLight" type="Node3D" parent="Color/World/Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="Color/World/Attach/LanternLight"]
+light_color = Color(1, 0.7, 0.38, 1)
+light_energy = 3.0
+omni_range = 9.0
+omni_attenuation = 1.4
+
+[node name="CottageWindow" type="Node3D" parent="Color/World/Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="Color/World/Attach/CottageWindow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+light_color = Color(1, 0.72, 0.4, 1)
+light_energy = 1.2
+omni_range = 4.5
+
+[node name="LighthouseLight" type="Node3D" parent="Color/World/Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="Color/World/Attach/LighthouseLight"]
+light_color = Color(1, 0.84, 0.58, 1)
+light_energy = 2.0
+omni_range = 5.0
+
+[node name="Rotor" type="Node3D" parent="Color/World/Attach/LighthouseLight"]
+
+[node name="Tilt" type="Node3D" parent="Color/World/Attach/LighthouseLight/Rotor"]
+transform = Transform3D(1, 0, 0, 0, 0.9961947, 0.08715574, 0, -0.08715574, 0.9961947, 0, 0, 0)
+
+[node name="Beam" type="MeshInstance3D" parent="Color/World/Attach/LighthouseLight/Rotor/Tilt"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, -15)
+layers = 4
+cast_shadow = 0
+mesh = SubResource("BeamMesh")
+surface_material_override/0 = SubResource("BeamMat")
+
+; Steuerkamera: folgt der Bildkamera (main.gd), sieht Ebenen 1, 2 und 20
+[node name="Ctrl" type="SubViewport" parent="."]
+use_hdr_2d = true
+size = Vector2i(1280, 720)
+render_target_update_mode = 4
+
+[node name="CtrlCam" type="Camera3D" parent="Ctrl"]
+cull_mask = 524291
+environment = SubResource("CtrlEnv")
+current = true
+fov = 46.0
+near = 0.1
+far = 3000.0
+
+[node name="Post" type="Node" parent="." node_paths=PackedStringArray("color_vp", "ctrl_vp", "paint_rect")]
+script = ExtResource("8_post")
+color_vp = NodePath("../Color")
+ctrl_vp = NodePath("../Ctrl")
+paint_rect = NodePath("../Paint")
+
+[node name="Paint" type="ColorRect" parent="."]
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource("9_ui")

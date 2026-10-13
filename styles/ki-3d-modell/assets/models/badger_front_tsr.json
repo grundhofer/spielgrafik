@@ -1,0 +1,45 @@
+{
+ "image": "styles/ki-3d-modell/assets/raw/badger_front.png",
+ "device": "mps",
+ "mc_resolution": 256,
+ "threshold": 25.0,
+ "ratio": 0.85,
+ "torch": "2.7.1",
+ "revision": "5b521936b01fbe1890f6f9baed0254ab6351c04a",
+ "t_load": 1.81,
+ "crop": {
+  "src_bbox": [
+   220,
+   34,
+   1034,
+   1195
+  ],
+  "square": 1366,
+  "offset": [
+   276,
+   102
+  ],
+  "ratio": 0.85
+ },
+ "t_model": 1.14,
+ "t_render": 7.19,
+ "t_mesh": 2.62,
+ "vertices": 60907,
+ "faces": 121822,
+ "bounds": [
+  [
+   -0.3391,
+   -0.3568,
+   -0.4932
+  ],
+  [
+   0.3401,
+   0.3678,
+   0.5083
+  ]
+ ],
+ "watertight": true,
+ "signed_volume": 0.12795515781024727,
+ "components": 2,
+ "t_total": 13.42
+}

@@ -1,0 +1,9 @@
+{
+ "D": 2.0,
+ "k_norm": 1.5301952559540268,
+ "cx_norm": 0.498279710571307,
+ "cy_norm": 0.49716898131257675,
+ "iou": 0.9796,
+ "iou_default_1.9m_40deg": 0.8848,
+ "model": "u = cx + k*y/(D-x), v = cy - k*z/(D-x), normiert auf die Bildbreite des quadratischen Eingabebilds"
+}

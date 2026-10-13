@@ -1,0 +1,146 @@
+{
+ "slug": "mode7",
+ "name": "Mode 7 & Pseudo-3D",
+ "family": "retro3d",
+ "kind": "style",
+ "era": "1990–1996",
+ "summary": "Eine einzige, perspektivisch gekippte und drehbare Kachelebene wie im Mode 7 der 16-Bit-Konsole: Die Perspektive entsteht aus einer Matrix, die eine HDMA-Tabelle in jeder Bildzeile neu setzt, gerechnet in 8.8-Festkomma und ohne Filter, deshalb treppt und flimmert die Ferne. Über der Horizontzeile laufen Himmel, Wolken und der ferne Leuchtturm als normale Ebenen. Gegenstände und Figuren sind Sprites, von denen für jede Entfernung eine vorgezeichnete Größenstufe gewählt wird, weil die Hardware nicht skalieren kann.",
+ "references": [
+  "Super Nintendo / Super Famicom (Nintendo 1990/1991), Grafikmodus 7 der PPU mit HDMA",
+  "F-Zero (Nintendo 1990)",
+  "Pilotwings (Nintendo 1990)",
+  "Super Mario Kart (Nintendo 1992)",
+  "ActRaiser (Quintet/Enix 1990): Flug über die Landkarte",
+  "Secret of Mana (Square 1993): Flug auf dem Drachen über die Weltkarte",
+  "Final Fantasy VI (Square 1994): Luftschiff über der Weltkarte, Dunst am Horizont"
+ ],
+ "traits": [
+  "Bild 256×224 mit quadratischen Pixeln, ganzzahlig ×3 (768×672 in der 1280×720-Aufnahme), Abtastung überall ohne Filter und ohne Mipmaps",
+  "Mode-7-Ebene: Kachelkarte 128×128 = 1024×1024 Texel (1 Texel = 0,1 m), 181 von höchstens 256 Kacheln à 8×8 mit 8 Bit je Texel, 41 Farben aus den CGRAM-Einträgen 64–105; außerhalb der Karte wiederholt sich Kachel 0 (offenes Meer, M7SEL)",
+  "Perspektive je Bildzeile: A, B, C, D als 8.8-Festkomma aus einer HDMA-Tabelle (131 Zeilen), Rechnung ganzzahlig wie die PPU (untere 6 Bit abgeschnitten, Texel = Wert >> 8); das Godot-Bild ist gleich der Python-Nachrechnung: 0 abweichende Pixel bei 5,1 Mio. geprüften Ebenenpixeln in 180 Bildern",
+  "Treppung und Flimmern sind messbar: Die Festkommarechnung verschiebt 11–12 % der Ebenenpixel gegenüber exakter Perspektive; in den 40 Zeilen unter dem Horizont ändern sich von Bild zu Bild 9–15 % der Pixel, mit 4×4-Glättung wären es 0,6–2 % (assets/compare_plane.png)",
+  "Kamerafahrt über die Bucht: in 3,7 s 15 m nach Norden, Augenhöhe 5,0 → 2,8 m, Kurs −14° → −3°; Ebene und Horizont drehen sich sichtbar mit, Wolken und Leuchtturm verschieben sich ganzzahlig um F·Kurs (46 px), der Leuchtturm wird nicht größer (unendlich fern)",
+  "Moduswechsel an der Horizontzeile 92: darüber Mode 1 mit BG2 (Wolken, 256 px periodisch, 179 Kacheln) und BG1 (Felsnase, Leuchtturm, Inseln; 85 Kacheln, je 8×8-Kachel eine von 2 Paletten), Himmel als Hintergrundfarbe je Zeile (HDMA, 5-Bit-Stufen sichtbar); darunter Mode 7 mit Farbaddition je Zeile (warmer Dunst in den 20 Zeilen unter dem Horizont)",
+  "Sprites in vorgezeichneten Größenstufen, je Bild nach Entfernung gewählt (nächste Stufe im logarithmischen Maßstab, der Wechsel springt sichtbar): Dachs 6 Stufen (12–38 px/m, Figur 12–40 px hoch), Laterne 6, Häuschen 4, Fässer 4, Kisten 4, beide Boote 4, Bojen 5, Möwen 4, Rauch 6, Lichtschein 4, Schatten 6; 149 Einzelbilder im Atlas",
+  "Hardware-Grenzen der Sprites eingehalten, wenn man sie in 8×8- und 16×16-Sprites zerlegt: höchstens 21 Sprites und 32 8-px-Streifen je Zeile (Grenzen 32 und 34), höchstens 98 OAM-Einträge (128), höchstens 7,1 KB sichtbare OBJ-Kacheln je Bild",
+  "CGRAM mit 256 Einträgen zu 15 Bit, aufgeteilt wie bei Mode 1 oben und Mode 7 unten (Fenster 1–15, Horizont 16–63, Ebene 64–127, Sprites 128–255); jedes Ausgabepixel liegt auf dem 5-Bit-Raster (0 Abweichungen in 180 Bildern), durch Farbmathematik bis 287 Farben je Bild",
+  "Farbmathematik wie bei OBJ-Paletten 4–7 mit halber Addition: Rauch, Lichtschein von Laterne und Leuchtfeuer und der Schatten unter dem Dachs mischen sich nur mit den Hintergrundebenen, nicht mit anderen Sprites",
+  "Dachs-Kurier: läuft mit 8 Bildern bei 15 Bildern/s und 0,69 m/s über den Steg (der stehende nahe Fuß bleibt auf 0–1 px), hält an, dreht sich über eine Dreiviertelansicht zur Kamera, winkt (6 Bilder bei 6 Bildern/s) und atmet im Stehen (4 Bilder); in Steh- und Winkbildern Fußzeile 196 und Kopfoberkante 158 in jedem Bild gleich",
+  "Umgebung: Glitzern im Wasser per Palettenrotation (4 Einträge), Leuchtfeuer blitzt alle 3,2 s (Palette + Lichtschein), Laterne flackert (Zufallsfolge mit festem Seed), Fenster glimmt, Rauch aus dem Schornstein, zwei Möwen, Boote rollen (3 Bilder) und wippen, Bojen wippen mit Blinklicht, Wolken treiben",
+  "Textfenster als BG3 oben über dem Himmel: höchstens 3 Farben je 8×8-Kachel (gemessen in 30 212 Kacheln), Titelleiste mit Ort, Schreibmaschinentext mit 40 Zeichen/s, Parserzeile mit blinkendem Cursor; 248×48 px = 20,8 % des Bildes, gleitet per Scroll von oben herein"
+ ],
+ "camera": "Verfolgerkamera ohne Neigung wie in Renn- und Flugszenen: Blick waagrecht, Horizont fest in Zeile 92, Brennweite 236 px (57° waagrecht); fährt in 3,7 s von (0,9 | −15,0) nach (0,3 | 0,0), sinkt von 5,0 auf 2,8 m Augenhöhe, dreht von −14° auf −3° und steht danach vor dem Steg. Eigener Grundriss (Kai links, Steg quer, Leuchtturm auf einer fernen Felsnase), nicht der aus shared/3d, weil ein Leuchtturm auf der Horizontebene nicht näher kommen kann.",
+ "resolution": "256×224, quadratische Pixel (×3 = 768×672); Mode 7: Karte 128×128 Kacheln = 1024×1024 Texel zu 0,1 m, 181 Kacheln, 41 Farben; Horizont 512×93 px (BG1, BG2); CGRAM 256 Einträge × 15 Bit",
+ "pipeline": [
+  {
+   "step": "Grundriss und Kachelsatz der Ebene",
+   "tool": "scripts/build_plane.py (Python)",
+   "detail": "Grundriss in Metern (scripts/layout.py): Kai und Steg auf dem 0,8-m-Kachelraster, Felsufer als Linienzüge und Felsen im Wasser als Kreise. Kacheln aus Regeln wie in einem Kachel-Editor: offenes Wasser aus einem nahtlosen 32×32-Muster (16 Kacheln, kurze Wellenstriche, 8 Glitzertexel), Kachel 0 als eigene Meer-Kachel für außerhalb, Pflaster aus einem 32×16-Muster, Kantensteine, Mauerschatten im Wasser, Stegplanken quer mit Balken und Pfählen alle 2,4 m, Felsufer und Fels/Gras als Eckentypen (bilineare Ecken plus Rauschen, das zu den Kachelkanten hin verschwindet). Gleiche Kacheln zusammengelegt: 181 Kacheln, 41 Farben."
+  },
+  {
+   "step": "Horizontebenen",
+   "tool": "scripts/build_backdrop.py (Python)",
+   "detail": "BG2: 14 Schichtwolken mit von unten beleuchteter Kante (je tiefer, desto wärmer), 256 px breit und zweimal nebeneinander, dazu 14 Sterne. BG1: ferne Inseln, Hügel links, Felsnase mit Plateau, Leuchtturm (24 px, von Hand als Zeichenmuster) und Wärterhaus. Danach je 8×8-Kachel genau eine Palette erzwungen (29 Pixel auf die nächste Farbe der Palette gesetzt) und Kacheln gezählt."
+  },
+  {
+   "step": "Sprite-Rohbilder in Größenstufen",
+   "tool": "Blender 5.2 (blender/render_sprites.py, EEVEE)",
+   "detail": "badger.glb und harbor.glb aus shared/3d. Je Blatt, Größenstufe und Bild eine orthografische Aufnahme in 4-facher Größe ohne Kantenglättung: Materialnummer als Emissionsfarbe und Normale im Kameraraum. Höhenwinkel je Objekt nach der echten Blickrichtung (Dachs 18°, Laterne 20°, Häuschen 9°, Boote 7–10°), Dachs 20° zur Kamera gedreht; Boote mit Holdout-Wasserfläche (Rumpf unter Wasser weg) und drei Rollwinkeln (−3°, 0°, 3°). 10 Blätter, 224 Bilder in etwa 8 s."
+  },
+  {
+   "step": "Sprites verkleinern und schattieren",
+   "tool": "scripts/build_sprites.py (Python)",
+   "detail": "Je Zielpixel gewinnt das Material mit den meisten Rohpixeln (Augen ×4, Nase ×3, Glas ×2, Metall und Seil zählen mehr; dünne Teile brauchen nur 25 % Abdeckung), Licht von oben links vorn auf die gemittelte Normale, Ton aus der Tonleiter des Materials in der OBJ-Palette (15 Farben je Palette), Außenkontur außer an Glas und an höchstens 2 px dünnen Teilen. Möwen, Bojen, Rauch, Lichtschein und Schatten als Code. Atlas 512×239 (L8, CGRAM-Index je Pixel), 149 Bilder."
+  },
+  {
+   "step": "Godot-Demo",
+   "tool": "Godot 4.7.2 (GDScript, canvas_item-Shader)",
+   "detail": "main.gd rechnet je Bild Kamera, HDMA-Tabelle, Farbaddition, CGRAM-Animation und die OAM-Liste (Projektion, Größenstufe, Sortierung fern zuerst); Shader für Mode 7, Horizont, Sprites und halbe Farbaddition; ui.gd zeichnet das Textfenster."
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/probe.py, scripts/measure_badger.py, scripts/compare_plane.py, tools/capture.py",
+   "detail": "probe.py nimmt 180 Bilder in 256×224 mit Prüfprotokoll auf: HDMA-Tabelle gleich m7lib.py (0 Zeilen anders), jedes freie Ebenenpixel gleich der Nachrechnung (0 von 5,1 Mio.), 5-Bit-Raster (0 Abweichungen), Sprites und Streifen je Zeile, OAM, Fensterkacheln. Läufe mit --rendering-method mobile und gl_compatibility bitgleich zu Forward+ (0 abweichende Pixel in 180 Bildern), Dauerlauf ab t = 30 s ohne Fehler und mit gleicher Ebenenprüfung. measure_badger.py misst den Dachs allein auf Schwarz. build_all.py baut alles neu; zwei Durchläufe ergaben byte-gleiche Daten."
+  }
+ ],
+ "godot": [
+  "project.godot: Basis 256×224, stretch viewport, scale_mode integer, Fenster 768×672, 2D-Filter Nearest, Snap auf Pixel; run/delta_smoothing=false und physics/common/physics_jitter_fix=0.0, damit delta mit --fixed-fps von Anfang an genau 1/30 s ist",
+  "main.tscn: Sky (ColorRect, Zeilen 0–92, shaders/sky.gdshader), Plane (ColorRect, Zeilen 93–223, shaders/mode7.gdshader), Subscreen (BackBufferCopy: Kopie nur der Hintergrundebenen für die Farbmathematik), Objs (64 Sprite2D als OAM), UI (scripts/ui.gd)",
+  "shaders/mode7.gdshader: Rechnung wie bsnes ppu-fast mode7.cpp mit int: Ursprung je Zeile aus A·clip(HOFS−X0), B·clip(VOFS−Y0), B·y je mit & ~63, dann + A·x bzw. + C·x, Texel = >> 8; Kachelnummer per texelFetch aus der 128×128-Karte, Texel aus dem 128×128-Kachelblatt, Farbe aus der 256×1-CGRAM; außerhalb Kachel 0; danach + feste Farbe je Zeile (5 Bit, Sättigung bei 31); Ausgabe genau k/255",
+  "HDMA in main.gd: je Zeile λ = F·h·10/(y − 92) Texel; A = λ/F·cos θ·256, C = λ/F·sin θ·256; X0/Y0 = gerundete Kameraposition, HOFS = X0 − 128, VOFS = Y0, B und D so, dass B·y bzw. D·y die Zeilenmitte trifft und den Bruchteil der Kameraposition enthält (gerundet auf 8.8, begrenzt auf 16 Bit); Tabelle als 224×1-RGBAF-Textur",
+  "shaders/sky.gdshader: BG1 vor BG2 vor Hintergrundfarbe je Zeile (93×1-Textur), beide Ebenen 512 px mit Umbruch, HOFS = round(F·θ) + 100, Wolken zusätzlich −2 px/s; Index % 16 == 0 durchsichtig",
+  "Sprites: Sprite2D-Pool mit Bereich aus dem L8-Atlas; shaders/obj.gdshader (Index → CGRAM) oder shaders/obj_math.gdshader ((OBJ + Subscreen) >> 1 je 5-Bit-Kanal über hint_screen_texture); Positionen ganzzahlig, Laterne per flip_h gespiegelt; durchscheinende Sprites in den Dunstzeilen werden weggelassen, weil die Farbmathematik dort für den Dunst belegt ist",
+  "Ablauf: Fenster gleitet 0,15–0,45 s herein, Text ab 0,6 s mit 40 Zeichen/s, Parserzeile ab 2,7 s mit 14 Zeichen/s, Cursor blinkt ab 2,5 s; Kamera fährt bis 3,7 s; Dachs läuft 0–4,27 s (64 Laufbilder, hält im Kontaktbild), dreht sich 4,37–4,57 s, winkt 4,72–5,72 s, danach Ruhebilder; Leuchtfeuer blitzt bei 1,1 und 4,3 s; Poster bei 5,2 s (Bild 155, Winken)",
+  "Zeit über delta aufsummiert (+1e-6 gegen Rundung an Bildgrenzen), Flackern aus einer RandomNumberGenerator-Folge mit Seed 1993; Benutzerargumente nach --: --t0=<s>, --still=<s>, --dump=<datei> (Kamera, Register, HDMA, OAM je Bild), --measure (nur der Dachs auf Schwarz, Kamera fest mit Kurs 0°)"
+ ],
+ "techniques": [
+  "mode7-ebene",
+  "hdma-zeilentabelle",
+  "festkomma-perspektive",
+  "groessenstufen-sprites",
+  "blender-sprite-render",
+  "kachelsatz",
+  "farbzyklus",
+  "palettenanimation",
+  "farbmathematik",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 1,
+  "consistency": 4,
+  "effort": 3,
+  "text_adventure": 3,
+  "mobile": 5
+ },
+ "ratings_note": "ai_fit 1: Die KI hat zu diesem Eintrag nichts beigetragen, es gibt keine KI-Bilder (image_generations 0); Kacheln, Horizont und Oberfläche kommen aus Code, die Sprites aus Blender. Die Zahl sagt also nicht, wie gut ein Bildmodell den Stil träfe. consistency 4: Alle Sprites laufen durch dieselbe Blender-Verkleinerung und feste Paletten, Ebene und Horizont durch dieselben Regeln, neue Objekte passen ohne Nacharbeit; Abzug, weil die Kacheln aus Code flacher wirken als die schattierten Sprites und kleine Stufen (unter 15 px) kaum Einzelheiten zeigen. effort 3: Mode-7-Shader, HDMA, Sprite- und Kachelwerkzeuge sind fertig und deterministisch; je Ort braucht es aber einen Grundriss im Code, passende Kachelregeln und Objekte in Blender, und Kachelkunst aus Code braucht Programmierarbeit statt Zeichnen. text_adventure 3: Für Reisen zwischen Orten (Überfahrt, Anflug) sehr stimmungsvoll und sofort als 16-Bit-Spiel erkennbar, als Grundstil für Räume mit vielen Gegenständen ungeeignet: Bei 256×224 passen nur vier Textzeilen ins Fenster, die Figur ist höchstens 40 px groß. mobile 5 nach Probeläufen, nicht auf einem Gerät gemessen: --rendering-method mobile und gl_compatibility ohne ERROR/WARNING und bitgleich zu Forward+ (0 abweichende Pixel in 180 Bildern); die Szene sind zwei Rechtecke mit kleinen Shadern, höchstens 22 Sprite-Knoten und je Bild 131 Tabellenzeilen und 256 Palettenwerte in GDScript.",
+ "verdict": "Gut als besonderer Szenentyp für unser Textadventure, nicht als Grundstil: Eine Überfahrt oder ein Anflug auf einen Ort (Hafen, Insel, Leuchtturm) in Mode 7 wirkt sofort wie ein 16-Bit-Spiel und lässt sich mit den Werkzeugen hier wiederholen: Grundriss als Code, Kacheln aus Regeln, Objekte aus den gemeinsamen Blender-Modellen in Größenstufen, Horizont als zweite Ebene. Die Ebene ist pixelgenau wie die Hardware gerechnet, Treppung und Flimmern entstehen von selbst. Für Gesprächs- und Rätselräume fehlen Platz und Figurengröße; dafür besser einen Ortsbild-Stil (z. B. snes-16bit) nehmen und Mode 7 nur für Reisen einsetzen.",
+ "pitfalls": [
+  "Der Leuchtturm liegt wie im Auftrag auf der Horizontebene und wird beim Anflug nicht größer. Deshalb steht er auf einer fernen Felsnase; der Grundriss weicht bewusst von shared/3d ab (dort steht der Leuchtturm 25 m vor der Kamera und müsste mitwachsen). Die Kamera fährt in Richtung Leuchtturm, kommt ihm aber sichtbar nicht näher.",
+  "Gegenüber der Hardware vereinfacht: Die Mode-7-Daten liegen als Karte und Kachelblatt in zwei Texturen statt verschachtelt im VRAM; BG1/BG2 sind Indexbilder, deren Kachel- und Palettenregeln nur geprüft, nicht durch eine echte Kachelumwandlung erzwungen werden; der Text des Fensters wird mit der Godot-Schrift gezeichnet und danach je 8×8-Kachel geprüft; Sprites kommen aus einem Indexatlas über Sprite2D, die OAM-Zerlegung in 8×8/16×16-Sprites rechnet nur probe.py; die HDMA-Tabelle rechnet GDScript mit Gleitkomma und rundet dann auf 8.8 (die Konsole hätte Tabellen und den Hardware-Multiplizierer benutzt).",
+  "Mit reinen 16×16-Sprites wären es in 64 von 180 Bildern bis zu 38 Streifen je Zeile (Grenze 34, die Hardware ließe dann Pixel weg); erst die gemischte Zerlegung (16×16 nur, wo mindestens 3 Viertel belegt sind) bleibt bei 32 Streifen und 98 OAM-Einträgen. Die Endeinstellung mit Häuschen, Kisten, Fässern, Laterne, Booten und Dachs ist damit an der Grenze.",
+  "VRAM ist knapp: Mode 7 belegt 32 KB, die Horizontebenen (85 + 179 Kacheln) 8,4 KB, Karten und Fenster etwa 10 KB; die 149 vorgezeichneten Sprite-Bilder passen nicht gleichzeitig hinein und müssten je Bild per DMA nachgeladen werden (bis 7,1 KB sichtbare OBJ-Kacheln je Bild; ob das in die VBlank-Bandbreite passt, ist nicht geprüft). Die Wolkenebene hatte zuerst 263 Kacheln und wurde deshalb auf 256 px Breite verdoppelt.",
+  "Durchscheinende Sprites mischen sich wie auf der Konsole nur mit den Hintergrundebenen: Als der Lichtschein der Laterne vor dem Häuschen lag, verschwand das Häuschen innerhalb des Scheins. Die Laterne ist deshalb gespiegelt (Ausleger nach Osten), ihr Schein liegt jetzt über dem Wasser. In den 20 Dunstzeilen ist die Farbmathematik für den Dunst belegt; durchscheinende Sprites dort werden weggelassen (in dieser Aufnahme kam das nicht vor).",
+  "Messung des Dachses (scripts/measure_badger.py, Kamera fest, Kurs 0°): Der nahe Fuß steht in seinen Standphasen auf 0–1 px. Für den fernen Fuß, der im 18°-Blick 2 Zeilen höher steht und vom schwingenden nahen Bein teilweise verdeckt wird, wandert die sichtbare Zehenkante um bis zu 3 px. Die Kopfoberkante wippt im Laufen um 1 px; das Drehbild steht 1 px tiefer als Ruhe- und Winkbilder (näherer Fuß in der Dreiviertelansicht). Der Dachs ist 20° zur Kamera gedreht, läuft aber parallel zum Steg (übliche Dreiviertel-Konvention der Sprites).",
+  "Die Figur ist in der Endeinstellung 38–40 px hoch, beim Anflug nur 12–20 px; Gesicht und Paket sind erst in den beiden größten Stufen zu erkennen. Der winkende Arm ist dunkles Fell vor dunklem Wasser und hebt sich wenig ab.",
+  "Der erste Vergleich von Godot mit der Python-Nachrechnung ergab Tausende abweichende Pixel je Bild: Mit --fixed-fps 30 waren die ersten sechs delta-Werte trotzdem ungleich (0,75/1,0/1,25/0,875/0,9/0,975 × 1/30 s), weil physics_jitter_fix sie verschob, und Vector2-Konstanten sind float32. Gelöst mit physics_jitter_fix = 0, delta_smoothing = false und einzelnen float-Konstanten; danach 0 Abweichungen.",
+  "gl_compatibility schrieb Farben zuerst um 1/255 anders als Forward+ (8-Bit-Rundung beim Schreiben, in etwa 3,7 % der Pixel). Die Shader geben jetzt genau k/255 aus; seither sind beide Renderer bitgleich.",
+  "Blender 5.2 bot im Skript keine Ansichtstransformation „Raw“; die Material- und Normalendurchgänge laufen mit „Standard“ und werden in Python aus sRGB zurückgerechnet. Im Kameraraum der Shader-Knoten zeigt +Z in die Szene; mit falschem Vorzeichen waren zuerst alle zur Kamera gewandten Flächen dunkel (Gesicht unlesbar).",
+  "Vorgerenderte Sprites aus 3D statt von Hand gepixelt: Das erinnert eher an spätere vorgerenderte 16-Bit-Spiele als an die handgezeichneten Sprites der Mode-7-Klassiker. Jedes Objekt hat nur einen Blickwinkel; während die Kamera um 11° dreht, bleibt die Ansicht des Häuschens gleich.",
+  "Kachelkunst aus Code ist sauber, aber schlicht: Das Felsufer zeigt Stufen im 0,8-m-Raster, das Pflaster erzeugt in der Ferne starkes Moiré (gewollt, wirkt aber unruhig), es gibt keine von Hand gezeichneten Einzelheiten wie Netze oder Pfützen.",
+  "Die drei Auswahlantworten aus ui_text fehlen: Mit Ort, Zeile und Parserzeile ist das Fenster schon 48 px hoch; drei weitere Zeilen hätten mehr als 30 % des Bildes verdeckt.",
+  "Durch die Farbmathematik entstehen bis 287 Farben je Bild, mehr als die 256 CGRAM-Einträge; das ist auf der Konsole ebenso. Pixel sind quadratisch, die 8:7-Breite des Fernsehbilds ist nicht nachgebildet. Der Horizont verschiebt sich linear mit dem Kurs (F·θ), richtig wäre tan: Der Leuchtturm wandert über die 11°-Drehung 46 statt 50 px; weil am Horizont der Ebene dort nur offenes Wasser liegt, fällt das nicht auf."
+ ],
+ "lessons": [
+  "Mode 7 in Godot: ein ColorRect mit canvas_item-Shader, der die Hardware-Formel ganzzahlig rechnet, und eine 224×1-RGBAF-Textur als HDMA-Tabelle, die GDScript je Bild füllt. Eine Python-Nachrechnung derselben Formel trifft das Godot-Bild pixelgenau; damit lässt sich jede Änderung messen statt schätzen.",
+  "B und D je Zeile nehmen den Bruchteil der Kameraposition auf (VOFS = Y0, Multiplikator = Bildzeile): Die Kamera gleitet ohne Texelsprünge, die Rundung auf 8.8 und das Abschneiden der unteren 6 Bit erzeugen trotzdem die typische Treppung in der Nähe und das Flimmern in der Ferne.",
+  "Für reproduzierbare Aufnahmen, die ein Prüfskript nachrechnen soll: physics/common/physics_jitter_fix = 0 und run/delta_smoothing = false setzen und keine Vector2-Konstanten (float32) verwenden.",
+  "Größenstufen aus Blender: je Stufe ein eigenes Bild in 4-facher Größe mit Materialnummer und Normale, dann je Zielpixel Material nach Mehrheit (kleine Teile gewichtet), eigenes Licht auf die Normale und Tonleiter aus der Palette. 149 Sprite-Bilder in etwa 10 s, byte-gleich wiederholbar.",
+  "Eine Mode-7-Karte aus Regeln (nahtlose Musterblöcke für Flächen, Eckentypen für freie Ufer, feste Kacheln für Kai und Steg) bleibt mit 181 Kacheln deutlich unter 256; derselbe Weg passt für Rennstrecken oder Weltkarten.",
+  "Halbe Farbaddition wie auf der Konsole: BackBufferCopy nach den Hintergrundebenen und ein Shader mit hint_screen_texture, der (OBJ + Kopie) >> 1 rechnet. Durchscheinende Sprites so platzieren, dass sie keine anderen Sprites überdecken.",
+  "Shader, die genau k/255 ausgeben, machen Forward+, Mobile und Compatibility bitgleich.",
+  "Eine Wolkenebene, die sich alle 256 px wiederholt, braucht nur halb so viele Kacheln und zeigt trotzdem keine Wiederholung, weil immer genau eine Periode im Bild ist.",
+  "Füße in einer Ansicht von schräg oben messen: Phasen mit gleicher unterster Zeile gehören zum selben Standfuß; dessen Zehenkante muss stehen bleiben. Der Vorschub des Sprites wird nur beim Bildwechsel (15 Bilder/s) gesetzt, sonst rutscht der Fuß zwischen zwei Laufbildern."
+ ],
+ "assets": [
+  {"file": "assets/m7_map_preview.png", "kind": "background", "made_with": "build_plane.py: ganze Mode-7-Karte 1024×1024 in CGRAM-Farben"},
+  {"file": "assets/m7_tiles_sheet.png", "kind": "tileset", "made_with": "build_plane.py: alle 181 Kacheln (×4)"},
+  {"file": "assets/backdrop_preview.png", "kind": "background", "made_with": "build_backdrop.py: BG1 und BG2 über dem Himmelsverlauf, 512×93 (×3)"},
+  {"file": "assets/sprites_sheet_dark.png", "kind": "sprite-sheet", "made_with": "Blender 5.2 + build_sprites.py: Atlas mit allen Größenstufen auf dunklem Grund (×3)"},
+  {"file": "assets/sprites_sheet_light.png", "kind": "sprite-sheet", "made_with": "Blender 5.2 + build_sprites.py: derselbe Atlas auf hellem Grund (Säume prüfen)"},
+  {"file": "assets/cgram_sheet.png", "kind": "palette", "made_with": "build_all.py: alle 256 CGRAM-Einträge mit Bereichen"},
+  {"file": "assets/compare_plane.png", "kind": "comparison", "made_with": "compare_plane.py: Hardware (8.8, nächster Texel) | exakte Perspektive | 4×4-Glättung, bei 0,5 / 2,0 / 3,6 s"},
+  {"file": "assets/probe.json", "kind": "measurement", "made_with": "probe.py: Forward+, 180 Bilder"},
+  {"file": "assets/measure_badger.json", "kind": "measurement", "made_with": "measure_badger.py: Kopf, Fußzeile und Standfuß je Bild"},
+  {"file": "demo/art/obj_atlas.png", "kind": "sprite-sheet", "made_with": "build_sprites.py: CGRAM-Index je Pixel (L8), so wie die Demo ihn lädt"}
+ ],
+ "licenses": [
+  {"item": "Schrift Pixel Operator 8 (Jayvee Enaguas)", "license": "CC0-1.0", "source": "https://www.dafont.com/pixel-operator.font (Lizenztext: demo/fonts/PixelOperator-LICENSE.txt)"},
+  {"item": "Dachs, Häuschen, Laterne, Fässer, Kisten, Boote (als Vorlagen der Sprites)", "license": "eigene Modelle des Katalogs", "source": "shared/3d/badger.glb, shared/3d/harbor.glb"},
+  {"item": "Kacheln, Karte, Horizont, Möwen, Bojen, Rauch, Lichtschein, Paletten, Shader, Skripte", "license": "eigener Code, keine fremden Grafiken", "source": "styles/mode7/"}
+ ],
+ "image_generations": 0,
+ "tool_issues": [
+  "tools/capture.py nimmt mit --fixed-fps 30 auf; Godot verschiebt trotzdem die ersten sechs delta-Werte (0,75/1,0/1,25/0,875/0,9/0,975 × 1/30 s), solange physics/common/physics_jitter_fix nicht 0 ist, danach läuft die Zeit dauerhaft 0,25 Bild nach. Die Aufnahme bleibt reproduzierbar, aber nicht genau t = k/30. Umgangen in demo/project.godot (physics_jitter_fix = 0, delta_smoothing = false)."
+ ],
+ "status": "done"
+}

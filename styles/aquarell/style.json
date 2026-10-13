@@ -1,0 +1,240 @@
+{
+ "slug": "aquarell",
+ "name": "Aquarell",
+ "family": "gemalt",
+ "kind": "style",
+ "era": "2010er bis heute (gemalte Indie-Erzählspiele und Plattformer)",
+ "summary": "Transparente Lasuren auf weißem Papier: weiche Nass-in-Nass-Verläufe, ausgefranste Ränder mit dunklerem Trockenrand, ausgespartes Papierweiß, sichtbares Papierkorn und viel Weißraum um Bild und Text. Bewegt wird wenig und ruhig: Lasurebenen gleiten über Wasser und Himmel, Licht und Rauch erscheinen als zum Papier aufgehellte Stellen.",
+ "references": [
+  "Gris (Nomada Studio, 2018): Plattformer in Aquarell-Optik",
+  "Child of Light (Ubisoft Montreal, 2014): aquarellartig gemalte Hintergründe",
+  "Bilderbuch-Illustration mit Aquarell als Medium (Technik, kein bestimmtes Werk)"
+ ],
+ "traits": [
+  "Die Farbe endet zum Papier hin in ausgefransten Rändern mit dunklerem Trockenrand; das gemalte Bild liegt als Blatt auf dem Papier",
+  "Weißraum: blankes Papier um das Bild (oben etwa 20 px, seitlich etwa 70 px, unten mit Trockenpinsel-Auslauf) und unter dem Text, der direkt auf dem Papier steht",
+  "Ausgespartes Papierweiß im Bild: die hellsten Stellen (Wolkenband am Horizont, Spiegelung, weiße Flächen) sind hart begrenzt fast unbemalt",
+  "Papierkorn über dem ganzen Bild einschließlich Figur und Text, in dunklen Lasuren stärker (Granulation)",
+  "Weiche Nass-in-Nass-Verläufe im Himmel, keine Tusche-Konturlinien",
+  "Die Figur ist aus flachen, transparenten Lasuren gebaut: je Kostümteil eine Eigenfarbe und eine hart begrenzte Schattenlasur, Trockenrand an jeder Lasurkante, helles Fell und Hemd fast Papierweiß, keine Fell- oder Strickstruktur",
+  "Wasser bewegt sich durch eine seitlich gleitende Lasurebene und eine leicht gekräuselte Spiegelung (nur innerhalb der Wassermaske; der Papierrand bleibt ruhig)",
+  "Wolken ziehen als transparente Lasuren, die nur abdunkeln (multiplikativ); Lampenschein, Lichtbahn des Leuchtturms und Schornsteinrauch erscheinen als zum Papier aufgehellte Flecken statt als additiver Schein"
+ ],
+ "camera": "Seitenansicht auf Augenhöhe, feste Kamera; der Kai im Vordergrund ist der Laufweg",
+ "resolution": "1280×720; gemaltes Bild etwa 1140×578 (KI-Bild 1536×1024 auf 76,7 % verkleinert) auf Papier mit etwa 20 px Rand oben (ausgefranst 10–34 px), etwa 70 px seitlich und 120 px Textfläche unten; Laufzeile y 550, Figur 150 px hoch (fest gesetzt, aus der Perspektive wären es 135 px), 15 Figurenbilder/s",
+ "pipeline": [
+  {
+   "step": "Bildaufträge (Phase 1 geplant, zentral erzeugt)",
+   "tool": "prompts/make_jobs.py -> assets/image_jobs.json -> tools/imagequeue.py",
+   "detail": "3 Aufträge, alle 1536×1024: (1) raw/bg.png Hintergrund ohne Referenz; (2) raw/walk.png Bogen 2×5 mit 8 Laufbildern, Stehen und Dreiviertel-Drehung, Referenzen Blender-Layout, Master-Sheet, raw/bg.png als Stilreferenz; (3) raw/front.png Bogen 2×3 zur Kamera (Stehen, drei Winkposen, Blinzeln, Sprechen), Referenzen Blender-Layout, raw/walk.png, Master-Sheet. Prompt: Stilblock (transparente Lasuren, Trockenränder, Granulation, starke Vereinfachung, begrenzte Pigmentpalette, Verbote: Foto, 3D-Render, digitale Malerei, Gouache, Postkarte, Plüschfigur) + Komposition + Motivblock wörtlich + Hinweise zu später animierten Teilen + Schutzregeln + Format."
+  },
+  {
+   "step": "Erzeugt: alle drei Bilder über Codex",
+   "tool": "genimg (gpt-image über Codex CLI 0.162.0)",
+   "detail": "backend laut .json: codex bei allen drei, je ein Versuch (60–88 s), geliefert in der angefragten Größe 1536×1024. Die Figurenbögen kamen mit echtem Alphakanal (Deckung höchstens 253–254 statt 255, ohne Saum); kein Magenta-Key nötig."
+  },
+  {
+   "step": "Nachbesserung 1 nach Prüfung 1: Laufbogen neu (nicht verwendet)",
+   "tool": "genimg (gpt-image über Codex), tools/make_style_ref.py, prompts/make_jobs.py -> assets/fix_jobs.json",
+   "detail": "raw/walk_v2.png, backend codex, 1536×1024, 84 s. Referenzen: Blender-Layout, Master-Sheet und als Stilreferenz assets/ref/wash_style.png (Ausschnitte mit echter Lasur aus raw/bg.png: Fässer, Kisten, Pflaster); Prompt verlangt ausdrücklich je Kostümteil ein bis zwei flache Lasuren, Papierweiß, harte Pigmentränder, kein Fell, kein Filz, keine runde 3D-Schattierung. Ergebnis nur wenig flacher, weiter deckend mit Fell- und Strickstruktur; nicht verwendet. Der zweite geplante Auftrag (raw/front_v2.png) wurde nicht erzeugt (Lauf abgebrochen, danach nicht mehr nötig)."
+  },
+  {
+   "step": "Layout-Referenzen für die Figur",
+   "tool": "blender/pose_layout.py (Blender 5.2, EEVEE) + tools/make_layouts.py",
+   "detail": "Posen des gemeinsamen Dachs-Modells (shared/3d/badger.glb) orthografisch mit 409,6 px/m, Licht von links oben, auf reinem Magenta zu assets/ref/walk_layout.png (2×5) und front_layout.png (2×3) zusammengesetzt; layouts.json hält Zellen und Sohlenpunkte. Codex hielt sich eng an Posen, Maßstab und Fußlinie."
+  },
+  {
+   "step": "Hintergrund aufbereiten",
+   "tool": "tools/prep_bg_ai.py (NumPy, Pillow) + assets/bg_ai_override.json",
+   "detail": "Automatische Erkennung hier großteils falsch (Horizont an der Kaikante, Lampe auf dem Boot, Laterne auf den Kisten), daher Korrekturdatei: Horizont 515, Lampe, Laterne, Fenster, Schornstein von Hand (Rohbild-Pixel), Laufzeile Rohbild 770 / Bildschirm 550 und Oberkante 100 (Maßstab 0,767, damit Schornstein mit Platz für Rauch und Leuchtturm ins Bild passen; seitlich bleibt Papier), Figurenhöhe 150 px, Wassermaske aus 23 Keimen, die je mit ihrer eigenen Farbe wachsen (Toleranz 0,12), Lampenschein 0,45-fach, Rauchdeckung 0,6. Nichts übermalt: Rauch, Lichtstrahl und Möwen hat das Modell wie verlangt weggelassen."
+  },
+  {
+   "step": "Hintergrund: Farbe und Papierweiß (nach Prüfung 1)",
+   "tool": "tools/prep_bg_ai.py → grade()",
+   "detail": "Im Pigmentmodell die Dichten je Kanal zum Mittel hin auf 78 % (weniger Postkarten-Sonnenuntergang); die hellsten 3 % (geglättete Helligkeit, Rand mit Rauschen verbogen) auf 18 % der Dichte, also fast Papier: ausgespartes Weiß im Wolkenband, in der Spiegelung und an weißen Flächen."
+  },
+  {
+   "step": "Papierrand",
+   "tool": "tools/finish_bg.py",
+   "detail": "Ausgefranster Rand mit Trockenrand (Pigmentmodell), unten Trockenpinsel-Auslauf, Alpha = Farbauftrag; Ergebnis assets/bg.png."
+  },
+  {
+   "step": "Figur neu lasieren (nach Prüfung 1)",
+   "tool": "tools/reglaze.py (NumPy, Pillow), aufgerufen von tools/prep_badger_ai.py",
+   "detail": "Je Bogen in Quellauflösung: 16 Farbgruppen (k-means in Lab) über Farbton und Helligkeit den Kostümteilen zugeordnet (dunkles Fell, helles Fell/Hemd, Grün, Rot, Leder, Paket), Mehrheitsentscheid (σ 2,2 px) macht aus Fell und Maschen ruhige Flächen. Je Teil eine flache Lasur der hellen Eigenfarbe (Mittel der helleren 55 %) mit leichter Wolkigkeit und Trockenrand an der Kante; eine zweite, hart begrenzte Schattenlasur aus der stark geglätteten KI-Helligkeit (σ 24 px, Anteil 30–40 %, plus das dunkelste Zehntel als Schlagschatten), kleine Inseln per Mehrheit entfernt; Schatten auf hellem Fell kühl. Hellstes Zehntel bis Viertel ausgehoben (helles Fell und Hemd fast Papier), an manchen Materialgrenzen ein Papierspalt, Granulation (dunkle Farben stärker). Aus dem KI-Bild bleiben Messingknöpfe, starke dunkle Einzelheiten und im Kopf Augen, Nase und Mund (vorzeichenbehafteter Hochpass, Pupillen in voller Tiefe); im Gesicht keine Schattenlasur auf den dunklen Streifen (sonst verschwinden die Augen bei 150 px). Rauschen je Layoutzelle gleich, damit Bilder eines Bogens an derselben Stelle dasselbe Korn haben."
+  },
+  {
+   "step": "Figur aufbereiten",
+   "tool": "tools/prep_badger_ai.py (NumPy, Pillow) + assets/badger_ai_override.json",
+   "detail": "Bögen per Zusammenhangskomponenten in die Layoutzellen zerlegt, je Bogen ein Maßstab auf 150 px (Lauf 0,361, Vorder 0,323), Ausrichtung am Kopf und an der Fußzeile. Vorschub je Laufbild aus dem Standfuß gemessen und in badger_ai_override.json festgelegt: 4, 8, 6, 8, 4, 8, 7, 9 px (54 px je Zyklus). Augen: Bild 'blink' = 'front' mit den geschlossenen Augen aus dem KI-Blinzelbild (Gesicht per Vorlagenvergleich ausgerichtet), in den drei Winkbildern die offenen Augen aus 'front' (im KI-Bild wave_in war ein Auge zu). Vorderansicht aus Teilen: fester Körper, Winkarm (30–33 % der Figur), Mund (11 %); Trockenrand 0,3 an der Außenkante."
+  },
+  {
+   "step": "Code-Assets",
+   "tool": "tools/make_fx.py, tools/blot.py, tools/wc.py",
+   "detail": "Papierhöhenfeld (kachelbar), Wolken-, Rauch- und Wasserlasuren, Möwe, Schatten, Lichtflecken und Oberflächenelemente als Kleckse aus geschichteten, verformten Polygonen; Farben im Pigmentmodell (Dichten addieren)."
+  },
+  {
+   "step": "Zusammenstellen",
+   "tool": "tools/stage.py, tools/build_ai.py",
+   "detail": "stage.py kopiert nach demo/art/ und schreibt scene.json mit Lichtpunkten, Wolken und dem ganzen Ablauf der Figur (90 Einträge bei 15 Bildern/s: 48 Laufbilder, Stehen, Dreiviertel, Vorderansicht, Winken, Blinzeln, Sprechen). build_ai.py führt alles samt Godot-Import, Probelauf und Messung aus (ruft kein Bildmodell auf)."
+  },
+  {
+   "step": "Prüfung",
+   "tool": "tools/measure_badger.py, Godot --rendering-method, Randmessung",
+   "detail": "Godot-Prüfmodus (nur Figur auf Magenta): Fußlinie in allen 180 Bildern bei y 549; Standfuß bei den 24 Wechseln mit demselben Fuß am Boden (IoU der untersten 6 Zeilen ≥ 0,7) 0–1 px Schlupf; die Fußwechsel im Doppelstand sind so nicht messbar und wurden am Bogen gemessen (siehe badger_ai_override.json). Papierrand rechts: Spanne je Zeile über 60 Bilder höchstens 1 px (vorher in den Wasserzeilen bis 4 px). Renderer: mobile bitgleich zu Forward+, gl_compatibility mittlere Abweichung 0,23 von 255, höchstens 2 (Bilder 30, 90, 135)."
+  },
+  {
+   "step": "Rückfallweg ohne KI (nicht in der Demo)",
+   "tool": "blender/bg_passes.py, blender/badger_passes.py, tools/paint_bg.py, tools/paint_badger.py",
+   "detail": "Aus der ersten Welle: gemeinsamer Hafen und Dachs aus shared/3d als Hilfsebenen gerendert und in NumPy als Aquarell gerechnet. Wirkt wie gefiltertes 3D; stage.py --bg 3d / --badger 3d wählt ihn noch aus."
+  }
+ ],
+ "godot": [
+  "2D, Fenster 1280×720, stretch canvas_items; main.gd liest alle Lagen und den Ablauf der Figur aus res://art/scene.json",
+  "Gemälde als Sprite2D mit painting.gdshader: Zeilen in der Wassermaske werden bis 1,6 px seitlich versetzt (Spiegelung kräuselt); Alpha wird unverschoben abgetastet und am ausgefransten Rand (±4 px) nicht verschoben, damit der Papierrand ruhig bleibt",
+  "Lasuren mit glaze.gdshader (blend_mul), begrenzt auf die bemalte Fläche (Alpha des Gemäldes) und optional auf Himmel- oder Wassermaske: Wolken, Wasserlasur, Schatten",
+  "Licht mit lift.gdshader: normal gemischte warm-weiße Flecken, zum Papier aufgehellt statt additiv (Lampe, Laterne, Fenster, drehende Lichtbahn); die Rauchtupfer nutzen dasselbe Material, weil eine abdunkelnde Lasur auf dem dunklen Abendhimmel unsichtbar blieb",
+  "Papierkorn als letzte Ebene (paper.gdshader, hint_screen_texture): Prägung von links oben, Granulation abhängig von der Pigmentmenge, Zahnung",
+  "Figur mit sprite_mask.gdshader: nur innerhalb der bemalten Fläche sichtbar, Abendtönung (wärmer nahe der Laterne), Atmen als Stauchung um die Fußlinie im Vertex-Shader; Position ganzzahlig",
+  "Text als Label mit Alegreya (Variationsschrift über FontVariation) und Alegreya SC für den Ort; gemalte Unterstreichung, Farbtupfer als Aufzählungszeichen und Farbfleck hinter der gewählten Antwort",
+  "Deterministisch: Zeit aus delta aufsummiert, RandomNumberGenerator mit Seed 20261010"
+ ],
+ "techniques": [
+  "ki-spritesheet",
+  "rotoskopie",
+  "sprite-animation",
+  "kinemagramm",
+  "nachbearbeitung",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 2,
+  "consistency": 3,
+  "effort": 3,
+  "text_adventure": 5,
+  "mobile": 5
+ },
+ "ratings_note": "ai_fit 2: Die KI liefert Motiv, Komposition und Figurendesign, den Aquarell-Look nur teilweise. Der Hintergrund hat Lasurhimmel und Körnung, ist aber detailreich und kräftig (digitales Aquarell); die Figur kam zweimal deckend mit Fell- und Strickstruktur, auch mit ausdrücklichem Verbot und einer Lasur-Stilreferenz (walk_v2). Lasuren, Papierweiß und Trockenränder der Figur, Papierrand, Weißraum, Papierkorn, gleitende Lasurebenen und aufgehelltes Licht kommen aus Code. consistency 3: Lauf- und Vorderbogen passen zueinander (gleiche Lasurregeln und Farben je Bogen, Maßstab, Fußlinie), Figur und Hintergrund folgen jetzt derselben Technik, aber die Figur ist deutlich flacher und einfacher als der detailreiche Hintergrund, und die Schattenformen der Figur wechseln von Laufbild zu Laufbild leicht (jedes KI-Bild wird für sich lasiert). effort 3: je Ort ein KI-Bild, doch Horizont, Lampe, Laterne und Wasserkeime mussten von Hand gesetzt werden; die Neulasur läuft automatisch, ihre Materialregeln (Farbton, Helligkeit) sind aber auf die Farben dieser Figur abgestimmt, und der Vorschub an den Fußwechseln wurde von Hand gemessen. text_adventure 5: ein gemaltes Bild je Ort, ruhige Bewegung, Text auf blankem Papier gehört zum Stil. mobile 5: geprüft mit mobile (bitgleich zu Forward+) und gl_compatibility (mittlere Abweichung 0,23 von 255) an der fertigen Demo; nur 2D-Sprites und vier kleine Shader.",
+ "verdict": "Aquarell passt sehr gut zu unserem Textadventure: Ein Bild je Ort reicht, die Bewegung ist ruhig und billig (gleitende Lasuren, aufgehellte Lichter, Papierkorn als ein Shader), und der Weißraum gibt dem Text natürlichen Platz. Das Bildmodell liefert Ort und Figur aber nicht als echtes Aquarell: Den Hintergrund mussten wir entsättigen und Papierweiß aussparen, und die Figur malt es auch mit Lasur-Stilreferenz deckend wie Gouache oder Plüsch. Der tragfähige Weg ist, die KI-Figur als Vorlage für Form, Posen und Gesicht zu nehmen und sie im Code neu zu lasieren (reglaze.py: flache Lasur je Kostümteil, harte Schattenlasur, Papierweiß, Trockenränder); das liest sich bei Spielgröße als Aquarell und passt zum Hintergrund. Für ein ganzes Spiel sollten die Hintergründe noch einfacher werden (weniger Steinfugen und Takelage), etwa mit derselben Neulasur in großen Flächen oder einem anderen Bildmodell.",
+ "pitfalls": [
+  "Codex malte die Figur trotz „traditional transparent watercolour … not a plush toy, not a digital painting“ deckend mit feiner Fell- und Filzstruktur. Auch die Nachbesserung (raw/walk_v2.png, Stilreferenz mit echter Lasur aus dem eigenen Hintergrund, Prompt mit „one or two flat transparent washes, hard pigment rims, no fur texture, no felt, no soft rounded 3D shading“) kam nur wenig flacher zurück und wird nicht verwendet; die zweite Nachbesserung (Vorderbogen) wurde deshalb nicht erzeugt.",
+  "Die Aquarell-Figur ist Code (reglaze.py), nicht KI: Die Materialregeln (welcher Farbton ist Weste, Schal, Fell) sind auf die Farben dieses Dachses abgestimmt und müssen für andere Figuren geprüft werden. Weil jedes KI-Laufbild für sich lasiert wird, wechseln die Schattenformen auf Weste und Fell von Bild zu Bild leicht (wie bei gemalter Einzelbild-Animation, aber ungeplant). Das helle Fell und das Hemd sind fast Papierweiß und fließen ineinander.",
+  "Ein erster Offline-Versuch vor Prüfung 1 (Median, Farbgruppen, Trockenränder) erzeugte Höhenlinien in Verläufen und verwischte die Augen. Was den Unterschied macht: Schatten nur als eine harte Lasur aus der stark geglätteten Helligkeit (keine Stufen), und das Gesicht (Augen, Nase, Mund) aus dem KI-Bild übernehmen.",
+  "Der Hintergrund bleibt detailreich (Steinfugen, Schindeln, Takelage), obwohl der Prompt starke Vereinfachung verlangte. Entsättigen und das Aussparen der hellsten 3 % als Papierweiß helfen beim Farbeindruck; vereinfacht ist das Bild dadurch nicht. Das ausgesparte Weiß liegt vor allem im Wolkenband am Horizont, die beleuchteten Fenster bleiben warm statt weiß.",
+  "Die automatische Erkennung in prep_bg_ai.py versagte an diesem Bild: Horizont an der Kaikante (733 statt 515), Leuchtturmlampe auf dem roten Boot, Laterne auf den Kisten, Wassermaske mit gemeinsamer Keimfarbe nur 1,6 % des Bildes. Alles über assets/bg_ai_override.json gesetzt; Wasserkeime auf Kisten, Seil, Poller und Steuerhaus mussten wieder heraus.",
+  "Bis Prüfung 1 standen die Füße bei y 572 auf dem Trockenpinsel-Auslauf der Unterkante; jetzt läuft der Dachs bei y 550 mit Kai darunter. Die Figurenhöhe aus der Perspektive wäre dort 135 px; sie ist auf 150 px festgesetzt, damit Kostüm und Lasuren lesbar bleiben (der Dachs ist damit etwas größer als 1 m).",
+  "Mit den Leuchtwerten des 3D-Rückfallwegs wurde das Aufblitzen der Leuchtturmlampe zum großen gelben Klecks über der Laterne (die gemalte Lampe ist nur etwa 16 px breit), und der Rauch als abdunkelnde Lasur war auf dem dunklen Himmel unsichtbar; beides über scene.json bzw. das Aufhellen-Material korrigiert.",
+  "Das KI-Modell malte im Winkbild wave_in ein Zwinkern; aus den Teilen des Blinzelbilds übertrug die Differenzmaske nur ein Auge. Behoben, indem Augen nicht mehr über Differenzen, sondern als fester Gesichtsausschnitt (Vorlagenvergleich) ersetzt werden: Blinzeln schließt beide Augen, alle Winkbilder haben offene Augen.",
+  "Laufzyklus: Die automatische Vorschubsuche fand bei 4 von 8 Bildwechseln kein eindeutiges Fußpaar und nahm 6,9 px; dadurch rutschte bei walk_1 → walk_2 der Standfuß 3–4 px zurück. Der Vorschub steht jetzt gemessen in assets/badger_ai_override.json (4, 8, 6, 8, 4, 8, 7, 9). Folge: Der Kopf rückt an den beiden Doppelstand-Wechseln nur 4 px vor statt 7–9 px, ein leichtes Pulsieren im Gang, das aus den KI-Posen kommt; an diesen Wechseln bleibt 1 px Schlupf.",
+  "Das Stehbild ist wie im Blender-Layout eine Schrittstellung; der Dachs hält in Schrittstellung an (Sohle nahtlos), der Kopf weicht dabei 6 px zurück, dann dreht er sich zur Kamera.",
+  "Spiegelungen direkt unter den Booten und zwischen dichten Pfählen liegen außerhalb der Wassermaske und kräuseln nicht; dort steht das Wasser still."
+ ],
+ "lessons": [
+  "Codex (gpt-image) übernimmt ein Blender-Layout als erste Referenz sehr genau (Posen, Maßstab, Fußlinie, Zellen) und liefert Sprite-Bögen mit echtem Alphakanal: Der Laufzyklus war ohne Nacharbeit zerlegbar, die Fußlinie in allen 180 Bildern gleich.",
+  "Wenn das Bildmodell eine Maltechnik nicht trifft, die KI-Figur als Vorlage für Form, Posen und Gesicht nehmen und die Technik im Code nachbauen: Materialien über Farbgruppen + Mehrheitsentscheid, je Material eine flache Lasur und eine hart begrenzte Schattenlasur aus der stark geglätteten Helligkeit, Gesicht aus dem Original. Bei Spielgröße liest sich das als Aquarell; Höhenlinien gibt es nicht, weil nur eine Schwelle je Material gezogen wird.",
+  "Rauschen für Körnung und Kantenverlauf je Layoutzelle kacheln: Alle Bilder eines Bogens bekommen an derselben Figurstelle dasselbe Korn, und das Zusammensetzen aus Teilen (Körper, Arm, Mund) zeigt keine Nähte.",
+  "Augen nicht über Bilddifferenzen übertragen (bei 3 px großen Augen auf dunklem Fell geht ein Auge verloren), sondern einen festen Gesichtsausschnitt per Vorlagenvergleich ausrichten und ganz ersetzen.",
+  "Vorschub aus der besten Überdeckung der untersten Sohlenzeilen messen, solange derselbe Fuß steht (IoU ≥ 0,7); an Fußwechseln (Doppelstand) die Ferse des hinteren Fußes bzw. die Spitze des vorderen Fußes vergleichen und die Zyklussumme des Layouts als Gegenprobe nehmen.",
+  "Den Hintergrund nicht formatfüllend, sondern leicht verkleinert mit Papier an den Seiten setzen: So passen Schornstein samt Rauchraum, Leuchtturm und Laufweg ins Bild, und der Weißraum gehört ohnehin zum Stil.",
+  "Papierweiß lässt sich im Pigmentmodell nachträglich aussparen: hellste Stellen hart begrenzt und mit verbogenem Rand fast auf Papier zurücknehmen; Buntheit über die Dichten je Kanal zum Mittel hin dämpfen.",
+  "Auf dunklem Abendhimmel Rauch und Licht als Aufhellung zum Papier (wie Auswaschen mit dem Pinsel) zeigen statt als Lasur; abdunkelnde Lasuren wirken nur auf hellen Flächen.",
+  "Ein Shader, der das Bild zeilenweise verschiebt, muss Alpha unverschoben lassen, sonst wackelt ein ausgefranster Rand mit.",
+  "Wassermaske per Bereichswachstum: jeden Keim mit seiner eigenen Farbe wachsen lassen (Wasser mit orangem Lichtband und blauen Stellen hat keine gemeinsame Farbe) und Keime nie auf Gegenstände am Wasser setzen.",
+  "Aquarell im Pigmentmodell rechnen: Jede Lasur trägt eine optische Dichte bei, Ergebnis = Papier × exp(−Summe). Lasuren dunkeln nur ab, Papierweiß bleibt, Trockenränder entstehen als höhere Dichte innen an der Kante.",
+  "Wolken, Rauch und Wasserschlieren als Kleckse aus 30–60 übereinandergelegten, rekursiv verformten Polygonen mit wenigen Prozent Deckkraft: dichter Kern, ausgefranster Rand, ohne Bildmodell.",
+  "Den ganzen Ablauf der Figur als Tabelle (Bogen, Bild, x, Flags je Figurenbild) in Python vorausrechnen: Demo und Messskript lesen dieselbe Tabelle, und KI- und 3D-Figur laufen über denselben Code."
+ ],
+ "assets": [
+  {
+   "file": "assets/bg.png",
+   "kind": "background",
+   "made_with": "gpt-image (Codex) + tools/prep_bg_ai.py (Ausschnitt, Masken, Lichtpunkte, Korrekturdatei, Entsättigen und Papierweiß) + tools/finish_bg.py (Papierrand)",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/water_mask_ai.png",
+   "kind": "mask",
+   "made_with": "tools/prep_bg_ai.py: Wassermaske aus 23 Keimen für Kräuseln und Wasserlasur"
+  },
+  {
+   "file": "assets/badger_ai_walk.png",
+   "kind": "sprite",
+   "made_with": "gpt-image (Codex, Referenzen Blender-Layout + Master-Sheet + bg.png) + tools/reglaze.py (Neulasur) + tools/prep_badger_ai.py: 8 Laufbilder 148×163",
+   "prompt": "assets/raw/walk.json"
+  },
+  {
+   "file": "assets/badger_ai_stand.png",
+   "kind": "sprite",
+   "made_with": "gpt-image (Codex) + tools/reglaze.py + tools/prep_badger_ai.py: Stehen und Dreiviertel aus dem Laufbogen, Vorderansicht, drei Winkbilder, Blinzeln (beide Augen) und Sprechen aus Teilen des Vorderbogens",
+   "prompt": "assets/raw/front.json"
+  },
+  {
+   "file": "assets/raw/walk_v2.png",
+   "kind": "sprite",
+   "made_with": "gpt-image (Codex), Nachbesserung nach Prüfung 1 mit Lasur-Stilreferenz; nicht verwendet (weiter deckend mit Fellstruktur)",
+   "prompt": "assets/raw/walk_v2.json"
+  },
+  {
+   "file": "assets/ref/walk_layout.png",
+   "kind": "reference",
+   "made_with": "Blender 5.2 (blender/pose_layout.py) + tools/make_layouts.py: Layout und Posen für Auftrag 2"
+  },
+  {
+   "file": "assets/ref/front_layout.png",
+   "kind": "reference",
+   "made_with": "Blender 5.2 (blender/pose_layout.py) + tools/make_layouts.py: Layout und Posen für Auftrag 3"
+  },
+  {
+   "file": "assets/ref/wash_style.png",
+   "kind": "reference",
+   "made_with": "tools/make_style_ref.py: Ausschnitte mit Lasur aus raw/bg.png als Stilreferenz für walk_v2"
+  },
+  {
+   "file": "assets/paper.png",
+   "kind": "texture",
+   "made_with": "Code (tools/make_fx.py): kachelbares Höhenfeld eines kaltgepressten Papiers"
+  },
+  {
+   "file": "assets/fx/water_glaze.png",
+   "kind": "effect",
+   "made_with": "Code (tools/make_fx.py): waagerecht kachelbare Wasserlasur"
+  },
+  {
+   "file": "assets/fx/cloud_2.png",
+   "kind": "effect",
+   "made_with": "Code (tools/make_fx.py): Wolkenlasur, eine von fünf"
+  },
+  {
+   "file": "assets/fx/smoke_2.png",
+   "kind": "effect",
+   "made_with": "Code (tools/make_fx.py): Rauchtupfer, einer von vier (in Godot aufhellend)"
+  },
+  {
+   "file": "assets/fx/gull.png",
+   "kind": "sprite",
+   "made_with": "Code (tools/make_fx.py): Möwe in drei Flügelstellungen"
+  },
+  {
+   "file": "assets/ui/swatch.png",
+   "kind": "ui",
+   "made_with": "Code (tools/make_fx.py): Farbfleck hinter der gewählten Antwort"
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Alegreya (Variationsschrift, normal und kursiv)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/alegreya (Lizenztext: demo/fonts/OFL-Alegreya.txt)"
+  },
+  {
+   "item": "Schrift Alegreya SC Medium",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/alegreyasc (Lizenztext: demo/fonts/OFL-AlegreyaSC.txt)"
+  }
+ ],
+ "image_generations": 4,
+ "tool_issues": [
+  "tools/imagequeue.py (latent, hier nicht ausgelöst): Trägt ein Auftrag \"backend\": \"agy\", während Codex nicht als gesperrt gilt, und ist agy gesperrt, kehrt genimg.run sofort mit „usage limit“ zurück; die Warteschleife prüft die Sperre nur für das Kommandozeilen-Backend und schläft danach nicht (Bedingung „not agy_limited_until()“), die Schleife läuft ohne Pause. Umgangen, indem die Aufträge kein backend-Feld haben (auto)."
+ ],
+ "status": "done"
+}

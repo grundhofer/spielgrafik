@@ -1,0 +1,8 @@
+ohne AO: Bild 60: 8.6 %, Bild 150: 8.8 %
+ohne Kanten: Bild 60: 0.0 %, Bild 150: 2.2 %
+alte Schatten: Bild 60: 23.4 %, Bild 150: 15.6 %
+ohne Schatten: Bild 60: 8.5 %, Bild 150: 7.0 %
+Nachbarkontrast Pflaster (Mittel der Flächen; Bild 150 / Bild 60):
+  voll: 2.2 / 3.2
+  alte Schatten: 5.6 / 8.7
+  ohne Schatten: 2.2 / 2.3

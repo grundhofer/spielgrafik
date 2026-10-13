@@ -1,0 +1,824 @@
+{
+ "soles": [
+  559
+ ],
+ "changes": [
+  {
+   "img": 1,
+   "change": "walk_2->walk_3",
+   "foot_a": [
+    0,
+    32
+   ],
+   "foot_b": [
+    0,
+    30
+   ],
+   "d_heel": 0,
+   "d_toe": -2,
+   "d_sole": 0,
+   "d_nose": 12
+  },
+  {
+   "img": 5,
+   "change": "walk_3->walk_4",
+   "foot_a": [
+    0,
+    30
+   ],
+   "foot_b": [
+    0,
+    29
+   ],
+   "d_heel": 0,
+   "d_toe": -1,
+   "d_sole": 0,
+   "d_nose": 8
+  },
+  {
+   "img": 7,
+   "change": "walk_4->walk_5",
+   "foot_a": [
+    33,
+    46
+   ],
+   "foot_b": [
+    34,
+    71
+   ],
+   "d_heel": 1,
+   "d_toe": 25,
+   "d_sole": 0,
+   "d_nose": 10
+  },
+  {
+   "img": 10,
+   "change": "walk_5->walk_6",
+   "foot_a": [
+    34,
+    71
+   ],
+   "foot_b": [
+    32,
+    71
+   ],
+   "d_heel": -2,
+   "d_toe": 0,
+   "d_sole": 0,
+   "d_nose": 12
+  },
+  {
+   "img": 13,
+   "change": "walk_6->walk_7",
+   "foot_a": [
+    32,
+    71
+   ],
+   "foot_b": [
+    32,
+    71
+   ],
+   "d_heel": 0,
+   "d_toe": 0,
+   "d_sole": 0,
+   "d_nose": 13
+  },
+  {
+   "img": 16,
+   "change": "walk_7->walk_0",
+   "foot_a": [
+    32,
+    71
+   ],
+   "foot_b": [
+    46,
+    70
+   ],
+   "d_heel": 14,
+   "d_toe": -1,
+   "d_sole": 0,
+   "d_nose": 8
+  },
+  {
+   "img": 18,
+   "change": "walk_0->walk_1",
+   "foot_a": [
+    74,
+    88
+   ],
+   "foot_b": [
+    58,
+    111
+   ],
+   "d_heel": -16,
+   "d_toe": 23,
+   "d_sole": 0,
+   "d_nose": 11
+  },
+  {
+   "img": 20,
+   "change": "walk_1->walk_2",
+   "foot_a": [
+    58,
+    111
+   ],
+   "foot_b": [
+    72,
+    111
+   ],
+   "d_heel": 14,
+   "d_toe": 0,
+   "d_sole": 0,
+   "d_nose": 5
+  },
+  {
+   "img": 22,
+   "change": "walk_2->walk_3",
+   "foot_a": [
+    72,
+    111
+   ],
+   "foot_b": [
+    72,
+    109
+   ],
+   "d_heel": 0,
+   "d_toe": -2,
+   "d_sole": 0,
+   "d_nose": 12
+  },
+  {
+   "img": 26,
+   "change": "walk_3->walk_4",
+   "foot_a": [
+    72,
+    109
+   ],
+   "foot_b": [
+    73,
+    108
+   ],
+   "d_heel": 1,
+   "d_toe": -1,
+   "d_sole": 0,
+   "d_nose": 8
+  },
+  {
+   "img": 28,
+   "change": "walk_4->walk_5",
+   "foot_a": [
+    112,
+    125
+   ],
+   "foot_b": [
+    113,
+    150
+   ],
+   "d_heel": 1,
+   "d_toe": 25,
+   "d_sole": 0,
+   "d_nose": 10
+  },
+  {
+   "img": 31,
+   "change": "walk_5->walk_6",
+   "foot_a": [
+    113,
+    150
+   ],
+   "foot_b": [
+    111,
+    150
+   ],
+   "d_heel": -2,
+   "d_toe": 0,
+   "d_sole": 0,
+   "d_nose": 12
+  },
+  {
+   "img": 34,
+   "change": "walk_6->walk_7",
+   "foot_a": [
+    111,
+    150
+   ],
+   "foot_b": [
+    111,
+    150
+   ],
+   "d_heel": 0,
+   "d_toe": 0,
+   "d_sole": 0,
+   "d_nose": 13
+  },
+  {
+   "img": 37,
+   "change": "walk_7->walk_0",
+   "foot_a": [
+    111,
+    150
+   ],
+   "foot_b": [
+    125,
+    149
+   ],
+   "d_heel": 14,
+   "d_toe": -1,
+   "d_sole": 0,
+   "d_nose": 8
+  },
+  {
+   "img": 39,
+   "change": "walk_0->walk_1",
+   "foot_a": [
+    153,
+    167
+   ],
+   "foot_b": [
+    137,
+    190
+   ],
+   "d_heel": -16,
+   "d_toe": 23,
+   "d_sole": 0,
+   "d_nose": 11
+  },
+  {
+   "img": 41,
+   "change": "walk_1->walk_2",
+   "foot_a": [
+    137,
+    190
+   ],
+   "foot_b": [
+    151,
+    190
+   ],
+   "d_heel": 14,
+   "d_toe": 0,
+   "d_sole": 0,
+   "d_nose": 5
+  },
+  {
+   "img": 43,
+   "change": "walk_2->walk_3",
+   "foot_a": [
+    151,
+    190
+   ],
+   "foot_b": [
+    151,
+    188
+   ],
+   "d_heel": 0,
+   "d_toe": -2,
+   "d_sole": 0,
+   "d_nose": 12
+  },
+  {
+   "img": 47,
+   "change": "walk_3->walk_4",
+   "foot_a": [
+    151,
+    188
+   ],
+   "foot_b": [
+    152,
+    187
+   ],
+   "d_heel": 1,
+   "d_toe": -1,
+   "d_sole": 0,
+   "d_nose": 8
+  },
+  {
+   "img": 49,
+   "change": "walk_4->walk_5",
+   "foot_a": [
+    191,
+    204
+   ],
+   "foot_b": [
+    192,
+    229
+   ],
+   "d_heel": 1,
+   "d_toe": 25,
+   "d_sole": 0,
+   "d_nose": 10
+  },
+  {
+   "img": 52,
+   "change": "walk_5->walk_6",
+   "foot_a": [
+    192,
+    229
+   ],
+   "foot_b": [
+    190,
+    229
+   ],
+   "d_heel": -2,
+   "d_toe": 0,
+   "d_sole": 0,
+   "d_nose": 12
+  },
+  {
+   "img": 55,
+   "change": "walk_6->walk_7",
+   "foot_a": [
+    190,
+    229
+   ],
+   "foot_b": [
+    190,
+    229
+   ],
+   "d_heel": 0,
+   "d_toe": 0,
+   "d_sole": 0,
+   "d_nose": 13
+  },
+  {
+   "img": 58,
+   "change": "walk_7->walk_0",
+   "foot_a": [
+    190,
+    229
+   ],
+   "foot_b": [
+    203,
+    227
+   ],
+   "d_heel": 13,
+   "d_toe": -2,
+   "d_sole": 0,
+   "d_nose": 7
+  },
+  {
+   "img": 60,
+   "change": "walk_0->walk_1",
+   "foot_a": [
+    231,
+    245
+   ],
+   "foot_b": [
+    216,
+    269
+   ],
+   "d_heel": -15,
+   "d_toe": 24,
+   "d_sole": 0,
+   "d_nose": 12
+  },
+  {
+   "img": 62,
+   "change": "walk_1->walk_2",
+   "foot_a": [
+    216,
+    269
+   ],
+   "foot_b": [
+    230,
+    269
+   ],
+   "d_heel": 14,
+   "d_toe": 0,
+   "d_sole": 0,
+   "d_nose": 5
+  },
+  {
+   "img": 64,
+   "change": "walk_2->walk_3",
+   "foot_a": [
+    230,
+    269
+   ],
+   "foot_b": [
+    230,
+    267
+   ],
+   "d_heel": 0,
+   "d_toe": -2,
+   "d_sole": 0,
+   "d_nose": 12
+  },
+  {
+   "img": 68,
+   "change": "walk_3->walk_4",
+   "foot_a": [
+    230,
+    267
+   ],
+   "foot_b": [
+    231,
+    266
+   ],
+   "d_heel": 1,
+   "d_toe": -1,
+   "d_sole": 0,
+   "d_nose": 8
+  },
+  {
+   "img": 70,
+   "change": "walk_4->walk_5",
+   "foot_a": [
+    270,
+    283
+   ],
+   "foot_b": [
+    271,
+    308
+   ],
+   "d_heel": 1,
+   "d_toe": 25,
+   "d_sole": 0,
+   "d_nose": 10
+  },
+  {
+   "img": 73,
+   "change": "walk_5->walk_6",
+   "foot_a": [
+    271,
+    308
+   ],
+   "foot_b": [
+    269,
+    308
+   ],
+   "d_heel": -2,
+   "d_toe": 0,
+   "d_sole": 0,
+   "d_nose": 12
+  },
+  {
+   "img": 76,
+   "change": "walk_6->walk_7",
+   "foot_a": [
+    269,
+    308
+   ],
+   "foot_b": [
+    269,
+    308
+   ],
+   "d_heel": 0,
+   "d_toe": 0,
+   "d_sole": 0,
+   "d_nose": 13
+  },
+  {
+   "img": 79,
+   "change": "walk_7->walk_0",
+   "foot_a": [
+    269,
+    308
+   ],
+   "foot_b": [
+    282,
+    306
+   ],
+   "d_heel": 13,
+   "d_toe": -2,
+   "d_sole": 0,
+   "d_nose": 7
+  },
+  {
+   "img": 81,
+   "change": "walk_0->walk_1",
+   "foot_a": [
+    310,
+    324
+   ],
+   "foot_b": [
+    295,
+    348
+   ],
+   "d_heel": -15,
+   "d_toe": 24,
+   "d_sole": 0,
+   "d_nose": 12
+  },
+  {
+   "img": 83,
+   "change": "walk_1->walk_2",
+   "foot_a": [
+    295,
+    348
+   ],
+   "foot_b": [
+    309,
+    348
+   ],
+   "d_heel": 14,
+   "d_toe": 0,
+   "d_sole": 0,
+   "d_nose": 5
+  },
+  {
+   "img": 85,
+   "change": "walk_2->walk_3",
+   "foot_a": [
+    309,
+    348
+   ],
+   "foot_b": [
+    309,
+    346
+   ],
+   "d_heel": 0,
+   "d_toe": -2,
+   "d_sole": 0,
+   "d_nose": 12
+  },
+  {
+   "img": 89,
+   "change": "walk_3->walk_4",
+   "foot_a": [
+    309,
+    346
+   ],
+   "foot_b": [
+    310,
+    345
+   ],
+   "d_heel": 1,
+   "d_toe": -1,
+   "d_sole": 0,
+   "d_nose": 8
+  },
+  {
+   "img": 91,
+   "change": "walk_4->walk_5",
+   "foot_a": [
+    349,
+    362
+   ],
+   "foot_b": [
+    350,
+    387
+   ],
+   "d_heel": 1,
+   "d_toe": 25,
+   "d_sole": 0,
+   "d_nose": 10
+  },
+  {
+   "img": 94,
+   "change": "walk_5->walk_6",
+   "foot_a": [
+    350,
+    387
+   ],
+   "foot_b": [
+    348,
+    387
+   ],
+   "d_heel": -2,
+   "d_toe": 0,
+   "d_sole": 0,
+   "d_nose": 12
+  },
+  {
+   "img": 97,
+   "change": "walk_6->walk_7",
+   "foot_a": [
+    348,
+    387
+   ],
+   "foot_b": [
+    348,
+    387
+   ],
+   "d_heel": 0,
+   "d_toe": 0,
+   "d_sole": 0,
+   "d_nose": 13
+  },
+  {
+   "img": 100,
+   "change": "walk_7->walk_0",
+   "foot_a": [
+    348,
+    387
+   ],
+   "foot_b": [
+    361,
+    385
+   ],
+   "d_heel": 13,
+   "d_toe": -2,
+   "d_sole": 0,
+   "d_nose": 7
+  },
+  {
+   "img": 102,
+   "change": "walk_0->walk_1",
+   "foot_a": [
+    389,
+    403
+   ],
+   "foot_b": [
+    373,
+    426
+   ],
+   "d_heel": -16,
+   "d_toe": 23,
+   "d_sole": 0,
+   "d_nose": 11
+  },
+  {
+   "img": 104,
+   "change": "walk_1->walk_2",
+   "foot_a": [
+    373,
+    426
+   ],
+   "foot_b": [
+    388,
+    427
+   ],
+   "d_heel": 15,
+   "d_toe": 1,
+   "d_sole": 0,
+   "d_nose": 6
+  },
+  {
+   "img": 106,
+   "change": "walk_2->walk_3",
+   "foot_a": [
+    388,
+    427
+   ],
+   "foot_b": [
+    388,
+    425
+   ],
+   "d_heel": 0,
+   "d_toe": -2,
+   "d_sole": 0,
+   "d_nose": 12
+  },
+  {
+   "img": 110,
+   "change": "walk_3->walk_4",
+   "foot_a": [
+    388,
+    425
+   ],
+   "foot_b": [
+    389,
+    424
+   ],
+   "d_heel": 1,
+   "d_toe": -1,
+   "d_sole": 0,
+   "d_nose": 8
+  },
+  {
+   "img": 112,
+   "change": "walk_4->walk_5",
+   "foot_a": [
+    428,
+    441
+   ],
+   "foot_b": [
+    429,
+    466
+   ],
+   "d_heel": 1,
+   "d_toe": 25,
+   "d_sole": 0,
+   "d_nose": 10
+  },
+  {
+   "img": 115,
+   "change": "walk_5->walk_6",
+   "foot_a": [
+    429,
+    466
+   ],
+   "foot_b": [
+    427,
+    466
+   ],
+   "d_heel": -2,
+   "d_toe": 0,
+   "d_sole": 0,
+   "d_nose": 12
+  },
+  {
+   "img": 118,
+   "change": "walk_6->walk_7",
+   "foot_a": [
+    427,
+    466
+   ],
+   "foot_b": [
+    427,
+    466
+   ],
+   "d_heel": 0,
+   "d_toe": 0,
+   "d_sole": 0,
+   "d_nose": 13
+  },
+  {
+   "img": 121,
+   "change": "walk_7->walk_0",
+   "foot_a": [
+    427,
+    466
+   ],
+   "foot_b": [
+    440,
+    464
+   ],
+   "d_heel": 13,
+   "d_toe": -2,
+   "d_sole": 0,
+   "d_nose": 7
+  },
+  {
+   "img": 123,
+   "change": "walk_0->walk_1",
+   "foot_a": [
+    468,
+    482
+   ],
+   "foot_b": [
+    452,
+    505
+   ],
+   "d_heel": -16,
+   "d_toe": 23,
+   "d_sole": 0,
+   "d_nose": 11
+  },
+  {
+   "img": 125,
+   "change": "walk_1->stand",
+   "foot_a": [
+    452,
+    505
+   ],
+   "foot_b": [
+    468,
+    506
+   ],
+   "d_heel": 16,
+   "d_toe": 1,
+   "d_sole": 0,
+   "d_nose": 10
+  },
+  {
+   "img": 143,
+   "change": "stand->turn",
+   "foot_a": [
+    468,
+    506
+   ],
+   "foot_b": [
+    489,
+    526
+   ],
+   "d_heel": 21,
+   "d_toe": 20,
+   "d_sole": 0,
+   "d_nose": -11
+  },
+  {
+   "img": 164,
+   "change": "turn->blink",
+   "foot_a": [
+    489,
+    526
+   ],
+   "foot_b": [
+    489,
+    526
+   ],
+   "d_heel": 0,
+   "d_toe": 0,
+   "d_sole": 0,
+   "d_nose": 0
+  },
+  {
+   "img": 168,
+   "change": "blink->turn",
+   "foot_a": [
+    489,
+    526
+   ],
+   "foot_b": [
+    489,
+    526
+   ],
+   "d_heel": 0,
+   "d_toe": 0,
+   "d_sole": 0,
+   "d_nose": 0
+  }
+ ],
+ "moved_in_hold": []
+}

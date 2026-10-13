@@ -1,0 +1,11 @@
+{
+ "slug": "probe-blockiert",
+ "name": "Probe blockiert",
+ "family": "gemalt",
+ "kind": "style",
+ "summary": "Abgebrochen am Bildlimit.",
+ "pitfalls": ["usage limit nach drei Bildern"],
+ "image_generations": 3,
+ "blocked_reason": "Tageslimit des Bildwerkzeugs erreicht",
+ "status": "blocked"
+}

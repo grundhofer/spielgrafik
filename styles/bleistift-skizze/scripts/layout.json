@@ -1,0 +1,16 @@
+{
+ "_comment": "Bildaufteilung: Rahmen der Skizze auf dem Blatt (x, y, w, h in Bildschirmpixeln), Ausschnitt aus raw/bg.png (x0, y0, x1, y1), Farbbereiche und Ankerpunkte in Pixeln von raw/bg.png. Gelesen von build_drawing.py.",
+ "frame": [32, 38, 1216, 538],
+ "crop": [0, 140, 1536, 820],
+ "color_keep_full": [[400, 250, 486, 330], [40, 425, 90, 497], [1335, 235, 1412, 372]],
+ "color_keep_chroma": [[300, 360, 1160, 720], [1160, 470, 1536, 720]],
+ "anchors_src": {
+  "chimney": [92, 246],
+  "chimney_small": [75, 251],
+  "lamp": [1375, 258],
+  "lantern": [441, 290],
+  "window": [63, 461]
+ },
+ "water_src": [490, 700],
+ "walk": {"feet_y": 548, "stop_x": 600}
+}

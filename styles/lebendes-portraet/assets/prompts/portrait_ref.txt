@@ -1,0 +1,2 @@
+The attached reference images only define the costume, colours and proportions of the character (front view); drawing style, lighting and framing follow this description.
+The character is isolated on a fully transparent background (alpha channel): nothing behind the figure, no ground, no cast shadow, no frame, no vignette.

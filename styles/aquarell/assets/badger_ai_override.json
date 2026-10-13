@@ -1,0 +1,13 @@
+{
+ "_comment": "Vorschub je Bildwechsel walk_i -> walk_i+1 (Bildschirm-px bei 150 px Figurenhöhe), aus dem Standfuß gemessen (Prüfung 1: walk_1 -> walk_2 war 5 statt 8, der Standfuß rutschte 3-4 px zurück). 1->2, 2->3, 5->6, 6->7: beste Überdeckung der untersten 6 Sohlenzeilen (IoU 0.79-0.96); 3->4 und 7->0: Ferse des hinteren Fußes im Doppelstand auf die Ferse des Standfußes (8 bzw. 9 px); 0->1 und 4->5: der vordere Fuß bleibt stehen, Ferse und Spitze weichen 2-3 px zurück, gewählt 4 (1 px Schlupf, dafür weniger Stocken des Kopfes). Zyklus 54 px (Layout 55).",
+ "walk_dx": [
+  4,
+  8,
+  6,
+  8,
+  4,
+  8,
+  7,
+  9
+ ]
+}

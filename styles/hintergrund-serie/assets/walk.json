@@ -1,0 +1,55 @@
+{
+ "frame_w": 174,
+ "frame_h": 146,
+ "count": 5,
+ "anchor": [
+  87,
+  143
+ ],
+ "cycle": [
+  0,
+  1,
+  2,
+  3
+ ],
+ "advance": [
+  15.0,
+  6.5,
+  30.0,
+  2.0
+ ],
+ "advance_fit": [
+  0.52,
+  0.93,
+  0.72,
+  0.75
+ ],
+ "foot_band_rows": 6,
+ "foot_spread": [
+  80,
+  56,
+  31,
+  56
+ ],
+ "stop_frame": 2,
+ "cycle_px": 53.5,
+ "source": "styles/hintergrund-serie/assets/raw/walk.png",
+ "real": true,
+ "keyed": false,
+ "scale": 0.3415,
+ "order_in_sheet": [
+  0,
+  1,
+  2,
+  3
+ ],
+ "stand_frame": 4,
+ "stand_from": {
+  "from": 2,
+  "cut_x": 612,
+  "cut_y": 648,
+  "copy_y": 610,
+  "dx": -40,
+  "dark": 0.78
+ }
+}

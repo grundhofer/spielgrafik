@@ -1,0 +1,2022 @@
+{
+"summary": {
+"frame_offset": "Bild i zeigt Godot-Bild f = i + 1",
+"frames_with_badger": 89,
+"frames_fully_visible": 71,
+"head_y": [
+131
+],
+"feet_y_walk": [
+157
+],
+"feet_y_stand": [
+157
+],
+"x_steps": [
+0,
+2
+],
+"pose_changes": 22,
+"planted_checks": 22,
+"planted_dx": [
+0
+],
+"changes_without_planted_foot": [],
+"foot_step_lengths": {
+"near": [
+8
+],
+"far": [
+8
+]
+},
+"stop": [
+{
+"frame": 153,
+"from": "walk4",
+"to": "stand",
+"x": [
+42,
+42
+],
+"near": [
+null,
+55
+],
+"far": [
+52,
+52
+],
+"far_planted_dx": 0
+}
+],
+"first_stand_frame": 153,
+"scene_colour_changes_max": 0,
+"scene_colour_changes_frames": 0,
+"godot_errors": []
+},
+"offset_fits": {
+"-2": {
+"head_left_minus_x": [
+7,
+9,
+11
+],
+"frames": 68
+},
+"-1": {
+"head_left_minus_x": [
+7,
+9
+],
+"frames": 69
+},
+"0": {
+"head_left_minus_x": [
+7,
+9
+],
+"frames": 70
+},
+"1": {
+"head_left_minus_x": [
+7
+],
+"frames": 71
+},
+"2": {
+"head_left_minus_x": [
+5,
+7
+],
+"frames": 71
+},
+"3": {
+"head_left_minus_x": [
+5,
+7
+],
+"frames": 71
+}
+},
+"checks": [
+{
+"frame": 111,
+"from": "walk3",
+"to": "walk4",
+"x": [
+0,
+2
+],
+"near": [
+7,
+null
+],
+"far": [
+12,
+12
+],
+"far_planted_dx": 0
+},
+{
+"frame": 113,
+"from": "walk4",
+"to": "walk1",
+"x": [
+2,
+4
+],
+"near": [
+null,
+15
+],
+"far": [
+12,
+12
+],
+"far_planted_dx": 0
+},
+{
+"frame": 115,
+"from": "walk1",
+"to": "walk2",
+"x": [
+4,
+6
+],
+"near": [
+15,
+15
+],
+"near_planted_dx": 0,
+"far": [
+12,
+null
+]
+},
+{
+"frame": 117,
+"from": "walk2",
+"to": "walk3",
+"x": [
+6,
+8
+],
+"near": [
+15,
+15
+],
+"near_planted_dx": 0,
+"far": [
+null,
+20
+]
+},
+{
+"frame": 119,
+"from": "walk3",
+"to": "walk4",
+"x": [
+8,
+10
+],
+"near": [
+15,
+null
+],
+"far": [
+20,
+20
+],
+"far_planted_dx": 0
+},
+{
+"frame": 121,
+"from": "walk4",
+"to": "walk1",
+"x": [
+10,
+12
+],
+"near": [
+null,
+23
+],
+"far": [
+20,
+20
+],
+"far_planted_dx": 0
+},
+{
+"frame": 123,
+"from": "walk1",
+"to": "walk2",
+"x": [
+12,
+14
+],
+"near": [
+23,
+23
+],
+"near_planted_dx": 0,
+"far": [
+20,
+null
+]
+},
+{
+"frame": 125,
+"from": "walk2",
+"to": "walk3",
+"x": [
+14,
+16
+],
+"near": [
+23,
+23
+],
+"near_planted_dx": 0,
+"far": [
+null,
+28
+]
+},
+{
+"frame": 127,
+"from": "walk3",
+"to": "walk4",
+"x": [
+16,
+18
+],
+"near": [
+23,
+null
+],
+"far": [
+28,
+28
+],
+"far_planted_dx": 0
+},
+{
+"frame": 129,
+"from": "walk4",
+"to": "walk1",
+"x": [
+18,
+20
+],
+"near": [
+null,
+31
+],
+"far": [
+28,
+28
+],
+"far_planted_dx": 0
+},
+{
+"frame": 131,
+"from": "walk1",
+"to": "walk2",
+"x": [
+20,
+22
+],
+"near": [
+31,
+31
+],
+"near_planted_dx": 0,
+"far": [
+28,
+null
+]
+},
+{
+"frame": 133,
+"from": "walk2",
+"to": "walk3",
+"x": [
+22,
+24
+],
+"near": [
+31,
+31
+],
+"near_planted_dx": 0,
+"far": [
+null,
+36
+]
+},
+{
+"frame": 135,
+"from": "walk3",
+"to": "walk4",
+"x": [
+24,
+26
+],
+"near": [
+31,
+null
+],
+"far": [
+36,
+36
+],
+"far_planted_dx": 0
+},
+{
+"frame": 137,
+"from": "walk4",
+"to": "walk1",
+"x": [
+26,
+28
+],
+"near": [
+null,
+39
+],
+"far": [
+36,
+36
+],
+"far_planted_dx": 0
+},
+{
+"frame": 139,
+"from": "walk1",
+"to": "walk2",
+"x": [
+28,
+30
+],
+"near": [
+39,
+39
+],
+"near_planted_dx": 0,
+"far": [
+36,
+null
+]
+},
+{
+"frame": 141,
+"from": "walk2",
+"to": "walk3",
+"x": [
+30,
+32
+],
+"near": [
+39,
+39
+],
+"near_planted_dx": 0,
+"far": [
+null,
+44
+]
+},
+{
+"frame": 143,
+"from": "walk3",
+"to": "walk4",
+"x": [
+32,
+34
+],
+"near": [
+39,
+null
+],
+"far": [
+44,
+44
+],
+"far_planted_dx": 0
+},
+{
+"frame": 145,
+"from": "walk4",
+"to": "walk1",
+"x": [
+34,
+36
+],
+"near": [
+null,
+47
+],
+"far": [
+44,
+44
+],
+"far_planted_dx": 0
+},
+{
+"frame": 147,
+"from": "walk1",
+"to": "walk2",
+"x": [
+36,
+38
+],
+"near": [
+47,
+47
+],
+"near_planted_dx": 0,
+"far": [
+44,
+null
+]
+},
+{
+"frame": 149,
+"from": "walk2",
+"to": "walk3",
+"x": [
+38,
+40
+],
+"near": [
+47,
+47
+],
+"near_planted_dx": 0,
+"far": [
+null,
+52
+]
+},
+{
+"frame": 151,
+"from": "walk3",
+"to": "walk4",
+"x": [
+40,
+42
+],
+"near": [
+47,
+null
+],
+"far": [
+52,
+52
+],
+"far_planted_dx": 0
+},
+{
+"frame": 153,
+"from": "walk4",
+"to": "stand",
+"x": [
+42,
+42
+],
+"near": [
+null,
+55
+],
+"far": [
+52,
+52
+],
+"far_planted_dx": 0
+}
+],
+"rows": [
+{
+"frame": 91,
+"godot_f": 92,
+"pose": "walk2_b",
+"x": -18,
+"head_y": 144,
+"feet_y": 148,
+"head_left": 0,
+"near_foot_x": 0,
+"far_foot_x": null,
+"foot_row": [
+0,
+1
+]
+},
+{
+"frame": 92,
+"godot_f": 93,
+"pose": "walk2_b",
+"x": -18,
+"head_y": 144,
+"feet_y": 148,
+"head_left": 0,
+"near_foot_x": 0,
+"far_foot_x": null,
+"foot_row": [
+0,
+1
+]
+},
+{
+"frame": 93,
+"godot_f": 94,
+"pose": "walk3_b",
+"x": -16,
+"head_y": 134,
+"feet_y": 148,
+"head_left": 1,
+"near_foot_x": 0,
+"far_foot_x": null,
+"foot_row": [
+0,
+1,
+2,
+3
+]
+},
+{
+"frame": 94,
+"godot_f": 95,
+"pose": "walk3_b",
+"x": -16,
+"head_y": 134,
+"feet_y": 148,
+"head_left": 1,
+"near_foot_x": 0,
+"far_foot_x": null,
+"foot_row": [
+0,
+1,
+2,
+3
+]
+},
+{
+"frame": 95,
+"godot_f": 96,
+"pose": "walk4_a",
+"x": -14,
+"head_y": 134,
+"feet_y": 148,
+"head_left": 1,
+"near_foot_x": 0,
+"far_foot_x": null,
+"foot_row": [
+0,
+1,
+2,
+3,
+4,
+5
+]
+},
+{
+"frame": 96,
+"godot_f": 97,
+"pose": "walk4_a",
+"x": -14,
+"head_y": 134,
+"feet_y": 148,
+"head_left": 1,
+"near_foot_x": 0,
+"far_foot_x": null,
+"foot_row": [
+0,
+1,
+2,
+3,
+4,
+5
+]
+},
+{
+"frame": 97,
+"godot_f": 98,
+"pose": "walk1_a",
+"x": -12,
+"head_y": 132,
+"feet_y": 157,
+"head_left": 1,
+"near_foot_x": 0,
+"far_foot_x": null,
+"foot_row": [
+0,
+1
+]
+},
+{
+"frame": 98,
+"godot_f": 99,
+"pose": "walk1_a",
+"x": -12,
+"head_y": 132,
+"feet_y": 157,
+"head_left": 1,
+"near_foot_x": 0,
+"far_foot_x": null,
+"foot_row": [
+0,
+1
+]
+},
+{
+"frame": 99,
+"godot_f": 100,
+"pose": "walk2_b",
+"x": -10,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 1,
+"near_foot_x": 0,
+"far_foot_x": null,
+"foot_row": [
+0,
+1
+]
+},
+{
+"frame": 100,
+"godot_f": 101,
+"pose": "walk2_b",
+"x": -10,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 1,
+"near_foot_x": 0,
+"far_foot_x": null,
+"foot_row": [
+0,
+1
+]
+},
+{
+"frame": 101,
+"godot_f": 102,
+"pose": "walk3_b",
+"x": -8,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 1,
+"near_foot_x": 0,
+"far_foot_x": 4,
+"foot_row": [
+0,
+1,
+4
+]
+},
+{
+"frame": 102,
+"godot_f": 103,
+"pose": "walk3_b",
+"x": -8,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 1,
+"near_foot_x": 0,
+"far_foot_x": 4,
+"foot_row": [
+0,
+1,
+4
+]
+},
+{
+"frame": 103,
+"godot_f": 104,
+"pose": "walk4_a",
+"x": -6,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 1,
+"near_foot_x": null,
+"far_foot_x": 4,
+"foot_row": [
+4
+]
+},
+{
+"frame": 104,
+"godot_f": 105,
+"pose": "walk4_a",
+"x": -6,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 1,
+"near_foot_x": null,
+"far_foot_x": 4,
+"foot_row": [
+4
+]
+},
+{
+"frame": 105,
+"godot_f": 106,
+"pose": "walk1_a",
+"x": -4,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 3,
+"near_foot_x": 7,
+"far_foot_x": 4,
+"foot_row": [
+4,
+7,
+8,
+9
+]
+},
+{
+"frame": 106,
+"godot_f": 107,
+"pose": "walk1_a",
+"x": -4,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 3,
+"near_foot_x": 7,
+"far_foot_x": 4,
+"foot_row": [
+4,
+7,
+8,
+9
+]
+},
+{
+"frame": 107,
+"godot_f": 108,
+"pose": "walk2_b",
+"x": -2,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 5,
+"near_foot_x": 7,
+"far_foot_x": null,
+"foot_row": [
+7,
+8,
+9
+]
+},
+{
+"frame": 108,
+"godot_f": 109,
+"pose": "walk2_b",
+"x": -2,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 5,
+"near_foot_x": 7,
+"far_foot_x": null,
+"foot_row": [
+7,
+8,
+9
+]
+},
+{
+"frame": 109,
+"godot_f": 110,
+"pose": "walk3_b",
+"x": 0,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 7,
+"near_foot_x": 7,
+"far_foot_x": 12,
+"foot_row": [
+7,
+8,
+9,
+12
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 110,
+"godot_f": 111,
+"pose": "walk3_b",
+"x": 0,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 7,
+"near_foot_x": 7,
+"far_foot_x": 12,
+"foot_row": [
+7,
+8,
+9,
+12
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 111,
+"godot_f": 112,
+"pose": "walk4_a",
+"x": 2,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 9,
+"near_foot_x": null,
+"far_foot_x": 12,
+"foot_row": [
+12
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 112,
+"godot_f": 113,
+"pose": "walk4_a",
+"x": 2,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 9,
+"near_foot_x": null,
+"far_foot_x": 12,
+"foot_row": [
+12
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 113,
+"godot_f": 114,
+"pose": "walk1_a",
+"x": 4,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 11,
+"near_foot_x": 15,
+"far_foot_x": 12,
+"foot_row": [
+12,
+15,
+16,
+17
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 114,
+"godot_f": 115,
+"pose": "walk1_a",
+"x": 4,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 11,
+"near_foot_x": 15,
+"far_foot_x": 12,
+"foot_row": [
+12,
+15,
+16,
+17
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 115,
+"godot_f": 116,
+"pose": "walk2_b",
+"x": 6,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 13,
+"near_foot_x": 15,
+"far_foot_x": null,
+"foot_row": [
+15,
+16,
+17
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 116,
+"godot_f": 117,
+"pose": "walk2_b",
+"x": 6,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 13,
+"near_foot_x": 15,
+"far_foot_x": null,
+"foot_row": [
+15,
+16,
+17
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 117,
+"godot_f": 118,
+"pose": "walk3_b",
+"x": 8,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 15,
+"near_foot_x": 15,
+"far_foot_x": 20,
+"foot_row": [
+15,
+16,
+17,
+20
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 118,
+"godot_f": 119,
+"pose": "walk3_b",
+"x": 8,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 15,
+"near_foot_x": 15,
+"far_foot_x": 20,
+"foot_row": [
+15,
+16,
+17,
+20
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 119,
+"godot_f": 120,
+"pose": "walk4_a",
+"x": 10,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 17,
+"near_foot_x": null,
+"far_foot_x": 20,
+"foot_row": [
+20
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 120,
+"godot_f": 121,
+"pose": "walk4_a",
+"x": 10,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 17,
+"near_foot_x": null,
+"far_foot_x": 20,
+"foot_row": [
+20
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 121,
+"godot_f": 122,
+"pose": "walk1_a",
+"x": 12,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 19,
+"near_foot_x": 23,
+"far_foot_x": 20,
+"foot_row": [
+20,
+23,
+24,
+25
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 122,
+"godot_f": 123,
+"pose": "walk1_a",
+"x": 12,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 19,
+"near_foot_x": 23,
+"far_foot_x": 20,
+"foot_row": [
+20,
+23,
+24,
+25
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 123,
+"godot_f": 124,
+"pose": "walk2_b",
+"x": 14,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 21,
+"near_foot_x": 23,
+"far_foot_x": null,
+"foot_row": [
+23,
+24,
+25
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 124,
+"godot_f": 125,
+"pose": "walk2_b",
+"x": 14,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 21,
+"near_foot_x": 23,
+"far_foot_x": null,
+"foot_row": [
+23,
+24,
+25
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 125,
+"godot_f": 126,
+"pose": "walk3_b",
+"x": 16,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 23,
+"near_foot_x": 23,
+"far_foot_x": 28,
+"foot_row": [
+23,
+24,
+25,
+28
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 126,
+"godot_f": 127,
+"pose": "walk3_b",
+"x": 16,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 23,
+"near_foot_x": 23,
+"far_foot_x": 28,
+"foot_row": [
+23,
+24,
+25,
+28
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 127,
+"godot_f": 128,
+"pose": "walk4_a",
+"x": 18,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 25,
+"near_foot_x": null,
+"far_foot_x": 28,
+"foot_row": [
+28
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 128,
+"godot_f": 129,
+"pose": "walk4_a",
+"x": 18,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 25,
+"near_foot_x": null,
+"far_foot_x": 28,
+"foot_row": [
+28
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 129,
+"godot_f": 130,
+"pose": "walk1_a",
+"x": 20,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 27,
+"near_foot_x": 31,
+"far_foot_x": 28,
+"foot_row": [
+28,
+31,
+32,
+33
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 130,
+"godot_f": 131,
+"pose": "walk1_a",
+"x": 20,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 27,
+"near_foot_x": 31,
+"far_foot_x": 28,
+"foot_row": [
+28,
+31,
+32,
+33
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 131,
+"godot_f": 132,
+"pose": "walk2_b",
+"x": 22,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 29,
+"near_foot_x": 31,
+"far_foot_x": null,
+"foot_row": [
+31,
+32,
+33
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 132,
+"godot_f": 133,
+"pose": "walk2_b",
+"x": 22,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 29,
+"near_foot_x": 31,
+"far_foot_x": null,
+"foot_row": [
+31,
+32,
+33
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 133,
+"godot_f": 134,
+"pose": "walk3_b",
+"x": 24,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 31,
+"near_foot_x": 31,
+"far_foot_x": 36,
+"foot_row": [
+31,
+32,
+33,
+36
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 134,
+"godot_f": 135,
+"pose": "walk3_b",
+"x": 24,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 31,
+"near_foot_x": 31,
+"far_foot_x": 36,
+"foot_row": [
+31,
+32,
+33,
+36
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 135,
+"godot_f": 136,
+"pose": "walk4_a",
+"x": 26,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 33,
+"near_foot_x": null,
+"far_foot_x": 36,
+"foot_row": [
+36
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 136,
+"godot_f": 137,
+"pose": "walk4_a",
+"x": 26,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 33,
+"near_foot_x": null,
+"far_foot_x": 36,
+"foot_row": [
+36
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 137,
+"godot_f": 138,
+"pose": "walk1_a",
+"x": 28,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 35,
+"near_foot_x": 39,
+"far_foot_x": 36,
+"foot_row": [
+36,
+39,
+40,
+41
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 138,
+"godot_f": 139,
+"pose": "walk1_a",
+"x": 28,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 35,
+"near_foot_x": 39,
+"far_foot_x": 36,
+"foot_row": [
+36,
+39,
+40,
+41
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 139,
+"godot_f": 140,
+"pose": "walk2_b",
+"x": 30,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 37,
+"near_foot_x": 39,
+"far_foot_x": null,
+"foot_row": [
+39,
+40,
+41
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 140,
+"godot_f": 141,
+"pose": "walk2_b",
+"x": 30,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 37,
+"near_foot_x": 39,
+"far_foot_x": null,
+"foot_row": [
+39,
+40,
+41
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 141,
+"godot_f": 142,
+"pose": "walk3_b",
+"x": 32,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 39,
+"near_foot_x": 39,
+"far_foot_x": 44,
+"foot_row": [
+39,
+40,
+41,
+44
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 142,
+"godot_f": 143,
+"pose": "walk3_b",
+"x": 32,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 39,
+"near_foot_x": 39,
+"far_foot_x": 44,
+"foot_row": [
+39,
+40,
+41,
+44
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 143,
+"godot_f": 144,
+"pose": "walk4_a",
+"x": 34,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 41,
+"near_foot_x": null,
+"far_foot_x": 44,
+"foot_row": [
+44
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 144,
+"godot_f": 145,
+"pose": "walk4_a",
+"x": 34,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 41,
+"near_foot_x": null,
+"far_foot_x": 44,
+"foot_row": [
+44
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 145,
+"godot_f": 146,
+"pose": "walk1_a",
+"x": 36,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 43,
+"near_foot_x": 47,
+"far_foot_x": 44,
+"foot_row": [
+44,
+47,
+48,
+49
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 146,
+"godot_f": 147,
+"pose": "walk1_a",
+"x": 36,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 43,
+"near_foot_x": 47,
+"far_foot_x": 44,
+"foot_row": [
+44,
+47,
+48,
+49
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 147,
+"godot_f": 148,
+"pose": "walk2_b",
+"x": 38,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 45,
+"near_foot_x": 47,
+"far_foot_x": null,
+"foot_row": [
+47,
+48,
+49
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 148,
+"godot_f": 149,
+"pose": "walk2_b",
+"x": 38,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 45,
+"near_foot_x": 47,
+"far_foot_x": null,
+"foot_row": [
+47,
+48,
+49
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 149,
+"godot_f": 150,
+"pose": "walk3_b",
+"x": 40,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 47,
+"near_foot_x": 47,
+"far_foot_x": 52,
+"foot_row": [
+47,
+48,
+49,
+52
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 150,
+"godot_f": 151,
+"pose": "walk3_b",
+"x": 40,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 47,
+"near_foot_x": 47,
+"far_foot_x": 52,
+"foot_row": [
+47,
+48,
+49,
+52
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 151,
+"godot_f": 152,
+"pose": "walk4_a",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": null,
+"far_foot_x": 52,
+"foot_row": [
+52
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 152,
+"godot_f": 153,
+"pose": "walk4_a",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": null,
+"far_foot_x": 52,
+"foot_row": [
+52
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 153,
+"godot_f": 154,
+"pose": "stand_b",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 154,
+"godot_f": 155,
+"pose": "stand_b",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 155,
+"godot_f": 156,
+"pose": "stand_a",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 156,
+"godot_f": 157,
+"pose": "stand_a",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 157,
+"godot_f": 158,
+"pose": "stand_a",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 158,
+"godot_f": 159,
+"pose": "stand_a",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 159,
+"godot_f": 160,
+"pose": "stand_a",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 160,
+"godot_f": 161,
+"pose": "stand_a",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 161,
+"godot_f": 162,
+"pose": "stand_b",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 162,
+"godot_f": 163,
+"pose": "stand_b",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 163,
+"godot_f": 164,
+"pose": "stand_b",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 164,
+"godot_f": 165,
+"pose": "stand_b",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 165,
+"godot_f": 166,
+"pose": "stand_b",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 166,
+"godot_f": 167,
+"pose": "stand_b",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 167,
+"godot_f": 168,
+"pose": "stand_a",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 168,
+"godot_f": 169,
+"pose": "stand_a",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 169,
+"godot_f": 170,
+"pose": "stand_a",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 170,
+"godot_f": 171,
+"pose": "stand_a",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 171,
+"godot_f": 172,
+"pose": "stand_a",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 172,
+"godot_f": 173,
+"pose": "stand_a",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 173,
+"godot_f": 174,
+"pose": "stand_b",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 174,
+"godot_f": 175,
+"pose": "stand_b",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 175,
+"godot_f": 176,
+"pose": "stand_b",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 176,
+"godot_f": 177,
+"pose": "stand_b",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 177,
+"godot_f": 178,
+"pose": "stand_b",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 178,
+"godot_f": 179,
+"pose": "stand_b",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+},
+{
+"frame": 179,
+"godot_f": 180,
+"pose": "stand_a",
+"x": 42,
+"head_y": 131,
+"feet_y": 157,
+"head_left": 49,
+"near_foot_x": 55,
+"far_foot_x": 52,
+"foot_row": [
+52,
+55,
+56,
+57
+],
+"scene_colour_changes": 0
+}
+]
+}

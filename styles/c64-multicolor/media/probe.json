@@ -1,0 +1,254 @@
+{
+ "badger": {
+  "fusszeile": [
+   141
+  ],
+  "kopfzeile_laufen": [
+   102,
+   103
+  ],
+  "kopfzeile_stehen": [
+   102
+  ],
+  "posenwechsel": 29,
+  "standfuss_max_abweichung_px": 0,
+  "standfuss_abweichungen": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "posen_abweichende_pixel": {
+   "blink/stand": 2,
+   "blink/walk1": 325,
+   "blink/walk2": 87,
+   "blink/walk3": 345,
+   "blink/walk4": 126,
+   "stand/walk1": 327,
+   "stand/walk2": 85,
+   "stand/walk3": 347,
+   "stand/walk4": 124,
+   "walk1/walk2": 380,
+   "walk1/walk3": 39,
+   "walk1/walk4": 407,
+   "walk2/walk3": 400,
+   "walk2/walk4": 39,
+   "walk3/walk4": 380
+  },
+  "beispiele": [
+   {
+    "f": 15,
+    "von": "walk3",
+    "nach": "walk4",
+    "dx": 6,
+    "sohlen_vorher": [
+     [
+      3,
+      9
+     ]
+    ],
+    "sohlen_nachher": [
+     [
+      3,
+      10
+     ]
+    ],
+    "standfuss_abweichung": 0
+   },
+   {
+    "f": 18,
+    "von": "walk4",
+    "nach": "walk1",
+    "dx": 6,
+    "sohlen_vorher": [
+     [
+      3,
+      10
+     ]
+    ],
+    "sohlen_nachher": [
+     [
+      3,
+      9
+     ],
+     [
+      15,
+      21
+     ]
+    ],
+    "standfuss_abweichung": 0
+   },
+   {
+    "f": 21,
+    "von": "walk1",
+    "nach": "walk2",
+    "dx": 6,
+    "sohlen_vorher": [
+     [
+      3,
+      9
+     ],
+     [
+      15,
+      21
+     ]
+    ],
+    "sohlen_nachher": [
+     [
+      15,
+      22
+     ]
+    ],
+    "standfuss_abweichung": 0
+   },
+   {
+    "f": 24,
+    "von": "walk2",
+    "nach": "walk3",
+    "dx": 6,
+    "sohlen_vorher": [
+     [
+      15,
+      22
+     ]
+    ],
+    "sohlen_nachher": [
+     [
+      15,
+      21
+     ],
+     [
+      27,
+      33
+     ]
+    ],
+    "standfuss_abweichung": 0
+   },
+   {
+    "f": 27,
+    "von": "walk3",
+    "nach": "walk4",
+    "dx": 6,
+    "sohlen_vorher": [
+     [
+      15,
+      21
+     ],
+     [
+      27,
+      33
+     ]
+    ],
+    "sohlen_nachher": [
+     [
+      27,
+      34
+     ]
+    ],
+    "standfuss_abweichung": 0
+   },
+   {
+    "f": 30,
+    "von": "walk4",
+    "nach": "walk1",
+    "dx": 6,
+    "sohlen_vorher": [
+     [
+      27,
+      34
+     ]
+    ],
+    "sohlen_nachher": [
+     [
+      27,
+      33
+     ],
+     [
+      39,
+      45
+     ]
+    ],
+    "standfuss_abweichung": 0
+   }
+  ],
+  "godot_fehler": []
+ },
+ "background": {
+  "fremde_farben": 0,
+  "doppelpixel_verstoesse": 0,
+  "zellen_ueber_3_farben": 0,
+  "max_farben_je_zelle_ohne_zeilenhintergrund": 3,
+  "textzellen_mit_mehr_als_1_zeichenfarbe": 0,
+  "farben_im_bild": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15
+  ],
+  "rasterzeilen_mit_farbwechsel": 16,
+  "godot_fehler": []
+ },
+ "full": {
+  "fremde_farben_in_30_bildern": 0,
+  "max_sprites_je_zeile": 6,
+  "max_sprites_gleichzeitig": 14,
+  "hwstat": [
+   "HWSTAT max_sprites_je_zeile=6 max_sprites_gleichzeitig=14 slot_kollisionen=0"
+  ],
+  "godot_fehler": []
+ },
+ "dauerlauf_t30": {
+  "bilder": 60,
+  "fremde_farben": 0,
+  "godot_fehler": []
+ },
+ "renderer": {
+  "mobile": {
+   "pixelgleich": "30/30",
+   "max_abweichung": 0.0,
+   "godot_fehler": []
+  },
+  "gl_compatibility": {
+   "pixelgleich": "30/30",
+   "max_abweichung": 0.0,
+   "godot_fehler": []
+  }
+ }
+}

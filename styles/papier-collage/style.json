@@ -1,0 +1,215 @@
+{
+ "slug": "papier-collage",
+ "name": "Papierschnitt & Collage",
+ "family": "grafisch",
+ "kind": "style",
+ "era": "seit etwa 2000 in Spielen (Paper Mario 2000, Tearaway 2013, Lumino City 2014, Tengami 2014); als Trickfilmtechnik (Legetrick, Cut-out) seit den 1920ern",
+ "summary": "Die Szene ist aus ausgeschnittenen und gerissenen Papierstücken geklebt: Seidenpapierstreifen als Himmel, gerissene Meeresstreifen mit weißem Faserrand, Kraftpapier für Boote und Steg, geschnittene Steinplättchen für Kai und Häuschen. Jede Lage wirft einen leichten Schatten auf die dahinter. Der Dachs ist eine Gliederpuppe aus starren Papierteilen an Musterklammern (Schulter, Ellbogen, Hüfte, Knöchel) und bewegt sich im Legetrick-Takt (15 Posen/s).",
+ "references": [
+  "Paper Mario (Intelligent Systems, 2000) und Nachfolger – Figuren und Kulissen als flache Papierteile",
+  "Tearaway (Media Molecule, 2013) – Welt aus gefaltetem und geschnittenem Papier, Papierschnipsel-Oberfläche",
+  "Lumino City (State of Play, 2014) – Kulissen aus echtem Papier und Karton, fotografiert",
+  "Tengami (Nyamyam, 2014) – Aufklappbuch-Kulissen aus Washi-Papier",
+  "South Park: The Stick of Truth (Obsidian, 2014) – Cut-out-Figuren aus wenigen starren Teilen",
+  "Legetrick- und Scherenschnittfilme (Lotte Reiniger) und Papiertheater des 19. Jahrhunderts – gleitende Wellenstreifen, Figuren an Stiften"
+ ],
+ "traits": [
+  "Jede Fläche ist ein eigenes Papierstück mit sichtbarer Faser: Himmel aus waagerechten Seidenpapier- und Tonpapierstreifen mit weißem, gerissenem Faserrand, Wolken und Leuchtturm als geschnittene Teile, Kai und Häuschen aus einzeln geschnittenen grauen und ockerfarbenen Steinplättchen, Tür, Boote und Steg aus Kraftpapierstreifen.",
+  "Schatten zwischen den Lagen: jedes bewegte und jedes Vordergrundteil zeichnet vor sich einen weichgezeichneten Schatten (Versatz 4/6 px, beim Häuschen 8/10 px, bei der Puppe 2,5/3,5 px), alle nach rechts unten. Die Schatten, die das Modell auf den Magenta-Grund gemalt hatte, sind beim Freistellen entfernt; es gibt keinen zweiten Schatten in Gegenrichtung. Gemessen am Poster: 7,8 % der Pixel ändern sich ohne Schatten um mehr als 8 Tonwerte, 4,2 % um mehr als 20 (assets/check/vergleich_schatten.png).",
+  "Papiertheater-Meer: vier gerissene Streifen mit weißem Faserrand gleiten gegeneinander hin und her (11–18 px, Perioden 3,3–4,9 s), dazwischen liegen ferne Boot, Steg und nahes Boot; die Boote schaukeln um ihre Wasserlinie (±1,6° und ±1,9°).",
+  "Der Dachs ist eine Gliederpuppe aus zwölf starren Papierteilen: Rumpf mit Schalwicklung und Tasche, Kopf, Schalende, Paket, je Arm Oberarm (Ärmel mit Aufschlag) und Unterarm (Fell mit Pfote), je Bein Schienbein und Fuß; ferner Arm und fernes Bein sind abgedunkelte Kopien der nahen. Vier sichtbare Messing-Musterklammern an Schulter, Ellbogen, Hüfte und Knöchel. Keine Verformung: Bewegung nur durch Drehen an den Gelenken.",
+  "Legetrick-Takt: Die Puppe wechselt 15-mal pro Sekunde die Pose (89 Posenwechsel in 6 s, alle auf geraden Bildern), die Umgebung läuft mit 30 Bildern/s.",
+  "Gemessen vor hellem Grund (assets/check/puppet_measure.json): Ferse und Zehe beider Füße haben in allen 11 Standphasen eine Spanne von 0 px; die Sohlenzeilen bleiben im Stand konstant (nah 587, fern 586 – das ferne Bein steht bewusst 1 px höher); Mützenspitze springt beim Gehen höchstens 2 px pro Pose, im Stand höchstens 1 px. Figurenhöhe 186–193 px. Die Sohlen stehen 15–22 px über dem hellen Faserrand des Notizblatts (Zeile 602–609), Fuß und Fußschatten liegen ganz auf dem Pflaster.",
+  "Ablauf in 6 s: Der Dachs läuft vor dem Häuschen nach rechts (72 px/s, 3 Schritte/s), bremst bis 3,3 s, schaut zur Laterne, hebt den nahen Oberarm senkrecht und winkt mit dem Unterarm am Ellbogen über Augenhöhe hinter der Mütze (3,9–5,7 s), blinzelt zweimal. Die ferne Pfote liegt auf dem Paket; das Paket hängt am fernen Unterarm und schwingt beim Gehen mit (±4°).",
+  "Umgebungsanimationen: gleitende Meeresstreifen, schaukelnde Boote, Rauchwölkchen aus grauem Seidenpapier hinter dem Schornstein, zwei Möwen aus Körper und angestecktem Flügel, eine ziehende Papierwolke, flackernde Laterne mit Lichtschein auf Kai und Puppe, Fensterlicht und ein Leuchtfeuer, dessen Lichtkeil aus Seidenpapier mit gerissenem, rundem Ende sich um den Turm dreht (Aufblitzen bei 4,0 s).",
+  "Oberfläche aus Papier, gesetzt von Godot: ein liniertes Notizblatt mit gerissener Oberkante und zwei Kreppbandstreifen, darauf die Zeile in Courier Prime (Tipptext), drei Antworten auf verschieden farbigen, schief geklebten Zetteln (Zettel 2 wird ab 4,4 s angehoben, sein Schatten wächst) und die Parserzeile mit Schreibmarke; der Ortsname oben rechts aus aufgeklebten Buchstabenschnipseln in drei Schriften. Deckt etwa 20 % des Bildes.",
+  "Saubere Ausschnitte: Boote, Steg, Möwe, Rauch, Wolke, Laternenpfahl, Fässer und Kisten haben keinen Magenta-Saum und keine eingebackenen schwarzen Modellschatten, über den Booten liegen keine Reste der Stegpfosten. Das Pflaster neben dem verrückten Häuschen besteht aus ganzen Steinen mit Fuge und gemaltem Schatten, ohne gerade Schnittkanten (assets/check/pflaster_fuellung.png)."
+ ],
+ "camera": "Feste Frontalansicht wie auf eine Papierbühne, keine Kamerafahrt; Tiefe nur über die Reihenfolge der Lagen und ihre Schatten",
+ "resolution": "1280×720. KI-Bilder 1264×848 (agy) mit 1,0127 auf den Bildschirm gebracht, ein 16:9-Ausschnitt; Puppenteile im doppelten Bildschirmmaßstab gespeichert und mit 0,5 und Mipmaps gezeichnet (Figur 190 px hoch bei 220 px Haustür)",
+ "pipeline": [
+  {
+   "step": "Lagevorlagen",
+   "tool": "scripts/make_refs.py (Pillow)",
+   "detail": "Die Szene wird zuerst in Bildschirmkoordinaten festgelegt (Horizont 352, Kaikante 515, Häuschen links, Laterne, Fässer, Leuchtturm) und als grobe Blockskizze auf die Leinwand der Bildaufträge übertragen: assets/refs/layout_back.png, layout_quay.png (Kai-Ebene auf Magenta), layout_props.png (Requisitenbogen), layout_badger.png (Seitenansicht aus shared/badger/master_sheet.png auf Magenta). agy übernimmt die Anordnung der ersten Referenz; so passen getrennt erzeugte Lagen ohne Neukomposition zusammen."
+  },
+  {
+   "step": "Prompts",
+   "tool": "scripts/make_prompts.py",
+   "detail": "Stilblock (echtes Papier, geschnitten oder gerissen, weißer Faserrand an Rissen, kleinere Teile aufgeklebt, jede Lage wirft einen dünnen Schatten, eine flache Farbe je Stück, keine Konturen, ‚not a painting, not a vector illustration, not a 3D render‘) + Lageblock + Motivblock wörtlich aus data/motif.json + Schutzregeln + Format. Ergebnis assets/prompts/*.txt und assets/jobs_w1…w5.json. Alle Aufträge bewusst mit --backend agy (siehe lessons)."
+  },
+  {
+   "step": "Hintergrund (Himmel, fernes Meer, Landzunge, Leuchtturm)",
+   "tool": "genimg (agy, verbatim: true), 1536×1024 bestellt, 1264×848 geliefert",
+   "detail": "Erster Versuch, 123 s. Horizont auf Zeile 352 (geplant 352), Leuchtturm bei x 1122, Lampe als gelber Papierpunkt ohne Strahl. Wird unverändert als hinterste Lage benutzt (assets/scene/back.png)."
+  },
+  {
+   "step": "Kai-Ebene (Kai, Häuschen, Laterne, Fässer, Kisten, Tau)",
+   "tool": "genimg (agy, verbatim: true), Referenzen layout_quay.png + raw/back.png (Papiertechnik)",
+   "detail": "Erster Versuch, 56 s, auf Magenta. Kaikante auf Zeile 519 (geplant 515), Laterne und Fässer an ihrer Stelle; das Häuschen kam aber 537 statt 330 px breit, mit drei unbestellten Papiersternen auf den Steinen. scripts/prep_scene.py stellt selbst frei (siehe Schritt Freistellung), schneidet das Häuschen genau an der Mauerkante aus (x ≤ 509, Mauerfuß bis Zeile 626 samt grauem Schattenstrich), rückt es 100 px nach links und belegt den frei gewordenen Kaistreifen mit ganzen Steinen (fill_pavement: angeschnittene Steine entfernen, Fugenpapier in Fugenfarbe mit KI-Papierkorn, dann vier ganze Steine aus mindestens 170 px Entfernung gierig einsetzen, größter zuerst, mindestens 4 px Fuge; Oberkante des Kais aus dem Zeilenmittel übernommen)."
+  },
+  {
+   "step": "Requisitenbogen (Steg, zwei Boote, Wolken, Möwe mit getrenntem Flügel, Rauchwölkchen)",
+   "tool": "genimg (agy, verbatim: true), Referenzen layout_props.png + raw/back.png",
+   "detail": "Erster Versuch, 63 s. Die Teile liegen wie skizziert, aber das Modell hat Meer und Landzunge der Stilreferenz in die untere Bildhälfte übernommen; zwei der drei Rauchwölkchen hängen an den kopierten Felsen. Außerdem malte es unter jedes Teil einen weichen, abgedunkelten Magenta-Schatten nach links unten. Teile per Zusammenhangskomponenten der eigenen Freistellung; ohne den gemalten Schatten hängen Steg und rechtes Boot nicht mehr zusammen, das Boot behält seine Mastspitze und nimmt keine Pfostenenden mit. Jedes Teil bekommt seinen weichen Rand bis 2 px um die Komponente, aber nichts von Nachbarteilen. Genutzt: Steg, beide Boote, eine Wolke, Möwenkörper, Flügel, ein Rauchwölkchen."
+  },
+  {
+   "step": "Freistellung der Szenenbilder",
+   "tool": "scripts/pc_util.py key_green (NumPy), auf raw/<name>.keyed-src.png",
+   "detail": "genimgs Freistellung ließ den gemalten Magenta-Schatten deckend stehen und färbte ihn schwarz (siehe tool_issues). Eigene Regel aus dem Original: Magenta und sein Schatten haben fast kein Grün, deshalb Alpha aus G / max(R, B) (unter 0,12 durchsichtig, ab 0,45 deckend). Kern = deckend ohne Magentastich, 2 px eingerückt (bei 4 px schmalen Masten 1 px). In einer 4-px-Randzone bekommt jedes Pixel die Farbe des nächsten Kerns, Alpha = G / G_Kern (Grün stammt nur vom Papier, auch vor dem dunklen Schatten). Dünne Teile ohne Kern (Taue, Baumenden): Magentastich abziehen, zu warmem Papier schieben (B ≤ 0,82·G, R ≤ 1,4·G). Wolken behalten ihr Violett (keep_hue), der Rauch wird ganz entfärbt (graues Seidenpapier). Vor dunklem und hellem Grund geprüft."
+  },
+  {
+   "step": "Gesamtfigur der Puppe (C1)",
+   "tool": "genimg (agy, verbatim: true), 1024×1536 bestellt, 848×1264 geliefert; Referenzen layout_badger.png (Pose, Kostüm) + raw/back.png (Papiertechnik)",
+   "detail": "Erster Versuch, 65 s. Seitenansicht nach rechts, aus Papierstücken mit gerissenen weißen Fellkanten. Abweichung: Das Paket hält die ferne Pfote (vor der Brust sichtbar), der nahe Arm hängt frei mit der Pfote auf der Tasche."
+  },
+  {
+   "step": "Teile einzeln erzeugen, erster Weg: Bildbearbeitung der Gesamtfigur",
+   "tool": "genimg (agy), Referenz raw/badger.keyed-src.png",
+   "detail": "Zwei Aufträge ‚Edit of the reference image … shows only ONE of its pieces‘. Beide Bilder sind deckungsgleich mit C1, zerlegen sie aber nicht: ‚nur Kopf‘ lieferte die ganze Figur ohne Schal mit einer dunklen Hals-Lasche, ‚nur Rumpf‘ ließ Kopf und Paket weg und setzte das Schalende ab, behielt aber Arm und Beine und malte eine dunkle Halskuppe. Aus dem ersten Bild wird der Kopf mit Lasche geschnitten (Farbklassen + Zusammenhang, deckungsgleich mit C1)."
+  },
+  {
+   "step": "Rumpf über eine grob zerlegte Vorlage",
+   "tool": "scripts/body_layout.py + genimg (agy, verbatim: true), Referenzen refs/layout_body.png + raw/badger.keyed-src.png",
+   "detail": "Aus dem Rumpfbild: Kuppe über der Schaloberkante weg, Beine unter dem Hüftfell weg, Arm durch flache Flecken in Westengrün und Taschenbraun ersetzt. agy zeichnete daraus im ersten Versuch (68 s) einen sauberen Rumpf mit vervollständigter Weste und neu gezeichneter Tasche, Schalende getrennt – aber 1,30-fach vergrößert und verschoben. Eingepasst über die drei Westenknöpfe (Ähnlichkeitstransformation, Restfehler 0,4 px)."
+  },
+  {
+   "step": "Puppe zusammensetzen",
+   "tool": "scripts/prep_puppet.py, scripts/pc_util.py",
+   "detail": "Kopf aus dem Kopfbild, Rumpf und Schalende aus dem Rumpfbild, naher Arm, Paket und nahes Bein aus C1 (dort ganz sichtbar, per Farbklassen in Polygonbereichen geschnitten). Der Arm wird an der Unterkante des Ärmelaufschlags (je Spalte, Zeile 714–720) in Oberarm und Unterarm geteilt; der Unterarm bekommt oben eine Scheibe (Radius 56 px) um den Ellbogen, gefüllt mit gespiegelten Fellzeilen von unterhalb des Aufschlagschattens, die bei jeder Drehung unter dem Aufschlag bleibt. Beinlasche über der Hüfte durch gespiegelte Zeilen verlängert, Bein am Knöchel mit einer Scheibe in Schienbein und Fuß geteilt. Ferner Arm und fernes Bein sind abgedunkelte Kopien (0,72); die ferne Schulter sitzt 60/−12 px versetzt, damit die Pfote das Paket erreicht. Von Hand gesetzt: Hals, Schulter, Ellbogen, Schalansatz, Hüft- und Knöchelpunkt, zwei Polygonbereiche (etwa 27 Koordinaten). Magentareste der Figurenbilder mit kill_magenta/despill_magenta entfernt (siehe tool_issues). Prüfbild assets/check/rig_rest.png neben C1."
+  },
+  {
+   "step": "Meeresstreifen, Oberfläche, Effekte aus Code",
+   "tool": "scripts/prep_scene.py, scripts/prep_ui.py (NumPy, Pillow, fester Seed)",
+   "detail": "Vier gerissene Streifen 1440 px breit: Oberkante aus Sinus + vier Rauschoktaven, weißer Faserrand 2,6–5,6 px mit einzelnen Fasern, dunkle Kante darunter, Farben aus dem KI-Meer abgelesen. Das Papierkorn stammt aus dem verdeckten unteren Meeresstück des KI-Hintergrunds (Helligkeit geteilt durch Mittelwert, gespiegelt gekachelt). Ebenso: Notizblatt, Kreppband, drei Antwortzettel, 18 Buchstabenschnipsel, Lichtkeil aus Seidenpapier (Textur 150 px hoch bei 116 px Keilbreite, fernes Ende als Halbbogen mit Rissrauschen und etwas dichterem Faserrand statt senkrechter Schnittkante), Musterklammer. Schatten aller Teile als weichgezeichnetes Alpha."
+  },
+  {
+   "step": "Godot-Demo",
+   "tool": "Godot 4.7.2, main.gd, puppet.gd, shaders/lit.gdshader",
+   "detail": "Lagen als Sprite2D mit Schatten-Sprite davor; Tönung und Laternenlicht im Shader; Puppe aus Formeln im 15er-Takt; Oberfläche in einem CanvasLayer. scripts/build_demo.py kopiert die Assets nach demo/art und schaltet Mipmaps für Puppe und Oberfläche ein."
+  },
+  {
+   "step": "Prüfung",
+   "tool": "scripts/measure_puppet.py, scripts/compare_renderers.py, Langzeitlauf",
+   "detail": "Füße und Kopf einzeln vor hellem Grund gemessen (--badger-only --no-shadows --only=…): Standfuß 0 px, Kopfsprung ≤ 2 px, 89 Posenwechsel nur auf geraden Bildern, Sohlen auf Zeile 587/586. Renderer: mobile pixelgleich, gl_compatibility mittlere Abweichung 0,21 Tonwerte (max. 3). Ab --t0=40 angesehen: Lichtkeil voll ausgefahren mit rundem Rissende, Streifen, Wolke und Möwen laufen periodisch weiter. Schatten ein/aus verglichen (--no-shadows). Alle freigestellten Teile vor dunklem und hellem Grund angesehen; Pflasterfüllung als Prüfbild mit Umriss der ersetzten Fläche."
+  },
+  {
+   "step": "Aufnahme",
+   "tool": "tools/capture.py --poster-at 0.78",
+   "detail": "6 s, 30 fps, ohne Godot-Fehler und -Warnungen; Poster bei 4,7 s mitten im Winken mit vollständiger Parserzeile und angehobenem Zettel."
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, stretch mode canvas_items, Forward+, nur 2D, keine Plugins. main.tscn enthält nur den Wurzelknoten; main.gd baut alles aus art/scene/layout.json, art/ui/ui.json und art/puppet/rig.json.",
+  "Zeichenreihenfolge: Hintergrund, Lampenschein, Wolke, Lichtkeil, Aufblitzen, Möwen, Streifen 0, fernes Boot, Streifen 1, Steg, Streifen 2, nahes Boot, Streifen 3, Rauch, Kai, Häuschen, Fenster- und Laternenschein auf dem Kai, Puppe (Schalende, fernes Bein, nahes Bein, ferner Oberarm, Paket, ferner Unterarm, Kopf, Rumpf, naher Unterarm, naher Oberarm), Laternenhof, Randabdunklung (multiplikativ), Oberfläche (CanvasLayer 10). Puppe auf Bodenzeile 588.",
+  "Jedes Papierteil ist ein Paar aus Schatten-Node2D und Teil-Node2D (je ein Sprite2D mit offset = −Drehpunkt). Der Schatten bekommt dieselbe Drehung und Skalierung und die Position plus einen festen Versatz im Bildschirmraum, so bleibt das Licht beim Schaukeln und Drehen gleich gerichtet.",
+  "shaders/lit.gdshader (canvas_item): COLOR.rgb *= Tönung + Laternenfarbe × Abfall nach Weltabstand (Position aus MODEL_MATRIX in vertex()) + Fensterschein. Drei Materialien: fern (0,80/0,80/0,92), nah (0,80/0,78/0,90), Puppe (0,88/0,86/0,94). Flackern mit FastNoiseLite (Seed 7) und einer Böe bei 2,2–2,9 s.",
+  "Lichtschein als Sprite2D mit radialer GradientTexture2D und CanvasItemMaterial BLEND_MODE_ADD. Lichtkeil: Sprite aus Seidenpapier (Alpha 0,72), scale.x = cos(Winkel), Periode 6,4 s; bei sin(Winkel) nahe 1 blitzt die Lampe auf.",
+  "Meeresstreifen um ganze Pixel verschoben (Sinus, 11–18 px) und um ±1 px gehoben; Boote drehen um die Wasserlinie. Rauch: fünf Wölkchen im 0,7-s-Abstand, steigen und treiben nach links, wachsen und werden zum Schluss klein statt durchsichtig (Papier verblasst nicht).",
+  "puppet.gd: Gang mit starrem Bein (Hüfte–Knöchel 25,3 px, Knöchel 11,6 px über der Sohle, ±28° Beinwinkel, Schritt 23,8 px). Standbein: Knöchel fest, Hüfte auf dem Kreis; Schwungbein: Knöchel auf der Strecke zwischen den Standorten, Bein gleitet im verdeckten Hüftgelenk um 4,5·sin(πs) px nach oben, Fuß hebt die Zehe um 9°. Bremsen mit stetiger Geschwindigkeit (0,5 s), Endphase so gewählt, dass beide Beine senkrecht stehen. Jedes Bein steht auf seiner eigenen Bodenzeile (fern 1 px höher); Bodenzeile 588, 14 px höher als zuvor, damit die Sohlen nicht am Notizblatt-Rand stehen.",
+  "Rumpf: 2,2° Vorlage beim Gehen, ±1,3° Wippen je Schritt, im Stand ±0,8° Atmen als Kippen um die Hüfte. Kopf gleicht das Wippen halb aus und schaut nach dem Anhalten 8° hinauf. Naher Oberarm pendelt ±15° gegen das nahe Bein, der Unterarm beugt sich beim Vorschwingen bis 16°; zum Winken dreht der Oberarm auf −185° (senkrecht, leicht nach hinten) und der Unterarm schwingt am Ellbogen 15° ±20°. Ferner Arm hält bei −44°/−18° (Pfote auf dem Paket, per Zwei-Gelenk-Rechnung gesetzt) und schwingt ±4° gegenläufig; das Paket hängt als Transform am fernen Unterarm. Schalende als gedämpfte Drehfeder mit vier Unterschritten je Bild, angetrieben von Tempo, Beschleunigung und Wind; angezeigt im Posentakt.",
+  "Posentakt: pose(floor(t·15)/15); Lidschläge (dunkles Papieroval im Kopfraum) liegen auf diesem Raster (je zwei Posen). --smooth zeigt 30 Posen/s.",
+  "Oberfläche: Notizblatt, Kreppband und Zettel als Papier-Sprites mit Schatten; Label mit Courier Prime Regular 23 px (Zeile, visible_characters) und Bold 18/20 px (Antworten, Parser), Schreibmarke als ColorRect. Ortsname: je Buchstabe ein Schnipsel (Lilita One, Abril Fatface, Courier Prime Bold, Farbe nach Papierhelligkeit), Lage und Drehung aus RandomNumberGenerator (Seed 41), Buchstaben ‚kleben‘ zwischen 0,15 und 1,0 s nacheinander auf (Schatten schrumpft).",
+  "Prüfargumente nach \"--\": --t0=<s>, --badger-only, --only=<Teile>, --no-shadows, --no-ui, --smooth."
+ ],
+ "techniques": [
+  "ki-bildbearbeitung",
+  "lagevorlage",
+  "lagenschatten",
+  "skelett-2d",
+  "fuss-halten",
+  "prozedurale-animation",
+  "papiertheater-wellen",
+  "additiver-lichtkegel",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 4,
+  "effort": 3,
+  "text_adventure": 4,
+  "mobile": 4
+ },
+ "ratings_note": "ai_fit 4: Alle vier Grundbilder (Hintergrund, Kai-Ebene, Requisitenbogen, Gesamtfigur) kamen im ersten Versuch mit überzeugendem Papier – gerissene Ränder mit Faser, aufgeklebte Teile, keine 3D- oder Gemäldeanmutung – und hielten die Lagevorlagen weitgehend ein. Abzug, weil das Zerlegen der Figur per Bildbearbeitung zweimal nicht gelang (dritter Auftrag mit grob zerlegter Vorlage nötig), der Requisitenbogen Meer und Landzunge der Stilreferenz übernahm, das Häuschen viel zu groß kam und das Modell trotz Chroma-Hintergrund Schatten auf das Magenta malte (eigene Freistellung nötig). Bewegung, Schatten, Licht, Meeresstreifen und Oberfläche kommen aus Code. consistency 4: Alle Bilder aus einem Modell mit demselben Stilblock und dem Hintergrund als Stilreferenz; die Code-Teile tragen das Papierkorn des KI-Bilds. Zwischen den Lagen bleiben Unterschiede (Kai-Pflaster fein und taghell, Häuschenfenster grell gelb), die Tönung im Shader nur mildert; geprüft ist ein Ort und eine Figur. effort 3: Pro Ort drei Bilder plus Lagevorlage, Ausschneiden und Nacharbeit am Freistellen; pro Figur eine Gesamtfigur und zwei bis drei Teilbilder sowie etwa 27 von Hand gesetzte Koordinaten; die Werkzeuge (Freistellung, Pflasterfüllung, Schatten, Wellen, Gang, Oberfläche) sind wiederverwendbar. mobile 4 (geschätzt): mobile pixelgleich mit Forward+, gl_compatibility mittlere Abweichung 0,21 Tonwerte; rund 100 Sprites, davon sechs fast bildschirmgroße Lagen mit Schatten (Überzeichnung), ein einfacher Shader; kein Test auf einem Telefon.",
+ "verdict": "Gut geeignet für unser Textadventure: Der Stil ist sofort erkennbar, warm und eigenständig, und er passt zu Orten, die sich nur wenig bewegen. Ein Ort entsteht aus drei KI-Bildern (ferne Lage, Spielebene, Requisitenbogen), die dank Lagevorlage zusammenpassen; Bewegung entsteht billig aus Code, indem Papierteile gleiten, schaukeln und sich an Klammern drehen. Die Oberfläche aus Notizzettel, Kreppband und Papierzetteln trägt den Stil bis in den Text. Grenzen: Die Figur kann nur in der Bildebene gelenkig sein (keine Drehung zur Kamera, Mimik nur als Lidschlag); jede neue Figur braucht Teilbilder und Handarbeit beim Zusammensetzen, und jedes freigestellte KI-Bild braucht die eigene Freistellung, weil das Modell im Papierstil Schatten auf den Chroma-Hintergrund malt. Abweichungen vom Auftrag: Kopf und Rumpf sind eigene KI-Teilbilder, Arme, Paket und Beine wurden aus der Gesamtfigur geschnitten, weil sie dort vollständig sichtbar sind und die Teilaufträge per Bildbearbeitung das Layout der Figur nicht aufgaben; ferner Arm und fernes Bein sind abgedunkelte Kopien der nahen. Das Häuschen ist gegenüber dem KI-Bild 100 px nach links gerückt, damit Meer und Boote Platz haben.",
+ "pitfalls": [
+  "Teilaufträge als Bildbearbeitung der Gesamtfigur scheiterten mit agy: ‚nur der Kopf‘ ergab die ganze Figur ohne Schal (mit Hals-Lasche), ‚nur der Rumpf‘ behielt nahen Arm und Beine. agy hält das Layout der Referenz so fest, dass es nichts weglässt. Zwei von sieben Bildern waren damit nur teilweise nutzbar; der Rumpf brauchte einen dritten Auftrag mit grob zerlegter Vorlage.",
+  "Der neu gezeichnete Rumpf kam 1,30-fach vergrößert und verschoben (nicht deckungsgleich, obwohl verlangt). Eingepasst über die drei Westenknöpfe; die Tasche ist etwas anders gezeichnet als in der Gesamtfigur.",
+  "Arme, Paket und Beine sind nicht einzeln erzeugt, sondern aus der Gesamtfigur geschnitten; die Gesamtfigur zeigt nur den nahen Arm. Ferner Arm und fernes Bein sind abgedunkelte Kopien der nahen (Faktor 0,72). Vom fernen Arm sieht man nur die Pfote auf dem Paket, gut zur Hälfte, weil Oberarm und Unterarm hinter dem Rumpf liegen; die Pfote liegt vor dem Paket statt es zu umgreifen. Die Beinlasche über der Hüfte ist durch gespiegelte Zeilen verlängert, die Ellbogenscheibe des Unterarms ebenso (unter dem Aufschlag verborgen).",
+  "Requisitenbogen: Meer und Landzunge der Stilreferenz wurden mitgemalt; zwei von drei Rauchwölkchen hängen an den kopierten Felsen. Der Rauch besteht deshalb aus einem einzigen Wölkchen, fünfmal mit anderer Größe und Drehung.",
+  "Kai-Ebene: Das Häuschen kam 1,6-fach breiter als in der Vorlage, das Meer war fast verdeckt. Häuschen ausgeschnitten und 100 px nach links gerückt. In der ersten Fassung war der frei gewordene Streifen als Rechteck mit Pflasterzeilen von daneben gefüllt: Steine waren senkrecht und waagerecht mitten durchgeschnitten (Nähte bei x 446 und 547, y 575), genau am Startpunkt des Dachses. Jetzt liegen dort Fugenpapier und vier ganze Steine von anderen Stellen des Kais (mindestens 170 px entfernt). Rest: Das Fugenpapier ist aus Fugenfarbe und Papierkorn erzeugt und etwas gleichmäßiger als die KI-Fuge daneben; die Steine kommen im Kai zweimal vor (weit auseinander). Ein Versuch, die Naht nur entlang der Fugen zu legen, scheiterte: Die Steine liegen so dicht, dass jede Verschiebung über die ganze Kaibreite Steine kreuzt. Drei unbestellte Papiersterne auf den Steinen blieben stehen.",
+  "Freistellen: genimg/sprites.py ließ den vom Modell auf das Magenta gemalten, abgedunkelten Schatten (z. B. 156/4/148) deckend stehen und färbte ihn schwarz. In der ersten Fassung lagen deshalb links neben jedem Tau, am Baum und unten links am Rumpf schwarze Striche (Takelage doppelt, Licht gegen den Code-Schatten), über dem rechten Boot schwebten drei abgeschnittene Pfostenenden des Stegs, und ein rosa-violetter Saum lag um beide Rümpfe, Steg, Laternenpfahl, Fässer und Kiste. Mit der eigenen Freistellung (key_green) sind Schatten, Pfostenenden und Saum weg. Reste: An der Fensteröffnung der Kajüte des nahen Boots und an den Baumenden bleibt ein 1–2 px rötlicher Rand (JPEG hat dort das Magenta 2–4 px ins Kraftpapier verschmiert, ohne dass die Regel es erkennt; eine Prüfung der Farbe gegen die Umgebung verfärbte dafür den weißen Kajütenstreifen und wurde verworfen). Die Taue sind nach der Entfärbung beige statt rosa; ihre echte Farbe ist unbekannt. In der Figur reichten kill_magenta/despill_magenta (violetter Saum um Hüftfell und Schal behoben).",
+  "Sehr kurze Beine (Hüfte–Knöchel 25 px): Der Gang ist ein Trippeln mit 3 Schritten/s und 24 px Schrittlänge; der Dachs legt in 3,3 s nur 220 px zurück und ist deshalb schon im ersten Bild zu sehen, statt hereinzulaufen. Das Schwungbein gleitet im Hüftgelenk nach oben – physikalisch unmöglich, aber unter dem Hüftfell verborgen.",
+  "Winken: Der Oberarm ist zu kurz, um die Pfote über die Mütze zu heben (Schulter bis Mützenspitze 428 px in der Vorlage, Arm 305 px). Gewinkt wird deshalb mit senkrecht erhobenem Oberarm und dem Unterarm am Ellbogen über Augenhöhe hinter der Mütze. Auge und Schnauze bleiben frei, aber der erhobene Ärmel liegt vor Hinterkopf und Schal.",
+  "Mimik nur als Lidschlag: das Papieroval über dem Auge ist 3,6 px groß und in der Totale kaum zu sehen.",
+  "Schatten sind bewusst leicht, aber nicht überall sichtbar: Bei Licht von oben fallen die Schatten der Meeresstreifen unter die Streifen; dort bleibt nur ein schwacher Saum. Deutlich sind sie an Häuschen, Laternenpfahl, Booten, Puppe und Oberfläche.",
+  "Die KI-Lagen sind flach beleuchtet (Kai-Pflaster taghell, Fenster und Laternenglas reines Gelb). Die Dämmerung entsteht erst durch Tönung im Shader und Lichtschein; ohne sie passen Kai und Himmel nicht zusammen.",
+  "Der Lichtkeil aus Seidenpapier dreht sich nur scheinbar (Breite = cos des Winkels). Voll ausgefahren liegt er als blasses Band über dem Himmel und hinter dem Ortsnamen; sein fernes Ende ist inzwischen rund gerissen statt senkrecht abgeschnitten.",
+  "Ortsname als Erpresserbrief-Collage: gut lesbar und typisch für Collage, aber die Anmutung ‚Erpresserbrief‘ passt nicht zu jedem Spielton.",
+  "Die Puppe stand in der ersten Fassung mit den Sohlen auf dem gerissenen Rand des Notizblatts (Zeile 600/601), Bodenkontakt und Fußschatten verschwanden darunter. Bodenzeile auf 588 angehoben; die Oberfläche deckt den Kai weiter ab Zeile 598 ab, der Dachs läuft also im oberen Drittel des sichtbaren Pflasters."
+ ],
+ "lessons": [
+  "Lagevorlage als erste Referenz für agy: eine Blockskizze im Bildschirmkoordinatensystem (Horizont, Kaikante, Lage der Objekte) bringt getrennt erzeugte Lagen auf dieselbe Bühne – Horizont 352 statt 352, Kaikante 519 statt 515. Größen einzelner Objekte hält das Modell nicht genau ein (Häuschen 1,6-fach).",
+  "Stilblock für Papiercollage: echtes Papier benennen (Tonpapier, Kraftpapier, Aquarellpapier, Seidenpapier), Schnitt- und Rissränder beschreiben (‚torn edges show a thin ragged white fibrous rim‘), Details als aufgeklebte kleinere Stücke, eine flache Farbe je Stück, ‚each glued layer casts a thin soft shadow onto the paper directly beneath it‘ und die Verbote Gemälde, Vektorgrafik, 3D-Render. agy lieferte damit in allen sieben Bildern Papier ohne 3D-Anmutung.",
+  "Figur zerlegen mit agy: nicht ‚zeige nur Teil X‘, sondern eine grob zerlegte Vorlage als erste Referenz (Teile ausgeschnitten, verdeckte Stellen als flache Farbflecken) und die fertige Figur als zweite. Das Modell zeichnet die Flecken als Weste und Tasche fertig. Größe und Lage danach über Landmarken einpassen (drei Knöpfe, Ähnlichkeitstransformation).",
+  "Was in der Gesamtfigur vollständig sichtbar ist (Arm vor dem Körper, Unterschenkel, Paket), lässt sich ohne weiteres Bild per Farbklassen in einem Polygonbereich schneiden; KI-Teilbilder lohnen sich nur für Teile mit verdeckten Flächen (Rumpf unter dem Arm, Hals unter dem Schal).",
+  "Papiergelenke ohne Lücken: Kopf mit Lasche hinter die Schalwicklung, Bein mit Lasche hinter das Hüftfell, Fuß mit einer Scheibe um den Knöchel unter das Schienbein, Unterarm mit einer Scheibe um den Ellbogen unter den Ärmelaufschlag. Musterklammern (kleine Messingscheiben) an Schulter, Ellbogen, Hüfte und Knöchel machen die Puppe als Puppe lesbar.",
+  "Gang starrer Papierbeine ohne Rutschen: Standfuß im Weltraum fest, Hüfte auf dem Kreis um den Knöchel, Schwungbein im verdeckten Gelenk anheben, Abbremsen mit stetiger Geschwindigkeit und Endphase bei halbem Schritt. Gemessen 0 px Spanne an Ferse und Zehe.",
+  "Papiertheater-Wellen: mehrere gerissene Streifen, die mit verschiedenen Perioden um ganze Pixel gegeneinander gleiten, und Boote zwischen den Streifen. Das Papierkorn für Code-Teile aus einer verdeckten Fläche des KI-Bilds nehmen (Helligkeit durch Mittelwert, gespiegelt gekachelt) – dann passen Code- und KI-Papier zusammen.",
+  "Schatten zwischen den Lagen: je Teil ein vorab weichgezeichnetes Alpha als schwarzes Sprite vor dem Teil, mit fester Verschiebung im Bildschirmraum und derselben Drehung. Billig, in allen Renderern gleich, und der Versatz lässt sich je Lage als ‚Abstand zur Lage dahinter‘ wählen.",
+  "Legetrick-Takt (15 Posen/s) für die Puppe und 30 Bilder/s für die Umgebung lassen die Puppe nach Stop-Motion aussehen, ohne die Umgebung ruckeln zu lassen; Federn (Schalende) mit echter Bildzeit rechnen und nur im Posentakt anzeigen.",
+  "Oberfläche ganz aus Papier: liniertes Notizblatt mit gerissener Oberkante, Kreppband, Antwortzettel aus verschiedenen Papieren, Buchstabenschnipsel für den Ortsnamen; der gewählte Zettel wird angehoben (Schatten wächst). Alles aus Code mit dem KI-Papierkorn, Schrift Courier Prime für gute Lesbarkeit.",
+  "Magentareste nach dem agy-Freistellen der Figurenbilder (ohne gemalten Schatten auf dem Grund): deckende Pixel mit R≈B und G deutlich darunter durchsichtig machen, bei Figuren ohne Blau/Violett zusätzlich B−G > 40; danach in einem 6-px-Randband Spill = min(R,B)−G von R und B abziehen. Violette Himmelsflächen im Inneren bleiben unberührt.",
+  "Papierstil und Chroma-Hintergrund vertragen sich nicht: Verlangt der Stilblock Schatten zwischen den Lagen, malt agy sie auch auf den Magenta-Grund, obwohl genimg ‚no shadow‘ einsetzt. Deshalb aus dem Original (keyed-src) selbst freistellen: Alpha aus G / max(R, B), Randfarbe vom nächsten sauberen Kern, Alpha am Rand = G / G_Kern (scripts/pc_util.py key_green). Das entfernt Magenta und gemalten Schatten in einem Schritt und trennt nebenbei Teile, die nur über den Schatten zusammenhingen.",
+  "Löcher im Pflaster mit ganzen Steinen füllen statt mit einem kopierten Rechteck: Steine als Farbabweichung von der Fuge segmentieren (Kern 2 px eingerückt, dann zurückgeweitet), angeschnittene Steine entfernen, Fugenpapier legen und ganze Steine gierig einsetzen (größter zuerst, feste Fugenbreite, Quelle weit genug weg, damit kein Doppel daneben steht).",
+  "Ellbogen für Papierpuppen: Arm an der Ärmelkante teilen, den Unterarm oben mit einer Scheibe um den Drehpunkt versehen und den verdeckten Teil mit Fellzeilen von unterhalb des gemalten Aufschlagschattens füllen. Die Scheibe ist drehinvariant und bleibt unter dem Aufschlag; ein Paket an der fernen Pfote hängt man als Transform an den fernen Unterarm.",
+  "Bewusst --backend agy für alle Bilder: ein Modell für alle Papierlagen hält die Papieranmutung gleich, agy übernimmt Lagevorlagen genau, und die Nutzervorgabe ist agy zuerst. Codex wäre wegen echter Transparenz die automatische Wahl für die freigestellten Lagen gewesen."
+ ],
+ "assets": [
+  {"file": "assets/scene/back.png", "kind": "background", "made_with": "agy (Gemini), auf 1280×720 gebracht", "prompt": "assets/raw/back.json"},
+  {"file": "assets/scene/quay.png", "kind": "layer", "made_with": "agy, eigene Freistellung (key_green), ohne Häuschen, Lücke mit ganzen Steinen belegt (prep_scene.py)", "prompt": "assets/raw/quay.json"},
+  {"file": "assets/scene/cottage.png", "kind": "layer", "made_with": "agy, eigene Freistellung, an der Mauerkante aus der Kai-Ebene geschnitten, 100 px nach links", "prompt": "assets/raw/quay.json"},
+  {"file": "assets/scene/jetty.png", "kind": "prop", "made_with": "agy-Requisitenbogen, Komponente, Maßstab 0,62, eigene Freistellung (ohne gemalten Schatten)", "prompt": "assets/raw/props.json"},
+  {"file": "assets/scene/boat_l.png", "kind": "prop", "made_with": "agy-Requisitenbogen, Maßstab 0,74, eigene Freistellung (ohne gemalten Schatten)", "prompt": "assets/raw/props.json"},
+  {"file": "assets/scene/boat_r.png", "kind": "prop", "made_with": "agy-Requisitenbogen, Maßstab 0,84, eigene Freistellung (ohne gemalten Schatten)", "prompt": "assets/raw/props.json"},
+  {"file": "assets/scene/cloud_a.png", "kind": "prop", "made_with": "agy-Requisitenbogen", "prompt": "assets/raw/props.json"},
+  {"file": "assets/scene/gull_body.png", "kind": "prop", "made_with": "agy-Requisitenbogen (Möwe ohne Flügel)", "prompt": "assets/raw/props.json"},
+  {"file": "assets/scene/gull_wing.png", "kind": "prop", "made_with": "agy-Requisitenbogen (Flügel einzeln)", "prompt": "assets/raw/props.json"},
+  {"file": "assets/scene/smoke.png", "kind": "fx", "made_with": "agy-Requisitenbogen (Seidenpapierwölkchen)", "prompt": "assets/raw/props.json"},
+  {"file": "assets/scene/strip0.png", "kind": "layer", "made_with": "Code (prep_scene.py): gerissener Meeresstreifen mit Faserrand, KI-Papierkorn", "prompt": ""},
+  {"file": "assets/scene/strip3.png", "kind": "layer", "made_with": "Code (prep_scene.py): vorderster Meeresstreifen", "prompt": ""},
+  {"file": "assets/scene/layout.json", "kind": "data", "made_with": "prep_scene.py: Bildschirmkoordinaten aller Lagen und Lichter", "prompt": ""},
+  {"file": "assets/puppet/body.png", "kind": "character-part", "made_with": "agy-Teilbild über grob zerlegte Vorlage, über drei Knöpfe eingepasst", "prompt": "assets/raw/badger_body.json"},
+  {"file": "assets/puppet/scarf.png", "kind": "character-part", "made_with": "agy-Teilbild (Schalende getrennt)", "prompt": "assets/raw/badger_body.json"},
+  {"file": "assets/puppet/head.png", "kind": "character-part", "made_with": "agy-Teilbild ‚nur Kopf‘ (deckungsgleich), Kopf mit Hals-Lasche per Farbklassen geschnitten", "prompt": "assets/raw/badger_head.json"},
+  {"file": "assets/puppet/upper_arm.png", "kind": "character-part", "made_with": "aus der agy-Gesamtfigur geschnitten (Ärmel mit Aufschlag)", "prompt": "assets/raw/badger.json"},
+  {"file": "assets/puppet/forearm.png", "kind": "character-part", "made_with": "aus der agy-Gesamtfigur geschnitten (Fell und Pfote, Ellbogenscheibe ergänzt)", "prompt": "assets/raw/badger.json"},
+  {"file": "assets/puppet/parcel.png", "kind": "character-part", "made_with": "aus der agy-Gesamtfigur geschnitten", "prompt": "assets/raw/badger.json"},
+  {"file": "assets/puppet/shin.png", "kind": "character-part", "made_with": "aus der Gesamtfigur, Lasche verlängert, am Knöchel geteilt", "prompt": "assets/raw/badger.json"},
+  {"file": "assets/puppet/foot.png", "kind": "character-part", "made_with": "aus der Gesamtfigur, am Knöchel geteilt", "prompt": "assets/raw/badger.json"},
+  {"file": "assets/puppet/rig.json", "kind": "rig", "made_with": "prep_puppet.py: Drehpunkte, Maßstäbe, Einpassung des Rumpfs", "prompt": ""},
+  {"file": "assets/ui/note.png", "kind": "ui", "made_with": "Code (prep_ui.py): liniertes Notizblatt mit gerissener Oberkante", "prompt": ""},
+  {"file": "assets/ui/slip_1.png", "kind": "ui", "made_with": "Code: Antwortzettel aus Kraftpapier", "prompt": ""},
+  {"file": "assets/ui/beam.png", "kind": "fx", "made_with": "Code: Lichtkeil aus Seidenpapier", "prompt": ""},
+  {"file": "assets/ui/pin.png", "kind": "ui", "made_with": "Code: Musterklammer", "prompt": ""},
+  {"file": "assets/refs/layout_back.png", "kind": "reference", "made_with": "make_refs.py: Lagevorlage Hintergrund", "prompt": ""},
+  {"file": "assets/refs/layout_quay.png", "kind": "reference", "made_with": "make_refs.py: Lagevorlage Kai-Ebene", "prompt": ""},
+  {"file": "assets/refs/layout_body.png", "kind": "reference", "made_with": "body_layout.py: grob zerlegter Rumpf als Vorlage", "prompt": ""},
+  {"file": "assets/check/rig_rest.png", "kind": "check", "made_with": "prep_puppet.py: Ruhelage aus Teilen neben der KI-Gesamtfigur", "prompt": ""},
+  {"file": "assets/check/pflaster_fuellung.png", "kind": "check", "made_with": "prep_scene.py: Kai neben dem Häuschen, ersetzte Fläche rot umrandet, neue Häuschenkante blau", "prompt": ""},
+  {"file": "assets/check/puppet_measure.json", "kind": "check", "made_with": "measure_puppet.py: Füße, Kopf, Posentakt", "prompt": ""},
+  {"file": "assets/check/vergleich_schatten.png", "kind": "check", "made_with": "Poster mit und ohne Lagenschatten", "prompt": ""},
+  {"file": "assets/check/renderer_compat.png", "kind": "check", "made_with": "compare_renderers.py: Forward+ | gl_compatibility | Differenz ×8", "prompt": ""}
+ ],
+ "licenses": [
+  {"item": "Schrift Courier Prime (Regular, Bold)", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/courierprime"},
+  {"item": "Schrift Lilita One", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/lilitaone"},
+  {"item": "Schrift Abril Fatface", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/abrilfatface"}
+ ],
+ "image_generations": 7,
+ "tool_issues": [
+  "sprites.py key (über genimg.py, --tol 70 --soft 50, Randentfärbung 2 px) misst nur den Abstand zur reinen Schlüsselfarbe. Den vom Modell gemalten, abgedunkelten Magenta-Schatten (z. B. 156/4/148, Abstand etwa 146) lässt es deckend stehen, und die Randentfärbung (R und B höchstens so hell wie G) macht ihn zu deckendem Schwarz (11/5/5). Ergebnis: schwarze Striche neben Tauen und Rümpfen, Teile über den Schatten verbunden. Lokal umgangen mit key_green in scripts/pc_util.py auf <name>.keyed-src.png.",
+  "Mischungen aus Rot und Magenta an dünnen Teilen der Figur (Schalfransen) und abgedunkeltes Magenta zwischen Fellzacken blieben ebenfalls deckend; für die Figurenbilder umgangen mit kill_magenta und despill_magenta in scripts/pc_util.py."
+ ],
+ "status": "done"
+}

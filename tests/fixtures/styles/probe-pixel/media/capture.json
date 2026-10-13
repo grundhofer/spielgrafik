@@ -1,0 +1,4 @@
+{
+ "frames": 10, "fps": 10, "seconds": 1.0, "size": [1280, 720], "native": [320, 180],
+ "poster_frame": 6, "poster_std": 60.0, "motion_mean_diff": [5.0], "motion_changed_share": [0.2], "godot_errors": []
+}

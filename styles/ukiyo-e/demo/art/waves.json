@@ -1,0 +1,116 @@
+[
+ {
+  "file": "wave_0.png",
+  "src_box": [
+   19,
+   98,
+   553,
+   565
+  ],
+  "scale": 0.4,
+  "size": [
+   214,
+   187
+  ],
+  "size_close": [
+   342,
+   299
+  ],
+  "full_width_from_y": 154.4
+ },
+ {
+  "file": "wave_1.png",
+  "src_box": [
+   541,
+   141,
+   1019,
+   565
+  ],
+  "scale": 0.4,
+  "size": [
+   191,
+   170
+  ],
+  "size_close": [
+   306,
+   272
+  ],
+  "full_width_from_y": 132.4
+ },
+ {
+  "file": "wave_2.png",
+  "src_box": [
+   1019,
+   264,
+   1516,
+   565
+  ],
+  "scale": 0.4,
+  "size": [
+   199,
+   120
+  ],
+  "size_close": [
+   318,
+   192
+  ],
+  "full_width_from_y": 99.2
+ },
+ {
+  "file": "wave_3.png",
+  "src_box": [
+   21,
+   690,
+   513,
+   924
+  ],
+  "scale": 0.4,
+  "size": [
+   197,
+   94
+  ],
+  "size_close": [
+   315,
+   150
+  ],
+  "full_width_from_y": 57.6
+ },
+ {
+  "file": "wave_4.png",
+  "src_box": [
+   540,
+   707,
+   1006,
+   925
+  ],
+  "scale": 0.4,
+  "size": [
+   186,
+   87
+  ],
+  "size_close": [
+   298,
+   139
+  ],
+  "full_width_from_y": 50.4
+ },
+ {
+  "file": "wave_5.png",
+  "src_box": [
+   1035,
+   749,
+   1516,
+   925
+  ],
+  "scale": 0.4,
+  "size": [
+   192,
+   70
+  ],
+  "size_close": [
+   307,
+   112
+  ],
+  "full_width_from_y": 42.0
+ }
+]

@@ -1,0 +1,17 @@
+{
+ "_comment": "Testkatalog für tests/test_build.py",
+ "families": [
+  {"id": "pixel", "name": "Pixel-Art & Konsolen"},
+  {"id": "gemalt", "name": "Gemalt & gezeichnet"},
+  {"id": "technik", "name": "Techniken"}
+ ],
+ "entries": [
+  {"slug": "probe-pixel", "name": "Probe-Pixel", "family": "pixel", "kind": "style", "brief": "Testeintrag mit allen Medien."},
+  {"slug": "probe-geplant", "name": "Probe geplant", "family": "pixel", "kind": "style", "needs": ["shared3d"], "brief": "Auftrag für einen geplanten Eintrag: 320×180, feste Kamera."},
+  {"slug": "probe-wip", "name": "Probe in Arbeit", "family": "pixel", "kind": "style", "brief": "Ordner existiert, Steckbrief fehlt."},
+  {"slug": "probe-gemalt", "name": "Probe gemalt", "family": "gemalt", "kind": "style", "brief": "Teilweise gelungen."},
+  {"slug": "probe-blockiert", "name": "Probe blockiert", "family": "gemalt", "kind": "style", "brief": "Am Bildlimit gescheitert."},
+  {"slug": "probe-technik", "name": "Probe-Technik", "family": "technik", "kind": "technique", "brief": "Eine Technik mit Demo."},
+  {"slug": "probe-technik-geplant", "name": "Geplante Technik", "family": "technik", "kind": "technique", "brief": "Technik, noch nicht gebaut."}
+ ]
+}

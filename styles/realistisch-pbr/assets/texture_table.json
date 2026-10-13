@@ -1,0 +1,317 @@
+{
+ "cobble": {
+  "source": "polyhaven",
+  "asset": "cobblestone_floor_03",
+  "download": "2k",
+  "size": [
+   2048,
+   2048
+  ],
+  "mode": "color",
+  "tile_m": 2.0,
+  "mean_rgb_lin": [
+   0.1983,
+   0.1763,
+   0.1294
+  ]
+ },
+ "quaywall": {
+  "source": "polyhaven",
+  "asset": "stone_wall_04",
+  "download": "1k",
+  "size": [
+   1024,
+   1024
+  ],
+  "mode": "color",
+  "tile_m": 1.7,
+  "mean_rgb_lin": [
+   0.1748,
+   0.151,
+   0.131
+  ]
+ },
+ "slatewall": {
+  "source": "polyhaven",
+  "asset": "castle_wall_slates",
+  "download": "1k",
+  "size": [
+   1024,
+   1024
+  ],
+  "mode": "color",
+  "tile_m": 2.5,
+  "mean_rgb_lin": [
+   0.2784,
+   0.2301,
+   0.1529
+  ]
+ },
+ "granite": {
+  "source": "polyhaven",
+  "asset": "rock_surface",
+  "download": "1k",
+  "size": [
+   1024,
+   1024
+  ],
+  "mode": "color",
+  "tile_m": 2.0,
+  "mean_rgb_lin": [
+   0.1604,
+   0.1191,
+   0.0841
+  ]
+ },
+ "roof": {
+  "source": "polyhaven",
+  "asset": "roof_slates_03",
+  "download": "1k",
+  "size": [
+   1024,
+   1024
+  ],
+  "mode": "color",
+  "tile_m": 3.0,
+  "mean_rgb_lin": [
+   0.1699,
+   0.1633,
+   0.1439
+  ]
+ },
+ "planks": {
+  "source": "polyhaven",
+  "asset": "weathered_planks",
+  "download": "1k",
+  "size": [
+   1024,
+   1024
+  ],
+  "mode": "color",
+  "tile_m": 2.0,
+  "mean_rgb_lin": [
+   0.0821,
+   0.0583,
+   0.0441
+  ]
+ },
+ "greywood": {
+  "source": "polyhaven",
+  "asset": "wood_planks_grey",
+  "download": "1k",
+  "size": [
+   1024,
+   1024
+  ],
+  "mode": "color",
+  "tile_m": 1.5,
+  "mean_rgb_lin": [
+   0.0638,
+   0.0608,
+   0.0531
+  ]
+ },
+ "paintwood": {
+  "source": "polyhaven",
+  "asset": "white_planks_clean",
+  "download": "1k",
+  "size": [
+   1024,
+   1024
+  ],
+  "mode": "detail",
+  "tile_m": 1.8,
+  "mean_lin": 0.3978
+ },
+ "plaster": {
+  "source": "polyhaven",
+  "asset": "painted_plaster_wall",
+  "download": "1k",
+  "size": [
+   1024,
+   1024
+  ],
+  "mode": "detail",
+  "tile_m": 2.0,
+  "mean_lin": 0.3739
+ },
+ "ironpaint": {
+  "source": "polyhaven",
+  "asset": "green_metal_rust",
+  "download": "1k",
+  "size": [
+   1024,
+   1024
+  ],
+  "mode": "color",
+  "tile_m": 1.0,
+  "mean_rgb_lin": [
+   0.0499,
+   0.0742,
+   0.0342
+  ]
+ },
+ "rust": {
+  "source": "polyhaven",
+  "asset": "rust_coarse_01",
+  "download": "1k",
+  "size": [
+   512,
+   512
+  ],
+  "mode": "color",
+  "tile_m": 2.2,
+  "mean_rgb_lin": [
+   0.1285,
+   0.0432,
+   0.0149
+  ]
+ },
+ "rock": {
+  "source": "polyhaven",
+  "asset": "mossy_rock",
+  "download": "1k",
+  "size": [
+   1024,
+   1024
+  ],
+  "mode": "color",
+  "tile_m": 3.0,
+  "mean_rgb_lin": [
+   0.1654,
+   0.1583,
+   0.1032
+  ]
+ },
+ "searock": {
+  "source": "polyhaven",
+  "asset": "lichen_rock",
+  "download": "1k",
+  "size": [
+   1024,
+   1024
+  ],
+  "mode": "color",
+  "tile_m": 2.0,
+  "mean_rgb_lin": [
+   0.0699,
+   0.0549,
+   0.0395
+  ]
+ },
+ "sand": {
+  "source": "polyhaven",
+  "asset": "damp_beach_sand",
+  "download": "1k",
+  "size": [
+   1024,
+   1024
+  ],
+  "mode": "color",
+  "tile_m": 2.0,
+  "mean_rgb_lin": [
+   0.152,
+   0.1186,
+   0.0747
+  ]
+ },
+ "grass": {
+  "source": "polyhaven",
+  "asset": "sparse_grass",
+  "download": "1k",
+  "size": [
+   1024,
+   1024
+  ],
+  "mode": "color",
+  "tile_m": 2.0,
+  "mean_rgb_lin": [
+   0.0817,
+   0.0491,
+   0.0086
+  ]
+ },
+ "tweed": {
+  "source": "polyhaven",
+  "asset": "poly_wool_herringbone",
+  "download": "1k",
+  "size": [
+   512,
+   512
+  ],
+  "mode": "detail",
+  "tile_m": 0.27,
+  "mean_lin": 0.1818
+ },
+ "linen": {
+  "source": "polyhaven",
+  "asset": "rough_linen",
+  "download": "1k",
+  "size": [
+   512,
+   512
+  ],
+  "mode": "detail",
+  "tile_m": 0.27,
+  "mean_lin": 0.3965
+ },
+ "leather": {
+  "source": "polyhaven",
+  "asset": "fabric_leather_02",
+  "download": "1k",
+  "size": [
+   512,
+   512
+  ],
+  "mode": "detail",
+  "tile_m": 0.5,
+  "mean_lin": 0.1031
+ },
+ "rope": {
+  "source": "ambientcg",
+  "asset": "Rope001",
+  "download": "1K-JPG",
+  "size": [
+   512,
+   256
+  ],
+  "mode": "detail",
+  "tile_m": 0.0,
+  "mean_lin": 0.1573
+ },
+ "cardboard": {
+  "source": "ambientcg",
+  "asset": "Cardboard002",
+  "download": "1K-JPG",
+  "size": [
+   512,
+   512
+  ],
+  "mode": "detail",
+  "tile_m": 0.0,
+  "mean_lin": 0.3084
+ },
+ "_sky": {
+  "asset": "belfast_sunset_puresky",
+  "download": "4k",
+  "full": [
+   1024,
+   512
+  ],
+  "band": [
+   1820,
+   546
+  ],
+  "band_deg": [
+   -8.0,
+   40.0
+  ],
+  "band_half_deg": 80.0,
+  "sun_u": 0.6046,
+  "sun_elev_deg": 2.07,
+  "sun_az_deg": -20.0,
+  "u_offset": 0.66017,
+  "max_lum": 29.43,
+  "mean_upper_lum": 1.2256
+ }
+}

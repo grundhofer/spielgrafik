@@ -1,0 +1,21 @@
+{
+ "forward_plus": {
+  "changed_share": 0.0,
+  "errors_warnings": [],
+  "mean_luma": 118.5
+ },
+ "mobile": {
+  "changed_share": 0.2622,
+  "errors_warnings": [
+   "WARNING: Screen-space ambient occlusion (SSAO) is only available when using the Forward+ or Compatibility renderers."
+  ],
+  "mean_luma": 106.3
+ },
+ "gl_compatibility": {
+  "changed_share": 0.8564,
+  "errors_warnings": [
+   "WARNING: Depth of field blur is only available when using the Forward+ or Mobile renderer."
+  ],
+  "mean_luma": 120.1
+ }
+}

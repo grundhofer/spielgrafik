@@ -1,0 +1,156 @@
+{
+ "slug": "snes-16bit",
+ "name": "16-Bit-Konsole",
+ "family": "pixel",
+ "kind": "style",
+ "era": "1991–1996",
+ "summary": "Kachelgrafik einer 16-Bit-Heimkonsole im Grafikmodus 1: 256×224 Pixel, zwei Hintergrundebenen mit 15 Farben je 8×8-Kachel, eine dritte Ebene mit 3 Farben für das blaue Textfenster, Sprites mit eigenen Paletten, alle Farben aus 15 Bit. Bewegung entsteht wie auf der Konsole über Palettenwerte (Leuchtfeuer, Laterne, Fenster), einen Zeilenscroll per HDMA für das Meer und Sprites (Dachs, Rauch, Möwen).",
+ "references": [
+  "Super Nintendo / Super Famicom (Nintendo 1990/1991), Grafikmodus 1 der PPU",
+  "Final Fantasy VI (Square 1994): blaues Verlaufsfenster mit Handzeiger",
+  "Chrono Trigger (Square 1995)",
+  "Secret of Mana (Square 1993)",
+  "The Legend of Zelda: A Link to the Past (Nintendo 1991)",
+  "Breath of Fire II (Capcom 1994)",
+  "Terranigma (Quintet/Enix 1995)"
+ ],
+ "traits": [
+  "Bild 256×224, ganzzahlig ×3 (768×672 in der 1280×720-Aufnahme), harte Pixel ohne Filter, bewusst quadratische Pixel (siehe pitfalls)",
+  "jede Ausgabefarbe liegt auf dem 5-Bit-Raster (BGR555, 32 Stufen je Kanal), auch die zur Laufzeit berechneten Lichtfarben; gemessen 0 Abweichungen in 180 Bildern; 135 von 256 CGRAM-Einträgen belegt (plus Hintergrundfarbe), höchstens 105 Farben je Bild",
+  "BG1 (Hafen) und BG2 (Himmel und Meer): jede 8×8-Kachel nutzt genau eine von 7 Paletten (CGRAM 16–127) mit 15 Farben + Transparenz; probe.py findet 0 Verstöße, höchstens 14 bzw. 12 Farben je Kachel; 545 + 542 verschiedene Kacheln (mit Spiegelung) = 34,8 KB, geschätzter VRAM-Bedarf insgesamt 45,9 von 64 KB",
+  "BG3 (Textfenster): je 8×8-Kachel höchstens 3 Farben aus einer von 4 BG3-Paletten (Füllung, Hell, Dunkel), 0 Verstöße; dunkelblauer Verlauf in 4 Stufen (eine Palette je zwei Kachelzeilen), Rahmen Dunkel-Hell-Hell-Dunkel mit abgerundeten, durchsichtigen Ecken, Fenster auf dem Kachelraster",
+  "Meer per Zeilenscroll wie mit HDMA: ab der Horizontzeile 61 verschiebt eine Tabelle jede BG2-Zeile um −3 bis +3 ganze Pixel (nach vorn stärker), die Kachelkarte bricht nach 256 px um; Spiegelungen von Sonne und Leuchtfeuer wabern, Boote, Pfähle und Laterne (BG1) stehen still",
+  "Palettenanimation ohne Pixeländerung: Leuchtfeuer und seine Spiegelung im Wasser blitzen alle 3,2 s auf, Laterne flackert, Fenster glimmen (9 CGRAM-Einträge je Bild neu gesetzt)",
+  "3–5 Abstufungen je Material und dunkle farbige Konturen (Braunviolett, Nachtblau, kein Schwarz) im Hintergrund und an der Figur",
+  "Dachs-Kurier als ein 32×32-Sprite (Figur ≈ 21×30) mit 15 Farben, großer Kopf (≈ 45 % der Höhe), H-Spiegelung wie das Flip-Bit im OAM; Laufzyklus 6 Bilder bei 15 Bildern/s (je 2 Aufnahmebilder), 7 px je Schritt, Standfuß gemessen 0 px Drift, 1 px Auf und Ab im Durchgang; Gruß (Pfote, Mund) und Blinzeln aus Teilen des Stehbilds",
+  "weitere Sprites: Rauchwolken aus 8×8-Sprites (4 Töne, 5 Größen, die letzte zerfällt), zwei Möwen, Paket am Kai; höchstens 9 Sprites und 9 8-px-Streifen je Bildzeile (Grenzen 32 bzw. 34)",
+  "Ortsfenster oben, Dialogfenster unten mit Schreibmaschinentext (60 Zeichen/s), drei Antworten und Handzeiger; zusammen 29,9 % des Bildes"
+ ],
+ "camera": "Seitenansicht wie ein Ortsbild eines Rollenspiels, feste Kamera, Kai als begehbare Fläche",
+ "resolution": "256×224 (Mode 1), 135 von 256 CGRAM-Einträgen mit 5 Bit je Kanal, quadratische Pixel (×3 = 768×672 in der 1280×720-Aufnahme)",
+ "pipeline": [
+  {
+   "step": "Hintergrund erzeugen",
+   "tool": "genimg (gpt-image)",
+   "detail": "Quadratisch angefordert, 1254×1254 geliefert. Stilblock: Ortsbild eines 16-Bit-Konsolen-Rollenspiels, 256 px breit, ≈ 100 Farben, 3–5 Töne je Material, dunkle farbige Konturen, Himmel in Stufenbändern, Wasser aus waagrechten Streifen; Kai-Oberfläche bei 55–72 % der Höhe, weil das Textfenster unten liegt; Lampe ohne Strahl, kein Rauch. Ein Versuch. Prompt: prompts/bg.txt"
+  },
+  {
+   "step": "Ebenenmaske erzeugen",
+   "tool": "genimg (gpt-image) mit bg.png als Referenz",
+   "detail": "Dasselbe Bild „wie auf Folie durchgepaust“, Himmel und offenes Wasser flach magenta, alle festen Dinge unverändert. Versatz zum Grundbild gemessen 0 px; Masten, Takelage und Pfähle sind sauber erfasst. Den gemalten Rauch ließ das Modell stehen (wird im Skript entfernt). Prompt: prompts/layers.txt"
+  },
+  {
+   "step": "Auf das echte Raster bringen",
+   "tool": "scripts/reduce_px.py (in build_bg.py)",
+   "detail": "Pseudo-Raster des Modells ungleichmäßig: scripts/gridfind.py findet als beste Teilung 4,51/4,55 px (≈ 277 Kunstpixel), aber nur mit Kantenverhältnis 1,2–1,3; für 256 px Breite kommen 4,9 Bildpixel auf ein Zielpixel. Quellbild per k-means (Oklab) auf 128 Farben vorquantisieren, je Zielpixel des 256×256-Rasters gewinnt die häufigste Farbe im inneren Teil der Zelle (Rand 22 % abgeschnitten): harte Pixel ohne Mischfarben. Farben auf 5 Bit gerundet, Zeilen 16–239 ausgeschnitten (Leuchtturmspitze bleibt 1 px unter dem Rand)"
+  },
+  {
+   "step": "Ebenen trennen, Rauch entfernen, Meer füllen",
+   "tool": "scripts/build_bg.py",
+   "detail": "Magenta-Anteil je Zelle < 65 % = BG1 (im Zweifel fest, damit Kanten von Booten nicht mitwabern), sonst BG2. Gemalter Rauch (x 2–23, Zeilen 4–42 des 256er-Rasters) durch Himmel derselben Zeilen 30 px weiter rechts ersetzt. BG2 unter BG1: im Meer die häufigste Wasserfarbe der Zeile (wird beim Wabern an Objektkanten sichtbar), über dem Horizont der nächste sichtbare Himmelspixel, ganz verdeckte Kacheln flach"
+  },
+  {
+   "step": "Lichter markieren",
+   "tool": "scripts/build_bg.py",
+   "detail": "Fünf Gruppen über Rechtecke + Farbregel (hell und warm): Leuchtfeuer (17 px), Haus- und Dachfenster (146 px), Fenster am Leuchtturmhaus (3 px), Laternenglas (30 px), Spiegelung des Leuchtfeuers im Wasser (62 px, BG2). Je Gruppe 1–2 Töne als eigene CGRAM-Einträge"
+  },
+  {
+   "step": "Kachelpaletten nach Mode 1",
+   "tool": "scripts/tilepal.py (in build_bg.py)",
+   "detail": "Beide Ebenen in einem Topf (gemeinsame Paletten 1–7, je 15 Farben). Kacheln als Farbhistogramme; k-means über Kacheln, Palettenfarben per gewichtetem k-means und anschließender Tauschsuche (k-Medoids) aus den echten Bildfarben, Gewicht Anzahl^0,45, Leuchtturm-Kacheln ×25, 8 Startwerte, der beste gewinnt. Durchgang 1 mit Lichtern als normalen Farben bestimmt, in welche Palette jede Lichtgruppe von selbst fällt; Durchgang 2 legt die Lichttöne dort als feste Einträge an und zwingt diese Kacheln hinein. Mittlerer Oklab-Abstand zum eingerasterten Bild 0,017. Ausgabe: demo/art/bg1.png, bg2.png (CGRAM-Index je Pixel), bg.json"
+  },
+  {
+   "step": "Figur erzeugen (2 Versuche)",
+   "tool": "genimg (gpt-image) + Referenzblatt",
+   "detail": "Versuch 1 (prompts/badger.txt, Referenzen master_sheet + walk_painted): 6 Lauf- und 4 Stehbilder, normale Proportionen, ≈ 60 Kunstpixel hoch; auf 32 px war das Gesicht nicht lesbar und die Laufbilder hatten keinen festen Standfuß (verworfen). Versuch 2 (prompts/badger2.txt, Referenzen master_sheet + eigenes Blatt 1 als Stilreferenz): 4 Stehbilder mit großem Kopf (≈ 45 %), Auge mit Glanzpunkt"
+  },
+  {
+   "step": "Figur auf 32 px, eine Sprite-Palette",
+   "tool": "scripts/build_badger.py",
+   "detail": "Alpha ≥ 200 und nur die größte Fläche je Bild (Schalenden der Nachbarbilder ragen herein, Hintergrund hat einen halbtransparenten Dunst). Materialtreue Verkleinerung (Kontur, Fell, Grün, Rot, Leder, Paket, Hell): je Zielpixel gewinnt das Material mit den meisten Rohpixeln, Ton aus der Tonleiter des Materials; 15 Farben, auf 5 Bit gerundet; Grüntöne von Hand aufgehellt (6b8439/4a6329/31421c); Kontur auf jedem Randpixel"
+  },
+  {
+   "step": "Laufen, Gruß, Blinzeln",
+   "tool": "scripts/build_sprites.py",
+   "detail": "Ein Körper (Stehbild, Zeilen 0–26) für alle Bilder. Beine gezeichnet: 6 Bilder (Kontakt, Tragen, Durchgang je Bein), Bein 4 px breit, Fuß 5 px, fernes Bein dunkler, Kontur zwischen den Beinen; der Standfuß wandert im Sprite um genau den Vorschub 3/2/2 px zurück; Körper im Durchgang 1 px höher. Blinzeln und Gruß: nur die Pixel, die sich im Fenster um Gesicht bzw. Mund und Pfote vom Stehbild unterscheiden (1 px erweitert). Rauch, Möwe, Paket als Textmuster im Skript"
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/probe.py, scripts/cgram_sheet.py, tools/capture.py",
+   "detail": "probe.py nimmt in 256×224 auf und prüft: 5-Bit-Raster jedes Ausgabepixels (0 Abweichungen), Farben je Bild (≤ 105), Kachelregeln BG1/BG2 an den Daten (0 Verstöße), BG3 an jeder 8×8-Kachel der offenen Fenster im gerenderten Bild (0 Verstöße), Sprite-Farben gegen ihre Palette (0 fremde), Sprites und Streifen je Zeile aus dem OAM-Protokoll (9/9), VRAM-Schätzung (45,9 KB). Mit --only=badger nur der Dachs auf Schwarz: Kopfoberkante (119, im Durchgang 118) und Bodenkontakt in Zeile 148 je Bild; Standfuß über 74 Aufnahmebilder des Laufens 0 px Drift, Steh-, Gruß- und Blinzelbilder mit identischen Füßen. Aufnahmen mit --rendering-method mobile und gl_compatibility bitgleich zu Forward+ (0 abweichende Pixel in 180 Bildern). Dauerlauf ab t = 30 s (--t0) ohne Fehler"
+  }
+ ],
+ "godot": [
+  "Viewport 256×224, stretch mode viewport, scale_mode integer, Standardfilter Nearest, snap_2d_transforms/vertices_to_pixel an; Fenster 768×672",
+  "BG2 und BG1 sind je ein Sprite2D mit einem L8-Bild (CGRAM-Index je Pixel) und shaders/bg.gdshader: Index per texelFetch, Farbe aus der 256×1-CGRAM-Textur, Index % 16 == 0 wird verworfen (durchsichtig). Nur BG2 liest je Bildschirmzeile den Versatz aus einer 224×1-Textur (R = Versatz + 128) und bricht nach 256 px um, wie BG2HOFS per HDMA",
+  "main.gd setzt jedes Bild alle 256 CGRAM-Einträge (ImageTexture.update); berechnete Lichtfarben gehen durch c5() und landen auf 5 Bit; die HDMA-Tabelle: Versatz = round((0,55 + 2,2·d)·(0,75·sin(0,62y − 3,1t) + 0,25·sin(0,23y + 1,7t))), d = Abstand zum Horizont",
+  "OBJ (obj.gd): main.gd baut je Bild eine OAM-Liste (Dachs, Paket, Möwen, Rauch); gezeichnet von hinten nach vorn aus einem RGBA-Atlas, dessen Farben nur aus den OBJ-Paletten stammen; Flip-Bit über draw_set_transform mit Maßstab (−1, 1); Positionen ganzzahlig",
+  "BG3 (bg3.gd): Fenster mit draw_rect je Kachelzeile in der Palettenfüllung, Rahmen und Ecken als 1-px-Rechtecke, Schrift Pixel Operator 8 als FontFile mit antialiasing NONE, hinting NONE, subpixel_positioning DISABLED, hell mit 1-px-Schatten in Dunkel; Handzeiger als Pixelmuster in denselben Farben (BG3 mit Vorrang liegt über allen Sprites, daher kein Sprite-Zeiger)",
+  "Ablauf: Ortsfenster öffnet 0,1–0,37 s, Dachs kommt von rechts (sichtbar ab ≈ 0,35 s), 45 Laufbilder bis 3,0 s, Halt im Kontaktbild, Gruß 3,3–3,9 s, Blinzeln 4,3 und 5,55 s; Dialogfenster öffnet 3,1–3,37 s kachelzeilenweise von der Mitte, Text ab 3,4 s mit 60 Zeichen/s, Antworten ab 4,5 s, Zeiger ab 4,6 s auf Antwort 1, ab 5,3 s auf Antwort 2; Leuchtfeuer blitzt bei 1,6 und 4,8 s (Poster)",
+  "Zeit über delta aufsummiert, Rauschen mit festem Seed 1991; Möwen laufen nach 296 px um, Rauch entsteht endlos alle 0,4 s. Prüfläufe über Benutzerargumente nach --: --probe=<datei> (OAM- und HDMA-Protokoll), --only=badger, --t0=<s>"
+ ],
+ "techniques": [
+  "ki-spritesheet",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 3,
+  "effort": 3,
+  "text_adventure": 4,
+  "mobile": 5
+ },
+ "ratings_note": "Das Bildmodell traf den 16-Bit-Look des Hintergrunds im ersten Versuch und lieferte eine pixelgenaue Ebenenmaske; die Hardware-Regeln (Kachelpaletten, 5-Bit-Farben, 3-Farben-Fenster) und alle Bewegung (HDMA, Palettenanimation, Laufbeine) kommen aber aus Skripten und Shader (ai_fit 4). Die Kachelpaletten-Optimierung braucht je Ort Handarbeit (Lichtrechtecke, Gewicht für wichtige Motivteile) und verschiebt kleine Farbakzente (consistency 3); die Figur brauchte ein zweites Blatt mit anderen Proportionen und gezeichnete Beine (effort 3). Mobile geprüft: Aufnahmen mit --rendering-method mobile und gl_compatibility sind bitgleich zu Forward+ (0 abweichende Pixel in 180 Bildern); die Szene sind zwei Sprites mit einfachem Shader und ein paar Dutzend Rechtecke.",
+ "verdict": "Gut geeignet für ein Textadventure, das wie ein Konsolen-Rollenspiel aussehen soll: Ein KI-Bild pro Ort plus Maske ergibt mit build_bg.py in Sekunden einen regelkonformen Hintergrund, und Wasser, Lichter und Rauch kosten keine Zeichenarbeit. Das blaue Fenster mit Handzeiger trägt Auswahl-Dialoge sehr gut. Grenzen: Bei 256×224 passen nur etwa 5 Zeilen à 35 Zeichen in ein Fenster, längere Beschreibungen brauchen Seitenumbruch; Figuren sind klein (32 px) und brauchen große Köpfe und Nacharbeit, Porträts im Fenster wären für Gespräche ein sinnvoller nächster Schritt.",
+ "pitfalls": [
+  "Bildgrößen: Beide quadratischen Bilder kamen als 1254×1254 statt 1024×1024. Das Pseudo-Raster ist ungleichmäßig (beste Teilung ≈ 4,5 px, also ≈ 277 Kunstpixel Breite statt 256), echtes Einrasten auf ein Gitter ging nicht; die Zellen-Mehrheitsregel auf 256 px (4,9 Bildpixel je Zielpixel) verschmilzt einzelne 1-px-Linien.",
+  "Das Modell malte trotz Anweisung Rauch aus dem Schornstein; die Maske ließ ihn als festes Objekt stehen. Retusche: Himmel derselben Zeilen 30 px weiter rechts eingesetzt (geht, weil der Himmel dort aus gleichmäßigen Bändern besteht).",
+  "Kompositionsvorgabe: Das Modell legte den Kai nur ungefähr in das verlangte Band. Für das Textfenster unten wurden die oberen 16 Zeilen abgeschnitten; die Leuchtturmspitze sitzt dadurch 1 px unter dem Bildrand, und das Fenster deckt die Vorderkante des Kais (4 Zeilen) ab.",
+  "Kachelpaletten: In der ersten Fassung mussten alle Lichter in eine Palette mit nur 9 freien Farben; die Steinkacheln um das Hausfenster wurden zu sichtbar bläulichen 8×8-Blöcken. Gelöst durch zwei Durchgänge (Lichter in die Palette, die ihre Kacheln von selbst wählen). Danach wurde in einem Lauf das rote Band des Leuchtturms orangebraun und der weiße Turm graurosa, weil die wenigen Leuchtturm-Kacheln die Palette mit rund 250 Steinkacheln teilten; gelöst durch Gewicht ×25 für den Leuchtturm und 8 Startwerte. Preis: der mittlere Farbabstand stieg von 0,0152 auf 0,0174 (Oklab); der rotbraune Streifen am rechten Boot wird braun, die Lichtkanten des Stegs sind etwas stumpfer, Moos an der Kaimauer wird stellenweise rostfarben.",
+  "Das Ergebnis der Palettenoptimierung hängt vom Startwert ab und ändert sich schon bei kleinen Änderungen an den Eingangsdaten; ohne Sichtprüfung gegen das eingerasterte Bild fallen verlorene Farbakzente nicht auf.",
+  "Zeilenscroll: Die erste Füllung des verdeckten Wassers spiegelte sichtbares Wasser derselben Zeile; unter der Laterne landeten so Lichtstriche der Lampenspiegelung, die beim Wabern an der Laterne aufblitzten. Jetzt bekommt verdecktes Wasser die häufigste Farbe der Zeile; an Objektkanten zeigt das Wabern dadurch ruhiges Wasser ohne Glitzer.",
+  "Figur, Versuch 1: Normale Proportionen (≈ 60 Kunstpixel hoch) auf 32 px verkleinert ergaben ein unlesbares Gesicht (Auge im dunklen Augenstreif unsichtbar), und die 6 KI-Laufbilder hatten keinen festen Standfuß (Sprung bis 6,5 px zwischen zwei Bildern, drei Bilder mit fast gleicher weiter Schrittstellung). Ein zweites Blatt mit großem Kopf löste das Gesicht; das Laufen hat jetzt gezeichnete Beine unter einem festen Körper.",
+  "Dadurch bewegen sich beim Gehen nur Beine und Körperhöhe (1 px); Arm, Schal und Tasche schwingen nicht mit. Die gezeichneten Beine sind einfache 4-px-Stummel mit 5-px-Fuß; die KI-Laufbilder hatten mehr Gewicht und Schwung.",
+  "Der Gruß (erhobene Pfote) ist kaum zu sehen: gespiegelt liegt die dunkle Pfote vor Schal und Körper. Beim Anhalten schließen sich die Füße von einem Bild zum nächsten (Bodenkontakt 166–170 und 173–177 → 167–176); die Außenkanten bleiben auf ±1 px.",
+  "Das zweite Figurenblatt kam mit halbtransparentem dunklem Dunst statt reiner Transparenz (Alpha 1–199 in ≈ 40.000 Pixeln) und Schalenden, die ins Nachbarbild ragen; geschnitten wird bei Alpha ≥ 200 und nur die größte zusammenhängende Fläche bleibt.",
+  "Textfenster: Pixel Operator 8 ist breiter als geschätzt; „Hafen von Lornholm“ (≈ 118 px) lief aus dem ersten 112 px breiten Ortsfenster heraus, jetzt 144 px. Fünf Zeilen mit 10 px Abstand füllen das 64 px hohe Fenster ganz aus; mehr Text braucht Seiten. Die Schrift hat Kleinbuchstaben und Unterlängen, aber keine eigene Zeichnung für große Umlaute (im Demotext nicht nötig).",
+  "Vereinfacht gegenüber der Hardware: Godot speichert jede Ebene als CGRAM-Index je Pixel statt als Kachelsatz + Kachelkarte; die Kachelregeln und der VRAM-Bedarf (Kacheln mit Spiegelung gezählt) sind nur von probe.py geprüft, nicht durch eine echte Umwandlung erzwungen. Der Text wird nicht in BG3-Kacheln gerendert, sondern direkt gezeichnet und danach je 8×8-Kachel geprüft. Sprites kommen aus einem RGBA-Atlas mit Palettenfarben, nicht aus Indexdaten; die Spritegrenzen werden aus dem OAM-Protokoll gezählt. CGRAM wird einmal je Bild gesetzt; HDMA nur für den Zeilenscroll von BG2. Nicht genutzt: Farbmathematik (Transparenz), Fenster-Masken, Mosaik, Mode 7.",
+  "BG3-Paletten 0–3 belegen CGRAM 0–15 und damit die 4bpp-Palette 0: BG1/BG2 haben nur 7 Paletten (105 Farben). Der Fensterverlauf in 4 Stufen kostet diese Palette; ein feiner Verlauf je Zeile per HDMA hätte mehr als 256 Farben je Bild ergeben und wurde bewusst nicht gebaut.",
+  "Seitenverhältnis: Auf dem Fernseher waren die Pixel etwa 8:7 breiter als hoch; hier quadratisch, weil die Grafik mit quadratischen Pixeln erzeugt und gemessen wurde und 8:7 bei ganzzahliger Vergrößerung nicht in 1280×720 passt. Die Szene wirkt dadurch etwas schmaler als damals."
+ ],
+ "lessons": [
+  "Ein Prompt, der Hardware und Technik beschreibt (256 px breit, 3–5 Töne je Material, farbige Konturen, Himmel in Stufenbändern, Wasser aus Streifen), liefert ohne Spielnamen einen Hintergrund im 16-Bit-Konsolenlook im ersten Versuch.",
+  "Ebenen für Parallax oder Zeilenscroll: das Grundbild als Referenz geben und „wie auf Folie durchgepaust“ Himmel und Wasser flach magenta verlangen. gpt-image traf es mit 0 px Versatz inklusive Takelage; gemalte Effekte (Rauch) lässt es aber stehen.",
+  "KI-Pixelbild auf ein echtes Raster: global auf 128 Farben vorquantisieren und je Zielzelle die häufigste Farbe im Zellinneren nehmen (reduce_px.py). Ergibt harte Pixel ohne Mischfarben, auch wenn das Pseudo-Raster ungleichmäßig ist.",
+  "Kachelpaletten automatisch (tilepal.py): Kacheln als Histogramme, k-means über Kacheln, Palettenfarben per k-Medoids-Tausch aus den echten Bildfarben, Gewicht Anzahl^0,45, mehrere Startwerte. Wichtige Motivteile mit einem Kachelgewicht schützen und das Ergebnis immer neben das eingerasterte Bild legen.",
+  "Animierte Lichter als markierte Pixel mit eigenen CGRAM-Einträgen in der Palette, die ihre Kacheln von selbst wählen (zwei Durchgänge): Palettenanimation ohne Pixeländerung, auch für die Spiegelung im Wasser.",
+  "HDMA-Wasser in Godot: Tabelle mit einem ganzzahligen Versatz je Bildschirmzeile als 224×1-Textur, BG2-Shader mit Umbruch nach 256 px. Das verdeckte Wasser unter festen Objekten flach mit der Zeilenfarbe füllen, sonst blitzen fremde Pixel an den Kanten auf.",
+  "Figuren bei 32 px: Proportionen mit großem Kopf (≈ 45 %) direkt beim Modell bestellen und das eigene frühere Blatt als Stilreferenz mitgeben; das Gesicht bleibt dann nach der Verkleinerung lesbar.",
+  "KI-Laufbilder durch gezeichnete Beine unter einem festen Körper ersetzen, wenn der Standfuß springt: Der Fuß wandert im Sprite genau um den Vorschub zurück, gemessen 0 px Drift; Blinzeln und Gesten nur als Pixelunterschied im Fenster um Gesicht oder Arm übernehmen.",
+  "Textfenster wie auf der Konsole: 3 Farben je Kachel, eine Palette je zwei Kachelzeilen ergibt den gestuften Verlauf; Godot-Schrift mit antialiasing NONE erzeugt genau zwei Schriftfarben; probe.py prüft jede 8×8-Kachel im gerenderten Bild.",
+  "Hardware-Regeln messbar machen: ein Prüflauf mit Benutzerargumenten (--probe, --only, --t0) schreibt OAM und HDMA je Bild mit, das Prüfskript zählt Farben, Rasterabweichungen, Kachelverstöße, Sprites je Zeile und misst die Füße der Figur allein auf Schwarz."
+ ],
+ "assets": [
+  {"file": "assets/raw/bg.png", "kind": "background", "made_with": "gpt-image (Codex)", "prompt": "assets/raw/bg.json"},
+  {"file": "assets/raw/layers.png", "kind": "mask", "made_with": "gpt-image (Codex), bg.png als Referenz", "prompt": "assets/raw/layers.json"},
+  {"file": "assets/raw/badger.png", "kind": "sprite-sheet", "made_with": "gpt-image (Codex), Referenzblatt; verworfen, nur Stilreferenz für badger2", "prompt": "assets/raw/badger.json"},
+  {"file": "assets/raw/badger2.png", "kind": "sprite-sheet", "made_with": "gpt-image (Codex), Referenzblatt + badger.png", "prompt": "assets/raw/badger2.json"},
+  {"file": "assets/bg1.png", "kind": "background", "made_with": "build_bg.py: BG1 (Hafen), CGRAM-Index je Pixel"},
+  {"file": "assets/bg2.png", "kind": "background", "made_with": "build_bg.py: BG2 (Himmel und Meer), CGRAM-Index je Pixel"},
+  {"file": "assets/bg_preview.png", "kind": "background", "made_with": "build_bg.py: beide Ebenen in CGRAM-Farben"},
+  {"file": "assets/bg_layers.png", "kind": "background", "made_with": "build_bg.py: BG1 auf Magenta | BG2"},
+  {"file": "assets/sprites.png", "kind": "sprite-sheet", "made_with": "build_badger.py + build_sprites.py: Dachs (9 Bilder), Rauch, Möwe, Paket"},
+  {"file": "assets/cgram.png", "kind": "palette", "made_with": "cgram_sheet.py: alle 256 CGRAM-Einträge, animierte weiß umrandet"}
+ ],
+ "licenses": [
+  {"item": "Schrift Pixel Operator 8 (Jayvee Enaguas)", "license": "CC0-1.0", "source": "https://www.dafont.com/pixel-operator.font (Lizenztext: demo/fonts/PixelOperator-LICENSE.txt)"},
+  {"item": "Figurenblatt Dachs-Kurier (Referenz für Kostüm und Laufposen)", "license": "eigenes Motiv des Katalogs", "source": "shared/badger/master_sheet.png, shared/badger/walk_painted.png"},
+  {"item": "Hintergrund, Maske, Figurenblätter", "license": "eigene KI-Bilder (gpt-image über Codex)", "source": "assets/raw/"},
+  {"item": "Rauch, Möwe, Paket, Textfenster, Shader, Skripte", "license": "eigener Code, keine fremden Grafiken", "source": "styles/snes-16bit/"}
+ ],
+ "image_generations": 4,
+ "tool_issues": [
+  "PIPELINE.md verlangt für Dauerläufe eine Prüfung „mit --t0 20–40 s“, tools/capture.py hat aber keine Option --t0. Umgangen: main.gd liest --t0=<s> als Benutzerargument, scripts/probe.py --t0 30 nimmt damit auf."
+ ],
+ "status": "done"
+}

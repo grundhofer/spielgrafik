@@ -1,0 +1,46 @@
+{
+ "name": "LanternTSR",
+ "dir": "styles/ki-3d-modell/work/tsr/lantern",
+ "input_faces": 64860,
+ "input_vertices": 32436,
+ "components": [
+  46698,
+  18010,
+  64,
+  52,
+  20,
+  16
+ ],
+ "components_removed": 4,
+ "faces_removed": 152,
+ "projected_share": 0.348,
+ "projection": {
+  "D": 1.5,
+  "iou": 0.9459,
+  "iou_default_1.9m_40deg": 0.5323
+ },
+ "tilt_deg": -11.0,
+ "yaw_deg": 0.0,
+ "scale": 2.7831,
+ "size_m": [
+  1.197,
+  1.838,
+  2.45
+ ],
+ "bridges": [
+  {
+   "part_vertices": 9007,
+   "shift_m": [
+    0.385,
+    0.0,
+    0.0
+   ],
+   "rod_m": 0.127
+  }
+ ],
+ "tris": 5028,
+ "vertices": 2514,
+ "t_bake": 0.21,
+ "glb_bytes": 1350504,
+ "t_total": 0.84
+}

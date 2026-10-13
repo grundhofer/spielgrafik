@@ -1,0 +1,29 @@
+Knochenpunkte (Bildlage in px, 1280×720), aufgesetzt = Spitze <= 24.1 mm über Kai
+  Laufen (bis 3,15 s)                  größte Wanderung eines aufgesetzten Fußes: 0.38 px/Bild
+  Bremsen (3,15-3,6 s)                 größte Wanderung eines aufgesetzten Fußes: 0.35 px/Bild
+  Überblenden Walk→Idle (3,6-4,4 s)    größte Wanderung eines aufgesetzten Fußes: 0.56 px/Bild
+  Stehen/Idle (ab 4,4 s)               größte Wanderung eines aufgesetzten Fußes: 0.14 px/Bild
+Standphasen im Laufen (Fuß, Bilder, Spanne x/y in px):
+  foot.L t 0.06-0.29 s   8 Bilder  x 0.19  y 0.35
+  foot.L t 0.56-0.79 s   8 Bilder  x 0.21  y 0.37
+  foot.L t 1.06-1.29 s   8 Bilder  x 0.24  y 0.40
+  foot.L t 1.56-1.79 s   8 Bilder  x 0.28  y 0.45
+  foot.L t 2.06-2.29 s   8 Bilder  x 0.32  y 0.50
+  foot.L t 2.56-2.79 s   8 Bilder  x 0.38  y 0.57
+  foot.L t 3.06-3.33 s   9 Bilder  x 0.69  y 0.54
+  foot.R t 0.00-0.03 s   2 Bilder  x 0.06  y 0.15
+  foot.R t 0.29-0.53 s   8 Bilder  x 0.15  y 0.50
+  foot.R t 0.79-1.02 s   8 Bilder  x 0.18  y 0.55
+  foot.R t 1.29-1.52 s   8 Bilder  x 0.20  y 0.60
+  foot.R t 1.79-2.02 s   8 Bilder  x 0.23  y 0.66
+  foot.R t 2.29-2.52 s   8 Bilder  x 0.28  y 0.74
+  foot.R t 2.79-3.02 s   8 Bilder  x 0.33  y 0.84
+  foot.R t 3.33-3.59 s   9 Bilder  x 0.01  y 0.02
+Silhouetten (180 Bilder): Fußlinie = unterste weiße Zeile, Kopf = oberste
+  Laufen (bis 3,15 s)                  Fußlinie 530-616  Kopf 368-376
+  Bremsen (3,15-3,6 s)                 Fußlinie 616-638  Kopf 368-372
+  Überblenden Walk→Idle (3,6-4,4 s)    Fußlinie 637-638  Kopf 367-368
+  Stehen/Idle (ab 4,4 s)               Fußlinie 637-637  Kopf 366-369
+  größter Sprung der Fußlinie von Bild zu Bild im Stehen: 0 px
+  größter Sprung des Kopfes von Bild zu Bild (alle Bilder): 2 px
+  Dachshöhe am Ende: 270 px

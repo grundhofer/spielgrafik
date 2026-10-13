@@ -1,0 +1,15 @@
+{
+ "door_leaf_px": 97,
+ "door_frame_px": 130,
+ "cottage_px": 290,
+ "cottage_foot_y": 548,
+ "badger_sole_y": 591,
+ "badger_front_px": 169,
+ "badger_walk_px": [
+  157,
+  171
+ ],
+ "door_frame_to_badger": 0.769,
+ "door_leaf_to_badger": 0.574,
+ "cottage_to_badger": 1.716
+}

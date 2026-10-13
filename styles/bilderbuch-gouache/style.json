@@ -1,0 +1,113 @@
+{
+ "slug": "bilderbuch-gouache",
+ "name": "Bilderbuch & Gouache",
+ "family": "gemalt",
+ "kind": "style",
+ "era": "Bilderbuch-Illustration in Gouache seit der Mitte des 20. Jahrhunderts; als Spielgrafik 2010er bis heute (Bilderbuch-Spiele, Märchen-Rollenspiele)",
+ "summary": "Deckende, matte Gouache mit sichtbaren Pinselspuren und Trockenpinsel-Kanten auf Papierkorn, runde, kindgerechte Formen und eine naive, flache Perspektive. Die Seite ist wie ein Bilderbuch gebaut: Der Text steht im ruhigen Himmel über der Szene, die Bewegung bleibt sanft (Schaukeln, Nachfedern, Rauchtupfer).",
+ "references": [
+  "Child of Light (2014): Märchen-Rollenspiel mit gemalten Bilderbuch-Hintergründen",
+  "Ni no Kuni (2010/2011): Märchen-Rollenspiel im Stil eines gemalten Zeichentrick-Bilderbuchs",
+  "Old Man's Journey (2017): illustrierte Landschaften mit flachen, deckenden Farbflächen",
+  "Lost in Play (2022): Bilderbuch-Adventure mit runden, kindgerechten Formen",
+  "Gouache-Bilderbücher der 1950er–1970er und ihre heutigen digitalen Nachfolger (Gouache-Pinsel in Malprogrammen)"
+ ],
+ "traits": [
+  "Deckende, matte Farbflächen mit sichtbaren Pinselspuren und Trockenpinsel-Kanten, Papierkorn über dem ganzen Bild (auch über Figur und Schrift)",
+  "Warme, begrenzte Mischpalette: Apricot und Koralle am Horizont, Ocker, Terrakotta, Salbei und Creme an Häuschen und Booten; die dunkelste Farbe ist ein Blauviolett, kein Schwarz",
+  "Runde, kindgerechte Formen: bauchiges Häuschen, rundlicher Leuchtturm, runde Rauchtupfer, gedrungener Dachs mit runden Pfoten",
+  "Bilderbuch-Komposition: Ort, Satz und Antworten stehen im ruhigen Himmel über der Szene, die Antworten auf einem gemalten dunklen Pinselfleck",
+  "Effekte als gemalte Tupfer statt Leuchten oder Partikel: Lichthöfe als konzentrische Farbringe, Blinken als kurze Pinselstrahlen, Glitzern als kurze Striche",
+  "Sanfte Animation: Boote schaukeln um die Wasserlinie, der Dachs federt beim Anhalten und Drehen nach und atmet, Rauchtupfer steigen und wachsen"
+ ],
+ "camera": "Feste Kamera, Seitenansicht mit leicht erhöhtem Blick auf den Kai; keine Kamerafahrt. Der Dachs läuft von links ins Bild und bleibt vor dem Steg stehen (Fußzeile y 652).",
+ "resolution": "1280×720; Hintergrund = bemalte Fläche 1170×658 aus dem 1264×848-KI-Bild (ohne den mitgemalten Papierrand), ×1,094 auf 1280×720; Dachs 200 px hoch (KI-Bogen ×0,591, Zelle 162×210), Boote ×0,34 (175×161 und 170×162); Figur 15 Bilder/s",
+ "pipeline": [
+  {"step": "Prompts schreiben", "tool": "scripts/make_jobs.py", "detail": "Stilblock (deckende Gouache auf Aquarellpapier, Trockenpinsel, runde kindgerechte Formen, wenige große Objekte, warme Mischpalette, dunkelste Farbe Blauviolett, Verbote: Foto, 3D-Render, Airbrush, Postkarte, Aquarell, Öl) + Kompositionsblock mit Prozentangaben (Horizont, Kai, Häuschen, Leuchtturm, Laterne und eine ruhige Himmelsfläche 25–72 % Breite für den Text) + Motivblock wörtlich + Hinweise zu animierten Teilen (Boote weglassen, Lampe und Laterne nur als Punkt, kein Rauch, keine Vögel) + Schutzregeln + Format. Prompts liegen als assets/prompts/*.txt."},
+  {"step": "Layout-Referenz für die Figur", "tool": "Blender 5.2 (blender/pose_layout.py) + scripts/make_layouts.py", "detail": "Posen des gemeinsamen Modells shared/3d/badger.glb orthografisch auf Magenta: 8 Laufbilder (Walk t = 0 … 7/8 s), Stehen, Dreiviertel-Drehung, 2×5 auf 1536×1024; Skript aus dem Eintrag aquarell übernommen (Ergebnis bitgleich zu dessen Layout)."},
+  {"step": "Hintergrund erzeugen", "tool": "genimg (agy, Gemini-Bildmodell)", "detail": "raw/bg.png, ein Versuch, 71 s, geliefert 1264×848 statt 1536×1024, verbatim: true. genimg.py --backend auto nahm agy, weil Codex seit 11:45 als „out of credits“ gesperrt war (Sperrdatei eines anderen Laufs bis 17:45); Codex wurde in diesem Eintrag nicht getestet."},
+  {"step": "Laufbogen und Boote erzeugen (parallel, --workers 2)", "tool": "genimg (agy)", "detail": "raw/walk.png: Referenzen Blender-Layout, Master-Sheet, raw/bg.png als Stilreferenz; raw/boats.png: Referenz raw/bg.png. Je ein Versuch (64 s bzw. 59 s), 1264×848, Magenta-Hintergrund von genimg.py freigestellt (59,7 % bzw. 66,1 % transparent), verbatim: true."},
+  {"step": "Vorderansicht (Winken, Sprechen, Blinzeln) – nicht erzeugt", "tool": "genimg (agy)", "detail": "raw/front.png (Referenzen Blender-Layout von vorn, raw/walk.png, Master-Sheet) endete mit „usage limit (agy, gesperrt bis 17:30)“: agy meldete RESOURCE_EXHAUSTED / 429 für gemini-3.1-flash-image (assets/raw/front.fail.json). Laut Auftrag nicht wiederholt; die Demo kommt ohne Vorderansicht aus."},
+  {"step": "Laufbogen zerlegen und aufbereiten", "tool": "scripts/build_badger.py (NumPy/Pillow)", "detail": "10 Figuren über Zusammenhangskomponenten den Layout-Zellen zugeordnet (genau 10 Komponenten, keine Splitter); Magenta-Rest am Rand entfernt (Despill bis 4 px zur Transparenz, innen nur deutliche Flecken), 4 winzige Löcher zwischen den Beinen geschlossen, Farbe in den transparenten Rand ausgebreitet; Sohle jeder Figur auf eine gemeinsame Grundlinie, waagerecht Lage in der Zelle beibehalten; vormultipliziert auf 200 px Figurenhöhe verkleinert. Ergebnis: badger_walk.png (8 Bilder) und badger_idle.png (Stehen, Dreiviertel, Dreiviertel mit geschlossenem Auge)."},
+  {"step": "Blinzeln aus dem Code", "tool": "scripts/build_badger.py (close_eye)", "detail": "Im Dreiviertelbild das einzige sichtbare Auge (von Hand bei 1160,6/543,4 im Rohbogen gemessen, r ≈ 5,5 px) mit der Farbe des umgebenden dunklen Augenstreifens übermalt und ein kurzes Lid als dunkler Bogen gesetzt."},
+  {"step": "Vorschub und Ablauf", "tool": "scripts/build_badger.py + scripts/choreo.py", "detail": "Standfuß im Rohbogen gemessen: 12–15 px je Laufbild innerhalb der Standphasen; gewählt gleichmäßig 14 px (8,27 px im Spiel). Übergang walk_6 → Stehen über die Sohlenüberdeckung (IoU 0,97, +1,8 px), Stehen → Drehen über die Sohlenmitte (+0,6 px). Ablauf für alle 180 Bilder als Tabelle (assets/timeline.json): 60 Laufbilder ab walk_3 bis walk_6, 0,2 s Stehen mit Einfedern, ab 4,2 s Dreiviertel-Ansicht mit Nachfedern, Atmen und zwei Blinzlern (5,3 s und 5,73 s)."},
+  {"step": "Hintergrund, Boote und gemalte Effekte", "tool": "scripts/build_scene.py + tools/gouache.py (eigene Pinselbibliothek)", "detail": "Ausschnitt 16:9 aus der bemalten Fläche, Boote als Komponenten ausgeschnitten, entfärbt und verkleinert; Sterne automatisch im Himmel gefunden (11). In Code gemalt (Abstandsfeld + Randverbiegung + gestrecktes Rauschen für Trockenpinsel, in doppelter Größe, dann halbiert): 3 Rauchtupfer, 3 Lichthöfe aus konzentrischen Ringen, Pinselstrahlen der Lampe, 4 Glitzerstriche, 2 Wellenstriche, Stern, Kontaktschatten, Pinselfleck hinter den Antworten, Unterstreichung, 3 Aufzählungstupfer, Papierkorn. Lage von Schornstein, Lampe, Laterne, Fenster, Wasserband und Wasserlinien der Boote von Hand im 40-px-Raster gemessen (scene.json)."},
+  {"step": "Godot-Demo und Aufnahme", "tool": "Godot 4.7.2 + tools/capture.py", "detail": "scripts/build_all.sh baut alles und kopiert nach demo/art; capture.py mit --poster-at 0.85 (Bild 153: Dreiviertel-Ansicht, alle Texte, Unterstreichung). Keine Fehler, keine Warnungen."},
+  {"step": "Prüfen", "tool": "scripts/measure_badger.py + demo/test/measure.tscn", "detail": "Hauptszene mit nur der Figur auf Magenta gerendert und gemessen (Ergebnis assets/measure_badger.json); Renderer mobile und gl_compatibility gegen Forward+ verglichen; zweiter Forward+-Lauf bitgleich zum Poster."}
+ ],
+ "godot": [
+  "project.godot: 1280×720, stretch mode canvas_items, Forward+; keine Lichter, keine Partikel, keine Plugins",
+  "main.tscn: World (Bg, Sky, Water, Boats, Lights, Actor), CanvasLayer UI (Ebene 5), CanvasLayer Paper (Ebene 10) mit ColorRect und paper.gdshader (render_mode blend_mul, dunkelt höchstens 7 %, kachelbares Papierkorn 512×512) – liegt auch über Figur und Schrift",
+  "main.gd baut Sterne, Rauch-Pool, Glitzer, Boote, Lichthöfe und Figur aus art/scene.json und art/timeline.json; alles ist eine Funktion der aufsummierten Zeit t, Zufall nur über RandomNumberGenerator mit Seed 20261011; zwei Läufe bitgleich",
+  "Boote: Sprite mit Drehpunkt auf der Wasserlinie (±1,8°, ±1,6 px, Periode 3,2 s); waterline.gdshader blendet alles unterhalb der Wasserlinie in Weltkoordinaten aus (Linie bleibt waagerecht beim Schaukeln); Spiegelbild als gespiegeltes Sprite mit reflection.gdshader (nur unter der Wasserlinie, 50 % zur Wasserfarbe gemischt, in 3-px-Bänder zerlegt und versetzt); zwei gemalte Wellenstriche an der Wasserlinie",
+  "Rauch: Pool von Sprite2D, alle 0,75 s ein Tupfer, steigt mit 24 px/s, treibt im Wind nach rechts, wächst von 0,22 auf 0,84, verblasst im letzten Drittel; z_index so, dass ältere Tupfer oben liegen (negativer z_index legt sie hinter den Hintergrund)",
+  "Lichter: Laterne flackert über eine Rauschtabelle (Deckkraft 0,3–1, Größe 0,85–1,1), Fenster leicht; Leuchtturm blinkt alle 2,5 s (Lichthof wächst, gemalte Strahlen erscheinen und drehen sich langsam)",
+  "Figur: Sprite2D mit region_rect aus zwei Bögen, offset auf den Fußpunkt (Fußzeile in der Zelle 206,2 px), Positionen auf ganze Pixel gerundet; Einfedern, Nachfedern und Atmen als Skalierung um den Fußpunkt; Kontaktschatten als gemalter Tupfer (50 % Deckkraft)",
+  "Oberfläche: Labels mit FontVariation über Fraunces (Achsen wght, opsz, SOFT = 100, WONK = 0 über TextServer.name_to_tag), Titel in Apricot mit Laufweite 3, Satz 31 px Creme im Schreibmaschinenmodus (visible_characters, VC_CHARS_AFTER_SHAPING, 34 Zeichen/s), Antworten untereinander mit gemalten Farbtupfern und Ziffer, Wahl 2 bekommt eine gemalte Unterstreichung, die über ein Control mit clip_contents von links nach rechts aufgemalt wird; Eingabezeile kursiv, linksbündig mit blinkendem Strich",
+  "demo/test/measure.tscn: instanziert main.tscn, blendet alles außer der Figur aus und setzt Magenta als Hintergrund (für scripts/measure_badger.py)"
+ ],
+ "techniques": ["ki-spritesheet", "sprite-animation", "fuss-halten", "mimik-aus-teilen", "prozedurale-animation", "nachbearbeitung", "textoberflaeche"],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 4,
+  "effort": 2,
+  "text_adventure": 5,
+  "mobile": 5
+ },
+ "ratings_note": "ai_fit 4: Das Gemini-Bildmodell (agy) traf deckende Bilderbuch-Gouache bei Hintergrund, Laufbogen und Booten jeweils im ersten Versuch; der Look der Szene und der Figur kommt aus den KI-Bildern, der Code ergänzt nur Effekte im selben Duktus. Abzüge: Der Kai kam als leere Sandfläche statt als Pflaster, das Modell malte einen Papierrand mit und lieferte nur 1264×848, Figur und Boote haben dünne dunkle Konturen trotz Verbot, und der Hintergrund wirkt eher wie digitale Gouache als wie echte Farbe auf Papier. Codex wurde nicht getestet. consistency 4: Mit dem Hintergrund als Stilreferenz passen Palette und Pinselspur von Figur und Booten zur Szene, die 8 Laufbilder sind im Kostüm gleich, der Standfuß steht; über einen zweiten Ort oder einen zweiten Figurenbogen ist es nicht geprüft (die Vorderansicht scheiterte am Kontingent). effort 2: je Asset ein Prompt und ein Versuch, Zerlegen, Entfärben, Vorschub und Effekte laufen per Skript; von Hand gemessen wurden nur Lichtpositionen, Wasserlinien und das Auge für das Blinzeln. text_adventure 5: ein gemaltes Bild je Ort, ruhige Bewegung, der Text hat im Himmel seinen festen Platz. mobile 5: Probelauf mit --rendering-method mobile bitgleich zu Forward+ und mit gl_compatibility mittlere Abweichung 0,15 von 255 (höchstens 2) in den Bildern 30, 100 und 153; nur 2D-Sprites, drei kleine Shader und ein Vollbild-Multiply. Die Leistung auf echten Smartphones ist nicht gemessen.",
+ "verdict": "Für unser Textadventure sehr gut geeignet, und unter den gemalten Einträgen bisher der mit dem kürzesten Weg (anders als bei Aquarell und Ölmalerei musste die Figur nicht im Code neu gemalt werden): Gouache liegt dem Bildmodell, Hintergrund, Figur und Boote kamen je im ersten Versuch im selben Stil, und alles Übrige (Rauch, Lichthöfe, Glitzer, Oberfläche) lässt sich im selben Duktus per Code malen, ohne weitere Bilder. Die Bilderbuch-Komposition passt zum Spiel: Wenn jeder Hintergrund-Prompt eine ruhige Himmelsfläche freihält, steht der Text wie in einem Bilderbuch über der Szene, nur die unteren Zeilen brauchen einen gemalten dunklen Fleck. Für ein ganzes Spiel fehlen noch geprüfte Wege für Vorderansicht, Gesten und Sprechen (hier am Bildkontingent gescheitert) und ein Mittel gegen leere Flächen wie den sandigen Kai; die Figur sollte außerdem für jeden Ort leicht an das Abendlicht angeglichen werden.",
+ "pitfalls": [
+  "Die Vorderansicht (zur Kamera, drei Winkposen, Blinzeln, Sprechen) wurde nicht erzeugt: genimg.py endete mit „usage limit (agy, gesperrt bis 17:30)“ (agy: RESOURCE_EXHAUSTED / 429), laut Auftrag nicht wiederholt. Deshalb winkt und spricht der Dachs nicht. Er endet im Dreiviertelbild des Laufbogens, in dem nur der Körper zum Betrachter gedreht ist; der Kopf bleibt im Profil, er schaut also nicht in die Kamera. Das Blinzeln ist im Code auf das eine sichtbare Auge gemalt.",
+  "Alle Bilder kamen von agy (Gemini), nicht von Codex: genimg.py --backend auto übersprang Codex wegen einer Sperrdatei („out of credits“, gesetzt 11:45 für sechs Stunden), obwohl der Auftrag „Codex liefert derzeit“ sagte. Folgen: 1264×848 statt 1536×1024 (Hintergrund um ×1,094 hochskaliert, etwas weich), JPEG auf Magenta statt echter Transparenz.",
+  "Der Kai ist eine fast leere Sandfläche mit einigen braunen Tupfern; nur die Randsteine an der Wasserkante lesen sich als Stein. Der Prompt verlangte „stones of the quay only hinted with a few loose rounded dabs“, das Modell nahm das zu wörtlich. Unten links malte es einen dunklen Felsen, der nicht im Prompt stand (als Vordergrund-Rahmen belassen).",
+  "Das Modell malte um das Bild einen Rand aus Papier (40 px rundum), auch beim Bootsbogen; der Hintergrund ist deshalb ein Ausschnitt der bemalten Fläche, der Bootsrand wurde über Zusammenhangskomponenten verworfen.",
+  "Die Palette ist am Himmel kühler als der Auftrag „warme Palette“: oben gedecktes Petrol, die Wärme liegt im Horizontband, im Häuschen, in den Booten und im Kai.",
+  "Figur und Boote haben dünne dunkelrot-braune Konturen trotz „no black outlines“. Nach dem Freistellen blieb ein Magenta-Saum an den Rändern und in den Lücken zwischen den Beinen; Despill und das Schließen von 4 Löchern entfernen ihn, an der linken Paketkante bleibt ein schmaler rötlicher Rand (wohl die gemalte Kontur).",
+  "Die Figur ist neutral von vorn links beleuchtet und etwas heller und bunter als die Abendszene; sie ist bewusst nicht an das Gegenlicht angeglichen (Bilderbuch), wirkt aber leicht aufgesetzt.",
+  "Die Boote kamen trotz „straight horizontal waterline“ mit ganzem, rundem Rumpf. Die Wasserlinie ist von Hand gesetzt und wird im Shader abgeschnitten; die Spiegelbilder sind schwach und nur auf ruhigem Wasser glaubhaft.",
+  "Laufen: Innerhalb einer Standphase bleibt die Ferse auf ±1 px, die Fußspitze schwankt um bis zu 2 px (Rundung des Vorschubs von 8,27 px auf ganze Pixel und Kantenglättung). Die KI-Posen haben ungleiche Standfuß-Schritte (12–15 px im Rohbogen); mit gleichmäßigem Vorschub von 14 px bleibt das ohne sichtbares Rutschen. Ein erster Messansatz (IoU der untersten 6 Zeilen) meldete an jedem Fußwechsel −12 px Schlupf; das war ein Messfehler (er zentriert den breiteren Doppelfuß-Klecks), die Kontaktspannen zeigen keinen Schlupf.",
+  "Der Text im Himmel funktioniert nur, solange das Bild dort ruhig und dunkel genug ist: Zum Horizont hin steigt die Helligkeit des Himmels (Luminanz 97 oben, 140 bei y 230), helle Schrift wird dort schwer lesbar. Ein Zeilenlayout der Antworten nebeneinander war 790 px breit und lag über Schornstein und Lichthof; jetzt stehen sie untereinander auf einem gemalten dunklen Fleck.",
+  "Der Lichthof der Laterne ist vor dem hellen Pfirsich-Himmel kaum zu sehen; das Flackern liest sich vor allem am hellen Kern auf dem Glas.",
+  "Die Rauchtupfer sind sehr regelmäßig rund und wirken in der Säule etwas wie eine Perlenkette."
+ ],
+ "lessons": [
+  "Gouache ist die Grundhaltung der Bildmodelle (beim Aquarell-Eintrag malte Codex die Figur ungewollt deckend): Mit einem Stilblock aus Technik (deckend, matt, Trockenpinsel, Papierkorn), Reduktion (wenige große Objekte, kaum Details) und Palette kamen Hintergrund, Laufbogen und Boote je im ersten Versuch.",
+  "Den eigenen Hintergrund als dritte Referenz für Figur- und Requisitenbögen mitgeben („shows the gouache technique and the palette … do not copy any of its content“): Palette, Pinselspur und Papierkorn der Figur passen dann zur Szene, ohne Nachbearbeitung der Farben.",
+  "agy hält sich bei einem Blender-Layout als erster Referenz genau an Zellen, Posen und Grundlinie (Sohlen in Zeile 400/401 bzw. 825/826, Köpfe ±3 px auf der Stelle); Zerlegen über Zusammenhangskomponenten plus Zuordnung zur nächsten Layout-Zelle reicht.",
+  "Laufzyklen an Fußwechseln über den Bodenkontakt messen (deckende Spalten in den untersten 2 Zeilen): Im Stand bleibt die Spanne ortsfest, im Doppelstand muss sie innerhalb der Spannen von altem und neuem Standfuß liegen. Der IoU der untersten Zeilen taugt dort nicht.",
+  "Bilderbuch-Komposition per Prompt: Prozentangaben für Horizont, Häuser, Leuchtturm und eine ruhige Himmelsfläche „where the story text of the page will be placed“ hielten; der Text steht dann ohne Kasten im Bild.",
+  "Effekte im Duktus der KI-Bilder per Code malen (tools/gouache.py): Form als Abstandsfeld, Rand mit niederfrequentem Rauschen verbiegen, mit gestrecktem Rauschen aufreißen (Trockenpinsel), deckende Farbe mit Strichspuren und Korn, in doppelter Größe malen und halbieren. Lichthöfe als konzentrische, flache Farbringe wirken gemalt, nicht digital.",
+  "Schaukelnde Boote ohne sichtbare Unterkante: Sprite mit Drehpunkt auf der Wasserlinie und ein Shader, der in Weltkoordinaten alles unterhalb der Linie ausblendet; ein gemalter Wellenstrich an der Linie verdeckt die Schnittkante.",
+  "Sanftes „Wackeln“ ohne neue Bilder: Einfedern beim Anhalten, gedämpftes Nachfedern nach dem Drehen und Atmen als Skalierung um den Fußpunkt; die Fußzeile bleibt in allen 180 Bildern bei y 652.",
+  "Blinzeln für ein einzelnes Bild per Code: Auge mit dem Median der dunklen Umgebung übermalen und ein Lid als Bogen setzen. Reicht für 3–4 px große Augen bei Spielgröße.",
+  "In Godot 4 liegt ein Sprite2D mit negativem z_index hinter dem Hintergrund-Sprite (z 0): Pools mit z_index = −i verschwanden nach den ersten Sekunden. Ordnung mit positiven Werten setzen.",
+  "Fraunces mit SOFT = 100 ist eine weiche, runde Serifenschrift, die zum Bilderbuch passt; FontVariation.variation_opentype braucht die Achsen-Tags über TextServer.name_to_tag."
+ ],
+ "assets": [
+  {"file": "assets/bg.png", "kind": "background", "made_with": "agy (Gemini) 1264×848 + scripts/build_scene.py: Ausschnitt 1170×658 der bemalten Fläche, auf 1280×720", "prompt": "assets/raw/bg.json"},
+  {"file": "assets/badger_walk.png", "kind": "spritesheet", "made_with": "agy (Referenzen Blender-Layout, Master-Sheet, raw/bg.png) + scripts/build_badger.py: 8 Laufbilder à 162×210, Despill, Grundlinie, ×0,591", "prompt": "assets/raw/walk.json"},
+  {"file": "assets/badger_idle.png", "kind": "spritesheet", "made_with": "aus demselben KI-Bogen: Stehen, Dreiviertel, Dreiviertel mit im Code gemaltem Lid", "prompt": "assets/raw/walk.json"},
+  {"file": "assets/boat_a.png", "kind": "sprite", "made_with": "agy (Referenz raw/bg.png) + scripts/build_scene.py: Komponente ausgeschnitten, entfärbt, ×0,34", "prompt": "assets/raw/boats.json"},
+  {"file": "assets/boat_b.png", "kind": "sprite", "made_with": "agy (Referenz raw/bg.png) + scripts/build_scene.py: Komponente ausgeschnitten, entfärbt, ×0,34", "prompt": "assets/raw/boats.json"},
+  {"file": "assets/fx/smoke_0.png", "kind": "effect", "made_with": "Code: tools/gouache.py, Rauchtupfer (einer von drei)", "prompt": ""},
+  {"file": "assets/fx/halo_lamp.png", "kind": "effect", "made_with": "Code: Lichthof aus vier konzentrischen gemalten Ringen (ebenso halo_lantern, halo_window)", "prompt": ""},
+  {"file": "assets/fx/rays.png", "kind": "effect", "made_with": "Code: acht kurze Pinselstrahlen für das Blinken der Lampe", "prompt": ""},
+  {"file": "assets/fx/band.png", "kind": "ui", "made_with": "Code: dunkler Pinselfleck hinter den Antworten", "prompt": ""},
+  {"file": "assets/fx/underline.png", "kind": "ui", "made_with": "Code: trockener Pinselstrich für die gewählte Antwort", "prompt": ""},
+  {"file": "assets/paper.png", "kind": "texture", "made_with": "Code: kachelbares Papierkorn 512×512 (Multiply im Shader)", "prompt": ""},
+  {"file": "assets/ref/walk_layout.png", "kind": "reference", "made_with": "Blender (blender/pose_layout.py, shared/3d/badger.glb) + scripts/make_layouts.py", "prompt": ""},
+  {"file": "assets/scene.json", "kind": "data", "made_with": "scripts/build_scene.py: Lichter, Sterne, Wasserband, Boote", "prompt": ""},
+  {"file": "assets/timeline.json", "kind": "data", "made_with": "scripts/choreo.py: Bogen, Bild, x, Skalierung je Bild (180 Bilder)", "prompt": ""},
+  {"file": "assets/measure_badger.json", "kind": "data", "made_with": "scripts/measure_badger.py: Fußzeile, Kontaktspannen, Stand- und Drehbilder", "prompt": ""}
+ ],
+ "licenses": [
+  {"item": "Schrift Fraunces (Variationsschrift, normal und kursiv)", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/fraunces (Lizenztext: demo/fonts/OFL.txt)"},
+  {"item": "3D-Modell Dachs-Kurier (nur als Layout-Referenz gerendert)", "license": "eigenes Modell des Katalogs", "source": "shared/3d/blender/build_badger.py"},
+  {"item": "Figurenblatt Dachs-Kurier (Referenz für das Kostüm)", "license": "eigenes Motiv des Katalogs", "source": "shared/badger/master_sheet.png"}
+ ],
+ "image_generations": 4,
+ "tool_issues": [
+  "tools/genimg.py: Ist Codex über die Codex-Sperrdatei von genimg.py gesperrt (hier von einem früheren Lauf eines anderen Eintrags, „out of credits“ für sechs Stunden), geht --backend auto ohne Hinweis in der Ausgabe direkt zu agy; nur „backend“: „agy“ in der .json zeigt es. Ob Codex inzwischen wieder liefert, prüft das Werkzeug nicht. Nicht umgangen (Auftrag: Standard --backend auto)."
+ ],
+ "status": "done"
+}

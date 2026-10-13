@@ -1,0 +1,192 @@
+{
+ "slug": "textmodus-ascii",
+ "name": "Textmodus & ASCII",
+ "family": "computer",
+ "kind": "style",
+ "era": "1981–1995 (PC-Textmodus MDA/CGA/EGA/VGA, ANSI-Art der Mailboxen um 1990–1996)",
+ "summary": "Das ganze Bild besteht aus Zeichen eines PC-Textmodus: 80×25 Zellen, je Zelle ein Zeichen aus einem 256er-Zeichensatz und ein Attributbyte mit 16 Vorder- und 8 Hintergrundfarben. Flächen entstehen aus Halbblöcken und den Schattierzeichen ░▒▓, Stoffe und Natur aus Textzeichen (~ ≈ ♣ \" @), Bewegung nur durch Zeichen- und Farbwechsel ganzer Zellen und durch das Blinkbit. Oberfläche und Bild sind dasselbe Medium: Statuszeile, Fenster mit Rahmen und Schatten, Parserzeile mit Cursor.",
+ "references": [
+  "Rogue (Toy, Wichman, Arnold, 1980; PC-Fassung 1983) und NetHack (1987): Spielwelt aus Zeichen",
+  "Kroz (Scott Miller, 1987) und ZZT (Tim Sweeney/Potomac Computer Systems, 1991): farbige CP437-Zeichen als Spielgrafik",
+  "ANSI-Art der Mailbox-Szene (z. B. Gruppen ACiD und iCE, 1990–1996): Bilder aus Halbblöcken und ░▒▓",
+  "Turbo-Vision- und Norton-Oberflächen (um 1990): Fenster mit Doppelrahmen, Schatten, Leuchtbalken",
+  "Dwarf Fortress (2006) und Brogue (2009): Textmodus-Darstellung in neueren Spielen"
+ ],
+ "traits": [
+  "Bildschirm 80×25 Zeichen à 8×14 Pixel (640×350, EGA-Textmodus), ganzzahlig ×2 auf 1280×700; jede Zelle ist genau ein Zeichen des 256er-Satzes in CP437-Reihenfolge (geprüft: 180 von 180 Bildern, 0 Zellen ohne passendes Zeichen)",
+  "Attributbyte je Zelle: Bit 0–3 Vordergrund (16 Farben), Bit 4–6 Hintergrund (8 Farben), Bit 7 Blinken; nur die 16 Farben der Textmoduspalette und nie zwei helle Farben in einer Zelle (geprüft: 0 Verstöße)",
+  "Himmel als zehn Zellbänder mit ░▒▓ von Schwarz über Blau und Magenta zu einem orangen Horizontband (▒ gelb auf rot), Gegenstände aus Halbblöcken ▀ ▄ █ ▌ ▐, Details als Zeichen: Wasser ~ ≈ - ═, Sterne · ∙ + *, Bäume ♣ ♠, Gras \", Wanten \\, Tauwerk @~, Kisten aus ┌┐└┘",
+  "Leuchtturm aus Blöcken mit rotem Band; die Lampe ☼ blinkt über das Blinkbit (7 Bilder an, 7 aus), der Lichtstrahl ist eine Zeichenkette ═ ─ - · mit dünnen Randstrahlen und dreht in 3 s einmal herum (zeigt er zum Betrachter, gleißt die Lampe als █)",
+  "Umgebung nur durch Zeichenwechsel: Wellenmuster je Meereszeile verschoben (vorn schneller), Spiegelung des Abendlichts flimmert, Laterne wechselt ☼ * ¤ und Farbe und ihr Lichtkreis auf den Platten wächst und schrumpft, Rauch o ° ∙ ·, zwei Möwen v - ^, ein Drittel der Sterne blinkt",
+  "Dachs-Kurier als Halbblock-Sprite 11×16 (11×8 Zellen): 8 Laufbilder mit 10 Bildern/s, je Laufbild genau eine Zelle Vorschub, Standfuß ortsfest; danach Stehen mit Schal im Wind, Drehung zum Spieler und Gruß an die Mütze",
+  "Gesprächsfenster wie in Textmodus-Oberflächen: Rahmen, Titel „Dachs-Kurier“, Schließknopf [■], Schatten (zwei Spalten rechts, eine Zeile unten), öffnet in 4 Bildern; darin ein Bildnis des Dachses aus 18×16 Halbblöcken mit Blinzeln",
+  "Oberfläche: Statuszeile schwarz auf hellgrau mit Ort, Tageszeit, Punkten und Zügen; Textfenster blau mit Doppelrahmen (5 Zeilen, 20 % des Bildes), Beschreibung wird getippt, Auswahl 1–3 mit Leuchtbalken, Parserzeile „> nimm paket“ mit blinkendem Unterstrich-Cursor; nach der Eingabe ist das Paket weg, Punkte 0 → 5, Züge 12 → 13",
+  "Das Raumbild liegt als ANSI-Datei vor (assets/hafen.ans, 5,2 KB, CP437 + SGR-Farbfolgen + SAUCE-Kopf); die Demo liest das aus dieser Datei zurückgelesene Bild"
+ ],
+ "camera": "Seitenansicht wie eine Bühne, feste Kamera: Häuschen links vom Bildrand angeschnitten, Meer mit Abendlicht in der Mitte, Leuchtturm auf der Felsnase rechts, der Kai mit Steinplatten als Laufboden über die ganze Breite",
+ "resolution": "80×25 Zeichen à 8×14 Pixel = 640×350 (EGA-Textmodus), ×2 auf 1280×700 in der 1280×720-Aufnahme; 16 Vorder-, 8 Hintergrundfarben; Halbblock-Raster 80×50. Pixel bewusst quadratisch: auf einem 4:3-Monitor waren die 640×350-Pixel etwa 1,37-mal so hoch wie breit, das Bild wirkt hier flacher als damals.",
+ "pipeline": [
+  {
+   "step": "Zeichensatz-ROM",
+   "tool": "scripts/font_atlas.py",
+   "detail": "Terminus Font 4.49.1 Bold 14 (ter-u14b.bdf, OFL-1.1) eingelesen und die 256 Zeichen in CP437-Reihenfolge (inkl. ☺☻♥♦♣♠•◘○ … in 0x01–0x1F und ⌂) auf einen Atlas 128×224 gesetzt (demo/fonts/cp437_8x14.png, Alpha = Pixel gesetzt). Alle 256 Zeichen sind in Terminus vorhanden, keines musste gezeichnet werden. Vorschau assets/charset.png. Der Atlas trägt den reservierten Namen „Terminus Font“ nicht."
+  },
+  {
+   "step": "Textmodus-Werkzeug",
+   "tool": "scripts/tmscreen.py",
+   "detail": "Bildschirm als Zeichen-, Vordergrund-, Hintergrund- und Blinkfeld; Halbpixel setzen (px) mit Zellregel: zwei helle Farben in einer Zelle sind verboten, die andere Hälfte wird abgedunkelt und als Konflikt gezählt; Vorschau mit dem echten Atlas; ANSI-Datei schreiben (SGR 30–37/40–47, 1 = hell, 5 = Blinken, 80 Spalten mit automatischem Umbruch, SAUCE-Kopf) und lesen."
+  },
+  {
+   "step": "Raumbild per Code",
+   "tool": "scripts/build_scene.py",
+   "detail": "Himmel als Zellbänder mit ░▒▓, Sterne als Zeichen; Hang, Felsnase, Leuchtturm, Fischerboot, Steg, Kaikante und Häuschen mit PIL-Formen (Polygon, Rechteck, Linie) auf einer 80×50-Halbblock-Ebene gezeichnet und Zelle für Zelle in ▀ ▄ █ umgesetzt (0 Farbkonflikte im fertigen Bild); danach Textzeichen für Schiefer (░), Bruchsteinmauer (─┴), Bäume und Gras (♣ ♠ \"), Felsschichten, Wanten (\\), Kisten (┌┐└┘), Tau (@~), Laterne (☼ ║ ╨) und Steinplatten (█ mit ▐ als Fuge). Der Lichtkreis der Laterne hellt die Platten elliptisch auf (█ hellgrau, Rand ▓). Ergebnis: assets/hafen.ans; das Skript liest die Datei zurück, prüft sie bitgleich und schreibt demo/data/scene.json mit dem Bild und der Lage aller animierten Teile (91 Meereszellen, 314 Himmelszellen, 133 Lichtkreiszellen, Lampe, Laterne, Schornstein, Paket)."
+  },
+  {
+   "step": "Versuch: automatische Umwandlung",
+   "tool": "scripts/convert_image.py, blender/render_badger.py, scripts/sprite_from_render.py",
+   "detail": "1. convert_image.py bringt shared/3d/preview_harbor_main.png je Zelle auf das beste Paar aus Zeichen (Leerzeichen, █ ▀ ▄ ▌ ▐ ░ ▒ ▓) und Farben (16 × 8), verglichen auf 2×2 Teilflächen: Die gedeckten Abendfarben landen auf Braun- und Grau-Rastern, das Bild wird Matsch (assets/render_umgewandelt.png); verworfen. 2. badger.glb in Blender (Workbench, flaches Licht, ohne Kantenglättung) als Material-ID-Bilder gerendert (5 Laufbilder aus Walk, Idle von der Seite und von vorn) und je Halbblock das häufigste Material genommen: Bei 16 Halbzeilen ist die Figur nur 6–7 Spalten breit, Auge, Nase und Beine gehen unter (assets/badger_auto_vs_hand.png, links automatisch, rechts Hand); verworfen."
+  },
+  {
+   "step": "Dachs von Hand",
+   "tool": "scripts/build_sprites.py",
+   "detail": "Oberkörper nach rechts als Buchstabenkarte 11×12 (Kopf ragt nach vorn: grauer Hinterkopf, Ohr, weiße Stirn, schwarzer Augenstreifen, weiße Schnauze, schwarze Nase), Schalende in zwei Windstellungen; Beine je Bild aus der Fersenposition gezogen (Oberschenkel schwarz, nahes Bein dunkelgrau, fernes schwarz, gehobener Fuß eine Halbzeile höher). Laufzyklus: Standfuß relativ 6→3, Schwungfuß 2→5, der Körper rückt je Bild eine Zelle vor. Vorderansicht, Gruß und Bildnis 18×16 (mit Blinzelbild) von Hand. Prüfung auf helle Farbpaare in einer Zelle: 0. Vorschau assets/badger_sheet.png."
+  },
+  {
+   "step": "Godot-Demo",
+   "tool": "Godot 4.7.2, GDScript, canvas_item-Shader",
+   "detail": "GDScript schreibt jedes Bild 2000 Zellen (Zeichen + Attribut) in einen 80×25-Puffer, der Shader spielt den Zeichengenerator; Einzelheiten unter godot"
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/check_badger.py, scripts/check_textmode.py, tools/capture.py",
+   "detail": "check_badger.py nimmt mit --isolate (nur der Dachs auf Magenta, gleicher Zeichenweg) und normal sowie mit --no-badger auf: 39 Laufbildwechsel im Abstand von genau 3 Aufnahmebildern, Ferse des Standfußes bei 38 von 38 Wechseln auf ±1 px ortsfest (Standphasen 3–5 Laufbilder), Kopfvorderkante rückt je Laufbild genau 8 px vor, Kopfoberkante fest (y = 168), Fußzeile in Lauf, Stehen, Vorderansicht und Gruß 279; im echten Bild unterscheiden sich mindestens 87 % der Dachs-Pixel vom Hintergrund; zwei Läufe bildgleich. check_textmode.py prüft alle 180 Bilder auf Palette, ≤2 Farben je Zelle, kein helles Paar, jedes Zellmuster ein Zeichen des Atlas: 0 Verstöße."
+  }
+ ],
+ "godot": [
+  "project.godot: Viewport 640×350, stretch mode viewport, scale_mode integer, Standardfilter Nearest, Fenster 1280×700; keine Plugins",
+  "main.tscn: Node2D mit main.gd und ein ColorRect 640×350 mit ShaderMaterial (shaders/textmode.gdshader); der Zeichensatz-Atlas ist als Textur-Parameter eingetragen (Import verlustfrei, compress/mode=0)",
+  "textmode.gdshader: Zelle und Glyphenzeile aus UV×(640,350), Zeichen und Attribut per texelFetch aus dem 80×25-Puffer (RG8), Glyphenpixel per texelFetch aus dem Atlas, feste 16-Farben-Tabelle; Uniforms blink_on (Bit 7 blendet den Vordergrund aus) und cursor/cursor_on (Unterstrich in den Glyphenzeilen 12–13)",
+  "main.gd: Grundpuffer aus demo/data/scene.json (Bildzeilen 1–19) plus statischer Oberfläche; je Bild Kopie des Grundpuffers, dann Meer, Strahl, Rauch, Möwen, Laterne mit Lichtkreis, Paket, Dachs, Fenster, Oberfläche; Upload mit Image.set_data + ImageTexture.update",
+  "Sprites über set_px(): liest die beiden Zellhälften des Hintergrunds (█ ▀ ▄ ▓ oder Hintergrundfarbe), setzt die Hälfte und wählt ▀/▄/█/Leerzeichen; trifft eine helle Spritefarbe auf eine helle Hintergrundhälfte, wird die Hintergrundhälfte abgedunkelt (402 Fälle in 180 Bildern, wirkt als dunkler Umriss)",
+  "Ablauf in Aufnahmebildern: Beschreibung tippt ab 6 (2 Zeichen je Bild), Auswahl ab 40, Leuchtbalken springt bei 66 auf 2, Dachs läuft 3–120 von Spalte −6 bis 33 (Laufbild alle 3 Bilder), Parser tippt 96–123, Eingabe bei 132 (Paket weg, Punkte, Antwort), Drehung bei 135, Fenster öffnet 138–141, Gruß 141–153",
+  "Blinken wie auf der VGA-Karte: Zeichenblinken 7 Bilder an/7 aus (≈2,1 Hz), Cursor 4/4; genutzt für Leuchtfeuer, Sterne und Cursor",
+  "Deterministisch: t += delta, Bildnummer = round(t·30), Laternenflackern aus RandomNumberGenerator mit Seed 1987; zwei Aufnahmen bildgleich",
+  "Mess-Schalter nach --: --isolate (nur Dachs auf Magenta), --no-badger, --timing (Rechenzeit und Farbkonflikte)",
+  "Rechenzeit (Desktop, --timing): 0,46–0,57 ms je Bild für das Füllen des Puffers (fünf Läufe); Aufnahmen mit --rendering-method mobile und gl_compatibility sind in RGB bitgleich zur Forward+-Aufnahme (0 von 180 Bildern weichen ab)"
+ ],
+ "techniques": [
+  "textoberflaeche",
+  "sprite-animation",
+  "fuss-halten",
+  "prozedurale-animation",
+  "dithering",
+  "einschub-panel",
+  "zeichengenerator-shader",
+  "attribut-blinken",
+  "ansi-datei"
+ ],
+ "ratings": {
+  "ai_fit": 1,
+  "consistency": 4,
+  "effort": 4,
+  "text_adventure": 4,
+  "mobile": 5
+ },
+ "ratings_note": "ai_fit 1, weil die KI hier nichts beigetragen hat: Nach Auftrag wurden keine KI-Bilder erzeugt (genimg.py nicht aufgerufen); Zeichensatz, Raumbild, Figur und Oberfläche entstehen aus Code, wie gut ein Bildmodell den Stil träfe, ist nicht geprüft. consistency 4: Zeichensatz, Palette, Zellraster und Attributregel lassen keine Ausreißer zu, und ein Prüfskript belegt das für jedes Bild; wie gut ein Raum oder eine Figur aussieht, hängt aber an der Hand, die die Zeichen setzt. effort 4: Der Hafen brauchte rund zehn Durchgänge mit Vorschau, der Dachs etwa acht Entwürfe; beide automatischen Wege (Render umwandeln, Figur aus 3D-Material-IDs) ergaben Matsch. text_adventure 4: Text, Parser, Auswahl und Fenster sind hier das Medium selbst und ein Raum ist 5 KB, aber Figuren bleiben grob und 80 Spalten sind auf einem Telefon im Hochformat kaum lesbar. mobile 5 gemessen: 0,46–0,57 ms je Bild (Desktop), Mobile- und Kompatibilitäts-Renderer bitgleich.",
+ "verdict": "Für unser Textadventure passt der Stil gut, wenn das Spiel den Terminal-Charakter will: Bild, Statuszeile, Parser und Fenster sind ein einziges Zeichenraster, ein Raum ist eine 5-KB-ANSI-Datei, alles läuft deterministisch und auf jedem Gerät. Der Engpass ist die Grafik selbst: Räume und Figuren müssen Zeichen für Zeichen gesetzt werden, und eine Figur in Spielgröße bleibt grob. Der Kompromiss aus diesem Eintrag trägt: kleine Figur im Raum, dazu ein Gesprächsfenster mit größerem Bildnis. Für viele Räume lohnt ein ANSI-Editor statt Code; für Telefone wäre ein 40-Spalten-Modus zu prüfen.",
+ "pitfalls": [
+  "Der Dachs im Raum ist mit 11×16 Halbblöcken grob: Der Kopf liest sich als gestreifte Maske mit Schnauze, die Beine haben nur drei Halbzeilen und der Laufzyklus ist entsprechend klein. Erst das Bildnis im Gesprächsfenster (18×16) zeigt Gesicht, Mütze und Schal deutlich.",
+  "Bewegung nur in ganzen Zellen: Der Dachs springt je Laufbild 8 Pixel (16 in der Aufnahme) bei 10 Bildern/s. Das ist echt für den Textmodus, wirkt aber ruckig neben den weich animierten Einträgen.",
+  "Zwei helle Farben passen nicht in eine Zelle (Hintergrund nur 0–7). Wo der Dachs auf eine helle Hintergrundhälfte trifft (dunkelgraue Platten), wird diese schwarz (402 Fälle in 180 Bildern); sichtbar als dunkler Rand an Beinen und Bauch.",
+  "Schattierzeichen und Textzeichen belegen die ganze Zelle: Wo Mast, Turmkante, Lichtstrahl oder Möwe durch den gerasterten Himmel gehen, fehlt in diesen Zellen das Raster (flache Hintergrundfarbe). Möwen und Rauch fliegen deshalb nur in den einfarbigen Himmelszeilen.",
+  "Automatische Wege gescheitert: Ein umgewandelter Render (shared/3d/preview_harbor_main.png, assets/render_umgewandelt.png) wird Matsch, weil gedeckte Farben auf Braun- und Grauraster fallen; die Figur aus Material-ID-Renders von badger.glb ist zu schmal, Auge, Nase und Beine verschwinden (assets/badger_auto_vs_hand.png).",
+  "Bewusst vom Motiv abgewichen: nur ein Fischerboot statt zwei und keine Fässer. Ein zweites Boot (Ruderboot aus \\█████/ und als Halbblock-Rumpf) und zwei Fässer machten die 80 Spalten unruhig und lagen hinter dem Laufweg; der Ausschnitt ist ohne sie lesbarer. Der Lichtstrahl ist eine Zeichenkette, kein Kegel.",
+  "Terminus ist nicht die IBM-ROM-Schrift: Glyphen wie ☼, ░▒▓ und die Rahmenzeichen sehen anders aus als auf einer EGA-Karte. Die ROM-Schriften und die verbreiteten CP437-Nachbauten sind nach PIPELINE nicht erlaubt (Lizenz).",
+  "Pixel quadratisch statt 1,37-mal so hoch wie breit (640×350 auf 4:3): Gegenüber einem echten EGA-Monitor ist alles flacher.",
+  "Ungeprüft: hafen.ans wurde nur mit dem eigenen Lesecode bitgleich zurückgelesen, nicht in einem externen ANSI-Editor (PabloDraw, Moebius) geöffnet.",
+  "Oberfläche am Ende: Textfenster (20 %) und Statuszeile (4 %) plus Gesprächsfenster (10 %) belegen in den letzten 1,4 s zusammen etwa 34 % des Bildes, das Textfenster allein 20 %. Parser und Auswahl sind gescriptet, nicht bedienbar."
+ ],
+ "lessons": [
+  "Textmodus in Godot: GDScript schreibt Zeichen und Attribut in einen 80×25-Puffer (ImageTexture RG8), ein canvas_item-Shader macht daraus mit texelFetch die Glyphen, Farben, Blinken und Cursor. 0,46–0,57 ms je Bild, Forward+, Mobile und Kompatibilität bitgleich, und jede Regel des Textmodus gilt automatisch, weil es keinen anderen Zeichenweg gibt.",
+  "Halbblock-Ebene als Zeichenfläche: Formen mit PIL auf 80×50 zeichnen und Zelle für Zelle in ▀ ▄ █ umsetzen (mit Zählung der verbotenen hellen Paare); Verläufe als ganze Zellbänder mit ░▒▓, Struktur und Material als Textzeichen darüber. So entsteht ANSI-Art aus Code, wiederholbar und prüfbar.",
+  "Material als Zeichen + Farbe (Wasser ~ ≈, Bäume ♣ ♠, Gras \", Tau @, Mauer ─┴, Kisten ┌┐└┘) trägt den Textmodus-Charakter stärker als Blockflächen. Möwen, Rauch und Strahl nur in einfarbige Himmelszeilen legen, sonst entstehen Löcher im Raster.",
+  "Die Himmelsmaske für Strahl, Rauch und Möwen ergibt sich aus dem Vergleich mit dem Bild vor den Gegenständen: Was sich nicht geändert hat, ist Himmel. Damit verschwinden Möwen hinter dem Dach statt darüber.",
+  "Standfuß im Zellraster: Körper je Laufbild eine Zelle vor, Standfuß relativ eine Zelle zurück, Beine aus der Fersenposition ziehen; gemessen ist die Ferse über 3–5 Laufbilder ortsfest. Gemessen wird in einem Godot-Lauf mit --isolate (nur die Figur auf Magenta).",
+  "Gesprächsfenster mit Schatten (Zeichen bleiben, Farbe dunkelgrau auf schwarz) und Bildnis gleicht die grobe Figur aus und gehört ohnehin zur Formensprache von Textmodus-Spielen; das Bildnis braucht einen farbigen Fenstergrund, auf Schwarz verschwinden die schwarzen Gesichtsstreifen.",
+  "Das Blinkbit ist kostenlose Animation: Leuchtfeuer und Sterne blinken ohne Code je Bild.",
+  "Ein Raum als .ans-Datei mit SAUCE-Kopf (5 KB) trennt Bild und Spiel: Gegenstände wie das Paket zeichnet die Demo, nicht das Bild, und Räume könnten in einem freien ANSI-Editor entstehen und mit demselben Leser geladen werden (Austausch mit einem Editor noch nicht geprüft).",
+  "Hinweis KI (ungeprüft): Ein Bildmodell könnte Komposition und Farbskript eines Raums liefern, etwa als flaches Bild mit wenigen gesättigten Farben in 80×38 Feldern, das der Bestwahl-Konverter dann in Zeichen umsetzt und von Hand nachbearbeitet wird. Der Versuch mit dem gedeckten 3D-Render zeigt, dass die Vorlage flache, gesättigte Flächen braucht; für Figuren hilft das wenig."
+ ],
+ "assets": [
+  {
+   "file": "assets/hafen.ans",
+   "kind": "background",
+   "made_with": "Code: scripts/build_scene.py (Zellbänder, PIL-Formen auf Halbblock-Ebene, Textzeichen), gespeichert als ANSI-Datei mit SAUCE",
+   "prompt": ""
+  },
+  {
+   "file": "assets/hafen_preview.png",
+   "kind": "background",
+   "made_with": "Wiedergabe von hafen.ans mit dem Zeichensatz-Atlas (×2), ohne Animation und Oberfläche",
+   "prompt": ""
+  },
+  {
+   "file": "assets/render_umgewandelt.png",
+   "kind": "background",
+   "made_with": "Versuch: shared/3d/preview_harbor_main.png automatisch in Zeichen umgewandelt (scripts/convert_image.py); verworfen",
+   "prompt": ""
+  },
+  {
+   "file": "demo/data/scene.json",
+   "kind": "background",
+   "made_with": "aus hafen.ans zurückgelesenes Bild plus Lage der animierten Teile (scripts/build_scene.py)",
+   "prompt": ""
+  },
+  {
+   "file": "demo/data/sprites.json",
+   "kind": "sprite",
+   "made_with": "von Hand gesetzte Halbblock-Karten (scripts/build_sprites.py): 8 Laufbilder, 2 Stehbilder, Vorderansicht, Gruß, Bildnis 18×16 mit Blinzeln",
+   "prompt": ""
+  },
+  {
+   "file": "assets/badger_sheet.png",
+   "kind": "sprite",
+   "made_with": "Vorschau der Dachs-Sprites vor dem Hafenbild (oben Laufbilder 1–4, Mitte 5–8, unten Stehen, Vorderansicht, Gruß)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/badger_auto_vs_hand.png",
+   "kind": "sprite",
+   "made_with": "Versuch: links aus Material-ID-Renders von shared/3d/badger.glb umgewandelt (blender/render_badger.py, scripts/sprite_from_render.py), rechts die Handfassung; Seite und Vorderansicht",
+   "prompt": ""
+  },
+  {
+   "file": "demo/fonts/cp437_8x14.png",
+   "kind": "font",
+   "made_with": "scripts/font_atlas.py aus Terminus Font 4.49.1 Bold 14 (BDF), 256 Zeichen in CP437-Reihenfolge",
+   "prompt": ""
+  },
+  {
+   "file": "demo/fonts/OFL-Terminus.txt",
+   "kind": "license",
+   "made_with": "Lizenztext SIL Open Font License 1.1 von Terminus Font (gilt für den Zeichensatz-Atlas cp437_8x14.png und seine Vorschau charset.png)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/charset.png",
+   "kind": "font",
+   "made_with": "Vorschau des Zeichensatz-Atlas mit Codes (×3)",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Zeichensatz-Atlas demo/fonts/cp437_8x14.png, abgeleitet aus Terminus Font 4.49.1 (Dimitar Toshkov Zhekov), Bold 14; reservierter Name „Terminus Font“ nicht verwendet",
+   "license": "OFL-1.1",
+   "source": "https://sourceforge.net/projects/terminus-font/ (terminus-font-4.49.1.tar.gz; Lizenztext: demo/fonts/OFL-Terminus.txt)"
+  }
+ ],
+ "image_generations": 0,
+ "tool_issues": [],
+ "status": "done"
+}

@@ -1,0 +1,283 @@
+{
+ "slug": "vorgerendert-diashow",
+ "name": "Vorgerenderte Ich-Perspektive (Standbild-Erkundung)",
+ "family": "retro3d",
+ "kind": "style",
+ "era": "1993–1997",
+ "summary": "Der Hafen ist in Blender wie frühe CGI gerendert: Raytracing mit harten Schlagschatten einer Sonne ohne Ausdehnung, glatten, glänzenden Flächen, Chrom und fast spiegelndem Wasser, ohne weiches Umgebungslicht und ohne Schmutz. Drei Ansichten aus Augenhöhe stehen als Standbilder mit 544×332 Bildpunkten und 256 Farben schwarz eingebettet auf dem Schirm; bewegt sind nur kleine eingebettete Bildfolgen und der vorgerenderte Dachs-Clip. Man wechselt die Knoten per Klick mit Hand-Mauszeiger, Pixel-Überblendung und schnellem Zoom, unten steht eine Textzeile.",
+ "references": [
+  "Myst (Cyan/Brøderbund 1993): Standbilder mit 544×332 Bildpunkten in 8 Bit auf schwarzem Grund, Hand-Mauszeiger, Überblendung zwischen Knoten, eingebettete Videoausschnitte für bewegte Teile",
+  "Riven (Cyan 1997): dieselbe Knotenstruktur mit dichteren Renderbildern und mehr eingebetteten Bildfolgen",
+  "The Journeyman Project (Presto Studios 1993): vorgerenderte Ich-Perspektive mit glatten, glänzenden Raytracing-Oberflächen",
+  "The 7th Guest (Trilobyte 1993): vorgerenderte Räume als feste Ansichten, Figuren als Videoclips im Bild",
+  "Lighthouse: The Dark Being (Sierra 1996) und Rama (Sierra 1996): Standbild-Erkundung auf CD-ROM mit Hand-Zeiger"
+ ],
+ "traits": [
+  "Bild 544×332 (wie die Ansichtsfläche der CD-ROM-Vorbilder), 1:1 in einem 640×360-Viewport, oben 2 px und seitlich 48 px schwarz eingebettet, ganzzahlig ×2 auf 1280×720",
+  "Frühe-CGI-Licht aus Cycles: keine indirekte diffuse Beleuchtung (diffuse_bounces = 0), Himmel beleuchtet nichts und ist nur in Kamera- und Spiegelstrahlen zu sehen, kleiner konstanter Umgebungsanteil je Material wie das ambient-Glied des Phong-Modells. Eine Hauptsonne ohne Ausdehnung (Westsüdwest, 36° hoch) wirft harte Schlagschatten auf sichtbare, beleuchtete Flächen: im gebackenen Bild 41–49 % dunkler als dieselbe Fläche ohne Schatten (Kai 43 %, Steg 49 %, Leuchtturmtür 41 %; Türrahmen auf der Turmwand, Dachüberstand auf der Hauswand, Pfähle auf den Planken), der Schatten des Dachses rechts neben seinen Füßen 33 % (scripts/measure_shadows.py). Eine schwache Gegensonne (Südost) wirft einen zweiten, blassen Schatten (19–21 % Abfall, 0,1–0,3 % der Bildfläche); echte Doppelschatten sind damit kaum zu sehen, am Dachs gar nicht",
+  "Saubere prozedurale Materialien ohne Texturdateien und ohne Schmutz: Pflaster, Mauer, Schiefer und Sockel aus dem Brick-Knoten mit scharfen Fugen, Holz als Ringe aus dem Wave-Knoten mit Lackglanz, Fels, Sand und Gras als glattes Rauschen, Farbe mit Klarlack, Metall als Chrom; Wasser als fast perfekter Spiegel mit 4 periodischen Wellenbändern; Rauch als 5 halbdurchsichtige Kugeln mit je eigener Größe, Drift und Pendelbewegung",
+  "256 Farben mit Fehlerdiffusion: eine gemeinsame Palette für alle drei Knoten (241 k-Means-Farben in OKLab + 15 feste Farben für Schrift und Zeiger), Floyd-Steinberg; aus 30 000–45 000 Farben im Render werden 237–254, mittlere Abweichung 2,5–2,9 Stufen; im reinen Himmel steigt der Helligkeitsunterschied benachbarter Pixel von 0,06–0,09 auf 0,33–0,77 Stufen (sichtbares Körnen, scripts/palette_stats.py)",
+  "Ganzer Bildschirm in Palettenfarben: Ein letzter Shader rastet das Bild auf die 256 Farben ein und das Textband darunter nur auf die 12 Textfarben (Schwarz, Textrampe, Gold); in allen 180 aufgenommenen Bildern kommen 254 Farben vor, 0 außerhalb der Palette, im Textband genau 12 (scripts/check_demo.py)",
+  "Drei Knoten aus Augenhöhe: Kai (Häuschen mit Rauch und Fensterlicht), Steg (Leuchtturm, Boote, Laterne, Dachs), Leuchtturmtür; ein Ort = ein Standbild",
+  "Bewegung nur in eingebetteten Bildfolgen mit 15 Bildern/s als 2-s-Schleife: aufsteigender Rauch (Kai, 976–1 895 geänderte Pixel in jedem Bild 1–29, Periode volle 2 s), Leuchtfeuer-Blitz mit Kreuzfilter-Stern einmal je 2 s, Wasser, schaukelnde Boote und flackernde Laterne (Steg), Wasser (Leuchtturmtür). Bewegter Anteil der Bildfläche im Mittel 3,4 % (Kai), 13,6 % (Steg), 6,7 % (Leuchtturmtür); alles andere ist das unveränderte Standbild, das Dithermuster steht still",
+  "Dachs als vorgerenderter Clip (117 Bilder, davon 30 als Stehschleife): kommt den Steg auf die Kamera zu, bremst, dreht sich zur Kamera und winkt; 62–80 px hoch im Knotenbild (124–160 px bei 720p); Paket als heller Packpapier-Block an der Hüfte; Godot zeigt die Clip-Bilder unverändert (in 155 ruhigen Bildern weichen nur die Pixel unter dem Mauszeiger ab, größter Abweichungsrahmen 21 px)",
+  "Knotenwechsel: Drehung als Pixel-Auflösung (jeder Bildpunkt springt zu einem festen Zufallszeitpunkt vom alten ins neue Bild, 0,45 s, keine Mischfarben), Vorwärtsgehen als schneller Zoom ins alte Bild (×3 in 0,32 s, grobe Pixel) mit anschließender Auflösung",
+  "Hand-Mauszeiger als eigene Pixelgrafik in drei Formen: zeigende Hand (vorwärts), Hand nach rechts am Bildrand (drehen), offene Hand über dem Dachs (ansprechen)",
+  "Textzeile im schwarzen Rand unter dem Bild (deckt das Bild nicht ab): Ort in goldenen Kapitälchen mit Knotenname („Hafen von Lornholm · Steg“), daneben die Zeile aus ui_text, EB Garamond 13/14 px bei 640×360, geglättet mit Halbpixel-Positionierung und auf die 12 Textfarben der Palette eingerastet"
+ ],
+ "camera": "Drei feste Knotenansichten aus Augenhöhe 1,62 m, Godot-Koordinaten (Position → Ziel, horizontaler Bildwinkel): Kai (−2,2 | 1,62 | 5,6) → (−9,2 | 2,9 | −2,5), 64°; Steg (2,2 | 1,62 | 3,0) → (6,0 | 2,6 | −20,0), 64°; Leuchtturmtür (11,2 | 4,64 | −18,9) → (9,4 | 5,0 | −25,6), 68° (Augenhöhe über dem Felsen). Bewusst nicht die Hauptkamera aus shared/3d: Der Stil ist die Ich-Perspektive, nicht die Totale.",
+ "resolution": "Knotenbilder 544×332, 256 Farben (eine Palette für alle Knoten, Floyd-Steinberg), in 640×360 eingebettet und ganzzahlig ×2 auf 1280×720; Bildfolgen und Dachs-Clip mit 15 Bildern/s (bei 30 fps jedes Bild zwei Takte)",
+ "pipeline": [
+  {
+   "step": "Knotenansichten suchen",
+   "tool": "Blender EEVEE (blender/scout.py)",
+   "detail": "9 Kamerakandidaten aus Augenhöhe mit Dachs-Platzhaltern (badger_low.glb) in Sekunden gerendert; je eine Ansicht für Kai, Steg und Leuchtturmtür in demo/data/nodes.json festgelegt (Godot-Koordinaten, horizontaler Bildwinkel)."
+  },
+  {
+   "step": "Szene und Materialien",
+   "tool": "Blender 5.2 (blender/render_nodes.py)",
+   "detail": "shared/3d/harbor.glb und badger.glb nur gelesen und importiert, alle Materialien nach Namen durch saubere prozedurale Cycles-Materialien ersetzt (Brick, Wave, Rauschen, Chrom, Klarlack), konstanter Umgebungsanteil (0,04–0,07 linear) als Emission statt indirektem Licht; Paket heller (#E2B577 statt #C08B57) mit stärkerem Kantenlicht. Abendhimmel als eigener Knotenbaum (Verlauf, Nachglühen, gestreckte Wolkenbänder, Voronoi-Sterne), nur für Kamera und Spiegelungen sichtbar. Lichter: Hauptsonne ohne Ausdehnung aus Westsüdwest, 36° hoch, Stärke 5,4, warm; Gegensonne aus Südost, 0,35, kühl; beide mit Schatten; Punktlichter in Laterne, Fenster und Leuchtfeuer. Nur in der eigenen Szene korrigiert: ein Eckpunkt der Turmwand, der durch die Leuchtturmtür stieß, 3 cm hinter die Tür gerückt; Poller, die nur angeschnitten im Bild stünden, entfernt (Kai: Poller bei x −3,2; Steg: bei x 0,9)."
+  },
+  {
+   "step": "Schleifen rendern",
+   "tool": "Blender 5.2 Cycles (Metal)",
+   "detail": "Je Knoten 30 Bilder (2 s, 15 Bilder/s) direkt in 544×332, 48 Samples (Standard des Skripts; steht in der SETTINGS-Zeile jedes Render-Logs und in den PNG-Metadaten), ohne Entrauschen, diffuse_bounces 0, glossy_bounces 3, Farbumsetzung Standard (hartes Abschneiden, 0,3–1,2 % der Pixel erreichen 255), fester Seed; etwa 7 s je Knoten. Alle Bewegungen mit ganzzahligen Perioden je 2 s (nahtlose Schleife). Erneuter Einzel-Render: Kai-Bild 0 bitgleich, Kai-Bild 17 und Dachs-Bild 60 bis auf je ein Pixel um eine Stufe gleich."
+  },
+  {
+   "step": "Dachs-Clip rendern",
+   "tool": "Blender 5.2 Cycles (blender/render_nodes.py --what badger)",
+   "detail": "Dachs (badger.glb, 7 348 Dreiecke) mit Walk, Wave und Idle aus dem glTF, je Bild aus den Aktionen gepost und überblendet: 1,535 s Laufen mit speed_scale 2, 0,45 s Bremsen (Animationszeit und Weg gemeinsam integriert, Weg = 0,367 m × Animationszeit), 0,3 s Drehung zur Kamera in Wave hinein, 1,5 s Winken, danach Idle. 117 Bilder in 25 s. Dachs-Materialien als glatter Kunststoff mit Glanzpunkt und einem Kantenlicht als Materialterm (Normale zur Seite rechts hinten × Kantenfaktor), damit der dunkle Winkearm vor dem dunklen Fels lesbar ist."
+  },
+  {
+   "step": "Auf 256 Farben backen",
+   "tool": "Python/NumPy/Pillow (scripts/bake.py)",
+   "detail": "Kreuzfilter-Stern auf das Leuchtfeuer in linearem Licht addiert (gleiche Blitzkurve wie im Render). Palette: k-Means in OKLab über Stichproben aller Knoten, Dachs-Pixel vierfach gewichtet, plus feste Text- und Zeigerfarben; dazu text_palette.png mit den 12 Textfarben. Floyd-Steinberg für jedes Bild. Bewegte Pixel (mehr als 3 Stufen Abweichung von Bild 0, Opening gegen Rauschpunkte; im Rauch-Rechteck aus nodes.json → soft_rects schon ab 1 Stufe und ohne Opening) kommen aus dem Einzelbild, alle anderen aus dem Standbild; zusammenhängende Bereiche werden zu Rechtecken und Rastern (clip_*.png). Dachs-Clip: nur die Pixel, die der Dachs verändert (Figur, Schatten, Spiegelung im lackierten Holz), sonst die Umgebung derselben Phase, damit er nahtlos auf der Wasser-Bildfolge liegt. 17 s, bitgleich wiederholbar."
+  },
+  {
+   "step": "Mauszeiger",
+   "tool": "Python/Pillow (scripts/cursors.py)",
+   "detail": "Drei Hände als eigene Pixelzeichnung in den festen Palettenfarben (Schwarz, Weiß, zwei Grau), Blatt 72×24 mit Hotspots in demo/ui/cursors.json."
+  },
+  {
+   "step": "Demo bauen",
+   "tool": "Godot 4.7.2",
+   "detail": "Jeder Knoten wird in einem eigenen SubViewport aus Standbild und Bildfolgen zusammengesetzt; ein Shader mischt höchstens zwei Knoten (Pixel-Auflösung, Zoom), ein zweiter rastet das Bild auf die 256 Farben und das Textband auf die 12 Textfarben ein. Ablauf, Zeigerweg und Hotspots in main.gd."
+  },
+  {
+   "step": "Prüfen",
+   "tool": "Python (scripts/measure_shadows.py, measure_badger.py, check_clips.py, palette_stats.py, check_demo.py) + tools/capture.py",
+   "detail": "Schatten: dieselbe Ansicht ohne Schatten einer Sonne gerendert (--no-shadow key|fill), Schattenmaske aus den Rohbildern, Abfall im gebackenen Standbild bzw. Dachs-Clip gemessen (assets/shadow_measure.json). Bildfolgen: geänderte Pixel je Bild gegen das Standbild und kürzeste Periode. Kopf und Füße des Dachses in Deckungsmasken aus Blender gemessen (--what mask: alles außer dem Dachs als Holdout, 117 Bilder in 9 s). Godot-Aufnahmen mit Forward+, Mobile und Compatibility gegen die gebackenen Bilder und die Palette geprüft. Aufnahme mit capture.py --poster-at 0.7 (Poster beim Winken)."
+  }
+ ],
+ "godot": [
+  "project.godot: Viewport 640×360, stretch mode viewport, scale_mode integer, Fenster 1280×720, Standard-Texturfilter Nearest, 2D-Transformationen und Eckpunkte auf Pixel gerastet, Clear Color Schwarz, Forward+",
+  "main.gd baut aus nodes/nodes_meta.json je Knoten einen SubViewport 544×332 (disable_3d, Nearest, UPDATE_ALWAYS) mit Sprite2D für Standbild und Bildfolgen (hframes/vframes, frame je Takt); Bildnummer = floor((t − Ursprung) · 15), auf dem Steg ist der Ursprung der Start des Dachs-Clips, damit Clip und Wasser dieselbe Phase zeigen; Dachs-Clip spielt 87 Bilder einmal, dann die Stehschleife 87–116",
+  "shaders/compose.gdshader auf einem ColorRect 544×332 bei (48, 2): tex_a (alter Knoten, um zoom_center vergrößert), tex_b (neuer Knoten), mix_p; ein Ganzzahl-Hash je Bildpunkt entscheidet, ab welchem mix_p der Punkt das neue Bild zeigt (Pixel-Auflösung ohne Mischfarben, unabhängig von der Bildrate)",
+  "shaders/palette_snap.gdshader auf zwei ColorRects mit hint_screen_texture: über dem Bild (y < 334) nächste der 256 Palettenfarben, über dem Textband (y ≥ 334) nächste der 12 Farben aus nodes/text_palette.png (Uniform count); gewichteter Abstand 0,30/0,59/0,11",
+  "Textzeile: zwei Label auf gemeinsamer Grundlinie, mittig unter dem Bild; EB Garamond (variabel, Regular) mit Graustufen-Glättung, Hinting light, Subpixel-Positionierung auf halbe Pixel; Ort über eine FontVariation mit OpenType-Merkmal smcp (Kapitälchen), Farben aus der Palette (Gold F2C85A, Pergament EADCBA)",
+  "Zeiger: Sprite2D mit Region aus ui/cursors.png, offset = −Hotspot, Position gerundet; Weg aus Schlüsselzeiten mit smoothstep, Form nach Lage: rechter Bildrand (x ≥ 500) Drehhand, Rechteck um den stehenden Dachs offene Hand (Zeiger neben der Schulter, damit Füße und Schatten frei bleiben), sonst zeigende Hand",
+  "Ablauf: 0–1,5 s Kai, 1,5–1,95 s Pixel-Auflösung zum Steg, Dachs-Clip ab 1,4 s, 5,4–5,72 s Zoom auf die Leuchtturmtür, danach Leuchtturmtür; Zeit als aufsummiertes delta, keine Zufallswerte zur Laufzeit",
+  "Probeläufe: --rendering-method mobile bitgleich zu Forward+; gl_compatibility weicht in 0,0043 % der Pixel ab, nur in den Zeilen 342–350 (Textzeile, andere Glättung), Bildfläche gleich; keine ERROR/WARNING in Import und Lauf"
+ ],
+ "techniques": [
+  "vorgerenderter-hintergrund",
+  "bildfolge-overlay",
+  "hintergrund-serie",
+  "blender-cycles",
+  "prozedurale-materialien",
+  "dithering",
+  "palette-einrasten",
+  "rim-light",
+  "fuss-halten",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 1,
+  "consistency": 5,
+  "effort": 3,
+  "text_adventure": 5,
+  "mobile": 4
+ },
+ "ratings_note": "ai_fit 1 heißt hier: Die KI hat nichts beigetragen (0 Bilderzeugungen). Der Look kommt vollständig aus Blender-Skripten (Materialien, Licht, Render), dem Back-Skript (Palette, Dithering, Bildfolgen) und zwei kleinen Godot-Shadern; ob ein Bildmodell als Zulieferer taugt (z. B. gemalter Himmel, in nodes.json als sky_image vorgesehen), ist nicht erprobt. consistency 5: Jede weitere Ansicht ist nur eine Kamera in derselben Szene mit denselben Materialien, Lichtern und derselben Palette; der Back-Schritt ist bitgleich wiederholbar, der Render bis auf Einzelpixel. effort 3: Hoher Einmalaufwand, weil jeder Ort als 3D-Modell und mit Materialien per Skript vorliegen muss und Licht je Ansicht geprüft werden will (Schattenrichtung, Geometriefehler, angeschnittene Gegenstände); danach kostet ein Knoten eine Zeile in nodes.json, etwa 7 s Render und den Back-Lauf, ein Figurenclip etwa 0,2 s je Bild. mobile 4: Probeläufe mit mobile (bitgleich) und gl_compatibility (nur Textglättung abweichend) bestanden; die Laufzeitkosten sind klein (drei 544×332-Viewports, ein Mischshader, ein Palettenshader mit 256 Vergleichen je Pixel bei 640×360), aber die Bildfolgen-Raster belegen ungepackt etwa 33–44 MB Grafikspeicher. Auf einem Smartphone wurde nicht gemessen, die Leistung dort ist geschätzt.",
+ "verdict": "Für ein Textadventure mit wenigen Orten liegt diese Form sehr nahe: Ein Raum ist ein Knoten, also ein Standbild mit ein paar Bildfolgen, dazu eine Textzeile; Klicks auf Bildränder oder Dinge können neben dem Parser als Bewegung und Auswahl dienen. Alles entsteht per Skript aus einem Blender-Modell und ist wiederholbar; zur Laufzeit ist es billig und sieht durch Raytracing, harte Schatten und Dithering sofort nach CD-ROM um 1995 aus. Der Preis: Jeder Ort muss modelliert sein, Licht und Ausschnitt wollen je Ansicht geprüft werden (die harten Schatten zeigen sich nur, wenn die Sonne seitlich zur Kamera steht), Figuren sind feste Clips (jede neue Handlung ist ein neuer Render), und eine gemeinsame 256er-Palette zwingt bei jedem neuen Ort zum Neubacken aller Bilder. Für unser erstes Spiel ist es ein starker Kandidat, wenn wir die Orte als Blender-Skripte bauen; die 8-Bit-Palette ist dabei Stilmittel und kann auch entfallen.",
+ "pitfalls": [
+  "Harte Schatten zeigen sich nur bei passender Sonnenrichtung. Im ersten Stand kam die Hauptsonne 12° hoch aus der Richtung des Abendglühens (Nordwest), dazu eine starke Gegensonne, viel Umgebungsanteil und ein Aufhelllicht am Steg: Die Schatten fielen lang ins Wasser, die Flächen waren nur streifend beleuchtet, der Schatten des Dachses dunkelte die Planken im gebackenen Bild nur um 1,5–3 Stufen ab. Jetzt steht die Sonne 36° hoch in Westsüdwest, die Gegensonne hat 0,35 statt 1,35, der Umgebungsanteil ist halbiert, das Aufhelllicht entfällt: 41–49 % Abfall in den Knoten, 33 % am Dachs.",
+  "Dafür passt das Licht nicht mehr ganz zum Himmel: Der Abendhimmel glüht im Nordnordwesten am Horizont, die Sonne scheint 36° hoch aus Westsüdwest, also eher wie am Nachmittag. Frühe CGI nahm es damit oft nicht genau; bewusst so gewählt, damit die Schatten auf sichtbare Flächen fallen.",
+  "Doppelschatten sind kaum zu sehen: Die Gegensonne wirft zwar einen zweiten harten Schatten, er dunkelt aber nur um 19–21 % ab und bedeckt 0,1–0,3 % des Bildes; am Dachs fällt er hinter die Figur und ist nicht zu sehen. Eine stärkere Gegensonne würde die Hauptschatten wieder aufhellen (so war es im ersten Stand).",
+  "Der Schatten des Dachses ist klein (411 Pixel, 33 % Abfall): Die Sonne steht seitlich, der Schatten reicht vom Fuß etwa 0,85 m nach rechts bis zur Stegkante und fällt dann ins Wasser. Das Wasser zeigt keine Schatten (Spiegel plus Emission ohne diffusen Anteil). Die Stegplanken spiegeln den violetten Himmel (Glanz 0,4); dieser Anteil liegt gleich hell auf Licht und Schatten und nimmt dem Schatten Kontrast.",
+  "Mit der hellen Sonne erreichen 0,3–1,2 % der Pixel im Render 255 (Farbumsetzung Standard schneidet hart ab), vor allem die sonnige Seite des weißen Leuchtturms und der Boote.",
+  "Ein zusätzliches Licht für das Kantenlicht des Dachses (auch per Light Linking nur auf den Dachs) änderte die Lichtauswahl von Cycles und damit das Rauschen im ganzen Bild: Das Rechteck des Dachs-Clips wuchs von 255×148 auf 374×262 px, auf Pfahl, Booten und Steg flackerten Rauschpunkte. Gelöst mit einem Kantenlicht als Materialterm ohne Lichtquelle; das Clip-Rechteck ist jetzt 257×148.",
+  "Beim Drehen zur Kamera (Clip-Bilder 30–34, 0,3 s) dreht sich die Figur auf der Stelle ohne Schritt: Die Füße wandern dabei um bis zu 3 px (links waagerecht 3 px, rechts 1 px waagerecht und 2 px in der Zeile). Beim Laufen und Stehen halten sie (siehe lessons).",
+  "Das Paket ist heller (Packpapier #E2B577 mit Glanz und Kantenlicht), bleibt bei 62–80 px Figurenhöhe aber ein kleiner Block von etwa 6×12 Pixeln an der Hüfte; als Paket erkennt man es nur im Zusammenhang. Größer ginge es nur über das Modell in shared/3d.",
+  "Auf dem Steg ist die Wasser-Bildfolge kein kleiner Ausschnitt: Wasser, Spiegelungen, Bootsschaukeln und Laternenschein verschmelzen zu einem Rechteck von 509×213 px (60 % des Bildes, Raster 2036×1704). Mit dem Dachs-Clip (1799×2516, höher als 2048) belegen die Raster ungepackt etwa 33–44 MB, obwohl die PNG-Dateien zusammen nur 2,5 MB groß sind. Godot speichert die 8-Bit-Bilder als RGB(A); ein Spiel bräuchte Indexbilder mit Palettenshader (ein Viertel des Speichers).",
+  "Glänzende Flächen tragen Änderungen weiter: Der Blitz des Leuchtfeuers und die Rauchballen spiegeln sich im Schieferdach und am Ortgang des Häuschens; daraus entstehen drei winzige Bildfolgen (kai/clip_1 bis clip_3, 13×16 bis 18×24 px), die sich nur in 3–5 von 30 Bildern ändern.",
+  "Eine Palette für alle Knoten: 256 Farben reichen für Himmel, Sonnenuntergang, Holz, Fels und Figur nur knapp; im Himmelsverlauf und auf dem Fels körnt das Floyd-Steinberg-Muster sichtbar (Nachbarunterschied im Himmel 0,33–0,77 statt 0,06–0,09 Stufen), die Stegplanken bekommen violette Sprenkel aus der Himmelsspiegelung. Jeder neue Ort ändert die Palette und damit alle Bilder; für ein Spiel Paletten je Ort oder 16 Bit erwägen.",
+  "Chrom ohne Umgebung spiegelt fast nur den Himmel: Die angeschnittenen Poller am Bildrand (Kai unten rechts, Steg unten links) sahen wie Glasglocken aus. Sie sind jetzt nur in dieser Szene entfernt (render_nodes.py, nodes.json → hide_cut_bollards); die übrigen Chromteile (Fassreifen, Laterne, Geländer) bleiben.",
+  "Das Leuchtfeuer blitzt nur (Lampe und Kreuzfilter-Stern einmal je 2 s), es gibt keinen Lichtstrahl: ein sichtbarer Strahl hätte Volumen-Render oder eine eigene Ebene gebraucht und wäre auf dem Steg über das halbe Bild gelaufen.",
+  "Der Kai-Knoten ist ruhig (3,4 % bewegte Fläche: Rauch, Wasser rechts, Widerschein auf dem Dach); das Fensterlicht flackert dort nicht. Das entspricht den Vorbildern, wirkt in den ersten 1,5 s aber fast wie ein Standbild. Der Rauch steigt sichtbar auf und verlässt das Bild oben (die Kugeln wachsen und verblassen über 2 s); als glatte Kugeln bleibt er grafisch, nicht wolkig.",
+  "Die Leuchtturmtür ist in der Aufnahme nur 0,28 s zu sehen (nach dem Zoom); ihre Bildfolgen (Wasser links und rechts) fallen in der kurzen Zeit kaum auf.",
+  "Nur Ort und Zeile aus ui_text sind zu sehen; Auswahl und Parser fehlen, die offene Hand über dem Dachs deutet die Auswahl „Mit dem Dachs sprechen“ nur an. Der Zeigerweg ist geskriptet, Klicks und Hotspots sind fest im Code (Rechtecke), es gibt keine echte Mauseingabe.",
+  "Die Textzeile ist mit Halbpixel-Positionierung gleichmäßiger gesetzt (vorher wirkte in „Leuchtturmtür“ die Lücke zwischen M und T wie ein Leerzeichen), einzelne Buchstaben werden dadurch etwas weicher. Mit dem Namen der Leuchtturmtür ist die Zeile 587 px breit und reicht seitlich über die Bildbreite hinaus in den schwarzen Rand.",
+  "Alle drei SubViewports werden in jedem Bild neu gezeichnet, auch wenn ihr Knoten nicht sichtbar ist (einfach, aber unnötig).",
+  "Der Dachs kommt über den Blender-Import von badger.glb in die Szene; laut shared/3d/README verschieben sich die Knochen dabei um bis zu 4 mm. Für das Rendern ist das bei 62–80 px Figurenhöhe nicht sichtbar, wurde aber nicht gemessen.",
+  "Entstehung in drei Läufen: Der erste Bauagent wurde nach Render und Back-Schritt abgebrochen; Godot-Demo, Prüfskripte, Kantenlicht und style.json kamen im zweiten Lauf dazu. Im dritten Lauf (nach einer Prüfung mit Note 4/5) wurden Licht, Rauch, Paket, Türschwelle, Poller und Textband geändert und alle Bilder neu gerendert und gebacken."
+ ],
+ "lessons": [
+  "Schatten mit einem Vergleichsschalter messen, nicht schätzen: dieselbe Ansicht ohne den Schatten einer Sonne rendern (--no-shadow key), Schattenmaske aus den Rohbildern, Abfall im gebackenen Bild messen. Raw- und Back-Abfall stimmen auf 0,5 Prozentpunkte überein; das Dithering frisst einen deutlichen Schatten nicht.",
+  "Sonnenrichtung relativ zur Kamera wählen: Steht die Sonne genau hinter der Kamera, verdeckt die Figur ihren eigenen Schatten; kommt sie flach von vorn, fallen die Schatten zur Kamera und die Flächen sind nur streifend beleuchtet. 50–60° seitlich der Blickrichtung und 30–40° hoch zeigt Schatten auf Boden und Wänden. Jedes Aufhelllicht, der Umgebungsanteil und Glanz auf dem Boden nehmen Kontrast weg.",
+  "Dither-Kochen vermeiden: Fehlerdiffusion verteilt jede kleine Änderung über das ganze Bild. Nur Pixel, die in der Quelle um mehr als 3 Stufen von Bild 0 abweichen (nach Opening), aus dem Einzelbild nehmen, alle anderen aus dem Standbild; so steht das Dithermuster still und die Bildfolgen bleiben klein. Für weiche, halbdurchsichtige Bewegung (Rauch) ein eigenes Rechteck mit Schwelle 1 ohne Opening, sonst schneidet die Schwelle die Ränder weg.",
+  "Periodische Partikel brauchen Unterschiede: Gleiche Rauchkugeln im festen Abstand LOOP/N wiederholen sich schon nach LOOP/N (bei 8 Kugeln 0,25 s), der Rauch pumpt dann auf der Stelle. Je Kugel eigene Größe, Drift und Pendelphase, alles nur vom Alter abhängig: Die Schleife bleibt nahtlos, die Periode ist die volle Schleife (scripts/check_clips.py prüft das).",
+  "Figurenclip mit Umgebung derselben Phase backen und die Umgebungsphase im Spiel an den Clip-Start koppeln: Dann liegt der Clip ohne Naht auf der Wasser-Bildfolge, auch wenn er Schatten und Spiegelung mitbringt. In Godot gemessen: abweichend sind nur die Pixel unter dem Mauszeiger.",
+  "Fußmessung ohne Störung durch Schatten, Spiegelung und Dithering: denselben Clip als Deckungsmaske rendern (alle anderen Objekte als Holdout, transparenter Film, 16 Samples, 9 s für 117 Bilder). Ergebnis beim Laufen: jeder Fuß steht in Phasen von 4–8 Bildern auf ±1 px (links Bilder 4–9, 12–16, 20–23, 28–30; rechts 1–5, 8–12, 16–19, 23–30); im Stehen und Winken (Bilder 35–116) liegen beide Fußzeilen auf Zeile 305, waagerecht ±0,7 px. Weg = 0,367 m × Animationszeit auch beim Bremsen einhalten.",
+  "Frühe CGI ohne Globalbeleuchtung ist schnell und deutlich: diffuse_bounces 0, Umgebungsanteil als Emission (Grundfarbe × kleiner Wert), Lichter ohne Ausdehnung, Farbumsetzung Standard. Ein 544×332-Bild mit 48 Samples braucht etwa 0,2 s und ist ohne Entrauschen sauber genug für 8 Bit. Die Sample-Zahl steht in Blenders PNG-Metadaten (cycles.ViewLayer.samples) und hier zusätzlich im Log.",
+  "Geometriefehler aus der gemeinsamen Szene in der eigenen Szene beheben statt die Kamera zu verbiegen: Eckpunkte gezielt verschieben bzw. angeschnittene Teile je Ansicht entfernen (Projektion der Teile ins Bild, nur ganz sichtbare bleiben).",
+  "Kantenlicht nur für eine Figur in Cycles als Materialterm statt als Licht: Normale·Richtung × Kantenfaktor (Layer Weight Facing) als zusätzliche Emission. Ändert nichts an der Lichtliste und damit nichts am Rauschen der übrigen Szene; mit eigenem Faktor je Material lässt sich ein Requisit (Paket) hervorheben.",
+  "Pixel-Auflösung als Überblendung (fester Zufallsschwellwert je Bildpunkt) passt zu 8 Bit: kein Bild enthält Mischfarben, die Übergänge bleiben in der Palette und sind bei jeder Bildrate gleich.",
+  "Palette als letzter Bildschirm-Shader plus eine eigene kleine Textpalette für das Textband: Schrift darf geglättet gerendert werden und landet nur auf Textrampe und Gold, ohne Säume in Szenenfarben; Prüfung über alle Bilder einer Aufnahme ist ein Einzeiler (Farben außerhalb der Palette bzw. im Band zählen).",
+  "Viewport 640×360 mit dem 544×332-Bild 1:1 und ganzzahlig ×2 hochskaliert: Bild, Schrift und Zeiger teilen dasselbe Pixelraster, capture.py skaliert ohne Rand auf 1280×720.",
+  "Alles deterministisch: fester Cycles-Seed ohne animierten Seed, Zeit aus der Bildnummer; der Back-Lauf ergibt bitgleiche Dateien, ein erneuter Einzel-Render weicht höchstens in einzelnen Pixeln um eine Stufe ab (persistente Szenendaten im Serienrender)."
+ ],
+ "assets": [
+  {
+   "file": "assets/nodes/kai/base.png",
+   "kind": "background",
+   "made_with": "Blender/Cycles 544×332 + bake.py: 256 Farben, Floyd-Steinberg",
+   "prompt": ""
+  },
+  {
+   "file": "assets/nodes/kai/clip_0.png",
+   "kind": "animation",
+   "made_with": "Cycles-Schleife 30 Bilder + bake.py (weiches Rechteck): aufsteigender Rauch über dem Schornstein, 57×85, Raster 30×1",
+   "prompt": ""
+  },
+  {
+   "file": "assets/nodes/kai/clip_1.png",
+   "kind": "animation",
+   "made_with": "Cycles-Schleife + bake.py: Widerschein des Leuchtfeuer-Blitzes am Ortgang des Häuschens (Dachspitze), 18×24, ändert sich in Bild 4–8",
+   "prompt": ""
+  },
+  {
+   "file": "assets/nodes/kai/clip_2.png",
+   "kind": "animation",
+   "made_with": "Cycles-Schleife + bake.py: Spiegelung von Rauchballen im Schieferdach, 15×18, ändert sich in Bild 5–8",
+   "prompt": ""
+  },
+  {
+   "file": "assets/nodes/kai/clip_3.png",
+   "kind": "animation",
+   "made_with": "Cycles-Schleife + bake.py: Spiegelung eines Rauchballens im Schieferdach, 13×16, ändert sich in Bild 21–23",
+   "prompt": ""
+  },
+  {
+   "file": "assets/nodes/kai/clip_4.png",
+   "kind": "animation",
+   "made_with": "Cycles-Schleife + bake.py: Wasser und Felsrand rechts, 134×103, Raster 15×2",
+   "prompt": ""
+  },
+  {
+   "file": "assets/nodes/steg/base.png",
+   "kind": "background",
+   "made_with": "Blender/Cycles 544×332 + bake.py: 256 Farben, Floyd-Steinberg",
+   "prompt": ""
+  },
+  {
+   "file": "assets/nodes/steg/clip_0.png",
+   "kind": "animation",
+   "made_with": "Cycles-Schleife + bake.py: Leuchtfeuer-Blitz mit Kreuzfilter-Stern, 91×52",
+   "prompt": ""
+  },
+  {
+   "file": "assets/nodes/steg/clip_1.png",
+   "kind": "animation",
+   "made_with": "Cycles-Schleife + bake.py: Wasser, Boote, Spiegelungen, Laternenflackern (509×213, Raster 4×8)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/nodes/steg/badger.png",
+   "kind": "character",
+   "made_with": "Cycles-Clip 117 Bilder (badger.glb, Walk/Wave/Idle) + bake.py: nur vom Dachs veränderte Pixel samt Schatten und Spiegelung, 257×148, Raster 7×17",
+   "prompt": ""
+  },
+  {
+   "file": "assets/nodes/tuer/base.png",
+   "kind": "background",
+   "made_with": "Blender/Cycles 544×332 + bake.py: 256 Farben, Floyd-Steinberg",
+   "prompt": ""
+  },
+  {
+   "file": "assets/nodes/tuer/clip_0.png",
+   "kind": "animation",
+   "made_with": "Cycles-Schleife + bake.py: Wasser rechts, 146×118",
+   "prompt": ""
+  },
+  {
+   "file": "assets/nodes/tuer/clip_1.png",
+   "kind": "animation",
+   "made_with": "Cycles-Schleife + bake.py: Wasser links, 241×117",
+   "prompt": ""
+  },
+  {
+   "file": "assets/nodes/palette.png",
+   "kind": "palette",
+   "made_with": "bake.py: 241 k-Means-Farben (OKLab) + 15 feste Farben, 256×1",
+   "prompt": ""
+  },
+  {
+   "file": "assets/nodes/text_palette.png",
+   "kind": "palette",
+   "made_with": "bake.py: die 12 Textfarben (Schwarz, Textrampe, Gold) für das Textband, 12×1",
+   "prompt": ""
+  },
+  {
+   "file": "assets/cursors.png",
+   "kind": "ui",
+   "made_with": "scripts/cursors.py: drei Hand-Mauszeiger als eigene Pixelzeichnung",
+   "prompt": ""
+  },
+  {
+   "file": "assets/nodes/nodes_meta.json",
+   "kind": "data",
+   "made_with": "bake.py: Rechtecke, Raster und Schleifen aller Bildfolgen",
+   "prompt": ""
+  },
+  {
+   "file": "assets/badger_measure.json",
+   "kind": "data",
+   "made_with": "scripts/measure_badger.py: Kopf und Füße je Clip-Bild",
+   "prompt": ""
+  },
+  {
+   "file": "assets/shadow_measure.json",
+   "kind": "data",
+   "made_with": "scripts/measure_shadows.py: Schattenabfall je Knoten und am Dachs, gebacken und roh",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift EB Garamond (variabel)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/ebgaramond (Lizenztext: demo/fonts/OFL-EBGaramond.txt)"
+  },
+  {
+   "item": "Hafen und Dachs",
+   "license": "eigene Modelle aus shared/3d (Blender-Skripte)",
+   "source": "shared/3d/blender/"
+  },
+  {
+   "item": "Materialien, Himmel, Rauch",
+   "license": "eigene prozedurale Blender-Knoten, keine fremden Texturen",
+   "source": "blender/render_nodes.py"
+  },
+  {
+   "item": "Hand-Mauszeiger",
+   "license": "eigene Pixelzeichnung",
+   "source": "scripts/cursors.py"
+  }
+ ],
+ "image_generations": 0,
+ "tool_issues": [
+  "shared/3d/harbor.glb: Am Fuß des Leuchtturms steht die Turmwand (WhitePaint, Eckpunkt etwa bei Godot (9,67 | 3,40 | −24,33)) rund 1 cm vor der flachen Tür und erscheint in Nahansichten als weißes Dreieck in der Türschwelle. Hier nur in der eigenen Blender-Szene umgangen (blender/render_nodes.py → fix_lighthouse_door); shared/ unverändert."
+ ],
+ "status": "done"
+}

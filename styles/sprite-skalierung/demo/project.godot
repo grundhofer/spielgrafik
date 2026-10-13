@@ -1,0 +1,29 @@
+; Godot 4.7 – Sprite-Skalierung & Rasterstraße (Arcade-Pseudo-3D), Katalogeintrag sprite-skalierung
+config_version=5
+
+[application]
+
+config/name="Sprite-Skalierung – Hafen von Lornholm"
+run/main_scene="res://main.tscn"
+config/features=PackedStringArray("4.7")
+run/delta_smoothing=false
+
+[display]
+
+window/size/viewport_width=320
+window/size/viewport_height=224
+window/size/window_width_override=960
+window/size/window_height_override=672
+window/stretch/mode="viewport"
+window/stretch/scale_mode="integer"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+2d/snap/snap_2d_transforms_to_pixel=true
+2d/snap/snap_2d_vertices_to_pixel=true
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)
+
+[physics]
+
+common/physics_jitter_fix=0.0

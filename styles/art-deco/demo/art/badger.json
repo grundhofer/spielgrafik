@@ -1,0 +1,296 @@
+{
+ "frames": 11,
+ "top_ai": 450,
+ "names": [
+  "walk_0",
+  "walk_1",
+  "walk_2",
+  "walk_3",
+  "walk_4",
+  "walk_5",
+  "walk_6",
+  "walk_7",
+  "stand",
+  "turn",
+  "blink"
+ ],
+ "scale_world": 0.28,
+ "inks": {
+  "dark": [
+   20,
+   22,
+   34
+  ],
+  "fur_dark": [
+   33,
+   42,
+   62
+  ],
+  "fur_light": [
+   56,
+   64,
+   86
+  ],
+  "green_dark": [
+   40,
+   62,
+   48
+  ],
+  "green_light": [
+   66,
+   88,
+   60
+  ],
+  "brown_dark": [
+   86,
+   44,
+   38
+  ],
+  "brown": [
+   138,
+   78,
+   58
+  ],
+  "red_dark": [
+   122,
+   30,
+   38
+  ],
+  "red": [
+   172,
+   44,
+   44
+  ],
+  "red_light": [
+   226,
+   82,
+   52
+  ],
+  "parcel": [
+   210,
+   140,
+   86
+  ],
+  "gold": [
+   236,
+   176,
+   88
+  ],
+  "rim": [
+   240,
+   128,
+   64
+  ],
+  "cream_shade": [
+   226,
+   186,
+   146
+  ],
+  "cream": [
+   248,
+   218,
+   172
+  ]
+ },
+ "ink_share": {
+  "dark": 0.0087,
+  "fur_dark": 0.1989,
+  "fur_light": 0.1148,
+  "green_dark": 0.1232,
+  "green_light": 0.0612,
+  "brown_dark": 0.0371,
+  "brown": 0.0559,
+  "red_dark": 0.0479,
+  "red": 0.0757,
+  "red_light": 0.0153,
+  "parcel": 0.0694,
+  "gold": 0.0111,
+  "rim": 0.0235,
+  "cream_shade": 0.0368,
+  "cream": 0.1205
+ },
+ "frame_w_far": 72,
+ "frame_h_far": 106,
+ "scale_far": 0.23333333333333336,
+ "zoom_far": 0.8333333333333334,
+ "sole_y_far": 104.605,
+ "px_per_ai_far": 0.2324561403508772,
+ "frame_w_close": 116,
+ "frame_h_close": 172,
+ "scale_close": 0.37800000000000006,
+ "zoom_close": 1.35,
+ "sole_y_close": 169.737,
+ "px_per_ai_close": 0.37719298245614036,
+ "measure": [
+  {
+   "name": "walk_0",
+   "sole_ai": 486,
+   "top_ai": 72,
+   "height_ai": 415,
+   "contact_ai": [
+    [
+     144,
+     175
+    ]
+   ],
+   "nose_x_ai": 279,
+   "cx_ai": 160.4
+  },
+  {
+   "name": "walk_1",
+   "sole_ai": 486,
+   "top_ai": 72,
+   "height_ai": 415,
+   "contact_ai": [
+    [
+     160,
+     176
+    ],
+    [
+     181,
+     239
+    ]
+   ],
+   "nose_x_ai": 291,
+   "cx_ai": 171.2
+  },
+  {
+   "name": "walk_2",
+   "sole_ai": 487,
+   "top_ai": 73,
+   "height_ai": 415,
+   "contact_ai": [
+    [
+     159,
+     232
+    ]
+   ],
+   "nose_x_ai": 302,
+   "cx_ai": 182.0
+  },
+  {
+   "name": "walk_3",
+   "sole_ai": 486,
+   "top_ai": 73,
+   "height_ai": 414,
+   "contact_ai": [
+    [
+     138,
+     205
+    ]
+   ],
+   "nose_x_ai": 294,
+   "cx_ai": 175.0
+  },
+  {
+   "name": "walk_4",
+   "sole_ai": 488,
+   "top_ai": 75,
+   "height_ai": 414,
+   "contact_ai": [
+    [
+     172,
+     179
+    ],
+    [
+     188,
+     214
+    ]
+   ],
+   "nose_x_ai": 289,
+   "cx_ai": 172.8
+  },
+  {
+   "name": "walk_5",
+   "sole_ai": 471,
+   "top_ai": 62,
+   "height_ai": 410,
+   "contact_ai": [
+    [
+     163,
+     233
+    ]
+   ],
+   "nose_x_ai": 276,
+   "cx_ai": 158.3
+  },
+  {
+   "name": "walk_6",
+   "sole_ai": 470,
+   "top_ai": 61,
+   "height_ai": 410,
+   "contact_ai": [
+    [
+     150,
+     228
+    ]
+   ],
+   "nose_x_ai": 288,
+   "cx_ai": 168.6
+  },
+  {
+   "name": "walk_7",
+   "sole_ai": 471,
+   "top_ai": 62,
+   "height_ai": 410,
+   "contact_ai": [
+    [
+     138,
+     216
+    ]
+   ],
+   "nose_x_ai": 294,
+   "cx_ai": 177.0
+  },
+  {
+   "name": "stand",
+   "sole_ai": 470,
+   "top_ai": 53,
+   "height_ai": 418,
+   "contact_ai": [
+    [
+     144,
+     228
+    ]
+   ],
+   "nose_x_ai": 289,
+   "cx_ai": 175.1
+  },
+  {
+   "name": "turn",
+   "sole_ai": 472,
+   "top_ai": 57,
+   "height_ai": 416,
+   "contact_ai": [
+    [
+     111,
+     182
+    ],
+    [
+     187,
+     242
+    ]
+   ],
+   "nose_x_ai": 250,
+   "cx_ai": 173.6
+  },
+  {
+   "name": "blink",
+   "sole_ai": 472,
+   "top_ai": 57,
+   "height_ai": 416,
+   "contact_ai": [
+    [
+     111,
+     182
+    ],
+    [
+     187,
+     242
+    ]
+   ],
+   "nose_x_ai": 250,
+   "cx_ai": 173.6
+  }
+ ]
+}

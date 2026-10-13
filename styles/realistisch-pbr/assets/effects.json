@@ -1,0 +1,96 @@
+{
+ "sdfgi_ramp": {
+  "unten_y600": [
+   76.1,
+   75.6,
+   75.5,
+   75.4,
+   76.0,
+   76.3,
+   75.7,
+   75.6,
+   75.5,
+   75.2,
+   75.3,
+   75.0,
+   74.8,
+   74.6
+  ],
+  "haeuschen": [
+   103.7,
+   105.7,
+   105.5,
+   105.2,
+   105.0,
+   104.5,
+   104.1,
+   103.6,
+   103.3,
+   103.0,
+   102.6,
+   102.3,
+   102.1,
+   101.7
+  ],
+  "ganzes_bild": [
+   130.9,
+   130.9,
+   130.9,
+   130.8,
+   131.0,
+   131.0,
+   130.9,
+   131.0,
+   131.2,
+   131.2,
+   131.0,
+   130.5,
+   130.1,
+   129.8
+  ],
+  "max_step_unten": 0.6,
+  "max_step_haeuschen": 2.0
+ },
+ "flicker": {
+  "Glas": {
+   "min": -25.0,
+   "max": 7.8,
+   "mean_without": 231.8,
+   "max_step": 22.9
+  },
+  "Pfosten": {
+   "min": -10.6,
+   "max": 7.1,
+   "mean_without": 79.9,
+   "max_step": 6.2
+  },
+  "Lichthof im Dunst": {
+   "min": -7.2,
+   "max": 6.4,
+   "mean_without": 113.2,
+   "max_step": 4.9
+  },
+  "Pflaster rechts": {
+   "min": -3.6,
+   "max": 2.6,
+   "mean_without": 71.1,
+   "max_step": 2.9
+  },
+  "Pfützenspiegelung": {
+   "min": -6.6,
+   "max": 2.0,
+   "mean_without": 97.2,
+   "max_step": 5.5
+  }
+ },
+ "title_contrast": {
+  "text_lum": 0.889,
+  "bg_lum_median": 0.131,
+  "ratio": 5.19
+ },
+ "smoke_gap_px": {
+  "frames": 16,
+  "max": 2,
+  "median": 0.0
+ }
+}

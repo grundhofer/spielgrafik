@@ -1,0 +1,17 @@
+{
+ "forward_plus_errors": [],
+ "two_runs_identical": true,
+ "mobile": {
+  "errors": [],
+  "mean_abs_diff": 0.0,
+  "max_abs_diff": 0,
+  "share_px_over_8": 0.0
+ },
+ "gl_compatibility": {
+  "errors": [],
+  "mean_abs_diff": 0.106,
+  "max_abs_diff": 2,
+  "share_px_over_8": 0.0
+ },
+ "t0_30_errors": []
+}

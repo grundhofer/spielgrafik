@@ -1,0 +1,236 @@
+{
+ "slug": "fotoreal-standbild",
+ "name": "Fotorealistische Standbilder",
+ "family": "gemalt",
+ "kind": "style",
+ "era": "1993–2000 (FMV- und Foto-Adventures) und heutige Erzählspiele mit Fotohintergründen",
+ "summary": "Der Ort ist eine KI-Fotografie in der blauen Stunde, fest eingestellt und nur durch Masken und Shader belebt (Wasser, Wolken, Boote, Laterne, Leuchtfeuer, dünner Rauch). Der Dachs ist ein fotorealistisch gerenderter KI-Dachs im Kostüm, freigestellt und wie ein vor Bluescreen gefilmter Darsteller ins Foto gesetzt: Weißabgleich an der weißen Leuchtturmwand, Kantenlicht von Laterne und Abendhimmel, Lichtsaum, Kontaktschatten, nachgeschärft und mit gemeinsamem Filmkorn. Er atmet, verlagert das Gewicht, sein Schal weht, und er wendet einmal den Kopf zum Meer (harter Wechsel zwischen zwei KI-Fassungen mit einem Zwischenbild, wie ein Schnitt im Film).",
+ "references": [
+  "Phantasmagoria und Gabriel Knight 2 (1995): gefilmte Darsteller vor Bluescreen in gerenderte oder fotografierte Kulissen gesetzt",
+  "Tex Murphy: The Pandora Directive (1996): FMV-Darsteller in festen Einstellungen",
+  "The X-Files Game und Black Dahlia (1998): Foto-Kulissen mit eingesetzten Videosequenzen",
+  "Her Story (2015) und Telling Lies (2019): heutige Erzählspiele mit gefilmten Darstellern",
+  "Kinemagramme der Fotografie: ein Foto, in dem nur einzelne Teile leben",
+  "Vorgerenderte Standbild-Erkundungsspiele zeigt der Eintrag vorgerendert-diashow"
+ ],
+ "traits": [
+  "Hintergrund ist genau eine KI-Fotografie (agy, 1264×848, auf 16:9 beschnitten: Zeilen 137–848, auf 1280×720 vergrößert); im Bild geändert sind nur zwei Pseudo-Bootsnamen (Retusche)",
+  "Fotolook: Tageslicht der blauen Stunde, warme Lichtpunkte nur an Fenster, Laterne und Leuchtfeuer, echtes Material (nasser Granit, Holz, Rost), leichte Vignette und Sensorrauschen aus dem Foto; kein gemalter Strich, kein 3D-Render-Glanz",
+  "Alle Bewegung im Hintergrund aus einem canvas_item-Shader mit drei Masken und einer sauberen Platte: Wolken ziehen langsam (Pendel ±26 px in 120 s, am Horizont langsamer), Wasser bewegt sich und Lichtsäulen flimmern in waagerechten Bändern (56 % der Wasserpixel schwanken > 12 Stufen), Boote schaukeln sichtbar (±1,4° und ±1,2° um einen Punkt auf der Wasserlinie, dazu 1,8 und 1,6 px Heben; die Bootsenden bewegen sich bis etwa 4 px, 90 % der Bootspixel schwanken > 12 Stufen), Laterne und Fenster flackern (mittlere Spanne 16,8 und 10,2 Stufen), Leuchtfeuer dreht sich (Blitz alle 9 s, schwacher warmer Strahl nur vor dem Himmel), dünner Rauch aus dem Schornstein; der Rest bleibt ruhig (0,4 % bewegte Pixel)",
+  "Dachs als freigestellter Darsteller: KI-Bild mit echtem Alphakanal (Codex), 245 px hoch (Quelle 1354 px; Farbtexturen in doppelter Auflösung 370×514, im Shader verkleinert), Füße fest auf Zeile 693 und Spalten 551–647 über alle 180 Bilder gemessen",
+  "Licht der Figur angeglichen und gemessen: Bauchfell vorher 173/148/128 (Studiolicht), nachher 74/79/91 gegen die weiße Leuchtturmwand im Foto 65/74/94 (Bild 156); warmes Kantenlicht der Laterne von links oben folgt dem Flackern, kühles Kantenlicht vom Abendhimmel oben, Lichtsaum nur vor hellem Hintergrund, Kontakt- und Schlagschatten",
+  "Schärfe angeglichen und über alle 180 Bilder gemessen (measure_sharp.py): Bandpass-Maß (feinste Details zu mittleren) der Figur 1,01–1,09 (roh 0,73) gegen Foto am Boot 0,75 und an Kisten und Kai vorn 1,19; Laplace-Maß im Gesicht 23,3–32,0, ohne die beiden Zwischenbilder der Kopfdrehung 25,3–32,0, mit festgehaltenem Kopf (--look=0) 25,3–29,8. Vorher (1x-Textur) pumpte die Schärfe mit Atmen und Gewicht: 0,77–1,11 und 14,7–34,8",
+  "Gemeinsames bewegtes Korn über Foto und Figur (nicht über der Oberfläche), stärker in den Mitteltönen",
+  "Dachs im Stand: Atmen (1 %, 3,4 s; Kopfoberkante Zeile 445–451), Gewicht verlagern (1,3 px am Kopf), Schalende weht (Spitze ±2,7 px, Böen aus Tabelle), Kopfdrehung zum Meer aus einer zweiten KI-Fassung als harter Wechsel mit je einem Zwischenbild (Bild 51 hin, Bild 111 zurück, gedreht in Bild 52–110, also 1,77–3,70 s), danach alle 7–13 s für 1,5–2,6 s",
+  "Textfeld als Milchglas unten rechts (520×182 px, 10 % des Bildes): Ortsname in Inter-Versalien gesperrt, Zeile in Newsreader tippt mit 30 Zeichen/s (1 je Bild, 0,2–2,3 s), nummerierte Antworten (Antwort 2 ab 3,4 s angewählt), Parserzeile „> nimm paket“ wie in motif.json in Newsreader Italic, tippt mit 15 Zeichen/s (1 je 2 Bilder, 3,9–4,57 s), Schreibmarke 15 Bilder an, 15 aus"
+ ],
+ "camera": "Feste Kamera wie im Foto: Augenhöhe etwa 1,9 m über dem Kai (aus Tür und Fässern geschätzt), Blick über den Hafen zum Horizont; keine Kamerafahrt, kein Schnitt",
+ "resolution": "1280×720 (Foto 1264×848 von agy, 16:9-Ausschnitt um 1,3 % vergrößert); Dachs 245 px hoch (Maßstab 0,181 aus 1024×1536; Farbtexturen 2x, 370×514), entspricht etwa 1,15 m Körpergröße",
+ "pipeline": [
+  {
+   "step": "Foto erzeugen",
+   "tool": "genimg (agy), 1536×1024 bestellt, 1264×848 geliefert",
+   "detail": "Prompt assets/prompts/bg.txt (assets/raw/bg.json, verbatim true): dokumentarische Landschaftsfotografie mit Kameradaten (35 mm, f/8, ½ s, blaue Stunde), zurückhaltende Farben, echtes Material, ausdrücklich kein Gemälde/3D-Render/HDR; Komposition für Animation getrennt (offener Himmel, ruhige Wasserfläche, Schornstein und Leuchtfeuer vor Himmel, Boote rundum im Wasser, Kai vorn frei), Leuchtfeuer ohne Strahl, kein Rauch, keine Vögel. Erster Versuch brauchbar; zwei kleine Pseudo-Bootsnamen trotz Schutzregel."
+  },
+  {
+   "step": "KI-Farbcode-Maske",
+   "tool": "genimg (agy, gebunden an bg.png), Referenz assets/raw/bg.png",
+   "detail": "Prompt assets/prompts/mask.txt (assets/raw/mask.json, verbatim true): sieben flache Codes (Himmel, Wasser, Boote, Fenster, Laternenglas, Leuchtfeuer, Schornstein). Ausgerichtet mit aimask.align: sx 1,0, sy 0,996, dx −1, dy +1 px."
+  },
+  {
+   "step": "Szene vorbereiten",
+   "tool": "tools/prep_scene.py (NumPy, Pillow; aimask.py und imgops.py aus dem Eintrag kinemagramm übernommen)",
+   "detail": "Retusche der Bootsnamen (zwei Rechtecke zeilenweise aus den Planken daneben), 16:9-Ausschnitt, Masken mit Guided Filter an die Bildkanten gelegt; dünne dunkle Teile nahe Objekten (Laternenhaken) aus der Himmelsmaske, Festmacherleinen als dunkle Linien aus der Wassermaske; Sterne nur in ruhigem Himmel (Wolkenränder ausgeschlossen); Lichtschein der Laterne auf Pfosten und Kai als flache Ellipse; saubere Platte (Pull-Push + gespiegelte Struktur bis 48 px; unter den Booten je Spalte senkrecht gespiegelt, oben Wasser, unten Spiegelung, damit beim Schaukeln kein dunkler Fleck auftaucht); weichgezeichnetes Foto für Lichtsaum und Milchglas. Handwerte nur in tools/scene.json."
+  },
+  {
+   "step": "Dachs erzeugen",
+   "tool": "genimg (Codex/gpt-image, Weg Transparenz), 1024×1536, Referenz shared/badger/master_sheet.png",
+   "detail": "Prompt assets/prompts/badger.txt (assets/raw/badger.json): Foto eines echten Dachses als Tierdarsteller im echten Kostüm (85 mm, f/5,6), Kostüm und Proportionen aus dem Referenzblatt, kein Zeichenstil; Licht schon passend beschrieben (warm von links hinten, kühl von oben), wehendes Schalende mit Abstand zum Körper; echter Alphakanal. Erster Versuch brauchbar, aber mit hellem Studiolicht."
+  },
+  {
+   "step": "Dachs mit gedrehtem Kopf",
+   "tool": "genimg (Codex, gebunden an badger.png), Referenz assets/raw/badger.png",
+   "detail": "Prompt assets/prompts/badger_look.txt (assets/raw/badger_look.json): dasselbe Foto, nur der Kopf 30° nach rechts. Körper fast deckungsgleich (Silhouetten-IoU 0,973, gleiche Fußlinie), aber 18 % heller (Bauchfell linear 0,51 statt 0,43 im Rotkanal)."
+  },
+  {
+   "step": "Figur angleichen",
+   "tool": "tools/prep_actor.py, Werte in tools/actor.json",
+   "detail": "Alpha auf 0–1 gestreckt (Codex liefert innen 252–253), Randfarben aus dem Inneren fortgesetzt; Kopf der zweiten Fassung oberhalb der Schaloberkante auf den Körper der ersten gesetzt, Kopfpixel der ersten, die der gedrehte Kopf nicht verdeckt, entfernt, Belichtung je Kanal über das Bauchfell angeglichen; in linearem Licht: Führungslicht links halbiert, Gesicht/Brust auf 62 % (Gegenlicht), Weißabgleich und Belichtung über das Bauchfell auf 76/83/100, Sättigung 0,75, Bodenverschattung; vormultipliziert in doppelter Auflösung verkleinert (370×514; Hilfskarten und Schatten in 1x, sie sind weich), nachgeschärft (σ 0,8 Bildschirmpixel = 1,6 Texel, Stärke 1,4); Hilfskarten: Randnormale und Randband (Kantenlicht aus beliebiger Richtung), Lichtsaum-Band, Schalgewicht; Schatten aus dem Fußabdruck und der geklappten Silhouette."
+  },
+  {
+   "step": "Alles neu bauen",
+   "tool": "tools/process.py",
+   "detail": "prep_scene.py + prep_actor.py + godot --import + Probelauf, rund 7 s."
+  },
+  {
+   "step": "Godot-Demo und Aufnahme",
+   "tool": "Godot 4.7.2, 5 Shader, tools/capture.py --poster-at 0.867",
+   "detail": "photo.gdshader (Hintergrund), actor.gdshader (Darsteller), shadow.gdshader (multiplikativ), post.gdshader (Korn), panel.gdshader (Milchglas). Poster bei 5,2 s (Bild 156: Text, Antworten und Parser vollständig, Dachs schaut zur Kamera; Gesichtsschärfe dort 28,2, Mittel aller 180 Bilder 28,3)."
+  },
+  {
+   "step": "Prüfen",
+   "tool": "tools/measure_fx.py, measure_actor.py, measure_match.py, measure_sharp.py, sim_sampling.py, render.py",
+   "detail": "measure_fx: Bewegung und Sprünge je Maskenbereich ohne Korn; measure_actor: Füße und Kopf je Bild (Differenz mit/ohne Figur); measure_match: Licht, Schärfe und Saum der Figur angeglichen gegen --raw, schreibt assets/compare_integration.png; measure_sharp: Schärfe der Figur in jedem Bild (Laplace im Gesicht, Bandpass der ganzen Figur), auch mit festem Kopf; sim_sampling: Abtastverfahren in NumPy über 8×8 Subpixel-Lagen verglichen; render.py: Aufnahme in beliebigen Ordner mit Schaltern, --t0 und --method. Kopfwechsel: Bild 50–57 und 110–117 einzeln angesehen (auch aus demo.mp4) und gegen Aufnahmen mit --look=0, --look=1 und --no-actor gezählt. Langlauf ab t = 40 s (600 Bilder) und an den Umkehrpunkten des Himmels (t = 33 s, 93 s) angesehen; Kopfdrehungen per Vergleich mit --look=0 gefunden (47,2–49,2 s); dort ebenfalls je ein Zwischenbild hin und zurück."
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, stretch mode canvas_items, Forward+ (Standard), nur 2D",
+  "Ebenen: Photo (Sprite2D, photo.gdshader) → Shadow (Sprite2D, blend_mul) → Actor (Sprite2D, actor.gdshader, Ursprung an den Füßen über offset) → CanvasLayer 1 mit Korn (ColorRect, hint_screen_texture) → CanvasLayer 2 mit Textfeld",
+  "photo.gdshader: Texturen photo, plate, mask_a (R Wasser, G Himmel, B Sterne), mask_b (R Fenster, G Laterne, B Leuchtfeuer), mask_c (R/G Boote, B Strahl sichtbar), noise (drei kachelbare Kanäle); Masken nur in RGB, nicht im Alphakanal",
+  "Himmel: reine Verschiebung u = 26 px · par(y) · sin(2π (t − 3)/120), par von 0,25 am Horizont bis 1 oben, Platte am Rand gespiegelt abgetastet; Sterne bleiben stehen",
+  "Wasser: Abtastung der Platte an p + Rauschverschiebung (bis 1,5 px · 2,6, perspektivisch 0,18 am Horizont bis 1 vorn), Helligkeit heller Stellen in breiten waagerechten Bändern ±11 %",
+  "Boote: Drehung um einen Punkt auf der Wasserlinie (scene.json: pivot, amp_deg 1,4/1,2, period 4,6/5,3 s, phase, bob 1,8/1,6 px), Bootsmaske mitgedreht, dahinter die Platte (unter den Booten senkrecht gespiegelt)",
+  "Lichter: Maske × Faktor aus main.gd (Laterne: Zittern aus 20-Hz-Tabelle + langsames Atmen + Einknicken bei Böen, 0,85–1,12), dazu additive Lichthöfe; Leuchtfeuer: Umdrehung 9 s, Lampe 0,85 + 0,55 · sin(phi)^10, Strahl als Kern mit Dunstsaum, Länge 900 px · |cos phi|, nur über der Himmelsmaske",
+  "Rauch: Gaußprofil um eine vom Wind gebogene Mittellinie (0,0022 h² + 0,30 h), Breite 4 px + 0,3 px je px Höhe, zerfasert durch zwei mitsteigende Rauschoktaven (≥ 1 px je Texel) und seitliches Pendeln, ausgeblendet bis 230 px, nur vor Himmel",
+  "actor.gdshader: Figur als Uniform actor_tex statt TEXTURE (Godot erlaubt in einer Funktion nicht Built-in und Uniform zugleich); Farbtexturen in 2x, Sprite auf 0,5 skaliert, je Bildschirmpixel 3×3 Abtastpunkte im Abstand 1/3 px vormultipliziert gemittelt (tap9), damit die Schärfe bei Subpixel-Verschiebung gleich bleibt; vertex() streckt um den Atem und schert seitlich ab den Füßen (in Texeln, tex_scale 2); fragment(): Schalende quer zur Achse scarf_root→scarf_tip ausgelenkt (Gewicht actor_aux2.g); Kopfwechsel: im Zwischenbild (look 0,5) wandern die Gesichtszüge beider Fassungen halb zur Lage der anderen (head_shift 26 px, Hinterkopf fest), Farbe = gewichtetes Mittel der verschobenen Fassungen, Deckung = min(max(a, b) verschoben, max(a, b) unverschoben): deckend, wo eine verschobene Fassung deckt, aber nie außerhalb der ungeschobenen Umrisse; Kantenlicht = Randnormale · Lichtrichtung im Randband (Laterne warm × Flackern, Himmel kühl), Lichtsaum = max(Figur, weichgezeichneter Hintergrund an Bildschirmlage) nur bei hellem Hintergrund",
+  "shadow.gdshader: render_mode blend_mul, R Kontaktschatten (0,55), G Schlagschatten (0,30 × Laterne), leicht kühl getönt",
+  "post.gdshader: Korn aus Hash ohne sin (Bildnummer), leicht farbig, Stärke 0,03 × (0,45 + 1,6 · L(1 − L))",
+  "UI: CanvasLayer 2, ColorRect mit panel.gdshader (weichgezeichnetes Foto abgedunkelt und blau getönt, Radius 6, helle Kante oben), Labels: Inter (variable, wght 600, Laufweite 2) 11 px Versalien, Newsreader 20 px (wght 430, opsz 20), Inter 14 px für Antworten, Ziffern 13 px in Laternenorange, Newsreader Italic 16 px für den Parser; visible_characters_behavior nach dem Shaping; FontVariation mit OpenType-Tag als Zahl (name_to_tag)",
+  "main.gd: t aus aufsummiertem delta, Tabellen aus RandomNumberGenerator (Seed 20261013) für Flackern, Böen und Kopfdrehungen (Ablauf wiederholt sich nach 700 s); Lagen aus art/scene.json und art/actor.json (dort tex_scale); Kopfwechsel und Tippen in ganzen Bildern (roundi(t · 30)): je ein Zwischenbild, Zeile 1 Zeichen je Bild, Parser 1 Zeichen je 2 Bilder, Schreibmarke 15/15 Bilder",
+  "Schalter nach --: --raw (Rohbild ohne Angleichung, ohne Schatten und Korn), --frozen, --no-actor, --no-shadow, --no-ui, --no-grain, --look=0|0.5|1 (0,5 zeigt das Zwischenbild), --t0=SEKUNDEN"
+ ],
+ "techniques": [
+  "kinemagramm",
+  "ki-farbcode-maske",
+  "saubere-platte",
+  "shader-wasser",
+  "additiver-lichtkegel",
+  "figur-als-standbild",
+  "figurenlicht",
+  "rim-light",
+  "compositing-angleichung",
+  "ki-bildbearbeitung",
+  "nachbearbeitung",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 3,
+  "effort": 3,
+  "text_adventure": 4,
+  "mobile": 4
+ },
+ "ratings_note": "ai_fit 4: Das Bildmodell liefert den ganzen Fotolook (Foto, Maske, Dachs, Kopf-Fassung) jeweils im ersten Versuch; agy trifft Fotografie besser als jeden gemalten Stil. Abzug, weil der Dachs mit hellem Studiolicht kam und erst durch Code ins Foto passt (Weißabgleich, Kantenlicht, Schatten, Korn), und weil er eher wie ein hochwertiges CGI-Tier wirkt als wie ein gefilmtes. Bewegung kommt ganz aus Shadern. consistency 3: nur ein Ort und eine Figur mit zwei Fassungen gebaut; Foto (agy) und Figur (Codex) kommen aus verschiedenen Modellen, schon die Kopf-Fassung war 18 % heller; für jeden Ort müssen Bezugsweiß und Lichtrichtungen neu gemessen werden. effort 3: je Ort zwei KI-Bilder und wenige Handwerte (Ausschnitt, Retusche, Lichter, Bootsdrehpunkte), je Figurenpose ein KI-Bild plus Angleichungswerte; Gehen ist so nicht machbar. mobile 4 auf dem Mac geprüft: Forward+, mobile und gl_compatibility (t = 5,2 s, nach dem Umbau auf 2x-Texturen) – mobile pixelgleich, gl_compatibility höchstens 2 Stufen Abweichung; ein Vollbild-Shader mit rund 15 Texturzugriffen, die Figur mit 39 je Pixel (3×3 Punkte für zwei Fassungen, verschoben und unverschoben) auf etwa 47 000 Pixeln, dazu eine Bildschirmkopie für das Korn. Auf einem Smartphone nicht gemessen.",
+ "verdict": "Für unser Textadventure ein ernsthafter Kandidat, wenn wir eine ruhige, realistische Stimmung wollen: Fotos von agy sind die überzeugendsten und billigsten Hintergründe im Katalog (ein Bild plus eine Maske je Ort, Shader für alle Orte gleich), und die Szene wirkt wie ein Spielbildschirm, nicht wie eine Diashow. Die Figur trägt den Stil nur, wenn sie wenig tut: Stehen, Atmen, Kopf wenden (als harter Wechsel zwischen zwei Fassungen, ein weiches Überblenden zeigt Doppelköpfe), Sprechen an festen Plätzen wie die gefilmten Darsteller der FMV-Zeit. Jede neue Pose kostet ein KI-Bild und eine Angleichung; Gehen, Hinsetzen oder Hantieren sind so nicht machbar. Ohne Angleichung wirkt der Dachs aufgeklebt (assets/compare_integration.png, links); mit Weißabgleich an einer bekannten weißen Fläche, Kantenlicht, Lichtsaum, Schatten, Nachschärfen und gemeinsamem Korn passt er (rechts). Ein kostümierter Dachs im Fotostil liegt näher an einem Realfilm für Familien als an einem Spiel; ob das gewollt ist, ist eine Geschmacksfrage, die vor der Wahl geklärt werden sollte. Bewusste Abweichung vom Auftrag: Der Dachs läuft nicht durchs Bild, er steht und dreht einmal den Kopf zum Meer (Idle mit sichtbarer Bewegung), weil ein fotorealistischer Laufzyklus aus Einzelbildern nicht gleichmäßig zu bekommen ist.",
+ "pitfalls": [
+  "Der Codex-Dachs kam mit hellem, warmem Studiolicht von vorn links (Bauchfell 173/148/128), die Szene ist Gegenlicht (Kistenfronten 17/17/17, weiße Leuchtturmwand 65/74/94). Ohne Angleichung sieht man das sofort (compare_integration.png, links). Die Angleichung ist eine Näherung, kein echtes Umleuchten: Rampe gegen das Führungslicht, gedämpftes Gesicht, Weißabgleich, Kantenlicht aus Randnormalen. Die Vorderseite der Figur ist dadurch noch gleichmäßiger beleuchtet als die Kisten daneben.",
+  "Schärfe zuerst falsch eingeschätzt: Ich hatte den verkleinerten Dachs weichgezeichnet, weil das hochskalierte agy-Foto weich wirken sollte. Gemessen ist es umgekehrt: Das Foto ist nachgeschärft und verrauscht (Bandpass 1,19 an Kisten und Kai vorn, 0,75 am Boot). Danach pumpte die Schärfe, was ich nur an einem Bild gemessen hatte: Atmen und Gewichtsverlagerung verschieben die Figur um Bruchteile eines Pixels, und die 1x-Textur wurde dabei linear neu abgetastet (über 6 s Bandpass 0,77–1,11, Laplace im Gesicht 14,7–34,8; das alte Poster lag am weichen Ende). Jetzt liegen die Farbtexturen in 2x vor und der Shader mittelt 3×3 Punkte je Pixel: 1,01–1,09 bzw. 25,3–32,0 (mit festem Kopf 25,3–29,8, ±8 %; der Rest kommt aus der verbleibenden Lageabhängigkeit und dem Flackern auf der Laternenseite). Mipmaps allein helfen nicht: Bei Skalierung 0,5 tastet die GPU Stufe 1 ab, also wieder eine 1x-Textur (simuliert max/min 2,31 gegen 2,08 mit 1x und 1,08 mit 3×3 Punkten). Mit derselben Nachschärfung liegt die Figur jetzt bei 1,06 statt 0,91, also näher am Kai vorn (1,19) als vorher.",
+  "Kopfdrehung aus zwei KI-Fassungen: Die erste Lösung (0,16 s Überblendung mit kleinem Morph) zeigte in zwei Zwischenbildern je Richtung einen durchscheinenden zweiten Kopf mit Mütze rechts außerhalb der Silhouette, in einem Bild dazu doppelte Augen und Nase, auch im MP4 in 1:1 sichtbar: Der Morph schob die Frontalfassung bis 13 px über den Umriss der gedrehten hinaus, und die gemischte Deckkraft ließ diesen Teil halb stehen. Jetzt harter Wechsel wie ein Schnitt mit je einem Zwischenbild, dessen Deckung auf die unverschobenen Umrisse begrenzt ist: Nichts scheint mehr durch, außerhalb der Umrisse beider Fassungen bleibt nur ein 1–2 px breiter Saum an der Mützenkante (gezählt gegen --look=0/1 und --no-actor). Das Zwischenbild (Bild 51 und 111) bleibt aber ein Mischbild: Gesichtszüge beider Fassungen halb übereinander, zwei Mützenknöpfe, der Augenfleck der Frontalfassung neben der Schnauze der gedrehten. Im Lauf (1/30 s) wirkt es wie Bewegungsunschärfe, im Standbild sieht man die Mischung. Die zweite Fassung war 18 % heller und musste je Kanal angeglichen werden; die Kopfoberkante springt beim Wechsel um 2 px (gemessen).",
+  "Kein Laufen: Ein fotorealistischer Laufzyklus aus KI-Einzelbildern wurde nicht versucht, weil schon zwei Fassungen derselben Pose in vielen Einzelheiten abweichen (Schalknoten, Fell); für Gänge bräuchte man Video, 3D oder einen anderen Eintrag. Der Dachs steht deshalb an einer festen Stelle.",
+  "Maßstab: Bei geschätzter Kamerahöhe 1,9 m (aus Tür und Fässern) entsprechen 245 px etwa 1,15 m – größer als ein echter Dachs, bewusst, damit Fell, Gesicht und Kostüm lesbar sind.",
+  "agy schrieb trotz Schutzregel zwei kleine Pseudonamen auf die Boote; von Hand per Retusche entfernt (zwei Rechtecke in tools/scene.json). Auf dem rechten Boot bleibt eine leicht verwischte Planke.",
+  "Der dünne Laternenhaken lag in der Himmelsmaske und wäre mit den Wolken mitgezogen; behoben mit einem Filter für dünne dunkle Teile nahe Objekten. Die Sternerkennung nahm zuerst helle Wolkenränder (8521 Pixel); jetzt nur in ruhigem Himmel, übrig bleiben 2 Sterne, weil der 16:9-Ausschnitt fast alle abschneidet.",
+  "Der Leuchtturmstrahl ist vor dem hellen Abendhimmel kaum zu sehen (Band links der Lampe +25 Stufen bei Stärke 0,22); auf 0,42 angehoben, sichtbar vor allem vor Wolken. Das Blitzen der Lampe (alle 9 s) ist das deutlichere Leuchtturmlicht.",
+  "Das Foto ist eine Langzeitbelichtung mit seidigem Wasser; die Bewegung zeigt sich deshalb fast nur an Spiegelungen, Lichtsäulen und Bootskanten, nicht als Wellen auf der Fläche (mittlere Helligkeit des Wassers schwankt nur 0,2 Stufen).",
+  "Rauch ist nur ein dünner, dunkler Faden (13 % der Rauchzone sichtbar bewegt), kein Volumen, keine Ballen.",
+  "Boote schaukelten zuerst mit ±0,55° und ±0,45° (unter 1,5 px Weg), in der Aufnahme praktisch nicht zu sehen. Jetzt ±1,4° und ±1,2° plus 1,8 und 1,6 px Heben. Dabei tauchte am Bootsrand die alte Platte auf: Pull-Push hatte Wasser und dunkle Spiegelung zu einem dunklen Fleck gemischt, sichtbar als Schatten über der Bordwand. Jetzt wird das Loch je Spalte senkrecht gespiegelt (oben Wasser, unten Spiegelung). Rest: Hebt sich das Heck, erscheint ein schmaler heller Wasserstreifen zwischen Rumpf und Spiegelung, weil die Spiegelung im Foto stehen bleibt; in 2× zu sehen, in 1:1 kaum. Festmacherleinen sind aus der Wassermaske genommen und stehen still; ihr Ende liegt hinter Fender und Bordwand, deshalb reißen sie beim Schaukeln nicht sichtbar ab.",
+  "Tippgeschwindigkeiten gingen zuerst nicht in 30 fps auf (Zeile 42 Zeichen/s, abwechselnd 1 und 2 Zeichen je Bild; Parser 12 Zeichen/s mit Haltezeiten 3-2-3-2), und die Parserzeile zeigte „›“ statt „>“ aus motif.json. Jetzt 30 und 15 Zeichen/s, in ganzen Bildern gerechnet, und „>“ wie vorgegeben; Antworten, Auswahl, Parser und Poster sind entsprechend verschoben.",
+  "Das Milchglas des Textfelds zeigt das statische weichgezeichnete Foto, nicht die bewegte Szene dahinter (bei der starken Unschärfe nicht zu sehen).",
+  "Licht der Figur ist an diesen einen Platz gebunden (Laternenrichtung, Bezugsweiß, Schattenrichtung als feste Werte); ein anderer Standort braucht neue Werte.",
+  "Nicht geprüft: echtes Smartphone; weitere Orte und Posen; ob agy-Fotos über viele Orte gleich belichtet und gleich gestimmt bleiben; Wirkung auf Spielerinnen (Uncanny-Valley-Gefahr bei Nahaufnahmen)."
+ ],
+ "lessons": [
+  "agy (Gemini) liefert mit einem Stilblock aus dokumentarischer Fotografie und Kameradaten (Brennweite, Blende, Belichtungszeit, blaue Stunde, „kein HDR, keine Postkartenfarben“) im ersten Versuch ein glaubwürdiges Foto; der sonst störende Hang zum Fotorealismus ist hier der Vorteil. Die Farbcode-Maske mit dem Foto als Referenz kam fast deckungsgleich (dx −1, dy +1 px).",
+  "Codex liefert fotorealistisches Fell mit echtem Alphakanal; Alpha auf 0–1 strecken (innen 252–253) und Randfarben aus dem Inneren fortsetzen, dann entsteht vor keinem Hintergrund ein Saum.",
+  "Codex mit dem eigenen Bild als Referenz („nur den Kopf drehen“) liefert dieselbe Figur in fast derselben Lage (IoU 0,973, gleiche Fußlinie). Nur den Kopf oberhalb der Schaloberkante übernehmen und die Belichtung je Kanal an einer gemeinsamen Fläche angleichen.",
+  "Licht über ein bekanntes Weiß angleichen: Weißabgleich und Belichtung so, dass das weiße Bauchfell der weißen Wand im Foto entspricht (gleiches Himmelslicht). Das ist ein Schritt mit einer Messung statt vieler Regler.",
+  "Kantenlicht aus dem Alpha: Randnormale und Randband in eine Textur backen, der Shader rechnet Kantenlicht für jede Lichtrichtung; folgt das Laternenlicht dem Flackern der Laterne, reagiert die Figur sichtbar auf die Szene.",
+  "Lichtsaum nur vor hellem Hintergrund (Wasser, Himmel) einblenden; vor dem dunklen Kai erzeugt er einen hellen Rand.",
+  "Schärfe messen statt schätzen (Bandpass-Verhältnis in Figur und Foto gleicher Tiefe): KI-Fotos sind nachgeschärft, verkleinerte Figuren brauchen Nachschärfen, nicht Weichzeichnen.",
+  "Ein gemeinsames, bewegtes Korn über Foto und Figur verbindet beide und versteckt, dass das Rauschen im Foto stillsteht; Hash ohne sin rechnet in allen Renderern gleich.",
+  "Ein Vergleichsschalter (--raw) und ein Messwerkzeug (measure_match.py) machen die Wirkung der Angleichung nachprüfbar; das Vergleichsbild gehört in die Assets.",
+  "Kopfdrehung aus zwei Standbildern: als harten Wechsel mit einem Zwischenbild bauen und die Deckung im Zwischenbild auf die unverschobenen Umrisse beider Fassungen begrenzen (min(max(a, b) verschoben, max(a, b) unverschoben)). Weiches Überblenden über mehrere Bilder, dazu ein Morph, zeigt durchscheinende Doppelköpfe außerhalb der Silhouette.",
+  "Figuren, die per Vertex um Bruchteile eines Pixels verformt werden (Atmen, Gewicht), in 2x ablegen und im Shader mit 3×3 Punkten verkleinern; dann bleibt die Schärfe fast lageunabhängig (simuliert max/min 1,08 statt 2,08). Mipmaps allein helfen nicht. Schärfe über alle Bilder der Aufnahme messen, nicht an einem.",
+  "Platte unter schaukelnden Objekten je Spalte senkrecht spiegeln (oben Wasser, unten Spiegelung) statt Pull-Push: Beim Schaukeln wird nur ein Rand von wenigen Pixeln sichtbar, und der muss dem Wasser direkt daneben gleichen.",
+  "Zeitabläufe (Tippen, Bildwechsel, Schreibmarke) in ganzen Bildern rechnen (roundi(t · 30)); dann gehen sie sicher in 30 fps auf, auch wenn die Startzeiten zufällig sind.",
+  "Die Masken- und Plattenwerkzeuge aus kinemagramm (aimask.py, imgops.py) funktionieren ohne Änderung mit agy-Fotos; dazu kommen zwei Filter für Fotos: dünne dunkle Teile nahe Objekten bleiben aus der Himmelsmaske, dunkle Linien im Wasser (Leinen) aus der Wassermaske."
+ ],
+ "assets": [
+  {
+   "file": "assets/photo.png",
+   "kind": "Hintergrund (KI-Foto, retuschiert, 16:9)",
+   "made_with": "agy (Gemini-Bildmodell) + prep_scene.py",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/plate.png",
+   "kind": "Saubere Platte (Himmel und Wasser fortgesetzt)",
+   "made_with": "prep_scene.py (Pull-Push, Spiegelung)"
+  },
+  {
+   "file": "assets/mask_a.png",
+   "kind": "Maske Wasser/Himmel/Sterne",
+   "made_with": "agy-Farbcode-Maske + Guided Filter",
+   "prompt": "assets/raw/mask.json"
+  },
+  {
+   "file": "assets/mask_b.png",
+   "kind": "Maske Fenster/Laterne/Leuchtfeuer",
+   "made_with": "agy-Farbcode-Maske + Lichtschein aus dem Foto",
+   "prompt": "assets/raw/mask.json"
+  },
+  {
+   "file": "assets/mask_c.png",
+   "kind": "Maske Boote/Strahl",
+   "made_with": "agy-Farbcode-Maske + Farbabstand",
+   "prompt": "assets/raw/mask.json"
+  },
+  {
+   "file": "assets/actor.png",
+   "kind": "Figur, angeglichen (245 px; Textur 2x, 370×514)",
+   "made_with": "Codex (gpt-image) + prep_actor.py",
+   "prompt": "assets/raw/badger.json"
+  },
+  {
+   "file": "assets/actor_look.png",
+   "kind": "Figur mit gedrehtem Kopf, angeglichen (Textur 2x, 370×514)",
+   "made_with": "Codex (gpt-image, Referenz badger.png) + prep_actor.py",
+   "prompt": "assets/raw/badger_look.json"
+  },
+  {
+   "file": "assets/actor_aux.png",
+   "kind": "Hilfskarte Randnormale und Randband",
+   "made_with": "prep_actor.py"
+  },
+  {
+   "file": "assets/actor_aux2.png",
+   "kind": "Hilfskarte Lichtsaum und Schalgewicht",
+   "made_with": "prep_actor.py"
+  },
+  {
+   "file": "assets/actor_shadow.png",
+   "kind": "Kontakt- und Schlagschatten",
+   "made_with": "prep_actor.py"
+  },
+  {
+   "file": "assets/compare_integration.png",
+   "kind": "Vergleich: links nur freigestellt, rechts angeglichen (Bild 156, ohne Korn)",
+   "made_with": "measure_match.py"
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Inter (variabel)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/inter"
+  },
+  {
+   "item": "Schrift Newsreader und Newsreader Italic (variabel)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/newsreader"
+  },
+  {
+   "item": "Hash without Sine (Shader-Funktion), Copyright (c) 2014 David Hoskins – in demo/shaders/post.gdshader",
+   "license": "MIT",
+   "source": "https://www.shadertoy.com/view/4djSRW"
+  },
+  {
+   "item": "Distanzfunktion abgerundetes Rechteck nach Inigo Quilez (Shader-Funktion), Copyright (c) Inigo Quilez – in demo/shaders/panel.gdshader",
+   "license": "MIT",
+   "source": "https://iquilezles.org/articles/distfunctions2d/"
+  }
+ ],
+ "image_generations": 4,
+ "tool_issues": [],
+ "status": "done"
+}

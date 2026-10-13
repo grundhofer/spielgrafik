@@ -1,0 +1,60 @@
+{
+ "method": "data_transfer POLYINTERP_NEAREST",
+ "mesh": "styles/ki-3d-modell/work/badger_static.glb",
+ "align_offset_m": [
+  0.0362,
+  0.0003
+ ],
+ "tsr_bbox": [
+  [
+   -0.303,
+   -0.359,
+   0.0
+  ],
+  [
+   0.194,
+   0.369,
+   1.011
+  ]
+ ],
+ "src_bbox": [
+  [
+   -0.244,
+   -0.356,
+   0.003
+  ],
+  [
+   0.27,
+   0.34,
+   1.011
+  ]
+ ],
+ "deform_bones": 20,
+ "satchel_vertices_to_hips": 102,
+ "dominant_bone_vertices": {
+  "hips": 2457,
+  "head": 1414,
+  "chest": 706,
+  "hand.R": 448,
+  "spine": 318,
+  "tail": 312,
+  "foot.L": 278,
+  "foot.R": 264,
+  "hand.L": 233,
+  "upper_arm.L": 224,
+  "upper_arm.R": 222,
+  "forearm.L": 213,
+  "neck": 212,
+  "scarf_1": 148,
+  "shin.R": 133,
+  "shin.L": 105,
+  "forearm.R": 100,
+  "thigh.L": 76,
+  "thigh.R": 69,
+  "scarf_2": 23
+ },
+ "unweighted_vertices": 0,
+ "glb_bytes": 1751848,
+ "tris": 8000,
+ "t_total": 0.28
+}

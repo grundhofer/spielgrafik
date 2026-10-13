@@ -1,0 +1,53 @@
+{
+ "print_origin": [
+  8,
+  8
+ ],
+ "lamp": [
+  955,
+  66,
+  13,
+  8
+ ],
+ "lantern": [
+  1012,
+  346,
+  14,
+  14
+ ],
+ "window": [
+  38,
+  361,
+  10,
+  15
+ ],
+ "chimney": [
+  131,
+  183
+ ],
+ "horizon_y": 256,
+ "quay_top": [
+  437,
+  507
+ ],
+ "sea_y": 655,
+ "closeup": {
+  "from_tick": 90,
+  "view": [
+   0,
+   230
+  ],
+  "zoom": 1.6,
+  "horizon_y": 42,
+  "quay_y": 330
+ },
+ "flat_stats": {
+  "cells": 594,
+  "one": 518,
+  "two": 76,
+  "three": 0,
+  "std_before": 16.18,
+  "std_after": 7.24,
+  "px": 386329
+ }
+}

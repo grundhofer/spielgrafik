@@ -1,0 +1,17 @@
+{
+ "stroke_pale": 0,
+ "stroke_mid": 1,
+ "stroke_dark": 2,
+ "ripple_a": 5,
+ "ripple_b": 3,
+ "ripple_c": 6,
+ "ripple_d": 4,
+ "smoke_a": {"box": [440, 185, 785, 350], "pale": true},
+ "smoke_b": {"box": [445, 660, 790, 840], "pale": true},
+ "smoke_c": {"box": [450, 1185, 790, 1345], "pale": true},
+ "gull_0": {"box": [824, 50, 947, 302], "anchor": [165, 928], "canvas": [400, 200]},
+ "gull_1": {"box": [862, 363, 925, 725], "anchor": [530, 910], "canvas": [400, 200]},
+ "gull_2": {"box": [852, 828, 954, 1120], "anchor": [955, 885], "canvas": [400, 200]},
+ "dot_big": 14,
+ "dot_small": 15
+}

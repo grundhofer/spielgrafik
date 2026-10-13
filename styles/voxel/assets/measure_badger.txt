@@ -1,0 +1,7 @@
+Knochenpunkte (180 Bilder): Fuß am Boden bewegt sich höchstens 9.0 mm je Bild (bei t=0.06 s, toe.R), in der festen Totale höchstens 0.64 px
+  davon im geraden Lauf und beim Abbiegen (t < 3,2 s): höchstens 9.0 mm je Bild
+  Übergang Lauf -> Stehen (3.57-3,95 s): Fuß am Boden höchstens 5.6 mm je Bild (t=3.79 s, heel.L), im Doppelstand (4 Bilder) höchstens 6.8 mm
+  Stehen/Winken ab 3,95 s: höchster Fußpunkt 4.2 mm über dem Boden, Fußpunkte bewegen sich höchstens 0.7 mm je Bild
+  Drehung 2.29-3.39 s: Schritte je Bild 0.14-3.00°, Bilder ohne Drehung dazwischen: 0
+Silhouette Nahaufnahme (Bild 124-179): Fußzeile 691-691, Kopf/Hand oben 404-409, größter Sprung oben je Bild 3 px, Figur 282 px hoch (ohne erhobene Pfote)
+Verdeckung durch den Dialogkasten (ab 3.0 s, 91 Bilder, Rechteck [500.0, 532.0, 752.0, 164.0]): höchstens 0.0 % der Figur

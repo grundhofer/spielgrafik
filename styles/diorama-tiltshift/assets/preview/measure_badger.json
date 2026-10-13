@@ -1,0 +1,83 @@
+{
+ "Weltmaß (Knochen)": {
+  "Laufen": {
+   "Kontaktpaare": 39,
+   "Rutschen max mm": 1.81,
+   "Rutschen Mittel mm": 0.26
+  },
+  "Abbiegen": {
+   "Kontaktpaare": 25,
+   "Rutschen max mm": 1.81,
+   "Rutschen Mittel mm": 0.22
+  },
+  "Bremsen": {
+   "Kontaktpaare": 9,
+   "Rutschen max mm": 1.74,
+   "Rutschen Mittel mm": 0.31
+  },
+  "Stehen/Winken": {
+   "Kontaktpaare": 137,
+   "Rutschen max mm": 10.96,
+   "Rutschen Mittel mm": 0.38
+  },
+  "größte Werte (mm, s, Fuß, Punkt)": [
+   [
+    10.96,
+    3.892,
+    "R",
+    "Ferse"
+   ],
+   [
+    10.96,
+    3.892,
+    "L",
+    "Ferse"
+   ],
+   [
+    10.65,
+    3.858,
+    "R",
+    "Ferse"
+   ],
+   [
+    10.65,
+    3.858,
+    "L",
+    "Ferse"
+   ],
+   [
+    1.81,
+    2.725,
+    "L",
+    "Ferse"
+   ],
+   [
+    1.81,
+    2.225,
+    "L",
+    "Ferse"
+   ]
+  ],
+  "tiefster Fußpunkt (m), min/max je Bild": [
+   0.0,
+   0.013
+  ]
+ },
+ "Messbilder": 181,
+ "Bildmaß (feste Nahaufnahme, Maske)": {
+  "Bilder mit Dachs": 180,
+  "Fußzeile beim Stehen/Winken (alle Werte)": [
+   452
+  ],
+  "Kopfzeile beim Stehen/Winken min/max": [
+   261,
+   263
+  ],
+  "größter Kopfsprung von Bild zu Bild (px)": 1,
+  "Höhe Dachs im Stehen (px)": 191,
+  "Fußzeile beim Laufen min/max": [
+   409,
+   488
+  ]
+ }
+}

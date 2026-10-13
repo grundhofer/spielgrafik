@@ -1,0 +1,136 @@
+{
+ "fidelity": {
+  "mean_abs_255": 1.9,
+  "share_over_24": 0.0065,
+  "note": "Abweichungen fast nur an Kanten (Mipmap-Filter gegen Lanczos, 2-px-Gitter)"
+ },
+ "fill": {
+  "share_plate_vs_stretch_differs": 0.0309,
+  "share_mid_layer_visible_at_end": 0.0064,
+  "share_back_layer_visible_at_end": 0.0524
+ },
+ "parallax_first_to_last_frame": {
+  "lantern": {
+   "z_m": 11.7,
+   "dx_px": -47.3,
+   "dy_px": -30.9
+  },
+  "window": {
+   "z_m": 12.9,
+   "dx_px": -74.8,
+   "dy_px": -23.0
+  },
+  "walllamp": {
+   "z_m": 15.6,
+   "dx_px": -50.2,
+   "dy_px": -18.3
+  },
+  "lighthouse": {
+   "z_m": 67.8,
+   "dx_px": 2.1,
+   "dy_px": -6.5
+  },
+  "chimney": {
+   "z_m": 15.9,
+   "dx_px": -52.5,
+   "dy_px": -31.0
+  },
+  "Kai sichtbar (Zeile 740)": {
+   "z_m": 7.7,
+   "dx_px": -57.3,
+   "dy_px": -2.9
+  },
+  "Kai Mitte (Zeile 700)": {
+   "z_m": 8.9,
+   "dx_px": -49.3,
+   "dy_px": -6.6
+  },
+  "Turmspitze": {
+   "z_m": 67.8,
+   "dx_px": 2.1,
+   "dy_px": -6.7
+  },
+  "Schornstein Wärterhaus": {
+   "z_m": 66.6,
+   "dx_px": 2.6,
+   "dy_px": -5.7
+  },
+  "Fass rechts": {
+   "z_m": 5.5,
+   "dx_px": 5.4,
+   "dy_px": -7.9
+  },
+  "Kiste vorn": {
+   "z_m": 4.8,
+   "dx_px": 50.9,
+   "dy_px": 7.6
+  },
+  "Boot rechts (Rumpf)": {
+   "z_m": 22.9,
+   "dx_px": -10.4,
+   "dy_px": -6.5
+  },
+  "Himmel/Inseln": {
+   "z_m": 4000.0,
+   "dx_px": -0.1,
+   "dy_px": -0.1
+  }
+ },
+ "parallax_measured_in_godot": {
+  "lantern": {
+   "godot_dx_px": -48,
+   "godot_dy_px": -31,
+   "model_dx_px": -47.3,
+   "model_dy_px": -30.9
+  },
+  "lighthouse": {
+   "godot_dx_px": 2,
+   "godot_dy_px": -7,
+   "model_dx_px": 2.1,
+   "model_dy_px": -6.5
+  },
+  "Fass rechts": {
+   "godot_dx_px": 6,
+   "godot_dy_px": -8,
+   "model_dx_px": 5.4,
+   "model_dy_px": -7.9
+  },
+  "Boot rechts (Rumpf)": {
+   "godot_dx_px": -10,
+   "godot_dy_px": -7,
+   "model_dx_px": -10.4,
+   "model_dy_px": -6.5
+  },
+  "Turmspitze": {
+   "godot_dx_px": 2,
+   "godot_dy_px": -7,
+   "model_dx_px": 2.1,
+   "model_dy_px": -6.7
+  },
+  "Schornstein Wärterhaus": {
+   "godot_dx_px": 3,
+   "godot_dy_px": -5,
+   "model_dx_px": 2.6,
+   "model_dy_px": -5.7
+  },
+  "Kai sichtbar (Zeile 740)": {
+   "godot_dx_px": -56,
+   "godot_dy_px": -3,
+   "model_dx_px": -57.3,
+   "model_dy_px": -2.9
+  }
+ },
+ "bit_identical_runs": true,
+ "renderers_vs_forward_plus": {
+  "mobile": {
+   "mean_abs_255": 0.38,
+   "share_over_24": 0.0,
+   "errors": []
+  },
+  "gl_compatibility": {
+   "mean_abs_255": 3.22,
+   "share_over_24": 0.0167,
+   "errors": []
+  }
+ }
+}

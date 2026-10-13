@@ -1,0 +1,9 @@
+{
+ "_comment": "Vorschub je Laufbild in Spielpixeln, von Hand aus den Bodenkontakt-Läufen (unterste 4 bzw. 8 Zeilen, Spalten relativ zum Bildrand) von assets/badger.png gelesen (Ausgabe: build_badger.py --runs). Anker ist die Zehenspitze des Fußes, der in beiden Bildern flach steht; die Ferse taugt nicht, weil sie beim Abrollen hochgeht. Fußwechsel ohne gemeinsamen Standfuß: walk_4 -> walk_5 (Fuß B setzt auf; Spitze in der Luft bei 150, danach bei 135: 15) und walk_0 -> walk_1 (Fuß A setzt auf: 10). Bei walk_0 schwebt der Fuß A 8 bis 18 Zeilen über dem Boden, seine Spitze liegt also nicht in den untersten 8 Zeilen (früher als 132 -> 133 gelesen, Vorschub 0: die Figur rückte 2–3 px zurück). Im Band 8–18 Zeilen über der Sohle liegt die Spitze bei Spalte 145, gelandet bei 133 (12 px). Mit 10 landet sie 1–2 px hinter ihrer Lage in der Luft wie bei walk_4 -> walk_5 (1 px), die hintere Ferse hebt sich fast senkrecht, und der Rumpf rückt 7 px vor (8 hätte die Spitze 4 px hinter der Luftlage aufsetzen lassen; geprüft mit Überlagerungen im Godot-Bild, scripts/probe_feet.py misst Rumpf und landende Spitze). walk_7 fällt weg: Pose fast gleich walk_0, Spitze 112 -> 114. Summe 69 px je Zyklus; die Blender-Vorlage hätte 71 px ergeben. Übergänge: Stehen hält die Spitze von Fuß B aus walk_6 (132 -> 135: -3); die Dreiviertelansicht hält die hintere Ferse aus dem Stehen (80 -> 76: +4).",
+ "units": "display_px",
+ "cycle": ["walk_0", "walk_1", "walk_2", "walk_3", "walk_4", "walk_5", "walk_6"],
+ "advance": {"walk_0": 10, "walk_1": 6, "walk_2": 14, "walk_3": 3, "walk_4": 15, "walk_5": 3, "walk_6": 18},
+ "foot_switch_after": ["walk_0", "walk_4"],
+ "stand_after_walk_6": -3,
+ "turn_after_stand": 4
+}

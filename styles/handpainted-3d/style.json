@@ -1,0 +1,425 @@
+{
+ "slug": "handpainted-3d",
+ "name": "Handbemalte Texturen (stilisiert)",
+ "family": "modern3d",
+ "kind": "style",
+ "era": "2002–heute",
+ "summary": "Echtzeit-3D, bei dem fast der ganze Look in gemalten Diffuse-Texturen steckt: Licht, Kanten, Fugen und Verdeckung sind in kräftigen Pinselstrichen in die Farbe gemalt, die Engine rechnet nur weiches Licht ohne Glanz dazu. Leicht übertriebene Formen (großer Dachüberstand, schräge Wände, bauchige Fässer, dicke Pfosten), warme, gesättigte Farben mit violetten Schatten, ein gemalter Himmel und eine Oberfläche im Stil stilisierter Online-Rollenspiele. Hier liegen neun KI-gemalte Kacheltexturen aus einem einzigen Bild auf einer per Blender-Skript stilisierten Fassung der gemeinsamen Hafenszene aus shared/3d.",
+ "references": [
+  "Warcraft III (Blizzard 2002): handbemalte Texturen auf einfachen Modellen, Draufsicht",
+  "World of Warcraft (Blizzard 2004): prägendes Beispiel; niedrig aufgelöste, gemalte Kacheltexturen mit aufgemaltem Licht, Vertex-Beleuchtung, gemalte Himmel, Gebietsname in Gold beim Betreten einer Zone, Auftrags-Ausrufezeichen über Figuren",
+  "Torchlight (Runic Games 2009) und Torchlight II (2012): gemalte Texturen, warme Palette, kräftige Formen",
+  "WildStar (Carbine Studios 2014): stark übertriebene Formen, gesättigte Farben, gemalte Oberflächen",
+  "Heroes of the Storm (Blizzard 2015) und spätere Titel desselben Stils: gemalte Texturen zusammen mit modernem Licht"
+ ],
+ "traits": [
+  "Gemalte Kacheltexturen: neun Materialien (Kaipflaster, Bruchsteinmauer, Schiefer, helle und dunkle Bretter, Fels, Gras, Sand, Kalkputz) aus einem KI-Texturblatt; jeder Stein, jede Planke und jede Schindel hat eine helle Oberkante, eine dunkle Unterkante und dunkle Fugen in der Farbe. Vergleichsschalter --no-paint (jede Textur durch ihre Mittelfarbe ersetzt, Pinseltupfer der Figur aus): ohne Oberfläche 35,6 % (2,0 s) bzw. 38,3 % (4,8 s, Poster) der Pixel um mehr als 8 Stufen anders, mit Oberfläche 26,8 % bzw. 29,4 %; ohne Texturen sieht die Szene wie flaches 3D aus (assets/preview/switches.png)",
+  "Stilisierte, leicht übertriebene Formen (blender/build_harbor_hp.py, Namen und Lage wie shared/3d): Wände des Häuschens unten 0,13 m ausgestellt (3° Neigung), Dachplatten an der Traufe 15 % und am Ortgang 20 % länger (Überstand am Giebel 0,25 → 0,66 m, Traufe 23 cm tiefer), First 6 cm durchgesackt, Fässer in der Mitte 10 % bauchiger (Radius 0,325 → 0,357 m), Steg- und Festmachpfähle 1,4-fach, Laternenpfahl 1,5-fach dicker, Leuchtturm unten 14 % breiter. Vergleich mit --no-stylize (scripts/compare_shapes.py): 4,8 % (2,0 s) bzw. 8,2 % (Poster) der Pixel anders (assets/preview/shapes.png)",
+  "Kein Glanz: alle Materialien mit specular_disabled und Rauheit 1, eigene light()-Funktion mit weichem Umgreifen (wrap 0,45, Übergang geglättet); Schlagschatten werden violett getönt statt schwarz (shadow_tint 0,62 | 0,55 | 0,85), Umgebungslicht kräftig violett (0,62 | 0,56 | 0,80 × 0,95)",
+  "Gemalte Umgebungsverdeckung: in Blender je Ecke gebacken (64 feste Strahlen, R bis 0,7 m, G bis 4 m; am Dachs 6 und 22 cm) und im Shader als violette Abdunklung in die Farbe gemischt (Fugen, Kontaktschatten unter Fässern, Kisten und Steg, Häuschen am Boden; am Dachs unter Mütze und Schal, zwischen Arm und Körper). Schalter --no-ao: ohne Oberfläche 10,1 % bzw. 13,3 % der Pixel anders, mit Oberfläche 6,8 % bzw. 10,5 %; in der Silhouette des Dachses 53 %",
+  "Steinflächen einzeln gemalt: Eckquader, Sockel, Türgewände, Simse und Kantensteine (StoneDark auf Häuschen, Kai und Laternenpfahl) tragen je Fläche eigene Koordinaten in Metern und ihre Größe (UV/UV2 aus Blender); der Shader malt je Fläche einen Stein (lange Flächen in Steine von etwa 0,95 m geteilt) mit Pinselstruktur, Verlauf nach unten dunkler, heller Oberkante, dunkler Unterkante und Fuge, statt die Mauertextur quer über die Blockkanten zu projizieren",
+  "Projektion je Objekt statt der Smart-UV-Inseln (die liegen beliebig gedreht): Wände und Dächer flächenbezogen, Steinreihen und Schindeln waagrecht, Ableitungen aus der stetigen Weltposition (keine Mip-Nähte an Kanten); Fässer zylindrisch mit senkrechten Dauben; schaukelnde Boote dreiachsig im eigenen Raum (schwimmen nicht); Gelände dreiachsig überblendet",
+  "Warme, gesättigte Palette: Abendsonne orange (1,0 | 0,78 | 0,56) von links vorn, 24° hoch, weiche Schatten (shadow_blur 2,5), Tonemapping linear, Sättigung +8 %, Glühen nur für Fenster, Laterne und Leuchtfeuer",
+  "Gemalter Himmel: das zweite KI-Bild (Wirbelwolken, Glutband, erste Sterne) als Himmelskuppel (zylindrische Abbildung 104° × 40°), dieselbe Abbildung spiegelt sich im Wasser; die Wolken pendeln langsam (±4°, Periode 120 s)",
+  "Gemaltes Wasser: Türkis am Ufer, Blau in der Tiefe (Wassertiefe entlang des Sehstrahls aus dem Tiefenpuffer), gespiegelter gemalter Himmel, treibende Wellenstriche in Flieder und Abendorange, cremefarbene Schaumkante an Kai, Pfählen, Booten und Felsen mit wanderndem zweitem Ring; eigener Nebel in der Horizontfarbe",
+  "Figur ohne Textur, im Shader 'bemalt': kräftigere Materialfarben, Pinseltupfer aus brush.png (etwa 8 cm groß, ±38 %), gebackene Verdeckung violett (in der Silhouette 53 % der Pixel anders mit --no-ao), Schattierung in 4 weichen Stufen (dunkle Stufen kühl, helle warm), aufgemalte helle Oberkante auf nach oben kippenden Flächen (Mützendeckel, Schultern, Paketkante), violette Formkante an der lichtabgewandten Silhouette, warme Lichtkante, gemalte Glanzpunkte nur auf Messing, Nase und Augen; Figurenlicht auf Ebene 2 (--no-key: 0,5 % bzw. 0,8 % des Bildes, 87 % der Dachs-Pixel), runder Bodenschatten. --no-paint ändert 34 % der Dachs-Pixel",
+  "Oberfläche im Genre: Gebietsname 'Hafen von Lornholm' in Gold mit dunkler Kontur und Zierlinie (Cinzel) blendet zu Beginn ein; Dialogfenster mit Rahmen in dunklem Holzbraun (flache Farbe, keine Holztextur), Goldkante und Nieten auf Pergament (die gemalte Putztextur warm getönt), Text Zeichen für Zeichen (Alegreya), drei Auswahlzeilen mit Symbolen (Pfeil, goldenes Ausrufezeichen, Sprechblase), die zweite hervorgehoben, Parserzeile mit Schreibmarke; goldenes Ausrufezeichen über dem stehenden Dachs. Dialogfenster 436 × 238 px (11,3 %), mit Gebietsname etwa 15 % des Bildes",
+  "Kamerafahrt 0–4,2 s von einer Halbtotalen auf Steg, Laterne, Boote und Leuchtturm (Dachs etwa 113 px) zur Endeinstellung mit Häuschen (Front- und Seitenfenster, Schornstein mit Rauch), Fässern, Dachs (140 px), Boot, Leuchtturm mit Strahl und Laterne rechts über dem Dialogfenster (Laternenglas bei x 1125, y 407; während der ganzen Fahrt zwischen x 692 und 1125, y 407–425, also nie vom Fenster verdeckt); Poster bei 4,8 s",
+  "Animierte 3D-Figur: kommt mit 0,73 m/s von links ins Bild (bei t = 0 außerhalb, ab 0,6 s ganz zu sehen), biegt im Laufen um −70° zur Kamera ab (Drehung nur um den Standfuß), bremst, Idle, winkt ab 3,85 s. Gemessen (scripts/measure_badger.py): Standfuß beim Laufen höchstens 5,5 mm je Bild (0,71 px bei fester Kamera); beim Anhalten bleibt der Standfuß stehen (0,1 mm), der Schwungfuß setzt in 0,3 s auf (in den letzten Bildern unter 1 cm Höhe noch 6 mm Weg); Füße im Stehen und Winken 1,3 mm; in der Silhouette Fußzeile 648 konstant (0 px), Kopf höchstens 1 px Sprung je Bild",
+  "Umgebungsanimationen: Leuchtfeuer dreht im Uhrzeigersinn (gemalter Lichtkegel, Lampe blitzt um 2,55 s auf, halbe Stärke etwa 0,45 s, Lichthof höchstens 5 m), Laterne flackert (Rauschen mit festem Seed, auf 0,45–1,0 abgebildet; Glas, Lichthof, Licht), gemalte Rauchballen aus dem Schornstein, Boote schaukeln, Wasser, zwei gemalte Möwen (etwa 2,1–2,3 m Spannweite, Rumpf, Kopf mit Schnabel, Flügel mit heller Ober- und violetter Unterkante, dunkle Spitzen) fliegen bei etwa y 190–290 px unter dem Gebietsnamen, Wolkendrift"
+ ],
+ "camera": "Eigene Kamerafahrt statt der Hauptkamera aus shared/3d (dort ist der Dachs 71 px groß und die Texturen sind zu klein, um den Stil zu zeigen): von (1,5 | 1,8 | 11,0) mit Blick auf (4,0 | 3,0 | −4,0), fov 48, in 0–4,2 s (smoothstep, Drehung per Slerp) zur Endeinstellung (0,8 | 1,8 | 8,6) mit Blick auf (−2,0 | 2,6 | −4,0), fov 52 (vertikal, Keep Height; Blick 3,5° nach oben). Ausschnitte vorab mit scripts/plan_shot.py gerechnet und aus Kandidaten gesucht: Anfang mit Laterne, Steg, Booten und Leuchtturm (unterhalb des Gebietsnamens), Dachs bei t = 0 knapp links außerhalb; Ende mit Häuschen samt Schornstein, Dachs halblinks, Leuchtfeuer rechts neben dem Gebietsnamen und Laterne über dem Dialogfenster. Der Laufweg liegt dafür auf z = 2,75 statt 1,2.",
+ "resolution": "1280×720 nativ, Forward+, MSAA 2×, anisotrope Filterung 8×; Kacheltexturen 512×512 (aus 316 px großen KI-Feldern, nach dem Nahtlosmachen 272 px, mit LANCZOS vergrößert), Mipmaps; Texeldichte der gemalten Details etwa 155–235 px/m an Pflaster, Mauer, Dach und Brettern, 60–85 px/m an Fels und Gras",
+ "pipeline": [
+  {
+   "step": "Texturblatt erzeugen",
+   "tool": "genimg (agy, Gemini-Bildmodell)",
+   "detail": "Ein Bild 1024×1024 (in voller Größe geliefert, Prompt wörtlich weitergegeben): neun Materialien als 3×3-Raster mit schwarzen Fugen, Technik als handbemalte Diffuse-Texturen stilisierter Online-Rollenspiele beschrieben (Licht und Verdeckung aufgemalt, kein Glanz, farbverschobene Schatten, gleichmäßige Helligkeit für Kachelbarkeit), Steingrößen je Feld vorgegeben. Erster Versuch brauchbar. Prompt: prompts/textures.txt, Rohbild assets/raw/textures.png"
+  },
+  {
+   "step": "Himmel erzeugen",
+   "tool": "genimg (agy, Gemini-Bildmodell)",
+   "detail": "Gemalter Abendhimmel ohne Land und Meer, Unterkante = Horizont, Wirbelwolken, Glutband, erste Sterne. Kam als 1264×848 statt 1536×1024 (agy), Prompt wörtlich weitergegeben, erster Versuch brauchbar. Prompt: prompts/sky.txt"
+  },
+  {
+   "step": "Texturen kachelbar machen",
+   "tool": "scripts/build_textures.py (NumPy, Pillow)",
+   "detail": "Felder an den schwarzen Fugen gefunden (je 326 px), 5 px Rand weg, je Achse 44 px Überlappung und Schnitt an der Linie geringster Abweichung (dynamische Programmierung, an beiden Enden auf die Bandmitte gezwungen), 3 px weich überblendet, dann 512×512. Farben unverändert (der Stil steckt in ihnen). Dazu brush.png (Pinseltupfer der Figur aus periodischem Rauschen, 5 Stufen, Code) und der Himmel unverändert. Prüfbild assets/preview/textures_tiled.png (jede Textur 2×2 gekachelt)"
+  },
+  {
+   "step": "Hafen: flacher Kaiboden, stilisierte Formen, Steinflächen, gebackene Verdeckung",
+   "tool": "Blender 5.2 (blender/build_harbor_hp.py)",
+   "detail": "Importiert shared/3d/harbor.glb, ersetzt die modellierten Pflasterplatten und die Fugenfläche durch ein 0,5-m-Gitter (Material Paving, UV in Metern; Vorgehen wie styles/n64), verformt Häuschen (Wände unten ausgestellt, Dach an Traufe und Ortgang länger, First durchgesackt, Giebelspitzen mit), Fässer, Steg- und Laternenpfähle und Leuchtturm im eigenen Raum, legt für StoneDark-Flächen auf Häuschen, Kai und Laternenpfahl UV = Meter ab der Flächenecke und UV2 = Flächengröße an (V wegen glTF als 1 − v gespeichert), unterteilt Wände des Häuschens (0,6 m) und Kaimauern (1,0 m) und backt je Ecke Nah- und Fernverdeckung als Vertexfarbe (64 Strahlen über einen BVH-Baum, deterministisch, zwei Läufe bytegleich, 7 s). Namen, Eltern, Empties, Ursprünge und Materialnamen bleiben; 17 932 → 20 304 Dreiecke. --no-stylize baut dieselbe Fassung ohne Formänderung (nur für den Vergleich)"
+  },
+  {
+   "step": "Figur",
+   "tool": "shared/3d/blender/build_badger.py --save-blend + Blender 5.2 (blender/bake_badger_ao.py)",
+   "detail": "Dachs nicht über glTF-Import umgebaut (verschiebt Knochen), sondern aus der .blend, die build_badger.py mit --save-blend in ein Temp-Verzeichnis schreibt: Ruhepose, Verdeckung je Ecke gebacken (Figur und Paket, 64 Strahlen, 6 und 22 cm), Export mit den Einstellungen aus build_badger.py plus aktiver Vertexfarbe → demo/models/badger_hp.glb (7 348 Dreiecke, Idle/Walk/Wave). Ohne Backen (--no-ao) ist das Ergebnis bytegleich mit shared/3d/badger.glb; der Rest des gemalten Eindrucks entsteht im Shader hp_actor.gdshader"
+  },
+  {
+   "step": "Bildausschnitt rechnen",
+   "tool": "scripts/plan_shot.py (Python, ohne Godot)",
+   "detail": "Projiziert Häuschen, Fässer, Boote, Laterne, Leuchtfeuer, Horizont und den Dachs für Kandidaten-Kameras (look_at, Keep Height) auf 1280×720; ein Suchlauf über Position, Blickziel, fov und Haltepunkt des Dachses lieferte Anfangs- und Endeinstellung (Laterne über dem Dialogfenster, Dachs bei t = 0 außerhalb), dazu Laufweg und Drehwinkel zur Kamera; die Fahrt dazwischen (Slerp) nachgerechnet, damit die Laterne nie hinter das Fenster gerät"
+  },
+  {
+   "step": "Godot-Demo",
+   "tool": "Godot 4.7.2 (Forward+), handgeschriebene Shader",
+   "detail": "main.gd ersetzt alle glTF-Materialien nach Namen (hp_world, hp_actor, hp_water), Himmel als Sky-Shader, Effekte als Billboards mit eigenen Shadern (Lichtkegel, Lichthöfe, Rauch, Möwen, Ausrufezeichen, Bodenschatten), Oberfläche in ui.gd mit _draw()"
+  },
+  {
+   "step": "KI-Beitrag",
+   "tool": "–",
+   "detail": "Zwei KI-Bilder (Texturblatt, Himmel), beide im ersten Versuch; in dieser Überarbeitung keine weiteren. Die Bilder liefern Pinselstrich, Farbe und das aufgemalte Licht; Formen, Projektion, Steinflächen, Verdeckung, Licht ohne Glanz, Wasser, Effekte, Figur und Oberfläche kommen aus Code und Blender"
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/measure_badger.py, scripts/compare_switches.py, scripts/compare_shapes.py, tools/capture.py",
+   "detail": "Füße und Kopf über Knochenpunkte (mit Kamerafahrt und fester Endeinstellung, dazu das Anhalten Walk → Idle) und über eine weiße Silhouette (--mask) gemessen; Vergleichsschalter --no-paint, --no-ao, --no-key, --no-blob bei 2,0 s und 4,8 s mit und ohne Oberfläche und in der Silhouette des Dachses; Formen mit --no-stylize; zwei Läufe bitgleich; Probeläufe mit --rendering-method mobile und gl_compatibility; Langlauf ab 30 s (--t0=30), Einzelbilder vom Aufblitzen (2,1–2,9 s), vom Hereinlaufen und von der Laterne während der Fahrt angesehen; capture.py mit --poster-at 0.8"
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, Forward+, MSAA 2×, Richtungsschatten-Map 8192 (lights_and_shadows/directional_shadow/size), weiche Schatten Qualität 3, anisotrope Filterung 8×; alle Texturen mit Mipmaps, verlustfrei, detect_3d/compress_to=0 (in den .import-Dateien gesetzt, weil sie nur per load() genutzt werden)",
+  "hp_world.gdshader (Hafen): Textur je Material mit Tönung und Meter je Kachel (PALETTE in main.gd); Projektion je Objekt (OBJECT_MAPPING): 0 = eben an der Flächennormale aus dFdx/dFdy ausgerichtet mit textureGrad und Ableitungen aus der Weltposition, 1 = dreiachsig in Welt, 2 = zylindrisch um die lokale y-Achse mit korrigierter Ableitung an der atan-Naht (Fässer gedreht, Dauben senkrecht; Leuchtturm), 3 = dreiachsig lokal (Boote); Steinflächen (use_block, UV2.x > 0): ein gemalter Stein je Fläche aus UV/UV2, Pinselstruktur aus plaster.png mit Versatz je Stein (vor der Verzweigung mit textureGrad abgetastet), Kanten und Fuge in Metern; Vertexfarbe R/G als violette Verdeckung in ALBEDO; Oberseiten +10 % warm; light(): Umgreifen, Schatten als Tönung, Punktlichter weich",
+  "hp_actor.gdshader (Dachs): Farbe je Material (BADGER_PALETTE), brush.png über die Mesh-UVs (1,6 Kacheln je Meter, ±38 %), Höhenverlauf über VERTEX.y, dunkle Unterseiten, Vertexfarbe als violette Verdeckung (gespreizt mit smoothstep ab 0,4, weil die Vorderseite kaum verdeckt ist), helle Oberkante über die Normale (nicht in verdeckten Falten), violette Formkante auf der lichtabgewandten Seite, Lichtkante als EMISSION (Fresnel, nur zur Seite des Abendlichts), Glanzpunkt als harte Spitze; light(): Sonnen- und Figurenlicht in 4 Stufen (0, 1/3, 2/3, 1 mit weichem Übergang) und Farbverschiebung kühl → warm, Schlagschatten eine Stufe tiefer und violett",
+  "Figurenlicht: zweites DirectionalLight3D (CharKey) mit light_cull_mask ohne Ebene 1; die Meshes des Dachses liegen auf Ebene 1 und 2 (Sonne und Figurenlicht)",
+  "hp_water.gdshader: unshaded, ALPHA = 1 (durchsichtiger Durchgang, damit hint_depth_texture lesbar ist), Dünung als Verschiebung wie shared/3d, Wassertiefe = Länge des Sehstrahls bis zur Geometrie dahinter, Wertrauschen für Striche, Schaum und Flecken, fog_disabled mit eigenem Nebel in der Horizontfarbe des Himmels",
+  "hp_sky.gdshader + hp_sky_map.gdshaderinc: zylindrische Abbildung des Himmelsbilds (Mitte 10°, Breite 104°, Oberkante 40° über dem Horizont), unter dem Horizont die unterste Bildzeile, außerhalb gespiegelt; dieselbe Funktion nutzt das Wasser für die Spiegelung",
+  "Environment: Hintergrund Sky (radiance_size 0), Umgebungslicht als Farbe, Spiegelungen aus, Tonemapping linear, Glühen ab HDR-Schwelle 0,95 mit Mischart Screen (glow_blend_mode = 1), Tiefennebel 18–320 m in Rosaorange, Farbanpassung Sättigung 1,08",
+  "Effekte: hp_beam (additiver Kegel, cull_back), hp_glow (additives Billboard mit Kern und gemaltem Ring), hp_smoke (Billboard-Ballen mit Beulen-Umriss, oben links hell, unten rechts violett, instance uniform für Alter und Form), hp_gull (Möwe aus Abstandsfunktionen: Rumpf, Kopf, Schnabel, Schwanz, geknickte Flügel mit Licht- und Schattenkante, Flügelschlag mit Gleitphasen), hp_marker (goldenes Ausrufezeichen aus Abstandsfunktionen, alpha scissor), hp_blob (Bodenschatten als PlaneMesh, blend_mix); Leuchtfeuer: Aufblitzen = Ausrichtung des Strahls zur Kamera hoch 56, Lichthof 2 + 3 × Aufblitzen Meter",
+  "Dachs: AnimationPlayer im manuellen Modus (advance in _update): erst Pose, dann Vorschub (0,367 m/s × speed_scale), dann Drehung um den Bodenpunkt des Standfußes, höchstens 3° je Bild und nur bei einem Fuß am Boden (Technik aus toon-cel übernommen); Walk mit Tempo 2, Bremsen 2,95–3,35 s gemeinsam mit dem Animationstempo; bei 3,3 s Walk mit play(\"Walk\", 0, 0) auf Tempo 0 einfrieren, dann play(\"Idle\", 0.3): während der Überblendung wird der Körper je Bild um die Verschiebung des Standfußes zurückgesetzt (Knochen vorher mit force_update_all_bone_transforms); Wave ab 3,85 s; Idle und Walk auf LOOP_LINEAR",
+  "Attach-Muster aus shared/3d (Lichter, Lichtkegel an den Empties); Materialien vor dem Umhängen ersetzt; Glas je Objekt eigenes Material (Laterne flackert, Lampe blitzt, Fenster leuchtet), Glas wirft keine Schatten",
+  "ui.gd: Control in einer CanvasLayer, zeichnet in _draw() mit StyleBoxFlat, draw_string/draw_string_outline und Polygonen; Cinzel und Alegreya als FontVariation (wght 800 bzw. 480/650); Pergament = plaster.png mit draw_texture_rect_region warm getönt, Rahmen als flache Farbflächen, Randschatten als Polygone mit Farbverlauf",
+  "Alles hängt an aufsummiertem delta und festen Seeds (Laternenrauschen, Rauch); Schalter nach --: --no-paint, --no-ao, --no-key, --no-blob, --no-ui, --static-cam, --cam-start, --mask, --measure, --t0=<s> (auch ui.gd)"
+ ],
+ "techniques": [
+  "ki-texturblatt",
+  "vertexfarben-backen",
+  "blender-lowpoly-variante",
+  "stilisierte-formen",
+  "shader-wasser",
+  "additiver-lichtkegel",
+  "figurenlicht",
+  "rundschatten",
+  "fuss-halten",
+  "kamerafahrt",
+  "prozedurale-animation",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 4,
+  "effort": 3,
+  "text_adventure": 4,
+  "mobile": 4
+ },
+ "ratings_note": "ai_fit 4: Das Bildmodell trifft gemalte Kacheltexturen und einen gemalten Himmel im ersten Versuch und liefert den Kern des Looks (ohne die Texturen ändern sich 36–38 % der Pixel ohne Oberfläche, die Szene wirkt dann wie flaches 3D). Nicht 5, weil die Felder nicht nahtlos kamen (Code schneidet sie zurecht, Restnähte bei Fels, Gras, Sand und Putz) und weil das Modell keine Textur auf vorhandene UVs malen kann: Figur, Eckquader und Einzelstücke wie Fässer oder Kisten bekommen keine eigenen KI-Texturen (die Steinblöcke malt Code). Die übertriebenen Formen kommen aus dem Blender-Skript, nicht aus der KI. consistency 4: Neun Materialien aus einem Blatt passen in Strich und Farbe zusammen; ob ein zweites Blatt (mit diesem als Stilreferenz) genauso aussieht, ist nicht geprüft, und die Figur wirkt trotz Verdeckung, Stufen und Kanten glatter als Mauer und Fässer. effort 3: Ein Ort braucht ein Blatt, einen Blender-Lauf für Formen und Verdeckung, eine Projektion je Objekt und zwei Kameras; für ein echtes Spiel kämen eigene gemalte Texturen für Figuren und Requisiten (abwickeln und malen) und eigens stilisierte Modelle dazu. mobile 4 ist geschätzt: 27 650 Dreiecke, ein Schattenlicht, 512er-Texturen, Wasser mit Tiefenpuffer. Probeläufe auf dem Mac: Mobile ohne Fehler und Warnungen, 0,2–0,9 % der Pixel um mehr als 8 Stufen anders als Forward+; Compatibility läuft ebenfalls ohne Fehler, weicht aber in 37–43 % der Pixel ab (heller und greller, Farben müssten neu abgestimmt werden). Auf einem Smartphone nicht gemessen.",
+ "verdict": "Gut geeignet für unser Textadventure, wenn wir 3D-Orte wollen: Der gemalte Look trägt vor allem über Texturen, die das Bildmodell zuverlässig malt, und verzeiht einfache Geometrie; leicht übertriebene Formen lassen sich per Skript aus einfachen Modellen ableiten, und mit Gebietsnamen, Pergamentfenster und Auswahlsymbolen sieht ein Ort sofort wie ein Fantasy-Rollenspiel aus. Ein Ort kostet ein Texturblatt (ein Bild für neun Materialien), ein einfaches Modell, einen Blender-Lauf für Formen und gebackene Verdeckung und zwei feste Kameras; Shader, Blender-Skripte, Messskripte und Oberfläche sind wiederverwendbar. Für ein echtes Spiel fehlen zwei Dinge: gemalte Texturen für Figuren und Requisiten (abgewickelt und gemalt, das kann das Bildmodell auf unsere UVs nicht; hier ersetzt Shader-Bemalung sie nur teilweise) und stärker stilisierte Modelle, die von Anfang an so gebaut sind (gekrümmte Kanten, schiefe Schornsteine, klobige Boote); die Verformung per Skript bleibt bei geraden Linien und skalierten Teilen.",
+ "pitfalls": [
+  "Formen nur leicht übertrieben: Das Blender-Skript verformt vorhandene Geometrie (Skalieren, Ausstellen, Durchsacken); es macht keine gekrümmten Kanten, schiefen Schornsteine oder unregelmäßigen Bretter. Boote, Kisten, Poller, Taurolle und Gelände sind unverändert aus shared/3d. Die Formen ändern 8,2 % der Pixel im Poster; wer stärker übertreiben will, braucht eigene Modelle. Die Wände sind unten ausgestellt statt oben eingezogen, damit Traufe und Dach an ihrem Platz bleiben und zwischen Wand und Dach keine Lücke entsteht; die Giebelspitzen sinken mit dem durchgesackten First.",
+  "Die tiefere Traufe (2,08 statt 2,30 m) verdeckt aus Augenhöhe den oberen Rand des Türsturzes; die längeren Dachplatten machen das Häuschen breiter und rücken es näher an die Fässer.",
+  "Endeinstellung ein Kompromiss: Damit Laterne, Leuchtturm, Häuschen und Dachs zusammen frei stehen, braucht sie fov 52 und blickt 3,5° nach oben (viel Himmel); der Dachs ist 140 px statt vorher 152 px groß, das Frontfenster des Häuschens ist am linken Rand angeschnitten, Kisten und der rechte Teil des Stegs liegen hinter dem Dialogfenster oder außerhalb. Die Laterne hängt rechts nur gut 20 px über der Oberkante des Dialogfensters. Der Laufweg wurde dafür auf z = 2,75 verlegt (shared/3d: z = 1,2).",
+  "Anfangseinstellung ohne Häuschen: Damit der Dachs wirklich von links ins Bild läuft, zeigt die erste Sekunde Steg, Laterne, Boote und Leuchtturm; Häuschen und Rauch kommen erst während der Kamerafahrt ins Bild.",
+  "Kaiboden anders als in den übrigen 3D-Einträgen: Die modellierten Platten aus shared/3d passten nicht zu einer gemalten Pflastertextur (Fugen doppelt); der flache Boden mit 1,75 m großer Kachel zeigt große, unregelmäßige Steine (etwa 0,5 m). Die Wiederholung ist im Vordergrund bei genauem Hinsehen zu erkennen.",
+  "KI-Felder nicht nahtlos: Nach dem Schnitt an der Linie geringster Abweichung kacheln alle neun, aber Fels und Gras zeigen eine waagrechte, Sand eine senkrechte Restnaht, der Kalkputz bleibt fleckig mit sichtbaren Wiederholungen (Leuchtturm, Boote, Metall, Pergament, Pinselstruktur der Steinblöcke nutzen ihn). Die Felder schrumpfen von 316 auf 272 px.",
+  "Smart-UV-Inseln der gemeinsamen Modelle sind beliebig gedreht und unbrauchbar für Bretter und Steinreihen; deshalb eine Projektion je Objekt im Shader. Die ebene Projektion an Kanten erst mit textureGrad und Ableitungen aus der Weltposition ohne Mip-Nähte; die zylindrische braucht eine Korrektur an der atan-Naht. Gekrümmte Teile wie der Bug der Boote zeigen bei der dreiachsigen Projektion weiche Überblendungen statt sauberer Planken.",
+  "Eckquader und Kantensteine: Die ebene Projektion der Mauertextur (1,3 m je Kachel) zerschnitt an den Blockkanten Steine; jetzt malt der Shader je Fläche einen Stein aus UV/UV2. Diese Steine sind Code, nicht KI-gemalt, und wirken glatter und gleichmäßiger als die Bruchsteine der Mauer; lange Flächen (Sockel 3,7 m) werden in gleich lange Steine geteilt. Die StoneDark-Teile des Leuchtturms und die Kaimauer unter Wasser nutzen weiter die Projektion.",
+  "Die Figur hat keine gemalte Textur: Verdeckung, Stufen, helle Oberkanten und violette Formkante machen sie gemalter als vorher, sie bleibt aber bei 140 px glatter als Mauer und Fässer; die Pinseltupfer (etwa 10 px) sieht man erst bei genauem Hinsehen, an den Nähten der Smart-UV-Inseln brechen sie ab. Gemalte Fugen zwischen Kostümteilen (Weste, Hemd, Schal) gibt es nur dort, wo die gebackene Verdeckung sie findet. Echte handbemalte Figuren bräuchten eine abgewickelte UV und eine gemalte Textur je Figur.",
+  "Füße: Beim Bremsen hebt der Schwungfuß ab, hängt etwa 0,17 s fast still 7,5 cm über dem Boden (3,19–3,36 s) und wird dann in 0,3 s abgesetzt; er bewegt sich dabei 39 mm nach vorn, in den letzten zwei Bildern (unter 1 cm Höhe) noch 6 mm. Godots Überblendung lässt die alte Animation weiterlaufen (ohne Einfrieren schwang der Fuß über das Ziel hinaus und rutschte nach dem Aufsetzen bis 64 mm zurück); erst play(\"Walk\", 0, 0) vor play(\"Idle\", 0.3) friert sie ein. Die Drehung zur Kamera erfolgt im Laufen um den Standfuß; Drehen auf der Stelle zieht die Füße über den Boden.",
+  "Licht ist geschönt: Die Sonne steht links vorn, obwohl die Glut im gemalten Himmel links hinten liegt (sonst lägen die Fronten zur Kamera im Schatten), und der Dachs bekommt ein eigenes Figurenlicht aus einer anderen Richtung. Schatten sind violett getönt und weich und dadurch wenig sichtbar; der Bodenschatten unter dem Dachs ändert nur 0,1 % der Pixel, ist aber nötig, damit er nicht schwebt.",
+  "Himmel gestreckt: Das Himmelsbild (1264 × 848, Seitenverhältnis 1,49) liegt auf 104° × 40°, die Wolken sind dadurch etwa 1,75-fach in die Breite gezogen (Wirbel oval). Ein unbewegter Himmel hinter der Kamerafahrt braucht diese Breite, damit der Bildrand nie sichtbar wird.",
+  "Das Meer spiegelt den rosa Himmel und wirkt in der Ferne fliederfarben statt blau; nur nahe am Kai ist es türkis. Die Glut am Horizont und der Nebel lassen die fernen Inseln fast verschwinden.",
+  "Leuchtfeuer: Der additive Lichtkegel ging vor dem hellen, rosa Himmel zuerst fast unter (Stärke von 0,32 auf 0,6 erhöht). Das Aufblitzen ist jetzt kürzer (Exponent 56 statt 16: halbe Stärke etwa 0,45 s statt 0,85 s, Lichthof höchstens 5 statt 7 m), überstrahlt den Laternenraum während dieser Zeit (2,35–2,75 s) aber weiterhin.",
+  "Möwen sind bewusst groß (etwa 2,1–2,3 m Spannweite, fast das Doppelte einer echten Möwe), sonst wären sie bei 22–29 m Abstand nur schmale Striche wie vorher (1–2 px dick); sie sind im Shader gezeichnet, nicht aus dem Texturblatt.",
+  "Der Rahmen des Dialogfensters ist eine flache Fläche in dunklem Holzbraun ohne Holztextur; das Holzband ist nur etwa 6 px breit, eine Textur wäre dort nicht zu erkennen.",
+  "Renderer: blend_mul für den Bodenschatten ergab in Compatibility ein schwarzes Viereck; jetzt blend_mix. Compatibility zeigt die ganze Szene deutlich heller und greller (37–43 % der Pixel anders).",
+  "Godot: QuadMesh ignorierte orientation = FACE_Y (der Bodenschatten stand senkrecht und war nur als Strich zwischen den Füßen zu sehen); PlaneMesh nehmen. Neue PNGs, die nur per load() geladen werden, kamen ohne Mipmaps und mit VRAM-Kompression; in den .import-Dateien umgestellt.",
+  "Das goldene Ausrufezeichen über dem Dachs ist ein Genre-Zeichen (Auftrag verfügbar); ob es zur Rolle des Dachses (Kurier oder Auftraggeber) im Spiel passt, ist offen."
+ ],
+ "lessons": [
+  "Ein KI-Bild mit neun Materialien als 3×3-Raster mit schwarzen Fugen liefert einen zusammenpassenden Satz handbemalter Texturen. Im Prompt wirkten: 'light painted into the colour', helle Ober- und dunkle Unterkante je Stein und Planke, 'painted ambient occlusion', kein Glanz, farbverschobene Schatten (violett/blau, Lichter gelb/pfirsich), gleichmäßige Helligkeit je Feld, Anzahl der Steine/Planken je Feld.",
+  "Nahtlos machen ohne Weichzeichnen: je Achse überlappen und an der Linie geringster Abweichung schneiden; die Linie an beiden Enden auf die Bandmitte zwingen, sonst bricht die zweite Achse die Naht der ersten wieder auf.",
+  "Gemalte Texturen auf fremde Modelle ohne neues Abwickeln: Projektion je Objekt im Shader (eben an der Flächennormale für Architektur, zylindrisch für Fässer, dreiachsig lokal für bewegte Objekte, dreiachsig in Welt für Gelände). Mit textureGrad und Ableitungen der stetigen Weltposition entstehen an Kanten keine Mip-Nähte.",
+  "Der gemalte Eindruck braucht drei Dinge zusammen: Licht in der Textur, kein Glanz (specular_disabled, Rauheit 1) und weiche, farbige Schatten (Umgreifen, violetter Schatten statt Schwarz, kräftiges violettes Umgebungslicht). Gebackene Verdeckung als Vertexfarbe, violett in die Farbe gemischt, wirkt wie aufgemalte Fugen und Kontaktschatten (13–15 % der Pixel).",
+  "Verdeckung backen ohne Cycles: Blender-Skript mit festen Strahlen über einen BVH-Baum (Nah- und Fernverdeckung in einem Durchgang, getrennte Kanäle), große Flächen vorher unterteilen. Läuft in 6 s und ist deterministisch.",
+  "Ein gemalter KI-Himmel als Sky-Shader mit zylindrischer Abbildung, dieselbe Funktion im Wasser für die Spiegelung, hält Himmel und Meer im selben Pinselstrich; Drift als langsames Pendeln statt linear, dann zeigt auch ein langer Lauf nie den Bildrand.",
+  "Genre-Zeichen machen den Stil sofort erkennbar: Gebietsname in Gold beim Betreten, Pergamentfenster mit Holzrahmen und Goldkante, Auswahlsymbole (Pfeil, goldenes Ausrufezeichen, Sprechblase), goldenes Ausrufezeichen über der Figur. Das Pergament ist die vorhandene gemalte Putztextur, warm getönt.",
+  "Kamera und Figur vorab rechnen (plan_shot.py): Laufweg, Halteposition und Drehwinkel zur Endkamera so legen, dass Figur, Leuchtfeuer und Boot frei vom Dialogfenster bleiben; Startpunkt verschieben ist einfacher als das Tempo ändern (Bremspunkt bleibt in der Durchgangsphase).",
+  "Vergleichsschalter (--no-paint, --no-ao, --no-key, --no-blob) messen, was jedes Merkmal beiträgt; --no-paint ersetzt jede Textur durch ihre Mittelfarbe und zeigt, wie viel vom Look an den gemalten Texturen hängt.",
+  "Bodenschatten und andere Effekt-Billboards mit blend_mix statt blend_mul bauen, dann sehen sie in Forward+, Mobile und Compatibility gleich aus; für flache Quads PlaneMesh statt QuadMesh nehmen.",
+  "Übertriebene Formen ohne neues Modell: im Blender-Skript je Objekt im eigenen Raum verformen (Dachplatten entlang der Neigung und in x strecken, Wände über eine Funktion der Höhe ausstellen, Fässer über sin der Höhe bauchiger, Pfähle um ihre Achse skalieren); Kanten, an denen Teile sich treffen (Traufe), festhalten und angrenzende Punkte (Giebelspitzen) mitziehen, dann entstehen keine Lücken. Kinder wie das Fensterglas im Raum des Elternobjekts mitverformen, Ursprünge nicht bewegen. Mit einem Schalter (--no-stylize) messen, was es bringt.",
+  "Blöcke statt Projektion: Für kleine Steinflächen in Blender je Fläche UV = Meter ab der Ecke und UV2 = Flächengröße speichern (glTF dreht V um, also 1 − v ablegen); der Shader malt daraus Stein, Kanten und Fuge in Metern. Die Pinselstruktur mit Versatz je Stein vor der Verzweigung und mit textureGrad aus den stetigen UVs abtasten, sonst entstehen an den Steingrenzen Mip-Linien.",
+  "Verdeckung auf einer geriggten Figur: nicht den glTF-Import umbauen, sondern build_badger.py --save-blend nutzen, die .blend öffnen, in der Ruhepose backen und mit denselben Exporteinstellungen plus aktiver Vertexfarbe exportieren; ohne Backen ist das Ergebnis bytegleich mit dem gemeinsamen glb. Die Vorderseite einer Figur ist kaum verdeckt: Werte im Shader spreizen (smoothstep), sonst sieht man die Abdunklung nicht.",
+  "Anhalten ohne Rutschen in Godot: Die alte Animation läuft während einer Überblendung mit ihrem eigenen Tempo weiter. play(\"Walk\", 0, 0) vor play(\"Idle\", 0.3) friert sie in der Pose ein; den Standfuß während der Überblendung festhalten, indem man den Körper je Bild um dessen Verschiebung zurücksetzt (vorher force_update_all_bone_transforms).",
+  "Endeinstellung suchen statt probieren: plan_shot.py in einem Suchlauf über Kameraposition, Blickziel, fov und Haltepunkt der Figur mit harten Bedingungen (Laterne über dem Dialogfenster, Leuchtfeuer neben dem Gebietsnamen, Figur bei t = 0 außerhalb) laufen lassen und danach die Fahrt (Slerp) für Zwischenzeiten nachrechnen."
+ ],
+ "assets": [
+  {
+   "file": "assets/textures/paving.png",
+   "kind": "texture",
+   "made_with": "agy-Texturblatt (Feld 1) + build_textures.py: nahtlos, 512×512; Kaiboden, 1,75 m je Kachel",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/wall.png",
+   "kind": "texture",
+   "made_with": "Texturblatt (Feld 2) + build_textures.py; Häuschen und Kaimauer (Stone, 1,7 m); Mittelfarbe, dunkler getönt, ist die Grundfarbe der Steinblöcke (StoneDark)",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/roof.png",
+   "kind": "texture",
+   "made_with": "Texturblatt (Feld 3) + build_textures.py; Schieferdach, 1,35 m",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/planks.png",
+   "kind": "texture",
+   "made_with": "Texturblatt (Feld 4) + build_textures.py; Wood: Fässer (zylindrisch, Dauben senkrecht), Kisten, Steg, Tür, Boote, 1,15 m",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/planks_dark.png",
+   "kind": "texture",
+   "made_with": "Texturblatt (Feld 5) + build_textures.py; WoodDark",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/rock.png",
+   "kind": "texture",
+   "made_with": "Texturblatt (Feld 6) + build_textures.py; Felsnase, Insel, Felsen, 4,5 m",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/grass.png",
+   "kind": "texture",
+   "made_with": "Texturblatt (Feld 7) + build_textures.py; Gras, 3,2 m",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/sand.png",
+   "kind": "texture",
+   "made_with": "Texturblatt (Feld 8) + build_textures.py; Sand (3 m), getönt als Tau (0,4 m)",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/plaster.png",
+   "kind": "texture",
+   "made_with": "Texturblatt (Feld 9) + build_textures.py; weiße und rote Farbe (Leuchtturm, Boote, Läden), Metall dunkel getönt, Pinselstruktur der Steinblöcke, Pergament der Oberfläche",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/sky.png",
+   "kind": "background",
+   "made_with": "agy-Bild (Himmel), unverändert 1264×848; Himmelskuppel und Spiegelung im Wasser",
+   "prompt": "assets/raw/sky.json"
+  },
+  {
+   "file": "assets/textures/brush.png",
+   "kind": "texture",
+   "made_with": "build_textures.py (Code): Pinseltupfer der Figur, periodisches Rauschen, 256×256",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/textures_tiled.png",
+   "kind": "preview",
+   "made_with": "build_textures.py: jede Textur 2×2 gekachelt (Nähte prüfen)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/switches.png",
+   "kind": "preview",
+   "made_with": "compare_switches.py: Spalten voll / --no-paint / --no-ao / --no-key / --no-blob, Zeilen 2,0 s und 4,8 s (ohne Oberfläche)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/renderers.png",
+   "kind": "preview",
+   "made_with": "compare_switches.py: Spalten Forward+, Mobile, Compatibility; Zeilen 2,0 s und 4,8 s",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/shapes.png",
+   "kind": "preview",
+   "made_with": "compare_shapes.py: Häuschen und Fässer im Poster, oben Formen wie shared/3d, unten stilisiert",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/badger_close.png",
+   "kind": "preview",
+   "made_with": "Ausschnitt aus dem Poster, 2-fach: Dachs mit gebackener Verdeckung, Stufen, Kanten, Bodenschatten und Ausrufezeichen vor Boot und Wasser",
+   "prompt": ""
+  },
+  {
+   "file": "blender/build_harbor_hp.py",
+   "kind": "code",
+   "made_with": "Blender-Skript: flacher Kaiboden, stilisierte Formen, Koordinaten je Steinfläche, Unterteilung, gebackene Nah- und Fernverdeckung als Vertexfarbe",
+   "prompt": ""
+  },
+  {
+   "file": "blender/bake_badger_ao.py",
+   "kind": "code",
+   "made_with": "Blender-Skript: Verdeckung des Dachses in der Ruhepose backen und mit den Exporteinstellungen von build_badger.py exportieren",
+   "prompt": ""
+  },
+  {
+   "file": "demo/models/harbor_hp.glb",
+   "kind": "model",
+   "made_with": "build_harbor_hp.py aus shared/3d/harbor.glb (20 304 Dreiecke, stilisierte Formen, UV2 für Steinflächen, Vertexfarben)",
+   "prompt": ""
+  },
+  {
+   "file": "demo/models/badger_hp.glb",
+   "kind": "model",
+   "made_with": "bake_badger_ao.py aus der .blend von shared/3d/blender/build_badger.py (7 348 Dreiecke, Idle/Walk/Wave, gebackene Verdeckung als Vertexfarbe)",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/hp_world.gdshader",
+   "kind": "shader",
+   "made_with": "gemalte Kacheltextur, Projektion je Objekt, gemalte Steinblöcke je Fläche, gebackene Verdeckung, Licht ohne Glanz",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/hp_actor.gdshader",
+   "kind": "shader",
+   "made_with": "Figur: Farbe, Pinseltupfer, gebackene Verdeckung, Schattierung in Stufen, helle Oberkante, Formkante, Lichtkante, Glanzpunkte",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/hp_water.gdshader",
+   "kind": "shader",
+   "made_with": "gemaltes Wasser: Tiefe, Himmelsspiegelung, Wellenstriche, Schaum",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/hp_sky.gdshader",
+   "kind": "shader",
+   "made_with": "gemalter Himmel als Kuppel",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/hp_sky_map.gdshaderinc",
+   "kind": "shader",
+   "made_with": "gemeinsame Abbildung des Himmelsbilds (Himmel und Wasser)",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/hp_beam.gdshader",
+   "kind": "shader",
+   "made_with": "Lichtkegel des Leuchtfeuers",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/hp_glow.gdshader",
+   "kind": "shader",
+   "made_with": "Lichthof mit gemaltem Ring",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/hp_smoke.gdshader",
+   "kind": "shader",
+   "made_with": "gemalte Rauchballen",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/hp_gull.gdshader",
+   "kind": "shader",
+   "made_with": "Möwe mit Rumpf, Kopf, Schnabel, Flügeln mit Licht- und Schattenkante, Flügelschlag",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/hp_marker.gdshader",
+   "kind": "shader",
+   "made_with": "goldenes Ausrufezeichen über der Figur",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/hp_blob.gdshader",
+   "kind": "shader",
+   "made_with": "runder Bodenschatten",
+   "prompt": ""
+  },
+  {
+   "file": "demo/main.gd",
+   "kind": "code",
+   "made_with": "Materialien nach Namen, Licht, Ablauf von Dachs und Kamera, Effekte, Mess- und Vergleichsschalter",
+   "prompt": ""
+  },
+  {
+   "file": "demo/ui.gd",
+   "kind": "code",
+   "made_with": "Oberfläche: Gebietsname, Dialogfenster mit Pergament, Auswahlsymbole, Parserzeile",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/build_textures.py",
+   "kind": "code",
+   "made_with": "Texturblatt zerlegen und nahtlos machen, Pinseltupfer, Prüfbild",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/plan_shot.py",
+   "kind": "code",
+   "made_with": "Bildausschnitt vorab rechnen",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/measure_badger.py",
+   "kind": "code",
+   "made_with": "Füße und Kopf messen (Knochenpunkte, Anhalten, Silhouette)",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/compare_switches.py",
+   "kind": "code",
+   "made_with": "Vergleichsschalter (mit und ohne Oberfläche, Dachs-Silhouette) und Renderer messen",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/compare_shapes.py",
+   "kind": "code",
+   "made_with": "Formen messen: Hafen mit --no-stylize in einer Temp-Kopie der Demo, Pixelvergleich",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Cinzel (variabel, Strichstärke 800)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/cinzel (Lizenztext: demo/fonts/OFL-Cinzel.txt)"
+  },
+  {
+   "item": "Schrift Alegreya (variabel, Strichstärke 480/650)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/alegreya (Lizenztext: demo/fonts/OFL-Alegreya.txt)"
+  },
+  {
+   "item": "Texturblatt und Himmel",
+   "license": "eigene KI-Erzeugung (agy, Gemini-Bildmodell), keine fremden Bilder",
+   "source": "assets/raw/textures.json, assets/raw/sky.json"
+  },
+  {
+   "item": "Hafen und Dachs",
+   "license": "eigene Modelle aus shared/3d (Blender-Skripte), Hafen und Dachs mit eigenen Blender-Skripten verändert",
+   "source": "shared/3d/blender/, styles/handpainted-3d/blender/"
+  },
+  {
+   "item": "Shader, Effekte, Pinseltupfer, Oberfläche",
+   "license": "eigener Code, keine fremden Texturen oder Bilder",
+   "source": "styles/handpainted-3d/demo/, styles/handpainted-3d/scripts/"
+  },
+  {
+   "item": "Hash without Sine (Shader-Funktion), Copyright (c) 2014 David Hoskins – in demo/shaders/hp_world.gdshader",
+   "license": "MIT",
+   "source": "https://www.shadertoy.com/view/4djSRW"
+  },
+  {
+   "item": "Distanzfunktion abgerundetes Rechteck nach Inigo Quilez (Shader-Funktion), Copyright (c) Inigo Quilez – in demo/shaders/hp_marker.gdshader",
+   "license": "MIT",
+   "source": "https://iquilezles.org/articles/distfunctions2d/"
+  }
+ ],
+ "image_generations": 2,
+ "tool_issues": [],
+ "status": "done"
+}

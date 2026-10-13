@@ -1,0 +1,222 @@
+{
+ "slug": "buchmalerei",
+ "name": "Buchmalerei & Manuskript",
+ "family": "grafisch",
+ "kind": "style",
+ "era": "um 1380–1450 (gotische Stundenbücher); als Spielgrafik in Erzählspielen im Manuskript-Look seit etwa 2020",
+ "summary": "Eine Seite aus einem gotischen Stundenbuch: links die Miniatur in deckender Tempera mit Federkontur, Goldgrund statt Himmel und aufgekipptem Raum, gerahmt von Gold- und Farbleiste; rechts der Text in Textura mit roter Initiale auf blauem Federwerk, Rubrik in Rot und Paragraphenzeichen; in den Rändern Dornblattranken mit Blattgold und eine Drolerie. Die Figur steht in Bedeutungsgröße und Dreiviertelansicht, gleitet als Schnittfigur ins Bild und hebt die Hand zum Redegestus; das Gold schimmert.",
+ "references": [
+  "Gotische Stundenbücher um 1400–1420, etwa die Très Riches Heures der Brüder von Limburg (um 1411–1416): Ultramarin und Zinnober, Goldgrund und Goldsterne, aufgekippter Raum, Figuren größer als Gebäude",
+  "Pariser Dornblattranken-Bordüren um 1380–1420: schwarze Federstiele, Efeublätter in Gold und Farbe, Goldpollen an Haarranken",
+  "Lombarden mit Fleuronnée: rote oder blaue Initialen mit Federwerk in der Gegenfarbe; Rubriken und Paragraphenzeichen in Rot und Blau",
+  "Drolerien in den Rändern englischer und französischer Handschriften des 14. Jahrhunderts (z. B. Luttrell-Psalter, um 1330): Hasen mit Trompeten, Schnecken, Mischwesen",
+  "Pentiment (Obsidian Entertainment, 2022): Erzählspiel im Handschriften- und Druckgrafik-Look, Text erscheint wie mit Tinte geschrieben",
+  "Inkulinati (Yaza Games, 2024): Spiel auf Pergament mit Drolerien als Figuren",
+  "The Procession to Calvary (Joe Richardson, 2020): Figuren aus alten Gemälden als Schnittfiguren, die gleiten statt zu laufen"
+ ],
+ "traits": [
+  "Ganze Seite als Pergament (Code): warmer Grund mit Flecken in drei Größen, Haarporen und dunklerem Rand; Miniaturfenster 792×524 px in einem Rahmen aus 7 px Blattgold mit Punzenraster (alle 5 px), 6 px Farbleiste abwechselnd Ultramarin/Rosa mit weißen Perlen und drei Federlinien; Textspalte rechts 324 px breit; in allen vier Rändern Dornblattranken",
+  "Blattgold, das schimmert: Goldgrund der Miniatur (punziertes Blattgold mit Sternen, 75 232 Maskenpixel), Goldleiste, goldene Efeublätter und Goldpollen der Ranken und die Trompete der Drolerie laufen durch denselben Shader: ein Lichtstreif wandert alle 5 s schräg über die Seite, jedes Element blitzt zusätzlich für sich auf, erhabene Stellen (Punzsterne) fangen mehr Licht. Gemessen: 40 % der Goldpixel im Himmel und 28 % des Seitengolds ändern sich je 0,5 s um mehr als 16 Stufen",
+  "Malweise der Miniatur und der Figuren: dunkelbraune Federkontur, flache deckende Temperafarben (Ultramarin, Zinnober, Malachit, Bleiweiß, Ocker), Modellierung nur mit feiner Schraffur und weißen Höhungen, keine Schlagschatten",
+  "Mittelalterlicher Bildraum: Goldgrund statt Abendhimmel, Wolken als ornamentale Bänder mit weißem Saum, Abenddämmerung nur als Zinnoberband am Horizont, Meer als Muster aus weißen Wellenkringeln, Felsen als gestufte Schollen; der Kai ist steil aufgekippt, das Pflaster fluchtet aber noch leicht (siehe pitfalls)",
+  "Bedeutungsgröße und Dreiviertelansicht: Der Dachs ist von Mütze bis Sohle 331 px hoch (63 % der Miniaturhöhe) und damit größer als das Hafenmeisterhaus (etwa 235 px vom Schornstein bis zur Schwelle); er steht in Dreiviertelansicht und hebt zwei Finger zum Redegestus",
+  "Text in Textura (Texturina, OFL) mit roter Initiale: D in Zinnober (Schriftgröße 112, Glyphe 78 px) mittig auf einem 100×100-px-Feld aus blauem Fleuronnée, das in einen Federausläufer entlang der Spalte übergeht; die ersten drei Zeilen laufen neben der Initiale; Rubrik „Hafen von Lornholm“ in Rot, Auswahl mit Paragraphenzeichen abwechselnd Rot/Blau, Parserzeile mit rotem „>“ und blinkender Schreibmarke, blasse Linierung wie mit Tinte vorgezogen. Die Textspalte deckt 19 % des Bildes ab",
+  "Figur gleitet (Brief): ohne Schritte, Smoothstep von 0,2 s bis 2,8 s, Vorschub höchstens 7,6 px je Bild, kein Rückschritt, leichtes Schaukeln (±1,3°) nur während der Fahrt; ab 2,83 s Sohle konstant bei y 489, Mützenoberkante bei 158, Fußpunkt bei x 245,72 (scripts/probe_badger.py über Differenzbilder)",
+  "Redegestus als Schnittfigur: Unterarm und Hand sind ein eigenes Teil hinter dem Körper und drehen um die Ärmelmanschette: beim Gleiten 14° nach vorn geneigt, ab 2,85 s aufgerichtet, danach kleine Schläge zwischen −1,5° und 3,5° wie beim Sprechen",
+  "Umgebungsanimationen im Stil: Rauch als gemaltes geschlängeltes Band mit Federkontur und weißer Glanzlinie; Leuchtfeuer als Strahlenkranz in Zinnober, der pulsiert und alle 3 s aufblitzt; Laterne flackert (Glas im Shader, 8 goldene Strahlen, 10-mal pro Sekunde); Wellenkringel kommen und gehen in nach links wandernden Zügen und wiegen sich um ganze Pixel; zwei Vögel als Federstriche über dem Goldgrund; ein Hase mit Goldtrompete im unteren Rand wiegt sich"
+ ],
+ "camera": "Feste Einstellung ohne Kamerafahrt: die ganze Manuskriptseite im Bild, Miniatur links im Rahmen; die Miniatur zeigt den Hafen von leicht erhöhtem Standpunkt mit aufgekipptem Boden",
+ "resolution": "1280×720, Seite 1:1 in Bildschirmauflösung (kein Pixelraster); Miniatur 792×524 aus 1536×1024 (Faktor 0,516), Dachs 235×337-px-Bild bei 330 px Figurhöhe (Faktor 0,241 aus 1024×1536), Drolerie 130×120 (Faktor 0,106 aus 1254×1254); Seite und Ranken doppelt groß gezeichnet und verkleinert",
+ "pipeline": [
+  {
+   "step": "Miniatur, Versuch 1 (verworfen)",
+   "tool": "genimg (agy, Gemini-Bildmodell; automatisch per Lastverteilung)",
+   "detail": "assets/raw/bg.png, 1536×1024 angefragt, 1264×848 geliefert, 71 s, verbatim: true, Prompt prompts/bg.txt. Stilblock: gotische Miniatur aus einem Stundenbuch um 1400, Eitempera, Federkontur, weiße Höhungen, aufgekippter Raum ohne Fluchtpunkt, Goldgrund mit punzierten Sternen, Wolkenband, Zinnoberstreifen, Meer als Muster aus Wellenkringeln, gestufte Felsen, Lampe ohne Strahl, kein Rauch, keine Vögel, Komposition in Prozent; dazu Motivblock, background_only_en, Schutzregeln, Format. Ergebnis: Goldhimmel mit Sternen und Wellenmuster gut, aber als moderne flache Plakatillustration mit richtiger Zentralperspektive, modernem Häuschen und Leuchtturm, dünner Rahmenlinie oben und trotzdem mitgemaltem Rauch. Nicht verwendet."
+  },
+  {
+   "step": "Miniatur, Versuch 2 (verwendet)",
+   "tool": "genimg (gpt-image über Codex, --backend codex bewusst gewählt)",
+   "detail": "assets/raw/bg2.png, 1536×1024, 83 s, Prompt prompts/bg2.txt: Stilblock wie Versuch 1, verschärft um „it must look like a real medieval painting on parchment, not like a modern illustration“, Palette „dominated by lapis-lazuli ultramarine, vermilion and burnished gold“, „fine parallel hatching strokes“, Gebäude „shown from two sides at once in reverse perspective“, gotisches Haus mit Spitzbogentür, mittelalterlicher Turm mit Zinnen, „no frame line“, „not a modern flat vector illustration, not a poster“. Ergebnis im ersten Versuch: zerknittertes Blattgold mit Punzsternen, Ultramarin mit Schraffur, Wolkenbänder, Wellenkringel, gestufte Felsen, Kai frei für die Figur. Abweichungen: Pflaster fluchtet leicht, Leuchtturm mit neuzeitlichem Laternenhaus, naturalistische goldene Spiegelstriche im Wasser, Rauch trotz Verbot; Laterne bei 72 % statt 60 % der Breite, Leuchtturm bei 86 % statt 82 %."
+  },
+  {
+   "step": "Miniatur aufbereiten",
+   "tool": "scripts/build_miniature.py (NumPy, Pillow)",
+   "detail": "Rauch entfernen: helle, unbunte Pixel im Rauchfenster über dem Schornstein (5 594 px, 4 px aufgedickt) werden mit demselben Bildstück 48 px weiter rechts gefüllt (Wolkenband und Abendstreifen laufen fast waagerecht), Rand weich überblendet. Auf 792×528 verkleinern (Lanczos), 2 Zeilen oben und unten abschneiden. Masken als RGB: R = Blattgold (Farbton 36–58°, Sättigung > 0,38, Helligkeit > 0,42, über y 330 der Quelle, ohne Lampe, plus goldene Spiegelstriche im Wasser), G = Wasser (blaue Pixel unter dem Horizont, Schließen mit Radius 7, danach nur blaue, weißliche und goldene Pixel, damit Masten und Wanten herausfallen), B = Laternenglas. mini_nocrest.png: weiße Wellenkringel im Wasser durch den Mittelwert der übrigen Wasserpixel im 11×11-Fenster ersetzt. miniature.json mit Horizont, Schornstein, Lampe und Laterne in Fensterkoordinaten."
+  },
+  {
+   "step": "Figur: Layout aus dem 3D-Modell",
+   "tool": "Blender 5.2 (blender/pose_layout.py) + scripts/make_pose_ref.py",
+   "detail": "shared/3d/badger.glb, Aktion Wave Bild 12 (Hand oben), um −60° zur Kamera gedreht (Dreiviertelansicht nach rechts, erhobene Hand frei neben dem Kopf), orthografisch gerendert; auf Magenta gesetzt, 88 % der Bildhöhe (assets/ref/pose_layout.png, 1024×1536). Vorher Drehungen −25°, −40° und −60° sowie Wave-Bilder 6, 12 und 20 verglichen."
+  },
+  {
+   "step": "Figur in Buchmalerei",
+   "tool": "genimg (gpt-image über Codex; gebunden an bg2.png, kein Ausweichen)",
+   "detail": "assets/raw/badger.png, 1024×1536 mit echtem Alphakanal, 89 s, Prompt prompts/badger.txt. Referenzen: 1. Pose-Layout (nur Layout und Pose, nie die 3D-Schattierung), 2. shared/badger/master_sheet.png (nur Kostüm und Proportionen), 3. bg2.png (gleicher Strich, gleiche Farben, gleiche Höhungen). Pose ausdrücklich: Dreiviertelansicht nach rechts, Redegestus mit Zeige- und Mittelfinger, Unterarm frei vom Kopf, Ärmel an der erhobenen Seite als dicke Manschette am Ellbogen, aus der der Unterarm kommt (für die Schnittfigur). Im ersten Versuch genau so geliefert."
+  },
+  {
+   "step": "Schnittfigur",
+   "tool": "scripts/build_badger.py (NumPy, Pillow)",
+   "detail": "Rand von 70 px um die Quelle, damit der gedrehte Arm nicht abgeschnitten wird. Unterarm = Polygon um Unterarm und Hand (Quellkoordinaten, von Hand gemessen) minus Manschette (cremefarbene Fläche im Manschettenfenster, mit Radius 4 geöffnet, damit die weißen Glanzstriche des Fells nicht mitzählen, und um 9 px aufgedickt, damit die Manschettenkontur beim Körper bleibt); auch halbtransparente Randpixel gehören zum Arm (sonst blieb ein Geisterumriss der Hand im Körper). Der Arm wird entlang seiner Achse um bis zu 60 px nach unten verschmiert (liegt verdeckt unter der Manschette, damit beim Drehen keine Lücke aufgeht). Beide Teile auf gemeinsamer Leinwand, vormultipliziert mit Lanczos auf 330 px Figurhöhe verkleinert; badger.json mit Fußpunkt und Drehpunkt (Mitte der Manschettenöffnung). Vorschau bei −6°, 0°, 8°, 16°, 24° geprüft: Gelenk unsichtbar."
+  },
+  {
+   "step": "Drolerie",
+   "tool": "genimg (gpt-image über Codex; gebunden an bg2.png) + scripts/build_drollery.py",
+   "detail": "assets/raw/drollery.png, 1024×1024 angefragt, 1254×1254 geliefert, echter Alphakanal, 71 s, Prompt prompts/drollery.txt: Hase im Ultramarin-Kittel mit langer Goldtrompete und schlichtem Zinnoberwimpel, Referenzen bg2.png und raw/badger.png als Stilreferenz. Im ersten Versuch verwendbar. Aufbereitung: auf 120 px Höhe verkleinert, Goldmaske der Trompete (Farbton 36–56°, Sättigung > 0,58, Helligkeit > 0,62; die erste, lockerere Schwelle erfasste auch Fellsprenkel)."
+  },
+  {
+   "step": "Seite, Rahmen, Ranken, Fleuronnée",
+   "tool": "scripts/build_page.py (NumPy, Pillow, kein Bildmodell)",
+   "detail": "Doppelt groß (2560×1440) in getrennten Ebenen gezeichnet und verkleinert: Farbe, Blattgold, Weiß, Tusche, blaue Feder. Pergament aus Rauschen in drei Größen, 900 Haarporen, dunklerem Rand. Rahmen: Federlinien, Farbleiste in Segmenten von etwa 64 px abwechselnd Blau/Rosa mit weißen Perlen, Goldleiste mit Punzenraster. Dornblattranken: Hauptstiel als Sinuslinie, im festen Abstand abwechselnd nach beiden Seiten eine offene Ranke (erst fast gerade, am Ende eng eingerollt) mit zwei Efeublättern (Gold, Blau, Rosa, Grün; farbige mit dunklerer Hälfte und weißer Mittelrippe) und Goldpollen am Ende, dazwischen Haarranken mit Goldpollen; Vierpassblüten in den Ecken; unter der Drolerie keine Ranken. Fleuronnée-Feld 100×100 aus Doppellinie, Perlstab, Eckspiralen und einem Raster kleiner Spiralen, dazu ein Federausläufer mit Spiralen die Spalte hinab. page_gold.png (RGB): R = Golddeckung, G = Phase je Goldelement, B = Relief (Knitter, Punzen nur in der Goldleiste). Zufall aus RandomState(20261013)."
+  },
+  {
+   "step": "Godot-Demo",
+   "tool": "Godot 4.7.2, GDScript, 3 canvas_item-Shader + 1 Include",
+   "detail": "main.gd baut Seite, Miniaturfenster (clip_contents), Effekte, Schnittfigur, Drolerie und Text in _ready(); alle Goldflächen über shaders/gold.gdshaderinc. Schrift Texturina als variable Schrift über FontVariation (wght/opsz)."
+  },
+  {
+   "step": "Messen und Aufnehmen",
+   "tool": "scripts/probe_badger.py, scripts/render_frames.py, tools/capture.py --poster-at 0.94",
+   "detail": "Figur über Differenzbilder zweier Godot-Läufe (mit und ohne --probe-no-badger) gemessen, Ergebnis assets/measure_badger.json. Einzelbilder des Aufblitzens (Leuchtfeuer bei 2,6 s und 5,6 s), Wasserkringel (Anteil geänderter Wasserpixel) und Langlauf ab t = 30 s gerendert. Probeläufe mit --rendering-method mobile und gl_compatibility. Poster bei 5,63 s (Leuchtfeuer blitzt, Parserzeile fertig). Neubau aller Assets ohne Bildmodell: sh styles/buchmalerei/scripts/build_all.sh (wenige Sekunden)."
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, stretch mode canvas_items, Forward+, MSAA 2D 4×, Löschfarbe Pergament; main.tscn enthält nur den Wurzelknoten mit main.gd",
+  "Seite: Sprite2D mit page.png und shaders/page.gdshader (Maske page_gold.png, filter_nearest). Miniatur: Control bei (64,48), 792×524, clip_contents; darin Sprite2D mit shaders/miniature.gdshader (Masken mini_mask.png und mini_nocrest.png)",
+  "shaders/gold.gdshaderinc: Lichtstreif entlang der Richtung (1; 0,42), Breite 150 px, Periode 5 s, über Bildschirmkoordinaten (origin + UV × size), damit Seite, Miniatur und Drolerie zur selben Zeit am selben Ort aufleuchten; Aufblitzen je Element pow(sin(2,1 t + 2π·Phase), 14); Gold dunkelt außerhalb des Streifs auf 84 % ab. In der Miniatur kommt das Relief aus der Helligkeit des gemalten Golds, die Phase aus breiten, schrägen Sinusbändern (ein Raster aus sin·sin ergab sichtbare Kacheln)",
+  "Wasser im Miniatur-Shader: Kringel-Ebene = Bild minus Bild ohne Kringel, um ganze Pixel verschoben (round(2 sin(1,7 t + 0,09 y))) und nur auf Wasserpixeln; Sichtbarkeit smoothstep über 0,7 sin(0,055 x + 3,2 t + 0,21 y) + 0,3 sin(0,021 x − 0,9 t + 0,47 y), wandert also mit 58 px/s nach links. Laterne: Glaspixel × (0,8 + 0,45 flick) plus warmer Zuschlag",
+  "Dachs: Node2D am Fußpunkt (Position ganzzahlig gerundet), Körper-Sprite2D davor, Unterarm-Sprite2D dahinter an einem Node2D im Drehpunkt; x = lerp(−150, 246, smoothstep((t − 0,2)/2,6)), Schaukeln 1,3° · sin(2πt/0,9) · Geschwindigkeitsanteil; Arm 14° beim Gleiten, ab 2,85 s in 0,45 s auf den Redegestus, danach −1,5° + 5° · sin²",
+  "Drolerie: Sprite2D mit shaders/sprite_gold.gdshader (Gold der Trompete), Fußpunkt (1080, 661) auf dem unteren Rankenstiel, wiegt sich mit 2,2° bei 1,3 s Periode",
+  "Effekte als innere Klassen (Node2D mit _draw, Zustand nur aus t): Smoke (Band aus 91 Kreisen: erst alle Konturkreise, dann alle Füllungen, dann weiße Glanzlinie; Welle läuft mit 2,8 rad/s nach oben, Wind biegt nach rechts), LampRays (16 Strahlen in Zinnober, nach unten zeigende ausgelassen, Länge 6–14 px pulsierend, beim Aufblitzen alle 3 s bis 48 px), LanternRays (8 goldene Strahlen, Länge aus vorab gezogenen Zufallszahlen, 10 Werte/s), Birds (2 Federstriche, 4 Flügelstellungen bei 6 Bildern/s, fliegen endlos durch), Ruling (Linierung der Textspalte)",
+  "Text: Label mit LabelSettings, Schrift Texturina-VF über FontVariation (Fließtext wght 560/opsz 24, Rubrik 700/30, Initiale 820/72). Zeilenumbruch in GDScript mit Font.get_string_size (drei schmale Zeilen neben der Initiale, dann volle Breite), Blocksatz nur bei Zeilen, die zu mehr als 86 % gefüllt sind. Text schreibt sich mit 21 Zeichen/s ab 0,6 s (visible_characters nach dem Shaping), Auswahl blendet ab 3,75 s nacheinander ein, Parserzeile tippt ab 4,7 s mit 12 Zeichen/s, Schreibmarke ColorRect blinkt",
+  "Zufall nur aus RandomNumberGenerator mit seed 20261013 (400 vorab gezogene Werte, Schleife über 40 s); Zeit t als Summe der delta-Werte; Prüfschalter nach --: --probe-no-badger blendet die Figur aus, --t0=<s> startet später (Langlauf-Prüfung)"
+ ],
+ "techniques": [
+  "textoberflaeche",
+  "buchseite",
+  "posen-vorlage-3d",
+  "schnittfigur",
+  "blattgold-schimmer",
+  "ornament-aus-code",
+  "shader-wasser",
+  "kinemagramm",
+  "prozedurale-animation"
+ ],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 3,
+  "effort": 3,
+  "text_adventure": 5,
+  "mobile": 5
+ },
+ "ratings_note": "ai_fit 4: gpt-image traf die Miniatur (Goldgrund mit Punzsternen, Tempera mit Schraffur, Wellenkringel, gestufte Felsen), die Figur im Redegestus und die Drolerie jeweils im ersten Versuch; Abzüge für den verworfenen agy-Versuch (moderne Flachillustration), das noch leicht fluchtende Pflaster, den neuzeitlichen Leuchtturmkopf und den trotz Verbot gemalten Rauch. Rahmen, Ranken, Initialfeld und Pergament kommen nicht aus der KI, sondern aus Code. consistency 3: Figur, Drolerie und Miniatur passen mit der Miniatur als Stilreferenz gut zusammen, und Seite und Ornamente sind als Code überall gleich; geprüft ist aber nur ein Ort und eine Figurenpose, weitere Gesten oder Orte aus dem Bildmodell würden nicht pixelgleich passen (vorläufig). effort 3: je Ort ein KI-Bild plus Aufbereitung mit von Hand gemessenen Stellen (Rauchfenster, Lampe, Laterne, Horizont), je Geste ein KI-Bild plus Schnittpolygon; Seite, Ranken und Text kosten nichts mehr. mobile 5: nach Probeläufen ist --rendering-method mobile bitgleich zu Forward+; gl_compatibility meldet „2D MSAA is not yet supported for GLES3“, 9,8 % der Pixel weichen leicht ab (0,01 % um mehr als 16 Stufen, höchstens 64: ungeglättete Kanten). Drei einfache Shader auf einer Seite in Bildschirmgröße, wenige Sprites und gezeichnete Linien; die Leistung auf einem echten Gerät ist geschätzt, nicht gemessen.",
+ "verdict": "Sehr gut geeignet für unser Textadventure. Die Manuskriptseite bringt die Textoberfläche mit: Ort als Rubrik, Erzähltext mit Initiale, Auswahl mit Paragraphenzeichen, Parserzeile, alles in einer Textspalte neben dem Bild, die sich ohne Overlay liest; Texturina bleibt in 27 px gut lesbar. Wiederholbar ist die Aufteilung: Pergament, Rahmen, Dornblattranken und Fleuronnée kommen aus Code und passen sich jedem Layout an, je Ort braucht es nur eine KI-Miniatur (mit Codex und strengem Stilblock; agy zog zur modernen Flachillustration) und deren Masken. Figuren sind KI-Bilder in Bedeutungsgröße, die als Schnittfiguren gleiten und gestikulieren; das passt zum Stil, der keine Laufzyklen braucht, und spart Animationsaufwand, begrenzt aber die Ausdrucksmöglichkeiten auf wenige Gesten je Figur. Bewusst vom Motiv abgewichen: Goldgrund statt Abendhimmel (Dämmerung nur als Zinnoberband und blaue Wolkenbänder) und ein Dachs, der größer ist als das Haus.",
+ "pitfalls": [
+  "agy (Versuch 1) lieferte trotz Stilblock eine moderne Plakatillustration mit Goldhimmel: richtige Zentralperspektive, modernes Häuschen und Leuchtturm, dünne Rahmenlinie, gemalter Rauch. Wie beim Jugendstil-Eintrag wurde für den zweiten Versuch bewusst Codex gewählt; dadurch sind alle folgenden Bilder an Codex gebunden.",
+  "Auch die Codex-Miniatur ist nicht ganz mittelalterlich: Das Pflaster des Kais fluchtet leicht, der Leuchtturm trägt ein neuzeitliches Laternenhaus, im Wasser liegen naturalistische goldene Spiegelstriche, und Rauch wurde trotz „no smoke at all“ gemalt (in build_miniature.py durch ein Bildstück 48 px weiter rechts ersetzt; das geht, weil Wolkenband und Abendstreifen dort fast waagerecht laufen). Der Leuchtturm selbst ist ein Anachronismus aus dem Motiv.",
+  "Die Figur hat nur eine gemalte Pose. Bewegung entsteht aus Gleiten, Schaukeln und dem gedrehten Unterarm; das Gelenk an der Manschette hält nur für kleine Winkel (geprüft −6° bis 24°). Jede weitere Geste braucht ein neues KI-Bild, das nicht pixelgleich zum ersten passt, und ein neues, von Hand gemessenes Schnittpolygon.",
+  "Beim ersten Zerlegen blieb ein Geisterumriss der Hand im Körperbild (halbtransparente Randpixel wurden dem Körper zugeschlagen), und die rechte Leinwandkante schnitt den gedrehten Arm ab (Quelle reicht bis zum Bildrand). Behoben durch Arm-Maske mit Alpha > 0 und 70 px Rand um die Quelle.",
+  "Beim Schaukeln während der Fahrt springt die Sohlenlinie zwischen 488 und 489 (gewollt, ±1,3° um den Fußpunkt); im Stand ist sie konstant. Die Prüfung meldet im Stand bis zu 8 geänderte Körperpixel je Bildpaar: halbtransparente Randpixel der Figur über den animierten Wellenkringeln, keine Bewegung der Figur.",
+  "Der erhobene Unterarm ist beim Gleiten nach vorn geneigt und erscheint deshalb ab etwa 0,8 s allein am linken Fensterrand, bevor der Körper folgt.",
+  "Die Wasseranimation ist zurückhaltend: Nur die weißen Kringel (13 % der Wasserpixel) ändern sich; je 0,5 s ändern sich 5,3 % der Wasserpixel um mehr als 16 Stufen (erste Fassung ohne Wiegen 3,8 %). Im Video als wanderndes Funkeln sichtbar, in Standbildern kaum.",
+  "Das Aufblitzen des Goldes nutzte zuerst ein Raster aus sin(x)·sin(y): Im Goldgrund erschienen sichtbare Kacheln. Jetzt breite, schräge Sinusbänder.",
+  "Die Initiale saß zunächst 33 px zu tief: Label zentriert vertikal über die Zeilenhöhe, nicht über die Glyphe. Jetzt aus gemessenen Faktoren gesetzt (Glyphenoberkante 0,567 × Schriftgröße unter dem Label, Glyphenhöhe 0,692 × Schriftgröße); gilt nur für Texturina in dieser Achseneinstellung.",
+  "Blocksatz in der schmalen Spalte neben der Initiale reißt Lücken auf; jetzt nur bei Zeilen, die zu mehr als 86 % gefüllt sind, „wartet ein Paket“ zeigt trotzdem sichtbar breite Wortabstände. Echte Handschriften kürzten dafür Wörter ab.",
+  "Texturina ist eine gut lesbare, an Textura angelehnte Schrift mit wenig Brechung; historische Textura wirkt dunkler und enger. Grenze Gotisch (gotischer, aber mit frakturähnlichen Versalien) und UnifrakturMaguntia (Fraktur-Versalien) wurden verglichen und nicht genommen, weil der Auftrag Fraktur ausschließt.",
+  "Die Dornblattranken aus Code wirkten im ersten Entwurf wie eine Lichterkette (Ranken rollten sich sofort am Stiel ein); erst offene Ranken mit am Ende steigender Krümmung lesen sich als gotische Bordüre. Sie bleiben schematischer als gemalte Bordüren: nur Efeublätter und Vierpassblüten, keine Akanthusranken, alle Blätter gleich gebaut; die linke Ranke berührt mit einzelnen Blättern die Goldleiste.",
+  "Die Strahlen des Leuchtfeuers kreuzen das Laternenhaus des gemalten Turms, weil sie über der Miniatur gezeichnet werden; nur nach unten zeigende Strahlen sind ausgelassen.",
+  "Boote schaukeln nicht (müssten aus der Miniatur gelöst werden); bewusst ausgelassen, sechs andere Umgebungsanimationen laufen.",
+  "gl_compatibility unterstützt kein 2D-MSAA (Warnung im Log); Kanten der gezeichneten Strahlen und Schreibmarke sind dort ungeglättet."
+ ],
+ "lessons": [
+  "Stilblock, der mit gpt-image im ersten Versuch traf: „miniature from a Gothic illuminated manuscript, a Book of Hours painted around 1410 … must look like a real medieval painting on parchment, not like a modern illustration“, „opaque egg tempera … dominated by lapis-lazuli ultramarine, vermilion and burnished gold“, „fine dark brown-black pen line of slightly irregular, hand-drawn width“, „modelled only with fine parallel hatching strokes … and thin white highlight lines“, „burnished gold-leaf ground with a fine tooled diaper pattern of small punched stars“, „sea … covered with neat rows of small curled white wavelets“, „stylized stepped rock ledges“ und „not a modern flat vector illustration, not a poster“.",
+  "Für historische Malstile Codex wählen: agy zog hier wie beim Jugendstil zur modernen Flachillustration.",
+  "Figur im Stil: Blender-Pose als erste Referenz (Layout), Master-Sheet als zweite (nur Kostüm), die fertige Miniatur als dritte (Strich und Farben) ergibt im ersten Versuch eine passende Figur mit echtem Alphakanal. Gewünschte Schnittstellen gleich in den Prompt schreiben („the forearm comes out of this cuff“, „clearly separated from the head“), dann lässt sich die Figur später zerlegen.",
+  "Schnittfigur aus einem KI-Bild: Teil per Polygon, Nachbarfläche (Manschette) über Farbe finden, öffnen, aufdicken und abziehen; das bewegte Teil hinter den Körper legen und entlang seiner Achse unter die Verdeckung verlängern. So bleibt das Gelenk bei kleinen Winkeln unsichtbar, ohne etwas nachzumalen.",
+  "Bedeutungsgröße löst das Problem kleiner Figuren: Der Dachs darf 63 % der Miniatur hoch sein, ohne dass es falsch wirkt, und zeigt so Strich, Schraffur und Gesicht.",
+  "Blattgold für alle Ebenen über ein gemeinsames Shader-Include in Bildschirmkoordinaten: Miniatur (Maske aus dem Farbton), Seite (Maske aus dem Code) und Drolerie leuchten gemeinsam auf. Das Relief aus der Helligkeit lässt Punzsterne funkeln. Phasen nicht als Raster verteilen.",
+  "Seite, Rahmen, Ranken und Initialfeld aus Code: Eine Python-Datei mit getrennten Ebenen (Farbe, Gold, Weiß, Tusche, Feder), doppelt groß gezeichnet, ergibt eine Bordüre, die sich jedem Layout anpasst. Offene Ranken: Krümmung erst gegen Ende steigern (0,35 + 7·s^3,2), Blätter auf 40 % und 75 % der Ranke, Goldpollen am Ende.",
+  "Animierte Wellen in einem gemalten Muster: Bild ohne Kringel offline erzeugen, Kringel-Ebene = Bild minus diese Fassung, im Shader um ganze Pixel verschieben und in wandernden Zügen ein- und ausblenden.",
+  "Initiale neben dem Text: Feld fester Größe im Seitenbild, Buchstabe als Label darüber, die ersten Zeilen mit schmaler Breite in GDScript umbrechen (Font.get_string_size); die vertikale Lage des Buchstabens messen, nicht aus der Label-Ausrichtung ableiten.",
+  "Effekte in der Bildsprache der Buchmalerei statt als Licht: Leuchtfeuer als Strahlenkranz in Zinnober, Laternenlicht als goldene Strahlen, Rauch als geschlängeltes Band mit Kontur und Glanzlinie, Vögel als Federstriche.",
+  "Eine Drolerie im unteren Rand macht die Seite sofort als Handschrift kenntlich; die Ranken darunter aussparen, sonst sieht ein Blatt hinter der Figur wie ein Teil von ihr aus.",
+  "Figur messen über Differenzbilder zweier deterministischer Läufe (mit und ohne Figur): Sohle, Mütze, Fußpunkt und Vorschub je Bild; Gleiten auf Rückschritte und Sprünge prüfen."
+ ],
+ "assets": [
+  {
+   "file": "assets/miniature.png",
+   "kind": "background",
+   "made_with": "gpt-image (Codex) 1536×1024, build_miniature.py: Rauch entfernt, auf 792×524",
+   "prompt": "assets/raw/bg2.json"
+  },
+  {
+   "file": "assets/mini_mask.png",
+   "kind": "mask",
+   "made_with": "build_miniature.py aus bg2.png: R Blattgold, G Wasser, B Laternenglas",
+   "prompt": ""
+  },
+  {
+   "file": "assets/mini_nocrest.png",
+   "kind": "texture",
+   "made_with": "build_miniature.py: Miniatur ohne weiße Wellenkringel (für die Wasseranimation)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/badger_body.png",
+   "kind": "sprite",
+   "made_with": "gpt-image (Codex) mit Blender-Pose, Master-Sheet und Miniatur als Referenzen, build_badger.py: Körper ohne Unterarm, 330 px Figurhöhe",
+   "prompt": "assets/raw/badger.json"
+  },
+  {
+   "file": "assets/badger_arm.png",
+   "kind": "sprite",
+   "made_with": "build_badger.py: Unterarm mit Redegestus, nach unten verlängert, dreht um die Manschette",
+   "prompt": "assets/raw/badger.json"
+  },
+  {
+   "file": "assets/ref/pose_layout.png",
+   "kind": "reference",
+   "made_with": "Blender 5.2 (shared/3d/badger.glb, Wave Bild 12, −60°) + make_pose_ref.py",
+   "prompt": ""
+  },
+  {
+   "file": "assets/drollery.png",
+   "kind": "sprite",
+   "made_with": "gpt-image (Codex) 1254×1254 mit Alphakanal, build_drollery.py: 130×120",
+   "prompt": "assets/raw/drollery.json"
+  },
+  {
+   "file": "assets/drollery_gold.png",
+   "kind": "mask",
+   "made_with": "build_drollery.py: Goldmaske der Trompete",
+   "prompt": ""
+  },
+  {
+   "file": "assets/page.png",
+   "kind": "ui",
+   "made_with": "build_page.py (Code): Pergament, Rahmen, Dornblattranken, Fleuronnée-Feld",
+   "prompt": ""
+  },
+  {
+   "file": "assets/page_gold.png",
+   "kind": "mask",
+   "made_with": "build_page.py: R Golddeckung, G Phase je Element, B Relief",
+   "prompt": ""
+  },
+  {
+   "file": "assets/raw/bg.png",
+   "kind": "background",
+   "made_with": "agy (Gemini) 1264×848, verworfen (moderne Flachillustration)",
+   "prompt": "assets/raw/bg.json"
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Texturina (variable, demo/fonts/Texturina-VF.ttf), Copyright 2020 The Texturina Project Authors (Omnibus-Type)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/texturina"
+  }
+ ],
+ "image_generations": 4,
+ "tool_issues": [],
+ "status": "done"
+}

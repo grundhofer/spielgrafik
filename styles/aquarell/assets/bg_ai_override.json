@@ -1,0 +1,127 @@
+{
+ "_comment": "Korrekturen für raw/bg.png (Codex): Horizont lag automatisch an der Kaikante, Lampe und Laterne auf Boot bzw. Kisten. Koordinaten in Rohbild-Pixeln (assets/check/bg_ai_grid.png). Prüfung 1: Laufzeile auf dem Bildschirm 550 statt 572 (Füße standen am Trockenpinsel-Auslauf der Unterkante), Rohbild-Laufzeile 770 statt 800 (gleicher Ausschnitt und Maßstab), Figurenhöhe fest 150 px (aus der Perspektive wären es 135 px); Hintergrund im Pigmentmodell entsättigt (grade_sat) und die hellsten 3 % als Papierweiß ausgespart (grade_white_pct).",
+ "horizon": 515,
+ "lamp": [
+  1338,
+  337
+ ],
+ "lantern": [
+  1053,
+  496
+ ],
+ "window": [
+  177,
+  494
+ ],
+ "chimney": [
+  113,
+  186
+ ],
+ "walk_y": 770,
+ "top_y": 100,
+ "water_y": [
+  515,
+  718
+ ],
+ "water_seed": [
+  [
+   1200,
+   600
+  ],
+  [
+   1400,
+   640
+  ],
+  [
+   1460,
+   570
+  ],
+  [
+   900,
+   560
+  ],
+  [
+   960,
+   600
+  ],
+  [
+   760,
+   690
+  ],
+  [
+   450,
+   690
+  ],
+  [
+   600,
+   700
+  ],
+  [
+   1150,
+   560
+  ],
+  [
+   700,
+   545
+  ],
+  [
+   1500,
+   700
+  ],
+  [
+   880,
+   690
+  ],
+  [
+   520,
+   530
+  ],
+  [
+   650,
+   530
+  ],
+  [
+   800,
+   530
+  ],
+  [
+   1000,
+   525
+  ],
+  [
+   400,
+   700
+  ],
+  [
+   500,
+   700
+  ],
+  [
+   560,
+   690
+  ],
+  [
+   680,
+   700
+  ],
+  [
+   1300,
+   560
+  ],
+  [
+   1450,
+   600
+  ],
+  [
+   1350,
+   690
+  ]
+ ],
+ "water_tol": 0.12,
+ "lamp_glow_scale": 0.45,
+ "smoke_alpha": 0.6,
+ "feet_y": 550,
+ "badger_height": 150,
+ "grade_sat": 0.78,
+ "grade_white_pct": 3.0
+}

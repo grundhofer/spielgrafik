@@ -1,0 +1,11 @@
+Repaint this sprite sheet in a different painting technique. The first reference image is the sprite sheet to repaint: keep its layout exactly, all ten figures in two rows of five, their poses, the positions of both legs and feet, the arms, the parcel, the satchel and the scarf, the place, size and outline of each figure and the baselines of the feet; change only how the figures are painted. The second reference image is the painted background of the same game: match its painting technique and tonal range, but do not copy any of its content.
+
+Painting technique: flat gouache painting with a broad brush, like a hand-painted matte painting for a 1940s black-and-white film. Every form is built from only two or three flat tonal planes with crisp, hard edges between them, with a few visible dry brush strokes inside the planes; no smooth gradients, no soft round airbrush shading, no fur texture, no individual hairs, no fuzzy felt surface. Strictly monochrome: only black, white and neutral greys; the only colour is the knitted scarf, a flat, deep, saturated red. Tonal design: cap, vest and the fur of body and legs in flat dark greys, the broad face stripes clearly black and white, the shirt sleeves light grey, satchel and parcel mid grey, the eye a small black dot. Lighting: flat and even, as on an overcast day; no cast shadows, no rim light, no glow, no bright highlights on the edges (the game adds hard noir lighting in real time). It must look painted by hand with a brush: not a 3D render, not a photograph, not a plush toy, not smooth CG shading, no outlines.
+
+The badger courier: an original mascot character, a stout, short-legged badger with a broad black-and-white striped face, wearing a dark green peaked cap with a brass button, a dark green vest with pockets over a cream shirt with rolled-up sleeves, a long red knitted scarf, a brown leather satchel on a shoulder strap, and a brown paper parcel tied with string under one arm.
+
+Each figure isolated on a fully transparent background, with clear empty space between the figures; no ground, no cast shadow, no frame borders, nothing cut off at the edge of the sheet.
+
+No text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.
+
+Image format: landscape 3:2.

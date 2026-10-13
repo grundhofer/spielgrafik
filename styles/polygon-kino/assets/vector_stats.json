@@ -1,0 +1,259 @@
+{
+ "retries": 644,
+ "dropped_nonsimple": 0,
+ "dropped_tiny": 1,
+ "snap_points": 3799,
+ "snap_rejected": 37,
+ "images": {
+  "A_far": {
+   "polygons": 48,
+   "points": 263,
+   "mismatch": 0.0682
+  },
+  "A_boats": {
+   "polygons": 19,
+   "points": 83,
+   "mismatch": 0.2003
+  },
+  "A_near": {
+   "polygons": 109,
+   "points": 534,
+   "mismatch": 0.0363
+  },
+  "A_walk_00": {
+   "polygons": 30,
+   "points": 192,
+   "mismatch": 0.1287
+  },
+  "A_walk_01": {
+   "polygons": 31,
+   "points": 201,
+   "mismatch": 0.1252
+  },
+  "A_walk_02": {
+   "polygons": 31,
+   "points": 204,
+   "mismatch": 0.1097
+  },
+  "A_walk_03": {
+   "polygons": 30,
+   "points": 187,
+   "mismatch": 0.1159
+  },
+  "A_walk_04": {
+   "polygons": 30,
+   "points": 190,
+   "mismatch": 0.1287
+  },
+  "A_walk_05": {
+   "polygons": 30,
+   "points": 187,
+   "mismatch": 0.097
+  },
+  "A_walk_06": {
+   "polygons": 32,
+   "points": 194,
+   "mismatch": 0.1077
+  },
+  "A_walk_07": {
+   "polygons": 31,
+   "points": 197,
+   "mismatch": 0.1218
+  },
+  "A_idle_00": {
+   "polygons": 30,
+   "points": 198,
+   "mismatch": 0.1269
+  },
+  "A_idle_01": {
+   "polygons": 31,
+   "points": 209,
+   "mismatch": 0.1315
+  },
+  "A_idle_02": {
+   "polygons": 32,
+   "points": 206,
+   "mismatch": 0.1385
+  },
+  "A_idle_03": {
+   "polygons": 32,
+   "points": 198,
+   "mismatch": 0.1455
+  },
+  "A_idle_04": {
+   "polygons": 31,
+   "points": 195,
+   "mismatch": 0.1509
+  },
+  "A_idle_05": {
+   "polygons": 32,
+   "points": 196,
+   "mismatch": 0.1418
+  },
+  "A_idle_06": {
+   "polygons": 32,
+   "points": 199,
+   "mismatch": 0.1457
+  },
+  "A_idle_07": {
+   "polygons": 33,
+   "points": 199,
+   "mismatch": 0.1312
+  },
+  "A_idle_08": {
+   "polygons": 32,
+   "points": 196,
+   "mismatch": 0.1279
+  },
+  "A_idle_09": {
+   "polygons": 30,
+   "points": 190,
+   "mismatch": 0.1277
+  },
+  "B_far": {
+   "polygons": 54,
+   "points": 286,
+   "mismatch": 0.0725
+  },
+  "B_boats": {
+   "polygons": 21,
+   "points": 101,
+   "mismatch": 0.1472
+  },
+  "B_near": {
+   "polygons": 55,
+   "points": 277,
+   "mismatch": 0.0452
+  },
+  "B_idle_00": {
+   "polygons": 56,
+   "points": 378,
+   "mismatch": 0.0926
+  },
+  "B_idle_01": {
+   "polygons": 56,
+   "points": 360,
+   "mismatch": 0.1063
+  },
+  "B_idle_02": {
+   "polygons": 56,
+   "points": 347,
+   "mismatch": 0.1187
+  },
+  "B_idle_03": {
+   "polygons": 57,
+   "points": 359,
+   "mismatch": 0.1167
+  },
+  "B_idle_04": {
+   "polygons": 57,
+   "points": 359,
+   "mismatch": 0.1272
+  },
+  "B_idle_05": {
+   "polygons": 59,
+   "points": 385,
+   "mismatch": 0.133
+  },
+  "B_idle_06": {
+   "polygons": 57,
+   "points": 372,
+   "mismatch": 0.1171
+  },
+  "B_idle_07": {
+   "polygons": 55,
+   "points": 367,
+   "mismatch": 0.1175
+  },
+  "B_idle_08": {
+   "polygons": 56,
+   "points": 371,
+   "mismatch": 0.1282
+  },
+  "B_idle_09": {
+   "polygons": 56,
+   "points": 368,
+   "mismatch": 0.1246
+  },
+  "B_wave_00": {
+   "polygons": 59,
+   "points": 384,
+   "mismatch": 0.0948
+  },
+  "B_wave_01": {
+   "polygons": 60,
+   "points": 385,
+   "mismatch": 0.1011
+  },
+  "B_wave_02": {
+   "polygons": 59,
+   "points": 385,
+   "mismatch": 0.0974
+  },
+  "B_wave_03": {
+   "polygons": 59,
+   "points": 381,
+   "mismatch": 0.092
+  },
+  "B_wave_04": {
+   "polygons": 58,
+   "points": 380,
+   "mismatch": 0.0968
+  },
+  "B_wave_05": {
+   "polygons": 58,
+   "points": 381,
+   "mismatch": 0.0941
+  },
+  "B_wave_06": {
+   "polygons": 58,
+   "points": 383,
+   "mismatch": 0.0938
+  },
+  "B_wave_07": {
+   "polygons": 58,
+   "points": 383,
+   "mismatch": 0.0928
+  },
+  "B_wave_08": {
+   "polygons": 58,
+   "points": 380,
+   "mismatch": 0.0974
+  },
+  "B_wave_09": {
+   "polygons": 58,
+   "points": 382,
+   "mismatch": 0.0937
+  },
+  "B_wave_10": {
+   "polygons": 58,
+   "points": 382,
+   "mismatch": 0.0934
+  },
+  "B_wave_11": {
+   "polygons": 58,
+   "points": 382,
+   "mismatch": 0.0957
+  },
+  "B_wave_12": {
+   "polygons": 59,
+   "points": 384,
+   "mismatch": 0.0883
+  },
+  "B_wave_13": {
+   "polygons": 59,
+   "points": 385,
+   "mismatch": 0.0974
+  },
+  "B_wave_14": {
+   "polygons": 60,
+   "points": 385,
+   "mismatch": 0.1011
+  },
+  "B_wave_15": {
+   "polygons": 59,
+   "points": 384,
+   "mismatch": 0.0948
+  }
+ }
+}

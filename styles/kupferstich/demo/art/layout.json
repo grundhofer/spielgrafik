@@ -1,0 +1,8 @@
+{
+ "_comment": "Bildschirmaufteilung (1280x720) und Ausschnitt aus dem Rohbild; gelesen von allen Skripten und von demo/main.gd (Kopie demo/art/layout.json).",
+ "screen": [1280, 720],
+ "src": "assets/raw/bg2.png",
+ "src_crop": [0, 120, 1536, 840],
+ "plate": [80, 22, 1120, 525],
+ "plate_mark": [66, 10, 1148, 551]
+}

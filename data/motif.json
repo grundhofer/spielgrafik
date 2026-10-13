@@ -1,0 +1,38 @@
+{
+ "_comment": "Szenenbibel: Jeder Stil zeigt dieselbe Szene, damit Stile vergleichbar sind (Prinzip aus bildsprache: ein Motiv, viele Stile). Die englischen Blöcke gehen wörtlich in Bild-Prompts; Stilangaben stehen davor, Format- und Schutzregeln danach.",
+ "world": "Lornholm",
+ "scene": {
+  "name_de": "Der Hafen von Lornholm in der Abenddämmerung",
+  "summary_de": "Kleiner Inselhafen: Steinkai mit Holzsteg, zwei Fischerboote, weißer Leuchtturm mit rotem Band auf einer Felsnase rechts, Hafenmeisterhäuschen mit erleuchtetem Fenster links, Fässer, Kisten, Laterne. Der Dachs-Kurier läuft über den Kai.",
+  "block_en": "Location: the small harbour of Lornholm, a fictional island in a northern sea, at dusk. A stone quay with a short wooden jetty runs along the lower third of the picture. Two small wooden fishing boats are moored at the jetty. On a rocky headland on the right stands a white lighthouse with one red band, its lamp lit. On the left a small stone harbour-master's cottage with a lit window and a smoking chimney. On the quay: two barrels, a stack of crates, a coil of rope and an iron lantern on a wooden post. Calm sea, low clouds, a band of orange light at the horizon, the first stars.",
+  "background_only_en": "Leave the quay in the foreground free of characters: it is a game background, characters are added later as separate sprites.",
+  "elements_required": ["Kai/Steg", "Wasser", "Leuchtturm mit Licht", "Häuschen mit Fenster", "Laterne", "Dachs-Kurier"],
+  "ambient_animations": ["Wellen oder Wasserglitzern", "Leuchtturmlicht (Strahl oder Blinken)", "Laterne flackert", "Rauch aus dem Schornstein", "Möwen", "Boote schaukeln"]
+ },
+ "character": {
+  "name_de": "Der Dachs-Kurier",
+  "summary_de": "Gedrungener Dachs mit dunkelgrüner Schirmmütze, grüner Weste über cremefarbenem Hemd, langem rotem Strickschal, brauner Umhängetasche und einem Paket unter dem Arm. Übernommen aus dem Figurenmotiv von bildsprache.",
+  "block_en": "The badger courier: an original mascot character, a stout, short-legged badger with a broad black-and-white striped face, wearing a dark green peaked cap with a brass button, a dark green vest with pockets over a cream shirt with rolled-up sleeves, a long red knitted scarf, a brown leather satchel on a shoulder strap, and a brown paper parcel tied with string under one arm.",
+  "reference_sheet": "shared/badger/master_sheet.png",
+  "reference_note": "Für jedes Figurenbild das Referenzblatt mitgeben (genimg.py --ref). Es zeigt Design und Proportionen, nicht den Stil: der Stilblock im Prompt muss ausdrücklich sagen, dass Zeichenstil, Auflösung und Palette dem Stil folgen und nur das Kostüm aus der Referenz übernommen wird."
+ },
+ "ui_text": {
+  "location": "Hafen von Lornholm",
+  "line": "Die Laterne flackert im Wind. Am Kai wartet ein Paket auf dich.",
+  "choices": ["Zum Leuchtturm gehen", "Das Paket ansehen", "Mit dem Dachs sprechen"],
+  "parser_prompt": "> nimm paket"
+ },
+ "guards_en": "No text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.",
+ "demo": {
+  "seconds": 6,
+  "fps": 30,
+  "output": "1280x720",
+  "requirements_de": [
+   "Die Hafenszene ist als Umgebung erkennbar (mindestens Kai, Wasser, Leuchtturm).",
+   "Der Dachs-Kurier ist sichtbar und animiert (läuft mindestens einen Teil der Zeit, sonst Idle mit sichtbarer Bewegung).",
+   "Mindestens zwei Umgebungsanimationen aus ambient_animations.",
+   "Eine Textbox oder Oberfläche im Stil des Eintrags mit ui_text (Ort, Zeile, optional Auswahl/Parser), gerendert von Godot mit echter Schrift, nicht vom Bildmodell; sie deckt höchstens etwa 30 % des Bildes ab.",
+   "Animation läuft deterministisch (feste Zufallsseeds), damit die Aufnahme reproduzierbar ist."
+  ]
+ }
+}

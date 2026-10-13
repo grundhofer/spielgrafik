@@ -1,0 +1,92 @@
+{
+ "ramps": [
+  {
+   "name": "grau",
+   "first": 0,
+   "last": 15
+  },
+  {
+   "name": "granit",
+   "first": 16,
+   "last": 31
+  },
+  {
+   "name": "schiefer",
+   "first": 32,
+   "last": 47
+  },
+  {
+   "name": "holz",
+   "first": 48,
+   "last": 63
+  },
+  {
+   "name": "rostbraun",
+   "first": 64,
+   "last": 79
+  },
+  {
+   "name": "rot",
+   "first": 80,
+   "last": 95
+  },
+  {
+   "name": "orange",
+   "first": 96,
+   "last": 111
+  },
+  {
+   "name": "gelb",
+   "first": 112,
+   "last": 127
+  },
+  {
+   "name": "gruen",
+   "first": 128,
+   "last": 143
+  },
+  {
+   "name": "oliv",
+   "first": 144,
+   "last": 159
+  },
+  {
+   "name": "meer",
+   "first": 160,
+   "last": 175
+  },
+  {
+   "name": "blau",
+   "first": 176,
+   "last": 191
+  },
+  {
+   "name": "violett",
+   "first": 192,
+   "last": 207
+  },
+  {
+   "name": "rosa",
+   "first": 208,
+   "last": 223
+  },
+  {
+   "name": "creme",
+   "first": 224,
+   "last": 239
+  },
+  {
+   "name": "nacht",
+   "first": 240,
+   "last": 255
+  }
+ ],
+ "transparent": 255,
+ "night": [
+  10,
+  10,
+  24
+ ],
+ "levels": 32,
+ "unique_colors": 255
+}

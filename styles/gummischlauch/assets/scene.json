@@ -1,0 +1,353 @@
+{
+ "bg": {
+  "crop_top": 120,
+  "rows": 711,
+  "scale": 1.0126582278481013
+ },
+ "props": {
+  "cottage": {
+   "file": "props/cottage.png",
+   "size": [
+    511,
+    339
+   ],
+   "anchor": [
+    256.0,
+    337.0
+   ],
+   "content_h": 290,
+   "at": [
+    165,
+    548
+   ],
+   "bend": 18.0,
+   "squash": 0.06,
+   "points": {
+    "chimney": [
+     139.03,
+     49.19
+    ],
+    "window": [
+     323.05,
+     259.57
+    ]
+   }
+  },
+  "lighthouse": {
+   "file": "props/lighthouse.png",
+   "size": [
+    176,
+    240
+   ],
+   "anchor": [
+    88.0,
+    238.0
+   ],
+   "content_h": 203,
+   "at": [
+    1160,
+    229
+   ],
+   "bend": 14.0,
+   "squash": 0.04,
+   "points": {
+    "lamp": [
+     88.19,
+     69.08
+    ]
+   }
+  },
+  "lantern": {
+   "file": "props/lantern.png",
+   "size": [
+    229,
+    340
+   ],
+   "anchor": [
+    65.0,
+    338.0
+   ],
+   "content_h": 291,
+   "at": [
+    868,
+    566
+   ],
+   "bend": 17.0,
+   "squash": 0.035,
+   "points": {
+    "lamp": [
+     153.59,
+     190.95
+    ]
+   }
+  },
+  "barrels": {
+   "file": "props/barrels.png",
+   "size": [
+    237,
+    143
+   ],
+   "anchor": [
+    122.0,
+    141.0
+   ],
+   "content_h": 118,
+   "at": [
+    1046,
+    562
+   ],
+   "bend": 8.0,
+   "squash": 0.09,
+   "points": {}
+  },
+  "crates": {
+   "file": "props/crates.png",
+   "size": [
+    219,
+    193
+   ],
+   "anchor": [
+    113.0,
+    191.0
+   ],
+   "content_h": 162,
+   "at": [
+    1180,
+    566
+   ],
+   "bend": 12.0,
+   "squash": 0.07,
+   "points": {}
+  },
+  "rope": {
+   "file": "props/rope.png",
+   "size": [
+    136,
+    61
+   ],
+   "anchor": [
+    73.0,
+    59.0
+   ],
+   "content_h": 46,
+   "at": [
+    792,
+    580
+   ],
+   "bend": 0.0,
+   "squash": 0.07,
+   "points": {}
+  },
+  "boat_a": {
+   "file": "props/boat_a.png",
+   "size": [
+    225,
+    181
+   ],
+   "anchor": [
+    113.0,
+    178.0
+   ],
+   "content_h": 150,
+   "at": [
+    625,
+    452
+   ],
+   "bend": 0.0,
+   "squash": 0.0,
+   "points": {}
+  },
+  "boat_b": {
+   "file": "props/boat_b.png",
+   "size": [
+    170,
+    120
+   ],
+   "anchor": [
+    85.0,
+    118.0
+   ],
+   "content_h": 98,
+   "at": [
+    805,
+    446
+   ],
+   "bend": 0.0,
+   "squash": 0.0,
+   "points": {}
+  },
+  "jetty": {
+   "file": "props/jetty.png",
+   "size": [
+    225,
+    140
+   ],
+   "anchor": [
+    113.0,
+    138.0
+   ],
+   "content_h": 115,
+   "at": [
+    470,
+    493
+   ],
+   "bend": 4.0,
+   "squash": 0.03,
+   "points": {}
+  }
+ },
+ "badger": {
+  "scale": 0.14,
+  "body_side": {
+   "file": "badger/body_side.png",
+   "size": [
+    88,
+    130
+   ],
+   "anchor": [
+    33.98,
+    126.0
+   ],
+   "points": {
+    "sleeve": [
+     9.04,
+     68.93
+    ],
+    "hip_near": [
+     37.63,
+     119.41
+    ],
+    "hip_far": [
+     31.18,
+     118.57
+    ],
+    "shoulder_far": [
+     38.19,
+     70.89
+    ],
+    "eye": [
+     54.72,
+     26.02
+    ]
+   }
+  },
+  "body_front": {
+   "file": "badger/body_front.png",
+   "size": [
+    89,
+    130
+   ],
+   "anchor": [
+    44.57,
+    126.0
+   ],
+   "points": {
+    "sleeve_l": [
+     8.91,
+     68.86
+    ],
+    "sleeve_r": [
+     79.67,
+     67.6
+    ],
+    "hip_l": [
+     36.99,
+     119.26
+    ],
+    "hip_r": [
+     52.15,
+     119.26
+    ],
+    "eye_l": [
+     36.15,
+     34.89
+    ],
+    "eye_r": [
+     56.22,
+     34.61
+    ]
+   }
+  },
+  "glove_open": {
+   "file": "badger/glove_open.png",
+   "size": [
+    39,
+    32
+   ],
+   "anchor": [
+    5.41,
+    16.28
+   ],
+   "axis": [
+    1,
+    0
+   ]
+  },
+  "glove_fist": {
+   "file": "badger/glove_fist.png",
+   "size": [
+    33,
+    27
+   ],
+   "anchor": [
+    5.25,
+    11.49
+   ],
+   "axis": [
+    1,
+    0
+   ]
+  },
+  "glove_wave": {
+   "file": "badger/glove_wave.png",
+   "size": [
+    34,
+    37
+   ],
+   "anchor": [
+    18.82,
+    28.86
+   ],
+   "axis": [
+    0,
+    -1
+   ]
+  },
+  "glove_grip": {
+   "file": "badger/glove_grip.png",
+   "size": [
+    33,
+    28
+   ],
+   "anchor": [
+    5.68,
+    13.86
+   ],
+   "axis": [
+    1,
+    0
+   ]
+  },
+  "parcel": {
+   "file": "badger/parcel.png",
+   "size": [
+    45,
+    32
+   ],
+   "anchor": [
+    22.5,
+    16.0
+   ]
+  },
+  "fur": [
+   0.2471,
+   0.2039,
+   0.1804
+  ],
+  "ink": [
+   0.0157,
+   0.0078,
+   0.0039
+  ]
+ }
+}

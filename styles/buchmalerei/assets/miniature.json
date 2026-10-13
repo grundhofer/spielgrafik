@@ -1,0 +1,26 @@
+{
+ "source": "assets/raw/bg2.png",
+ "scale": 0.515625,
+ "crop_top": 2,
+ "size": [
+  792,
+  524
+ ],
+ "horizon_y": 197.0,
+ "chimney_top": [
+  58.3,
+  175.4
+ ],
+ "lighthouse_lamp": [
+  680.1,
+  41.3
+ ],
+ "lantern": [
+  574.0,
+  328.4
+ ],
+ "quay_back_y": 402.8,
+ "gold_px": 75232,
+ "water_px": 85304,
+ "lantern_px": 250
+}

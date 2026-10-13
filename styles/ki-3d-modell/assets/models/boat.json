@@ -1,0 +1,32 @@
+{
+ "name": "BoatTSR",
+ "dir": "styles/ki-3d-modell/work/tsr/boat",
+ "input_faces": 113052,
+ "input_vertices": 56524,
+ "components": [
+  112876,
+  168,
+  8
+ ],
+ "components_removed": 2,
+ "faces_removed": 176,
+ "projected_share": 0.285,
+ "projection": {
+  "D": 1.7,
+  "iou": 0.9771,
+  "iou_default_1.9m_40deg": 0.6421
+ },
+ "tilt_deg": -11.0,
+ "yaw_deg": -120.28,
+ "scale": 4.082,
+ "size_m": [
+  4.0,
+  2.478,
+  3.143
+ ],
+ "tris": 6000,
+ "vertices": 2994,
+ "t_bake": 0.24,
+ "glb_bytes": 1321040,
+ "t_total": 1.17
+}

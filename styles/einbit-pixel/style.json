@@ -1,0 +1,265 @@
+{
+ "slug": "einbit-pixel",
+ "name": "1-Bit-Pixel-Art",
+ "family": "pixel",
+ "kind": "style",
+ "era": "1984–1990 (Schwarzweiß-Heimcomputer mit Fensteroberfläche) und seit 2018 (1-Bit-Indiespiele, Handheld mit 1-Bit-Display)",
+ "summary": "2D-Pixelgrafik in genau zwei Farben (Tinte und warmes Papier) in 400×240: Grautöne gibt es nur als feste Muster – in der Szene am Bildraster Bayer-Raster für Gegenstände, Zeilenraster für den Himmel, Strichraster für das Wasser, in den Sprites (Dachs, Boote, Möwen) Bayer im eigenen Raster, das mit der Figur wandert –, klare Konturen, und Licht ist ein Musterwechsel: Der Strahl des Leuchtfeuers macht aus Linien Punkte, die Laterne hellt ihren Hof stufenweise auf, der Blitz kehrt einen Kreis um. Die Szene liegt als Tonkarte vor (Stufe, Musterfamilie, Bereich je Pixel), ein Godot-Shader setzt die Muster; Bildaufbau und große Flächen stammen aus KI-Bildern, kleine Gegenstände, Kopf und Paket des Dachses sind von Hand gesetzt.",
+ "references": [
+  "Déjà Vu (ICOM Simulations 1985), Uninvited (1986), Shadowgate (1987) auf dem Macintosh: 1-Bit-Adventures mit Bildfenster und Textfenster, Titelleisten mit Nadelstreifen; Vorbild für das Textfenster",
+  "Dark Castle (Silicon Beach Software 1986) und andere Macintosh-Spiele der Jahre 1984–1990: 1-Bit-Pixelgrafik mit Füllmustern statt Grautönen, Konturen und invertierten Flächen",
+  "MacPaint (Apple 1984): Füllmuster (Punktraster, Schachbrett, Linien) als Grauersatz – Vorbild für die festen Musterfamilien",
+  "Playdate (Panic 2022): Handheld mit 400×240-Display in 1 Bit, Vorbild für Auflösung und Farbanzahl",
+  "Minit (2018), Gato Roboto (2019), World of Horror (2020): aktuelle Spiele in 1-Bit-Pixel-Art"
+ ],
+ "traits": [
+  "Genau zwei Farben im ganzen Bild, Szene, Figuren und Oberfläche: Tinte #1B1916, Papier #E9E3D3; scripts/probe.py zählt in 36 Bildern der Aufnahme und im Dauerlauf ab 30 s je 2 Farben, das Poster ist zu 58 % Tinte. Eine letzte CanvasLayer setzt die Palette per Schwelle; sie lässt sich wie die Farbe eines 1-Bit-Bildschirms tauschen",
+  "Spielbild 400×240 (wie das Display des 1-Bit-Handhelds), ganzzahlig ×3 auf 1200×720 (in der Aufnahme 40 px schwarzer Rand links und rechts), quadratische Pixel wie auf den Vorbildern; Sprite-Positionen in ganzen Pixeln, Sprites mit 1-Bit-Alpha",
+  "Grautöne nur über drei Musterfamilien mit festen Schwellenmatrizen. Szene (Tonkarte) am Bildraster: Bayer 4×4 für Gegenstände (51 % der Szene; Stufen 0/4/8/12/16 = schwarz, 25-%-Punktraster, Schachbrett, 75 %, weiß, dazu Stufe 2 in der Mitte des Tauwerks, 9 Pixel), Wolken Bayer Stufe 4/6/8 mit weißer Unterkante, Zeilenraster 8×8 für den Himmel (36 %; Stufe 2 = eine Linie je 8 Zeilen, 4 = je 4, 8 = jede zweite), Strichraster 16×8 für das Wasser (12 %; Striche von 4 bis 16 px, zuerst jede vierte Zeile). Sprites (Dachs, Boote, Möwen) rastern Bayer im eigenen Raster und wandern mit der Figur. Die Matrizen liegen als 16×24-Bild vor (demo/art/patterns.png) und stimmen mit scripts/onebit.py überein",
+  "Die Szene ist eine Tonkarte statt eines Bildes: 400×240, je Pixel Stufe 0–16 (Rot), Musterfamilie (Grün) und Bereich (Blau: Himmel, Wasser, Kai, Laternenglas, Lampe, Fenster, Sterne, Gegenstand); erst scene.gdshader setzt Muster, Licht und Bewegung",
+  "Licht über Muster: Der Strahl des Leuchtfeuers ist ein Keil (sichtbare Länge 240·|cos φ|, Umlauf 5 s), in dem das Zeilenraster des Himmels zu Bayer-Punkten wird und die Stufe um 8/5/3 steigt; dreht der Strahl zur Kamera, wird ein Kreis um die Lampe umgekehrt (Radius wächst bis 11 px und schrumpft, etwa 0,9 s). Die Laterne flackert in 15 Werten je Sekunde aus festem Seed: Lichthof in zwei Ringen (Radius 7–9 und 12–16 px nach Flackerstärke, bei Böen 5–6 und 10–11; Linien werden Punkte) nur auf Himmel, Sternen und Wasser, sodass Rahmen, Kappe und Haken des Laternenkopfs schwarz bleiben; Lichtkegel auf dem Kai (+4/+2 Stufen, nur auf der Kaifläche, nicht auf Fässern und Sockel); das Glas ist weiß, bei zwei Böen kurz schwarz und dann Schachbrett. Vergleichsschalter --fx=1: 0,8 % der Pixel im Mittel, höchstens 1,6 % ändern sich",
+  "Weitere Umgebungsanimationen: Wasser-Doppelzeilen wandern in ganzen Pixeln (Richtung abwechselnd, vorn schneller), Sterne verlöschen einzeln für 1/6 s, Rauch treibt als Bayer-Wölkchen (Kern Stufe 12, Rand 6, mit dem Alter ausdünnend, Radius 2→6 px) fast waagrecht und leicht sinkend vom Schornstein nach rechts, ganz im Bild (Mitte y 6–10), zwei Möwen (3 Flügelstellungen, 10 Bilder/s), die Boote heben sich abwechselnd um 1 px",
+  "Klare Silhouetten: schwarze Kontur an hellen Flächen, helle Gegenkontur, wo Schwarz auf dunklen Grund trifft (Leuchtturm vor dem Nachthimmel); Boote mit heller Bordwand (Dollbord weiß, eine schwarze Plankennaht, darunter Bayer 12), schwarzer Kontur und durchgehender schwarzer Wasserlinie, das Wasser in einer Ellipse um jedes Boot eine Stufe dunkler; Dachs und Möwen mit Kontrastrand (an Weiß ein Tintenpixel, an Schwarz ein Papierpixel), damit sie vor Kai, Wasser und Himmel stehen",
+  "Szene vollständig und stimmig: Kai, Steg, zwei Boote, Leuchtturm mit Lampe auf der Felsnase, Häuschen mit erleuchtetem Fenster (6 Scheiben) und Schornstein, zwei Fässer, Kistenstapel, Tauwerk, wartendes Paket und Galgenlaterne, deren Pfahl mit einem Sockel auf der Kaifläche steht (y 74–157). Die Tür ist 81 px hoch, 1,3-mal der Dachs",
+  "Dachs 62 px hoch (Mütze bis Sohle), Sprite 56×66: 8 Laufbilder mit 15 Bildern/s (jedes Bild genau 2 Aufnahmebilder), 56 Laufbilder (7 Zyklen), Vorschub je Bildwechsel [3, 1, 4, 3, 3, 2, 4, 3] px aus dem Standfuß; gemessen mit scripts/measure_badger.py: bei jedem der 44 Bildwechsel bleibt Ferse oder Spitze des Standfußes auf 0 px liegen, Sohlenzeile 176 in allen Bildern ab Bild 10 (davor ist er erst zum Teil im Bild), Kopf wippt um 1 px (Oberkante 114/115); Kopf und Paket (weißer Kasten mit Schnurkreuz, Deckel und Seitenfläche, 13×9) sind feste Teile, per Versatz in alle Bilder gesetzt; in den Laufbildern trennt eine 1-px-Papierlinie die Beine; im Stand Blinzeln und Gruß mit offenem und geschlossenem Mund, Fußspanne 134–146 in allen Stehbildern, beim Übergang Laufen → Stand kein Sprung; der Dachs bleibt bei x = 140 vor freiem Wasser im Lichtkegel stehen, die Grußpfote steht vor dunklem Wasser",
+  "Textfenster wie eine frühe 1-Bit-Fensteroberfläche: Titelleiste mit Nadelstreifen, Schließfeld, Ortsname fett in einer Lücke, 1-px-Schatten, Papierrand; links Erzähltext mit Schreibmaschine (32 Zeichen/s) und Eingabezeile „> nimm paket“ mit blinkendem Blockcursor, rechts drei Auswahlpunkte, der gewählte invertiert. Schrift Pixel Operator in nativer Größe 16 (scripts/check_font.py: 0 abweichende Pixel gegen eine Pillow-Rasterung derselben TTF); das Fenster deckt 24 % des Bildes"
+ ],
+ "camera": "Seitenansicht auf Augenhöhe, feste Kamera, ein Bildschirm eines 2D-Adventures; Textfenster unten über der Kaimauer",
+ "resolution": "400×240, 1 Bit (zwei Farben), ×3 auf 1200×720 (Nearest), quadratische Pixel",
+ "pipeline": [
+  {
+   "step": "Hintergrund als 1-Bit-Pixelbild erzeugen",
+   "tool": "genimg (agy)",
+   "detail": "1264×848 statt 1536×1024, ein Versuch, Prompt wörtlich übernommen (verbatim). Stilblock: 1-Bit-Pixel-Art eines Handhelds mit Schwarzweiß-Display, 400 px breit, Grautöne nur als Schachbrett, Punkt- und Linienraster, Konturen; Lampe ohne Strahl, kein Rauch, keine Lichthöfe. Ergebnis im Stil sehr treffend, aber auf keinem festen Raster (Rasterpunkte 2 px, Konturen 3–4 px, im Wasser feiner). Prompt: prompts/bg_direct.txt"
+  },
+  {
+   "step": "Vergleichsversuch Tonplatte direkt",
+   "tool": "genimg (agy)",
+   "detail": "Dieselbe Szene gleich als flache Fünf-Grauwert-Tonplatte angefordert (prompts/bg_tone.txt). Sauber, aber leer und in anderem Bildaufbau; verworfen. Die Umrechnung zeigte: flache Flächen geben saubere Muster, kleine Gegenstände werden trotzdem Brei"
+  },
+  {
+   "step": "Bereichsmaske durchgepaust",
+   "tool": "genimg (agy, an bg_direct gebunden)",
+   "detail": "Dasselbe Bild „wie auf Folie durchgepaust“, Himmel magenta, Wasser cyan, Gegenstände unverändert. Gemessener Versatz 0 px (mittlere Abweichung der Gegenstandsflächen 3,7 von 255). Prompt: prompts/mask.txt"
+  },
+  {
+   "step": "Flache Tonplatte durchgepaust",
+   "tool": "genimg (agy, an bg_direct gebunden)",
+   "detail": "Dasselbe Bild, jedes Raster durch den Grauwert ersetzt, den es darstellt, Konturen durchgehend schwarz, fünf Flächenwerte. Versatz 0 px (Überdeckung der Konturen mit dem 1-Bit-Bild 63 %, beste Verschiebung 0/0). Die Flächenwerte (k-means) 0,02/0,36/0,48/0,61/0,80 geben die Form, nicht den Ton. Prompt: prompts/tone.txt"
+  },
+  {
+   "step": "Tonkarte rechnen",
+   "tool": "scripts/build_bg.py, scripts/onebit.py",
+   "detail": "400er-Raster, Ausschnitt ab Zeile 14. Bereich je Zielpixel per Mehrheit aus der Maske (Gegenstand ab 40 %). Gegenstände: zusammenhängende Flächen gleicher Stufe der Tonplatte (8206 Flächen) bekommen den mittleren Grauwert des 1-Bit-Bildes nach 7×7-Kastenmittel (löscht dessen Rasterpunkte), gerundet auf 0/4/8/12/16; je Zielpixel die häufigste Stufe, Kontur ab 35 % Anteil, Einzelpixel ersetzt, Felsnase mit 3×3-Mehrheitsfilter. Himmel und Wasser mit eigenem Stufenverlauf zum Horizont, Wolken aus den hellen Flächen der Tonplatte (Bayer, Unterkante weiß), die schwarze Horizontlinie des Modells wird Glutband, Sterne mit festem Seed gesetzt (70 Pixel, einzelne als Kreuz) (die Sterne des Modells liegen fast alle oberhalb des Ausschnitts)"
+  },
+  {
+   "step": "Kleine Gegenstände von Hand setzen",
+   "tool": "scripts/props.py (ASCII-Stempel und Grundformen)",
+   "detail": "Lage und Größe nach dem KI-Bild, Stufen wie in einem 1-Bit-Spiel: Leuchtturm (helle Gegenkontur, schwarzes Band mit Lichtkanten, Lampe als eigener Bereich), Galgenlaterne (Glas als eigener Bereich, Pfahl mit Sockel auf der Kaifläche; wird erst nach dem Löschen der alten Fass- und Kistenfläche gezeichnet), zwei Fässer (Schattierung in festen Spaltenbändern, Reifen), drei Kisten, Steg, Tauwerk, das wartende Paket, Mauer, Tür (81 px, Sturz unter der Traufe), erleuchtetes Fenster mit 6 Scheiben und Schornstein des Häuschens; die Boote als eigene 1-Bit-Sprites (weißes Dollbord, Plankennaht, Bayer 12, schwarze Wasserlinie), das Wasser um sie eine Stufe dunkler. Abweichend vom KI-Bild steht das zweite Fass bei x 98 statt 111 und der Kistenstapel rechts neben dem Tauwerk (x 312–352 statt 130–170), damit der Dachs vor freiem Wasser stehen bleibt"
+  },
+  {
+   "step": "Posen-Vorlage rendern",
+   "tool": "Blender 5.2 (blender/pose_layout.py --color) + scripts/compose_layout.py",
+   "detail": "Geriggter Dachs aus shared/3d/badger.glb in der Seitenansicht: 8 Phasen des Walk (je 1/8 s) und 4 Idle-Bilder, am Ursprung der Figur ausgerichtet, 1536×1024-Blatt. Eine Fassung als Tonplatte mit Freestyle-Kontur (ohne --color) wurde gerendert, aber nicht verwendet (zu unruhig als Vorlage)"
+  },
+  {
+   "step": "Figurenblatt in 1 Bit erzeugen",
+   "tool": "genimg (gpt-image), Referenzen pose_layout.png + master_sheet.png",
+   "detail": "Ein Versuch, echter Alphakanal (Codex zuerst wegen Transparenz). 8 Lauf- und 4 Stehbilder in Schwarz und Weiß über den Blender-Posen: schwarzes Fell, weißes Gesicht, Schachbrett-Weste, gestreifter Schal, weißes Paket mit Schnurkreuz. Gezeichnet mit ≈2,4 Bildpixeln je Kunstpixel (Figur ≈113 statt der verlangten 56 Kunstpixel), untere Reihe 14 % größer. Prompt: prompts/badger.txt"
+  },
+  {
+   "step": "Dachs auf 62 px",
+   "tool": "scripts/build_badger.py",
+   "detail": "Je Reihe eigener Maßstab, Raster am Blender-Ursprung und an der Fußlinie. Je Bildpixel 5×5-Mittel (löscht das Schachbrett des Modells) auf 0/4/8/12/16, je Zielpixel die häufigste Stufe, Muster im Sprite-Raster (wandert mit der Figur), nur die größte Fläche (Schalenden der Nachbarbilder). Kopf als festes Teil aus Stehbild 1 mit 14 Pixelkorrekturen (Mützenband als Linie, Auge als einzelnes Papierpixel im Augenstreif) und einem Glanzlicht auf der Mützenkuppel (8 Pixel), per bestem Versatz in alle Bilder gesetzt (Laufbild 5 einen Pixel tiefer); Blinzeln und offener Mund als Kopfvarianten. Paket als zweites festes Teil (ASCII, 13×9: Vorderseite mit Schnurkreuz, Deckel, Seitenfläche, Papierlinie als Unterkante des Unterarms, Pfote als Kerbe), mit dem Versatz des Kopfes gesetzt, nachdem die Paketreste des Modells im Bereich zu Tinte wurden. Je Laufbild 3–5 von Hand gesetzte Papierpixel zwischen den Beinen (nach dem Kontrastrand). Kontrastrand"
+  },
+  {
+   "step": "Möwen",
+   "tool": "scripts/build_fx.py",
+   "detail": "3 Flügelstellungen als ASCII, Kontrastrand wie beim Dachs"
+  },
+  {
+   "step": "Godot-Demo",
+   "tool": "Godot 4.7.2: shaders/scene.gdshader, shaders/palette.gdshader, scripts/main.gd, scripts/ui.gd",
+   "detail": "Siehe godot; Ablauf: Dachs läuft ab x = −18 (außerhalb des Bildes) 56 Laufbilder nach rechts, steht ab 3,73 s bei x = 140 (Stehbilder 138) vor freiem Wasser im Lichtkegel der Laterne, blinzelt bei 4,05 s, grüßt 4,4–5,4 s mit erhobener Pfote, blinzelt bei 5,75 s"
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/measure_badger.py, scripts/probe.py, scripts/check_font.py, tools/capture.py",
+   "detail": "Dachs allein auf Magenta (--solo) vermessen (media/measure.json); Farben, Vergleichsschalter --fx=1, Dauerlauf ab 30 s, Renderer Mobile und Compatibility (media/probe.json); Schrift Pixel für Pixel; Aufnahme mit --poster-at 0.8 (Gruß mit der Pfote vor dunklem Wasser, Strahl nach links, Auswahl auf „Mit dem Dachs sprechen“)"
+  }
+ ],
+ "godot": [
+  "project.godot: viewport 400×240, window_*_override 1200×720, stretch mode viewport, aspect keep, scale_mode integer, Canvas-Texturen Nearest, 2D-Snap für Transformationen und Vertices, MSAA 2D aus",
+  "Knoten: Scene (Sprite2D mit der Tonkarte und scene.gdshader), BoatA/BoatB, Gull1/Gull2, Badger (Sprite2D, hframes 8 bzw. 4, offset −28/−64 = Fußpunkt), UI (CanvasLayer 1, Control mit ui.gd), Palette (CanvasLayer 100, ColorRect mit palette.gdshader)",
+  "scene.gdshader: texelFetch auf Tonkarte und Musterbild; Stufe = R·255/15, Familie = G·255/85, Bereich = B·255/30; weiß, wenn Schwelle der Familie an (x mod 16, y mod 8) < Stufe·8. Wasser: x um floor(t·v + Phase) verschoben, v je Doppelzeile 1,5–9,5 px/s mit wechselndem Vorzeichen. Licht addiert Stufen und schaltet im Strahl und im Lichthof die Familie von Linien auf Bayer; der Lichthof der Laterne wirkt nur auf die Bereiche Himmel, Sterne und Wasser, der Lichtkegel nur auf den Bereich Kai; der Blitz kehrt das Ergebnis im Kreis um. Uniform fx_mode = 1 schaltet Licht, Rauch und Funkeln ab (Messung)",
+  "palette.gdshader: liest hint_screen_texture, Helligkeit > 0,5 → Papier, sonst Tinte; damit sind auch Schrift und Sprites garantiert zweifarbig",
+  "main.gd: Zeit über delta aufsummiert; Leuchtfeuer φ = π + 2π(t − 4,6)/5 (Strahllänge, Seite, Blitzradius als ganze Pixel); Laterne aus RandomNumberGenerator mit Seed 4711 (15 Werte/s) und Böen bei 1,6 s und 4,05 s; Rauch: alle 0,6 s ein Wölkchen, Lebensdauer 4,2 s, Start 2 px über dem Schornsteinrand, 11–15 px/s nach rechts, sinkt 0,6–1,0 px/s, Radius 2→6, Dichte 1 − u², Position gerundet, bis zu 10 als Uniform-Array; Boote und Möwen auf ganze Pixel gerundet; Benutzerargumente --t0, --fx, --solo",
+  "Dachs: Laufbild = floor(t·15) mod 8, Position = Startpunkt + Summe der gemessenen Vorschübe (kein konstantes Tempo); Stehbilder mit Versatz [−2, −2, 0, 0], damit die Füße stehen bleiben",
+  "ui.gd: _draw() mit draw_rect und draw_string in reinem Schwarz/Weiß, FontFile per load_dynamic_font in _ready(), antialiasing NONE, hinting NONE, subpixel_positioning DISABLED, Größe 16; Pfeilspitzen der Auswahl als 3×5-Pixelrechtecke (die Schrift hat kein ▸)",
+  "Renderer: Mobile und Compatibility liefern pixelgleiche Bilder (je 30 Bilder gegen Forward+ verglichen, 0 Abweichungen)"
+ ],
+ "techniques": [
+  "ordered-dithering",
+  "musterfamilien",
+  "zwei-farben-palette",
+  "tonkarte-shader",
+  "licht-als-musterwechsel",
+  "invertierung",
+  "zeilenversatz-wasser",
+  "ebenenmaske-durchgepaust",
+  "tonplatte-durchgepaust",
+  "posen-vorlage-3d",
+  "ki-spritesheet",
+  "sprite-animation",
+  "kontrastrand",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 3,
+  "consistency": 4,
+  "effort": 4,
+  "text_adventure": 4,
+  "mobile": 5
+ },
+ "ratings_note": "ai_fit 3: Das Gemini-Modell (agy) traf den 1-Bit-Look als Bild im ersten Versuch und lieferte Bereichsmaske und flache Tonplatte deckungsgleich (0 px); gpt-image zeichnete den Dachs in Schwarzweiß sauber über die Blender-Posen. Echte 1-Bit-Pixel liefert keins (Raster 2–4 px, Figur doppelt so fein wie verlangt): Alle Muster setzt der Shader, Himmel- und Wasserverlauf und Sterne sind entworfen, Fässer, Kisten, Boote, Steg, Tau, Laterne, Leuchtturm, Mauer, Tür, Fenster und Schornstein von Hand gesetzt, Kopf und Paket des Dachses von Hand korrigiert bzw. ersetzt und die Beine von Hand getrennt. Von der KI bleiben Bildaufbau, Dach, Felsnase, Kaiplatten, Kaimauer, Wolken und Körper und Posen der Figur. consistency 4: Palette, Musterfamilien und Licht kommen für jedes Bild aus demselben Shader, neue Orte sehen automatisch gleich aus; die Umrechnung gelingt aber je Gegenstand verschieden gut, und von Hand Gesetztes und Umgerechnetes unterscheiden sich in der Detaildichte (Dach und Felsnase unruhiger als die Stempel). effort 4: je Ort drei KI-Bilder plus rund zehn neu gesetzte Gegenstände, je Figur ein Kopf- und ein Paketteil, Beinlinien je Laufbild und Prüfmessungen. text_adventure 4: Textfenster und Pixelschrift passen genau zum Stil und sind sehr gut lesbar, Licht und Stimmung gehen über Muster; die Figur liest sich bei 62 px über Gesicht, Ärmel, Paket und Silhouette, bleibt aber eine überwiegend schwarze Fläche, und Farbe als Stimmungsmittel fehlt. mobile 5: geprüft mit Probeläufen --rendering-method mobile und gl_compatibility (pixelgleich zu Forward+); 400×240, ein Shader mit zwei Texturzugriffen je Pixel und eine Bildschirmkopie; Bildzeit auf echten Telefonen nicht gemessen.",
+ "verdict": "Für unser Textadventure ein starker Kandidat: Der Look ist sofort als 1-Bit-Spiel erkennbar, Text und Fensteroberfläche sind das Natürlichste an diesem Stil, und das Licht über Muster (Strahl, Lichthof, invertierter Blitz) gibt Stimmung ohne Farbe bei fast keinen Laufzeitkosten. Für die Produktion heißt das: KI-Bilder liefern Bildaufbau und große Flächen, Maske und Tonplatte gibt es deckungsgleich dazu, aber jede Szene braucht danach eine Überarbeitung der kleinen Gegenstände im Pixel-Editor (hier etwa zehn) und jede Figur von Hand gesetzte Teile für Gesicht und Requisit sowie getrennte Beine. Figuren brauchen ruhigen Grund (freies Wasser, helle Kaifläche), sonst verschmelzen schwarze Flächen; bei der Bildplanung den Standplatz der Figur freihalten. Die Tonkarte mit Musterfamilien und ein gemeinsamer Shader halten viele Orte einheitlich; Figuren sollten eher größer als 62 px sein oder in Nahaufnahmen gezeigt werden.",
+ "pitfalls": [
+  "Das Bildmodell erzeugt 1-Bit-Optik, aber kein 1-Bit-Raster: im Hintergrund Rasterpunkte von 2 px, Konturen von 3–4 px, im Wasser so fein, dass JPEG-Grau entsteht. Direktes Abtasten auf 400 px gab Moiré und Wurmmuster (Linienhimmel), die erste Umrechnung über Struktur und Ton ergab an Booten, Fässern, Steg und Kaimauer Pixelbrei. Erst Tonplatte (Formen) + 1-Bit-Bild (Ton) + Maske (Bereich) + eigene Muster gaben saubere Flächen",
+  "Kleine Gegenstände blieben auch so unlesbar und sind von Hand neu gesetzt (scripts/props.py): Fässer, Kisten, Boote, Steg, Tauwerk, Galgenlaterne, Leuchtturm, Mauer, Tür, Fenster und Schornstein des Häuschens. Dach und Felsnase sind umgerechnet und unruhiger als die gesetzten Teile; die Felsnase zeigt trotz Mehrheitsfilter Schachbrett-Flecken, am Fuß der Felsen liegen einzelne Gischtpixel im Wasser",
+  "Erste Fassung: Der Laternenpfahl endete bei y≈127 im Wasser, 27 px über dem Kai, weil das clear() für Fässer und Kisten nach dem Zeichnen der Laterne lief und den unteren Teil des Pfahls löschte. Behoben (erst löschen, dann Laterne mit Sockel, dann Fässer); der Pfahl steht jetzt mit einem 7×4-Sockel auf der Kaifläche (y 157). Bei Stempeln auf der Tonkarte jede Änderung in assets/bg_preview.png prüfen",
+  "Himmel und Wasser sind entworfen, nicht übernommen: Der Himmel des Modells wurde in der Umrechnung schon in der Bildmitte weiß (die Stimmung kippte), das Wasser war mittelhell, und helle wie dunkle Gegenstände verschwammen davor. Jetzt: schwarzer Sternenhimmel, Linienstufen bis zum weißen Glutband, dunkles Wasser zum Kai hin, helle Gegenstände mit schwarzer Kontur",
+  "Der Dachs: gpt-image zeichnete ≈113 statt 56 Kunstpixel hoch; auf 62 px gingen Auge und Mützenband verloren (Mützenband wurde Punktrauschen), das Paket zerfiel zu zwei weißen Flecken in S-Form, und die Beine waren eine ungeteilte schwarze Masse. Korrigiert über ein festes Kopfteil (14 Pixeländerungen, Glanzlicht), ein festes Paketteil (weißer Kasten mit Schnurkreuz, Deckel und Seite, der Unterarm nur noch als Papierlinie und Pfotenkerbe angedeutet statt quer über das Paket) und 3–5 Papierpixel zwischen den Beinen je Laufbild. Offen: Die Figur bleibt überwiegend schwarz; die Beinlinien sind nach den Fußläufen von Hand gesetzt, nicht aus dem 3D-Modell abgeleitet, und trennen in den Durchgangsbildern (2 und 6) nur einen 2–4 px schmalen gehobenen Fuß ab; in den Stehbildern stehen die Beine weiter als eine Fläche. Eine eigene ASCII-Fassung des Kopfes war schlechter als die korrigierte KI-Fassung und wurde verworfen. Die Lesbarkeit habe nur ich selbst beurteilt",
+  "Damit der Dachs vor freiem Wasser stehen bleibt (in der ersten Fassung stand er vor den Kisten, und die Grußpfote verschmolz mit einer Kiste), läuft er jetzt 56 statt 48 Laufbilder ab x = −18 (in den ersten 2 Aufnahmebildern ist er noch nicht im Bild, bis Bild 9 nur zum Teil), das zweite Fass rückte an den Laternenpfahl (x 98), und der Kistenstapel steht abweichend vom KI-Bild rechts neben dem Tauwerk vor der Felsnase. Das Stehen beginnt dadurch erst bei 3,73 s statt 3,2 s",
+  "Größenverhältnis nur teilweise behoben: Die Tür ist jetzt 81 px hoch (vorher 64), 1,3-mal der Dachs statt der empfohlenen 1,4-mal (85–90 px). Mehr geht nicht ohne die Traufe anzuheben, denn der Sturz sitzt schon direkt unter dem umgerechneten KI-Dach; dafür müssten Dach und Schornstein neu gesetzt werden. Der gedrungene Dachs wirkt neben der Tür weiterhin groß, ein Kinderbuchmaßstab statt eines realistischen",
+  "Der Rauch ist klein: Er treibt jetzt ganz im Bild fast waagrecht nach rechts (vorher stieg er an den oberen Rand und wurde abgeschnitten), aber die Wölkchen sind höchstens 6 px groß und wirken bei 1× eher wie eine Reihe gerasterter Flecken als wie weicher Rauch; der Schornstein liegt nur 8 px unter dem Bildrand",
+  "Die Boote sind mit heller Bordwand und dunklerem Wasser darum jetzt als Flächen lesbar; das Innere zeigt durch die Treppenstufen von naher und ferner Bordkante noch einzelne helle Pixel, und das Schaukeln um 1 px ist nur bei genauem Hinsehen zu bemerken. Die dunklere Ellipse um die Boote ist fest und schaukelt nicht mit",
+  "Die Lichteffekte betreffen wenig Fläche: Ohne Licht, Rauch und Funkeln (--fx=1) ändern sich im Mittel 0,8 %, höchstens 1,6 % der Pixel. Sichtbar sind sie trotzdem (Strahl über den halben Himmel, Lichthof um die Laterne, weißer Lichtkegel um die Füße des Dachses, Blitz), aber ein Leuchtfeuer ohne Strahl wäre kaum aufgefallen. Der Lichthof um die Lampe des Leuchtturms hellt weiterhin auch dessen Rahmen auf (anders als bei der Laterne nicht eingeschränkt)",
+  "Die eigene Musterwahl schlägt die des Modells nicht überall: Wo der Strahl über den ohnehin hellen Himmel nahe am Horizont läuft, ändert der Wechsel von Linien zu Punkten die Helligkeit kaum; der Strahl wirkt dort eher als Strukturwechsel",
+  "Das Tonplatten-Experiment ohne 1-Bit-Vorlage (bg_tone.png) war sauber, aber zu leer, und hatte einen anderen Bildaufbau; es kostete ein Bild des Kontingents. Insgesamt 5 von 10 Erzeugungen; die Nachbesserung nach der Prüfung brauchte keine neuen Bilder"
+ ],
+ "lessons": [
+  "Drei deckungsgleiche KI-Bilder statt eines: 1-Bit-Bild (Ton und Gestaltung), durchgepauste Bereichsmaske (Himmel/Wasser), durchgepauste flache Tonplatte (Formen mit durchgehenden Konturen). agy hielt beide Durchpausungen auf 0 px; genimg.py bindet sie automatisch an dasselbe Modell",
+  "Rasterpunkte des Modells nie abtasten: über die Musterperiode mitteln (Kasten 7×7 bzw. 5×5), auf wenige Stufen runden und mit eigenen Schwellenmatrizen neu rastern. So stehen alle Muster exakt auf dem Bildraster",
+  "Tonkarte als RGBA (Stufe, Musterfamilie, Bereich) plus ein Shader: Licht ist eine Stufenaddition, ein Musterwechsel oder eine Umkehrung, Wasser ein Zeilenversatz; Muster und Palette wechselt man für alle Orte an einer Stelle. Die Matrizen einmal in Python (Vorschau, Sprites) und als Textur für den Shader erzeugen, dann sind Vorschau und Spiel gleich",
+  "Musterfamilien nach Material wählen: Bayer für Gegenstände, Zeilenraster für den Himmel, Strichraster (Striche wachsen von der Mitte, zuerst jede vierte Zeile) für ruhiges Wasser. Gegenstände nur auf 0/4/8/12/16 halten, dann sind Flächen ruhig",
+  "In 1 Bit zuerst die Helligkeitsfolge planen: dunkler Himmel, helles Glutband, dunkles Wasser am Kai, helle Kaiplatten; Gegenstände vor dunklem Wasser hell mit schwarzer Kontur, vor dunklem Himmel mit heller Gegenkontur. Eine schwarze Kontur vor schwarzem Grund ist unsichtbar",
+  "Kleine Gegenstände als ASCII-Stempel mit 5–6 Zeichen für die Stufen setzen; feste Schattierungsbänder je Spalte (statt Rampen je Zeile) vermeiden Rauschen an gewölbten Formen wie Fässern",
+  "Sprites mit Kontrastrand (Gegenfarbe des angrenzenden Pixels) bleiben vor jedem Grund lesbar; Muster im Sprite-Raster wandern mit der Figur und krabbeln nicht",
+  "Gesicht als festes Teil aus dem besten KI-Bild, per bestem Versatz in jedes Laufbild gesetzt: kein Flackern im Gesicht, Blinzeln und Sprechen sind Kopfvarianten. Ein Gruß mit anderem Körperbild braucht einen Fußversatz (hier 2 px), damit die Füße stehen bleiben",
+  "Vorschub je Laufbild aus dem gemessenen Standfuß (Spitze) statt konstantem Tempo: [3, 1, 4, 3, 3, 2, 4, 3] px, 0 px Rutschen. Mit --solo (nur Dachs auf Magenta, ohne Palette) ist die Messung einfach",
+  "Pixel Operator in nativer Größe 16 ist bei 400×240 gut lesbar und deckt sich pixelgenau mit Pillow; die fette Fassung ergibt eine passende Titelzeile. Pfeile und Cursor selbst zeichnen",
+  "Stempel auf der Tonkarte strikt in der Reihenfolge Löschen → Zeichnen setzen: Ein später laufendes clear() für einen Nachbargegenstand löschte unbemerkt den unteren Teil des Laternenpfahls",
+  "Lichteffekte im Shader nach Bereich begrenzen: Der Lichthof der Laterne wirkt nur auf Himmel, Sterne und Wasser, der Lichtkegel nur auf die Kaifläche; den Bereich Kai vor dem Setzen der Gegenstände vergeben, sonst werden auch deren Konturen auf dem Kai aufgehellt",
+  "Requisiten an Figuren (hier das Paket) wie den Kopf als festes, von Hand gesetztes Teil einsetzen; eine schwarze Gliedmaße quer über einer weißen Fläche zerfällt in 1 Bit in Flecken. Lieber die Gliedmaße als Papierlinie andeuten und die Fläche ganz lassen",
+  "Papierlinien innerhalb einer Figur erst nach dem Kontrastrand setzen, sonst macht der Rand die durchsichtigen Lücken daneben zu Tinte",
+  "In 1 Bit den Standplatz einer Figur bei der Bildplanung freihalten (ruhiges Wasser, helle Kaifläche) und den Gruß vor dunklen Grund legen; vor gemusterten Gegenständen verschmilzt eine schwarze Figur"
+ ],
+ "assets": [
+  {
+   "file": "assets/raw/bg_direct.png",
+   "kind": "background",
+   "made_with": "agy (Gemini), 1264×848, Grundlage für Ton und Gestaltung",
+   "prompt": "assets/raw/bg_direct.json"
+  },
+  {
+   "file": "assets/raw/mask.png",
+   "kind": "mask",
+   "made_with": "agy, durchgepaust von bg_direct.png (0 px Versatz)",
+   "prompt": "assets/raw/mask.json"
+  },
+  {
+   "file": "assets/raw/tone.png",
+   "kind": "tone-plate",
+   "made_with": "agy, durchgepaust von bg_direct.png (0 px Versatz)",
+   "prompt": "assets/raw/tone.json"
+  },
+  {
+   "file": "assets/raw/bg_tone.png",
+   "kind": "background",
+   "made_with": "agy, Vergleichsversuch Tonplatte direkt, verworfen",
+   "prompt": "assets/raw/bg_tone.json"
+  },
+  {
+   "file": "assets/bg_tone.png",
+   "kind": "tonemap",
+   "made_with": "build_bg.py + props.py: Stufe/Familie/Bereich je Pixel (400×240), Grundlage der Demo",
+   "prompt": "assets/raw/bg_direct.json"
+  },
+  {
+   "file": "assets/bg_preview.png",
+   "kind": "background",
+   "made_with": "build_bg.py: Tonkarte mit den Mustern gerastert, ohne Animation (1 Bit)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/patterns.png",
+   "kind": "pattern",
+   "made_with": "onebit.py: Schwellenmatrizen Bayer 4×4, Zeilenraster 8×8, Strichraster 16×8",
+   "prompt": ""
+  },
+  {
+   "file": "assets/ref/pose_layout.png",
+   "kind": "reference",
+   "made_with": "Blender 5.2: blender/pose_layout.py --color + scripts/compose_layout.py",
+   "prompt": ""
+  },
+  {
+   "file": "assets/raw/badger.png",
+   "kind": "spritesheet",
+   "made_with": "gpt-image (Codex), Referenzen pose_layout.png + master_sheet.png, Alphakanal",
+   "prompt": "assets/raw/badger.json"
+  },
+  {
+   "file": "assets/badger_walk.png",
+   "kind": "sprite",
+   "made_with": "build_badger.py: 8 Laufbilder 56×66, 1 Bit, Kopf- und Paketteil, Beinlinien, Kontrastrand",
+   "prompt": "assets/raw/badger.json"
+  },
+  {
+   "file": "assets/badger_idle.png",
+   "kind": "sprite",
+   "made_with": "build_badger.py: Stand, Blinzeln, Gruß (offener/geschlossener Mund), Kopf- und Paketteil",
+   "prompt": "assets/raw/badger.json"
+  },
+  {
+   "file": "assets/boat_a.png",
+   "kind": "sprite",
+   "made_with": "props.py (Code), 1 Bit: weißes Dollbord, Plankennaht, Bayer 12, schwarze Wasserlinie",
+   "prompt": ""
+  },
+  {
+   "file": "assets/boat_b.png",
+   "kind": "sprite",
+   "made_with": "props.py (Code), 1 Bit: weißes Dollbord, Plankennaht, Bayer 12, schwarze Wasserlinie",
+   "prompt": ""
+  },
+  {
+   "file": "assets/gull.png",
+   "kind": "sprite",
+   "made_with": "build_fx.py (ASCII), 3 Flügelstellungen",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schriften Pixel Operator und Pixel Operator Bold (Jayvee Enaguas)",
+   "license": "CC0-1.0",
+   "source": "https://www.dafont.com/pixel-operator.font (Dateien und Lizenztext aus styles/hibit-pixel/demo/fonts kopiert; demo/fonts/PixelOperator-LICENSE.txt)"
+  },
+  {
+   "item": "Dachs-Modell als Posen-Vorlage",
+   "license": "eigenes Modell aus shared/3d (Blender-Skript)",
+   "source": "shared/3d/badger.glb"
+  },
+  {
+   "item": "Muster, Shader, Stempel, Skripte",
+   "license": "eigener Code, keine fremden Grafiken",
+   "source": "styles/einbit-pixel/"
+  }
+ ],
+ "image_generations": 5,
+ "tool_issues": [
+  "tools/capture.py: preview.gif wird mit Lanczos auf 480 px verkleinert (127 Farben statt 2) und poster.webp verlustbehaftet gespeichert (q 86, 1386 Farben); die 1-Bit-Muster werden dort zu Grau und Moiré. Für Pixel- und 1-Bit-Stile wäre eine Vorschau in Basisauflösung mit Nearest oder verlustfreies WebP passender (wie schon bei einbit-3d angemerkt). Nicht geändert."
+ ],
+ "status": "done"
+}

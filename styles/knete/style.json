@@ -1,0 +1,320 @@
+{
+ "slug": "knete",
+ "name": "Knetfigur & Stop-Motion",
+ "family": "modern3d",
+ "kind": "style",
+ "era": "1993–heute",
+ "summary": "Der Hafen als Knet-Set im Studio: alle Formen gerundet, leicht beulig und ineinander verknetet, auf den Oberflächen Fingerabdrücke, Daumenspuren, Poren und Krümel mit wachsartigem Glanz, dazu ein Himmel aus verstrichener Knete. Alles Bewegte springt wie bei Stop-Motion: die Figur auf Zweien (15 Bilder/s) mit leichtem Formrauschen je Animationsbild, Meer, Boote und Leuchtfeuer auf Dreien (10 Bilder/s). Gebaut ohne KI-Bilder aus einem Blender-Skript, Shadern und Code auf den Modellen aus shared/3d.",
+ "references": [
+  "The Neverhood (The Neverhood Inc./DreamWorks Interactive 1996): Adventure, dessen Figuren und Kulissen aus Knete gebaut und Bild für Bild fotografiert wurden",
+  "Skullmonkeys (The Neverhood Inc. 1998) und ClayFighter (Interplay 1993): Knetfiguren als vorgerenderte Stop-Motion-Sprites",
+  "Armikrog (Pencil Test Studios 2015): Knet-Adventure in derselben Tradition, Stop-Motion vor gebauten Sets",
+  "Harold Halibut (Slow Bros. 2024): handgebaute Puppen und Kulissen, eingescannt und in 3D animiert",
+  "Kirby and the Rainbow Curse (HAL Laboratory 2015): Knetlook vollständig in Echtzeit-3D, Fingerabdrücke und Glanz aus dem Shader",
+  "Stop-Motion-Filme von Aardman (Wallace & Gromit, Chicken Run): Daumenabdrücke, Animation auf Zweien, das 'Kochen' der Oberfläche zwischen den Bildern"
+ ],
+ "traits": [
+  "Knet-Set: alle sichtbaren Hafenobjekte aus shared/3d/harbor.glb per Voxel-Remesh (0,9–5 cm je Objekt), Laplace-Glättung und Beulen in Knetmasse umgeformt: Kanten gerundet, Teile ineinander verschmolzen, Pflaster als einzelne Knetplatten mit gerundeten Fugen; Gelände und Taurolle per Catmull-Clark gerundet",
+  "Oberfläche aus dem Shader ohne Texturen und UVs: Fingerkuppen-Abdrücke als Mulden mit Randwulst (rund bis langgezogen verstrichen), feine Beulen, Poren, dunkle Krümel, Schmutz in den Mulden, leichte Marmorierung (nicht ganz durchgeknetet); Rillen nur, wenn sie mindestens etwa 3 px breit wären",
+  "Muster liegt fest am Objekt: Set im Objektraum, die geriggte Figur in ihrer Ruhelage (CUSTOM0); ferne Teile mit größerem Muster (Leuchtturm 2,6-fach, Felsnase 2,2-fach) wie kleinere Modelle bei erzwungener Perspektive",
+  "Vergleichsschalter --no-detail (ohne Abdrücke, Poren, Krümel, Marmorierung, Formrauschen) im Poster: 16,5 % der Pixel im Dachs-Ausschnitt und 3,2 % des ganzen Bilds ändern sich um mehr als 8 Stufen (assets/measure/detail_switch.jpg)",
+  "Licht wie im Studio: großes warmes Hauptlicht von links vorn (Lichtquellenwinkel 4°, weiche Schatten), orangefarbenes Gegenlicht vom Abendhimmel, Umgebungslicht aus dem Himmel, SSAO für Kontaktschatten; im Shader umgreifendes Licht mit warmem Saum an der Schattengrenze und breiter Wachsglanz, Augen und Nase als glänzende Perlen",
+  "Animation auf Zweien und Dreien: Dachs, Laterne und Eingabezeile wechseln alle 2 Bilder (15/s), Meer, Boote und Leuchtfeuer alle 3 Bilder (10/s); gemessen: alle 61 Bildwechsel ohne neues Animationsbild sind pixelgleich",
+  "Formrauschen ('Kochen') je Animationsbild mit dem Bildindex als Seed: Umriss verschiebt sich im Mittel um 0,5 px (höchstens 0,7 px), das Oberflächenmuster verrutscht um bis zu 4 mm und ein Teil der Abdrücke liegt in jedem Bild neu; Haltebilder bleiben gleich (assets/measure/boil_steps.jpg)",
+  "Laufzyklus in 8 Posen auf Zweien, Standfuß fest (waagrecht höchstens 1,2 mm bzw. 0,3 px je Animationsbild), Halt in einer Durchgangsphase, dann ein Drehschritt um den linken Knöchel zur Kamera, Winken, Stehen",
+  "Meer aus Knete: Reihen gerollter Wellenwülste mit weißen Kämmen aus Knete, die in Stufen zum Kai wandern; feine Oberfläche je Bild leicht neu geknetet",
+  "Himmelsprospekt als Platte aus verstrichener Knete: Farbbänder waagrecht ineinander gestrichen, modellierte Wolkenwülste mit flach abgestrichener Unterseite, Sterne als Kügelchen",
+  "Textoberfläche als ausgerollte Knetplatte mit welligem Rand, Abdrücken und weichem Schatten, Ortsname auf einem terrakottafarbenen Knetschild, Nummern als Knetkugeln, ausgewählte Zeile als flache Mulde; Schrift Fredoka; deckt etwa 13 % des Bildes"
+ ],
+ "camera": "Feste Kamera wie auf einem Stop-Motion-Stativ, auf Augenhöhe der Puppe: Position (−0,6 | 0,9 | 5,15), rotation_degrees (6, −10, 0), fov 42 (vertikal). Ausschnitt vorab mit scripts/frame_shot.py gerechnet: Dachs am Ende 239 px hoch (Hauptkamera aus shared/3d: etwa 71 px), Leuchtturm ganz im Bild, Laterne rechts am Rand. Häuschen, Fässer und Kisten liegen bewusst außerhalb: lieber ein kleiner Ausschnitt, in dem die Knetoberfläche der Figur lesbar ist.",
+ "resolution": "1280×720 nativ, Forward+, MSAA 4×, ohne TAA und ohne SSIL (beide verändern Haltebilder)",
+ "pipeline": [
+  {
+   "step": "Keine KI-Bilder",
+   "tool": "–",
+   "detail": "genimg.py wurde nicht aufgerufen. Formen, Oberflächen, Himmel und Oberfläche sind prozedural; für den Stil wäre ein Bildmodell höchstens als Prospekt oder Texturquelle denkbar gewesen."
+  },
+  {
+   "step": "Knet-Set aus dem gemeinsamen Hafen",
+   "tool": "Blender 5.2, blender/build_clay_harbor.py",
+   "detail": "Import von shared/3d/harbor.glb; je Objekt aus einer Tabelle: unter dem Meer (y < −1,05) abschneiden, offene Teile schließen (große füllen, dünne nach innen aufdicken), Voxel-Remesh, Laplace-Glättung mit Volumenerhalt, Beulen aus zwei Oktaven Perlin-Rauschen entlang der Normale, Ausdünnen (Collapse), Materialien vom nächsten Originalpolygon zurückholen, Box-UVs in Metern. Gelände und Taurolle: Catmull-Clark statt Remesh. IslandsFar und Sea entfernt. Export demo/models/harbor_knete.glb (499 286 Dreiecke, 13 MB), Laufzeit etwa 5 min. Namen, Eltern und Empties bleiben."
+  },
+  {
+   "step": "Laufweg-Höhen",
+   "tool": "Blender (Strahltests im selben Skript)",
+   "detail": "Oberkante des Knetpflasters auf drei Linien (z = 0,825 / 0,95 / 1,075) für x = −4 bis 1 m im 2-cm-Raster nach demo/models/harbor_knete_path.json; main.gd stellt den tragenden Fuß auf den höchsten seiner drei Sohlenpunkte."
+  },
+  {
+   "step": "Materialien nach Namen",
+   "tool": "Godot 4.7.2, shaders/clay.gdshader, main.gd (Tabelle CLAY)",
+   "detail": "Alle 14 Hafen- und 11 Figurenmaterialien durch einen Knete-Shader ersetzt (Farbe, Rauheit, Glanz, Art: Knete, gestupftes Gras, Strickrippen, Perle, Gelände); Felsnase und Westhügel mit einem Gelände-Material, das Fels, Sand und Gras aus Neigung und Höhe mit welligen Grenzen bestimmt; je Objekt eigener Musterversatz und Mustergröße (Instanz-Uniforms)."
+  },
+  {
+   "step": "Dachs als Knetpuppe",
+   "tool": "main.gd (_clay_mesh)",
+   "detail": "badger.glb unverändert kopiert; zur Laufzeit je Fläche neu aufgebaut: Ruhelage nach CUSTOM0, 3,5 mm Beulen entlang der über alle Nahtkopien gemittelten Normale (Nähte bleiben zu), Normalen nach dem Beulengradienten geneigt; Knochen, Gewichte und Skin bleiben."
+  },
+  {
+   "step": "Stop-Motion-Stufen",
+   "tool": "main.gd",
+   "detail": "AnimationPlayer im manuellen Modus; je Figurenbild (Bildindex = floor(t·15)) advance() um 0,125 s (Walk) bzw. 1/15 s; Verschiebung 0,367 m je Sekunde Animationszeit; Abbremsen in vier Bildern (0,1/0,075/0,05/0,025 s) bis in die Durchgangsphase; Drehschritt um den linken Knöchel über 6 Bilder bei gleichzeitigem Überblenden auf Idle; boil_seed = Bildindex. Umgebung je Bild der 10er-Folge."
+  },
+  {
+   "step": "Meer, Prospekt, Oberfläche",
+   "tool": "clay_sea.gdshader, backdrop.gdshader, clay_ui.gdshader, ui.gd",
+   "detail": "Meer als Gitter im Kamerakegel (Zeilenabstand wächst mit dem Quadrat der Entfernung, 420 Spalten je Zeile) mit Wellenwülsten in Weltkoordinaten; Prospekt als 170 × 72 m große Platte 55 m hinter dem Kai, unbeleuchtet mit eigener Reliefschattierung; Knetplatte und Kugeln als Canvas-Shader auf ColorRects, Text als Label mit Fredoka."
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/measure_badger.py, compare_detail.py, compare_renderers.py, still.py, tools/capture.py",
+   "detail": "Knochen und Sohlenpunkte je Bild (Welt und px), Umriss als weiße Maske mit und ohne Formrauschen, Haltebilder pixelgenau gegen den Bildindex, Vergleichsschalter --no-detail, Probeläufe mit Mobile und Compatibility, Einzelbilder bei 30 s und 41 s angesehen."
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, Forward+, MSAA 4×, Tiefenunschärfe Kreisblende ohne Jitter, Schattenkarte 8192, weiche Schatten Stufe 4",
+  "Environment: ProceduralSky in Abendfarben nur für Umgebungslicht und Spiegelungen (Sky.process_mode Quality), Umgebungslicht 0,5, Filmic, SSAO (Radius 0,7, Stärke 2,4), Glow ab 1,1, leichter Tiefennebel ab 22 m, Sättigung 1,1; kein SSIL (liest das vorige Bild, das erste Bild wich in 1 120 Pixeln ab; Beitrag zum Bild nur 0,06 % der Pixel)",
+  "CameraAttributesPractical: nur ferne Unschärfe ab 18 m, Übergang 60 m, Stärke 0,035 (Leuchtturm leicht weich, Prospekt bleibt lesbar)",
+  "clay.gdshader: eigene light()-Funktion (umgreifendes Diffuslicht mit warmem Saum an der Schattengrenze, GGX-Glanz, Samtsaum); Normale ohne Tangenten nach Mikkelsen aus drei Auswertungen der Höhenfunktion (Pixel, rechts, unten), dadurch keine 2×2-Blöcke wie bei dFdx(h); Rillen, Poren und Krümel nach Pixelgröße ausgeblendet",
+  "Instanz-Uniforms noise_offset und detail_scale je MeshInstance3D (gleiche Fässer tragen nicht dieselben Abdrücke; ferne Teile größeres Muster)",
+  "Figur: Netz zur Laufzeit mit ARRAY_CUSTOM0 (RGBA float) neu aufgebaut; im Vertex-Shader Formrauschen als Verschiebung (6 mm) aus Rauschen in der Ruhelage plus Bildindex",
+  "Stufen: Bildindex floor(t·15 + 1e-4) bzw. floor(t·10 + 1e-4), t aus aufsummiertem delta; main.gd spult für --t0 in denselben Schritten vor",
+  "Höhe der Figur: Sohlenpunkte (Ferse, Mitte, Zehen) aus der Ruhelage mit der Knochenlage mitbewegt, Oberfläche aus harbor_knete_path.json bilinear; im Lauf trägt der Fuß der aktuellen Halbphase",
+  "Meer: eigenes ArrayMesh (Kamerakegel) mit cull_back; Wellen, Schaum und Abdrücke in Weltkoordinaten, sea_t und sea_seed je Umgebungsbild; Schaum ab 7 cm Pixelgröße ausgeblendet",
+  "Attach-Muster aus shared/3d für Laternen-, Fenster- und Leuchtfeuerlicht; Leuchtfeuer dreht in Stufen, Lampe blitzt auf, wenn der Strahl zur Kamera zeigt (bei 1,6 s); beam.gdshader aus shared/3d kopiert, schwächer eingestellt",
+  "UI: CanvasLayer mit Control (ui.gd), Knetplatte über clay_ui.gdshader (SDF eines abgerundeten Rechtecks mit welligem Rand, Viertelkreisprofil, Abdrücke, Schatten), Eingabe tippt und Cursor blinkt im Takt der Figurenbilder",
+  "Prüfschalter nach --: --t0, --no-boil, --no-ui, --no-detail, --mask, --measure; harbor_knete.glb mit meshes/generate_lods=false"
+ ],
+ "techniques": [
+  "animation-auf-zweien",
+  "formrauschen",
+  "voxel-remesh",
+  "prozedurale-materialien",
+  "fuss-halten",
+  "prozedurale-animation",
+  "shader-wasser",
+  "additiver-lichtkegel",
+  "rim-light",
+  "tiefenunschaerfe",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 1,
+  "consistency": 4,
+  "effort": 3,
+  "text_adventure": 4,
+  "mobile": 2
+ },
+ "ratings_note": "ai_fit 1, weil die KI hier nichts beigetragen hat: Es wurde kein Bild erzeugt; der Look kommt aus dem Blender-Skript, den Shadern und dem Code. Wie gut ein Bildmodell Knetbilder trifft, ist damit nicht geprüft. consistency 4: Ein Shader und eine Materialtabelle machen jedes Modell nach denselben Regeln zu Knete, die Figur braucht keine Handarbeit; je Ort müssen aber Voxelgrößen, offene Teile und Mustergrößen eingestellt werden, und dünne Teile (Geländer, Laternenrahmen) werden zu Knubbeln. effort 3: Ein Ort braucht ein 3D-Modell und einen Lauf des Knete-Skripts (5 min) mit Sichtprüfung; Stop-Motion-Stufen, Formrauschen und Oberfläche sind wiederverwendbar, Gänge auf unebenem Knetboden brauchen aber Höhentabellen und Prüfung. mobile 2 ist geschätzt (auf keinem Smartphone gemessen): 499 286 Dreiecke im Hafen und ein Pixel-Shader, der Abdrücke, Rauschen und Poren dreimal je Pixel auswertet; Probeläufe auf dem Mac laufen mit Mobile ohne Fehler, aber ohne SSAO und mit dunkler verschatteter Felsnase (26,2 % der Pixel weichen um mehr als 8 Stufen ab), mit Compatibility ohne Tiefenunschärfe und mit anderer Farbwiedergabe (85,6 %), der Knete-Eindruck bleibt in beiden erhalten. Für Smartphones müssten die Abdrücke in Normal-Maps gebacken und das Netz stärker ausgedünnt werden.",
+ "verdict": "Gut geeignet für ein Textadventure mit festen Kameras je Ort: Die Szene wirkt wie ein gebautes Knet-Set, die Figur ist sofort als Knetpuppe zu erkennen, und die gestufte Bewegung mit Formrauschen trägt den Stop-Motion-Eindruck auch ohne Fotografie. Neue Figuren und Requisiten werden über dieselbe Materialtabelle zu Knete, ohne Texturen zu malen. Kosten: ein 3D-Modell je Ort, ein Skriptlauf mit Kontrolle der Remesh-Ergebnisse und Kameraeinstellungen nah genug an der Figur (in der Totale verschwinden die Abdrücke). Gesichter ohne Mund- und Augenanimation wirken bei Dialogen starr; für Sprechszenen bräuchte die Figur Ersatzmünder wie bei echter Stop-Motion. Für Smartphones und Web wären gebackene Normal-Maps nötig.",
+ "pitfalls": [
+  "Keine KI-Bilder (bewusst, laut Auftrag nur wenn unvermeidbar); ai_fit ist deshalb nicht geprüft.",
+  "Voxel-Remesh lässt offene Teile verschwinden: Im ersten Lauf fehlte die Fugenfläche des Kais (man sah zwischen den Platten ins Leere), Poller ohne Boden zerfielen, der Leuchtturmsockel fehlte. Erst Abschneiden unter dem Meer, Füllen großer und Aufdicken dünner offener Teile (289 Pflasterplatten, 39 Planken) ergab geschlossene Körper. Der Lauf mit offenen Teilen ohne Schnitt dauerte über 10 min.",
+  "Remesh verschmilzt dicht liegende Teile: Die Taurolle wurde zu einer flachen Scheibe (deshalb Catmull-Clark statt Remesh), Geländer des Leuchtturms und Laternenrahmen werden zu Knubbeln. Materialien kommen per nächstem Originalpolygon zurück; ihre Grenzen folgen den Dreiecken und sind aus der Nähe zackig (am Bootsfenster sichtbar).",
+  "Gelände: Einfache Unterteilung plus Glätten ließ die Low-Poly-Facetten der Felsnase stehen, und Gras folgte als Dreiecke den Facetten; erst Catmull-Clark und ein Gelände-Material mit welligen Grenzen im Shader beseitigten das. Dabei entstand eine Sandbucht an der Felsnase, die aus der Ferne wie ein Loch wirkte, bis der Sand gedämpft wurde.",
+  "Bewusste Abweichung von shared/3d: Laufweg auf z = 0,95 statt 1,2, weil auf z = 1,2 der kameranahe Fuß über einer 3 cm tiefen Pflasterfuge stand; eigene Kamera nah auf Augenhöhe der Puppe; Häuschen, Rauch, Fässer und Kisten liegen außerhalb des Bildes; IslandsFar fehlt (hinter dem Prospekt).",
+  "Der Dachs steht auf unebenem Knetpflaster: Beim Wechsel des Standbeins hebt oder senkt sich die ganze Figur um bis zu 12,5 mm (2,95 px); waagrecht steht der tragende Fuß fest (höchstens 1,2 mm, im Mittel 0,43 mm je Animationsbild).",
+  "Beim Drehschritt zur Kamera bleibt der linke Knöchel fest (0,1 mm), der Fuß dreht sich aber auf der Stelle um ihn; der rechte Fuß ist in der Luft (bis 71 mm) und setzt erst am Ende auf.",
+  "Das Meer war zuerst unsichtbar: Das Gitter war falsch herum gewickelt und wurde mit cull_back verworfen, durch die Lücke schimmerte der Himmel als lila 'Meer'. Bei streifendem Blick (Kamera 1,7 m über dem Wasser) stauchen sich die Wellen auf wenige Pixel; erst höhere, breitere Wülste und matte Knete (weniger Himmelsspiegelung) machten sie lesbar.",
+  "Fingerabdrücke auf dem Set sind bei flachem Blick auf das Pflaster schwach: --no-detail ändert nur 3,2 % des ganzen Bildes (Dachs-Ausschnitt 16,5 %); auf dem Set kommt der Knete-Eindruck vor allem aus den gerundeten Formen. Echte Rillen eines Fingerabdrucks (2,5 mm im Szenenmaß bei Puppenmaßstab 1:5) liegen bei 720p unter einem Pixel und sind nur als Mulden dargestellt; Krümel und Poren mussten nach Pixelgröße ausgeblendet werden, sonst rauschte der weiße Leuchtturm.",
+  "Formrauschen am Umriss ist mit 0,5 px im Mittel (höchstens 0,7 px) bewusst schwach; sichtbar ist das Kochen vor allem an der Oberfläche (wandernde und neue Abdrücke). Stärkere Werte wurden nicht geprüft.",
+  "SSIL liest das vorige Bild: Das erste Bild der Aufnahme wich in 1 120 Pixeln vom zweiten ab, obwohl kein neues Animationsbild begann. SSIL ist deshalb aus (Beitrag nur 0,06 % der Pixel); danach sind alle Haltebilder pixelgleich.",
+  "Bei 0 s ist der Dachs noch nicht im Bild (er kommt bei etwa 0,3 s links herein).",
+  "Der Lichtkegel des Leuchtturms ist ein additiver Rechnerkegel und wirkt weniger nach Studio als der Rest.",
+  "Mobile: ohne SSAO, Felsnase dunkler verschattet (26,2 % der Pixel anders); Compatibility: ohne Tiefenunschärfe, andere Farbwiedergabe (85,6 % der Pixel anders, Bild sieht aber ähnlich aus). Auf einem Smartphone nicht gemessen.",
+  "Die Figur hat keine Gesichtsanimation; für Dialoge fehlen Ersatzmünder und Lider."
+ ],
+ "lessons": [
+  "Voxel-Remesh + Laplace-Glättung + Beulen macht aus jedem Low-Poly-Modell glaubwürdige Knete; vorher unter der Wasserlinie abschneiden und offene Teile schließen, danach Materialien vom nächsten Originalpolygon zurückholen. Gelände und Röhren (Tau) besser mit Catmull-Clark runden.",
+  "Muster ohne UVs: Set im Objektraum, geriggte Figur in der Ruhelage über CUSTOM0 (Netz zur Laufzeit neu aufbauen, Skin bleibt). Die Normale nach Mikkelsen aus drei Auswertungen der Höhe statt aus dFdx(h) vermeidet 2×2-Blöcke.",
+  "Stop-Motion in Godot: AnimationPlayer im manuellen Modus und advance() nur an Bildgrenzen, Bildindex aus der aufsummierten Zeit, Formrauschen mit dem Bildindex als Seed; dann sind Haltebilder pixelgleich, was sich einfach messen lässt. TAA und SSIL vermeiden.",
+  "Walk (1 s) mit 0,125 s Animationszeit je Bild ergibt 8 Posen auf Zweien; Abbremsen in Bildschritten so legen, dass der Lauf in einer Durchgangsphase endet, und dann um den Knöchel des Standfußes zur Kamera drehen, während das andere Bein auf Idle niedergeht: wirkt wie ein echter Schritt, der Standfuß bleibt fest.",
+  "Unebener Boden: Oberflächenhöhen aus Strahltests in Blender als kleine Tabelle mitliefern und den Fuß auf den höchsten seiner Sohlenpunkte stellen, sonst sackt er in Fugen.",
+  "Erzwungene Perspektive auch für Muster: Ferne Teile bekommen ein größeres Musterraster (wie kleinere Modelle im Studio), sonst verschwinden Abdrücke im Pixelrauschen.",
+  "Kleinteiliges (Rillen, Poren, Krümel, Schaum) nach Pixelgröße ausblenden; sonst wird Knete zu Rauschen.",
+  "Bei streifendem Blick auf Wasser hilft matte Knete: weniger Fresnel-Spiegelung, die Wülste werden über Licht und Farbe lesbar.",
+  "Ein Himmelsprospekt aus verstrichener Knete gelingt als unbeleuchteter Shader mit eigener Reliefschattierung; das Studiolicht muss den 55 m entfernten Prospekt dann nicht treffen.",
+  "Oberflächen im selben Material wie die Welt (Knetplatte als Canvas-Shader) halten Spiel und UI zusammen, ohne die Lesbarkeit zu gefährden, wenn Krümel unter der Schrift ausgeschaltet sind."
+ ],
+ "assets": [
+  {
+   "file": "blender/build_clay_harbor.py",
+   "kind": "code",
+   "made_with": "Blender 5.2: Hafen aus shared/3d zu Knet-Set umformen (Remesh, Glätten, Beulen, Materialien zurückholen), Laufweg-Höhen, Vorschau",
+   "prompt": ""
+  },
+  {
+   "file": "demo/models/harbor_knete.glb",
+   "kind": "model",
+   "made_with": "build_clay_harbor.py aus shared/3d/harbor.glb (499 286 Dreiecke)",
+   "prompt": ""
+  },
+  {
+   "file": "demo/models/harbor_knete_path.json",
+   "kind": "data",
+   "made_with": "build_clay_harbor.py: Oberkante des Knetpflasters entlang des Laufwegs (Strahltests)",
+   "prompt": ""
+  },
+  {
+   "file": "demo/models/badger.glb",
+   "kind": "model",
+   "made_with": "unveränderte Kopie von shared/3d/badger.glb (7 348 Dreiecke, Idle/Walk/Wave); Knete-Umbau zur Laufzeit in main.gd",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/clay.gdshader",
+   "kind": "shader",
+   "made_with": "Knetmasse: Fingerabdrücke, Beulen, Poren, Krümel, Marmorierung, Gras, Strick, Perle, Gelände, Formrauschen, eigenes Licht",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/clay_noise.gdshaderinc",
+   "kind": "shader",
+   "made_with": "gemeinsame Rausch-, Zell- und Fingerabdruckfunktionen",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/clay_sea.gdshader",
+   "kind": "shader",
+   "made_with": "Meer aus Knetwülsten mit weißen Kämmen, in Stufen bewegt",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/backdrop.gdshader",
+   "kind": "shader",
+   "made_with": "Himmelsprospekt aus verstrichener Knete mit Wolkenwülsten und Sternkügelchen",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/clay_ui.gdshader",
+   "kind": "shader",
+   "made_with": "Knetplatte, Namensschild und Knetkugeln der Oberfläche",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/beam.gdshader",
+   "kind": "shader",
+   "made_with": "Kopie aus shared/3d/demo (additiver Lichtkegel), schwächer eingestellt",
+   "prompt": ""
+  },
+  {
+   "file": "demo/main.gd",
+   "kind": "code",
+   "made_with": "Materialtabelle, Figur als Knetpuppe, Stop-Motion-Stufen, Drehschritt, Höhe auf unebenem Boden, Meer- und Prospektgitter, Prüfschalter",
+   "prompt": ""
+  },
+  {
+   "file": "demo/ui.gd",
+   "kind": "code",
+   "made_with": "Textoberfläche als Knetplatte mit Fredoka",
+   "prompt": ""
+  },
+  {
+   "file": "demo/main.tscn",
+   "kind": "scene",
+   "made_with": "von Hand geschrieben: Studiolicht, Environment, feste Kamera mit Tiefenunschärfe, Attach-Knoten",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/frame_shot.py",
+   "kind": "code",
+   "made_with": "Bildausschnitt vorab rechnen (Projektion wie Godot)",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/still.py",
+   "kind": "code",
+   "made_with": "Einzelbilder ab --t0 rendern",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/measure_badger.py",
+   "kind": "code",
+   "made_with": "Standfuß, Drehschritt, Fuß- und Kopfzeile, Formrauschen, Haltebilder messen",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/compare_detail.py",
+   "kind": "code",
+   "made_with": "Vergleichsschalter --no-detail",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/compare_renderers.py",
+   "kind": "code",
+   "made_with": "Probeläufe Forward+, Mobile, Compatibility",
+   "prompt": ""
+  },
+  {
+   "file": "assets/measure/measure_badger.json",
+   "kind": "data",
+   "made_with": "Ausgabe von measure_badger.py",
+   "prompt": ""
+  },
+  {
+   "file": "assets/measure/detail_switch.json",
+   "kind": "data",
+   "made_with": "Ausgabe von compare_detail.py",
+   "prompt": ""
+  },
+  {
+   "file": "assets/measure/detail_switch.jpg",
+   "kind": "preview",
+   "made_with": "Dachs im Poster mit und ohne Knet-Oberfläche (2-fach)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/measure/renderers.json",
+   "kind": "data",
+   "made_with": "Ausgabe von compare_renderers.py",
+   "prompt": ""
+  },
+  {
+   "file": "assets/measure/renderers.jpg",
+   "kind": "preview",
+   "made_with": "Forward+, Mobile, Compatibility bei 4,3 s",
+   "prompt": ""
+  },
+  {
+   "file": "assets/measure/boil_steps.jpg",
+   "kind": "preview",
+   "made_with": "vier aufeinanderfolgende Animationsbilder im Stehen (5,4–5,6 s, 2-fach): Formrauschen",
+   "prompt": ""
+  },
+  {
+   "file": "assets/measure/badger_close.jpg",
+   "kind": "preview",
+   "made_with": "Ausschnitt aus dem Poster, 2-fach: Dachs als Knetpuppe beim Winken",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Fredoka (variabel, Strichstärken 500 und 620)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/fredoka (Kopie aus styles/ki-spritesheet, Lizenztext: demo/fonts/OFL-Fredoka.txt)"
+  },
+  {
+   "item": "Hafen und Dachs",
+   "license": "eigene Modelle aus shared/3d (Blender-Skripte)",
+   "source": "shared/3d/blender/"
+  },
+  {
+   "item": "Knet-Set, Shader, Oberfläche",
+   "license": "eigener Code, keine fremden Texturen oder Bilder",
+   "source": "styles/knete/"
+  },
+  {
+   "item": "Hash without Sine (Shader-Funktion), Copyright (c) 2014 David Hoskins – in demo/shaders/clay_noise.gdshaderinc",
+   "license": "MIT",
+   "source": "https://www.shadertoy.com/view/4djSRW"
+  },
+  {
+   "item": "Distanzfunktion abgerundetes Rechteck nach Inigo Quilez (Shader-Funktion), Copyright (c) Inigo Quilez – in demo/shaders/clay_ui.gdshader",
+   "license": "MIT",
+   "source": "https://iquilezles.org/articles/distfunctions2d/"
+  }
+ ],
+ "image_generations": 0,
+ "tool_issues": [],
+ "status": "done"
+}

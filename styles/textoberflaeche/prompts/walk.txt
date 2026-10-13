@@ -1,0 +1,9 @@
+Repaint the sprite sheet from the first reference image as a finished, hand-painted 2D game sprite sheet. Keep its layout exactly: two rows of four animation frames of one walk cycle to the right, every figure at the same position, size and scale as in the first reference, feet on the same baseline in each row, and in every frame the same leg, foot, arm and scarf position as in the first reference (the eight frames are evenly spaced phases of the walk, so the leg positions must not change). Paint the character as the badger courier of the second reference image and in its picture-book illustration style: clean dark-brown ink outlines, opaque gouache colour with soft painted shading in two or three values, painted fur texture, a friendly face with a short snout and a broad black-and-white striped face, short sturdy legs with dark paws. The third reference only shows the costume and proportions; drawing style, palette and resolution follow the second reference. The same character with the same colours in all eight frames, evenly front-lit, no rim light.
+
+The badger courier: an original mascot character, a stout, short-legged badger with a broad black-and-white striped face, wearing a dark green peaked cap with a brass button, a dark green vest with pockets over a cream shirt with rolled-up sleeves, a long red knitted scarf, a brown leather satchel on a shoulder strap, and a brown paper parcel tied with string under one arm.
+
+Isolated on a fully transparent background. No ground, no cast shadows, no frame borders, no grid lines, no motion lines.
+
+No text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.
+
+Image format: landscape 3:2.

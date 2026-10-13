@@ -1,0 +1,105 @@
+{
+ "variant": "ai",
+ "lamp": [
+  1077.3,
+  217.8
+ ],
+ "lantern": [
+  858.6,
+  339.8
+ ],
+ "chimney": [
+  137.5,
+  102.0
+ ],
+ "window": [
+  186.6,
+  338.3
+ ],
+ "window_glow_scale": 0.71,
+ "lantern_glow_scale": 0.6,
+ "lamp_glow_scale": 0.45,
+ "smoke_alpha": 0.6,
+ "feet_y": 550.0,
+ "horizon_y": 354.4,
+ "top": 22.0,
+ "side": 68.8,
+ "bottom": 600.0,
+ "badger_height": 150.0,
+ "stop_x": 560.0,
+ "water_band": [
+  358.0,
+  510.0
+ ],
+ "clouds": [
+  [
+   0,
+   200.0,
+   55.6,
+   9.0,
+   0.55
+  ],
+  [
+   2,
+   760.0,
+   123.7,
+   7.0,
+   0.5
+  ],
+  [
+   1,
+   1100.0,
+   42.0,
+   10.0,
+   0.45
+  ],
+  [
+   3,
+   480.0,
+   246.3,
+   4.5,
+   0.4
+  ],
+  [
+   4,
+   1000.0,
+   287.1,
+   4.0,
+   0.35
+  ]
+ ],
+ "gulls": [
+  [
+   -40.0,
+   191.8,
+   58.0,
+   0.8,
+   0.0
+  ],
+  [
+   300.0,
+   110.1,
+   44.0,
+   0.6,
+   0.45
+  ]
+ ],
+ "place": {
+  "scale": 0.76716,
+  "ox": 50.82,
+  "oy": -40.72,
+  "raw_size": [
+   1536,
+   1024
+  ]
+ },
+ "sources": {
+  "lamp": "Korrektur",
+  "window": "Korrektur",
+  "lantern": "Korrektur",
+  "chimney": "Korrektur"
+ },
+ "notes": [
+  "Sättigung ×0.78, Papierweiß 3.0%"
+ ]
+}

@@ -1,0 +1,313 @@
+{
+ "frames": 15,
+ "top_ai": 450,
+ "names": [
+  "walk_0",
+  "walk_1",
+  "walk_2",
+  "walk_3",
+  "walk_4",
+  "walk_5",
+  "walk_6",
+  "walk_7",
+  "stand",
+  "turn",
+  "turn_b1",
+  "turn_b2",
+  "blink",
+  "blink_b1",
+  "blink_b2"
+ ],
+ "scale_world": 0.44,
+ "key_grow_ai": 2.0,
+ "inks": {
+  "key": [
+   33,
+   31,
+   14
+  ],
+  "fur": [
+   74,
+   63,
+   52
+  ],
+  "green_dark": [
+   60,
+   66,
+   40
+  ],
+  "green": [
+   90,
+   95,
+   58
+  ],
+  "red": [
+   154,
+   66,
+   42
+  ],
+  "brown_dark": [
+   78,
+   47,
+   28
+  ],
+  "brown": [
+   116,
+   74,
+   44
+  ],
+  "parcel_dark": [
+   156,
+   116,
+   72
+  ],
+  "parcel": [
+   204,
+   152,
+   86
+  ],
+  "gold": [
+   214,
+   160,
+   66
+  ],
+  "cream_dark": [
+   198,
+   178,
+   140
+  ],
+  "cream": [
+   240,
+   220,
+   182
+  ]
+ },
+ "ink_share": {
+  "key": 0.3283,
+  "fur": 0.2419,
+  "green_dark": 0.0005,
+  "green": 0.1306,
+  "red": 0.0855,
+  "brown_dark": 0.0021,
+  "brown": 0.0342,
+  "parcel_dark": 0.0007,
+  "parcel": 0.0491,
+  "gold": 0.0022,
+  "cream_dark": 0.0003,
+  "cream": 0.1246
+ },
+ "frame_w_far": 80,
+ "frame_h_far": 119,
+ "scale_far": 0.25895833333333335,
+ "zoom_far": 0.5885416666666666,
+ "sole_y_far": 116.921,
+ "px_per_ai_far": 0.259825327510917,
+ "frame_w_close": 135,
+ "frame_h_close": 202,
+ "scale_close": 0.44,
+ "zoom_close": 1.0,
+ "sole_y_close": 198.472,
+ "px_per_ai_close": 0.4410480349344978,
+ "measure": [
+  {
+   "name": "walk_0",
+   "sole_ai": 491,
+   "top_ai": 71,
+   "height_ai": 421,
+   "nose_x_ai": 286,
+   "cx_ai": 164.3,
+   "eye_ai": [
+    219,
+    103
+   ],
+   "head_shift_ai": 3
+  },
+  {
+   "name": "walk_1",
+   "sole_ai": 491,
+   "top_ai": 68,
+   "height_ai": 424,
+   "nose_x_ai": 284,
+   "cx_ai": 161.5,
+   "eye_ai": [
+    216,
+    101
+   ],
+   "head_shift_ai": -5
+  },
+  {
+   "name": "walk_2",
+   "sole_ai": 490,
+   "top_ai": 70,
+   "height_ai": 421,
+   "nose_x_ai": 284,
+   "cx_ai": 161.4,
+   "eye_ai": [
+    219,
+    104
+   ],
+   "head_shift_ai": 1
+  },
+  {
+   "name": "walk_3",
+   "sole_ai": 490,
+   "top_ai": 69,
+   "height_ai": 422,
+   "nose_x_ai": 283,
+   "cx_ai": 160.4,
+   "eye_ai": [
+    217,
+    105
+   ],
+   "head_shift_ai": 0
+  },
+  {
+   "name": "walk_4",
+   "sole_ai": 491,
+   "top_ai": 68,
+   "height_ai": 424,
+   "nose_x_ai": 274,
+   "cx_ai": 155.8,
+   "eye_ai": [
+    207,
+    104
+   ],
+   "head_shift_ai": -1
+  },
+  {
+   "name": "walk_5",
+   "sole_ai": 457,
+   "top_ai": 46,
+   "height_ai": 412,
+   "nose_x_ai": 280,
+   "cx_ai": 157.9,
+   "eye_ai": [
+    214,
+    111
+   ],
+   "head_shift_ai": 0
+  },
+  {
+   "name": "walk_6",
+   "sole_ai": 457,
+   "top_ai": 43,
+   "height_ai": 415,
+   "nose_x_ai": 286,
+   "cx_ai": 163.9,
+   "eye_ai": [
+    220,
+    109
+   ],
+   "head_shift_ai": 2
+  },
+  {
+   "name": "walk_7",
+   "sole_ai": 457,
+   "top_ai": 46,
+   "height_ai": 412,
+   "nose_x_ai": 283,
+   "cx_ai": 160.8,
+   "eye_ai": [
+    214,
+    112
+   ],
+   "head_shift_ai": 0
+  },
+  {
+   "name": "stand",
+   "sole_ai": 457,
+   "top_ai": 38,
+   "height_ai": 420,
+   "nose_x_ai": 282,
+   "cx_ai": 162.6,
+   "eye_ai": [
+    216,
+    106
+   ],
+   "head_shift_ai": 0
+  },
+  {
+   "name": "turn",
+   "sole_ai": 458,
+   "top_ai": 38,
+   "height_ai": 421,
+   "nose_x_ai": 237,
+   "cx_ai": 154.4,
+   "eye_ai": [
+    172,
+    106
+   ],
+   "head_shift_ai": 0
+  },
+  {
+   "name": "turn_b1",
+   "sole_ai": 458,
+   "top_ai": 38,
+   "height_ai": 421,
+   "nose_x_ai": 237,
+   "cx_ai": 154.4,
+   "eye_ai": [
+    172,
+    106
+   ],
+   "head_shift_ai": 0,
+   "breath_ai": 2
+  },
+  {
+   "name": "turn_b2",
+   "sole_ai": 458,
+   "top_ai": 38,
+   "height_ai": 421,
+   "nose_x_ai": 237,
+   "cx_ai": 154.4,
+   "eye_ai": [
+    172,
+    106
+   ],
+   "head_shift_ai": 0,
+   "breath_ai": 4
+  },
+  {
+   "name": "blink",
+   "sole_ai": 458,
+   "top_ai": 38,
+   "height_ai": 421,
+   "nose_x_ai": 237,
+   "cx_ai": 154.4,
+   "eye_ai": [
+    172,
+    106
+   ],
+   "head_shift_ai": 0,
+   "breath_ai": 0
+  },
+  {
+   "name": "blink_b1",
+   "sole_ai": 458,
+   "top_ai": 38,
+   "height_ai": 421,
+   "nose_x_ai": 237,
+   "cx_ai": 154.4,
+   "eye_ai": [
+    172,
+    106
+   ],
+   "head_shift_ai": 0,
+   "breath_ai": 2
+  },
+  {
+   "name": "blink_b2",
+   "sole_ai": 458,
+   "top_ai": 38,
+   "height_ai": 421,
+   "nose_x_ai": 237,
+   "cx_ai": 154.4,
+   "eye_ai": [
+    172,
+    106
+   ],
+   "head_shift_ai": 0,
+   "breath_ai": 4
+  }
+ ]
+}

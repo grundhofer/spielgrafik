@@ -1,0 +1,49 @@
+{
+ "pos": [
+  342,
+  67
+ ],
+ "size": [
+  516,
+  769
+ ],
+ "variants": [
+  "neutral",
+  "blink",
+  "talk",
+  "happy",
+  "happy_closed",
+  "surprised"
+ ],
+ "face_box": [
+  163,
+  83,
+  351,
+  223
+ ],
+ "head": [
+  115,
+  5,
+  400,
+  200
+ ],
+ "emote": [
+  386,
+  63
+ ],
+ "test_images": false,
+ "regions": {
+  "eyes": [
+   169,
+   101,
+   359,
+   178
+  ],
+  "mouth": [
+   180,
+   204,
+   341,
+   259
+  ]
+ }
+}

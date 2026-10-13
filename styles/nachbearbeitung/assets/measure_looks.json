@@ -1,0 +1,165 @@
+{
+ "t": 3.6,
+ "looks": {
+  "Bloom": {
+   "changed_share": 0.3149,
+   "changed_share_world": 0.3583,
+   "mean_abs": 16.66,
+   "mean_abs_world": 18.72,
+   "max": 213
+  },
+  "Filmkorn & Vignette": {
+   "changed_share": 0.4999,
+   "changed_share_world": 0.5587,
+   "mean_abs": 18.62,
+   "mean_abs_world": 20.46,
+   "max": 143
+  },
+  "Farb-LUT": {
+   "changed_share": 0.8298,
+   "changed_share_world": 0.9302,
+   "mean_abs": 28.28,
+   "mean_abs_world": 31.22,
+   "max": 138
+  },
+  "CRT": {
+   "changed_share": 0.8211,
+   "changed_share_world": 0.8849,
+   "mean_abs": 33.16,
+   "mean_abs_world": 34.04,
+   "max": 245
+  },
+  "Halbton": {
+   "changed_share": 0.7761,
+   "changed_share_world": 0.8709,
+   "mean_abs": 46.43,
+   "mean_abs_world": 51.49,
+   "max": 242
+  },
+  "Paletten-Reduktion": {
+   "changed_share": 0.1994,
+   "changed_share_world": 0.2249,
+   "mean_abs": 9.15,
+   "mean_abs_world": 10.15,
+   "max": 196
+  }
+ },
+ "renderers": {
+  "mobile": {
+   "ohne": {
+    "changed_share": 0.0001,
+    "changed_share_world": 0.0002,
+    "mean_abs": 1.03,
+    "mean_abs_world": 1.16,
+    "max": 59,
+    "errors": []
+   },
+   "Bloom": {
+    "changed_share": 0.0344,
+    "changed_share_world": 0.0392,
+    "mean_abs": 4.53,
+    "mean_abs_world": 5.08,
+    "max": 82,
+    "errors": []
+   },
+   "Filmkorn & Vignette": {
+    "changed_share": 0.0,
+    "changed_share_world": 0.0,
+    "mean_abs": 0.78,
+    "mean_abs_world": 0.88,
+    "max": 41,
+    "errors": []
+   },
+   "Farb-LUT": {
+    "changed_share": 0.0001,
+    "changed_share_world": 0.0001,
+    "mean_abs": 0.75,
+    "mean_abs_world": 0.85,
+    "max": 95,
+    "errors": []
+   },
+   "CRT": {
+    "changed_share": 0.0017,
+    "changed_share_world": 0.0019,
+    "mean_abs": 0.75,
+    "mean_abs_world": 0.85,
+    "max": 42,
+    "errors": []
+   },
+   "Halbton": {
+    "changed_share": 0.0118,
+    "changed_share_world": 0.0135,
+    "mean_abs": 1.13,
+    "mean_abs_world": 1.27,
+    "max": 170,
+    "errors": []
+   },
+   "Paletten-Reduktion": {
+    "changed_share": 0.0256,
+    "changed_share_world": 0.0292,
+    "mean_abs": 0.64,
+    "mean_abs_world": 0.72,
+    "max": 76,
+    "errors": []
+   }
+  },
+  "gl_compatibility": {
+   "ohne": {
+    "changed_share": 0.2838,
+    "changed_share_world": 0.3155,
+    "mean_abs": 11.3,
+    "mean_abs_world": 12.36,
+    "max": 179,
+    "errors": []
+   },
+   "Bloom": {
+    "changed_share": 0.5533,
+    "changed_share_world": 0.624,
+    "mean_abs": 20.99,
+    "mean_abs_world": 23.47,
+    "max": 181,
+    "errors": []
+   },
+   "Filmkorn & Vignette": {
+    "changed_share": 0.2023,
+    "changed_share_world": 0.2258,
+    "mean_abs": 8.83,
+    "mean_abs_world": 9.68,
+    "max": 152,
+    "errors": []
+   },
+   "Farb-LUT": {
+    "changed_share": 0.0769,
+    "changed_share_world": 0.0854,
+    "mean_abs": 8.25,
+    "mean_abs_world": 9.0,
+    "max": 169,
+    "errors": []
+   },
+   "CRT": {
+    "changed_share": 0.2273,
+    "changed_share_world": 0.2533,
+    "mean_abs": 8.87,
+    "mean_abs_world": 9.74,
+    "max": 215,
+    "errors": []
+   },
+   "Halbton": {
+    "changed_share": 0.2858,
+    "changed_share_world": 0.3182,
+    "mean_abs": 14.45,
+    "mean_abs_world": 15.78,
+    "max": 239,
+    "errors": []
+   },
+   "Paletten-Reduktion": {
+    "changed_share": 0.3895,
+    "changed_share_world": 0.4374,
+    "mean_abs": 10.11,
+    "mean_abs_world": 11.02,
+    "max": 167,
+    "errors": []
+   }
+  }
+ }
+}

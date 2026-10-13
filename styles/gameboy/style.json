@@ -1,0 +1,191 @@
+{
+ "slug": "gameboy",
+ "name": "Game Boy (4 Grüntöne)",
+ "family": "pixel",
+ "kind": "style",
+ "era": "1989–1998",
+ "summary": "Handheld-Grafik in 160×144 Pixeln mit genau vier Grüntönen. Alles besteht aus 8×8-Kacheln: ein Hintergrund aus wiederholten Kachelmustern, kleine Sprites mit drei Tönen, Bewegung durch ausgetauschte Kacheln und Zeilen-Scroll, Text in einer Kachelbox am unteren Rand. Die Demo bildet die Grafikeinheit im Shader nach, die Hardwaregrenzen gelten also tatsächlich und werden nicht nur nachträglich geprüft.",
+ "references": [
+  "The Legend of Zelda: Link's Awakening (Nintendo 1993)",
+  "Pokémon Rot/Blau (Game Freak 1996)",
+  "Kirby's Dream Land (HAL 1992)",
+  "Super Mario Land 2: 6 Golden Coins (Nintendo 1992)",
+  "Final Fantasy Adventure (Square 1991)",
+  "Wario Land: Super Mario Land 3 (Nintendo 1994)"
+ ],
+ "traits": [
+  "Bildschirm 160×144, ganzzahlig ×5 auf 800×720, harte Pixel, quadratisch wie das Original-LCD",
+  "genau 4 Töne der Palette gb (0f380f, 306230, 8bac0f, 9bbc0f) in jedem Bild; probe.py: 4 Farben in allen geprüften Bildern, keine fremden",
+  "Hintergrund eine Ebene aus 8×8-Kacheln (Karte 32×32): 197 eindeutige Szenenkacheln + 46 Window-Kacheln = 243 von 256 erlaubten; Videospeicher 323 von 384 Kacheln",
+  "Sprites im 8×16-Modus (global), Farbe 0 durchsichtig, zwei Paletten: Dachs OBP0 (Töne 0/2/3), Rauch und Möwe OBP1 (Töne 1/2/3); gemessen höchstens 4 Sprites je Zeile und 10 gleichzeitig (Grenzen 10 und 40, im Shader erzwungen)",
+  "Wasser per Kachelanimation: 30 Kacheln, 8 Zustände mit 6 Wechseln/s, jede Wellenzeile um 1 px verschoben; Leuchtfeuer 14 Kacheln mit 8 Zuständen je Umdrehung (2,4 s, Blitz zur Kamera); Laterne 6 Kacheln mit 3 Zuständen (Glas hell mit Lichtring aus Ton 1, fast aus in Ton 2, halb): Helligkeit des Glases gemessen zwischen 92 und 158 von 255; 2 funkelnde Sterne",
+  "Parallax nur über Zeilen-Scroll: die Wolkenzeilen 8–23 haben ein eigenes SCX (6 px/s nach links), alle anderen Zeilen stehen",
+  "Kachelkopien wie im VBlank begrenzt: höchstens 20 je Bild bei 30 fps (10 je VBlank bei 60 Hz), Rest wartet auf das nächste Bild; Text hat Vorrang",
+  "Textbox als Kachelrahmen auf der Window-Ebene von Bild 0 an: 20×5 Kacheln (160×40 px, 28 % des Bildes), eigene 8×8-Bitmapschrift mit 1 px breiten Strichen, dunkel auf hell; Ortsname, zwei Textseiten mit Schreibmaschine (20 Zeichen/s) und ▼, das alle 10 Bilder blinkt, danach Auswahl mit Cursor ▶: zwei Einträge mit Leerzeile dazwischen, ▼ im Rahmen zeigt den dritten",
+  "Dachs 16×24 px im 16×32-Rahmen aus vier 8×16-Sprites: im Profil Laufzyklus 8 Bilder bei 15 Bildern/s, 2 px Vorschub je Bild, Standfuß bleibt auf ±1 px stehen; nach dem Halt dreht er sich zur Kamera (Vorderansicht mit Streifengesicht), blinzelt und atmet mit gleichen Fußzeilen (probe.py)",
+  "Alle Takte gehen in 30 fps auf: Laufen und Möwe auf Zweien (15/s), Wasser und Rauchwind auf Fünfen (6/s), Rauchsteigen auf Dreien (10/s), ▼ auf Zehnen, Leuchtfeuer auf Neunen"
+ ],
+ "camera": "Seitenansicht wie eine Bühne, feste Kamera; nur die Wolkenzeilen scrollen",
+ "resolution": "160×144 (Szene 160×104 + Textbox 160×40), 4 Töne, 8×8-Kacheln",
+ "pipeline": [
+  {
+   "step": "KI-Bilder versucht (erste Welle)",
+   "tool": "genimg (agy)",
+   "detail": "Hintergrund als Handheld-Pixelbild (prompts/bg.txt) und Sprite-Blatt des Dachses mit Laufzyklus (prompts/badger.txt, Referenzen walk_painted.png und master_sheet.png). Fünf Aufrufe ohne Bild: zwei mit ausdrücklichem Kontingentfehler von agy (»Quota exhausted for image generation model«), drei von genimg.py als Limit eingestuft; Codex ohne Guthaben. Bei der Überarbeitung kein weiterer Aufruf, weil die Figur von Hand lesbarer wurde. Kein Bild entstanden, alle Assets kommen aus Code."
+  },
+  {
+   "step": "Hintergrund als Pixelbild im Code",
+   "tool": "scripts/scene.py",
+   "detail": "256×104 Pixel als Tonnummern 0–3: Himmel mit geordnetem 2×2-Dithering in Bändern, Wolkenbänke aus Ellipsen (256 px breit, damit der Zeilen-Scroll umläuft), Meer als 8-px-Wellenmuster je Zeile, Landzunge mit Lichtkante, Leuchtturm, Häuschen mit dunkler Bruchsteinmauer (Ton 2/3), hell leuchtendem Fenster samt Lichtschein und 24 px hoher Tür, zwei Boote mit hellen Festmachertauen zum Kai und zum Steganfang, Steinkai und Holzsteg, Fässer, Kisten, Tau, Laterne und Paket (Schnurkreuz mittig, Schleife oben, 3 px Kai bis zum Steg) als ASCII-Stempel. Flächen sind kachelgenau periodisch (8, 16 oder 32 px), damit sie sich zu wenigen Kacheln zusammenlegen lassen."
+  },
+  {
+   "step": "Kachelanimationen aus Szenenzuständen",
+   "tool": "scripts/build_rom.py",
+   "detail": "Die Szene wird für jeden Zustand von Wasser (8), Leuchtfeuer (8), Laterne (3) und Sternen (2) neu gezeichnet; Kacheln, die sich ändern, werden animierte Kacheln. Berührt eine Kachel zwei Animationen, gilt Laterne vor Strahl vor Sternen vor Wasser, die andere bleibt dort stehen. Wasser wird nur in Kacheln mit mindestens 20 % sichtbarem Wasser animiert."
+  },
+  {
+   "step": "Kacheln, Karte und ROM-Daten",
+   "tool": "scripts/build_rom.py",
+   "detail": "Gleiche Kacheln zusammenlegen, im 2-Bit-Format (16 Byte je Kachel) wie im Videospeicher ablegen, Karte 32×32, Animationsfolgen, Schriftglyphen, Metasprites und Paletten nach demo/rom/rom.json. Prüft die Grenzen: Hintergrund+Window ≤ 256, Sprite-Kacheln ≤ 128, Videospeicher ≤ 384, Sprite-Töne passend zur Palette."
+  },
+  {
+   "step": "Dachs pixeln",
+   "tool": "scripts/badger.py (von Hand)",
+   "detail": "Erste Fassung las sich als Ente oder Kind. Neu gepixelt nach shared/badger/master_sheet.png in rund 15 Entwürfen (Profil, Dreiviertel, Front; eine Verkleinerung des Referenzblatts nach Materialien diente als Lageplan): Profil mit großem Kopf (11 Zeilen), spitzer, nach unten zur dunklen Nase laufender weißer Schnauze, breitem schwarzem Augenstreif vom Ohr über das Auge (helles Lichtpixel) zur Nase, schmalem weißem Stirnstreif bis unter den Schirm, großer weißer Wange, Ohr mit hellem Rand, dunklem Arm am Paket. Vorderansicht: zwei schwarze Streifen von den Ohren über die Augen zur Nase, weißer Mittelstreif, weiße Wangen. Die Beine im Profil erzeugt badger.py je Bild aus der Fußstellung."
+  },
+  {
+   "step": "Schrift und Rahmen",
+   "tool": "scripts/font8.py, scripts/build_rom.py",
+   "detail": "Eigene 8×8-Bitmapschrift (CC0): 84 Zeichen inkl. Ä/Ö/Ü/ä/ö/ü/ß, 1 px breite Striche, Zeichen 5 px breit, Großbuchstaben und Umlaute 7 px hoch, Unterlängen bis Zeile 7; Pfeile ▼ und ▶ und 10 Rahmenkacheln (eine mit ▼ für weitere Einträge) von Hand. Die Schrift liegt nur in rom.json; beim Tippen wird jede Glyphe in eine von 36 Textpufferkacheln (2 Zeilen × 18) kopiert."
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/probe.py, tools/capture.py",
+   "detail": "probe.py nimmt einmal mit --sprites-only (nur der Dachs) und einmal normal auf: Bodenkontakte und Kopf je Bild, Fußzeilen im Profil-Halt und in der Vorderansicht, Farben je Bild. Godot schreibt beim Beenden HWSTAT (max. Kachelkopien, Sprites je Zeile, Sprites gesamt). Mobile- und Compatibility-Renderer gegen Forward+ verglichen: 180 von 180 Bildern bytegleich."
+  }
+ ],
+ "godot": [
+  "Viewport 160×144, stretch mode viewport, scale_mode integer, Standardfilter Nearest; Fenster 800×720",
+  "Die ganze Szene ist ein ColorRect mit shaders/ppu.gdshader. Der Shader rechnet jeden Pixel wie die Grafikeinheit des Handhelds: Hintergrundkachel über Karte und SCX/SCY der Zeile, Window ab WY mit internem Zeilenzähler, Kachelnummern im $8800-Modus (0–127 → Platz 256–383), 40 OAM-Einträge, davon nur die ersten 10 je Zeile, Vorrang kleineres X, Farbe 0 durchsichtig, BGP/OBP0/OBP1 als Register",
+  "Speicher als Texturen: VRAM 128×192 R8 (384 Kacheln), Hintergrund- und Window-Karte je 32×32 R8, OAM 40×1 RGBA8, Register je Zeile 144×1 RGBA8; scripts/main.gd schreibt sie jedes Bild neu und ruft ImageTexture.update() auf, wie ein Spiel, das im VBlank den Videospeicher beschreibt",
+  "main.gd ist das »Spielprogramm«: Kachelanimationen über eine Kopierwarteschlange (20 Kacheln je Bild, Text zuerst), Textbox (Ortsname, zwei Seiten mit Schreibmaschine, Auswahl mit Cursor; bei Seitenwechsel bleibt die Box leer, bis alle Textkacheln kopiert sind), Metasprites für Dachs, Rauch (alle 0,6 s ein Wölkchen in drei Größen, Wind nach links wie die Wolken) und Möwe (zwei Flügelstellungen, 15 px/s)",
+  "Ablauf: Textbox steht ab Bild 0, Ortsname bis 1,0 s, Seite 1 ab 1,0 s, Seite 2 ab 2,9 s, Auswahl ab 5,0 s (Cursor springt bei 5,5 s auf »Das Paket ansehen«); der Dachs läuft ab x = −6 herein (ab Bild 0 halb im Bild), hält bei 2,67 s links neben dem Paket ohne Fußrutschen, dreht sich bei 3,2 s zur Kamera, blinzelt und atmet",
+  "Zeit über delta aufsummiert, Laterne aus einer Folge mit festem Seed; Schalter --sprites-only (nur Dachs) für die Messung; beim Beenden HWSTAT im Log",
+  "Renderer: Forward+, Mobile und Compatibility liefern bitgleiche Bilder (180 von 180 verglichen)"
+ ],
+ "techniques": [
+  "kachelsatz",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 1,
+  "consistency": 4,
+  "effort": 4,
+  "text_adventure": 3,
+  "mobile": 5
+ },
+ "ratings_note": "ai_fit 1, weil die KI zu diesem Eintrag nichts beigetragen hat: Das Bildkontingent war erschöpft, der KI-Weg ist ungeprüft. Der Look kommt ganz aus Code (Szene, Sprites, Schrift, Shader). Konsistenz hoch, weil Palette, Kachelraster und Sprite-Regeln jede Abweichung verhindern; jede Grafik muss aber von Hand gesetzt werden (Aufwand 4: allein der Dachs brauchte rund 15 Entwürfe, die Szene rechnerisches Kachelsparen). Für das Textadventure stören die 18 Zeichen je Zeile und die zwei sichtbaren Auswahlpunkte. Mobil 5: ein Draw-Call mit kleinem Shader und winzigen Texturen, Mobile- und Compatibility-Renderer bitgleich zu Forward+ geprüft (nicht auf einem echten Telefon).",
+ "verdict": "Der Stil ist sofort erkennbar und billig im Speicher, passt aber nur bedingt zu einem Textadventure mit viel deutschem Text: In die Box passen 2 Zeilen à 18 Zeichen, ein Satz braucht zwei Seiten, Auswahlpunkte müssen auf 17 Zeichen gekürzt werden, und mit Leerzeile passen nur zwei Auswahlpunkte auf einmal. Wer den Look will, sollte die Hardwareregeln für den Text lockern (ganze Bildschirmseite für Text oder schmalere Schrift) und für die Grafik behalten. Figuren müssen bei 16×24 px von Hand und mit Blick auf das Erkennungsmerkmal gepixelt werden (beim Dachs: das Streifengesicht, am besten von vorn); für Orte bedeutet jeder neue Hintergrund ein eigenes Pixelskript. Für ein Agent-Team machbar, aber kein Massenweg. Die Engine (Shader + rom.json) ist sofort für weitere Orte wiederverwendbar.",
+ "pitfalls": [
+  "Kein KI-Bild: fünf genimg-Aufrufe der ersten Welle (4× Hintergrund, 1× Sprite-Blatt, verteilt über etwa 45 Minuten) lieferten kein Bild; zwei meldeten ausdrücklich das erschöpfte agy-Kontingent, drei wurden von genimg.py ebenfalls als Limit eingestuft. Codex hatte kein Guthaben. Bei der Überarbeitung bewusst kein Aufruf, weil die Figur von Hand lesbarer wurde. Ob das Bildmodell einen brauchbaren Handheld-Hintergrund oder ein 16-px-Sprite liefert, ist ungeprüft.",
+  "Die Palette gb hat zwei fast gleiche helle Töne (Helligkeit etwa 169 und 154 von 255). Praktisch gibt es drei Stufen: hell, dunkel, dunkelst. Die erste Fassung ließ die Laterne nur zwischen den beiden hellen Tönen flackern (praktisch unsichtbar) und das Fenster auf heller Mauer sitzen (nicht als erleuchtet lesbar); beides läuft jetzt über hell gegen dunkel. Weiße Flächen der Figur heben sich vom hellen Kai nur durch die dunkle Kontur ab.",
+  "Der Dachs bei 16×24 px ist der schwierigste Teil: Die erste Fassung las sich als Ente oder Kind, Zwischenentwürfe als Ente mit Schirmmütze, Krokodil, Waschbär oder Pirat mit Augenklappe. Das Streifengesicht trägt die Erkennung, und die Mütze verdeckt seinen oberen Teil. Die Vorderansicht (Stehen, auch im Poster) zeigt die Streifen am deutlichsten; das Profil beim Laufen liest sich als Tier mit spitzer Schnauze und Augenstreif, auf Magenta allein aber auch als Echse. Die Lesbarkeit habe nur ich selbst beurteilt, ein Blindtest (Poster jemandem ohne Zusammenhang zeigen) fehlt.",
+  "Beim Laufen kreuzt der Dachs die Fässer und den Laternenpfahl (Bild 36–70); vor den dunklen Fässern verliert die Figur einen Teil ihrer Kontur. In der ersten Aufnahme liefen außerdem dunkle Kantenlinien des Kais durch den Kopf; der Laufbereich muss in diesem Stil frei von dunklen Linien bleiben.",
+  "Beim Drehen zur Kamera (3,2 s) ändern sich die Bodenkontakte um 1–2 px (Profil: Füße bei x 76–80 und 82–86, vorn 75–79 und 84–88); ein harter Schnitt ohne Zwischenbild, wie in den Vorbildern üblich.",
+  "Kachelbudget: Mit der ganzen Schrift im Videospeicher (84 Glyphen) wären es über 280 Hintergrundkacheln gewesen. Ein Textpuffer (Glyphen werden beim Tippen in eigene Kacheln kopiert) mit 2 statt 3 Zeilen bringt es auf 243 von 256. Die Änderungen der Überarbeitung (Lichtring der Laterne, Tür, Fensterschein, Festmachertaue, Paket) kosteten zusammen 4 Kacheln; jede weitere Einzelheit kostet woanders eine Kachel.",
+  "Wasser: 30 Kachelplätze animiert, 13 Kacheln stehen still: 8 schmale Randkacheln an Booten, Masten und Felsen und 5 Kacheln unter Laterne und Lichtring, weil eine Kachel nur eine Animationsfolge hat und die Laterne Vorrang hat. Man sieht dort ruhige Stellen im Wellenmuster.",
+  "Kopierlast: Ein Zustandswechsel von Wasser, Leuchtfeuer und Laterne betrifft bis zu 50 Kacheln; gemessen warteten höchstens 45 Kopien, die in den folgenden 2–3 Bildern erledigt waren. Das Wasser wechselt deshalb nicht in allen Kacheln im selben Bild (1–2 Bilder versetzt). Beim Wechsel zur Auswahl bleibt die Box 2 Bilder leer, bis die 36 Textkacheln kopiert sind.",
+  "Text: 18 Zeichen je Zeile. Die Zeile aus ui_text passt auf zwei Seiten zu je zwei Zeilen; die Auswahlpunkte »Zum Leuchtturm gehen« (20) und »Mit dem Dachs sprechen« (22) passen nicht und stehen gekürzt da (»Zum Leuchtturm«, »Dachs ansprechen«). Mit Leerzeile zwischen den Einträgen sind nur zwei Auswahlpunkte sichtbar; der dritte (»Dachs ansprechen«) liegt hinter dem ▼ im Rahmen und kommt in den 6 s nicht ins Bild. Die Parserzeile fehlt (keine Tastatur).",
+  "Eigene Schrift statt Press Start 2P (dessen 2 px breite Senkrechte eher nach Arcade aussahen): 1 px breite Striche wie bei Handheld-Schriften, Umlaute in voller Höhe. Die 5 px breiten Zeichen im 8-px-Raster lassen 3 px Abstand; der Text wirkt dadurch luftig und etwas gesperrt.",
+  "Zeilen-Scroll: Die Wolkenzeilen 8–23 dürfen nur Himmel und Wolken enthalten, sonst wandert alles in diesen Zeilen mit. Leuchtturm und Schornstein mussten darunter bleiben, Sterne gibt es dort keine.",
+  "Größenverhältnisse: Die Tür ist jetzt 24 px hoch (vorher 16) und damit so hoch wie der 24 px große Dachs, Fässer 13 px. Häuschen und Boote sind im Verhältnis zur Figur trotzdem klein; die Figur ist bewusst größer als in den Vorbildern (dort ist eine 16-px-Figur meist so hoch wie eine 16-px-Tür), damit Gesicht und Kostüm lesbar bleiben. 16×24 liegt im Rahmen des Auftrags.",
+  "Boote: Sie liegen im Becken vor dem Kai und sind mit Festmachertauen an Kai und Steganfang gebunden, liegen aber nicht längsseits am Steg wie im Motiv beschrieben; dafür hätte der Steg ins Wasser ragen müssen.",
+  "Vereinfacht gegenüber der echten Hardware: keine CPU-Zeit und kein Modus-Timing, keine OAM-DMA, WX fest, keine Effekte mitten in einer Zeile, kein Nachziehen und kein Pixelraster des Original-LCDs. Der Laufzyklus mit 8 Bildern und 15 Bildern/s ist flüssiger als bei vielen Originalen (oft 2–4 Bilder)."
+ ],
+ "lessons": [
+  "Die Grafikeinheit als Shader nachbilden (Kacheln, Karten, OAM, Register je Zeile als Texturen) macht die Hardwareregeln zur Bauweise: Mehr als 10 Sprites je Zeile oder fremde Töne sind gar nicht darstellbar. Für einen neuen Ort genügt eine neue rom.json; ppu.gdshader und main.gd bleiben.",
+  "Szene als Code in Animationszuständen zeichnen und die Kacheln vergleichen: So entstehen Kachelanimationen (Wasser, Leuchtfeuer, Laterne, Sterne) automatisch, samt Vorrangregel und Einfrieren schmaler Randkacheln.",
+  "Kachelbudget von Anfang an messen und Flächen kachelgenau periodisch zeichnen (8, 16, 32 px). Text über Pufferkacheln statt ganzer Schrift im Videospeicher spart rund 40 Kacheln; jede Pufferzeile kostet 18.",
+  "Die zwei hellen Töne der gb-Palette wie einen behandeln und jeden sichtbaren Unterschied über hell gegen dunkel legen: Flackern (helles gegen dunkles Glas plus Lichtring), Fensterlicht (helles Fenster in dunkler Mauer), Figuren mit dunkelster Kontur vor ruhig hellem Grund.",
+  "Tierfiguren bei 16 px über ihr Erkennungsmerkmal bauen und an der fertigen Szene in Originalgröße ×5 prüfen, nicht vergrößert auf leerem Grund: Beim Dachs trägt das Streifengesicht, von vorn am deutlichsten. Im Profil muss die Schnauze nach unten zur Nase laufen; eine waagrechte Schnauze unter einem Mützenschirm liest sich als Schnabel.",
+  "Figuren aus Teilen: fester Oberkörper (ASCII) plus Beine, die je Bild aus der Fußstellung erzeugt werden. Der Vorschub je Bild ist genau die Wanderung des Standfußes (hier 2 px); dann bleibt der Fuß stehen, und der Halt ist ohne Sprung planbar, wenn die Zahl der Laufbilder ein Vielfaches des Zyklus ist.",
+  "Kachelkopien über eine Warteschlange mit festem Budget je Bild schicken und Text vorziehen; beim Seitenwechsel die Box leer zeigen, bis der Puffer geschrieben ist (sonst stehen alte Buchstaben ein Bild lang da).",
+  "Eine eigene 8×8-Schrift als Text im Skript (5×7-Raster, Unterlängen mit angehobenem Körper) ist in einer Stunde gezeichnet, lizenzfrei und hat Umlaute in voller Höhe.",
+  "Ein Messmodus (--sprites-only) in der Demo selbst macht Fuß- und Kopfmessungen trivial; HWSTAT im Log belegt Sprites je Zeile und Kopierlast."
+ ],
+ "assets": [
+  {
+   "file": "assets/bg_preview.png",
+   "kind": "background",
+   "made_with": "Code (scripts/scene.py), 160×104, 4 Töne",
+   "prompt": ""
+  },
+  {
+   "file": "assets/bg_map_256.png",
+   "kind": "background",
+   "made_with": "Code (scripts/scene.py), ganze Kartenbreite 256 px für den Zeilen-Scroll der Wolken",
+   "prompt": ""
+  },
+  {
+   "file": "assets/tiles_bg.png",
+   "kind": "tileset",
+   "made_with": "scripts/build_rom.py: alle 243 Hintergrund- und Window-Kacheln (Startzustand)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/font_tiles.png",
+   "kind": "font",
+   "made_with": "Eigene 8×8-Schrift (scripts/font8.py) + Pfeile, über scripts/build_rom.py",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/font8.py",
+   "kind": "font",
+   "made_with": "Von Hand gezeichnete Glyphen als Text (CC0)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/badger_frames.png",
+   "kind": "sprite",
+   "made_with": "Von Hand gepixelt (scripts/badger.py): 8 Laufbilder im Profil, Halt im Profil, Vorderansicht mit Blinzeln und Atmen; je 16×32",
+   "prompt": ""
+  },
+  {
+   "file": "demo/rom/rom.json",
+   "kind": "data",
+   "made_with": "scripts/build_rom.py: Videospeicher im 2-Bit-Format, Karte, Kachelanimationen, Schrift, Metasprites",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/ppu.gdshader",
+   "kind": "shader",
+   "made_with": "Code: Grafikeinheit (Hintergrund, Window, Sprites, Paletten) je Pixel",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/build_rom.py",
+   "kind": "effect",
+   "made_with": "Code: enthält auch Rauchwölkchen (3 Größen) und Möwe (2 Flügelstellungen) als Pixelmuster",
+   "prompt": ""
+  },
+  {
+   "file": "blender/render_badger_ids.py",
+   "kind": "reference",
+   "made_with": "Blender-Skript: Materialkarte des gemeinsamen Dachses als Proportionsvorlage (erste Fassung)",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Eigene 8×8-Bitmapschrift font8 (scripts/font8.py), in rom.json als Glyphen",
+   "license": "CC0-1.0",
+   "source": "eigene Zeichnung für diesen Eintrag (Lizenztext: demo/fonts/LICENSE-font8.txt)"
+  }
+ ],
+ "image_generations": 0,
+ "tool_issues": [
+  "tools/genimg.py (Backend agy): zwei der fünf Aufrufe meldeten ausdrücklich »Image generation failed due to quota exhaustion« bzw. »Quota exhausted for image generation model«. Die drei anderen Antworten (»I am waiting for the image-generator subagent to finish …«, »I have started the image generation …«, »I have tasked the image-generator subagent …«) wurden ebenfalls als »usage limit (agy)« eingestuft; genimg.py sucht nur nach den Wörtern quota/limit/exhausted in der Antwort. Ob dort ebenfalls das Kontingent oder ein zu frühes Ende des Unteragenten vorlag, ließ sich nicht prüfen. Kein Bild erzeugt.",
+  "tools/genimg.py: Codex war durch die Codex-Sperrdatei von genimg.py (kein Guthaben) gesperrt; deshalb direkt --backend agy gewählt."
+ ],
+ "status": "done"
+}

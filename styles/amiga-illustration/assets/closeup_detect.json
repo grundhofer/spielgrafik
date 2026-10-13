@@ -1,0 +1,33 @@
+{
+ "source": "styles/amiga-illustration/assets/raw/closeup.png",
+ "source_size": [
+  1536,
+  1024
+ ],
+ "scaled_height": 213,
+ "crop_y": 22,
+ "horizon_y": 72,
+ "water_bottom": 136,
+ "pixels": {
+  "water": 4062,
+  "lamp": 3,
+  "lantern": 65,
+  "window": 303,
+  "sky": 8788
+ },
+ "lamp_xy": [
+  279.6666666666667,
+  30.0
+ ],
+ "lantern_xy": [
+  81.81538461538462,
+  37.03076923076923
+ ],
+ "chimney_xy": [
+  -50.0,
+  -50.0
+ ],
+ "feet_y": 134,
+ "stop_x": 160,
+ "gull_y": 28
+}

@@ -1,0 +1,8 @@
+{
+ "_comment": "Angaben für das Impressum, nur hier: build.py setzt daraus die Seite impressum/ zusammen (page_legal). Die Anschrift gilt auch für die Verantwortlichkeit nach § 18 Abs. 2 MStV.",
+ "name": "Sebastian Grundhöfer",
+ "address": ["c/o Impressumservice Dein-Impressum", "Stettiner Str. 41", "35410 Hungen", "Deutschland"],
+ "email": "info@sebaro-ventures.de",
+ "vat_id": "DE356982540",
+ "responsible": "Sebastian Grundhöfer"
+}

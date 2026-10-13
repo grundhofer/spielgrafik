@@ -1,0 +1,125 @@
+{
+ "_comment": "Bildschirmkoordinaten (1280x720), gemessen am Rohbild (bg.png 1264x848) und umgerechnet",
+ "crop_top": 24,
+ "scale": 1.01266,
+ "horizon_y": 369.1,
+ "quay_edge_y": 562.0,
+ "lantern": [
+  482.0,
+  332.2
+ ],
+ "lantern_post_base": [
+  419.2,
+  514.4
+ ],
+ "window": [
+  180.3,
+  443.5
+ ],
+ "window_size": [
+  46,
+  92
+ ],
+ "lighthouse_lamp": [
+  1110.9,
+  154.9
+ ],
+ "chimney": [
+  97.2,
+  68.9
+ ],
+ "chimney_pot": [
+  112.0,
+  63.0
+ ],
+ "jetty_posts": {
+  "left_near": [
+   686.6,
+   524.6
+  ],
+  "left_mid": [
+   733.2,
+   487.1
+  ],
+  "left_far": [
+   765.6,
+   462.8
+  ],
+  "right_far": [
+   861.8,
+   462.8
+  ],
+  "right_mid": [
+   880.0,
+   489.1
+  ],
+  "right_near": [
+   905.3,
+   524.6
+  ]
+ },
+ "water_pixels": 125704,
+ "boats": {
+  "boat_a": {
+   "sheet_bbox": [
+    60,
+    208,
+    870,
+    772
+   ],
+   "tex_size": [
+    324,
+    226
+   ],
+   "waterline_sheet_y": 700,
+   "stern_cleat_sheet": [
+    840,
+    560
+   ],
+   "bow_sheet": [
+    75,
+    485
+   ],
+   "waterline_tex_y": 196.8,
+   "stern_cleat_tex": [
+    312.0,
+    140.8
+   ],
+   "bow_tex": [
+    6.0,
+    110.8
+   ]
+  },
+  "boat_b": {
+   "sheet_bbox": [
+    932,
+    546,
+    1506,
+    772
+   ],
+   "tex_size": [
+    230,
+    90
+   ],
+   "waterline_sheet_y": 712,
+   "stern_cleat_sheet": [
+    948,
+    608
+   ],
+   "bow_sheet": [
+    1485,
+    565
+   ],
+   "waterline_tex_y": 66.4,
+   "stern_cleat_tex": [
+    6.4,
+    24.8
+   ],
+   "bow_tex": [
+    221.2,
+    7.6
+   ]
+  }
+ },
+ "boat_tex_scale": 0.4
+}

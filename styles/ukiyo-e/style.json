@@ -1,0 +1,208 @@
+{
+ "slug": "ukiyo-e",
+ "name": "Japanischer Farbholzschnitt",
+ "family": "grafisch",
+ "kind": "style",
+ "era": "Landschaftsdruck der späten Edo-Zeit (etwa 1830–1860); als Spielgrafik seit den 2000ern in einzelnen Titeln zitiert",
+ "summary": "Ein Mehrplatten-Farbholzschnitt: schwarze Kontur des Schlüsselstocks um jede Form, flache Farbflächen, Verläufe nur als Bokashi entlang einer Kante (Himmel, Wasser, Felsen, Licht), stilisierte Wellen mit krallenartiger Gischt, Papierstruktur. Die Brandung im Vordergrund besteht aus KI-gezeichneten Wellenbrettern, die wie Bühnenwellen kreisen. Licht und Rauch sind gedruckte, deckende Flächen, die nur umgeschaltet werden. Der Ortsname steht als Kopfzeile auf einem Gedichtzettel im Himmel, die Kartusche daneben trägt keine Schrift. Die Demo zeigt eine Totale und schneidet dann auf eine feste Nahaufnahme.",
+ "references": [
+  "Utagawa Hiroshige: Die 53 Stationen des Tōkaidō (1833–34) und Hundert berühmte Ansichten von Edo (1856–59): Bokashi-Himmel mit dunklem Band oben, Titelkartuschen, flache Landschaftsebenen",
+  "Katsushika Hokusai: Die große Welle vor Kanagawa (um 1831): Wellen mit Gischt-Krallen und Tropfen",
+  "Yokohama-e (1860er): japanische Drucke ausländischer Häfen, Schiffe und Steinhäuser – das Vorbild dafür, einen nordischen Hafen in dieser Technik zu zeigen",
+  "Ōkami (2006): Sumi-e- und Holzschnitt-Anleihen in einem Spiel",
+  "Muramasa: The Demon Blade (2009): gemalte 2D-Szenen mit Ukiyo-e-Wellen und Wolkenbändern",
+  "Gegenbeispiel: Shin-hanga des 20. Jahrhunderts (z. B. Kawase Hasui) – realistischer, schattiert; dorthin zog der erste KI-Hintergrund"
+ ],
+ "traits": [
+  "Schwarze Kontur des Schlüsselstocks um jede Form (im Bild 2–3 px, an Seilen und Takelage 1 px); 4,9 % der Druckfläche sind Kontur (RGB-Summe < 110, gemessen an assets/bg.png).",
+  "Flache Farbflächen: Kaimauer, Pflaster, Hausmauer und Felsen werden in KI-Auflösung Zelle für Zelle flach gedruckt (jede von der Schlüsselkontur oder einer feinen Fuge umschlossene Fläche bekommt ihre Medianfarbe). Von 594 Zellen haben 518 (87 %) einen Ton und 76 (13 %) zwei (Ober- und Vorderseite der Deckplatten, Licht- und Schattenseite großer Felsen); Felszellen laufen zur Unterkante als Bokashi bis 16 % dunkler aus. Örtliche Helligkeitsstreuung (5×5, ohne Konturnähe) vorher → nachher: Kaimauer 7,5 → 0,1, Pflaster 9,2 → 5,6 (die Fugenlinien bleiben stehen und zählen mit), Hausmauer 8,2 → 4,8, Felsnase 5,0 → 1,9. Verläufe nur als Bokashi entlang einer Kante: Himmel oben Preußischblau (15, 81, 142) über Blassgrau (128, 161, 185) zu einem orangen Glühen (244, 144, 99) über dem Horizont, Hafenwasser am Horizont dunkel (1, 56, 114) und zum Kai heller (16, 77, 128), Nebelbänder mit runden Enden.",
+  "Stilisierte Brandung mit Gischt-Krallen vor der Kaimauer: 14 Wellenbretter aus 6 KI-Formen (große Brecher 120–187 px, flache Wellen 70–94 px hoch), die auf Zweien (15 Bilder/s) kreisen wie Bühnenwellen: große Brecher 8–9 px senkrecht und 6 px waagerecht in 3 s, flache Wellen 4 px in 2 s, ganze Pixel. Bei jeder Welle sind beide Seiten des Körpers über 16 px ausgeblendet (abgelöste Tropfen bleiben deckend); die äußerste Körperspalte hat darunter höchstens Deckung 65 von 255 (wave_4 rechts, sonst höchstens 36). Die hintere Reihe steht alle 145 px (Überlappung 41–52 px, beim Kreisen mindestens 33 px), sodass die ausgeblendete rechte Kante jeder Welle unter dem deckenden Körper der nächsten liegt. Am höchsten Punkt jedes Brechers fliegen sieben deckende Gischttropfen (Papierweiß mit Indigo-Kontur) als Wurfparabel aus den Krallen; zum Schluss schrumpfen sie 9 → 7 → 5 px und verschwinden, ohne Alpha.",
+  "Die gedruckten Wellenlinien im Hafen wiegen sich: Jedes Wasserpixel wird aus einem um ganze Pixel versetzten Wasserpixel gelesen (waagerecht 1–4 px, senkrecht bis 2 px, zum Kai stärker, in der Nahaufnahme 1,6-fach), 10 Bilder/s; je Schritt ändern sich 4,9 % (Totale) bzw. 5,1 % (Nahaufnahme) der Wasserpixel um mehr als 8 Stufen. Boote, Steg und Konturen bleiben stehen.",
+  "Licht wird gedruckt, nicht addiert: Das Leuchtfeuer blitzt alle 3 s in drei Stufen zu 10 Bildern/s (0,1 s Scheibe r = 19, 0,2 s Scheibe r = 24 mit zehn Strahlen, 0,1 s Scheibe), sonst leuchtet nur das gemalte Glas. Scheiben und Strahlen sind deckend, blassgelb mit Bokashi zur Oberkante und 1 px Indigo-Kontur, werden nur ein- und ausgeschaltet (keine Überblendung, keine Skalierung) und liegen hinter Dach, Sprossen und Geländer des Laternenraums. Die Laterne wechselt mit 10 Bildern/s zwischen keiner, kleiner (r = 17) und großer Scheibe (r = 21) hinter dem Gehäuse. Rauch ist eine deckende graue Fahne mit 1,2-px-Sumi-Kontur und Bokashi nach oben (unten dunkel, oben hell), Bildfolge aus 20 Bildern bei 10 Bildern/s; sie steigt 111 px und treibt 79 px nach links, je Schritt ändern sich rund 800 Pixel.",
+  "Oberfläche aus Druckelementen: Gedichtzettel im Himmel mit Ichimonji-Band in Preußischblau, darin der Ortsname als Kopfzeile (Zen Antique), Text und Eingabe (Kaisei Tokumin), Auswahl mit Zinnober-Siegeln als Ziffern, gewählte Zeile in Zinnober. Die Titelkartusche rechts oben trägt keine Schrift: Zinnoberrahmen, gelbes Feld mit Bokashi, Seigaiha-Wellenmuster in Indigo. Zettel und Kartusche decken zusammen 12,9 % des Bildes.",
+  "Ein Bogen Papier: 8-px-Papierrand mit 2-px-Randlinie um den Druck, Washi mit langen Kozo-Fasern multiplikativ über allem (Druck, Figur, Wellen, Text; Faktor im Mittel 0,962, mindestens 0,86).",
+  "Zwei feste Einstellungen ohne hochskalierte Pixel: Totale 0–3,0 s (Dachs 114–115 px hoch, passend zu Fässern um 75 px und Laternenpfahl um 210 px; die Tür des weiter hinten stehenden Häuschens ist 103 px hoch), dann harter Schnitt auf eine Nahaufnahme (Druckausschnitt x 0–790, y 230–670, 1,6-fach), in der der Dachs 185 px hoch ist. Für die Nahaufnahme sind Druckbild, Wassermaske, Wellen, Gischt und Figur eigens in Zielgröße aus den KI-Vorlagen gerechnet.",
+  "Der Dachs ist im selben Druckstil gezeichnet: schwarze Kontur, flache Farben, Fell als flaches Sumi-Grau mit feinen Haarstrichen am Rand; acht Laufbilder zu je 3 Takten (10 Bilder/s), Stehen, Dreiviertelansicht und Blinzeln. Gemessen im Prüflauf in einer festen Sohlenzeile je Einstellung (Totale 505, Nahaufnahme 435; die unterste Figurzeile liegt in allen 89 bzw. 91 Bildern genau dort): Bei allen 36 Laufwechseln wandert der Drehpunkt des Standfußes (Ferse oder Spitze der überdeckenden Kontaktgruppe, je nachdem welche weniger wandert) höchstens 1 px; die aufsetzende Ferse bei walk_0 → walk_1 und walk_4 → walk_5 (linke Kante der vorderen Kontaktgruppe gegen dieselbe Gruppe danach) wandert 0 oder −1 px."
+ ],
+ "camera": "Zwei feste Einstellungen: Totale als Seitenansicht des Hafens von See her (vorn die Brandung vor der Kaimauer, darüber der Kai, auf dem der Dachs ins Bild läuft, dahinter Hafen mit Steg und Booten, links das Häuschen, rechts der Leuchtturm auf dem Felsen), ab 3,0 s Schnitt auf eine Nahaufnahme von Häuschen, Kai, Kaimauer und Brandung (1,6-fach), in der der Dachs stehen bleibt, sich zur Kamera dreht und blinzelt; das Bild ist ein Druckblatt mit Papierrand",
+ "resolution": "1280×720; Druck 1264×704 (Zeilen 64–920 des 1536×1024-KI-Bilds, Faktor 0,823), Nahaufnahme 1264×704 aus demselben KI-Bild (Faktor 1,317); Dachs Totale 114 px (KI-Figur 421 px, Faktor 0,26875, Bild 83×123), Nahaufnahme 185 px (Faktor 0,43, Bild 132×196); Wellen Faktor 0,40 bzw. 0,64",
+ "pipeline": [
+  {
+   "step": "Hintergrund, Versuch 1 (verworfen)",
+   "tool": "genimg (gpt-image über Codex)",
+   "detail": "assets/raw/bg.png, 1536×1024, 79 s. Stilblock: Mehrplatten-Farbholzschnitt der späten Edo-Zeit, ein nordischer Hafen, wie ihn ein japanischer Drucker um 1850 gezeichnet hätte; Konturen ~3 px, flache Farben, Bokashi nur an Kanten (Himmel, Meer), wenige Druckfarben (Preußischblau, Indigo, Zinnober, Beni, Ocker, Mineralgrün, Sumi, Papier), Nebelbänder, Verbote (Foto, 3D, Öl, Aquarell, Anime, Postkarte); animierte Teile nicht mitmalen (Wasser ohne Linien und Gischt, Lampe ohne Strahl, kein Rauch); Komposition in Prozent; Motivblock, background_only_en, Schutzregeln. Ergebnis eher Shin-hanga des 20. Jahrhunderts (gesprenkelte Steine, schattierte Felsen) und ein Kai, der das untere Drittel als leere Fläche füllt; ohne Platz für eine Brandung. Nicht verwendet."
+  },
+  {
+   "step": "Hintergrund, Versuch 2",
+   "tool": "genimg (gpt-image über Codex)",
+   "detail": "assets/raw/bg2.png, 1536×1024, 85 s. Stilblock verschärft: „Edo period … around 1830 to 1860 … Not a 20th-century realistic woodblock print: shapes simplified and decorative“, „no mottled or speckled textures“, Mauern als Muster flacher Steine, Hafenwasser mit Reihen feiner gebogener Wellenlinien; neue Komposition: oberer Himmel frei (Platz für Text), Häuschen niedrig links, Leuchtturm bei drei Vierteln der Breite, Kaipflaster 60–76 %, Kaimauer bis 86 %, darunter ein Band flaches Meer ohne Wellen (dort kommt die Brandung hin); keine Kartusche, keine Siegel, keine Kalligrafie. Komposition, Himmel, Wasser und Konturen im ersten Versuch brauchbar; Kaimauer, Pflaster, Hausmauer und Felsen blieben trotz „no mottled or speckled textures“ gesprenkelt bzw. modelliert (siehe nächster Schritt)."
+  },
+  {
+   "step": "Flach drucken",
+   "tool": "scripts/flatten_cells.py (NumPy), aufgerufen von scripts/build_bg.py",
+   "detail": "In KI-Auflösung, vor dem Verkleinern. Geschützt bleiben die Schlüsselkontur (RGB-Summe < 110) und feine dunkle Linien (mindestens 45 dunkler als beide Nachbarn im Abstand 2 oder 3 px, z. B. Plattenfugen); Schutzflecken unter 14 px gelten als Sprenkel. Zellen = zusammenhängende ungeschützte Flächen in sieben von Hand gesetzten Rechtecken (Kaimauer, Pflaster, Hausmauer, Felsen am Haus, Felsnase, Klippen, Steine im Wasser), ohne Laternenpfahl, Fässer/Kisten/Tau, Fenster, Tür, Leuchtturm, Wärterhaus und ohne Zellen mit Himmel-, Wolken- oder Wasserfarbe. Je Zelle: Helligkeit innerhalb der Zelle stark geglättet; Umfang p90 − p10 unter 16 (Felsen 12) → ein Ton (Medianfarbe), sonst zwei Töne (Otsu-Schwelle auf der geglätteten Helligkeit). Felszellen ab 200 px: unteres Drittel bis 16 % dunkler (Bokashi). Der 1-px-Saum der geschützten Linien wird um dieselbe Farbverschiebung wie die Nachbarzelle versetzt. 594 Zellen, 386 000 KI-px, 7 s."
+  },
+  {
+   "step": "Druckbild, Nahaufnahme und Wassermasken",
+   "tool": "scripts/build_bg.py (NumPy, Pillow)",
+   "detail": "bg.png: Zeilen 64–920 des geglätteten KI-Bilds auf 1264×704 (Lanczos). bg_close.png: Druckausschnitt x 0–790, y 230–670 direkt aus dem KI-Bild auf 1264×704 (Lanczos ×1,317, nicht aus bg.png hochskaliert). Wassermasken aus der Farbe: blaue Pixel (B > R + 55, B > 80) zwischen Horizont und Kaikante, nur zusammenhängende Flächen ab 1500 px (Nahaufnahme 3840 px); R = Zielpixel (1 px geschrumpft), G = Lesepixel (3 bzw. 4 px geschrumpft). Lampe, Laterne, Fenster und Schornstein an 6-fach vergrößerten Ausschnitten von Hand abgelesen (assets/scene.json, dort auch die Nahaufnahme und die Zellstatistik)."
+  },
+  {
+   "step": "Wellenbretter",
+   "tool": "genimg (gpt-image über Codex), Referenz raw/bg2.png",
+   "detail": "assets/raw/waves.png, 1536×1024, 85 s, im ersten Versuch brauchbar: sechs Wellen in zwei Reihen (drei hohe Brecher, drei flache Wellenzüge) mit echtem Alphakanal, Kamm nach rechts gerollt, Gischt in krallenartigen Fingern mit Tropfen, unten gerade abgeschnitten („as if the sea continued below“), Druckfarben und Kontur aus dem Hintergrund als Referenz."
+  },
+  {
+   "step": "Wellen zerlegen",
+   "tool": "scripts/build_waves.py",
+   "detail": "Zusammenhangsflächen (Alpha ≥ 128), Tropfen dem nächsten Wellenkörper zugeordnet, Faktor 0,40 (Totale) und 0,64 (Nahaufnahme) mit vormultipliziertem Alpha. Das Modell hatte die Wellenkörper links und rechts unten senkrecht mit Kontur abgeschnitten. Jetzt bei jeder Welle auf beiden Seiten erzwungen: je Zeile vom äußersten Körperpixel über 40 KI-px nach innen ausgeblendet (Smoothstep), ab der Zeile, in der die Kante ihre unterste Lage bis auf 8 KI-px erreicht (spätestens 20 Zeilen über der Zeile mit voller Breite), darüber über 30 Zeilen eingeblendet; abgelöste Tropfen werden nicht ausgeblendet. Das Skript meldet je Welle die größte Deckung am äußersten Körperpixel im ausgeblendeten Bereich (0–65 von 255, verkleinert)."
+  },
+  {
+   "step": "Figur: Layout aus dem 3D-Modell",
+   "tool": "Blender 5.2 (blender/pose_layout.py) + scripts/make_layout.py, beide aus styles/holzschnitt kopiert",
+   "detail": "Posen von shared/3d/badger.glb orthografisch (409,6 px/m) auf Magenta, 2×5 Zellen à 307×512: walk_0 … walk_7, stand, turn. Das Ergebnis ist bytegleich mit dem Layout von holzschnitt; beide Laufbögen sind damit direkt vergleichbar."
+  },
+  {
+   "step": "Laufbogen",
+   "tool": "genimg (gpt-image über Codex), Referenzen walk_layout.png, master_sheet.png, raw/bg2.png",
+   "detail": "assets/raw/walk.png, 1536×1024, 108 s, im ersten Versuch brauchbar: zehn Figuren 419–430 KI-px hoch, Nasenspitze in allen Laufzellen auf ±3 KI-px gleich, Sohlen je Reihe auf 1 px gleich, echter Alphakanal. Prompt: Layout und Posen aus Referenz 1, nur Kostüm aus Referenz 2, Kontur, Druckfarben und Papierweiß aus dem Hintergrund (Referenz 3); Fell als flaches Sumi-Grau mit feinen Haarstrichen am Rand, Mütze und Weste Mineralgrün, Schal Zinnober, „sturdy, not cute; not a cartoon“. Die Figur wurde trotzdem eher bilderbuchhaft (siehe pitfalls)."
+  },
+  {
+   "step": "Figurenbögen",
+   "tool": "scripts/build_badger.py",
+   "detail": "Je Zelle größte Alphafläche, weicher KI-Alpharand in 2-px-Saum, x in Zellkoordinaten, y an der Sohle; zwei Bögen aus denselben Zellen (Lanczos, vormultipliziertes Alpha): badger.png Faktor 0,26875 (11 Bilder à 83×123) für die Totale, badger_close.png Faktor 0,43 (11 Bilder à 132×196) für die Nahaufnahme; Farben unverändert. Blinzelbild: im Dreiviertelbild beide Augen mit dem Streifengrau zugedeckt und gebogene Lidstriche gezeichnet (Augenstellen an 4-fach vergrößertem Kopf abgelesen)."
+  },
+  {
+   "step": "Ablauf des Dachses",
+   "tool": "scripts/choreo.py",
+   "detail": "Jedes Laufbild 3 Takte (10 Bilder/s). Vorschub je Bildwechsel in KI-Pixeln aus dem Standfuß: Einzelstand-Wechsel über die beste Deckung der untersten 6 Sohlenzeilen (19, 28, 27, 11), Doppelstand-Wechsel am Drehpunkt (aufsetzende Ferse 0→1: 21, 4→5: 15; abrollende Spitze 3→4: 19, 7→0: 21). 4→5 stand vorher auf 21 und ließ die Ferse in der Aufnahme 3–4 px vorrücken; neu gemessen an der Fersenhinterkante zwei Zeilen über der Sohle (16) und am untersten Fersenpunkt (14). Lage in Druckkoordinaten als laufende Summe, je Einstellung auf ganze Bildschirmpixel gerundet. 0–3,0 s Totale (Dachs kommt von links ins Bild), 3,0 s Schnitt, 3,8 s Halt, 4,6 s Drehung zur Kamera, 5,4 s Blinzeln."
+  },
+  {
+   "step": "Gedrucktes Licht",
+   "tool": "scripts/build_lights.py (NumPy, Pillow)",
+   "detail": "Gegen das fertige Druckbild gerechnet: Scheibe (und beim Blitz zehn Strahlenkeile, die Richtungen in den Turm hinein weggelassen) 4-fach überabgetastet, blassgelb mit Bokashi zur Ober- bzw. Unterkante, 1 px Indigo-Kontur; im Gehäuse von Laternenraum und Laterne bleiben die dunklen, nicht blauen Pixel des Druckbilds frei (RGB-Summe < 200, Übergang bis 260), die Scheibe liegt also hinter dem Gehäuse. lamp_a, lamp_b, lantern_1, lantern_2 mit Lage in lights.json."
+  },
+  {
+   "step": "Papier, Rauch, Gischt",
+   "tool": "scripts/make_textures.py (Code, feste Seeds)",
+   "detail": "washi.png (512×512, kachelbar: Kozo-Fasern, Wolkigkeit), smoke.png (20 Bilder à 130×140: Fahne aus dicht gesetzten Kreisen entlang des Wegs, Ausbuchtungen alle 0,4 s, die mit dem Rauch nach oben wandern, spitzes Ende statt Ausblenden; periodisch in 2,0 s), spray.png und spray_close.png (Tropfen 5/7/9 bzw. 8/11/14 px in Zielgröße mit Indigo-Kontur)."
+  },
+  {
+   "step": "Godot-Demo",
+   "tool": "Godot 4.7.2 (GDScript, canvas_item-Shader)",
+   "detail": "Druckbild und Nahaufnahme mit water.gdshader, gedrucktes Licht und Rauch als umgeschaltete Bilder, Dachs nach timeline.json, Wellenbretter und Gischt, Papierrand, Gedichtzettel und Kartusche, Washi multiplikativ obenauf. Alle Schritte: scripts/build_all.sh (zweimal gelaufen, alle Ausgaben in assets/ bytegleich)."
+  },
+  {
+   "step": "Prüfung",
+   "tool": "scripts/probe_feet.py, tools/capture.py",
+   "detail": "Prüflauf -- --probe-badger (nur Dachs vor flachem Blau) je Bild gemessen (feste Sohlenzeile je Einstellung); Aufnahme mit --poster-at 0,85 (Nahaufnahme, Dachs zur Kamera gedreht); Wellenstreifen y 630–714 in den Bildern 10, 40 und 70 2- und 4-fach vergrößert angesehen; Blitz (Bilder 46–51), Laterne und Rauch als Einzelbilder; zusätzlich Läufe mit --rendering-method mobile und gl_compatibility und ein Lauf mit -- --t0=31."
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, stretch mode canvas_items, Forward+, Löschfarbe Papier. Alle Bilder mit Standardimport (verlustfrei, ohne Mipmaps); alles wird in Originalgröße gezeichnet (keine Skalierung in Godot, auch nicht in der Nahaufnahme).",
+  "main.tscn enthält nur den Wurzelknoten mit main.gd; das Skript baut die Ebenen: Druckbild und Nahaufnahme (zwei Sprite2D bei (8, 8) mit je einem water.gdshader-Material, je Einstellung eines sichtbar), Leuchtfeuer und Laterne (Sprite2D, Textur je Stufe umgeschaltet), Rauch (Sprite2D, hframes = 20), Dachs (Sprite2D, hframes = 11, Textur je Einstellung), 9 hintere und 5 vordere Wellenbretter (Sprite2D, Textur je Einstellung), Gischt (Node2D mit draw_texture_rect_region), Papierrand und Randlinie (Node2D-Zeichnung), Gedichtzettel und Kartusche (Node2D-Zeichnungen, GradientTexture2D für Bokashi, draw_arc für das Seigaiha-Muster, Label mit LabelSettings), zuletzt Washi als gekacheltes TextureRect mit CanvasItemMaterial BLEND_MODE_MUL.",
+  "Einstellungen: Lagen aller Wellen und Tropfen werden in Totale-Koordinaten berechnet und für die Nahaufnahme mit p' = (8, 8) + 1,6 · (p − (8, 8) − view) umgerechnet und gerundet; der Dachs bekommt seine Bildschirmlage je Takt fertig aus timeline.json (Feld s = Einstellung).",
+  "water.gdshader: Zielpixel nur in der Wassermaske (R), Lesepixel nur aus der geschrumpften Maske (G), sonst bleibt das Pixel; Versatz round(ax·sin(t·2π/3 + y·0,105)) waagerecht (ax 1 → 4 px zum Kai) und round(ay·sin(t·1,4 + x·0,021)) senkrecht (ay bis 1,6 px), Phasen in Druckkoordinaten (px_scale, view), Ausschläge in der Nahaufnahme ×1,6; Zeit auf 10 Bilder/s gestuft; alle Texturen vor der Mischung abgetastet, Maske mit filter_nearest.",
+  "Wellenbretter: y = Unterkante − Höhe + A·sin(ωt + φ), x = x0 + B·cos(ωt + φ), auf ganze Pixel gerundet, t auf 15 Bilder/s gestuft; Unterkanten liegen unter dem Papierrand (720 bzw. 742) und bleiben bei jeder Phase verdeckt. Gischt: Ausbruch 0,12 s vor dem höchsten Punkt (ωt + φ = 3π/2 + 2πn), sieben Tropfen je Welle aus festen Zufallswerten, Lebensdauer 0,75 s, Schwerkraft 260 px/s², ab 0,5 s und 0,625 s je eine Größe kleiner, Farbe immer deckend.",
+  "Alles ist eine Funktion der Zeit (Takte in _process gezählt, Movie Maker: Bild i zeigt Takt i + 1), Zufallswerte vorab aus RandomNumberGenerator (seed 18571012); Leuchtfeuer: Stufe aus posmod(Schritt − 16, 30) bei 10 Schritten/s (0 und 3: Scheibe, 1–2: Scheibe mit Strahlen); Laterne: Zufallswert je Schritt < 0,18 keine, < 0,62 kleine, sonst große Scheibe; Rauch: Bild = Schritt mod 20; Cursor blinkt mit 1 Hz. Leuchtturm, Laterne und Schornstein liegen außerhalb der Nahaufnahme und werden dort ausgeblendet.",
+  "Schriften: Kaisei Tokumin Regular/Bold (Text 22 px, Auswahl 20 px) und Zen Antique (Ortsname 19 px, Siegelziffern 15 px) als FontFile aus demo/fonts.",
+  "Prüfschalter nach --: --probe-badger (nur Dachs vor flachem Blau, für probe_feet.py), --t0=<s> (Umgebung vorgestellt, Langzeitprüfung)."
+ ],
+ "techniques": [
+  "ki-spritesheet",
+  "posen-vorlage-3d",
+  "sprite-animation",
+  "fuss-halten",
+  "wellenbretter",
+  "partikel",
+  "shader-wasser",
+  "prozedurale-animation",
+  "nachbearbeitung",
+  "kameraschnitt",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 3,
+  "consistency": 3,
+  "effort": 3,
+  "text_adventure": 4,
+  "mobile": 5
+ },
+ "ratings_note": "ai_fit 3: Hintergrund (zweiter Versuch), Wellenbogen und Laufbogen kamen von gpt-image jeweils im ersten Anlauf brauchbar, mit Kontur, Bokashi-Himmel, gedrucktem Wasser und Gischt-Krallen; die Wellen sind das Stärkste. Den Kern „flache Farbflächen“ lieferte das Modell aber trotz ausdrücklichem Verbot nicht: Mauern, Pflaster und Felsen kamen gesprenkelt und modelliert und werden jetzt per Code Zelle für Zelle flach gedruckt; die Figur ist eher Bilderbuch als Edo-Druck, Bokashi an Weste und Schal fehlt. consistency 3: Mit dem Hintergrund als Referenz hatten Wellen und Figur dieselben Druckfarben und Konturstärken, die Figur weicht im Ausdruck (Lächeln, runde Formen, gleichmäßig dünne Linie) aber sichtbar vom Hintergrund ab; ein zweiter Ort ist nicht gebaut, und der Abstand zwischen bg und bg2 zeigt, wie stark der Stil am Wortlaut hängt. effort 3: Ein Ort braucht ein Bild, sieben von Hand gesetzte Glättungsbereiche mit Ausnahmen, einige abgelesene Koordinaten (Lampe, Laterne, Schornstein, Gehäuse fürs Licht) und für jede Nahaufnahme eigene Ausschnitte; die Wellenbretter und alle Skripte lassen sich wiederverwenden; jede Figurenanimation braucht Blender-Layout, Bogen und Vorschubtabelle. mobile 5: --rendering-method mobile ist bitgleich zu Forward+ (6 Bilder verglichen), gl_compatibility weicht in rund 52 % der Pixel um höchstens 3 Stufen ab (Ursache nicht untersucht, vermutlich Rundung bei der Multiplikationsfläche); die Szene besteht aus einem Vollbild-Sprite mit vier Texturzugriffen je Pixel, 14 Wellen-Sprites, einigen umgeschalteten Sprites und einer Multiplikationsfläche. Die Leistung auf einem echten Gerät ist geschätzt, nicht gemessen; die Schriften belegen 14 MB.",
+ "verdict": "Für ein Textadventure gut geeignet: feste Szenen, wenige bewegte Schichten, und die Oberfläche hat im Holzschnitt natürliche Vorbilder (Text als Gedichtzettel im Himmel mit dem Ortsnamen als Kopfzeile, Kartusche als Ornament). Der Druckcharakter entsteht zur Hälfte im Code: Das Bildmodell liefert Komposition, Kontur, Bokashi-Himmel und sehr gute Wellenbretter, aber große Flächen erst nach dem zellweisen Flachdrucken; Licht und Rauch sind gezeichnete, umgeschaltete Druckflächen. Die Figur ist eine bewusste Grenze dieses Eintrags: Sie passt in Farbe und Kontur, wirkt aber freundlich-bilderbuchhaft statt wie eine Edo-Figur (kein an- und abschwellender Strich, kein Bokashi an Weste und Schal); ein zweiter Laufbogen mit diesen Vorgaben wurde nicht erzeugt (Begründung in pitfalls). Damit die Figur im richtigen Größenverhältnis bleibt und trotzdem ihren Stil zeigt, schneidet die Demo von der Totale auf eine feste Nahaufnahme; für ein Adventure heißt das: je Ort mindestens zwei Bildausschnitte. Zu entscheiden bleibt der kulturelle Bruch: Ein nordischer Inselhafen im Edo-Druck liest sich als bewusste Umkehr der Yokohama-e; das kann reizvoll sein, wirkt aber kulturell markiert.",
+ "pitfalls": [
+  "Erster Hintergrund (bg.png) trotz ausführlichem Stilblock eher Shin-hanga des 20. Jahrhunderts: gesprenkelte Steine, schattierte Felsen, weiches Licht; der Kai füllte das untere Drittel als leere Fläche. Auch bg2 hat trotz „no mottled or speckled textures“ gesprenkelte Kaimauer, Pflaster und Hausmauer und mit Licht und Schatten modellierte Felsen (Kaimauer allein rund 19 % des Bildes). Die erste Fassung dieses Eintrags behauptete dennoch „Flächen ohne Modellierung“; das war falsch.",
+  "Das zellweise Flachdrucken ist kein Automatismus: Die sieben Bereiche und die Ausnahmen (Laternenpfahl, Fässer, Kisten, Tau, Fenster, Tür, Leuchtturm, Wärterhaus) sind von Hand gesetzt, Himmel- und Wolkenzellen werden über eine Farbregel ausgelassen (der erste Lauf färbte ein Wolkenband und den Leuchtturmsockel grau). Die Grenze zwischen zwei Tönen einer Zelle ist an manchen Deckplatten und Felsen ausgefranst, einzelne dunkle Sprenkel-Linien blieben als Kratzer stehen, und Fässer, Kisten und Pflanzen sind nicht geglättet. Felsen bekommen nur ein oder zwei Töne (die Schwelle für drei wurde nie erreicht) und ein waagerechtes Bokashi am unteren Drittel, kein echtes Kanten-Bokashi entlang der Kontur.",
+  "Größenverhältnis: Der Dachs war in der ersten Fassung 185 px hoch bei 103 px Haustür und wirkte wie ein Riese. Jetzt ist er in der Totale 114 px hoch (passend zu Fässern um 75 px und Laternenpfahl um 210 px; die Tür steht weiter hinten am Häuschen und bleibt kleiner als er), und die Demo schneidet bei 3,0 s auf eine Nahaufnahme, in der er 185 px hoch ist. Die Nahaufnahme zeigt Häuschen, Boote, Kaimauer und Brandung, aber weder Leuchtturm noch Laterne noch Rauch; das Poster (Nahaufnahme) zeigt deshalb keinen Leuchtturm. Der Gedichtzettel deckt in der Nahaufnahme die Mastspitzen ab. Der Schnitt fällt mitten in den Lauf (harter Schnitt, kein Übergang).",
+  "Wellennähte: Die erste Fassung erkannte die senkrechten Seitenschnitte nur, wenn die Kante über mindestens 8 Zeilen auf 3 px gerade war; an wave_2 (rechts), wave_4 (links) und wave_5 (beidseitig) griff das nicht, die Kanten blieben mit Deckung 229–253 hart, und im Poster standen senkrechte Nähte bei x ≈ 118 und x ≈ 745 – entgegen der damaligen Angabe in pitfalls. Jetzt wird bei allen sechs Wellen auf beiden Seiten ausgeblendet und die hintere Reihe enger gesetzt (alle 145 px). Im Streifen y 630–714 (Bilder 10, 40, 70, 4-fach) gibt es keine harte senkrechte Kante mehr. Wo Gischtfinger einer vorderen Welle in den ausgeblendeten Rand fallen, laufen sie über etwa 16 px weich aus; das ist kein harter Druckrand.",
+  "Bewusste Abweichung vom Motiv: Die Szenenbibel verlangt ruhiges Meer, der Auftrag Wellen mit Gischt-Krallen. Das Hafenbecken bleibt ruhig (nur wiegende Linien), die Brandung liegt außen vor der Kaimauer im Vordergrund.",
+  "Die Wellenbretter bewegen sich als starre Bühnenwellen (Kreisen auf Zweien); die Krallen ändern ihre Form nicht, kein Brechen oder Einrollen. Drei große Formen kommen fünfmal vor (wave_0 und wave_2 doppelt); bei genauem Hinsehen fällt die Wiederholung auf.",
+  "Gischt erschien zuerst als weiße Quadrate (Textur nur in der Zeichenfunktion geladen und vor dem Zeichnen freigegeben; 64-px-Tropfen ohne Mipmaps auf 4–8 px verkleinert), danach blendeten die Tropfen in den letzten 0,25 s über Alpha aus und wirkten über Stein und Schaum wie durchscheinende lila Seifenblasen. Jetzt bleiben sie deckend und schrumpfen 9 → 7 → 5 px.",
+  "Licht: Die erste Fassung zeichnete einen weichen Glanzstern (durchscheinende, skalierte Strahlen ohne Kontur über dem Laternenraum) und einen radialen Lichthof, der auch ohne Blitz mit Alpha 0,28 leuchtete – das widersprach dem eigenen Merkmal „gedruckt, nicht addiert“. Jetzt deckende, umgeschaltete Bilder hinter dem Gehäuse. Die große Laternenscheibe (r = 21) wirkt im Flackern recht kräftig, fast wie ein Mond hinter der Laterne.",
+  "Rauch: Erst durchscheinende Ballen (Seifenblasen), dann eine CanvasGroup mit 82 % Deckung und Alpha-Ausblendung, die wie Airbrush wirkte und sich kaum bewegte (150–200 geänderte Pixel je Schritt). Jetzt eine gezeichnete Bildfolge mit Kontur (rund 800 geänderte Pixel je Schritt); sie wiederholt sich exakt alle 2,0 s und sieht eher wie ein gerippter Schlauch aus als wie lose Rauchwolken.",
+  "Laufzyklus: Die erste Fassung hielt die Laufbilder 2, 3 oder 4 Takte und begründete das mit „damit der Fuß steht“; das war falsch, weil x während einer Haltezeit ohnehin konstant ist. Jetzt hält jedes Laufbild 3 Takte (10 Bilder/s). Weil der gemessene Vorschub je Wechsel verschieden ist (11–28 KI-px), kommt der Rumpf je Bild unterschiedlich weit voran (Totale 3–8 px, Nahaufnahme 5–12 px); der Gang wirkt dadurch leicht stoßend, die Füße stehen aber.",
+  "Fersen-Messung: Die erste Fassung meldete für alle Wechsel ≤ 1 px, ließ aber bei walk_4 → walk_5 die aufsetzende Ferse in der Aufnahme 3–4 px vorrücken. Ursache: Vorschub 4 → 5 war nach einem Prüflauf von 15 auf 21 KI-px erhöht worden, dessen Messung Kontaktgruppen über mehrere Zeilen zusammenfasste und dabei die Zehe des hinteren Fußes statt der Ferse verglich. Jetzt 15 KI-px und gemessen nur in der festen Sohlenzeile; zudem zählte die alte Prüfmaske (Abstand > 150 vom Blau) das Sumi-Grau des Fells nicht als Figur.",
+  "Die Drehung zur Kamera springt: Die Dreiviertelpose hat die Füße weiter auseinander, sie ist ein Schnitt, keine Bewegung. Beim Übergang walk_1 → stand weicht die Fußspitze 2 px ab.",
+  "Figur nicht verbessert: Der Dachs wirkt trotz „sturdy, not cute; not a cartoon“ freundlich-bilderbuchhaft (Lächeln, runde Formen, gleichmäßig dünne Linie), Bokashi an Weste und Schal fehlt. Ein zweiter Laufbogen (Kontingent wäre frei gewesen: 4 von 10 Bildern genutzt) wurde bewusst nicht erzeugt: Er hätte alle acht Vorschübe neu messen lassen und die jetzt gemessene Fußruhe gefährdet; die Prüfung nannte ihn optional. In der Nahaufnahme fällt der Unterschied zum flach gedruckten Hintergrund am stärksten auf.",
+  "Kartusche: Die erste Fassung setzte den Ortsnamen lesbar in die Kartusche, obwohl der Auftrag „Kartusche ohne lesbare Schrift“ verlangt. Jetzt trägt sie nur ein Seigaiha-Muster; der Ortsname steht als Kopfzeile im Ichimonji-Band des Gedichtzettels.",
+  "Die Schriften sind groß (Kaisei Tokumin je 4,4–4,6 MB, Zen Antique 5,5 MB), weil sie japanische Zeichensätze enthalten; nicht verkleinert."
+ ],
+ "lessons": [
+  "Stilblock für diesen Stil: Epoche und Gattung nennen („Edo period landscape print, around 1830 to 1860“) und das Gegenteil ausschließen („not a 20th-century realistic woodblock print“); Bokashi als Verlauf „from one edge of an area“ beschreiben, dann kommen dunkles Himmelsband, Horizontglühen und Wasserverlauf wie im Druck. Flache Flächen an großen Steinflächen hält das Modell trotzdem nicht ein; dafür ist das Flachdrucken im Code verlässlicher als ein weiteres Bild.",
+  "Zellweise flach drucken (scripts/flatten_cells.py): Schlüsselkontur und feine Fugen (dunkler als beide Nachbarn im Abstand 2–3 px) schützen, kleine Schutzflecken als Sprenkel freigeben, dann jede umschlossene Zelle mit ihrer Medianfarbe füllen und nur bei deutlichem Licht/Schatten-Unterschied der geglätteten Helligkeit in zwei Töne teilen. In KI-Auflösung vor dem Verkleinern rechnen, sonst werden die Konturen weich.",
+  "Den fertigen Hintergrund als Referenz für alle weiteren Bilder mitgeben: Wellen und Figur kamen im ersten Versuch mit denselben Druckfarben, Konturstärken und Papierweiß.",
+  "Wellenbretter: Das Bildmodell zeichnet Ukiyo-e-Brecher mit Krallen und Tropfen sehr sicher, wenn man sie als freigestellte Teile mit „straight horizontal cut at the bottom“ verlangt. Im Spiel kreisen sie wie Bühnenwellen (y = sin, x = cos, ganze Pixel, 15 Bilder/s), die Unterkanten liegen unter dem Papierrand. Seitenkanten immer erzwungen ausblenden (nicht erkennen) und Nachbarn so dicht setzen, dass die ausgeblendete Kante unter dem deckenden Körper des Nachbarn liegt; das Ergebnis im vergrößerten Streifen prüfen, nicht nur im Skriptausdruck.",
+  "Flach gedrucktes Wasser braucht keine KI-Maske: Farbe plus Zusammenhangsflächen reichen; Wiegen durch Lesen aus ganzzahlig versetzten Wasserpixeln (nur aus Wasser, nur in Wasser) hält feine Linien und Bootskonturen scharf.",
+  "Licht im Holzschnitt als vorab gerechnetes Überlagerungsbild: Scheibe und Strahlen deckend mit Bokashi und Kontur, gegen das Druckbild gerechnet, sodass dunkle Gehäuseteile frei bleiben; in Godot nur umschalten (10 Bilder/s). Rauch ebenso als Bildfolge einer konturierten Fahne, deren Ausbuchtungen an der Austrittszeit hängen und deshalb mit dem Rauch wandern.",
+  "Zu große Figur in der Totale: lieber zwei feste Einstellungen mit eigenen Ausschnitten aus der KI-Vorlage (Lanczos direkt in Zielgröße) als die Figur hochskalieren; Lagen in Druckkoordinaten führen und je Einstellung auf ganze Pixel runden, dann stehen die Füße in beiden Einstellungen.",
+  "Füße in der Aufnahme nur in einer festen Sohlenzeile messen und die Prüfmaske gegen den flachen Grund so wählen, dass auch dunkle Fellfarben zählen; Kontaktgruppen über mehrere Zeilen verschmelzen die Füße und täuschen Rutschen vor oder verdecken es.",
+  "Die Oberfläche aus Druckelementen ableiten: Ortsname als Kopfzeile im Ichimonji-Band eines Gedichtzettels, Ziffern als Zinnober-Siegel, Kartusche als Ornament ohne Schrift; Washi multiplikativ über alles verbindet Godot-Text, Figur und KI-Bild zu einem Blatt.",
+  "Blender-Layout aus holzschnitt wiederverwendet (bytegleich): Laufbögen verschiedener Stile haben dieselben Posen und lassen sich vergleichen.",
+  "In Godot ein Bild, das nur in einer draw-Funktion per load() geholt wird, als Feld halten; sonst wird es vor dem Rendern freigegeben und als weiße Fläche gezeichnet."
+ ],
+ "assets": [
+  {"file": "assets/bg.png", "kind": "background", "made_with": "gpt-image (Codex) 1536×1024 + scripts/flatten_cells.py (Zellen flach gedruckt) + scripts/build_bg.py: Zeilen 64–920, Lanczos auf 1264×704", "prompt": "assets/raw/bg2.json"},
+  {"file": "assets/bg_close.png", "kind": "background", "made_with": "dieselbe geglättete KI-Vorlage, Druckausschnitt x 0–790, y 230–670, Lanczos ×1,317 auf 1264×704 (Nahaufnahme)", "prompt": "assets/raw/bg2.json"},
+  {"file": "assets/water.png", "kind": "mask", "made_with": "scripts/build_bg.py aus den Farben des Druckbilds: R Hafenwasser (Ziel), G Hafenwasser (Quelle)"},
+  {"file": "assets/water_close.png", "kind": "mask", "made_with": "scripts/build_bg.py, dieselbe Regel für die Nahaufnahme"},
+  {"file": "assets/scene.json", "kind": "data", "made_with": "scripts/build_bg.py: von Hand abgelesene Lagen (Lampe, Laterne, Fenster, Schornstein, Horizont, Kai), Nahaufnahme, Zellstatistik"},
+  {"file": "assets/lamp_a.png", "kind": "sprite", "made_with": "scripts/build_lights.py: Leuchtfeuer Stufe 1, Scheibe r = 19 hinter dem Laternenraum"},
+  {"file": "assets/lamp_b.png", "kind": "sprite", "made_with": "scripts/build_lights.py: Leuchtfeuer Stufe 2, Scheibe r = 24 mit zehn Strahlen"},
+  {"file": "assets/lantern_1.png", "kind": "sprite", "made_with": "scripts/build_lights.py: Laterne, kleine Scheibe r = 17"},
+  {"file": "assets/lantern_2.png", "kind": "sprite", "made_with": "scripts/build_lights.py: Laterne, große Scheibe r = 21"},
+  {"file": "assets/lights.json", "kind": "data", "made_with": "scripts/build_lights.py: Lage der Lichtbilder in Druckkoordinaten"},
+  {"file": "assets/wave_0.png", "kind": "sprite", "made_with": "gpt-image (Codex; Referenz bg2) + scripts/build_waves.py: hoher Brecher, 214×187", "prompt": "assets/raw/waves.json"},
+  {"file": "assets/wave_1.png", "kind": "sprite", "made_with": "gpt-image (Codex; Referenz bg2) + scripts/build_waves.py: hoher Brecher, 191×170", "prompt": "assets/raw/waves.json"},
+  {"file": "assets/wave_2.png", "kind": "sprite", "made_with": "gpt-image (Codex; Referenz bg2) + scripts/build_waves.py: mittlerer Brecher, 199×120", "prompt": "assets/raw/waves.json"},
+  {"file": "assets/wave_3.png", "kind": "sprite", "made_with": "gpt-image (Codex; Referenz bg2) + scripts/build_waves.py: flacher Wellenzug, 197×94", "prompt": "assets/raw/waves.json"},
+  {"file": "assets/wave_4.png", "kind": "sprite", "made_with": "gpt-image (Codex; Referenz bg2) + scripts/build_waves.py: flacher Wellenzug, 186×87", "prompt": "assets/raw/waves.json"},
+  {"file": "assets/wave_5.png", "kind": "sprite", "made_with": "gpt-image (Codex; Referenz bg2) + scripts/build_waves.py: flacher Wellenzug, 192×70", "prompt": "assets/raw/waves.json"},
+  {"file": "assets/wave_0_close.png", "kind": "sprite", "made_with": "wie wave_0, Faktor 0,64 (Nahaufnahme)", "prompt": "assets/raw/waves.json"},
+  {"file": "assets/wave_1_close.png", "kind": "sprite", "made_with": "wie wave_1, Faktor 0,64 (Nahaufnahme)", "prompt": "assets/raw/waves.json"},
+  {"file": "assets/wave_2_close.png", "kind": "sprite", "made_with": "wie wave_2, Faktor 0,64 (Nahaufnahme)", "prompt": "assets/raw/waves.json"},
+  {"file": "assets/wave_3_close.png", "kind": "sprite", "made_with": "wie wave_3, Faktor 0,64 (Nahaufnahme)", "prompt": "assets/raw/waves.json"},
+  {"file": "assets/wave_4_close.png", "kind": "sprite", "made_with": "wie wave_4, Faktor 0,64 (Nahaufnahme)", "prompt": "assets/raw/waves.json"},
+  {"file": "assets/wave_5_close.png", "kind": "sprite", "made_with": "wie wave_5, Faktor 0,64 (Nahaufnahme)", "prompt": "assets/raw/waves.json"},
+  {"file": "assets/waves.json", "kind": "data", "made_with": "scripts/build_waves.py: Quellausschnitt, Größen und Faktor je Welle"},
+  {"file": "assets/badger.png", "kind": "spritesheet", "made_with": "gpt-image (Codex; Referenzen Blender-Layout, Master-Sheet, bg2) + scripts/build_badger.py: 11 Bilder à 83×123 (8 Laufen, Stehen, Dreiviertel, Blinzeln), Totale", "prompt": "assets/raw/walk.json"},
+  {"file": "assets/badger_close.png", "kind": "spritesheet", "made_with": "dieselben KI-Zellen, scripts/build_badger.py: 11 Bilder à 132×196, Nahaufnahme", "prompt": "assets/raw/walk.json"},
+  {"file": "assets/badger.json", "kind": "data", "made_with": "scripts/build_badger.py: Bildgrößen, Sohlenlinien, Maßstäbe, Messwerte je KI-Zelle"},
+  {"file": "assets/timeline.json", "kind": "animation", "made_with": "scripts/choreo.py: Einstellung, Bild und Lage je Takt aus der Vorschubtabelle"},
+  {"file": "assets/measure_feet.json", "kind": "measurement", "made_with": "scripts/probe_feet.py aus dem Godot-Prüflauf --probe-badger: feste Sohlenzeile, Drehpunkt und aufsetzende Ferse je Bildwechsel"},
+  {"file": "assets/washi.png", "kind": "texture", "made_with": "scripts/make_textures.py (Code, fester Seed): Japanpapier mit Kozo-Fasern, kachelbar, Multiplikationsfaktor"},
+  {"file": "assets/smoke.png", "kind": "spritesheet", "made_with": "scripts/make_textures.py (Code): Rauchfahne, 20 Bilder à 130×140, Schleife 2,0 s"},
+  {"file": "assets/spray.png", "kind": "sprite", "made_with": "scripts/make_textures.py (Code): Gischttropfen 5, 7 und 9 px mit Indigo-Kontur"},
+  {"file": "assets/spray_close.png", "kind": "sprite", "made_with": "scripts/make_textures.py (Code): Gischttropfen 8, 11 und 14 px (Nahaufnahme)"},
+  {"file": "assets/ref/walk_layout.png", "kind": "reference", "made_with": "Blender 5.2 (blender/pose_layout.py) + scripts/make_layout.py: Posen des gemeinsamen Dachsmodells, 2×5 Zellen"},
+  {"file": "assets/ref/layout.json", "kind": "data", "made_with": "scripts/make_layout.py: Zellen, Bodenlinie und Sohlen der Blender-Posen"}
+ ],
+ "licenses": [
+  {"item": "Schrift Kaisei Tokumin Regular und Bold (Text, Auswahl, Eingabe)", "license": "OFL-1.1", "source": "https://github.com/google/fonts (ofl/kaiseitokumin); Lizenztext demo/fonts/OFL-KaiseiTokumin.txt"},
+  {"item": "Schrift Zen Antique (Ortsname, Siegelziffern)", "license": "OFL-1.1", "source": "https://github.com/google/fonts (ofl/zenantique); Lizenztext demo/fonts/OFL-ZenAntique.txt"}
+ ],
+ "image_generations": 4,
+ "tool_issues": [
+  "PIPELINE.md verlangt für Dauerläufe eine Prüfung „mit --t0 20–40 s“, tools/capture.py kennt aber keine Option --t0. Umgangen mit einem eigenen Prüfschalter der Demo (godot … -- --t0=31) und einem Lauf in ein Temp-Verzeichnis."
+ ],
+ "status": "done"
+}

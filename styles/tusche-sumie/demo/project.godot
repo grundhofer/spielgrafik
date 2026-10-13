@@ -1,0 +1,22 @@
+; Engine configuration file.
+; Von Hand geschrieben (kein Editor).
+
+config_version=5
+
+[application]
+
+config/name="Tuschmalerei (Sumi-e) – Hafen von Lornholm"
+run/main_scene="res://main.tscn"
+config/features=PackedStringArray("4.7")
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=1
+environment/defaults/default_clear_color=Color(0.933, 0.91, 0.851, 1)

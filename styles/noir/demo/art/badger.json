@@ -1,0 +1,38 @@
+{
+ "frames": [
+  "walk_0",
+  "walk_1",
+  "walk_2",
+  "walk_3",
+  "walk_4",
+  "walk_5",
+  "walk_6",
+  "walk_7",
+  "stand",
+  "turn",
+  "turn_blink"
+ ],
+ "frame_w": 120,
+ "frame_h": 186,
+ "scale": 0.42857142857142855,
+ "anchor": [
+  61.89,
+  184.29
+ ],
+ "step_px": 9.0,
+ "px_per_m": 175.54,
+ "sole_rows": {
+  "walk_0": 183,
+  "walk_1": 184,
+  "walk_2": 184,
+  "walk_3": 184,
+  "walk_4": 184,
+  "walk_5": 184,
+  "walk_6": 183,
+  "walk_7": 184,
+  "stand": 183,
+  "turn": 184,
+  "turn_blink": 184
+ },
+ "source": "assets/raw/walk3.png"
+}

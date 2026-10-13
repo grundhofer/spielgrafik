@@ -1,0 +1,78 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui_choice.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/harbor.tscn" id="2_harbor"]
+[ext_resource type="FontFile" path="res://fonts/AlegreyaSC-Medium.ttf" id="3_sc"]
+[ext_resource type="Texture2D" path="res://art/paper.png" id="4_paper"]
+
+[sub_resource type="FontVariation" id="F_caps"]
+base_font = ExtResource("3_sc")
+spacing_glyph = 2
+
+[sub_resource type="Gradient" id="G_edge"]
+offsets = PackedFloat32Array(0, 1)
+colors = PackedColorArray(0.12, 0.08, 0.05, 0.38, 0.12, 0.08, 0.05, 0)
+
+[sub_resource type="GradientTexture2D" id="T_edge"]
+gradient = SubResource("G_edge")
+width = 16
+height = 4
+
+[node name="UIChoice" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 640.0
+offset_bottom = 360.0
+script = ExtResource("1_script")
+
+[node name="Picture" type="Control" parent="."]
+clip_contents = true
+layout_mode = 0
+offset_right = 236.0
+offset_bottom = 360.0
+
+[node name="Harbor" parent="Picture" instance=ExtResource("2_harbor")]
+show_badger = false
+
+[node name="Paper" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 236.0
+offset_right = 640.0
+offset_bottom = 360.0
+texture = ExtResource("4_paper")
+stretch_mode = 1
+
+[node name="Edge" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 236.0
+offset_right = 252.0
+offset_bottom = 360.0
+texture = SubResource("T_edge")
+expand_mode = 1
+
+[node name="EdgeLine" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 235.0
+offset_right = 237.0
+offset_bottom = 360.0
+color = Color(0.2, 0.15, 0.1, 0.85)
+
+[node name="Header" type="Label" parent="."]
+layout_mode = 0
+offset_left = 264.0
+offset_top = 20.0
+offset_right = 614.0
+offset_bottom = 44.0
+theme_override_colors/font_color = Color(0.58, 0.27, 0.16, 1)
+theme_override_fonts/font = SubResource("F_caps")
+theme_override_font_sizes/font_size = 16
+text = "Hafen von Lornholm"
+vertical_alignment = 1
+
+[node name="Rule" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 264.0
+offset_top = 48.0
+offset_right = 614.0
+offset_bottom = 49.0
+color = Color(0.74, 0.66, 0.5, 1)

@@ -1,0 +1,143 @@
+{
+ "bg": {
+  "file": "bg_640.png",
+  "w": 640,
+  "h": 429,
+  "source": "styles/painterly-digital/assets/raw/master.png (nur lesend)"
+ },
+ "anchors": {
+  "lamp": [
+   540,
+   109
+  ],
+  "lantern": [
+   227,
+   243
+  ],
+  "window": [
+   152,
+   253
+  ],
+  "chimney": [
+   136,
+   137
+  ]
+ },
+ "glints": [
+  [
+   236,
+   204,
+   470,
+   214,
+   7,
+   1
+  ],
+  [
+   508,
+   250,
+   576,
+   276,
+   5,
+   1
+  ],
+  [
+   240,
+   262,
+   300,
+   288,
+   4,
+   1
+  ],
+  [
+   420,
+   240,
+   500,
+   262,
+   3,
+   0
+  ]
+ ],
+ "gulls": [
+  [
+   292,
+   112,
+   8.0,
+   5.5,
+   1.3,
+   0.0
+  ],
+  [
+   352,
+   128,
+   6.0,
+   4.5,
+   1.1,
+   2.1
+  ]
+ ],
+ "beam_phase": 2.2,
+ "beam_len": 1.0,
+ "parcel": {
+  "pos": [
+   300,
+   322
+  ],
+  "size": 16
+ },
+ "badger": {
+  "scale": 0.10487,
+  "height_px": 56,
+  "body_pivot": [
+   22.02,
+   42.05
+  ],
+  "leg_pivot": [
+   10.07,
+   2.1
+  ],
+  "heel": [
+   -5.768,
+   15.206
+  ],
+  "toe": [
+   5.768,
+   15.206
+  ],
+  "head_top": [
+   2.727,
+   -40.794
+  ],
+  "source": "shared/badger/walk_painted.png, Bild 3 (Box (735, 90, 1062, 662))",
+  "body": "badger_body.png",
+  "leg": "badger_leg.png"
+ },
+ "walk": {
+  "ground_y": 322,
+  "step": 14.0,
+  "speed": 32.0,
+  "decel": 0.7,
+  "steps": 9,
+  "stop_x": 252,
+  "lift": 2.5,
+  "far_dx": -2.0,
+  "far_shade": 0.62,
+  "shadow_w": 24,
+  "distance": 133.0,
+  "start_x": 119.0
+ },
+ "crops": {
+  "choice": [
+   400,
+   16
+  ],
+  "illustrated": [
+   0,
+   92
+  ],
+  "fullscreen": [
+   0,
+   69
+  ]
+ },
+ "band_h": 234
+}

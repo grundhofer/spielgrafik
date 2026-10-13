@@ -1,0 +1,11 @@
+{
+ "t0": 4.3,
+ "changed_share_frame": 0.0323,
+ "changed_share_badger_box": 0.1647,
+ "badger_box": [
+  300,
+  420,
+  470,
+  690
+ ]
+}

@@ -1,0 +1,134 @@
+[gd_scene load_steps=12 format=3]
+
+; Stilneutrale Probeszene der gemeinsamen 3D-Grundlage (siehe shared/3d/README.md).
+; Hafen und Dachs kommen unverändert aus den glb; Licht, Himmel, Nebel, Kamera und die
+; Zusatzlichter stehen hier. main.gd hängt die Knoten unter "Attach" an die Empties im Hafen.
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://models/harbor.glb" id="2_harbor"]
+[ext_resource type="PackedScene" path="res://models/badger.glb" id="3_badger"]
+[ext_resource type="Shader" path="res://shaders/water.gdshader" id="4_water"]
+[ext_resource type="Shader" path="res://shaders/beam.gdshader" id="5_beam"]
+
+[sub_resource type="ProceduralSkyMaterial" id="SkyMat"]
+sky_top_color = Color(0.04, 0.09, 0.3, 1)
+sky_horizon_color = Color(0.93, 0.6, 0.4, 1)
+sky_curve = 0.04
+ground_bottom_color = Color(0.06, 0.09, 0.14, 1)
+ground_horizon_color = Color(0.93, 0.6, 0.4, 1)
+ground_curve = 0.04
+sun_angle_max = 20.0
+
+[sub_resource type="Sky" id="Sky"]
+sky_material = SubResource("SkyMat")
+
+[sub_resource type="Environment" id="Env"]
+background_mode = 2
+sky = SubResource("Sky")
+ambient_light_source = 3
+ambient_light_energy = 0.8
+tonemap_mode = 4
+glow_enabled = true
+glow_intensity = 0.6
+glow_hdr_threshold = 1.0
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.78, 0.56, 0.46, 1)
+fog_density = 1.0
+fog_sky_affect = 0.0
+fog_depth_begin = 30.0
+fog_depth_end = 700.0
+fog_depth_curve = 1.0
+fog_aerial_perspective = 0.4
+
+[sub_resource type="ShaderMaterial" id="WaterMat"]
+render_priority = 0
+shader = ExtResource("4_water")
+
+[sub_resource type="CylinderMesh" id="BeamMesh"]
+top_radius = 3.2
+bottom_radius = 0.3
+height = 30.0
+radial_segments = 24
+rings = 1
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="ShaderMaterial" id="BeamMat"]
+render_priority = 0
+shader = ExtResource("5_beam")
+shader_parameter/color = Color(1, 0.86, 0.6, 1)
+shader_parameter/intensity = 0.25
+shader_parameter/length_m = 30.0
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_main")
+water_material = SubResource("WaterMat")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Env")
+
+; Abendsonne tief von links vorn (14° über dem Horizont), Lichtrichtung (0.86, -0.24, -0.46)
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.4694716, 0.21360436, -0.85672027, 0, 0.9702957, 0.2419219, 0.88294756, -0.113575466, 0.4555263, 0, 30, 0)
+light_color = Color(1, 0.63, 0.38, 1)
+light_energy = 1.6
+shadow_enabled = true
+directional_shadow_max_distance = 70.0
+
+; Hauptkamera wie in harbor_notes.md: Position (-1.8, 3.4, 14.5), rotation_degrees (-3, 0, 0), fov 42 (vertikal)
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.9986295, 0.05233596, 0, -0.05233596, 0.9986295, -1.8, 3.4, 14.5)
+current = true
+fov = 42.0
+near = 0.1
+far = 3000.0
+
+[node name="Harbor" parent="." instance=ExtResource("2_harbor")]
+
+[node name="Badger" parent="." instance=ExtResource("3_badger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 1.2)
+
+; Alles unter "Attach" wird in main.gd an ein Empty bzw. Objekt des Hafens gehängt
+; (Name des Knotens = Ziel). Lokale Transformation bleibt erhalten.
+[node name="Attach" type="Node3D" parent="."]
+
+[node name="LanternLight" type="Node3D" parent="Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="Attach/LanternLight"]
+light_color = Color(1, 0.72, 0.4, 1)
+light_energy = 1.6
+omni_range = 6.0
+
+[node name="CottageWindow" type="Node3D" parent="Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="Attach/CottageWindow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+light_color = Color(1, 0.74, 0.42, 1)
+light_energy = 0.9
+omni_range = 4.0
+
+[node name="LighthouseLight" type="Node3D" parent="Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="Attach/LighthouseLight"]
+light_color = Color(1, 0.84, 0.58, 1)
+light_energy = 2.0
+omni_range = 5.0
+
+; Drehteil des Leuchtfeuers: main.gd dreht "Rotor" um Y; "Tilt" neigt Strahl und Spot 5° nach unten
+[node name="Rotor" type="Node3D" parent="Attach/LighthouseLight"]
+
+[node name="Tilt" type="Node3D" parent="Attach/LighthouseLight/Rotor"]
+transform = Transform3D(1, 0, 0, 0, 0.9961947, 0.08715574, 0, -0.08715574, 0.9961947, 0, 0, 0)
+
+[node name="Spot" type="SpotLight3D" parent="Attach/LighthouseLight/Rotor/Tilt"]
+light_color = Color(1, 0.86, 0.6, 1)
+light_energy = 40.0
+spot_range = 180.0
+spot_angle = 7.0
+
+[node name="Beam" type="MeshInstance3D" parent="Attach/LighthouseLight/Rotor/Tilt"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, -15)
+cast_shadow = 0
+mesh = SubResource("BeamMesh")
+surface_material_override/0 = SubResource("BeamMat")

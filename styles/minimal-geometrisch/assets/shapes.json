@@ -1,0 +1,13 @@
+{
+ "t": 4.42,
+ "total": 383,
+ "by_kind": {
+  "Kreis": 128,
+  "Kreis (Ring)": 16,
+  "Kreisabschnitt": 6,
+  "Kreisbogen": 5,
+  "Linie": 144,
+  "Rechteck": 80,
+  "Rechteck (Rahmen)": 4
+ }
+}

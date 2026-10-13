@@ -1,0 +1,331 @@
+{
+ "slug": "diorama-tiltshift",
+ "name": "Diorama & Miniatur",
+ "family": "modern3d",
+ "kind": "style",
+ "era": "2010–heute",
+ "summary": "Die Spielwelt als Modell auf dem Tisch: der Hafen als aufgeschnittenes Inselstück auf einem lackierten Holzsockel, Spielzeugmaterialien (glänzender Kunststoff, Filz, Holz mit Maserung, Gießharz-Wasser, Watte-Rauch) und eine sehr geringe Schärfentiefe, die nur einen schmalen Streifen scharf lässt (Tilt-Shift-Eindruck). Weiches, warmes Studiolicht von schräg oben; der Dachs wirkt wie eine bemalte Kunststofffigur. Der Look entsteht vollständig aus einem Blender-Skript, Shadern und Code auf den Modellen aus shared/3d, ohne KI-Bilder.",
+ "references": [
+  "The Legend of Zelda: Link's Awakening (Neuauflage, Grezzo/Nintendo 2019): Spielzeugfiguren aus glänzendem Kunststoff, starke Unschärfe oben und unten im Bild",
+  "Captain Toad: Treasure Tracker (Nintendo 2014): jedes Level ein kleines Diorama-Inselstück, das man von außen betrachtet",
+  "Tearaway (Media Molecule 2013) und LittleBigPlanet (2008): Bastel- und Stoffmaterialien, Welt als Werkstück",
+  "Yoshi's Crafted World (Good-Feel 2019): Pappe, Filz und Spielzeug als Baustoff, Tiefenunschärfe",
+  "Astro Bot (Team Asobi 2024) und Tinykin (Splashteam 2022): Miniaturgefühl über Maßstab, Glanz und weiches Licht",
+  "Hitman GO und Lara Croft GO (Square Enix Montréal 2014/2015): Brettspiel-Diorama mit fester Schrägsicht",
+  "Tilt-Shift-Fotografie echter Orte (Olivo Barbieri, Vincent Laforet): ein schmaler Schärfebereich lässt Landschaften wie Modelle wirken"
+ ],
+ "traits": [
+  "Modell auf Sockel: Gelände, Kai, Felsen und Meer aus shared/3d/harbor.glb an einem abgerundeten Rechteck abgeschnitten (Godot x −12,5 bis 14,5, z −30,5 bis 2,9, Eckradius 2,5 m), darunter ein 1,2 m hoher Sockel aus lackiertem Nussbaum mit Fasen und einem Messingschild vorn (Schrift „Hafen von Lornholm“ als Label3D, Marcellus SC); in der Totale steht das ganze Modell frei auf einem dunklen Filztuch vor einem gemalten Abendhimmel-Prospekt",
+  "Schnittkanten wie bei einem aufgeschnittenen Modell: Die Bodenschichten folgen der Oberkante (Mutterboden, Erde mit Kieseln bis 12 cm, gewelltes Lehmband, Erde, ab etwa 1,7 m Tiefe Fels in waagrechten Bänken mit dunklen Fugen; bei hohen Wänden darin ein zweites Lehmband und ein Kiesband). So ist auch die bis 6 m hohe Schnittwand des Westhügels über die ganze Höhe geschichtet (ohne Tiefenunschärfe in der Totale und der Fahrt geprüft). Unter dem Kai geschnittene Pflasterplatten auf Kiesbett, an Grasflächen ein grüner Filzrand; wo Wasser oben liegt, ein Block aus Gießharz (oben heller Meniskus, unten dunkel), durch den Grund und Kaimauer schimmern. 2 353 Säulen im Abstand von 5 cm, davon 776 mit Wasser",
+  "Tiefenunschärfe als Kern des Looks (CameraAttributesPractical, Bokeh hoch, Kreisblende, Stärke 0,24): Schärfe auf dem Dachs, scharf nur zwischen etwa 92 % und 105 % des Fokusabstands, volle Unschärfe ab etwa 150 % dahinter bzw. unter 72 % davor. In der Totale ergibt das das typische Band (Kai scharf, Sockelkante vorn und Leuchtturm hinten weich). In der Fahrt (um 2,2 s) werden Laterne und Positionslampe von Boot A zu weichen runden Lichtflecken; in der Nahaufnahme sind Boot, Steg und Wasser stark verschwommen, das beleuchtete Ruderhausfenster von Boot A bleibt dort ein weicher, gerundeter Lichtfleck (keine scharf umrandete Bokeh-Scheibe). Vergleichsschalter --no-dof: 14,4 % (Totale, 0,5 s) bzw. 17,8 % (Nahaufnahme, 5,0 s) der Pixel um mehr als 8 Stufen anders",
+  "Spielzeugmaterialien per Materialname (toy.gdshader, eine Tabelle in main.gd): Kunststoff mit Klarlack und leichter Lichtdurchlässigkeit (Dachs, Bootslack, Leuchtturm, Möwen), Filz mit verfilzten Fasern und Samtglanz am Rand (Gras, Dach, Taurolle, Schal des Dachses, Tischtuch), Holz mit Jahresringen und Poren (Fässer, Steg, Kisten; Sockel als Nussbaum mit Klarlack), bemalter Gips mit Schwammtupfen und Trockenbürste (Pflaster, Häuschen), Fels mit dunkler Lasur in Vertiefungen, Streusand aus einzelnen Körnern, Packpapier fürs Paket",
+  "Streugras-Flaum: acht Schalen (shell texturing) über dem Grasmaterial, 6 cm hoch, 55 Fasern je m, ab 25 m Kameraabstand ausgedünnt (sonst Flimmern). Sichtbar nur während der Kamerafahrt (6,9 % der Pixel bei 1,6 s); in der Totale ausgeblendet, in der Nahaufnahme liegt kein Gras im Bild (0,1 % bzw. 0,0 %)",
+  "Wasser aus Gießharz (resin_water.gdshader): durchsichtig, Farbaufnahme nach der Strecke im Harz aus dem Tiefenpuffer (Pfähle, Bootsrümpfe und Kaimauer scheinen türkis durch, tiefe Stellen dunkelblau), Hochglanz aus dem normalen Licht, feine wandernde Kräuselung nur in der Normale; schreibt Tiefe, damit die Unschärfe es richtig einordnet",
+  "Weiches Studiolicht: warme Abendsonne von links vorn oben mit großer Lichtquelle (light_angular_distance 4°, weiche Schatten), kühles schwaches Gegenlicht ohne Glanzpunkte, SSAO und SSIL für Kontaktschatten in Fugen und unter Fässern. Leuchtdioden mit Glow im Häuschenfenster, im Ruderhaus von Boot A (Fenster und Positionslampe), in der Laterne und im Leuchtfeuer. Die Laterne flackert zwischen 55 und 100 % (Licht und Glas mit dem Quadrat davon); in der Totale schwankt die Helligkeit im Kasten um Laterne und Pflaster um 7,3 %, sichtbar vor allem am Lichtfleck auf Pflaster und Kisten. Das Leuchtfeuer dreht sich in 7 s; bei 0,7 s zeigt der Strahl zur Kamera der Totale und die Lampe blitzt auf (mittlere Helligkeit im Kasten um die Lampe steigt von 143 bei 0 s auf 200 bei 0,73 s und fällt danach wieder ab), assets/preview/effects.png",
+  "Effekte im Modellbau-Stil: Schornsteinrauch aus Wattebäuschen (Billboards mit flauschigem Rand und Kugelbeleuchtung), schaukelnde Boote, schwacher additiver Lichtkegel des Leuchtfeuers (als Streif nur zu Beginn der Totale), zwei Spielzeugmöwen an Nylonfäden. Die erste (0,65-fach) hängt rechts neben dem Dachs in dessen Schärfeebene (9,2–10 m vor der Kamera der Nahaufnahme): in der Totale ein kleiner scharfer Vogel über dem Kai, ab der Fahrt deutlich als Möwe mit ausgebreiteten Flügeln zu erkennen; in der Nahaufnahme pendelt und dreht sie sich sichtbar (Körpermitte zwischen x 877 und 992 px und y 67 und 105 px, mit leichter Kameradrift; mittlere Änderung je Bild im Kasten um die Möwe 3,8 Stufen gegenüber 0,28 an ruhigem Pflaster). Die zweite hängt hinten vor dem Leuchtturm und bleibt in der Unschärfe ein blasser Punkt",
+  "Zwei Einstellungen mit Fahrt: 0–0,9 s Totale auf das ganze Modell (Dachs 25 px), 0,9–2,9 s Fahrt auf einem Bogen (Richtung per Slerp, Abstand logarithmisch, doppelt geglättet), danach Nahaufnahme leicht von oben (26° Neigung, fov 24°), in der der Dachs die letzten Schritte läuft, zur Kamera abbiegt, stehen bleibt und winkt (191 px hoch); Poster bei 4,97 s",
+  "Spielzeugfigur Dachs: unveränderte badger.glb mit Kunststoff-Materialien (Fell, Mütze, Weste, Hemd), Messingknöpfe metallisch, Schal aus Filz. Gemessen (scripts/measure_badger.py): Standfuß beim Laufen, Abbiegen und Bremsen höchstens 1,8 mm je Bild (Mittel 0,2–0,3 mm); beim Überblenden Walk → Idle zwei Bilder mit je etwa 1,1 cm an beiden Füßen; in der festen Nahaufnahme Fußzeile im Stehen und Winken konstant (452), Kopf 261–263, größter Sprung 1 px",
+  "Textoberfläche als Karteikarte (ui.gd): cremefarbene Karte mit weichem Schatten und feinem Innenrand unten rechts, Messingschild mit dem Ort (passend zum Schild am Sockel), Zeilen Zeichen für Zeichen, Auswahl als Pillen mit Messingnummern (gewählte rot), Eingabezeile mit blinkender Schreibmarke; Nunito und Marcellus SC. Karte 478×276 px (14,3 % des Bildes), erscheint bei 3,45 s, Zeilen ab 3,6 s, Auswahl ab 4,2 s, „> nimm paket“ ist bei 4,9 s fertig; das Poster (4,97 s) zeigt die vollständige Karte"
+ ],
+ "camera": "Totale bis 0,9 s: von (−26 | 23,5 | 38,5) auf (0,8 | 0,8 | −12), fov 30 (vertikal), 21,7° nach unten, 28° von links; sie schiebt sich bis 2,9 s langsam nach (−23,5 | 21,5 | 35,5). Von 0,9 bis 2,9 s Fahrt zur Nahaufnahme: Ziel linear, Richtung per Slerp, Abstand logarithmisch, Zeit doppelt geglättet, damit die Kamera nicht durch das Modell schneidet. Nahaufnahme ab 2,9 s: von (−7,6 | 4,7 | 9,8) auf (−3,27 | 0,41 | 2,25), fov 24, 26° nach unten, gleitet bis 6 s nach (−7,25 | 4,5 | 9,45). Werte aus scripts/frame_shots.py (Dachs links der Mitte über der Karte, Schnittkante des Sockels unten im Bild). Die Hauptkamera aus shared/3d wird nicht benutzt: Ein Diorama braucht den Blick schräg von oben, und der Sockel muss im Bild sein.",
+ "resolution": "1280×720 nativ, Forward+, SMAA statt MSAA (mit MSAA erschienen an den Wasserkanten gepunktete Linien, weil der Harz-Shader den Tiefenpuffer liest)",
+ "pipeline": [
+  {
+   "step": "Keine KI-Bilder",
+   "tool": "–",
+   "detail": "genimg.py wurde nicht aufgerufen. Materialien, Himmelsprospekt und Effekte sind prozedural; ein KI-Bild wäre für diesen Stil höchstens als gemalter Hintergrundprospekt sinnvoll gewesen, der in der Unschärfe aber ohnehin nur als Farbverlauf ankommt."
+  },
+  {
+   "step": "Diorama aus dem gemeinsamen Hafen bauen",
+   "tool": "Blender 5.2, blender/build_diorama.py",
+   "detail": "Import von shared/3d/harbor.glb; Quay, WestHill, Headland, RocksSea und Sea mit bmesh.bisect_plane an 28 Ebenen (Rechteck mit sechs Segmenten je Ecke) abgeschnitten, eigene Normalen verworfen und neu geglättet wie im Original (Gelände 38°, Kai und Felsen flach); IslandsFar entfernt; Schnittwände aus Strahltests von oben alle 5 cm (UV = Umfangsmeter und Höhe, UV2 = Oberkante und Art der Oberfläche); Meeresboden, Holzsockel mit Fasen, Messingschild, zwei Möwen mit Faden (Gull1 0,65-fach rechts neben dem Dachs bei (−1,6 | 1,7 | 2,4), Lage per Rückprojektion aus der Nahaufnahme gesucht; Gull2 vor dem Leuchtturm); Export harbor_diorama.glb (18 802 Dreiecke). Namen, Empties und Lage der übrigen Objekte bleiben"
+  },
+  {
+   "step": "Materialien nach Namen ersetzen",
+   "tool": "Godot 4.7.2, shaders/toy.gdshader, main.gd",
+   "detail": "Alle 19 Hafen- und 11 Figurenmaterialien über eine Tabelle (Art, Farben, Rauheit, Klarlack, Lichtdurchlässigkeit, Samtglanz) durch einen Shader mit acht Arten ersetzt; Rauschen im Objektraum, bei der geriggten Figur in UV-Metern (sonst schwimmt das Muster beim Laufen)"
+  },
+  {
+   "step": "Wasser, Schnittwände, Himmel, Effekte",
+   "tool": "resin_water / section_land / backdrop / table / cotton / wire / felt_shell.gdshader",
+   "detail": "Harz-Wasser durchsichtig mit Tiefenpuffer; Schnittwände aus UV und UV2 (Bodenschichten nach Tiefe unter der Oberkante, Felsbänke waagrecht); Himmelsprospekt als Hohlkehle per SurfaceTool im Code, unten mit Licht und Farbe des Tischtuchs, oben gemalter Verlauf als Emission; Watte-Rauch, Möwen, Laternenflackern und Aufblitzen des Leuchtfeuers im Code animiert; Fenster und Positionslampe von Boot A als Leuchtdiode"
+  },
+  {
+   "step": "Kamera, Schärfe, Ablauf",
+   "tool": "main.gd, scripts/frame_shots.py",
+   "detail": "Bildausschnitte vorab in Python gerechnet (Projektion wie Godot, Keep Height), Ziel so gesucht, dass der Dachs an einer festen Bildstelle steht; Fokus je Bild auf den Dachs, Schärfebereich proportional zum Abstand"
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/measure_badger.py, scripts/check_effects.py, scripts/compare_switches.py, scripts/still.py, tools/capture.py",
+   "detail": "Füße über Knochen (Weltmaß) und über eine weiße Silhouette bei fester Nahaufnahme (Bildmaß); Umgebungseffekte mit Messkästen in den Einzelbildern (Leuchtfeuer vor und beim Aufblitzen, Laterne, Möwe, Fensterlicht, ruhiges Pflaster als Vergleich; Bildlage der Möwe aus main.gd); Vergleichsschalter --no-dof und --no-shells; Probeläufe mit Mobile und Compatibility; zwei Läufe bitgleich (0,5 s und 5,0 s); Lauf ab 30 s und 41 s angesehen (Kamera steht, nichts läuft weg); Schnittwände ohne Tiefenunschärfe angesehen; capture.py mit --poster-at 0.83"
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, Forward+, MSAA aus, SMAA an, Bokeh-Tiefenunschärfe Qualität hoch und Kreisblende, ohne Jitter (sonst rauscht die Aufnahme), Schattenkarte 8192, weiche Schatten Stufe 4, globale Shader-Uniform dio_time",
+  "Environment: ProceduralSky in gedeckten Studiofarben nur für Umgebungslicht und Spiegelungen (der sichtbare Hintergrund sind Tischtuch und Prospekt), Umgebungslicht 0,75, Tonemapping Filmic, SSAO (Radius 0,9, Stärke 2,6), SSIL, Glow ab 1,0, Sättigung 1,12",
+  "Camera3D.attributes = CameraAttributesPractical; main.gd setzt je Bild dof_blur_far_distance = 1,05·f + 0,25, far_transition = 0,45·f, near_distance = 0,92·f − 0,2, near_transition = 0,2·f mit f = Abstand Kamera–Dachs (0,55 m über dem Boden)",
+  "toy.gdshader: ein Shader, Art über uniform int kind (Kunststoff, Filz, Holz, Gips, Streusand, Fels, Metall, Leuchtdiode, Papier); setzt ALBEDO, ROUGHNESS, CLEARCOAT, SSS_STRENGTH und RIM (Samtglanz für Filz); Holzmaserung entlang UV.x, weil die Smart-UV-Inseln der gemeinsamen Modelle in Metern liegen",
+  "felt_shell.gdshader: acht ShaderMaterials als next_pass-Kette am Grasmaterial, jede Schale entlang der Normale angehoben, Fasern per discard aus einem 3D-Zellraster im Objektraum (gleiche Zelle in allen Schalen)",
+  "resin_water.gdshader: depth_draw_always, ALBEDO 0 und EMISSION = Bild dahinter × exp(−Aufnahme × Strecke) + Streufarbe; Tiefe aus hint_depth_texture, für Compatibility mit z·2−1 (#if CURRENT_RENDERER)",
+  "section_land.gdshader: glTF dreht V um, deshalb Höhe = 1 − UV.y und Art = 1 − UV2.y",
+  "wire.gdshader: skip_vertex_transform, Faden im Kameraraum auf mindestens 2 px verbreitert, Deckkraft im selben Verhältnis gesenkt; die Pixelgröße kommt als Uniform aus main.gd",
+  "Dachs: AnimationPlayer im manuellen Modus (advance), Vorschub 0,367 m/s × speed_scale, Abbiegen um den Bodenpunkt des Standfußes; Bremsbeginn 3,2 s so gelegt, dass der Lauf in einer Durchgangsphase endet; beim Überblenden auf Idle hält ein Fußanker erst den Standfuß, dann die Mitte beider Fersen fest; Wave ab 4,0 s",
+  "Attach-Muster aus shared/3d (Lichter und Lichtkegel an den Empties); Materialien vor dem Umhängen ersetzen. Prüfschalter nach --: --t0, --no-dof, --no-shells, --no-ui, --no-lamps, --no-gulls, --no-wires, --mask, --measure, --cam",
+  "ui.gd: Control in einer CanvasLayer, zeichnet in _draw() mit StyleBoxFlat (weicher Schatten über shadow_size), Zeit kommt per set_time() aus main.gd",
+  "Leuchtfeuer: Startwinkel beam_yaw0 aus der Lage der Kamera der Totale bei BEAM_FACING_T = 0,7 s (WIDE_A→WIDE_B) berechnet; facing = cos⁴⁸ des waagrechten Winkels zwischen Strahl und Kamera (Aufblitzen etwa 0,4 s lang), Lampe Emission 3 + 40·facing, Punktlicht 1,5 + 4·facing, Lichtkegel bis dreifach",
+  "Laterne: zwei FastNoiseLite-Frequenzen; der Wertebereich in 0–6 s wird in _ready() bestimmt und auf 0,55–1,0 abgebildet, Punktlicht 3,4·f² (Reichweite 5,5 m) und Glas-Emission 6·f²",
+  "Boot A: die Flächen mit Material Metal (Ruderhausfenster und Positionslampe am Mast) bekommen ein Leuchtdioden-Material; mit --measure gibt main.gd zusätzlich die Bildlage der Möwe Gull1 aus (Zeilen G)"
+ ],
+ "techniques": [
+  "tiefenunschaerfe",
+  "prozedurale-materialien",
+  "shell-fasern",
+  "shader-wasser",
+  "kamerafahrt",
+  "fuss-halten",
+  "prozedurale-animation",
+  "additiver-lichtkegel",
+  "nachbearbeitung",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 1,
+  "consistency": 4,
+  "effort": 3,
+  "text_adventure": 4,
+  "mobile": 2
+ },
+ "ratings_note": "ai_fit 1, weil die KI hier nichts beigetragen hat: Es wurde kein Bild erzeugt; der Look kommt aus dem Blender-Skript, den Shadern und dem Code. Wie gut ein Bildmodell Diorama-Bilder trifft, ist damit nicht geprüft. consistency 4: Materialien, Licht und Unschärfe gelten über die Tabelle für jedes Modell gleich; je Ort müssen aber Sockelumriss, Kamera und Schärfebereich eingestellt werden. effort 3: Jeder Ort braucht ein 3D-Modell und einen Lauf des Diorama-Skripts samt Prüfung der Schnittkanten; Shader, Oberfläche und Messskripte sind wiederverwendbar. mobile 2 ist geschätzt (auf keinem Smartphone gemessen): Probeläufe auf dem Mac mit Mobile laufen, aber ohne SSAO, SSIL und Lichtdurchlässigkeit, das Bild wird heller und flacher (57,0 % bzw. 81,9 % der Pixel weichen um mehr als 8 Stufen ab); Compatibility hat keine Tiefenunschärfe, damit fehlt der Kern des Looks (82,8 % bzw. 98,4 % anders). Dazu kommen ein durchsichtiges Wasser, das Bild- und Tiefenpuffer liest, und die Bokeh-Unschärfe in voller Auflösung.",
+ "verdict": "Gut geeignet, wenn wir jeden Ort unseres Textadventures als kleines Modell zeigen wollen: Ein Ort ist ein Inselstück auf einem Sockel, die Unschärfe lenkt den Blick auf Figur und Gegenstand, und die Karteikarten-Oberfläche passt zum Modellbau-Gedanken. Die Bilder wirken hochwertig, ohne dass die Modelle detailliert sein müssen; einfache Formen werden durch Kunststoff, Filz und Holz glaubwürdig. Kosten: ein 3D-Modell je Ort und eine Kameraeinstellung mit Fokus; Shader, Sockel-Skript und Oberfläche sind wiederverwendbar. Für Smartphones und Web müsste die Unschärfe anders entstehen (z. B. vorgerenderte Standbilder je Ort mit wenigen bewegten Teilen); in Compatibility fehlt sie ganz. Die Unschärfe verträgt sich nur mit Rätseln, deren Gegenstände im Schärfebereich liegen.",
+ "pitfalls": [
+  "Keine KI-Bilder (bewusst, laut Auftrag nur wenn unvermeidbar). Der gemalte Himmelsprospekt ist prozedural und wirkt in der Unschärfe nur als Verlauf; ein gemalter Prospekt aus dem Bildmodell würde in der Totale kaum auffallen.",
+  "Bewusste Abweichung von shared/3d: eigene Kamera (schräg von oben) statt der Hauptkamera, Sockel und Schnitt verkleinern den Hafen auf x −12,5 bis 14,5 und z −30,5 bis 2,9; der Kai endet vorn schon bei z 2,9 statt 8, IslandsFar fehlt. Der Leuchtturm ist nur in der Totale und der Fahrt zu sehen; in der Nahaufnahme liegt er bei 26° Blick nach unten über dem Bildrand. Zusätzlich zum gemeinsamen Modell: Sockel, Möwen und leuchtende Fenster bzw. Positionslampe an Boot A (nur Material, keine neue Geometrie).",
+  "Der gebogene Himmelsprospekt erscheint von oben als Bogen um das Modell; erst mit 62 m Radius, einer Hohlkehle, die unten Farbe und Licht des Tischtuchs übernimmt, und ausblendenden Enden wirkt er wie ein Studiohintergrund statt wie ein Ring.",
+  "glTF dreht V um: Höhe und Oberflächenart der Schnittwände kamen zuerst vertauscht an (grüner Filz vorn am Kai, Mauerwerk unter dem Hügel), bis der Shader 1 − UV.y bzw. 1 − UV2.y liest.",
+  "Helle, fast weiße Glanzflecke auf dem Harz waren die Spiegelung des kühlen Gegenlichts (Richtung zur Kamera); erst light_specular 0 am Gegenlicht und geringer Glanz an Laterne und Leuchtfeuer beseitigten sie. Das Gegenlicht wirkt jetzt nur noch diffus.",
+  "Mit MSAA zeigten die Kanten zwischen Harz und Kaimauer bzw. Bootsrumpf gepunktete helle Linien (Tiefenpuffer und Farbe passen an MSAA-Kanten nicht zusammen); deshalb SMAA.",
+  "Die Nylonfäden der Möwen (1,2 cm) sind in der Totale dünner als ein Pixel und erschienen als gestrichelte Linien. VIEWPORT_SIZE und PROJECTION_MATRIX im Vertex-Shader verbreiterten sie im Test nicht (Ursache nicht geklärt); erst eine Pixelgröße als Uniform aus main.gd half. Die Fäden bleiben leicht unterbrochen. In der Nahaufnahme läuft der Faden der vorderen Möwe nach oben auf die Kamera zu und wird dort zu einem blassen, breiten Streifen (vordere Unschärfe).",
+  "Der Streugras-Flaum aus Schalen ist nur während der Kamerafahrt zu sehen (6,9 % der Pixel bei 1,6 s); in der Totale musste er ausgeblendet werden (Fasern unter einem Pixel flimmern), in der Nahaufnahme liegt kein Gras im Bild.",
+  "Füße: Beim Überblenden Walk → Idle rutschen beide Füße in zwei Bildern je etwa 1,1 cm (gut 2 px in der Nahaufnahme), obwohl der Lauf in einer Durchgangsphase endet und ein Fußanker den Standfuß hält; ohne Anker waren es bis 4 cm hin und her. Beim Abbiegen um die Figurmitte wanderte der Standfuß im Mittel 6,4 mm je Bild, nach dem Umstellen auf Drehen um den Standfuß 1,4 mm (beide mit 1,2 cm Auflageschwelle gemessen); mit der strengen Schwelle jetzt höchstens 1,8 mm.",
+  "Die Tiefenunschärfe ändert nur 14–18 % der Pixel um mehr als 8 Stufen, weil große, ruhige Flächen (Wasser, Tischtuch) unscharf kaum anders aussehen; sichtbar ist sie trotzdem deutlich an Booten, Steg, Leuchtturm und Sockelkante. Unscharfe Bereiche eignen sich nicht für anklickbare Gegenstände.",
+  "Die Schrift auf dem Messingschild ist in der Totale nur etwa 10 px hoch und nicht lesbar; den Ort nennt deshalb zusätzlich das Schild auf der Karteikarte.",
+  "Das Blender-Skript ist deterministisch bis auf die Reihenfolge der Dreiecke der beiden Möwen (gleiche Dreiecke, andere Reihenfolge im Indexpuffer); das Bild ändert sich dadurch nicht.",
+  "Abendstimmung: In der Nahaufnahme wirkt das Licht eher wie später Nachmittag (warm, hell); die Dämmerung zeigen vor allem der Prospekt in der Totale und die Leuchtdioden. Dunkler wäre die Spielzeugwirkung schwächer geworden.",
+  "Leuchtfeuer: Zuerst richtete sich das Aufblitzen nach der Kamera der Nahaufnahme (4,6 s), in der der Leuchtturm gar nicht im Bild ist; in Totale und Fahrt zeigte der Strahl mindestens 85° von der Kamera weg, ein Aufblitzen war nie zu sehen. Jetzt liegt es bei 0,7 s in der Totale. Der Lichtkegel ist um 10° nach unten geneigt und die Kamera der Totale steht 8,5° über der Lampe: Man sieht nie in den Kegel hinein, das Aufblitzen ist die Lampe selbst (Emission bis 43, Glow) und erscheint in der Unschärfe als großer heller Fleck, nicht als Lichtstrahl. Der Kegel ist nur zu Beginn der Totale als schwacher Streif zu sehen.",
+  "Möwen: Die erste Fassung hängte beide Möwen hinter den Hafen; mit Tiefenunschärfe waren sie in der Totale nur blasse 5-px-Punkte und ab etwa 1,8 s außerhalb des Bildes. Eine Möwe hängt jetzt in der Schärfeebene des Dachses. Sie pendelt an einem 46 m langen Faden (Aufhängung über dem Bild): Schon 0,5° Ausschlag ergeben gut 40 cm Weg. Die hintere Möwe bleibt in der Unschärfe ein blasser Punkt.",
+  "Nahaufnahme (2,9–6 s, gut die Hälfte der Laufzeit): Rauch, Laterne und Leuchtturm liegen außerhalb des Bildes. Deutliche Bewegung kommt nur von der Möwe; dazu schaukeln die unscharfen Boote samt Fensterlicht (±2–3 px, mittlere Änderung im Fensterkasten 0,42 gegenüber 0,28 an ruhigem Pflaster), und das Wasser kräuselt sich kaum messbar.",
+  "Laternenflackern: Mit 0,8 ± 0,2 schwankte die Helligkeit in der Totale nur um etwa 1 %. Jetzt 55–100 % mit Licht und Glas im Quadrat davon: 7,3 % im Kasten um die Laterne. Das Glas selbst bleibt auch gedimmt fast weiß (Tonemapping, etwa 10 px groß); man sieht das Flackern vor allem am Lichtfleck auf Pflaster und Kisten. In der Nahaufnahme ist die Laterne nicht im Bild.",
+  "Runde Bokeh-Flecken: In der Nahaufnahme liegt keine punktförmige Lichtquelle im Hintergrund. Das beleuchtete Ruderhausfenster ist größer als der Unschärfekreis und wird nur ein weicher, gerundeter Fleck. Ein Test mit einer zusätzlichen 9-cm-Lampe am Ruderhaus ergab eine runde Scheibe, wurde aber verworfen, weil sie eine Lampe erfindet, die es im gemeinsamen Modell nicht gibt; die echte Positionslampe am Mast liegt in der Nahaufnahme über dem Bildrand und ist nur in der Fahrt ein runder Fleck.",
+  "Schnittwände: Die Schichten lagen zuerst nach absoluter Höhe, und ein falsch herum geschriebenes smoothstep färbte alles über −1,6 m in Felsgrau ein. Die hohe Wand des Westhügels war dadurch eine glatte braune Fläche, und die beschriebenen Schichten sah man nur im Band unter dem Kai. Jetzt folgen die Bodenschichten der Oberkante; dadurch hat sich auch das Band unter dem Kai geändert (mehr Erde und Lehm, Fels erst ab 1,7 m). Die großen Kiesel sind erst in Fahrt und Nahaufnahme zu erkennen (in der Totale unter 2 px); die Schnittkante vorn liegt in der Nahaufnahme in der vorderen Unschärfe.",
+  "Im ersten Poster (4,97 s) stand in der Eingabezeile erst „> n“. Zeilen, Auswahl und Eingabe kommen jetzt früher und schneller (100 bzw. 22 Zeichen/s); bei 4,2 s erscheinen Auswahl und Eingabezeile fast gleichzeitig."
+ ],
+ "lessons": [
+  "Ein Diorama lässt sich automatisch aus jeder Ortsszene schneiden: konvexer Umriss, bisect_plane je Kante, dann Schnittwände aus Strahltests von oben (5 cm Raster) mit Oberkante und Oberflächenart in UV2. Der Shader malt daraus Erdschichten, Pflaster auf Kies oder Gießharz.",
+  "Der Miniatur-Eindruck kommt vor allem aus der geringen Schärfentiefe mit Fokus auf der Figur und einem Schärfebereich proportional zum Abstand; dazu Blick schräg von oben, weiche Schatten (große Lichtquelle) und Kontaktschatten (SSAO).",
+  "Spielzeugmaterialien brauchen keine Texturen: Klarlack und leichte Lichtdurchlässigkeit für Kunststoff, RIM für Filz, Jahresringe aus gewelltem Rauschen für Holz; eine Tabelle nach Materialname macht neue Modelle sofort stimmig.",
+  "Gießharz-Wasser: durchsichtig mit depth_draw_always, Farbe als EMISSION aus dem Bild dahinter mal exp(−Aufnahme × Strecke); getauchte Pfähle und Rümpfe schimmern dann von selbst durch. Glanzpunkte von Gegenlichtern abschalten (light_specular 0), sonst entstehen weiße Flecken.",
+  "Bildausschnitte in Python rechnen und das Ziel so suchen, dass die Figur an einer festen Bildstelle steht (frame_shots.py, aim()); so passen Figur und Textkarte zusammen, ohne Kameraproben in Godot.",
+  "Abbiegen im Laufen um den Bodenpunkt des Standfußes drehen und den Bremsbeginn so legen, dass der Lauf in einer Durchgangsphase endet; beim Überblenden auf Idle die Figur so nachschieben, dass der Standfuß stehen bleibt.",
+  "Füße mit einer strengen Auflageschwelle messen (Sohle bei 3 mm, Schwelle 6 mm): Bei 1,2 cm zählt das Aufsetzen der Ferse als Rutschen und verdeckt die echten Werte.",
+  "Sehr dünne Objekte (Fäden) im Vertex-Shader auf mindestens 2 px verbreitern und die Deckkraft senken, die Pixelgröße als Uniform übergeben.",
+  "Die Textkarte als Karteikarte mit Messingschild greift das Schild am Sockel auf und hält die Oberfläche im Modellbau-Thema; unten rechts lässt sie Figur und Schnittkante frei.",
+  "Effekte, die von der Kamera abhängen (Aufblitzen, wenn der Strahl zur Kamera zeigt), an der Einstellung ausrichten, in der das Objekt im Bild ist, und mit einem Messkasten über die Einzelbilder nachprüfen (scripts/check_effects.py).",
+  "Bei geringer Schärfentiefe zählt nur, was in der Schärfeebene liegt: Bewegte Kleinigkeiten (Möwe am Faden) per Rückprojektion aus der Nahaufnahme in Figurtiefe setzen, sonst werden sie zu unscharfen Punkten.",
+  "Schichten einer Schnittwand nach der Tiefe unter der Oberkante färben, Felsbänke nach absoluter Höhe: So sind niedrige und hohe Wände gleich lesbar."
+ ],
+ "assets": [
+  {
+   "file": "blender/build_diorama.py",
+   "kind": "code",
+   "made_with": "Blender 5.2: Hafen als Inselstück zuschneiden, Schnittwände, Meeresboden, Holzsockel, Messingschild, Möwen mit Faden",
+   "prompt": ""
+  },
+  {
+   "file": "demo/models/harbor_diorama.glb",
+   "kind": "model",
+   "made_with": "build_diorama.py aus shared/3d/harbor.glb (18 802 Dreiecke; Möwe Gull1 0,65-fach neben dem Dachs)",
+   "prompt": ""
+  },
+  {
+   "file": "demo/models/badger.glb",
+   "kind": "model",
+   "made_with": "unveränderte Kopie von shared/3d/badger.glb (7 348 Dreiecke, Idle/Walk/Wave)",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/toy.gdshader",
+   "kind": "shader",
+   "made_with": "Spielzeugmaterialien: Kunststoff, Filz, Holz, Gips, Streusand, Fels, Metall, Leuchtdiode, Papier",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/felt_shell.gdshader",
+   "kind": "shader",
+   "made_with": "Streugras-Flaum aus acht Schalen",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/resin_water.gdshader",
+   "kind": "shader",
+   "made_with": "Gießharz-Wasser (Oberfläche und Schnittkante) mit Farbaufnahme aus dem Tiefenpuffer",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/section_land.gdshader",
+   "kind": "shader",
+   "made_with": "Schnittwände: Erdschichten, Pflaster auf Kies, Filzrand",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/backdrop.gdshader",
+   "kind": "shader",
+   "made_with": "gemalter Abendhimmel-Prospekt als Hohlkehle, unten in Tischtuch übergehend",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/table.gdshader",
+   "kind": "shader",
+   "made_with": "Filz-Tischtuch mit Lichtkegel",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/cotton.gdshader",
+   "kind": "shader",
+   "made_with": "Watte-Rauch als Billboard",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/wire.gdshader",
+   "kind": "shader",
+   "made_with": "Nylonfaden mit Mindestbreite in Pixeln",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/beam.gdshader",
+   "kind": "shader",
+   "made_with": "Kopie aus shared/3d/demo (additiver Lichtkegel), hier schwächer eingestellt",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/dio_noise.gdshaderinc",
+   "kind": "shader",
+   "made_with": "gemeinsame Rausch- und Zellfunktionen",
+   "prompt": ""
+  },
+  {
+   "file": "demo/main.gd",
+   "kind": "code",
+   "made_with": "Materialtabelle, Kamerafahrt und Schärfe, Dachs mit Fußanker, Effekte, Prüfschalter",
+   "prompt": ""
+  },
+  {
+   "file": "demo/ui.gd",
+   "kind": "code",
+   "made_with": "Karteikarte mit Messingschild, Auswahl-Pillen, Eingabezeile",
+   "prompt": ""
+  },
+  {
+   "file": "demo/main.tscn",
+   "kind": "scene",
+   "made_with": "Szene von Hand geschrieben: Licht, Environment, Kamera mit CameraAttributesPractical, Tisch, Schild, Attach-Knoten",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/frame_shots.py",
+   "kind": "code",
+   "made_with": "Bildausschnitte vorab rechnen, Ziel für feste Bildstelle suchen",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/measure_badger.py",
+   "kind": "code",
+   "made_with": "Fuß- und Kopfmessung (Knochen und Silhouette)",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/check_effects.py",
+   "kind": "code",
+   "made_with": "Leuchtfeuer, Laterne, Möwe und Nahaufnahme-Bewegung in den Einzelbildern messen",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/compare_switches.py",
+   "kind": "code",
+   "made_with": "Vergleichsschalter und Renderer messen, Bögen schreiben",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/still.py",
+   "kind": "code",
+   "made_with": "Einzelbilder zu beliebigen Zeitpunkten rendern",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/badger_close.png",
+   "kind": "preview",
+   "made_with": "Ausschnitt aus dem Poster (300–640 × 200–480), 2-fach: Dachs als Kunststofffigur mit Filzschal, Holzfässer",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/switches.png",
+   "kind": "preview",
+   "made_with": "compare_switches.py: Totale und Nahaufnahme voll, ohne Tiefenunschärfe, ohne Filzfasern",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/renderers.png",
+   "kind": "preview",
+   "made_with": "compare_switches.py: Forward+, Mobile, Compatibility (Totale und Nahaufnahme)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/measure_badger.json",
+   "kind": "data",
+   "made_with": "Ausgabe von measure_badger.py",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/effects.png",
+   "kind": "preview",
+   "made_with": "check_effects.py: Leuchtfeuer bei 0 s und beim Aufblitzen (0,73 s), Laterne dunkel/hell, Möwe im Poster",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/effects.json",
+   "kind": "data",
+   "made_with": "Ausgabe von check_effects.py",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Nunito (variabel, Strichstärken 600 und 760)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/nunito (Kopie aus styles/tageszeit-wetter, Lizenztext: demo/fonts/OFL-Nunito.txt)"
+  },
+  {
+   "item": "Schrift Marcellus SC",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/marcellussc (Kopie aus styles/silhouette-scherenschnitt, Lizenztext: demo/fonts/OFL-MarcellusSC.txt)"
+  },
+  {
+   "item": "Hafen und Dachs",
+   "license": "eigene Modelle aus shared/3d (Blender-Skripte)",
+   "source": "shared/3d/blender/"
+  },
+  {
+   "item": "Sockel, Schnittwände, Möwen, Shader, Oberfläche",
+   "license": "eigener Code, keine fremden Texturen oder Bilder",
+   "source": "styles/diorama-tiltshift/"
+  },
+  {
+   "item": "Hash without Sine (Shader-Funktion), Copyright (c) 2014 David Hoskins – in demo/shaders/dio_noise.gdshaderinc",
+   "license": "MIT",
+   "source": "https://www.shadertoy.com/view/4djSRW"
+  }
+ ],
+ "image_generations": 0,
+ "tool_issues": [],
+ "status": "done"
+}

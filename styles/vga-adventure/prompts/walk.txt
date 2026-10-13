@@ -1,0 +1,9 @@
+Sprite sheet for a 1990s point-and-click adventure game running on a 256-colour VGA PC at 320x200. Use the attached reference only for the costume, colours and body proportions of the character; drawing style, resolution and palette follow this description. The character is a small pixel-art sprite about 36 art pixels tall, enlarged without smoothing so every art pixel is a crisp, clearly visible square block of the same size; about 20 colours, a one-pixel dark coloured outline, simple two- or three-tone shading per material, no anti-aliasing, no gradients, no texture noise. Side view facing right.
+
+One row of 6 animation frames of a walk cycle, walking to the right, evenly spaced, same scale, feet on the same baseline, each frame a distinct leg and arm position (contact, down, passing, up, contact, down). The parcel stays under the near arm, the scarf ends swing slightly.
+
+The badger courier: an original mascot character, a stout, short-legged badger with a broad black-and-white striped face, wearing a dark green peaked cap with a brass button, a dark green vest with pockets over a cream shirt with rolled-up sleeves, a long red knitted scarf, a brown leather satchel on a shoulder strap, and a brown paper parcel tied with string under one arm.
+
+Isolated on a fully transparent background, no ground, no shadows, no frame borders. No text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.
+
+Image format: landscape 3:2.

@@ -1,0 +1,18 @@
+{
+ "t": 3.4,
+ "forward_plus_log": [],
+ "mobile": {
+  "changed_any": 0.0,
+  "changed_gt24": 0.0,
+  "mean_abs": 0.0,
+  "log": []
+ },
+ "gl_compatibility": {
+  "changed_any": 0.1568,
+  "changed_gt24": 0.0143,
+  "mean_abs": 0.859,
+  "log": [
+   "WARNING: 2D MSAA is not yet supported for GLES3."
+  ]
+ }
+}

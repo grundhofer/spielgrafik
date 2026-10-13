@@ -1,0 +1,5 @@
+The reference image is a one-bit pixel art game background. Redraw exactly the same picture with the same composition and size, every object at exactly the same position and with exactly the same outline, as if traced on a clear sheet laid on top of it, but as a flat tone plate: replace every dither pattern (checkerboard, dot grids, line patterns, dashes) by the one flat grey that the pattern represents. Keep black outlines and black areas black and white areas white. Use only five flat values: black, dark grey, middle grey, light grey and white. Every stone, slate, plank, barrel stave and crate board keeps its own outline as a continuous black line; inside each outlined shape one flat value. No patterns, no dithering, no stippling, no hatching, no texture, no gradients, no anti-aliasing, no colour.
+
+No text, letters, numbers, signatures, watermarks or logos anywhere in the image.
+
+Image format: landscape 3:2.

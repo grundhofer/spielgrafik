@@ -1,0 +1,29 @@
+DE,Hafen von Lornholm (Spielgrafik-Katalog, Eintrag videotext)
+PN,10000
+SC,0000
+PS,8000
+OL,1,T]MCHafen von LornholmWZ     !      "   
+OL,2,                                        
+OL,3,T]     V||  HZW"           I`Y   Q||   
+OL,4,T]   W|4##       Z$S,,^YH_\T]  
+OL,5,T] Wh4    Z`  "       !    0Y    "!Z$
+OL,6,T] Q         U`x|||p0  ppp^Z0 YW   
+OL,7,V|^WU]                          Q   
+OL,8,V]^W#Uo] Qppp0   p||t0   pppp0   W/   
+OL,9,V]    Q+]    WjSppppp0   pppppR`]W\^R
+OL,10,V]     S"o]  Wj         j    Rx
+OL,11,V]      ^W+T]Wj S##o_3WjV,,R\ss//
+OL,12,]Sj      T/%////]QpppzpQ^\Rws{//o
+OL,13,]Ssbs      T]Q'S.o^\T_SRwss//
+OL,14,]Sj  \   T]W##########^S##7#W#########
+OL,15,]T    R\htp ZT0 0 0 0 0Y S5 ZT0 0 0 0 
+OL,16,]T    W\*ss^! ZT 0 0 0 0 0YS5  _jZT0 0
+OL,17,]T    Q\>/-ZT0 0 0 0 0 0Y S5  ||h|Q~4~4
+OL,18,]T   ^R\jS_%ZT0 0 0 0YS5 5  ||||Qs1s1
+OL,19,]T     \j7k5 Z0 0 0 0Y S|4| 5  ||||Q55
+OL,20, Die Laterne flackert im Wind. Am Kai   
+OL,21, wartet ein Paket auf dich.             
+OL,22,QG Zum Leuchtturm gehen D..........C201
+OL,23,RG Das Paket ansehen D.............C202
+OL,24,SG Mit dem Dachs sprechen D........C203
+FL,201,202,203,100,8FF,100

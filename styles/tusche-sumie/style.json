@@ -1,0 +1,312 @@
+{
+ "slug": "tusche-sumie",
+ "name": "Tuschmalerei (Sumi-e)",
+ "family": "gemalt",
+ "kind": "style",
+ "era": "Ostasiatische Tuschmalerei (seit der Tang- und Song-Zeit); in Spielen seit etwa 2006",
+ "summary": "Schwarze Tusche in vielen Grauabstufungen auf warmem Reispapier, viel leeres Papier als Himmel, Wasser und Nebel, Zinnober als einzige Farbe (Stempel, Leuchtturmband, Schal, Lichter). Hintergrund und Figur sind in großen nassen Lasuren ohne Kontur gemalt (Technik ohne Knochen, mokkotsu). Bewegt wird mit Pinselstrichen: Tusche zieht beim Szenenstart ins Papier, Wellenstriche werden gezogen und verblassen, Rauch steigt als blasse Tuschfahne aus dem Schornstein, Nebel zieht als leeres Papier, Schrift wird von links nach rechts geschrieben.",
+ "references": [
+  "Ōkami (Clover Studio, 2006): Tuschmalerei-Ästhetik mit Pinselstrichen als Spielmechanik",
+  "Sumioni: Demon Arts (Acquire, 2012): Plattformer in Tusche auf Papier",
+  "Ostasiatische Tuschmalerei (Sumi-e, Shuimo) mit Inschrift und rotem Siegel als Bildaufbau (Technik, kein bestimmtes Werk)"
+ ],
+ "traits": [
+  "Nur schwarze Tusche in Abstufungen auf warmem Reispapier mit Fasern; die einzige Farbe ist Zinnober: Stempel, rotes Band und blinkendes Licht des Leuchtturms, Laternenschein, Schal der Figur",
+  "Wenige große Lasuren statt Zeichnung: Kai als ein langer Trockenpinsel-Strich mit blassen Lasuren davor, keine einzelnen Steine, keine Mauer, kein Pflaster; Häuschen, Kisten, Boote und Steg in wenigen Flecken (Feindetail-Anteil gegenüber dem vorigen Hintergrund um gut ein Drittel kleiner, siehe pipeline)",
+  "Viel Leere: 64 % des Hintergrunds sind unbemaltes Papier (Tuschedichte < 0,02), Himmel und Wasser fast leer, Objekte lösen sich nach unten in Nebel auf",
+  "Ein einziges Papier für alles: Hintergrund, Papierweiß der Figur und Nebel zeigen dieselbe Papiertextur an derselben Bildschirmstelle; Tusche liegt multiplizierend darauf (Tusche über Tusche wird dunkler)",
+  "Figur ohne Kontur (mokkotsu): Fell, Mütze, Weste und Tasche sind fleckige nasse Lasuren mit ausfransenden Rändern, Hemd, Gesicht und Bauch bleiben unbemaltes Papier, nur durch die Lasuren daneben begrenzt; Zinnober-Schal; dieselbe Technik in Lauf- und Vorderansicht",
+  "Roter Stempel im Weißschnitt (ausgesparte Dachspfote, keine Schrift) neben dem Ortsnamen; er wird bei 1,15 s aufgedrückt (1,25-fach auf 1-fach)",
+  "Text steht wie eine Inschrift im leeren Himmel (Mincho-Schrift, ohne Kasten) und wird mit ausgefranster Kante von links nach rechts geschrieben; die gewählte Antwort liegt auf einem gezogenen blassen Pinselstrich; die Aufzählungspunkte sitzen auf der Mitte der x-Höhe",
+  "Szenenstart als Pinseleffekt: Bild 0 zeigt schon die blassesten Lasuren, bis 0,85 s zieht die Tusche nach Dichte ins Papier (blasse Lasuren zuerst, satte Striche zuletzt); die Tusche der Figur zieht mit demselben Fortschritt ein, die Zinnober-Lichter glühen erst ab 70 % auf",
+  "Pinselstrich-Effekte als Umgebung: Wellenstriche auf dem Wasser werden in 0,55 s gezogen und blenden aus; Möwen aus zwei Flügelstrichen schlagen mit 6 Bildern/s im Ping-Pong (oben, Mitte, unten, Mitte); Rauch setzt direkt auf der Schornsteinkante an (gemessene Lücke 0 px in allen Bildern ab 0,85 s) und steigt als blasse Tuschfahne auf",
+  "Nebel zieht als leeres Papier über Horizont, Fuß der Felsnase und Uferbereich (drei Bänder, 10–20 px/s)"
+ ],
+ "camera": "Seitenansicht auf Augenhöhe, feste Kamera; der Kai im Vordergrund ist der Laufweg",
+ "resolution": "1280×720 ohne Pixelraster; KI-Bild 1536×1024, Ausschnitt 1536×864 ab Zeile 150, auf 83,3 % verkleinert; Figur 179–187 px hoch, Laufen mit 15 Bildern/s (auf Zweien), Winken mit 5 Bildern/s",
+ "pipeline": [
+  {
+   "step": "Prompts und Aufträge",
+   "tool": "prompts/make_jobs.py -> assets/jobs_*.json -> tools/genimg.py (direkt, --workers 1–2)",
+   "detail": "Aufbau je Prompt: Stilblock + Komposition bzw. Layout-Vorgabe + Motivblock aus data/motif.json wörtlich + Hinweise zu später animierten Teilen (kein Rauch, Lampe nur als Papierfleck ohne Strahl, keine Vögel, Horizontband als leeres Papier statt Orange) + background_only_en + guards_en + Format. Alle neun Bilder über Codex (gpt-image), je ein Versuch, 46–99 s, alle in 1536×1024 geliefert."
+  },
+  {
+   "step": "Hintergrund, Versuche 1 und 2 (nicht verwendet)",
+   "tool": "genimg (gpt-image über Codex)",
+   "detail": "raw/bg.png: Tuschlavierung mit Federstrichen, Steinmauern, Schindeln, orangem Horizont. raw/bg_v2.png mit „etwa vierzig Pinselstriche, jedes Objekt in ein bis fünf Strichen“: einfacher, zeichnet aber Steinmauer, Pflaster, Fassreifen und Kistenbretter aus. bg_v2 war bis zur Nachbesserung der verwendete Hintergrund und ist die Kompositionsvorlage für Versuch 3."
+  },
+  {
+   "step": "Hintergrund, Versuch 3: Übermalen (verwendet)",
+   "tool": "genimg (gpt-image über Codex), Referenzen raw/bg_v2.png + raw/strokes.png",
+   "detail": "raw/bg_v3.png: „Male dieses Bild bei gleicher Komposition in wenigen großen nassen Lasuren neu“, Technik ohne Kontur (xieyi/mokkotsu) mit Verboten je Objekt (keine Schindeln, keine Steine, keine Fassdauben, keine Bretter, Felsnase als ein nasser Fleck), Strichbogen als Pinselvorlage. Ergebnis: Kai als ein Trockenpinsel-Strich, Mauer und Pflaster weg, Kisten als graue Blöcke, Häuschen als Dachfleck und blasse Wand; Komposition wie bg_v2, einzelne Objekte 5–20 px verschoben (Laterne am weitesten). Gemessen auf dem fertigen Bild: Tuschemittel 0,128 → 0,107, Papieranteil 0,60 → 0,64, Anteil feiner Tuschekanten (|d − Weichzeichnung σ 3| > 0,05) 18,5 % → 11,6 %. Lichtpunkte, Schornstein, Wasserband und Aussparungen der Wellen in assets/bg_override.json an die neue Lage angepasst."
+  },
+  {
+   "step": "Tusche zurückrechnen und auf eigenes Papier setzen",
+   "tool": "tools/prep_bg.py + assets/bg_override.json",
+   "detail": "Ausschnitt 16:9 ab Zeile 150, Lanczos auf 1280×720. Papierton des KI-Bildes als obere Hülle der Helligkeit (Blöcke 32 px, Quantil 0,96, geglättet). Je Pixel Tuschedichte d und Zinnoberdichte r aus R- und G-Kanal gelöst (Modell T = (1 − d(1 − Tusche))(1 − r(1 − Zinnober)), Fixpunkt-Iteration); Zinnober nur, wo (R − G)/R > 0,22; Dichten unter 0,04 gelten als Papierstruktur. Der Gelbstich am Horizont und die graue Himmelslasur von bg_v3 verschwinden dabei weitgehend (die Hülle nimmt die gleichmäßige Lasur als Papierton), das rote Band bleibt. Ergebnis: assets/bg.png und assets/bg_ink.png (Transmission + Dichte als Reihenfolge für das Einziehen)."
+  },
+  {
+   "step": "Pinselstrich-Bogen",
+   "tool": "genimg (gpt-image über Codex) + tools/prep_strokes.py + assets/strokes_pick.json",
+   "detail": "raw/strokes.png: ein Studienblatt mit drei breiten Trockenpinsel-Strichen, vier Wellenstrichen, drei Rauchfahnen, drei Möwen (Flügel oben, waagerecht, unten) und zwei Tuschepunkten auf weißem Papier. Zerlegt über Zusammenhangskomponenten; Rauchfahnen über feste Boxen mit niedriger Schwelle; Möwen auf eine gemeinsame Fläche mit dem Körper in der Mitte. Gespeichert als RGB = Tusche, A = Dichte. Außerdem Pinselvorlage für alle drei Übermal-Aufträge."
+  },
+  {
+   "step": "Layout-Referenzen für die Figur",
+   "tool": "blender/pose_layout.py (Blender 5.2, EEVEE) + tools/make_layouts.py",
+   "detail": "Posen von shared/3d/badger.glb orthografisch mit 409,6 px/m auf Magenta: walk_layout.png (2×5: acht Laufbilder auf der Stelle, Stehen, Dreiviertel) und front_layout.png (2×3: vorn, drei Winkposen, Blinzeln, Sprechen); layouts.json mit Zellen und Bodenlinie."
+  },
+  {
+   "step": "Figurenbögen, erste Fassung (Posenvorlage, nicht mehr im Bild)",
+   "tool": "genimg (gpt-image über Codex)",
+   "detail": "raw/walk.png (Referenzen Layout, Master-Sheet, eigener Hintergrund) und raw/front.png (Layout, walk.png, Master-Sheet): Posen und Maßstab wie im Layout, aber saubere Bilderbuch-Figur mit dünnen gleichmäßigen Umrissen. raw/walk_v2.png (lockere Pinselskizze mit dick-dünnen Konturen) kam detailreicher und farbig zurück, nicht verwendet. walk.png und front.png sind jetzt nur noch Vorlage (assets/ref/*_clean.png: deckende Figur auf Weiß, Schleier entfernt, tools/make_clean_refs.py) und Registrierungsreferenz."
+  },
+  {
+   "step": "Figurenbögen übermalt ohne Kontur (verwendet)",
+   "tool": "genimg (gpt-image über Codex)",
+   "detail": "raw/walk_v3.png: Referenzen ref/walk_clean.png (Layout, Posen, Kostüm), raw/strokes.png und assets/bg.png (Pinsel und Tuschtöne), Master-Sheet (nur Kostüm); Prompt „Technik ohne Kontur (mokkotsu): jede Form nur als nasse Lasur mit der Pinselseite, nirgends eine Linie; Hemd, Gesicht und Bauch unbemaltes Papier; Kostümfarben in Tuschtöne übersetzt“. raw/front_v3.png: Referenzen ref/front_clean.png, raw/walk_v3.png (Stilvorlage), Strichbogen, Master-Sheet; zusätzlich die dunkle Umhängetasche an der Hüfte verlangt. Beide Bögen ohne Umrisse, Posen bis auf wenige Pixel wie die Vorlage (IoU der Silhouetten 0,90 gegenüber walk.png), beide mit sauberem Alphakanal (Anteil halbtransparenter Schleierpixel unter 1 %, der erste Laufbogen hatte 40 %)."
+  },
+  {
+   "step": "Figur aufbereiten und registrieren",
+   "tool": "tools/prep_badger.py + assets/badger_override.json",
+   "detail": "Silhouette = KI-Alpha > 0,5 plus 1–2 px Kantenring (Schleier verworfen); Tusche und Zinnober wie beim Hintergrund zurückgerechnet. Laufbogen: direkt auf die Blender-Pose registriert rutschte der Standfuß um bis zu 4 px; deshalb wird walk.png wie bisher auf die Pose registriert (IoU 0,93–0,96) und jedes Bild von walk_v3.png auf das entsprechende Bild von walk.png im Layoutraum (IoU 0,92–0,94, register_via). walk_3 hat den Standfuß 4 px weiter hinten gezeichnet: Füße per foot_fix um 4 px nach vorn geschert, über 60 px nach oben auslaufend (Kopf und Rumpf bleiben). Vorderbogen auf die Blender-Pose (IoU 0,88), die übrigen Vorderbilder auf das Vorderbild und aus Teilen gebaut (Winkarm über Differenzmaske, Augen und Mund als feste Ausschnitte). Der Vorderbogen kam nach der Registrierung 11 px niedriger als die Dreiviertelansicht heraus; sheet_scale 1,06 für den Vorderbogen gleicht das an (186 gegen 187 px). Danach Maßstab 0,45 für alle, Lasur leicht wolkig, Tusche läuft 1–2 px aus."
+  },
+  {
+   "step": "Vorschub messen",
+   "tool": "tools/measure_badger.py + Auswertung der Sohlenzeilen in Figurkoordinaten",
+   "detail": "Das Layout ergibt 8,46 px je Laufbild; die KI zeichnet den Schritt länger. Verwendet wie bisher konstant 9,25 px je Laufbild (139 px/s bei 15 Bildern/s); mit den übermalten Bildern nachgemessen (siehe Prüfung)."
+  },
+  {
+   "step": "Code-Assets",
+   "tool": "tools/make_paper.py, tools/make_fx.py",
+   "detail": "Reispapier 1280×720 (wolkige Dichte, 3 400 Fasern als Zufallswege, Korn, leicht dunklere Ecken); Stempel 112×112 im Weißschnitt mit Dachspfote; zwei waagerecht kachelbare Nebelmasken; Lichtfleck; Rauschen für das Einziehen der Tusche."
+  },
+  {
+   "step": "Zusammenstellen",
+   "tool": "tools/stage.py, tools/build_all.py",
+   "detail": "stage.py kopiert nach demo/art/ und schreibt scene.json: Lichtpunkte, Nebelbänder, 13 Wellenstrich-Plätze im Wasserband, Rauch samt Fußpunkt jeder Rauchtextur (unterste Zeile mit Dichte > 0,08 und Schwerpunkt darüber), Möwen, Oberfläche (x-Höhe der Schrift 0,45 em für die Aufzählungspunkte) und den Ablauf der Figur (180 Einträge: 59 Laufbilder auf Zweien, Anhalten in einem Durchgangsbild, Stehen, Dreiviertel, Vorderansicht, viermal Winken, Blinzeln). build_all.py führt alles samt Godot-Import aus (ruft kein Bildmodell auf); ein voller Neubau ergab bitgleiche Dateien in demo/art/."
+  },
+  {
+   "step": "Prüfung",
+   "tool": "tools/measure_badger.py (Godot-Prüfmodus --figure-only), tools/measure_smoke.py, Godot --rendering-method",
+   "detail": "Fußlinie: Steh-, Dreh- und Vorderbilder 639–640, Laufbilder 638–640. Spitze des Standfußes über die Bilder mit demselben Standfuß: 159/160/159 und 198/197/197 (±1 px); Sohlenzonen-Verschiebung walk_2→3, walk_5→6 und walk_6→7 je 0 px; walk_1→2 3 px, weil in walk_1 der hintere Fuß noch in der Sohlenzone liegt (Spitze des Standfußes 159→160); an den Fußwechseln misst die Sohlenzone den neuen Fuß mit (dort Sichtprüfung als Fußstreifen). Kopf: im Laufen hebt er sich beim Durchgangsbild walk_6 um 5 px (oberste Zeile 459 → 454 → 457), beim Wechsel Stehen → Dreiviertel 5 px (Posenwechsel); Dreiviertel → Vorderansicht nach sheet_scale ohne Sprung. Rauch: Schornsteinkante y 170, unterste Rauchzeile mit Abweichung > 8 zum Hintergrund in allen 154 Bildern ab 0,85 s direkt darüber (Lücke 0 px; Gegenprobe in einem leeren Himmelsfenster: Abweichung 0–1). Aufzählungspunkte: Mitte 0,5 px unter der Mitte der x-Höhe. Möwen: Bilder 60–95 zeigen oben, Mitte, unten, Mitte. Renderer: mobile bitgleich zu Forward+, gl_compatibility mittlere Abweichung 0,11 von 255, höchstens 2 (Bilder 30, 90, 149, 175)."
+  }
+ ],
+ "godot": [
+  "2D, Fenster 1280×720, stretch canvas_items, lineare Filterung; main.gd baut alle Lagen aus res://art/scene.json",
+  "Hintergrund als Sprite2D mit bg_ink.gdshader: Papier per SCREEN_UV × Transmission; progress läuft von 0,15 (Bild 0, blasse Lasuren schon sichtbar) bis 1 bei 0,85 s und lässt die Tusche nach Dichte (70 %) und wolkigem Rauschen (30 %) einziehen",
+  "Alle Tusche-Ebenen (Wellen, Rauch, Möwen, Pinselstrich, Stempel, Punkte, Lichter) mit ink_mul.gdshader (render_mode blend_mul): Ausblenden durch Mischen zu Weiß, optional Aufziehen von links nach rechts mit je Zeile versetzter Kante (Borsten) und optional nur der untere Teil der Textur (fade_top/fade_len)",
+  "Rauch: Ursprung jedes Rauch-Sprites ist der Fuß der Fahne (aus stage.py), gesetzt auf die Schornsteinkante; ein fester Ansatz (unterer Teil einer Fahne, oben weich ausgeblendet) wiegt sich auf dem Schornstein; drei Fahnen steigen mit k^1,5 auf, Deckung smoothstep(0; 0,06; k) · (1 − k)^1,5, das Pendeln wächst mit k",
+  "Lichter als Zinnober-Scheiben (Lichtfleck × modulate Zinnober, multiplizierend), eingeblendet mit smoothstep(0,7; 1; progress): Leuchtfeuer blinkt alle 2,5 s weich auf und ab, Laterne flackert über drei Sinusse, Fenster atmet leicht",
+  "Möwen: Flügelbild = [0, 1, 2, 1][Bildzähler mod 4] bei 6 Bildern/s, Position ganzzahlig",
+  "Nebel mit mist.gdshader: kachelbare Maske waagerecht verschoben, oben und unten weich begrenzt, gezeigt wird das Papier selbst (normal gemischt)",
+  "Figur in zwei Durchgängen mit derselben Textur: figure.gdshader legt Papier (SCREEN_UV) in die Silhouette, figure_ink.gdshader multipliziert die Tusche darauf und lässt sie mit demselben progress und Rauschen einziehen wie den Hintergrund; Atmen als Stauchung um die Fußlinie im Vertex-Shader; Position ganzzahlig",
+  "Text als Label mit Shippori Mincho (Latin-1-Teilmenge) und text_reveal.gdshader; Aufzählungspunkt auf y = Oberkante + get_ascent(Größe) − 0,5 · x-Höhe (0,45 em, im Bild gemessen); Stempel und Pinselstrich unter der gewählten Antwort aus dem Code animiert; Schreibmarke blinkt",
+  "Texturen, deren Farbe auch bei kleinem Alpha zählt (Hintergrund, Figur), speichern Alpha als 21/255 + a × 234/255; die Shader rechnen das zurück. Grund: Godots Import-Option process/fix_alpha_border (Standard true) überschreibt die Farbe fast transparenter Pixel. Einfacher wäre fix_alpha_border=false in der .import-Datei (geprüft, siehe lessons); hier nicht genutzt, weil stage.py demo/art/ bei jedem Bau neu anlegt und Godot die .import-Dateien dann mit Standardwerten schreibt",
+  "Deterministisch: Zeit aus delta aufsummiert, alle Zufallswerte in stage.py mit festen Seeds vorausberechnet; Prüfmodus über Benutzerargument --figure-only"
+ ],
+ "techniques": [
+  "ki-spritesheet",
+  "rotoskopie",
+  "nachbearbeitung",
+  "kinemagramm",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 3,
+  "consistency": 4,
+  "effort": 3,
+  "text_adventure": 5,
+  "mobile": 5
+ },
+ "ratings_note": "ai_fit 3: Codex liefert Tuschlavierung zuverlässig, aber nicht beim ersten Mal reduziert: Erste Hintergründe und Figuren waren detailreiche Illustrationen mit Umrissen. Die Reduktion gelang erst als Übermalen eines eigenen Bildes (gleiche Komposition bzw. Posen, nur die Technik ändert sich), und auch dann bleiben Restdetails (Fassreifen, Laubtextur der Felsnase) und eine saubere Maskottchen-Form der Figur. Papier, Stempel, Entfärben, Registrierung und alle Bewegung kommen aus Code. consistency 4: Hintergrund und Figur sind jetzt in derselben Lasurtechnik ohne Kontur gemalt, Lauf- und Vorderbogen passen in Technik, Tönen und Kostüm (Tasche und Paket auf derselben Körperseite); das Übermalen behält Posen und Komposition, sodass Messungen und Einstellungen weiter gelten. effort 3: Hintergrund und Figur laufen nach der Erzeugung automatisch durch, je Ort sind aber Ausschnitt, Lichtpunkte, Wasserband und Nebelbänder von Hand zu setzen, jedes Bild braucht zwei Erzeugungen (Vorlage, dann Übermalen), und neue Figuren brauchen Blender-Layouts, Registrierung und einzelne Fußkorrekturen. text_adventure 5: ein Bild je Ort, ruhige Bewegung, Text als Inschrift im leeren Papier gehört zum Stil, Szenenwechsel als einziehende Tusche. mobile 5: geprüft mit mobile (bitgleich zu Forward+) und gl_compatibility (mittlere Abweichung 0,11 von 255) an der fertigen Demo; nur 2D-Sprites und sechs kleine Shader.",
+ "verdict": "Tuschmalerei passt sehr gut zu unserem Textadventure: Das leere Papier gibt dem Text natürlichen Platz (Inschrift statt Textkasten), ein Bild je Ort reicht, und die Bewegung ist billig und ruhig (Nebel, gezogene Wellenstriche, Rauch, Szenenwechsel als einziehende Tusche). Tragfähig ist ein Ablauf in zwei Schritten: Zuerst liefert das Bildmodell Ort und Figur in der richtigen Komposition bzw. in den Blender-Posen, dann übermalt es genau diese Bilder in der Technik ohne Kontur mit wenigen nassen Lasuren; der Code rechnet alles auf ein gemeinsames Papier und ein festes Tusche-Zinnober-Modell zurück und macht daraus die Bewegung. So sind Hintergrund und Figur jetzt im selben Duktus gemalt. Bewusst akzeptierte Abweichung vom Auftrag „wenige Pinselstriche“: Der Hintergrund ist auf große Lasuren reduziert (Kai, Mauer, Häuschen, Kisten), Fassreifen, die Laubtextur der Felsnase und die Galerie des Leuchtturms bleiben gezeichnet; eine weitere Reduktion im Code (Tonstufen, Glätten) hätte die nassen Ränder der Lasuren mit vereinfacht und wurde deshalb nicht gemacht. Die Figur ist eine Lasurmalerei ohne Kontur, aber in der Form weiter eine saubere Maskottchenfigur, keine schnelle kalligrafische Skizze mit einzelnen sichtbaren Strichen. Für ein ganzes Spiel ist die Figurenkette (Blender-Layout, Registrierung über den Vorgänger, Teile) wiederverwendbar; je Bild sind zwei Erzeugungen einzuplanen.",
+ "pitfalls": [
+  "Die Reduktion auf wenige Pinselstriche gelingt dem Bildmodell nicht aus dem Text heraus: raw/bg.png war eine detailreiche Tuschlavierung mit Federstrichen und orangem Horizont, raw/bg_v2.png mit „etwa vierzig Pinselstriche, keine Texturen“ zeichnete Steinmauer, Pflaster, Fassreifen und Kistenbretter aus. Erst das Übermalen von bg_v2 (raw/bg_v3.png) reduzierte deutlich. Es bleiben Fassreifen, die Laubtextur der Felsnase, die Dachstruktur des Häuschens und die Galerie des Leuchtturms; das Bild ist näher an freier Pinselmalerei, aber kein Xieyi mit wirklich nur einer Handvoll Strichen.",
+  "Die erste Figur (raw/walk.png, raw/front.png) war eine Bilderbuch-Tuschfigur mit dünnen, gleichmäßigen Umrissen und brach im Duktus mit dem malerischen Hintergrund; die Nachbesserung als Pinselskizze (raw/walk_v2.png) wurde detailreicher und farbig. Behoben durch Übermalen in der Technik ohne Kontur (walk_v3, front_v3). Grenze: Die Ränder sind weich und fransig wie Filz oder nasse Lasur, die Formen bleiben rund und sauber wie bei einem Maskottchen; einzelne Pinselstriche mit Druck und Trockenpinsel sind in der Figur kaum zu sehen. Eine kalligrafische Kontur im Code (Variante „Kontur über die Tuschemaske neu setzen“) wurde nicht gebaut, weil die neue Figur gar keine Kontur mehr hat.",
+  "Weiße Teile der Figur (Bauch, Hemd, Schwanzspitze) haben ohne Kontur keine Kante zum Papier; vor hellem Kai liest sich die Silhouette dort nur über die Papierfüllung, die die Kaistriche dahinter verdeckt. In dunkler Umgebung wäre das kein Problem, vor leerem Papier verschwimmt der Bauch.",
+  "Übermalte Bögen haben dieselben Posen, aber nicht pixelgenau: walk_v3 direkt auf die Blender-Posen registriert ergab Sohlenzonen-Verschiebungen bis 4 px (Messbereichsgrenze) und eine Standfußspitze, die in walk_3 5 px zurücksprang. Behoben durch Registrierung über den Vorgänger (walk.png → Pose, walk_v3 → walk.png) und eine Fußscherung von 4 px nur für walk_3. Der Kopf hebt sich beim Durchgangsbild walk_6 um 5 px (beim ersten Bogen offline gemessen 2 px); das wirkt als etwas stärkeres Wippen und wurde nicht korrigiert, weil eine senkrechte Verschiebung die Füße vom Boden gelöst hätte.",
+  "Der Vorderbogen kam nach der Registrierung auf die Blender-Pose 11 px niedriger heraus als die Dreiviertelansicht (die KI zeichnet ihn gedrungener), der Kopf sprang beim Umdrehen nach unten. Behoben über sheet_scale 1,06 für den ganzen Vorderbogen. Beim Wechsel Stehen → Dreiviertel springt der Kopf 5 px nach oben und 5 px zurück (Posenwechsel).",
+  "Kostüm: Im ersten Vorderbogen fehlte die dunkle Umhängetasche, Tasche und Paket waren zu einem hellen Teil am Gurt zusammengelegt. Im übermalten Vorderbogen ist die dunkle Tasche da, auf derselben Körperseite wie Paket und Tasche im Laufbogen (rechte Körperseite, im Vorderbild links). Der Prompt verlangte sie fälschlich auf der anderen Seite; das Modell hat sie trotzdem passend zum Laufbogen gesetzt.",
+  "Der Rauch schwebte in der ersten Fassung in jedem Bild 20–46 px über dem Schornstein: Jede Fahne begann mit Deckung sin(k·π) = 0, und der Sprite-Ursprung lag am Texturrand statt am Fuß der sichtbaren Fahne. Behoben über Fußpunkt je Textur, festen Ansatz auf dem Schornstein und eine Deckung, die am Schornstein schon sichtbar ist; tools/measure_smoke.py misst die Lücke (jetzt 0 px).",
+  "Möwen schlugen wegen eines Modulo-Fehlers (Bildzähler erst mod 3, dann Folge [0,1,2,1] mod 4) oben-Mitte-unten und sprangen dann hart nach oben zurück; behoben, jetzt Ping-Pong.",
+  "Szenenstart war uneinheitlich: Bild 0 leeres Papier, die Lichter glühten vor ihren Gebäuden, der Dachs lief voll gesättigt in die halb eingezogene Szene. Behoben: progress beginnt bei 0,15, Lichter erst ab 70 %, die Figurtusche zieht mit demselben progress ein. Bild 0 zeigt nur sehr blasse Lasuren; die erste Kachel in frames.jpg wirkt deshalb weiter fast leer.",
+  "Die Aufzählungspunkte saßen mit 0,62 × Schriftgröße unter der Oberkante etwa 7 px zu hoch; jetzt über Oberlänge und x-Höhe gesetzt. Die x-Höhe (0,45 em) ist im gerenderten Bild gemessen, nicht aus der Schriftdatei gelesen (fontTools ist nicht installiert).",
+  "Godots Textur-Import ersetzt mit process/fix_alpha_border=true (Standard) die Farbe aller fast transparenten Pixel durch die Farbe des nächsten deckenderen Pixels. Weil der Hintergrund die Einzieh-Reihenfolge im Alpha trug (Papier = 0), entstanden um jedes Objekt graue Blöcke; ebenso um die Figur in der multiplizierenden Tusche-Ebene. Gelöst über eine Alpha-Untergrenze von 21/255, die die Shader zurückrechnen. Der einfachere Weg wäre fix_alpha_border=false in der .import-Datei; Achtung: Ändert man nur den Wert in einer vorhandenen .import-Datei, importiert `godot --import` nicht neu, erst nach Löschen der Datei in .godot/imported/ (im Test in einem eigenen Projekt bestätigt).",
+  "Lichter sind kein Aufhellen: Auf fast weißem Papier ist ein Aufhellen unsichtbar. Leuchtfeuer, Laterne und Fenster sind deshalb Zinnober-Scheiben (bewusste Abweichung: das Leuchtfeuer blinkt rot). Das Fensterlicht ist klein und wirkt im blassen Mauerfleck eher wie ein rosa Punkt.",
+  "Der Vorschub aus dem Blender-Layout (8,46 px je Bild) passte nicht: Die KI zeichnet den Schritt etwas länger. Gemessen und fest auf 9,25 px gesetzt. An den Fußwechseln ist die Sohlenzonen-Messung nicht aussagekräftig (Ferse setzt auf, Fuß rollt ab); dort Sichtprüfung als Fußstreifen.",
+  "Die Inschrift belegt den freien Himmel in der Mitte; Möwen fliegen deshalb links. Rauchfahnen und Möwen sind starre Pinselformen, die verschoben, skaliert und ausgeblendet werden, kein gemalter Strich in Bewegung. Die Boote schaukeln nicht (im Hintergrund eingemalt).",
+  "Kontingent: 9 von 10 Bilderzeugungen verbraucht (6 in der ersten Runde, 3 für die Nachbesserung: walk_v3, front_v3, bg_v3, je ein Versuch)."
+ ],
+ "lessons": [
+  "Übermalen statt neu erzeugen: Ein eigenes, bereits passendes Bild (Komposition bzw. Posen und Kostüm) als erste Referenz, dazu „behalte Layout, Posen, Größe und Lage exakt, nur die Maltechnik ändert sich“ und einen Pinsel-Studienbogen als Stilreferenz. Codex hält Posen und Komposition auf wenige Pixel und wechselt die Technik deutlich (Umrisse weg, Details weg). Alle Einstellungen (Lichtpunkte, Registrierung, Teile) bleiben fast unverändert gültig.",
+  "Für Tuschmalerei die Technik benennen statt Stimmungswörter: „boneless ink painting (mokkotsu), every shape only a wet wash with the side of the brush, no contour lines“ plus Verbote je Objekt („no shingles, no stones, no hoops, no planks“). Kostümfarben ausdrücklich in Tuschtöne übersetzen, sonst übernimmt das Modell Grün und Braun aus dem Motivblock.",
+  "Übermalte Sprite-Bögen über den Vorgänger registrieren (alter Bogen → Blender-Pose, neuer Bogen → alter Bogen im Layoutraum): Der neue Bogen erbt die gemessene Fußlage; einzelne abweichend gezeichnete Füße mit einer Scherung nur im Fußbereich korrigieren, statt das ganze Bild zu verschieben.",
+  "Tusche aus jedem KI-Tuschbild zurückrechnen: je Pixel Tuschedichte und Zinnoberdichte aus R- und G-Kanal gegen feste Farben lösen und auf ein eigenes Papier setzen. Das entfernt Farbstiche (gelber Horizont, graue Himmelslasur) und macht alle Bilder (Hintergrund, Figur, Striche) farbgleich.",
+  "Ein Papier für alles: Hintergrund, Papierweiß der Figur und Nebel lesen dieselbe Papiertextur per Bildschirmkoordinate; Tusche liegt multiplizierend darüber (blend_mul). So sitzt die Figur im Papier statt darauf.",
+  "Ein KI-Studienblatt mit einzelnen Pinselstrichen auf weißem Papier ergibt mit einer Erzeugung eine wiederverwendbare Effekt- und UI-Bibliothek und ist zugleich die beste Pinselreferenz für spätere Übermal-Aufträge.",
+  "Rauch und andere aufsteigende Effekte am Fuß der sichtbaren Textur verankern (Fußpunkt aus der Dichte messen, Sprite-Offset darauf), einen festen Ansatz an die Quelle setzen und die Deckung so wählen, dass sie an der Quelle schon sichtbar ist; die Lücke mit einem Differenzbild gegen den Hintergrund messen.",
+  "KI-Sprite-Bögen auf die Blender-Posen registrieren (Maßstab und Versatz über FFT-Kreuzkorrelation der Silhouetten) und Bögen verschiedener Ansicht danach auf gleiche Höhe bringen (sheet_scale), sonst springt der Kopf beim Umdrehen.",
+  "Winken, Blinzeln und Sprechen nach der Registrierung aus Teilen bauen (Basisbild + Differenzmaske bzw. fester Ausschnitt für Augen und Mund): Der Körper bleibt in allen Vorderbildern pixelgleich.",
+  "Godot: Für Texturen, deren RGB bei kleinem Alpha zählt, ist process/fix_alpha_border=false in der .import-Datei der einfache Weg (getestet: Farbe bei Alpha 5/255 bleibt erhalten). Nach dem Ändern die importierte Datei in .godot/imported/ löschen, sonst importiert Godot nicht neu. Eine Alpha-Untergrenze mit Rückrechnung im Shader ist nur der Ausweichweg, wenn die .import-Dateien wie hier bei jedem Bau neu entstehen.",
+  "Szenenstart als Pinseleffekt mit einem gemeinsamen Fortschrittswert für Hintergrund, Figur und Lichter: alles zieht im selben Takt ein, Lichter erst am Ende; ein leicht negativer Start lässt Bild 0 nicht leer.",
+  "Licht in der Tuschmalerei als Zinnober-Scheibe statt als Aufhellen; Nebel dagegen als Papier, das über die Tusche gelegt wird.",
+  "Pinsel-Schreiben als Shader: Aufdecken nach Bildschirm-x mit zeilenweise versetzter Kante wirkt bei Schrift, Pinselstrichen und Wellen gleichermaßen wie ein gezogener Pinsel.",
+  "Im Prompt das Siegel ausdrücklich verbieten und selbst setzen: Echte Siegel enthalten Schriftzeichen; ein Weißschnitt mit Symbol (Dachspfote) erfüllt die Schutzregeln."
+ ],
+ "assets": [
+  {
+   "file": "assets/bg.png",
+   "kind": "background",
+   "made_with": "gpt-image (Codex, raw/bg_v3.png, Übermalung von bg_v2) + tools/prep_bg.py (Ausschnitt, Tusche und Zinnober zurückgerechnet, eigenes Papier)",
+   "prompt": "assets/raw/bg_v3.json"
+  },
+  {
+   "file": "assets/bg_ink.png",
+   "kind": "background",
+   "made_with": "tools/prep_bg.py: Transmission (RGB) und Einzieh-Reihenfolge (Alpha) für den Godot-Shader",
+   "prompt": "assets/raw/bg_v3.json"
+  },
+  {
+   "file": "assets/raw/bg_v3.png",
+   "kind": "background",
+   "made_with": "gpt-image (Codex), Referenzen raw/bg_v2.png (Komposition) + raw/strokes.png (Pinsel): wenige nasse Lasuren, verwendet",
+   "prompt": "assets/raw/bg_v3.json"
+  },
+  {
+   "file": "assets/raw/bg_v2.png",
+   "kind": "background",
+   "made_with": "gpt-image (Codex), zweiter Versuch; nicht mehr verwendet (Steinmauer, Pflaster, Fassreifen), Kompositionsvorlage für bg_v3",
+   "prompt": "assets/raw/bg_v2.json"
+  },
+  {
+   "file": "assets/raw/bg.png",
+   "kind": "background",
+   "made_with": "gpt-image (Codex), erster Versuch; nicht verwendet (zu detailreich, oranger Horizont)",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/paper.png",
+   "kind": "texture",
+   "made_with": "Code (tools/make_paper.py): Reispapier mit Fasern, 1280×720"
+  },
+  {
+   "file": "assets/ui/seal.png",
+   "kind": "ui",
+   "made_with": "Code (tools/make_paper.py): Zinnober-Stempel im Weißschnitt mit Dachspfote, ohne Schrift"
+  },
+  {
+   "file": "assets/badger_walk.png",
+   "kind": "sprite",
+   "made_with": "gpt-image (Codex, raw/walk_v3.png) + tools/prep_badger.py: 8 Laufbilder, Stehen, Dreiviertel ohne Kontur (Einzelbilder in assets/badger/)",
+   "prompt": "assets/raw/walk_v3.json"
+  },
+  {
+   "file": "assets/badger_front.png",
+   "kind": "sprite",
+   "made_with": "gpt-image (Codex, raw/front_v3.png) + tools/prep_badger.py: Vorderansicht, drei Winkbilder, Blinzeln, Sprechen aus Teilen",
+   "prompt": "assets/raw/front_v3.json"
+  },
+  {
+   "file": "assets/raw/walk_v3.png",
+   "kind": "sprite",
+   "made_with": "gpt-image (Codex), Übermalung von ref/walk_clean.png in der Technik ohne Kontur, Referenzen Strichbogen, eigener Hintergrund, Master-Sheet; verwendet",
+   "prompt": "assets/raw/walk_v3.json"
+  },
+  {
+   "file": "assets/raw/front_v3.png",
+   "kind": "sprite",
+   "made_with": "gpt-image (Codex), Übermalung von ref/front_clean.png, Stilvorlage raw/walk_v3.png, mit dunkler Umhängetasche; verwendet",
+   "prompt": "assets/raw/front_v3.json"
+  },
+  {
+   "file": "assets/raw/walk.png",
+   "kind": "sprite",
+   "made_with": "gpt-image (Codex), erster Laufbogen mit Umrissen; nicht mehr im Bild, Posenvorlage und Registrierungsreferenz für walk_v3",
+   "prompt": "assets/raw/walk.json"
+  },
+  {
+   "file": "assets/raw/front.png",
+   "kind": "sprite",
+   "made_with": "gpt-image (Codex), erster Vorderbogen mit Umrissen; nicht mehr im Bild, Posenvorlage für front_v3",
+   "prompt": "assets/raw/front.json"
+  },
+  {
+   "file": "assets/raw/walk_v2.png",
+   "kind": "sprite",
+   "made_with": "gpt-image (Codex), Nachbesserung als lockere Pinselskizze; nicht verwendet (detailreicher, Farbe in Weste und Tasche)",
+   "prompt": "assets/raw/walk_v2.json"
+  },
+  {
+   "file": "assets/raw/strokes.png",
+   "kind": "effect",
+   "made_with": "gpt-image (Codex): Studienblatt einzelner Pinselstriche, Quelle aller Strich-Effekte und Pinselreferenz der Übermalungen",
+   "prompt": "assets/raw/strokes.json"
+  },
+  {
+   "file": "assets/fx/stroke_pale.png",
+   "kind": "effect",
+   "made_with": "tools/prep_strokes.py aus raw/strokes.png: blasser Trockenpinsel-Strich unter der gewählten Antwort und als Bodenstrich der Figur",
+   "prompt": "assets/raw/strokes.json"
+  },
+  {
+   "file": "assets/fx/ripple_b.png",
+   "kind": "effect",
+   "made_with": "tools/prep_strokes.py aus raw/strokes.png: Wellenstrich, einer von vier",
+   "prompt": "assets/raw/strokes.json"
+  },
+  {
+   "file": "assets/fx/smoke_b.png",
+   "kind": "effect",
+   "made_with": "tools/prep_strokes.py aus raw/strokes.png: Rauchfahne, eine von drei; auch fester Rauchansatz auf dem Schornstein",
+   "prompt": "assets/raw/strokes.json"
+  },
+  {
+   "file": "assets/fx/gull_1.png",
+   "kind": "sprite",
+   "made_with": "tools/prep_strokes.py aus raw/strokes.png: Möwe, Flügel waagerecht (eine von drei Flügelstellungen)",
+   "prompt": "assets/raw/strokes.json"
+  },
+  {
+   "file": "assets/fx/mist_a.png",
+   "kind": "effect",
+   "made_with": "Code (tools/make_fx.py): waagerecht kachelbare Nebelmaske"
+  },
+  {
+   "file": "assets/ref/walk_layout.png",
+   "kind": "reference",
+   "made_with": "Blender 5.2 (blender/pose_layout.py) + tools/make_layouts.py: Layout und Posen für den Laufbogen"
+  },
+  {
+   "file": "assets/ref/front_layout.png",
+   "kind": "reference",
+   "made_with": "Blender 5.2 (blender/pose_layout.py) + tools/make_layouts.py: Layout und Posen für den Vorderbogen"
+  },
+  {
+   "file": "assets/ref/walk_clean.png",
+   "kind": "reference",
+   "made_with": "tools/make_clean_refs.py: raw/walk.png ohne Schleier auf Weiß, Vorlage für walk_v3"
+  },
+  {
+   "file": "assets/ref/front_clean.png",
+   "kind": "reference",
+   "made_with": "tools/make_clean_refs.py: raw/front.png ohne Schleier auf Weiß, Vorlage für front_v3"
+  },
+  {
+   "file": "assets/ref/ink_style.png",
+   "kind": "reference",
+   "made_with": "Stand von assets/bg.png nach dem ersten Durchlauf von prep_bg.py: Tusche-Stilreferenz für den ersten Laufbogen"
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Shippori Mincho Regular und SemiBold (Teilmenge Latin-1 mit fontTools pyftsubset; die Lizenz nennt keinen reservierten Schriftnamen)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/shipporimincho (Lizenztext: demo/fonts/OFL-ShipporiMincho.txt)"
+  }
+ ],
+ "image_generations": 9,
+ "tool_issues": [
+  "tools/genimg.py hängt bei Codex an jeden Auftrag mit Referenzen den Satz an, das Ergebnis solle „character design, palette and style“ der Referenzen behalten; ref_note wirkt nur bei agy. Für Übermal-Aufträge (Vorlage in anderer Technik) widerspricht das dem Prompt. Hier hat Codex die Technik trotzdem gewechselt; umgangen wurde nichts."
+ ],
+ "status": "done"
+}

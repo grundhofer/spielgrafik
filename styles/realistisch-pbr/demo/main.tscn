@@ -1,0 +1,269 @@
+[gd_scene load_steps=19 format=3]
+
+; Realistisches PBR: Hafen und Dachs aus shared/3d mit CC0-PBR-Texturen (Poly Haven, ambientCG),
+; HDRI-Himmel, SDFGI, SSR, SSAO, SSIL, volumetrischem Nebel und eigenem Wasser.
+; main.gd setzt die Materialien nach Namen, hängt die Knoten unter "Attach" an die Empties im
+; Hafen und animiert alles über die aufsummierte Zeit t.
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://models/harbor.glb" id="2_harbor"]
+[ext_resource type="PackedScene" path="res://models/badger.glb" id="3_badger"]
+[ext_resource type="Shader" path="res://shaders/sky.gdshader" id="4_sky"]
+[ext_resource type="Texture2D" path="res://sky/sky_full.hdr" id="5_skyfull"]
+[ext_resource type="Texture2D" path="res://sky/sky_band.hdr" id="6_skyband"]
+[ext_resource type="Shader" path="res://shaders/beam.gdshader" id="7_beam"]
+[ext_resource type="Script" path="res://ui.gd" id="8_ui"]
+[ext_resource type="Shader" path="res://shaders/sea_mist.gdshader" id="9_mist"]
+[ext_resource type="Shader" path="res://shaders/quay_haze.gdshader" id="10_haze"]
+
+[sub_resource type="ShaderMaterial" id="SkyMat"]
+shader = ExtResource("4_sky")
+shader_parameter/sky_full = ExtResource("5_skyfull")
+shader_parameter/sky_band = ExtResource("6_skyband")
+shader_parameter/exposure = 0.16
+shader_parameter/bg_exposure = 1.0
+shader_parameter/grade = Vector3(1, 1, 1)
+shader_parameter/zenith_tint = Vector3(0.45, 0.55, 0.95)
+shader_parameter/horizon_tint = Vector3(1.25, 0.85, 0.6)
+shader_parameter/tint_curve = 0.45
+
+[sub_resource type="Sky" id="Sky"]
+sky_material = SubResource("SkyMat")
+process_mode = 1
+radiance_size = 3
+
+[sub_resource type="Environment" id="Env"]
+background_mode = 2
+sky = SubResource("Sky")
+ambient_light_source = 3
+ambient_light_energy = 1.0
+reflected_light_source = 2
+tonemap_mode = 3
+tonemap_exposure = 1.0
+tonemap_white = 6.0
+ssr_enabled = true
+ssr_max_steps = 96
+ssr_fade_in = 0.12
+ssr_fade_out = 2.0
+ssr_depth_tolerance = 0.25
+ssao_enabled = true
+ssao_radius = 1.2
+ssao_intensity = 2.0
+ssao_power = 1.5
+ssao_detail = 0.6
+ssao_horizon = 0.06
+ssao_light_affect = 0.1
+ssil_enabled = true
+ssil_radius = 4.0
+ssil_intensity = 1.0
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+sdfgi_read_sky_light = true
+sdfgi_bounce_feedback = 0.5
+sdfgi_cascades = 4
+sdfgi_min_cell_size = 0.15
+sdfgi_energy = 1.0
+glow_enabled = true
+glow_levels/1 = 1.0
+glow_levels/2 = 1.0
+glow_levels/3 = 1.0
+glow_levels/4 = 0.6
+glow_levels/5 = 0.4
+glow_normalized = true
+glow_intensity = 0.7
+glow_strength = 1.0
+glow_bloom = 0.04
+glow_blend_mode = 1
+glow_hdr_threshold = 1.2
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.55, 0.52, 0.6, 1)
+fog_density = 1.0
+fog_sky_affect = 0.0
+fog_depth_begin = 40.0
+fog_depth_end = 650.0
+fog_depth_curve = 1.4
+fog_aerial_perspective = 0.75
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.004
+volumetric_fog_albedo = Color(0.88, 0.88, 0.92, 1)
+volumetric_fog_anisotropy = 0.3
+volumetric_fog_length = 90.0
+volumetric_fog_detail_spread = 2.0
+volumetric_fog_gi_inject = 0.6
+volumetric_fog_ambient_inject = 0.25
+volumetric_fog_sky_affect = 0.0
+volumetric_fog_temporal_reprojection_enabled = true
+volumetric_fog_temporal_reprojection_amount = 0.85
+adjustment_enabled = true
+adjustment_brightness = 1.0
+adjustment_contrast = 1.05
+adjustment_saturation = 1.0
+
+[sub_resource type="CameraAttributesPractical" id="CamAttr"]
+exposure_multiplier = 1.0
+dof_blur_far_enabled = true
+dof_blur_far_distance = 16.0
+dof_blur_far_transition = 30.0
+dof_blur_amount = 0.0
+
+[sub_resource type="ShaderMaterial" id="MistMat"]
+shader = ExtResource("9_mist")
+shader_parameter/density = 0.08
+
+[sub_resource type="ShaderMaterial" id="HazeLanternMat"]
+shader = ExtResource("10_haze")
+shader_parameter/density = 0.045
+shader_parameter/edge_m = 1.4
+
+[sub_resource type="ShaderMaterial" id="HazeWindowMat"]
+shader = ExtResource("10_haze")
+shader_parameter/density = 0.045
+shader_parameter/edge_m = 1.2
+
+[sub_resource type="CylinderMesh" id="BeamMesh"]
+top_radius = 3.2
+bottom_radius = 0.3
+height = 30.0
+radial_segments = 24
+rings = 1
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="ShaderMaterial" id="BeamMat"]
+render_priority = 0
+shader = ExtResource("7_beam")
+shader_parameter/color = Color(1, 0.86, 0.62, 1)
+shader_parameter/intensity = 0.12
+shader_parameter/length_m = 30.0
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_main")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Env")
+camera_attributes = SubResource("CamAttr")
+
+; Sonne knapp über dem Horizont hinter der Szene (Richtung aus dem HDRI, main.gd setzt sie genau)
+[node name="Sun" type="DirectionalLight3D" parent="."]
+light_color = Color(1, 0.6, 0.36, 1)
+light_energy = 0.5
+light_volumetric_fog_energy = 0.3
+light_angular_distance = 0.6
+shadow_enabled = true
+shadow_blur = 1.0
+directional_shadow_max_distance = 90.0
+directional_shadow_split_1 = 0.06
+directional_shadow_split_2 = 0.18
+directional_shadow_split_3 = 0.45
+
+; Figurenlicht wie in Spielen üblich: wirkt nur auf Ebene 2 (der Dachs liegt auf Ebene 1 und 2),
+; von vorn links, warm; hellt die Figur im Gegenlicht auf, ohne die Umgebung zu verändern.
+[node name="CharKey" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7, 1.9, 4.4)
+layers = 2
+light_color = Color(1, 0.82, 0.66, 1)
+light_energy = 3.0
+light_volumetric_fog_energy = 0.0
+light_size = 0.4
+light_cull_mask = 4294967294
+shadow_enabled = true
+spot_range = 8.0
+spot_angle = 30.0
+spot_attenuation = 0.8
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.9986295, 0.05233596, 0, -0.05233596, 0.9986295, -1.8, 3.4, 14.5)
+current = true
+fov = 42.0
+near = 0.05
+far = 3000.0
+
+[node name="Harbor" parent="." instance=ExtResource("2_harbor")]
+
+[node name="Badger" parent="." instance=ExtResource("3_badger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.012, 1.2)
+
+; Seenebel über dem Hafenbecken (Wasserlinie bis 3,2 m, vor der Kaikante bis weit hinter den Leuchtturm)
+[node name="SeaMist" type="FogVolume" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.2, -24)
+size = Vector3(70, 4, 46)
+shape = 3
+material = SubResource("MistMat")
+
+; Feuchter Dunst um Laterne und Fenster (dichter als der Grundnebel): die Lichter werfen darin sichtbare
+; Lichthöfe und Lichtkegel. Ellipsoide mit weichem Rand, die Kamera bleibt in beiden Einstellungen draußen.
+[node name="HazeLantern" type="FogVolume" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.1, 1.2, -0.1)
+size = Vector3(5.6, 3.6, 5.6)
+shape = 0
+material = SubResource("HazeLanternMat")
+
+[node name="HazeWindow" type="FogVolume" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.3, 1.0, 2.3)
+size = Vector3(5.6, 3.0, 4.6)
+shape = 0
+material = SubResource("HazeWindowMat")
+
+; Alles unter "Attach" hängt main.gd an das gleichnamige Empty bzw. Objekt im Hafen.
+[node name="Attach" type="Node3D" parent="."]
+
+[node name="LanternLight" type="Node3D" parent="Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="Attach/LanternLight"]
+light_color = Color(1, 0.66, 0.34, 1)
+light_energy = 2.5
+light_volumetric_fog_energy = 10.0
+light_size = 0.06
+shadow_enabled = true
+shadow_bias = 0.05
+omni_range = 9.0
+omni_attenuation = 1.6
+
+[node name="CottageWindow" type="Node3D" parent="Attach"]
+
+; Licht aus dem Frontfenster (x = -9.2, Glas bei z = 0.52) nach außen: +z, 20° nach unten und 25° zum Kai
+; hin gedreht (sonst läge der Lichtkegel in der Totale links außerhalb des Bildes), knapp vor dem Glas
+[node name="Spot" type="SpotLight3D" parent="Attach/CottageWindow"]
+transform = Transform3D(-0.9063, 0.1445, -0.397, 0, 0.9397, 0.342, 0.4226, 0.3101, -0.852, 0, 0.05, 0.08)
+light_color = Color(1, 0.68, 0.38, 1)
+light_energy = 6.0
+light_volumetric_fog_energy = 8.0
+light_size = 0.3
+shadow_enabled = true
+spot_range = 9.0
+spot_angle = 60.0
+spot_attenuation = 1.4
+
+[node name="LighthouseLight" type="Node3D" parent="Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="Attach/LighthouseLight"]
+light_color = Color(1, 0.84, 0.6, 1)
+light_energy = 3.0
+light_volumetric_fog_energy = 4.0
+omni_range = 7.0
+
+; Drehteil des Leuchtfeuers: main.gd dreht "Rotor" um Y; "Tilt" neigt Strahl und Spot 4° nach unten
+[node name="Rotor" type="Node3D" parent="Attach/LighthouseLight"]
+
+[node name="Tilt" type="Node3D" parent="Attach/LighthouseLight/Rotor"]
+transform = Transform3D(1, 0, 0, 0, 0.9975641, 0.06975647, 0, -0.06975647, 0.9975641, 0, 0, 0)
+
+[node name="Spot" type="SpotLight3D" parent="Attach/LighthouseLight/Rotor/Tilt"]
+light_color = Color(1, 0.88, 0.66, 1)
+light_energy = 60.0
+light_volumetric_fog_energy = 6.0
+spot_range = 220.0
+spot_angle = 5.0
+spot_attenuation = 0.6
+
+[node name="Beam" type="MeshInstance3D" parent="Attach/LighthouseLight/Rotor/Tilt"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, -15)
+cast_shadow = 0
+mesh = SubResource("BeamMesh")
+surface_material_override/0 = SubResource("BeamMat")
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="UILayer"]
+script = ExtResource("8_ui")

@@ -1,0 +1,330 @@
+{
+ "note": {
+  "file": "note.png",
+  "shadow": "note_shadow.png",
+  "size": [
+   1236,
+   118
+  ],
+  "pad": 14
+ },
+ "tape_0": {
+  "file": "tape_0.png",
+  "shadow": "tape_0_shadow.png",
+  "size": [
+   92,
+   30
+  ],
+  "pad": 8
+ },
+ "tape_1": {
+  "file": "tape_1.png",
+  "shadow": "tape_1_shadow.png",
+  "size": [
+   92,
+   30
+  ],
+  "pad": 8
+ },
+ "slip_0": {
+  "file": "slip_0.png",
+  "shadow": "slip_0_shadow.png",
+  "size": [
+   282,
+   36
+  ],
+  "pad": 10
+ },
+ "slip_1": {
+  "file": "slip_1.png",
+  "shadow": "slip_1_shadow.png",
+  "size": [
+   248,
+   36
+  ],
+  "pad": 10
+ },
+ "slip_2": {
+  "file": "slip_2.png",
+  "shadow": "slip_2_shadow.png",
+  "size": [
+   304,
+   36
+  ],
+  "pad": 10
+ },
+ "snips": [
+  {
+   "file": "snip_0.png",
+   "shadow": "snip_0_shadow.png",
+   "size": [
+    37,
+    50
+   ],
+   "pad": 8,
+   "paper": [
+    244,
+    240,
+    230
+   ]
+  },
+  {
+   "file": "snip_1.png",
+   "shadow": "snip_1_shadow.png",
+   "size": [
+    42,
+    48
+   ],
+   "pad": 8,
+   "paper": [
+    206,
+    178,
+    132
+   ]
+  },
+  {
+   "file": "snip_2.png",
+   "shadow": "snip_2_shadow.png",
+   "size": [
+    43,
+    52
+   ],
+   "pad": 8,
+   "paper": [
+    40,
+    40,
+    46
+   ]
+  },
+  {
+   "file": "snip_3.png",
+   "shadow": "snip_3_shadow.png",
+   "size": [
+    43,
+    46
+   ],
+   "pad": 8,
+   "paper": [
+    190,
+    58,
+    56
+   ]
+  },
+  {
+   "file": "snip_4.png",
+   "shadow": "snip_4_shadow.png",
+   "size": [
+    41,
+    48
+   ],
+   "pad": 8,
+   "paper": [
+    230,
+    226,
+    210
+   ]
+  },
+  {
+   "file": "snip_5.png",
+   "shadow": "snip_5_shadow.png",
+   "size": [
+    40,
+    51
+   ],
+   "pad": 8,
+   "paper": [
+    206,
+    178,
+    132
+   ]
+  },
+  {
+   "file": "snip_6.png",
+   "shadow": "snip_6_shadow.png",
+   "size": [
+    39,
+    54
+   ],
+   "pad": 8,
+   "paper": [
+    236,
+    214,
+    120
+   ]
+  },
+  {
+   "file": "snip_7.png",
+   "shadow": "snip_7_shadow.png",
+   "size": [
+    36,
+    48
+   ],
+   "pad": 8,
+   "paper": [
+    244,
+    240,
+    230
+   ]
+  },
+  {
+   "file": "snip_8.png",
+   "shadow": "snip_8_shadow.png",
+   "size": [
+    42,
+    51
+   ],
+   "pad": 8,
+   "paper": [
+    206,
+    178,
+    132
+   ]
+  },
+  {
+   "file": "snip_9.png",
+   "shadow": "snip_9_shadow.png",
+   "size": [
+    41,
+    49
+   ],
+   "pad": 8,
+   "paper": [
+    40,
+    40,
+    46
+   ]
+  },
+  {
+   "file": "snip_10.png",
+   "shadow": "snip_10_shadow.png",
+   "size": [
+    44,
+    55
+   ],
+   "pad": 8,
+   "paper": [
+    40,
+    40,
+    46
+   ]
+  },
+  {
+   "file": "snip_11.png",
+   "shadow": "snip_11_shadow.png",
+   "size": [
+    37,
+    50
+   ],
+   "pad": 8,
+   "paper": [
+    230,
+    226,
+    210
+   ]
+  },
+  {
+   "file": "snip_12.png",
+   "shadow": "snip_12_shadow.png",
+   "size": [
+    40,
+    49
+   ],
+   "pad": 8,
+   "paper": [
+    120,
+    132,
+    150
+   ]
+  },
+  {
+   "file": "snip_13.png",
+   "shadow": "snip_13_shadow.png",
+   "size": [
+    38,
+    47
+   ],
+   "pad": 8,
+   "paper": [
+    236,
+    214,
+    120
+   ]
+  },
+  {
+   "file": "snip_14.png",
+   "shadow": "snip_14_shadow.png",
+   "size": [
+    44,
+    47
+   ],
+   "pad": 8,
+   "paper": [
+    244,
+    240,
+    230
+   ]
+  },
+  {
+   "file": "snip_15.png",
+   "shadow": "snip_15_shadow.png",
+   "size": [
+    43,
+    54
+   ],
+   "pad": 8,
+   "paper": [
+    190,
+    58,
+    56
+   ]
+  },
+  {
+   "file": "snip_16.png",
+   "shadow": "snip_16_shadow.png",
+   "size": [
+    39,
+    46
+   ],
+   "pad": 8,
+   "paper": [
+    40,
+    40,
+    46
+   ]
+  },
+  {
+   "file": "snip_17.png",
+   "shadow": "snip_17_shadow.png",
+   "size": [
+    37,
+    54
+   ],
+   "pad": 8,
+   "paper": [
+    190,
+    58,
+    56
+   ]
+  }
+ ],
+ "beam": {
+  "file": "beam.png",
+  "size": [
+   560,
+   150
+  ],
+  "pivot": [
+   554,
+   75.0
+  ]
+ },
+ "pin": {
+  "file": "pin.png",
+  "shadow": "pin_shadow.png",
+  "size": [
+   28,
+   28
+  ],
+  "pad": 6
+ }
+}

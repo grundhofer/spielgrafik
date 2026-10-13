@@ -1,0 +1,210 @@
+{
+ "slug": "farbzyklus",
+ "name": "Farbzyklus-Animation",
+ "family": "technik",
+ "kind": "technique",
+ "era": "1985–1996 (Palettenbildschirme mit 32–256 Farben; Farbzyklus-Bereiche in Malprogrammen und Spielgrafik)",
+ "summary": "Die ganze Hafenszene ist ein einziges Indexbild mit 256 Paletteneinträgen; zur Laufzeit ändert sich kein Pixel, nur die Palette. 21 Zyklus-Bereiche rotieren (Wasserglitzern, Wellen am Ufer, Regen, Rauch, Sterne, Leuchtfeuer, Goldglanz im Ortsnamen), berechnete Einträge zeichnen den drehenden Leuchtturmstrahl und das Flackern von Laterne und Fenstern, und der Wechsel Abend → Nacht → Regen ist nur ein Überblenden zwischen drei vollständigen Paletten. Ausgangsbilder sind zwei deckungsgleiche KI-Bilder (Abend und Nacht), die gemeinsam auf eine Palette mit reservierten Bereichen umgerechnet werden; kleine Pflichtfarben wie das rote Band des Leuchtturms bekommen eigene Einträge.",
+ "references": [
+  "Farbzyklus-Hintergründe von Mark Ferrari (u. a. Loom, Lucasfilm Games 1990)",
+  "Deluxe Paint (Electronic Arts, Amiga ab 1985): Farbzyklus-Bereiche als Werkzeug im Malprogramm",
+  "Canvas Cycle (Joseph Huckaby, 2010): Browser-Nachbau von Ferraris Szenen mit Paletten je Tageszeit",
+  "VGA- und Amiga-Adventures der frühen 90er mit animiertem Wasser, Feuer und Licht über die Palette"
+ ],
+ "traits": [
+  "Hintergrund = ein Indexbild 426×240 (ein Byte je Pixel, 226 Einträge benutzt) + 256×1-Palettentextur; das Bild bleibt in allen 180 Aufnahmebildern unverändert, nur cycler.gd schreibt die Palette neu",
+  "21 Rotationsbereiche mit eigener Geschwindigkeit und Richtung: Wasser 7 Tonstufen × 6 Einträge (7,5 Schritte/s), Wellen am Ufer 2 × 6 (6/s, Kamm läuft aufs Ufer zu), Regen 6 Töne × 5 (30/s, nach unten), Rauch 2 Töne × 6 (5/s, nach oben), Sterne 2 × 3, Leuchtfeuer 4 (synchron zum Strahl), Goldrampe der Oberfläche 6 (10/s); die Laufrichtung von Rauch und Wellen ist im NumPy-Nachbau nachgemessen",
+  "Tageszeit nur über die Palette: Abend → Nacht von 1,4 bis 3,4 s, Nacht → Regen von 4,0 bis 5,0 s (smoothstep), drei vollständige Paletten zu je 256 Einträgen; Abend- und Nachtfarben jedes Eintrags stammen aus zwei deckungsgleichen KI-Bildern",
+  "Weißer Leuchtturm mit rotem Band in allen Paletten: das Band hat 4 eigene statische Einträge (eigenes k-means über 107 Bandpixel); Mittel im Prüfausschnitt x 375–383, y 66–71 abends RGB 92/37/58 (Vorlage 98/33/55), nachts 61/40/62 (Vorlage 63/38/63)",
+  "Wasserglitzern auf der ganzen Wasserfläche (22.250 Pixel, Gegenstände per Polygon ausgenommen); Sonnenuntergangs- bzw. Mondstreifen und Spiegelung des Leuchtturms glitzern mit; im Regen wird die Oberfläche über die Palette unruhig",
+  "Regen als schräge Bahnen aus 5-px-Abschnitten, die mit 30 Schritten/s weiterzählen (Tropfen fallen 150 px/s); 5.241 Pixel im Hintergrund; die Regeneinträge sind Kopien statischer Farben, ohne Regen ist das Bild nahezu gleich (umgelegte Pixel mittlere Abweichung Oklab 0,023 abends, 0,013 nachts, so groß wie der Quantisierungsfehler)",
+  "Regen auch vor dem Dachs: sein Shader liest eine Bahnkarte mit denselben Bahnen, Phasen und Regen-Einträgen und setzt den Eintrag auf seine Pixel, solange dieser den hellen Tropfenkopf zeigt; die Tropfen laufen hinter der Figur und über sie hinweg weiter",
+  "Leuchtturmstrahl ohne neue Pixel: 13 Abstandsstufen × 2 Töne (1.014 Pixel), Helligkeit je Stufe aus dem Drehwinkel (Umdrehung 4 s), links bis 180 px lang und spitz auslaufend, kurzer Strahl nach rechts, die Lampe blitzt auf, wenn der Strahl zur Kamera zeigt",
+  "Laterne (Glas + Lichthof) und zwei Fenster flackern über berechnete Paletteneinträge aus festem Zufallsrauschen",
+  "Rauch aus dem Schornstein als drei Ballen mit wachsendem Radius (3–7 px) auf einer vom Wind nach rechts gebogenen Bahn, verbunden durch einen dünnen Faden; Rand und Oberseite heller, unten rechts ein dunklerer Kern; auch nachts und im Regen heller als der Himmel. Der Umriss ist fest, Verdichtungen wandern per Rotation nach oben (gemessen 3 px entlang der Fahne je Schritt)",
+  "Dachs-Kurier 48 px hoch in eigenen 17 Paletteneinträgen, die mit Abend, Nacht und Regen mitblenden; Paket als eigener Kasten mit Kontur und dunklem Schnurkreuz; 12 Laufbilder (zwei Schritte) mit 15 Bildern/s, Schrittlänge 10 px, Standfuß in der Aufnahme 0 px verrutscht, Sohlenzeile in allen 180 Bildern 224, Kopf springt höchstens 2 px je Bild; Anhalten über ein Übergangsbild, dann flatterndes Schalende und Blinzeln (am Animationsbild gezählt, alle Haltezeiten gerade: 2–8 Aufnahmebilder)",
+  "Textfenster links unten (176×110 px, 19 % des Bildes) in Palettenfarben mit Doppelrahmen: Ortsname in der Pixel-Bastarda Jacquarda Bastarda 9 (13 px) mit eigenem Farbzyklus (Goldglanz läuft schräg durch die Schrift); Erzählzeile, drei Antworten mit wanderndem Auswahlpfeil und Parserzeile „> nimm paket“ mit blinkender Schreibmarke in Pixel Operator 8 (8 px); alle Schriften in ihrer Rastergröße ohne Kantenglättung",
+  "höchstens 256 Farben je Bild für alles (Hintergrund, Figur, Schrift): gemessen 175–220",
+  "Forward+, mobile und gl_compatibility liefern bitgleiche Bilder (0 abweichende Pixel in 180 Bildern)"
+ ],
+ "camera": "Seitenansicht wie eine Bühne, feste Kamera; der Kai ist der begehbare Boden",
+ "resolution": "426×240, ganzzahlig ×3 (1278×720 in der 1280×720-Aufnahme), quadratische Pixel; 256 Paletteneinträge mit 8 Bit je Kanal (kein 6-Bit-DAC nachgebildet)",
+ "pipeline": [
+  {
+   "step": "Abendbild erzeugen",
+   "tool": "genimg (gpt-image über Codex), 1536×1024",
+   "detail": "Prompt prompts/bg_evening.txt: von Hand gepixeltes Palettenbild der späten 80er, etwa 426×284 Kunstpixel, lange Farbrampen, feines geordnetes Dithering, ruhiges Meer mit vielen kurzen waagerechten Lichtstrichen, Lampe ohne Strahl, kein Rauch, kein Regen (werden über die Palette animiert), Kai unten frei. Ein Versuch genügte; das Pseudo-Pixelraster liegt bei etwa 3,6 Quellpixeln und passt zur Zielbreite 426."
+  },
+  {
+   "step": "Nachtbild als Schlüsselbild erzeugen",
+   "tool": "genimg (gpt-image über Codex), Referenz assets/raw/bg_evening.png",
+   "detail": "Prompt prompts/bg_night.txt: dasselbe Bild als Nachtfassung, „as if traced on a clear sheet laid on top of it“, nur Farben und Licht ändern sich, Laterne und Fenster wärmer, keine neuen Gegenstände. Kachelweise gemessener Versatz zum Abendbild 0–1 Quellpixel (unter 1/3 Zielpixel), also ohne Ausrichten verwendbar. Das Modell malte von sich aus einen Mondstreifen an die Stelle des Sonnenstreifens und warmes Laternenlicht auf das Pflaster."
+  },
+  {
+   "step": "Verkleinern und Masken",
+   "tool": "scripts/build_scene.py",
+   "detail": "Beide Bilder BOX-verkleinert auf 426×284, Zeilen 20–259 als Szene. Wasser über die Nachtfarbe (gesättigtes Blau oder silbriger Streifen) im Meeresbereich, dazu die Spiegelsäule des Leuchtturms; ausgenommen werden 10 Polygone und 2 Linien (Rümpfe, Masten, Pfähle, Ufer) sowie Landzunge und Uferfelsen, weil Rümpfe und Felsen nachts genauso blau sind wie Wasser. Wellen: Wasserpixel bis 2 px unter Felsen und Landzunge (Ufer in derselben Spalte 1–3 Zeilen darüber) und 4 Zeilen vor der Kaikante. Rotes Band des Leuchtturms über den Farbton in beiden Bildern (abends rot bis violett, nachts violett oder kräftig rot; der Himmel daneben ist nachts blau und fällt heraus). Lampe, Laterne (Glas, Lichthof), Fenster über Helligkeit/Farbton in kleinen Rechtecken, Sterne als punktförmige helle Pixel (Wolkenränder über Farbe ausgeschlossen)."
+  },
+  {
+   "step": "Palette mit reservierten Bereichen",
+   "tool": "scripts/build_scene.py",
+   "detail": "Feste Aufteilung: 0–11 Oberfläche, 12–29 Dachs, 30–33 Leuchtfeuer, 34–37 Laterne, 38–39 Fenster, 40–45 Sterne, 46–57 Rauch, 58–99 Wasser, 100–111 Wellen, 112–137 Lichtkegel, 138–167 Regen, 168–255 88 statische Farben. Statische Farben, Wasser- und Wellentöne per k-means über den 6-Werte-Vektor (Oklab Abend + Oklab Nacht), damit jeder Eintrag in beiden Bildern zusammenhängende Pixel trifft; 4 der 88 statischen Einträge bekommen nur die Pixel des roten Bands (eigenes k-means), die übrigen 84 der Rest. Geordnetes Bayer-4×4-Dithering nur in ruhigen Verläufen zwischen nahen Einträgen. Jeder Eintrag bekommt drei Farben: Mittel der Pixel im Abendbild, im Nachtbild und eine Regenfassung (Nacht, dunkler und kühler, Zyklus-Profile für Regen). Mittlere Abweichung zur Vorlage Oklab 0,021 (Abend) und 0,018 (Nacht); in den Bandpixeln 0,039 bzw. 0,037 (4 Töne für Lichtkante, Karmin und Schatten)."
+  },
+  {
+   "step": "Zyklus-Profile",
+   "tool": "scripts/build_scene.py",
+   "detail": "Wasser: Phase je Pixel aus Strichlänge (2–5 px) und Richtung je Zeile, Einträge einer Tonstufe mit Helligkeitsbuckel. Wellen: Phase aus dem Abstand zum Ufer, rückwärts gedreht, damit der helle Kamm aufs Ufer zu läuft; in Nacht- und Regenpalette auf 60 % abgeschwächt. Rauch: Mittellinie, die erst steigt und dann bis 80° nach rechts biegt; drei Ballen aus je fünf Kreisen (Radius 3,4 / 5,2 / 7,2 px) plus dünner Faden; Ton 1 (dunkler Kern) unten rechts im Inneren jedes Ballens, Ton 0 (heller Rand) sonst, gedithert; Phase = Weg entlang der Fahne / 3 px, vorwärts gedreht (nach oben). Regen: schräge Bahnen alle 4 px (Wind von links), 40 % der Abschnitte fallen weg; ein Bahnpixel wird Regenpixel, wenn sein statischer Eintrag zu einem der 6 Regentöne passt (gierige Auswahl je Bildzone: oberer Himmel, Himmel, Wasser, Kai; Abstand ≤ 0,045 in 6D). Für die Figur schreibt das Skript eine Bahnkarte (art/rain_front.png) mit denselben Bahnen und Phasen im Laufbereich, auch vor dem Wasser. Lichtkegel ebenso mit 2 Tönen je Abstandsstufe und Abstand ≤ 0,065 (90 % der Kegelpixel belegt). scripts/simulate.py rechnet die Palettenmaschine in NumPy nach und zeigt jeden Zeitpunkt ohne Godot-Lauf."
+  },
+  {
+   "step": "Dachs als Palettensprite",
+   "tool": "scripts/build_badger.py (Quelle shared/badger/walk_painted.png, nur gelesen)",
+   "detail": "Materialtreue Verkleinerung der 6 gemalten Laufbilder auf 48 px (Verfahren aus vga-adventure übernommen): Material je Rohpixel, Mehrheit je Zielpixel, Ton aus einer Tonleiter je Material, 17 Farben, 1-px-Kontur. Davon genutzt: der Rumpf des Durchgangsbilds für alle Bilder (kein Flimmern) und die Schalenden aus vier Bildern (Flattern). Kopf von Hand gesetzt (13 Zeilen: weiße Stirn, schwarzer Augenstreif, Auge als heller Fleck mit Pupille, Wange, Mütze mit Messingknopf), weil die Verkleinerung Auge und Streif verlor; Blinzelbild mit Lid in Fellfarbe. Paket von Hand als 9×8-Kasten (Kontur, Papier hell oben, Schatten unten, dunkles Schnurkreuz), weil die Verkleinerung nur einen hellbraunen Fleck ergab. Beine per Code: kurze Trapeze mit Licht vorn und Schatten hinten, Füße aus Standfuß- und Schwungfuß-Tabelle, Vorschub 2/2/1/2/2/1 px je Bild, Rumpf 1 px Auf und Ab. Nachtfarben über Kanalfaktoren aus dem Pflaster des Laufbereichs (Abend → Nacht) plus etwas warmes Laternenlicht."
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/probe.py, tools/capture.py",
+   "detail": "probe.py nimmt in 426×240 auf und zählt Farben je Bild (175–220); mit --feet malt der Shader den Dachs magenta und misst je Bild Kopf und Sohlenläufe: Sohlenzeile immer 224, kein Sohlenlauf rutscht um 1–3 px, Standfuß über einen ganzen Schritt fest (z. B. 396–403 in den Bildern 0–13), beim Anhalten bleibt der vordere Fuß auf 316–323. Mit --holds listet es, welches Dachsbild in welchem Aufnahmebild steht: alle Haltezeiten gerade (2, 4, 6, 8), Blinzeln ab Bild 130 und 162 je 4 Bilder. Langzeitlauf mit --t0=30 ohne Drift, Blinzeln wiederholt sich. Vergleich Forward+ gegen mobile und gl_compatibility: 0 abweichende Pixel in 180 Bildern. Band, Rauch und Wellen im NumPy-Nachbau gegen die Vorlage bzw. über mehrere Zyklusschritte gemessen. Poster bei 4,5 s (Nacht, Regen setzt ein, Strahl nach links)."
+  }
+ ],
+ "godot": [
+  "Viewport 426×240, stretch mode viewport, scale_mode integer, Standardfilter Nearest, Pixel-Snapping an; Fenster 1278×720",
+  "Hintergrund: Sprite2D mit bg_index.png (Graustufe = Index) und shaders/indexed.gdshader: Index per texelFetch, Farbe per texelFetch aus der 256×1-Palettentextur; derselbe Shader für den Dachs mit Deckkraft aus dem Grünkanal (keine Maske im Alphakanal)",
+  "Regen vor dem Dachs im selben Shader: Weltposition per varying aus vertex(), Bahnkarte rain_tex (R = Regen-Eintrag, G = Bahn) per texelFetch; ist der Alphakanal des Eintrags in der Palette größer als die Bayer-4×4-Schwelle, ersetzt die Regenfarbe das Figurpixel (1-Bit, bleibt Palettenfarbe)",
+  "Palettenmaschine scripts/cycler.gd (RefCounted): liest drei Paletten und die Bereichsliste aus art/palette.json; je Bild Quellindex je Eintrag aus den Rotationen, Mischung Abend/Nacht/Regen, dann berechnete Einträge (Lichtkegel je Abstandsstufe aus dem Drehwinkel, Aufblitzen der Lampe, Flackern von Laterne und Fenstern aus einer Rauschtabelle mit Seed 3); Alphakanal = 1, nur Regen-Einträge tragen Tropfenkopf × Regenstärke; Image.set_pixel für 256 Einträge und ImageTexture.update",
+  "Dachs: Sprite2D mit region_rect und flip_h (läuft nach links), Bild aus der Zeit (15 Bilder/s), Lage aus dem summierten Vorschub laut art/badger.json; Anker der Kopfmitte auf ganze Pixel; Blinzeln und Schalende am Animationsbild k nach dem Anhalten gezählt (Blinzeln bei k mod 64 = 16 und 32)",
+  "Oberfläche: CanvasLayer mit ui.gd (_draw: Rahmen, Text, Auswahlpfeil, Parserzeile mit Schreibmarke) und title.gd mit ShaderMaterial ui_cycle.gdshader, das die Schriftpixel nach Bildschirmlage auf die rotierende Goldrampe (Einträge 4–9) abbildet; zwei FontFile (Bastarda 13 px, Pixel Operator 8 bei 8 px) mit antialiasing NONE, hinting NONE, subpixel_positioning DISABLED, einmal beim Start gesetzt",
+  "Zeit über delta aufsummiert; Befehlszeile nach --: --t0=<s> (Langzeitprüfung), --probe (Dachs magenta, ohne Regen), --probe-log (je Bild Zeit, Dachsbild, Lage nach user://probe.txt)"
+ ],
+ "techniques": [
+  "farbzyklus",
+  "tageszeit-wetter",
+  "textoberflaeche",
+  "palette-einrasten",
+  "prozedurale-animation",
+  "fuss-halten"
+ ],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 4,
+  "effort": 3,
+  "text_adventure": 5,
+  "mobile": 5
+ },
+ "ratings_note": "Die KI lieferte beide Schlüsselbilder im ersten Versuch, und zwar genau so, wie Farbzyklus sie braucht: Wasser aus vielen kurzen Lichtstrichen, Lichthöfe um Laterne und Fenster, kein gemalter Strahl oder Rauch, dazu eine Nachtfassung, die auf ein Drittel Zielpixel deckungsgleich ist (ai_fit 4); für die Nachbesserung wurde kein Bild erzeugt. Die Bewegung selbst kommt vollständig aus Code: Masken, Zyklus-Profile, Rauchballen, Regenbahnen, Lichtkegel und Überblendung sind Skript und Palette, der Dachs stammt aus dem gemeinsamen Laufblatt mit von Hand gesetztem Kopf und Paket und Beinen per Code (keine eigene KI-Erzeugung). Der Ablauf (zwei Bilder, gemeinsame 6D-Palette) ist für weitere Orte gleich, aber Polygone, Lagen von Lampe, Laterne und Schornstein und reservierte Einträge für kleine Pflichtfarben sind je Ort neu (consistency 4, effort 3). Mobile geprüft: Aufnahmen mit --rendering-method mobile und gl_compatibility sind bitgleich zu Forward+; je Bild ein Draw-Call je Ebene mit einfachem Shader und ein Update einer 256×1-Textur.",
+ "verdict": "Sehr gut geeignet für das erste Spiel: Ein Ort braucht zwei KI-Bilder (Abend, Nacht) und bekommt daraus Tageszeit, Wetter und mehrere Umgebungsanimationen, ohne ein einziges Animationsbild zu zeichnen; Speicher und Rechenzeit sind winzig. Ein Textadventure, das zwischen Ortsbildern und Text wechselt, kann so jeden Ort lebendig halten und die Uhrzeit des Spiels über die Palette zeigen; Erzähltext gehört dabei in eine schlichte Pixelschrift, die Zierschrift nur in den Ortsnamen. Einschränkungen: Figuren bleiben klein und brauchen eigene Paletteneinträge, Lichteffekte und Rauch wirken gerastert und haben feste Umrisse, kleine auffällige Farben (rotes Band) brauchen von Hand reservierte Einträge, und die Masken (Wasser gegen Rümpfe und Felsen) sind je Ort etwa eine Stunde Handarbeit.",
+ "pitfalls": [
+  "Die Demo rafft die Tageszeit: Abend → Nacht in 2 s und der Regen in 1 s, damit alles in 6 s passt. In einem Spiel würde dieselbe Überblendung über Minuten laufen; zu schnell gezeigt wirkt sie wie ein Lichtschalter.",
+  "Bewusst über den Auftrag hinaus: Statt zwei Paletten gibt es drei (Abend, Nacht, Nacht mit Regen). Der Tageszeitwechsel ist wie verlangt eine Überblendung zwischen zwei Paletten; der Regen ist eine dritte, weil er sich in den Zyklus-Profilen (Regentropfen, unruhiges Wasser, Sterne aus) und nicht nur in den Grundfarben unterscheidet. Regen nur in der Nachtpalette hätte Sterne und Regen gleichzeitig gezeigt.",
+  "Das rote Band des Leuchtturms ging in der gemeinsamen 6D-Quantisierung verloren: Es hat zu wenige Pixel für einen eigenen k-means-Eintrag und wurde mit Wand und Schatten zu Braungrau gemittelt (Prüfausschnitt abends 84/56/58 statt 98/33/55). Die mittlere Abweichung über das Bild (0,021) zeigte das nicht. Jetzt 4 reservierte statische Einträge nur für die Bandpixel (Maske über den Farbton in beiden Bildern); im Ausschnitt abends 92/37/58, nachts 61/40/62. In den Bandpixeln bleibt die Abweichung mit Oklab 0,039 fast doppelt so groß wie im Bildmittel, weil 4 Töne Lichtkante, Karmin und Schatten abdecken müssen.",
+  "Rümpfe, Uferfelsen und die Felsen der Landzunge sind nachts genauso gesättigt blau wie das Wasser; die Wassermaske allein über die Farbe ließ beide Boote und die Felsen glitzern. Gelöst mit 10 von Hand nachgezogenen Polygonen und 2 Linien (Takelage) für dieses eine Bild.",
+  "Wellen: Die erste Fassung legte Wellen um jeden Pfahl und jedes Boot (9.229 Pixel, helle Umrisse um alle Gegenstände). Die zweite setzte sie nur an Felsen, Landzunge und Kaikante, lief aber noch links und oben um die Spitze der Landzunge, weil das Polygon dort über den kleinen Felsen hinausragt; nachts stand dort ein heller Haken im Wasser, der wie ein Segel aussah. Jetzt nur noch Wasser, über dem in derselben Spalte 1–3 Zeilen höher Ufer liegt (Brandung an der Wasserlinie, 1.406 Pixel), und der Kamm ist in Nacht- und Regenpalette auf 60 % abgeschwächt.",
+  "Zyklusrichtung war verkehrt: In der vorigen Fassung lief der Rauch nach unten in den Schornstein und der Wellenkamm vom Ufer weg, obwohl die Beschreibung das Gegenteil sagte. Ob ein Bereich vorwärts oder rückwärts drehen muss, hängt davon ab, in welche Richtung die Phase im Bild wächst; Hinsehen auf Standbilder zeigt das nicht. Jetzt im NumPy-Nachbau gemessen: Rauch wandert 3 px je Schritt nach oben; der Kamm am Kai rückt in 51 % der Schritte eine Zeile aufs Ufer zu, steht in 30 % (6 Phasen auf 4 Zeilen) und springt in 14 % an den Anfang zurück.",
+  "Regen über dem Wasser zeigt keine Striche: Wasserpixel gehören schon zum Wasserzyklus, und ein Pixel hat nur einen Index. Ein Regenpixel im Wasser würde dort abends nicht mehr glitzern. Im Regen wird stattdessen die Wasseroberfläche über ein eigenes Zyklus-Profil unruhig; die Striche fallen vor Himmel, Häuschen und Kai. Wer Regen auch vor dem Wasser will, muss Wassertöne × Regenphasen reservieren (bei 7 Tönen 35 weitere Einträge).",
+  "Regen fiel zuerst nur hinter dem Dachs (ein Index je Pixel, die Figur liegt darüber), er wirkte im Regen trocken. Jetzt setzt sein Shader die Regen-Einträge einer Bahnkarte auf seine Pixel. Grenzen: Auf der Figur erscheinen nur die hellen Tropfenköpfe (5-px-Abschnitte), nicht der schwächere Schweif, weil dessen Farbe fast die Untergrundfarbe ist und auf der Figur wie ein Loch aussähe; das gilt nur für Figuren mit diesem Shader (Requisiten im Hintergrundbild bleiben trocken, was dort nicht auffällt).",
+  "Regen- und Lichtkegelpixel brauchen eigene Einträge, deren Farbe ohne Effekt gleich der statischen Farbe darunter ist. Nur 35 % der umgelegten Pixel treffen ihre Farbe genau, die übrigen liegen bis Oklab 0,063 daneben (Mittel 0,023 abends, 0,013 nachts). Im Bild ist das nicht zu sehen, weil es so groß ist wie der Quantisierungsfehler; mit strengerem Abstand (0,045) blieb der Kegel an der Lampe lückenhaft (60 % statt 90 % belegt) und der Regen fiel fast nur im oberen Himmel, bis die Regentöne je Bildzone gewichtet wurden.",
+  "Der Lichtkegel ist gerastert: Mitgliedschaft im Kegel per Bayer-Schwelle, Licht nur je 20-px-Abstandsstufe. Die erste Fassung war an der Lampe nur 1 px breit und hinten breiter, sodass der hellste Teil losgelöst in der Mitte des Himmels schwebte; jetzt beginnt er 1,8 px hoch an der Lampe und fällt mit (1 − d/L)^1,3 ab. Der Lichthof beim Blick zur Kamera trifft fast nur Turmpixel; das Aufblitzen übernimmt deshalb die Lampe selbst.",
+  "Rauch: Die erste Fassung war ein schmaler, gerader, heller Streifen und las sich wie ein Lichtstrahl, die zweite ein dünner, fast gerader Diagonalstrich, der nachts kaum zu sehen war. Jetzt drei Ballen mit wachsendem Radius auf einer gebogenen Bahn, heller Rand und dunklerer Kern, nachts heller als der Himmel (314 Pixel). Der Umriss bleibt fest: Die Ballen lösen sich nicht ab und ziehen nicht davon, nur Verdichtungen wandern hinauf. Ziehende Wolken bräuchten mehrere überlappende Ballenlagen mit je eigenen Einträgen. Der oberste Ballen reicht bis 1 px unter den Bildrand.",
+  "Der Dachs ist nicht im Stil neu erzeugt, sondern aus dem gemeinsamen Laufblatt verkleinert. Die materialtreue Verkleinerung auf 48 px verlor Auge und Augenstreif (Gesicht als graue Fläche) und machte aus dem Paket einen hellbraunen Fleck, der in Hemd und Bauch überging; Kopf und Paket sind deshalb von Hand gesetzt. Das Paket ist jetzt als Kasten mit Schnur klar zu erkennen, sitzt aber ohne darüberliegenden Arm vor dem Bauch und wirkt eher getragen als unter den Arm geklemmt. Die KI-Laufbilder 0, 3, 4 und 5 haben fast dieselbe Schrittstellung und die Beinphasen passen nicht zu festem Standfuß; die Beine sind deshalb per Code gezeichnet: kurz, dick, ohne Kniebeuge, im Stand verschmelzen beide Beine zu einem Block. Das wirkt einfacher als der Rumpf. Die erste Bein-Fassung (Schrittlänge 16 px, schmale Beine) sah wie Stelzen aus.",
+  "Blinzeln: Es hing an der absoluten Zeit (4,05 s und 5,35 s) und begann damit mitten in einem Animationsbild; die Schalposen wurden 7, 4 und 5 Aufnahmebilder gehalten. Hintergrund: Godot liefert in den ersten Bildern ungleiche delta (0,025 / 0,033 / 0,042 s), Aufnahmebild i zeigt danach den Stand bei etwa i/30 + 0,025 s. Jetzt am Animationsbild gezählt; gemessen alle Haltezeiten gerade. Außerdem fehlte beim Blinzeln nur ein Glanzpixel (nachts unsichtbar); jetzt ist das offene Auge ein heller Fleck mit Pupille und das geschlossene ein Lid in Fellfarbe.",
+  "Nachts ist der Dachs dunkel und kontrastarm (Kanalfaktoren aus dem Pflaster ergeben 0,17/0,36/0,62); auch mit etwas warmem Laternenlicht in der Nachtpalette liest er sich vor allem über Schal, weißes Gesicht, Auge und Paket.",
+  "Schrift: Die Bastarda war für Erzählzeile und Antworten schwer lesbar („Am Kai“ las sich wie „Um Kai“, L, H und Z mehrdeutig). Sie setzt jetzt nur noch den Ortsnamen; Erzählung, Antworten und Parser stehen in Pixel Operator 8 (8 px). Der Wechsel von gebrochener Titelschrift zu schlichter Pixelgrotesk ist gewollt. Pixelify Sans bei 10 px und Jacquard 12 bei 12 px wurden in Godot ohne Kantenglättung verzerrt (i ohne Punkt, Z wie 2), weil ihre Konturen nicht auf dem Raster dieser Größen liegen; Jersey 10 ist bei 10 px ebenso verzerrt und erst bei 20 px sauber (zu groß).",
+  "Das Fenster (176×110 px) deckt Fässer, Kisten, Tau, den Fuß des Laternenpfahls und 10 px vom Bug des linken Boots ab; rechts unten hätte es das zweite Boot und die Spiegelung des Leuchtturms verdeckt, die Teil des Farbzyklus sind. Mit der schmaleren Schrift passt jetzt auch die Parserzeile hinein; die längste Antwort endet 3 px vor dem Rahmen.",
+  "Erste Fassung beim Anhalten: Der Anker des Übergangsbilds wurde um das Vorschubmaß des nie gezeigten nächsten Laufbilds zu weit gesetzt, der Standfuß sprang 2 px. Die Fußmessung im gerenderten Bild fand das; jetzt bleibt der vordere Fuß auf 316–323 stehen."
+ ],
+ "lessons": [
+  "Nachtfassung als Schlüsselbild mit dem Abendbild als Referenz („as if traced on a clear sheet“) kam bei gpt-image deckungsgleich zurück (0–1 Quellpixel). Damit lassen sich Paletten je Tageszeit aus Bildern lernen statt von Hand mischen.",
+  "Abend und Nacht gemeinsam quantisieren: k-means über den 6-Werte-Vektor (Oklab Abend + Oklab Nacht). Jeder Index trifft dann in beiden Bildern zusammenhängende Pixel, und die Nachtpalette ist einfach das Mittel des Nachtbilds je Index. 88 statische Einträge reichten für Oklab-Abweichung 0,021/0,018.",
+  "Farbzyklus-Maschine wie im Malprogramm: Liste von Bereichen (Start, Länge, Schritte/s, Richtung), je Bild ein Quellindex je Eintrag, dann Überblenden der Paletten, dann berechnete Einträge. Rotieren und Überblenden sind vertauschbar, wenn alle Paletten dieselben Bereiche haben.",
+  "Effekte, die an- und ausgehen (Regen, Lichtkegel), bekommen Einträge, die ohne Effekt eine Kopie einer statischen Farbe sind. Welche Töne, entscheidet eine gierige Abdeckung (die k Einträge, die die meisten Kandidatenpixel innerhalb eines kleinen Farbabstands abdecken), gewichtet je Bildzone; so sieht das Bild ohne Effekt aus wie vorher.",
+  "Regen in der Palette: schräge Bahnen in Abschnitte teilen, die Phase zählt entlang der Bahn weiter, ein Schritt je Bild; Abschnittslänge × Bildrate = Fallgeschwindigkeit (5 px × 30/s = 150 px/s). Bahnen in Stücken auslassen, sonst entsteht ein gleichmäßiges Raster.",
+  "Wassermaske über die Nachtfarbe auswählen (dort ist Wasser deutlich gesättigt blau) und Gegenstände als Polygone ausnehmen, die nachts dieselbe Farbe haben (Rümpfe, Felsen).",
+  "Wellen an Ufern: Phase = Abstand zum Ufer (+ leichte Wellung je Spalte), dann läuft eine helle Linie aufs Ufer zu; nur an echten Uferlinien setzen, nicht um jeden Pfahl.",
+  "Figuren in dieselbe Palette legen und ihre Nachtfarben aus dem Boden ableiten, auf dem sie stehen (Kanalfaktoren Abend → Nacht im Laufbereich); so blenden sie mit der Szene mit, ohne eigenen Shader.",
+  "Laufzyklus mit festem Standfuß per Code: Rumpf aus einem KI-Bild, Beine aus einer Fußtabelle, Vorschub je Bild (2/2/1/2/2/1) und Lage aus der Summe; im gerenderten Bild mit magentafarbenem Dachs messen (probe.py --feet).",
+  "Pixelschriften nur in ihrer Rastergröße setzen; die Größe aus unitsPerEm durch den gemeinsamen Teiler der Konturkoordinaten bestimmen (fontTools in eigenem venv).",
+  "Ein NumPy-Nachbau der Palettenmaschine (simulate.py) macht das Abstimmen von Profilen, Strahl und Rauch zu Sekunden statt Godot-Läufen; Godot-Skript und Nachbau lesen dieselben Parameter aus palette.json.",
+  "Kleine Pflichtfarben aus der Szenenbibel (rotes Band) vor dem gemeinsamen k-means herausnehmen und mit eigenem k-means auf reservierte Einträge legen. Erfolg am Ausschnitt gegen die Vorlage messen; eine mittlere Abweichung über das ganze Bild verdeckt einzelne verlorene Farben.",
+  "Laufrichtung jedes Zyklus-Bereichs messen statt aus der Formel ableiten: im NumPy-Nachbau die Lage der hellsten Phase über einige Schritte verfolgen (Weg entlang der Fahne, Zeile des Wellenkamms je Spalte).",
+  "Effekte, die vor einer Figur liegen sollen, ohne zweite Ebene: Der Figur-Shader liest eine szenengroße Karte mit denselben Paletteneinträgen und nimmt deren Farbe, wenn der Alphakanal der Palette (je Eintrag vom Zyklus-Skript geschrieben) über einer Bayer-Schwelle liegt. Jedes Pixel bleibt eine Palettenfarbe.",
+  "Ereignisse einer Figurenanimation (Blinzeln, Posenwechsel) am Animationsbild zählen, nicht an Sekunden, und im gerenderten Lauf die Haltezeiten je Aufnahmebild auflisten (probe.py --holds); Godots erste delta-Werte sind ungleich.",
+  "FontFile-Eigenschaften (antialiasing, hinting, subpixel_positioning) nur einmal nach dem Laden setzen, nie in _draw(): Dort gesetzt, zeichnet Godot jede Glyphe als gefülltes Rechteck (im Schrifttest gesehen)."
+ ],
+ "assets": [
+  {
+   "file": "assets/bg_index.png",
+   "kind": "background",
+   "made_with": "gpt-image (Abend + Nacht) + build_scene.py: Indexbild 426×240, Wert = Palettenindex",
+   "prompt": "assets/raw/bg_evening.json"
+  },
+  {
+   "file": "assets/bg_preview_evening.png",
+   "kind": "background",
+   "made_with": "bg_index.png mit Abendpalette (Ansicht, ohne Zyklus)",
+   "prompt": "assets/raw/bg_evening.json"
+  },
+  {
+   "file": "assets/bg_preview_night.png",
+   "kind": "background",
+   "made_with": "bg_index.png mit Nachtpalette (Ansicht, ohne Zyklus)",
+   "prompt": "assets/raw/bg_night.json"
+  },
+  {
+   "file": "assets/palette.json",
+   "kind": "palette",
+   "made_with": "build_scene.py + build_badger.py: drei Paletten, 21 Zyklus-Bereiche, Lichtkegel-Stufen, Flackern, Regen vor der Figur, Zeitplan",
+   "prompt": ""
+  },
+  {
+   "file": "assets/palette_sheet.png",
+   "kind": "palette",
+   "made_with": "palette_sheet.py: Abend-, Nacht- und Regenpalette mit Bereichen",
+   "prompt": ""
+  },
+  {
+   "file": "assets/cycle_masks.png",
+   "kind": "effect",
+   "made_with": "build_scene.py: Wasser (cyan), Wellen (weiß), Lampe/Laterne/Fenster, Sterne (gelb), Rauchballen (magenta), Lichtkegel (hellgelb), Regenbahnen (grün)",
+   "prompt": ""
+  },
+  {
+   "file": "demo/art/rain_front.png",
+   "kind": "effect",
+   "made_with": "build_scene.py: Bahnkarte für Regen vor der Figur (R = Regen-Eintrag, G = Bahn), dieselben Bahnen und Phasen wie im Hintergrund",
+   "prompt": ""
+  },
+  {
+   "file": "assets/badger.png",
+   "kind": "sprite",
+   "made_with": "shared/badger/walk_painted.png + build_badger.py: materialtreu auf 48 px, Kopf und Paket von Hand, Beine per Code; 18 Bilder (12 Laufen, Übergang, 4 Stehen mit Schalenden, Blinzeln), R = Index, G = Deckkraft",
+   "prompt": ""
+  },
+  {
+   "file": "demo/scripts/cycler.gd",
+   "kind": "effect",
+   "made_with": "Code: Palettenmaschine (Rotation, Überblendung, Lichtkegel, Flackern)",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Jacquarda Bastarda 9 (The Soft Type Project Authors)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/jacquardabastarda9 (Lizenztext: demo/fonts/OFL-JacquardaBastarda9.txt)"
+  },
+  {
+   "item": "Schrift Pixel Operator 8 (Jayvee Enaguas)",
+   "license": "CC0-1.0",
+   "source": "https://www.dafont.com/pixel-operator.font (Lizenztext: demo/fonts/PixelOperator-LICENSE.txt; Datei aus styles/vga-adventure/demo/fonts kopiert)"
+  },
+  {
+   "item": "Laufblatt des Dachses shared/badger/walk_painted.png (gemeinsames Projekt-Asset, gpt-image)",
+   "license": "projektintern",
+   "source": "shared/badger/walk_painted.json"
+  }
+ ],
+ "image_generations": 2,
+ "tool_issues": [
+  "PIPELINE.md empfiehlt die Langzeitprüfung „mit --t0 20–40 s“, tools/capture.py hat aber keine Option --t0. Umgangen: Die Demo liest --t0=<s> aus den Nutzerargumenten, scripts/probe.py reicht es durch (geprüft mit --t0 30)."
+ ],
+ "status": "done"
+}

@@ -1,0 +1,282 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="Texture2D" path="res://art/bg.png" id="2_bg"]
+[ext_resource type="Texture2D" path="res://art/bg_normal.png" id="3_bgn"]
+[ext_resource type="Texture2D" path="res://art/fx/halo.png" id="4_halo"]
+[ext_resource type="Texture2D" path="res://art/walk.png" id="5_walk"]
+[ext_resource type="Texture2D" path="res://art/portrait.png" id="6_portrait"]
+[ext_resource type="Texture2D" path="res://art/fx/beam_cone.png" id="7_beam"]
+[ext_resource type="Shader" path="res://shaders/oil_sprite.gdshader" id="9_oil"]
+[ext_resource type="Shader" path="res://shaders/canvas_post.gdshader" id="10_post"]
+[ext_resource type="Shader" path="res://shaders/panel.gdshader" id="11_panel"]
+[ext_resource type="Shader" path="res://shaders/portrait.gdshader" id="12_portrait"]
+[ext_resource type="FontFile" path="res://fonts/LibreBaskerville-wght.ttf" id="13_serif"]
+[ext_resource type="FontFile" path="res://fonts/Oswald-wght.ttf" id="14_cond"]
+[ext_resource type="FontFile" path="res://fonts/LibreBaskerville-Italic-wght.ttf" id="15_italic"]
+[ext_resource type="Texture2D" path="res://art/edge_mask.png" id="16_edges"]
+[ext_resource type="Texture2D" path="res://art/fx/shadow.png" id="17_shadow"]
+
+[sub_resource type="CanvasTexture" id="CT_bg"]
+diffuse_texture = ExtResource("2_bg")
+normal_texture = ExtResource("3_bgn")
+
+[sub_resource type="Gradient" id="G_glow"]
+offsets = PackedFloat32Array(0, 0.25, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.45, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="T_glow"]
+gradient = SubResource("G_glow")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="CanvasItemMaterial" id="M_glaze"]
+light_mode = 1
+
+[sub_resource type="ShaderMaterial" id="M_oil"]
+shader = ExtResource("9_oil")
+shader_parameter/time_s = 0.0
+shader_parameter/boil_fps = 8.0
+shader_parameter/boil_texels = 1.0
+shader_parameter/tint = Vector3(1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="M_post"]
+shader = ExtResource("10_post")
+shader_parameter/time_s = 0.0
+shader_parameter/edge_mask = ExtResource("16_edges")
+
+[sub_resource type="ShaderMaterial" id="M_panel"]
+shader = ExtResource("11_panel")
+shader_parameter/size = Vector2(362, 720)
+
+[sub_resource type="ShaderMaterial" id="M_portrait"]
+shader = ExtResource("12_portrait")
+shader_parameter/size = Vector2(284, 303)
+shader_parameter/flicker = 0.0
+
+[sub_resource type="FontVariation" id="F_caps"]
+base_font = ExtResource("14_cond")
+variation_opentype = {2003265652: 500}
+spacing_glyph = 3
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="BG" type="Sprite2D" parent="World"]
+texture = SubResource("CT_bg")
+centered = false
+
+[node name="Glints" type="Node2D" parent="World"]
+
+[node name="Smoke" type="Node2D" parent="World"]
+
+[node name="Beam" type="Node2D" parent="World"]
+position = Vector2(801, 183)
+
+[node name="BeamSprite" type="Sprite2D" parent="World/Beam"]
+material = SubResource("M_glaze")
+texture = ExtResource("7_beam")
+centered = false
+offset = Vector2(-2, -48)
+
+[node name="LampHalo" type="Sprite2D" parent="World"]
+material = SubResource("M_glaze")
+modulate = Color(1, 0.9, 0.62, 0.6)
+position = Vector2(801, 183)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("4_halo")
+
+[node name="WindowHalo" type="Sprite2D" parent="World"]
+material = SubResource("M_glaze")
+modulate = Color(1, 0.72, 0.4, 0.25)
+position = Vector2(78, 378)
+scale = Vector2(0.55, 0.75)
+texture = ExtResource("4_halo")
+
+[node name="LanternHalo" type="Sprite2D" parent="World"]
+material = SubResource("M_glaze")
+modulate = Color(1, 0.76, 0.42, 0.5)
+position = Vector2(228, 352)
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("4_halo")
+
+[node name="LanternLight" type="PointLight2D" parent="World"]
+position = Vector2(228, 352)
+color = Color(1, 0.62, 0.32, 1)
+energy = 0.9
+texture = SubResource("T_glow")
+texture_scale = 2.2
+height = 24.0
+
+[node name="WindowLight" type="PointLight2D" parent="World"]
+position = Vector2(78, 380)
+color = Color(1, 0.6, 0.3, 1)
+energy = 0.45
+texture = SubResource("T_glow")
+texture_scale = 0.9
+height = 24.0
+
+[node name="LampLight" type="PointLight2D" parent="World"]
+position = Vector2(801, 183)
+color = Color(1, 0.85, 0.55, 1)
+energy = 0.5
+texture = SubResource("T_glow")
+texture_scale = 1.2
+height = 24.0
+
+[node name="Gulls" type="Node2D" parent="World"]
+
+[node name="BadgerShadow" type="Sprite2D" parent="World"]
+light_mask = 0
+modulate = Color(1, 1, 1, 0.75)
+position = Vector2(-80, 677)
+scale = Vector2(0.78, 0.62)
+texture = ExtResource("17_shadow")
+
+[node name="Badger" type="Sprite2D" parent="World"]
+light_mask = 0
+material = SubResource("M_oil")
+position = Vector2(-80, 676)
+texture = ExtResource("5_walk")
+centered = false
+offset = Vector2(-65, -162)
+hframes = 6
+
+[node name="Post" type="ColorRect" parent="World"]
+light_mask = 0
+material = SubResource("M_post")
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="ColorRect" parent="UI"]
+material = SubResource("M_panel")
+offset_left = 918.0
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+
+[node name="Portrait" type="TextureRect" parent="UI"]
+material = SubResource("M_portrait")
+offset_left = 970.0
+offset_top = 22.0
+offset_right = 1254.0
+offset_bottom = 325.0
+texture = ExtResource("6_portrait")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Location" type="Label" parent="UI"]
+offset_left = 972.0
+offset_top = 340.0
+offset_right = 1256.0
+offset_bottom = 366.0
+theme_override_colors/font_color = Color(0.80, 0.64, 0.40, 1)
+theme_override_fonts/font = SubResource("F_caps")
+theme_override_font_sizes/font_size = 15
+text = "HAFEN VON LORNHOLM"
+
+[node name="Rule" type="ColorRect" parent="UI"]
+offset_left = 972.0
+offset_top = 370.0
+offset_right = 1256.0
+offset_bottom = 371.0
+color = Color(0.80, 0.64, 0.40, 0.35)
+
+[node name="Line" type="Label" parent="UI"]
+offset_left = 972.0
+offset_top = 384.0
+offset_right = 1256.0
+offset_bottom = 486.0
+theme_override_colors/font_color = Color(0.86, 0.83, 0.77, 1)
+theme_override_constants/line_spacing = 6
+theme_override_fonts/font = ExtResource("13_serif")
+theme_override_font_sizes/font_size = 17
+text = "Die Laterne flackert im Wind. Am Kai wartet ein Paket auf dich."
+autowrap_mode = 3
+visible_characters = 0
+visible_characters_behavior = 1
+
+[node name="Choice1" type="Label" parent="UI"]
+offset_left = 996.0
+offset_top = 506.0
+offset_right = 1256.0
+offset_bottom = 532.0
+theme_override_colors/font_color = Color(0.85, 0.42, 0.24, 1)
+theme_override_fonts/font = ExtResource("13_serif")
+theme_override_font_sizes/font_size = 16
+text = "Zum Leuchtturm gehen"
+
+[node name="Choice2" type="Label" parent="UI"]
+offset_left = 996.0
+offset_top = 540.0
+offset_right = 1256.0
+offset_bottom = 566.0
+theme_override_colors/font_color = Color(0.85, 0.42, 0.24, 1)
+theme_override_fonts/font = ExtResource("13_serif")
+theme_override_font_sizes/font_size = 16
+text = "Das Paket ansehen"
+
+[node name="Choice3" type="Label" parent="UI"]
+offset_left = 996.0
+offset_top = 574.0
+offset_right = 1256.0
+offset_bottom = 600.0
+theme_override_colors/font_color = Color(0.85, 0.42, 0.24, 1)
+theme_override_fonts/font = ExtResource("13_serif")
+theme_override_font_sizes/font_size = 16
+text = "Mit dem Dachs sprechen"
+
+[node name="Num" type="Label" parent="UI/Choice1"]
+offset_left = -26.0
+offset_right = -6.0
+offset_bottom = 26.0
+theme_override_colors/font_color = Color(0.85, 0.42, 0.24, 1)
+theme_override_fonts/font = ExtResource("13_serif")
+theme_override_font_sizes/font_size = 16
+text = "1."
+horizontal_alignment = 2
+
+[node name="Num" type="Label" parent="UI/Choice2"]
+offset_left = -26.0
+offset_right = -6.0
+offset_bottom = 26.0
+theme_override_colors/font_color = Color(0.85, 0.42, 0.24, 1)
+theme_override_fonts/font = ExtResource("13_serif")
+theme_override_font_sizes/font_size = 16
+text = "2."
+horizontal_alignment = 2
+
+[node name="Num" type="Label" parent="UI/Choice3"]
+offset_left = -26.0
+offset_right = -6.0
+offset_bottom = 26.0
+theme_override_colors/font_color = Color(0.85, 0.42, 0.24, 1)
+theme_override_fonts/font = ExtResource("13_serif")
+theme_override_font_sizes/font_size = 16
+text = "3."
+horizontal_alignment = 2
+
+[node name="Rule2" type="ColorRect" parent="UI"]
+offset_left = 972.0
+offset_top = 640.0
+offset_right = 1256.0
+offset_bottom = 641.0
+color = Color(0.80, 0.64, 0.40, 0.22)
+
+[node name="Parser" type="Label" parent="UI"]
+offset_left = 972.0
+offset_top = 652.0
+offset_right = 1256.0
+offset_bottom = 680.0
+theme_override_colors/font_color = Color(0.66, 0.62, 0.55, 1)
+theme_override_fonts/font = ExtResource("15_italic")
+theme_override_font_sizes/font_size = 16
+text = ">"

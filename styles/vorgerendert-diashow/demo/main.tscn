@@ -1,0 +1,69 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="Shader" path="res://shaders/compose.gdshader" id="2_compose"]
+[ext_resource type="Shader" path="res://shaders/palette_snap.gdshader" id="3_snap"]
+[ext_resource type="Texture2D" path="res://nodes/palette.png" id="4_palette"]
+[ext_resource type="Texture2D" path="res://ui/cursors.png" id="5_cursors"]
+[ext_resource type="Texture2D" path="res://nodes/text_palette.png" id="6_textpal"]
+
+[sub_resource type="ShaderMaterial" id="mat_compose"]
+shader = ExtResource("2_compose")
+shader_parameter/mix_p = 0.0
+shader_parameter/zoom_a = 1.0
+shader_parameter/zoom_center = Vector2(272, 166)
+shader_parameter/size = Vector2(544, 332)
+
+[sub_resource type="ShaderMaterial" id="mat_snap"]
+shader = ExtResource("3_snap")
+shader_parameter/palette = ExtResource("4_palette")
+shader_parameter/count = 256
+
+[sub_resource type="ShaderMaterial" id="mat_snap_text"]
+shader = ExtResource("3_snap")
+shader_parameter/palette = ExtResource("6_textpal")
+shader_parameter/count = 12
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="Views" type="Node" parent="."]
+
+[node name="Screen" type="ColorRect" parent="."]
+material = SubResource("mat_compose")
+offset_left = 48.0
+offset_top = 2.0
+offset_right = 592.0
+offset_bottom = 334.0
+mouse_filter = 2
+
+[node name="Band" type="Node2D" parent="."]
+
+[node name="Location" type="Label" parent="Band"]
+offset_right = 200.0
+offset_bottom = 20.0
+mouse_filter = 2
+
+[node name="Line" type="Label" parent="Band"]
+offset_right = 420.0
+offset_bottom = 20.0
+mouse_filter = 2
+
+[node name="Cursor" type="Sprite2D" parent="."]
+texture = ExtResource("5_cursors")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 24)
+
+[node name="PaletteSnap" type="ColorRect" parent="."]
+material = SubResource("mat_snap")
+offset_right = 640.0
+offset_bottom = 334.0
+mouse_filter = 2
+
+[node name="TextSnap" type="ColorRect" parent="."]
+material = SubResource("mat_snap_text")
+offset_top = 334.0
+offset_right = 640.0
+offset_bottom = 360.0
+mouse_filter = 2

@@ -1,0 +1,207 @@
+{
+ "badger": {
+  "frames": 180,
+  "head_top_rows": [
+   125,
+   126,
+   129
+  ],
+  "head_top_by_pose": {
+   "contact_a": [
+    126
+   ],
+   "contact_b": [
+    126
+   ],
+   "pass_a": [
+    125
+   ],
+   "pass_b": [
+    125
+   ],
+   "stand": [
+    126
+   ],
+   "stand_blink": [
+    126
+   ]
+  },
+  "distinct_walk_images": 4,
+  "a_b_differ": true,
+  "foot_rows": [
+   149
+  ],
+  "pose_changes": 33,
+  "planted_foot_max_drift_px": 0,
+  "stand_feet_variants": 1,
+  "examples": [
+   [
+    0.225,
+    "pass_a",
+    "contact_b",
+    [
+     [
+      254,
+      255
+     ]
+    ],
+    [
+     [
+      246,
+      249
+     ],
+     [
+      254,
+      255
+     ]
+    ],
+    0
+   ],
+   [
+    0.325,
+    "contact_b",
+    "pass_b",
+    [
+     [
+      246,
+      249
+     ],
+     [
+      254,
+      255
+     ]
+    ],
+    [
+     [
+      246,
+      249
+     ]
+    ],
+    0
+   ],
+   [
+    0.425,
+    "pass_b",
+    "contact_a",
+    [
+     [
+      246,
+      249
+     ]
+    ],
+    [
+     [
+      238,
+      241
+     ],
+     [
+      246,
+      249
+     ]
+    ],
+    0
+   ],
+   [
+    0.525,
+    "contact_a",
+    "pass_a",
+    [
+     [
+      238,
+      241
+     ],
+     [
+      246,
+      249
+     ]
+    ],
+    [
+     [
+      238,
+      241
+     ]
+    ],
+    0
+   ]
+  ],
+  "errors": []
+ },
+ "background": {
+  "block_violations": 0,
+  "tile_violations": 0,
+  "scene_colours": [
+   "00",
+   "02",
+   "03",
+   "07",
+   "0F",
+   "10",
+   "17",
+   "21",
+   "24",
+   "27",
+   "30"
+  ],
+  "n_scene_colours": 11,
+  "tiles": {
+   "set_x": 137,
+   "water_static": 82,
+   "water_anim": 111,
+   "scene_tiles_total": 1107
+  },
+  "errors": []
+ },
+ "timing": {
+  "cloud_hold_frames": [
+   6
+  ],
+  "gull_hold_frames": [
+   2
+  ],
+  "water_hold_frames": [
+   4
+  ],
+  "lamp_on_starts_s": [
+   1.23,
+   3.62
+  ],
+  "title_black_gap_rows_159_160": true
+ },
+ "frame": {
+  "non_system_colours": 0,
+  "max_colours_per_frame": 14,
+  "max_sprites_per_line": 7,
+  "max_sprites": 29,
+  "hwstat": {
+   "frames": 181,
+   "lines_over_8": 0,
+   "max_sprites": 29,
+   "max_sprites_line": 7,
+   "nt_writes_max": 106
+  },
+  "errors": []
+ },
+ "renderers": {
+  "mobile": {
+   "frames_compared": 60,
+   "frames_different": 0,
+   "errors": []
+  },
+  "gl_compatibility": {
+   "frames_compared": 60,
+   "frames_different": 0,
+   "errors": []
+  }
+ },
+ "t30": {
+  "frames": 60,
+  "errors": [],
+  "hwstat": {
+   "frames": 61,
+   "lines_over_8": 0,
+   "max_sprites": 28,
+   "max_sprites_line": 7,
+   "nt_writes_max": 53
+  }
+ }
+}

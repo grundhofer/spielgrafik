@@ -1,0 +1,14 @@
+{
+ "pairs": [
+  {
+   "id": "bg",
+   "agy": {
+    "seconds": 12.5,
+    "conversation_id": "c-0",
+    "file": "bg_agy0.png"
+   }
+  }
+ ],
+ "thread_id": "t-0",
+ "agy_account": "x"
+}

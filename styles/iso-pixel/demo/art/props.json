@@ -1,0 +1,154 @@
+{
+ "cottage": {
+  "size": [
+   80,
+   88
+  ],
+  "anchor": [
+   40,
+   69
+  ],
+  "fit": {
+   "iou": 1.0,
+   "pitch": 3.33,
+   "dx": -1.5,
+   "dy": -0.375
+  },
+  "colors": 59,
+  "fringe_to_metal": 0,
+  "glass_from_layout": 87
+ },
+ "lighthouse": {
+  "size": [
+   38,
+   97
+  ],
+  "anchor": [
+   21,
+   84
+  ],
+  "fit": {
+   "iou": 0.971,
+   "pitch": 3.315,
+   "dx": -1.25,
+   "dy": -0.125
+  },
+  "colors": 56,
+  "fringe_to_metal": 16,
+  "glass_from_layout": 38
+ },
+ "boat_a": {
+  "size": [
+   50,
+   40
+  ],
+  "anchor": [
+   26,
+   25
+  ],
+  "fit": {
+   "iou": 0.999,
+   "pitch": 3.325,
+   "dx": -2.0,
+   "dy": -0.125
+  },
+  "colors": 51,
+  "fringe_to_metal": 1,
+  "glass_from_layout": 0
+ },
+ "boat_b": {
+  "size": [
+   44,
+   47
+  ],
+  "anchor": [
+   23,
+   34
+  ],
+  "fit": {
+   "iou": 0.996,
+   "pitch": 3.315,
+   "dx": -1.375,
+   "dy": 0.0
+  },
+  "colors": 39,
+  "fringe_to_metal": 2,
+  "glass_from_layout": 0
+ },
+ "barrel": {
+  "size": [
+   18,
+   27
+  ],
+  "anchor": [
+   9,
+   22
+  ],
+  "fit": {
+   "iou": 0.997,
+   "pitch": 3.31,
+   "dx": -1.125,
+   "dy": 0.25
+  },
+  "colors": 40,
+  "fringe_to_metal": 0,
+  "glass_from_layout": 0
+ },
+ "crates": {
+  "size": [
+   30,
+   35
+  ],
+  "anchor": [
+   14,
+   24
+  ],
+  "fit": {
+   "iou": 0.994,
+   "pitch": 3.32,
+   "dx": -1.75,
+   "dy": -0.375
+  },
+  "colors": 26,
+  "fringe_to_metal": 1,
+  "glass_from_layout": 0
+ },
+ "rope": {
+  "size": [
+   17,
+   14
+  ],
+  "anchor": [
+   9,
+   6
+  ],
+  "fit": {
+   "iou": 0.983,
+   "pitch": 3.28,
+   "dx": 1.75,
+   "dy": 1.875
+  },
+  "colors": 28,
+  "fringe_to_metal": 3,
+  "glass_from_layout": 0
+ },
+ "lantern": {
+  "size": [
+   19,
+   47
+  ],
+  "anchor": [
+   12,
+   43
+  ],
+  "fit": {
+   "iou": 0.995,
+   "pitch": 3.315,
+   "dx": -1.5,
+   "dy": -0.125
+  },
+  "colors": 41,
+  "fringe_to_metal": 0,
+  "glass_from_layout": 14
+ }
+}

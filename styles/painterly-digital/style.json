@@ -1,0 +1,284 @@
+{
+ "slug": "painterly-digital",
+ "name": "Digital gemalt, atmosphärisch",
+ "family": "gemalt",
+ "kind": "style",
+ "era": "2010er bis heute (gemalte 2D-Plattformer, Metroidvanias und Erkundungsspiele)",
+ "summary": "Digital gemalte Ebenen mit weichen Pinseln, großen vereinfachten Formen und Luftperspektive, als Parallax mit leichter Kamerafahrt gezeigt. Himmel und Meer, Landzunge, Hafen, Boote und Vordergrund sind getrennt erzeugte KI-Bilder mit einem gemalten Hauptbild als Stilvorlage; Nebelschwaden zwischen den Ebenen, Lichtschein mit HDR-Glow, schwebende Lichtteilchen, schaukelnde Boote und dunkle, unscharfe Vordergrund-Silhouetten erzeugen die Atmosphäre. Die im selben Stil übermalte Figur hebt sich mit klarer Silhouette und Lichtkante ab.",
+ "references": [
+  "Ori and the Blind Forest / Ori and the Will of the Wisps (2015/2020): gemalte Ebenen, Glow, schwebende Lichtteilchen, dunkle Vordergrund-Silhouetten",
+  "Hollow Knight (2017): Ortsname als Titelkarte beim Betreten eines Gebiets, Dialogfeld oben mit Ornamentlinien",
+  "Child of Light (2014) und Rayman Legends (2013): gemalte Hintergründe mit Schnittfiguren-Animation (Teile statt Einzelbilder)",
+  "Gris (2018): reduzierte, atmosphärische Farbflächen mit viel Luft"
+ ],
+ "traits": [
+  "Hintergrund digital gemalt mit weichen Kanten und sichtbarer Pinseltextur, große vereinfachte Formen, keine Konturlinien; gedämpfte Palette aus Petrol, Schieferblau und staubigem Violett, warmes Orange nur am Horizont und in den Lichtern",
+  "Tiefe in sechs Ebenen mit eigener Parallaxe bei 80 px Kamerafahrt (zwischen erstem und letztem Bild gemessen): Himmel 3 px, Landzunge mit Leuchtturm 28 px, Boote und Spielebene (Kai, Hütte, Steg) 80 px, Vordergrund 119 px; das Meer verschiebt sich zeilenweise um 10 bis 50 px (aus den Shader-Faktoren 0,12–0,62, wegen Nebel und Wellen nicht messbar)",
+  "Drei Nebelbänder (am Fuß der Landzunge, über dem Wasser hinter dem Kai, vor der Kaimauer) treiben gegeneinander und legen sich zwischen die Ebenen",
+  "Lichtschein mit HDR-Glow: Laterne (flackernd, mit Lichtpfütze auf dem Kai und aufsteigenden Funken), Fenster, Leuchtfeuer mit zwei sich drehenden Strahlen und einer flackernden Spiegelung aus Glanzstrichen im Wasser unter der Landzunge (y 446–548), schwache Dämmerungsstrahlen über dem Horizont, funkelnde Sterne auf den gemalten Sternen",
+  "Zwei getrennt erzeugte Boote schaukeln um ihre Wasserlinie (±1,3° und ±1,0°, Perioden 3,7 und 4,3 s; Mast oben gemessen etwa ±3 px); die Wasserlinie bleibt waagerecht und kräuselt sich, der Rumpf wird zum Wasser hin dunkler, darunter ein kurzes, gewelltes Spiegelbild",
+  "Gemalter, fast schwarzer Vordergrund mit warmer Lichtkante oben und 1,8 px Tiefenunschärfe: Poller mit Tau und Strandgras links, Felsen mit Gras rechts; der Dachs läuft am Anfang hinter dem Poller hervor",
+  "Der Dachs-Kurier ist im Zielstil gemalt (weiche Pinsel, Tonwerte statt Konturen, kühle Dämmerungsfarben) und 140 px hoch, etwas kleiner als die Haustür (155 px). Er hebt sich mit klarer Silhouette, warmer Gegenlicht-Kante oben und Laternenlicht-Kante seitlich ab, läuft mit festem Standfuß herein (Rumpf leicht vorgeneigt und im Schrittakt pendelnd, hinteres Schalende schwingt an einer Feder nach) und bleibt unter der Laterne stehen (Hüfte x 548, Laterne x 553)",
+  "Oberfläche: Ortsname als Titelkarte (Cinzel, gesperrte Versalien, Ornamentlinie mit Raute) blendet ein und aus, danach Dialogfeld oben mit ausgefranstem dunklem Grund, Goldlinien, Text in Alegreya, drei Antworten mit Rautenmarke und Parserzeile; 620×270 px, 18 % des Bildes"
+ ],
+ "camera": "Seitenansicht wie in einem 2D-Plattformer, Horizont bei 49 % der Bildhöhe (y 350); die Kamera fährt in 6 s um 80 px nach rechts (sanft beschleunigt und abgebremst), alle Ebenen verschieben sich mit ihrem Parallax-Faktor",
+ "resolution": "1280×720, ohne Pixelraster; Ebenen aus 1536×1024-Rohbildern (Codex) verkleinert: Himmel und Meer Faktor 0,9 (1382×922), Landzunge 0,44, Hafen 0,92, Boote 0,27, Vordergrund 0,7; Dachs 140 px hoch (Rohbild 1024×1024 von agy, Faktor 0,169)",
+ "pipeline": [
+  {
+   "step": "Hauptbild erzeugen (1 Bild)",
+   "tool": "genimg (agy, Gemini; Codex ohne Guthaben)",
+   "detail": "prompts/master.txt: Stilblock (gemalter 2D-Spielhintergrund, große weiche Pinsel, Luftperspektive in getrennten Tiefenebenen, Dunst zwischen den Ebenen, Lichtschein nur an Fenster, Laterne und Leuchtfeuer, begrenzte Palette, ausdrücklich „not a photograph, not a 3D render, not a postcard, not an oil painting with thick impasto, not a cartoon with ink outlines“) + Motivblock wörtlich + Kompositionsblock für eine Spielebene (Horizont 45 %, Kai als durchgehende begehbare Kante, Hütte links, Leuchtturm bei 80 % der Breite) + „lamp only as a small glowing spot without any beam, no smoke, no birds (animated separately)“. 1536×1024 angefragt, 1264×848 geliefert, 46 s, erster Versuch brauchbar. verbatim: false (agy-Protokoll kürzt den Prompt, siehe tool_issues). Dient seit dem 12.10. als Stil- und Motivreferenz für die getrennt erzeugten Ebenen."
+  },
+  {
+   "step": "Ebenen getrennt erzeugen (5 Bilder)",
+   "tool": "genimg (Codex, gpt-image) über tools/imagequeue.py, Hauptbild als Referenz",
+   "detail": "assets/image_jobs.json, Aufträge 2 und 4–7, am 12.10. abgearbeitet, je erster Versuch (58–67 s): Himmel und Meer ohne Objekte (Bearbeitung des Hauptbilds, Horizont als eine waagerechte Linie, gemessen in Rohzeile 486 über die ganze Breite), Landzunge mit Leuchtturm allein (Lampe nur als heller Punkt), Hafen-Ebene ohne Boote mit vervollständigtem Steg und ohne Lichthöfe, zwei Boote nebeneinander, Vordergrund-Silhouetten. Codex lieferte echten Alphakanal mit sauberen Kanten (kein Freistellen, keine Säume vor dunkler und heller Fläche), Alpha höchstens 254. Technik und Palette entsprechen dem Hauptbild, Lage und Maßstab nicht (Hütte kleiner, Steg anders, Kaimauer höher): die Ebenen werden neu komponiert."
+  },
+  {
+   "step": "Ebenen aufbereiten und komponieren",
+   "tool": "scripts/build_sep_layers.py (Pillow, NumPy)",
+   "detail": "Lage und Maßstab je Ebene an Lupenbildern mit Raster gemessen (Horizont, Kaikanten, Laterne, Fenster, Schornstein, Lampe im Leuchtturm, Wasserlinien der Boote) und so gewählt, dass Haustür (155 px) und Dachs (140 px) zusammenpassen und der Leuchtturm rechts neben dem Dialogfeld steht. Alpha ab 250 auf 255, vormultipliziert mit Lanczos verkleinert; Boote einzeln ausgeschnitten, Drehpunkt auf der Wasserlinie; Vordergrund in zwei Eckteile geteilt (der Bodenstreifen läuft an der Schnittkante über 70 px aus) und 1,8 px weichgezeichnet; gemalte Sterne automatisch gefunden. Schreibt assets/sep/layout.json mit allen Bildschirmkoordinaten. Zwei Läufe bitgleich (md5)."
+  },
+  {
+   "step": "Frühere Fassung: Ebenen aus dem einen Gemälde geschnitten (nur noch Vergleich)",
+   "tool": "scripts/build_layers.py (Pillow, NumPy)",
+   "detail": "Solange nur das Hauptbild vorlag (10./11.10.), wurde es mit rund 20 Polygonen und Linien, einer Clean Plate (zeilenweise und Laplace-Füllung) und einer Differenzmaske in Himmel+Meer, Landzunge und Hafen zerlegt; Boote und Steg als 12 eng nachgezeichnete Formen, Laterne und Pfahl als eigene Formen, Taue gemessen und neu gezeichnet. Ausgabe in assets/layers/, nicht mehr in der Demo."
+  },
+  {
+   "step": "Effekt-Texturen",
+   "tool": "scripts/build_fx.py (Pillow, NumPy, fester Seed)",
+   "detail": "Lichthof, Lichtkegel (auch für die Dämmerungsstrahlen), Rauchwolke mit Pinseltextur, Lichtteilchen, Glanzstrich; fester Seed, zwei Läufe bitgleich. Der frühere prozedurale Vordergrund (Felsen, Gras, Pfahl) entsteht weiter in assets/fx/foreground.png, wird aber seit dem gemalten Vordergrund nicht mehr in die Demo kopiert."
+  },
+  {
+   "step": "Posenvorlage aus Blender (Layout für das Laufblatt)",
+   "tool": "blender/poses.py (Blender 5.2, EEVEE) + scripts/pose_sheet.py",
+   "detail": "Rendert den Dachs aus shared/3d/badger.glb in 8 Laufphasen und 2 Stehposen samt Fußpunkten und setzt sie als Layout-Blatt auf Magenta zusammen (assets/raw/pose_layout.png); erste Referenz für Bildauftrag 3."
+  },
+  {
+   "step": "Dachs im Zielstil übermalen (1 Bild)",
+   "tool": "genimg (--backend agy, Gemini; Codex ohne Guthaben laut PIPELINE.md)",
+   "detail": "prompts/badger_side.txt: Übermalauftrag mit drei Referenzen: assets/raw/badger_layout.png (Bild 3 aus shared/badger/walk_painted.png, um 1,55 vergrößert, auf Magenta) als Pose und Layout, assets/raw/master.png als Stil und shared/badger/master_sheet.png nur als Kostümprüfung. Der Prompt verlangt dieselbe Pose, Größe und Lage, weiche Pinsel und Tonwertflächen, ausdrücklich keine dunklen Konturen, keine Cel-Schattierung und kein Rand- oder Seitenlicht (kommt aus Godot). 1024×1024 in 58 s, erster Versuch brauchbar, 76 % freigestellt, kein key-failed. Die Silhouette stimmt mit der Vorlage überein (IoU 0,997, gleicher Umriss 270–761 × 103–933), deshalb gelten die an walk_painted.png abgelesenen Rig-Punkte weiter. verbatim: false (agy-Protokoll kürzt den Prompt nach 2047 Zeichen; bis dahin zeichengleich)."
+  },
+  {
+   "step": "Laufblatt im Zielstil (1 Bild, nicht eingebaut)",
+   "tool": "genimg (Codex, gpt-image) über tools/imagequeue.py",
+   "detail": "Auftrag 3: pose_layout.png als Layout, badger_side.png als Stil, master_sheet.png als Kostüm; 87 s, erster Versuch, sauberer Alphakanal. Kostüm und Gesicht in allen zehn Figuren gleich. Als Laufzyklus unbrauchbar: Zeile 2 wiederholt Zeile 1 (Fußspanne je Bild 164/159/112/128 gegen 158/155/109/129 px), die Figuren sind in Zeile 2 kleiner (390–396 statt 401–406 px), die verlangte seitliche Stehpose fehlt (Bild 5 ist ein weiterer Schritt), und die Malweise ist glatter als badger_side.png und der Hintergrund. Die Schnittfigur bleibt."
+  },
+  {
+   "step": "Dachs als Schnittfigur",
+   "tool": "scripts/build_badger.py (Pillow, NumPy)",
+   "detail": "Quelle: assets/raw/badger_side.png (Übermalung von walk_painted.png, Bild 3, Durchschwung). Ein Bild wird in drei Teile zerlegt: Rumpf (mit Kopf, Armen, Paket, Tasche, Schalwicklung; unten gezackte Fellkante), ein Bein (nah und abgedunkelt fern) und das hintere Schalende (mit einem 16 px breiten Band unter der Weste, damit beim Ausschwingen keine Lücke aufgeht). Rig-Punkte von walk_painted.png per Skalierung 1,5485 und Verschiebung übertragen. Magenta-Stich in 2229 Randpixeln (Schalfransen) zurückgenommen. Gegen die Schnittnaht teilen sich alle Teile EINE Farbebene: das ganze Bild einmal vormultipliziert mit Lanczos auf 140 px Figurenhöhe verkleinert und zurückgerechnet, nur das Alpha kommt aus der Teilmaske. Drehpunkt über der Sohlenmitte, Ferse und Zehe symmetrisch (±14,4 px)."
+  },
+  {
+   "step": "Bildaufträge",
+   "tool": "assets/image_jobs.json für tools/imagequeue.py",
+   "detail": "Sieben Aufträge in Prioritätsreihenfolge: 1 Dachs übermalt (schon vorhanden, übersprungen), 2 gemalter Vordergrund, 3 Laufblatt, 4–7 Himmel+Meer, Landzunge, Hafen, Boote. Aufträge 2–7 am 12.10. mit Codex je im ersten Versuch erzeugt; mit Hauptbild und Figur 8 Bilder. Keine direkten Nachbesserungen nötig."
+  },
+  {
+   "step": "Godot-Demo",
+   "tool": "Godot 4.7.2, GDScript, 6 eigene Shader",
+   "detail": "Parallax2D-Ebenen mit Camera2D, Zeilen-Parallaxe des Meeres im Shader, drei fbm-Nebelbänder, HDR-2D mit WorldEnvironment-Glow, schaukelnde Boote mit waagerechter Wasserlinie und Spiegelbild, Lichter und Teilchen als additive Sprite-Pools, Schnittfigur per Code (Beine, Rumpfneigung, Schalfeder), Oberfläche als CanvasLayer."
+  },
+  {
+   "step": "Prüfung",
+   "tool": "scripts/measure_badger.py, scripts/probe.py",
+   "detail": "measure_badger.py im Prüfmodus „-- --badger-only“ (nur Figur vor Magenta, Kamera steht), getrennte Läufe für nahes und fernes Bein: feste Kante des Standfußes ±1 px (0 Meldungen), ein Aufsetzen des fernen Beins nach dem Anhalten mit wachsender Kontaktkante bei fester Mitte (0,5 px, kein Rutschen); Fußzeile beim Gehen 650–652, im Stand immer 652; keine Kopfsprünge über 2 px (12.10.). Schnittnaht (11.10., Figur seitdem unverändert): keine Zeile an der Schnittkante mehr als 9 Tonwerte heller als ihre Nachbarzeilen. Mast des Boots: Ausschlag oben etwa ±3 px. Parallaxe zwischen erstem und letztem Bild gemessen (Himmel 3, Landzunge 28, Hütte 80, Vordergrund 119 px). Zwei Läufe bitgleich (md5 aller 180 Bilder, 12.10.). Renderer-Vergleich bei 1,0 und 5,4 s: mobile 0,05 Tonwerte mittlere Abweichung, gl_compatibility 7,8–10,4 (dunkler)."
+  },
+  {
+   "step": "Aufnahme",
+   "tool": "tools/capture.py --poster-at 0.9",
+   "detail": "6 s bei 30 fps, 1280×720, ohne Godot-Fehler und -Warnungen; Poster bei 5,4 s mit stehendem Dachs unter der Laterne und vollständigem Dialogfeld."
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, stretch canvas_items, Forward+, rendering/viewport/hdr_2d = true; unter gl_compatibility schaltet main.gd HDR-2D ab (siehe pitfalls)",
+  "WorldEnvironment: background_mode Canvas, background_canvas_max_layer 6 (Glow wirkt auf Welt und Vignette, nicht auf die Oberfläche in CanvasLayer 10), glow_hdr_threshold 0,95, Stufen 2–5, Blend Screen. Lichter überschreiten 1,0 per modulate (z. B. Color(2.4, 1.6, 0.8)) und blühen auf",
+  "Ebenen als Parallax2D unter einer Camera2D (anchor top-left): Himmel+Meer scroll_scale 0 (Parallaxe im Shader), Dämmerungsstrahlen 0,05, Sterne 0,04, Landzunge mit Leuchtfeuer 0,35, ferner Nebel 0,42, Wassernebel 0,7, Boote und Spielebene 1,0, Bodennebel 1,25, Lichtteilchen 1,15, Vordergrund (zwei Eckteile) 1,5",
+  "shaders/sea_plate.gdshader: eine Textur für Himmel und Meer (sky_sea.png, eigenes KI-Bild): Himmelszeilen verschieben sich mit f_sky = 0,04, Meereszeilen von 0,12 am Horizont (Texturzeile 437,85) bis 0,62 an der hinteren Kaikante (Zeile 696, Bodenebene). Dazu Wellen als waagerechtes Versetzen (vorn stärker, langsamer) und Glitzern in Zellen, nur im hellen, warmen Abendlicht",
+  "shaders/fog.gdshader: zwei fbm-Lagen (je 5 Oktaven Wertrauschen) driften gegeneinander, oben/unten/seitlich weich; rein Funktion von UV und time_s",
+  "shaders/boat.gdshader: Boot unterhalb der Wasserlinie weich ausgeblendet; die Linie wird mit der aktuellen Drehung (tilt) gegengerechnet, bleibt in der Welt waagerecht und kräuselt sich leicht; Rumpf zur Wasserlinie hin dunkler. Dasselbe Bild mit scale.y = -1 und reflection = 1 ist das Spiegelbild: nur der Teil über der Wasserlinie, gewellt, in Streifen gebrochen, dunkler als das Wasser. Die Boote drehen um die Wasserlinie (Summe zweier Sinus) und heben sich um unter 1 px, das Spiegelbild dreht gegensinnig",
+  "shaders/badger.gdshader: Umgebungstönung (kühl, nahe der Laterne wärmer) und zwei Lichtkanten aus dem Alpha in Lichtrichtung (warmes Gegenlicht von oben, Laternenlicht zur Laterne hin, Stärke nach Abstand und Flackern); Vertexfarbe über varying. Unterhalb von rim_cut (Oberkante der Schnittkante im Rumpfbild) keine Lichtkanten, sonst bekommen die Zacken der Schnittkante Laternenlicht. Beine mit eigenem Material ohne Gegenlicht-Kante, Schalende mit eigenem Material",
+  "Schnittfigur in main.gd: Weg in Abhängigkeit von der Zeit (konstant 110,6 px/s bis 4,3 s, Abbremsen 0,8 s, Stand ab 5,1 s), Endpunkt Hüfte x 548 unter der Laterne, Schrittlänge 31,5 px (Bein ±25°, ~3,5 Schritte/s), Phase je Bein aus der Hüftposition. Standbein: Winkel per Bisektion so, dass die Ferse (Fuß vorn) bzw. die Zehe (Fuß hinten) an ihrer Bodenstelle bleibt; Hüfthöhe aus dem tiefsten Sohlenpunkt (umgekehrtes Pendel). Schwungbein: erst abheben, waagerecht nur zwischen 18 % und 82 % des Schwungs, dann senkrecht aufsetzen. Fernes Bein mit derselben Kinematik, eine halbe Periode versetzt, 7,5 px weiter hinten. Sohlenlinie GROUND = 652 (vor dem Fuß der Taurolle bei ~640). Rumpf beim Gehen 1,2° vorgeneigt und im Schrittakt ±0,8° pendelnd, im Stand aufrecht und atmend. Hinteres Schalende: gedämpfte Feder (Eigenfrequenz 10 rad/s, Dämpfung 0,22), mit festem Zeitschritt 1/240 s gerechnet, angetrieben von Gehtempo (Fahrtwind) und Beschleunigung der Hüfte; beim Gehen 6,8–14,4°, beim Anhalten schwingt es bis −5,7° vor und kommt zur Ruhe",
+  "Leuchtfeuer: zwei Lichtkegel (beam.png, additiv) am Laternenhaus, scale.x = cos(Drehwinkel) für die Drehung um die senkrechte Achse, Periode 10 s; zur Kamera hin blitzt der Lichthof auf (Skalierung 0,15–0,27, kleiner als in der geschnittenen Fassung, weil der getrennt erzeugte Leuchtturm kleiner ist). Spiegelung: Knoten HeadPar/Reflect liegt NACH dem Headland-Sprite; unregelmäßige Säule aus Glanzstrichen (Abstand 4–14 px, Breite und Helligkeit zufällig mit festem Seed) im freien Wasser unter der Landzunge von y 446 bis 548, flackernd und beim Aufblitzen heller",
+  "Rauch, Funken, 46 Lichtteilchen, 19 Sterne (10 auf den gemalten Sternen) und 5 Dämmerungsstrahlen sind Sprite-Pools, ihr Zustand ist eine reine Funktion von t (fposmod); Zufall nur aus RandomNumberGenerator mit seed 20261010",
+  "Oberfläche: Titelkarte (Label mit LabelSettings, FontVariation Cinzel wght 600, spacing_glyph 7, zwei Linien und Polygon2D-Raute), Dialogfeld als ColorRect mit panel.gdshader (ausgefranster Rand aus Rauschen, Goldlinien, Raute), Tipptext mit visible_characters_behavior = 1, geschütztes Leerzeichen in „auf dich.“, Hervorhebung über self_modulate",
+  "Prüfmodus über Benutzerargumente: „-- --badger-only“ blendet alles außer dem Dachs aus, setzt Magenta als Hintergrund und hält die Kamera an; „--only-near“/„--only-far“ zeigen nur ein Bein; „--debug-legs“ druckt Beinphasen und Winkel"
+ ],
+ "techniques": [
+  "parallax-2-5d",
+  "ki-bildbearbeitung",
+  "zeilen-parallaxe",
+  "shader-nebel",
+  "hdr-glow-2d",
+  "additiver-lichtkegel",
+  "skelett-2d",
+  "rim-light",
+  "shader-wasser",
+  "prozedurale-animation",
+  "kamerafahrt",
+  "nachbearbeitung",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 4,
+  "effort": 3,
+  "text_adventure": 5,
+  "mobile": 3
+ },
+ "ratings_note": "ai_fit 4: Mit dem Hauptbild als Referenz traf Codex Technik und Palette in allen fünf getrennten Ebenen im ersten Versuch und lieferte saubere Alphakanäle; agy traf den Stil bei Hauptbild und Figur ebenfalls im ersten Versuch. Abzug: Das Laufblatt im Stil war als Laufzyklus unbrauchbar, und die Atmosphäre selbst (Nebel, Glow, Lichtschein, Teilchen, Strahlen, Spiegelungen, Schaukeln) kommt aus Godot-Shadern und Code. consistency 4: Sieben eingebaute bzw. geprüfte KI-Bilder aus zwei Modellen (agy: Hauptbild, Figur; Codex: fünf Ebenen) passen in Palette und Pinselführung zusammen, weil jedes ein Stilbild als Referenz bekam; die Figur hat etwas feinere Fellstriche als der Hintergrund, das Laufblatt ist glatter gemalt; über mehrere Orte ungeprüft. effort 3: pro Ort ein Hauptbild plus fünf Ebenenaufträge, danach nur Maßstab und Lage messen (ein Skript mit einer Handvoll Zahlen) statt rund 20 Polygone und einer Clean Plate wie beim Zerlegen eines Gemäldes; Shader, Effekte und Figuren-Rig sind wiederverwendbar, das Rig braucht aber je Figur Handarbeit. mobile 3: Probeläufe mit --rendering-method mobile (mittlere Abweichung zum Forward+-Bild 0,05 Tonwerte) und gl_compatibility (nach Abschalten von HDR-2D 7,8–10,4 Tonwerte: dunkler, Nebel und Glow schwächer); Leistung auf einem Gerät nicht gemessen, teuerste Teile sind drei breite fbm-Nebelflächen und der Glow.",
+ "verdict": "Für unser Textadventure gut geeignet: Pro Ort ein Hauptbild als Stilvorlage und fünf getrennt erzeugte Ebenen (Himmel+Meer, Landzunge, Hafen, Boote, Vordergrund) ergeben mit Nebel, Licht, schaukelnden Booten und leichter Kamerafahrt eine lebendige Szene, die sofort als gemaltes 2D-Spiel lesbar ist; die Oberfläche (Titelkarte, Dialogfeld oben) fügt sich ein. Getrennte Ebenen mit echtem Alphakanal sind dem Zerlegen eines Gemäldes klar vorzuziehen: keine Clean Plate, keine Polygone, bewegliche Teile (Boote) lassen sich einzeln animieren. Der Preis: Die Ebenen halten Lage und Maßstab des Hauptbilds nicht ein und werden neu komponiert. Figuren: Eine vorhandene Figur lässt sich im Zielstil übermalen, ohne dass sich ihr Umriss ändert, und als Schnittfigur sauber bewegen; ein KI-Laufblatt lieferte keine brauchbaren Laufphasen. Die Atmosphäre liefert Godot mit wenigen, wiederverwendbaren Shadern. Abweichungen vom Auftrag: Himmel und Meer sind ein gemeinsames Bild (das Meer braucht ohnehin zeilenweise Parallaxe im Shader), die Boote kamen als zusätzliche Ebene hinzu.",
+ "pitfalls": [
+  "Bildkontingent: Am 10.10. lieferte agy nur das Hauptbild (10 weitere Aufrufe mit „429 RESOURCE_EXHAUSTED“), Codex hatte kein Guthaben; am 11.10. gelang die Übermalung der Figur. Die Demo entstand deshalb zuerst aus Ebenen, die aus dem einen Gemälde geschnitten waren. Getrennte Ebenen, gemalter Vordergrund und Laufblatt kamen erst am 12.10. aus der Bildwarteschlange (Codex) und wurden danach eingebaut.",
+  "Die getrennt erzeugten Ebenen halten Lage und Maßstab des Hauptbilds nicht ein, obwohl der Prompt „at the same size and position as in the reference“ verlangte: Hütte kleiner und weiter links, Steg anders geformt, Kaimauer viel höher, Landzunge größer. Ein Einsetzen an die alten Stellen war nicht möglich; die Szene wurde mit gemessenen Koordinaten neu komponiert (layout.json). Die Komposition des Hauptbilds ist damit nur noch sinngemäß erhalten.",
+  "Codex-Alpha erreicht höchstens 254, auch in voll deckenden Flächen; ohne Korrektur scheinen dahinterliegende Ebenen minimal durch. Werte ab 250 werden auf 255 gesetzt.",
+  "Boote: Das Bild zeigt vollständige Rümpfe bis zum Kiel ohne Wasser; die Wasserlinie entsteht im Shader. Zwischen Wasserlinie und hinterer Kaikante liegen nur 10–20 px Wasser, und das Ruderboot liegt halb hinter dem Steg: Die Spiegelbilder sind deshalb nur als schmaler dunkler Streifen zu sehen. Eine erste Fassung der Spiegelung in Wasserfarbe war unsichtbar; jetzt dunkler als das Wasser.",
+  "Laufblatt (Bildauftrag 3) nicht eingebaut: Zeile 2 wiederholt Zeile 1 statt der zweiten Schritthälfte (Fußspanne 164/159/112/128 gegen 158/155/109/129 px), die Figurenhöhe springt zwischen den Zeilen um 6–16 px, die seitliche Stehpose fehlt, und die Malweise ist glatter („Plüsch“) als die übermalte Figur und der Hintergrund. Der Gang bleibt die Schnittfigur aus einem Bild.",
+  "Vordergrund: Der gemalte Poller steht links; mit Parallaxe 1,5 wandert er während der Fahrt fast ganz aus dem Bild (im Poster nur ein schmaler Streifen am linken Rand). Am Anfang verdeckt er den Auftritt des Dachses, wie gewollt. Ein Vordergrund in voller Breite hätte bei Faktor 0,92 einen Pfahl über die halbe Bildhöhe ergeben; deshalb zwei Eckteile bei Faktor 0,7.",
+  "Leuchtfeuer: Der getrennt erzeugte Leuchtturm ist kleiner als der geschnittene (Lampenhaus 35 statt 46 px); der Lichthof beim Aufblitzen deckte mit den alten Werten das ganze Lampenhaus zu und wurde verkleinert (0,15–0,27).",
+  "Frühere, geschnittene Fassung (assets/layers/): Im Bereich von Booten und Steg versagte die Differenzmaske (Holz und dunkles Wasser gleich hell), mitgemalte Lichthöfe kamen als heller Kasten mit, Taue lagen zunächst an geschätzter Stelle. Behoben nur mit 12 eng nachgezeichneten Formen, eigenen Formen für Laterne und Pfahl und gemessenen Tauen – viel Handarbeit für ein Bild; mit den getrennten Ebenen entfällt das.",
+  "Figur: Die erste Fassung nutzte shared/badger/walk_painted.png mit dunklen Konturen und Cel-Schattierung, die neben dem weichen Hintergrund aufgeklebt wirkte. Jetzt im Zielstil übermalt (assets/raw/badger_side.png). Geblieben: an Mütze und Nase einzelne dünne dunkle Kanten, und die Fellstriche sind etwas feiner als die Pinsel im Hintergrund.",
+  "Schnittnaht zwischen Rumpf und Beinen: Die erste Fassung meldete sie als behoben, im Poster war sie aber weiter als helle gepunktete Linie zu sehen (+15–25 Tonwerte). Zwei Ursachen: (1) jedes Teil wurde einzeln verkleinert, an der weichen Schnittkante entstanden durch Lanczos-Überschwinger aufgehellte Farben; (2) der Figuren-Shader legte Laternenlicht auf die Flanken der Fellzacken (Lichtkante aus dem Alpha). Behoben mit einer gemeinsamen Farbebene für alle Teile und rim_cut im Shader; in den Laufbildern ist keine Zeile an der Schnittkante mehr als 9 Tonwerte heller als ihre Nachbarn. Die etwas hellere Zone darüber ist die gemalte Oberschenkel-Aufhellung.",
+  "Größe: Die Figur war mit 168 px größer als die Haustür und wirkte menschengroß. Jetzt 140 px gegen eine 155 px hohe Tür (Verhältnis 0,9): kleiner würden Gesichtsstreifen, Strickschal und Pinselstriche in der 1280×720-Totalen unleserlich. Für einen gedrungenen Dachs bleibt das groß; im Spiel besser eine größere Hafen-Ebene oder eine Nahaufnahme.",
+  "Sohlenlinie und Taurolle: In der ersten Fassung trat der Dachs in die Taurolle hinein, weil Rollenfuß und Sohlenlinie zusammenfielen. Die Sohlenlinie 652 liegt jetzt 12 px vor dem Fuß der Taurolle (640) und 16 px hinter der vorderen Kaikante (668).",
+  "Die Spiegelung des Leuchtfeuers muss nach dem Sprite der Landzunge gezeichnet werden und im freien Wasser darunter liegen; in einer frühen Fassung lag sie dahinter und war unsichtbar, gleichmäßige Abstände sahen wie eine Leiter aus.",
+  "Starre Beinstücke sehen bei großem Winkel wie Stiefel aus; Bein daher nur ±25°. Das ferne Bein ist eine abgedunkelte Kopie des nahen. Mit 3,5 Schritten/s (vorher 4,2) wirkt der Gang noch etwas eilig; Rumpfneigung und Schalfeder nehmen ihm die Steifheit, ein Laufzyklus im Zielstil (Bildauftrag 3) wäre besser.",
+  "Das Schalende schwingt nur um wenige Pixel (24 px lang, 6,8–14,4°); ein größeres Teil (z. B. das vordere Schalende) lässt sich nicht lösen, ohne ein Loch in die Weste zu schneiden.",
+  "Fußmessung in der normalen Aufnahme ist verfälscht, weil die Kamera fährt und sich nahes und fernes Bein in der Kontaktzeile überlagern. Erst der Prüfmodus mit stehender Kamera und getrennten Läufen je Bein lieferte saubere Werte. Das Aufsetzen eines flachen Fußes (Kontaktkante wächst nach beiden Seiten) meldete das Prüfskript als 6 px Rutschen; jetzt zählt es nur, wenn auch die Mitte wandert.",
+  "Erste Rig-Fassung hatte zwei Fehler: Hüftsprünge von 7,7 px beim Beinwechsel (Drehpunkt nicht über der Sohlenmitte, Ferse und Zehe unsymmetrisch) und 3 px Rutschen beim Aufsetzen (Schwungfuß berührte den Boden, bevor er an seiner Stelle war). Beides behoben.",
+  "Godot 4.7 gl_compatibility mit hdr_2d = true: das ganze Bild wird ausgewaschen (mittlere Abweichung 53 Tonwerte). Mit use_hdr_2d = false nur unter Compatibility sind es 7,8–10,4 Tonwerte: dunkler, Nebel und Glow schwächer, weil ohne HDR-2D nicht linear gemischt wird.",
+  "canvas_item-Shader: TEXTURE als sampler-Argument an eine eigene Funktion zu übergeben, ergab im Import „Condition !actions.custom_samplers.has(...)“. Die Lichtkanten werden direkt in fragment() abgetastet."
+ ],
+ "lessons": [
+  "Stilblock für digital gemalt und atmosphärisch: Medium (große weiche digitale Pinsel, wenige Texturpinsel, weiche Kanten, keine Konturen), Luftperspektive in getrennten Tiefenebenen mit Dunst dazwischen, Lichtschein nur an benannten Quellen, begrenzte Palette mit Akzenten, plus Verbote (Foto, 3D-Render, Postkarte, Impasto, Konturen-Cartoon). agy lieferte damit im ersten Versuch keinen 3D-Look.",
+  "Kompositionsblock für eine Spielebene (Horizont-Höhe, durchgehender Kai als begehbare Kante, Lage von Hütte und Leuchtturm in Prozent) macht das Bild direkt als Seitenansicht mit Kamerafahrt nutzbar.",
+  "Getrennte Ebenen als Bearbeitung des Hauptbilds (Codex): „Edit of the reference image … paint only <Ebene> … isolated on a fully transparent background“ plus Stilblock liefert im ersten Versuch Ebenen in Technik und Palette der Vorlage mit sauberem Alphakanal. Lage und Maßstab hält das Modell nicht ein: die Szene in Godot neu komponieren, Ankerpunkte (Horizont, Kaikanten, Lichtquellen, Wasserlinien) an Lupenbildern messen und in einer layout-Datei festhalten.",
+  "Himmel und Meer als eigene Bearbeitung mit „the horizon is one straight, level line across the whole width“ ergab einen exakt waagerechten Horizont (Rohzeile 486 über die ganze Breite) – Voraussetzung für die zeilenweise Meeres-Parallaxe.",
+  "Lichter und Rauch in den Ebenen-Prompts ausdrücklich weglassen („lit as flat warm shapes without any halo“, „lamp only a small bright spot“, „no smoke“): Codex hielt sich daran, Lichthöfe und Rauch kommen sauber aus Godot.",
+  "Bewegliche Teile als eigenes Bild bestellen (hier die Boote): Schaukeln um die Wasserlinie mit einer im Shader gegengerechneten, waagerechten Wasserlinie und einem gespiegelten Sprite als Spiegelbild braucht kein weiteres KI-Bild.",
+  "Vordergrund für starke Parallaxe in Eckteile schneiden: Jedes Teil wird für sich platziert, die Fläche muss nicht 1280 + Fahrweg breit sein; an der Schnittkante den Bodenstreifen weich auslaufen lassen.",
+  "Laufblätter vor dem Einbau messen (Fußspanne und Figurenhöhe je Bild): Ein zweizeiliges Blatt kann zweimal denselben Halbzyklus enthalten. Bei kurzbeinigen Figuren ist eine Schnittfigur aus einem gelungenen Bild oft die sicherere Wahl.",
+  "Ein Gemälde in Ebenen zerlegen (Ausweichweg, wenn nur ein Bild möglich ist): grobe Polygone + Clean Plate + Differenzmaske ist in rund 300 Zeilen NumPy und Pillow machbar und ergibt exakt passende Ebenen; zeilenweise Füllung für Himmel und Meer, Laplace-Füllung für Wasser zwischen Objekten, eng nachgezeichnete Formen, wo Objekt und Hintergrund gleich hell sind.",
+  "Meer als Bodenebene: eine Textur, der Shader verschiebt jede Zeile je nach Abstand zum Horizont unterschiedlich weit. Bei waagerechter Kamerafahrt gibt es am Horizont keine Naht, und es braucht keine eigene Meeres-Ebene.",
+  "Atmosphäre in Godot: HDR-2D + WorldEnvironment-Glow (Hintergrund Canvas, Oberfläche in höherem CanvasLayer außerhalb des Glows), Lichter als additive Sprites mit modulate > 1, fbm-Nebel in mehreren Parallaxe-Ebenen, schwebende Lichtteilchen, Dämmerungsstrahlen aus der Lichtkegel-Textur. Alles als Funktion der Zeit, zwei Aufnahmen bitgleich.",
+  "Schnittfigur aus einem gemalten Bild: Rumpf + ein Bein (nah, fern abgedunkelt), Drehpunkt über der Sohlenmitte, Standbein per Bisektion an Ferse bzw. Zehe festhalten, Hüfthöhe aus dem tiefsten Sohlenpunkt, Schwung waagerecht nur in der Mitte. Ergibt einen messbar sauberen Gang ohne KI-Laufbilder und ist für jede Figur wiederholbar.",
+  "Prüfmodus in der Demo (Benutzerargumente nach „--“): nur Figur vor Magenta, Kamera fest, Beine einzeln. So lassen sich Standfuß und Fußzeile in der echten Godot-Ausgabe messen.",
+  "Unter gl_compatibility HDR-2D per Code abschalten (get_viewport().use_hdr_2d = false), sonst ist das Bild ausgewaschen.",
+  "Titelkarte beim Betreten eines Orts und Dialogfeld oben im Himmel lassen Figur und Kai frei und sind typische Merkmale dieser Spiele.",
+  "Vorhandene Figur in einen neuen Stil übermalen: das Bild der Figur auf Magenta als erste Referenz (Pose und Layout), ein gelungenes Bild im Zielstil als zweite, das Figurenblatt nur als Kostümprüfung, im Prompt „exactly the same pose, size and position“, „no dark contour lines“ und „no rim light (the game adds the lights)“. agy hielt den Umriss pixelgenau (IoU 0,997), so dass Rig-Punkte und Schnittmasken weiter gelten.",
+  "Schnittfigur ohne Naht: das ganze Bild EINMAL vormultipliziert verkleinern (eine Farbebene) und nur das Alpha je Teil aus der Maske nehmen; Lichtkanten im Shader an Schnittkanten abschalten (rim_cut), sie gehören nur an den echten Umriss.",
+  "Nachschwingende Teile (Schalende) als gedämpfte Feder mit festem Zeitschritt, angetrieben von Tempo und Hüftbeschleunigung aus denselben Zeitfunktionen wie der Gang: bleibt mit --fixed-fps bitgleich und braucht kein weiteres Bild. Das Teilbild reicht unter den Rumpf, damit beim Ausschwingen keine Lücke aufgeht."
+ ],
+ "assets": [
+  {
+   "file": "assets/sep/sky_sea.png",
+   "kind": "background",
+   "made_with": "Codex (Bearbeitung des Hauptbilds: nur Himmel und Meer) + build_sep_layers.py, Faktor 0,9",
+   "prompt": "assets/raw/backdrop.json"
+  },
+  {
+   "file": "assets/sep/head_sep.png",
+   "kind": "layer",
+   "made_with": "Codex (Landzunge mit Leuchtturm, transparent) + build_sep_layers.py, Faktor 0,44",
+   "prompt": "assets/raw/headland.json"
+  },
+  {
+   "file": "assets/sep/harbour_sep.png",
+   "kind": "layer",
+   "made_with": "Codex (Spielebene: Kai, Hütte, Laterne, Steg, Fässer, Kisten, transparent) + build_sep_layers.py, Faktor 0,92",
+   "prompt": "assets/raw/harbour.json"
+  },
+  {
+   "file": "assets/sep/boat_row.png",
+   "kind": "sprite",
+   "made_with": "Codex (zwei Boote, transparent) + build_sep_layers.py: Ruderboot, Faktor 0,27, Drehpunkt auf der Wasserlinie",
+   "prompt": "assets/raw/boats.json"
+  },
+  {
+   "file": "assets/sep/boat_mast.png",
+   "kind": "sprite",
+   "made_with": "Codex (zwei Boote, transparent) + build_sep_layers.py: Boot mit Mast, Faktor 0,27, Drehpunkt auf der Wasserlinie",
+   "prompt": "assets/raw/boats.json"
+  },
+  {
+   "file": "assets/sep/fg_left.png",
+   "kind": "layer",
+   "made_with": "Codex (Vordergrund-Silhouetten, transparent) + build_sep_layers.py: linkes Eckteil (Poller, Gras), Faktor 0,7, 1,8 px unscharf",
+   "prompt": "assets/raw/foreground.json"
+  },
+  {
+   "file": "assets/sep/fg_right.png",
+   "kind": "layer",
+   "made_with": "Codex (Vordergrund-Silhouetten, transparent) + build_sep_layers.py: rechtes Eckteil (Felsen, Gras), Faktor 0,7, 1,8 px unscharf",
+   "prompt": "assets/raw/foreground.json"
+  },
+  {
+   "file": "assets/badger/badger_body.png",
+   "kind": "sprite",
+   "made_with": "agy (Übermalung im Zielstil) + build_badger.py: Rumpf der Schnittfigur aus assets/raw/badger_side.png, 140 px Figurenhöhe, gemeinsame Farbebene",
+   "prompt": "assets/raw/badger_side.json"
+  },
+  {
+   "file": "assets/badger/badger_leg.png",
+   "kind": "sprite",
+   "made_with": "agy (Übermalung im Zielstil) + build_badger.py: Bein der Schnittfigur (nah und abgedunkelt fern) aus derselben Quelle",
+   "prompt": "assets/raw/badger_side.json"
+  },
+  {
+   "file": "assets/badger/badger_tail.png",
+   "kind": "sprite",
+   "made_with": "agy (Übermalung im Zielstil) + build_badger.py: hinteres Schalende der Schnittfigur (schwingt an einer Feder)",
+   "prompt": "assets/raw/badger_side.json"
+  },
+  {
+   "file": "assets/fx/beam.png",
+   "kind": "effects",
+   "made_with": "build_fx.py: Lichtkegel für Leuchtfeuer und Dämmerungsstrahlen",
+   "prompt": ""
+  },
+  {
+   "file": "assets/fx/halo.png",
+   "kind": "effects",
+   "made_with": "build_fx.py: weicher Lichthof (Laterne, Fenster, Leuchtfeuer, Lichtpfütze, Kontaktschatten)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/fx/puff.png",
+   "kind": "effects",
+   "made_with": "build_fx.py: Rauchwolke mit Pinseltextur",
+   "prompt": ""
+  },
+  {
+   "file": "assets/fx/mote.png",
+   "kind": "effects",
+   "made_with": "build_fx.py: Lichtteilchen, Funken, Sterne",
+   "prompt": ""
+  },
+  {
+   "file": "assets/fx/streak.png",
+   "kind": "effects",
+   "made_with": "build_fx.py: Glanzstrich für die Spiegelung des Leuchtfeuers",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Cinzel (variabel)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/cinzel"
+  },
+  {
+   "item": "Schrift Alegreya (Regular und Italic, variabel)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/alegreya"
+  }
+ ],
+ "image_generations": 8,
+ "tool_issues": [
+  "tools/genimg.py mit agy: Am 10.10. meldeten nach dem ersten Bild 10 Aufrufe in Folge „429 RESOURCE_EXHAUSTED / quota exhaustion“ (Kontingent rechnerweit, andere Einträge liefen parallel). Fehlgeschlagene Aufrufe erzeugen kein Bild; ob sie zum Kontingent von 10 pro Eintrag zählen, sagt PIPELINE.md nicht. Hier gezählt werden nur erzeugte Bilder: Die 12 agy-Aufrufe vom 10./11.10. ergaben 2 Bilder (Hauptbild, Figur), dazu kamen am 12.10. 6 Codex-Bilder aus der Bildwarteschlange, zusammen image_generations = 8.",
+  "tools/genimg.py mit agy: verbatim false bei beiden Bildern; actual_calls zeigt den Prompt in Anführungszeichen mit maskierten Zeilenumbrüchen und im agy-Protokoll gekürzt („<truncated … bytes>“, beim Dachs nach 2047 Zeichen). Bis zur Kürzung stimmt er mit dem gesendeten Prompt überein (schon bei oelmalerei gemeldet).",
+  "Das Scratchpad-Verzeichnis wird von parallel laufenden Agenten geteilt; eine dort liegende fremde inspect.py überdeckte das gleichnamige Standardmodul, NumPy brach beim Import ab. Umgangen mit eigenem Unterordner und Python im isolierten Modus (python -I).",
+  "Codex (über genimg.py/imagequeue.py): Der Alphakanal erreicht höchstens 254, auch in voll deckenden Flächen (alle fünf freigestellten Bilder vom 12.10.). Lokal in build_sep_layers.py auf 255 angehoben; andere Einträge mit Codex-Sprites sehen sonst minimal durchscheinende Figuren."
+ ],
+ "status": "done"
+}

@@ -1,0 +1,241 @@
+{
+ "slug": "kinemagramm",
+ "name": "Lebendes Standbild (Shader-Animation)",
+ "family": "technik",
+ "kind": "technique",
+ "era": "2010er bis heute (Erzählspiele und Adventures mit gemalten Standbildern)",
+ "summary": "Ein einziges gemaltes KI-Bild wird nur durch Masken und einen Shader lebendig: Wasser wellt und glitzert, Wolken pendeln langsam, Fenster, Laterne und ihr Lichtschein flackern, der Leuchtturmstrahl kreist als additive Ebene, Rauch steigt in Ballen, Möwen ziehen, Boote schaukeln. Die Masken kommen aus einem zweiten KI-Bild mit Farbcodes und werden automatisch ausgerichtet; auch der Dachs ist ein gemaltes Standbild, das atmet, das Gewicht verlagert, blinzelt und dessen Schal weht.",
+ "references": [
+  "Kinemagramme der Fotografie (ab etwa 2011): ein Standbild, in dem nur ein Teil als Schleife lebt",
+  "Gemalte Adventure-Hintergründe der 1990er mit einzeln animierten Teilbereichen (Wasser, Feuer, Rauch als Überlagerung)",
+  "Heutige Visual Novels und Erzählspiele, deren Hintergründe per Shader leicht bewegt werden (Wasser, Licht, Partikel)"
+ ],
+ "traits": [
+  "Hintergrund ist genau ein KI-Gemälde (1536×1024, auf 16:9 beschnitten, 1280×720); kein Bildteil wird neu gemalt, alle Bewegung entsteht in einem canvas_item-Shader aus drei Maskenbildern und einer sauberen Platte",
+  "Masken aus einem zweiten KI-Bild (Farbcode-Karte derselben Komposition), automatisch ausgerichtet und mit Guided Filter an die Bildkanten gelegt; keine Polygone von Hand",
+  "Wasser: Zeilenwellen über Rauschverzerrung, vorn stärker als am Horizont; die Spiegelsäulen von Leuchtfeuer und Sonnenstreifen zerfallen in waagerechte Bänder; Glitzern als kurze waagerechte Striche nur auf hellen Spiegelungen (gemessen: 1,6 % der Wasserpixel, Helligkeit darunter ≥ 0,33 bei Wasser-Median 0,27), kein Salzrauschen",
+  "Himmel pendelt als reine Verschiebung (±24 px, Periode 80 s, in der Aufnahme nach links), ohne Überblendung und ohne Wabern; die feinste Pinselstruktur bleibt bei 92–105 % des Gemäldes; flache Wolkenschatten ziehen mit; die wenigen gemalten Sterne bleiben stehen und funkeln",
+  "Leuchtturmstrahl als additiver Kegel mit Dunststreifen, nur vor dem Himmel sichtbar, verkürzt sich mit dem Drehwinkel; die Lampe blitzt auf, wenn er zur Kamera zeigt",
+  "Fenster, Laterne und ihr gemalter Lichtschein auf Wand, Kisten und Kai flackern über Maske × Faktor (Kai-Lichtfleck schwankt um 24 Stufen), dazu weiche additive Lichthöfe",
+  "Rauch als Kette weicher Ballen aus dem rechten Kaminaufsatz: kurzer dichter Stiel, darüber wachsende, oben hellere Ballen, vom Wind nach rechts gebogen; zwei Möwen, die über den Bildrand hinaus fliegen und in neuer Höhe wiederkommen; zwei schaukelnde Boote samt Takelage (Drehung um einen Punkt auf der Wasserlinie über der sauberen Platte), alles im selben Shader",
+  "Dachs als ein gemaltes Standbild (keine Laufbilder, 196–199 px hoch), zerlegt in Körper, wehendes Schalende und Lider: Atmen und Gewicht verlagern ab den Füßen, Schal flattert quer zu seiner Achse, Blinzeln alle 3–6 s aus einer geseedeten Tabelle (gelegentlich doppelt), flackerndes Kantenlicht der Laterne; Füße bleiben auf dem Pixel stehen",
+  "Textfeld unten rechts auf dem Kai als dunkle Lasur mit weich auslaufendem Rand und feiner warmer Linie, Alegreya und Alegreya SC, Text Zeichen für Zeichen, nummerierte Antworten mit Hervorhebung, Parserzeile; 12 px Abstand zum unteren Bildrand"
+ ],
+ "camera": "Feste Kamera wie im Gemälde (leicht erhöhte Seitenansicht über den Hafen); keine Kamerafahrt, damit das Standbild-Prinzip sichtbar bleibt",
+ "resolution": "1280×720; Gemälde, Platte und Masken in derselben Auflösung, Rauschtextur 256×256 kachelbar; Dachs 196–199 px hoch (aus rund 1380 px Quellhöhe verkleinert)",
+ "pipeline": [
+  {
+   "step": "Bildaufträge planen",
+   "tool": "tools/make_jobs.py → assets/image_jobs.json",
+   "detail": "Drei Aufträge in Prioritätsreihenfolge, erzeugt aus assets/prompts/*.txt; Motiv-, Figuren- und Schutzblock wörtlich aus data/motif.json. Erzeugt von der zentralen Warteschlange (tools/imagequeue.py) am 11.10.2026, jeder Auftrag im ersten Versuch. Vorher (10.10.2026) drei direkte agy-Aufrufe mit 429 RESOURCE_EXHAUSTED, ohne Bild."
+  },
+  {
+   "step": "Gemälde",
+   "tool": "genimg über imagequeue, Backend codex (gpt-image), 1536×1024",
+   "detail": "Prompt assets/prompts/bg.txt (assets/raw/bg.json): ruhig gemaltes digitales Adventure-Hintergrundbild, ausdrücklich für Animation entworfen: klar getrennte Flächen (großer offener Himmel, große ruhige Wasserfläche mit senkrechten Spiegelungen), Leuchtfeuer und Schornstein vor offenem Himmel, Boote rundum im Wasser, Kai unten rechts frei, Rand oben und unten für den 16:9-Schnitt; animierte Effekte ausdrücklich ausgeschlossen (kein Strahl, kein Rauch, keine Möwen, kein Bloom). Ergebnis ohne Nachbesserung brauchbar: kein gemalter Strahl oder Rauch, Lampe und Schornstein vor Himmel."
+  },
+  {
+   "step": "Gemalter Dachs",
+   "tool": "genimg über imagequeue, Backend codex (gpt-image), 1024×1536, Referenzen assets/ref/badger_front.png und assets/raw/bg.png",
+   "detail": "Prompt assets/prompts/badger.txt (assets/raw/badger.json): eine stehende Figur in der Maltechnik des Gemäldes (zweite Referenz nur als Stilvorlage), Kostüm und Proportionen aus der Vorderansicht des Referenzblatts, Laternenlicht von links, Schalende vom Wind gelöst, freigestellt. Codex lieferte echten Alphakanal (keine Magenta-Freistellung, kein keyed-src); in den durchsichtigen Pixeln steht ein farbiger Schein im RGB, der bei Alpha 0 nicht sichtbar ist."
+  },
+  {
+   "step": "KI-Farbcode-Maske",
+   "tool": "genimg über imagequeue, Backend codex (gpt-image), 1536×1024, Referenz assets/raw/bg.png",
+   "detail": "Prompt assets/prompts/mask.txt (assets/raw/mask.json): dieselbe Komposition als flache Codes (Himmel #0000FF, Wasser #00FFFF, Boote #FF00FF, Fenster #FFFF00, Laternenglas #FF8000, Leuchtfeuer #FF0000, Schornstein #00FF00, Rest Schwarz). Die Maske lag schon deckungsgleich auf dem Gemälde (Ausrichtung sx 1,0, sy 0,996, dx 0, dy 0; Maß 0,341 gegen 0,338 unverändert), alle sieben Codes vorhanden, Bootsformen nur grob (Aufbauten anders als gemalt)."
+  },
+  {
+   "step": "Maske ausrichten und Szene ableiten",
+   "tool": "tools/auto_scene.py, tools/aimask.py (NumPy, Pillow)",
+   "detail": "Codes nach nächster Farbe einordnen, Mehrheitsfilter 5×5, Ausrichtung über den Farbunterschied quer zu den Codegrenzen; 16:9-Schnitt automatisch (Mitte); daraus Lichter (hellster warmer Punkt in der Codefläche), Schornstein, zwei Boote mit Drehpunkt auf der Wasserlinie, Horizont (Zeile 332), Kai, Möwenbahnen und Dachsplatz. Korrekturen von Hand nur in tools/scene.override.json: Textfeld (645, 532, 615×176), Rauchpunkt auf dem rechten Aufsatz (107,5; 118,5; die Maske liefert die Mitte zwischen beiden Aufsätzen), Lichtschein der Laterne auf dem Kai (Ellipse um 345/600, 300×125 px) und Tönung des Dachses."
+  },
+  {
+   "step": "Masken und saubere Platte",
+   "tool": "tools/prep.py (NumPy, Pillow)",
+   "detail": "Grobe Flächen → Guided Filter mit Farbführung (r 6, eps 0,002) → kantentreue Masken für Himmel und Wasser. Boote: Umgebung per Pull-Push hineinfüllen, Farbabstand messen, Inneres immer Boot; dazu die Takelage: dünne dunkle, nicht waagerechte Linien (waagerechter Hochpass) in der konvexen Hülle des Boots über Wasser. Sterne: Hochpass, hell und fast farblos, nur im Himmel (12 px). Lichter: Helligkeit × Wärme um eine Position, gemalter Lichtschein mit Abstand abfallend, für die Laterne zusätzlich eine flache Ellipse auf dem Boden (warme Pixel auf Kai und Steg, linear abfallend). Platte: Objekte aus Himmel und Wasser gefüllt, 3 px Objektsaum ausgespart, bis 48 px gespiegelte Pinselstruktur, tiefer Pull-Push; Bootslöcher unter dem Horizont aus dem Wasser daneben (gespiegelte Wellen) statt aus einem Pull-Push-Schmierfleck."
+  },
+  {
+   "step": "Figur in Ebenen zerlegen",
+   "tool": "tools/auto_badger.py, tools/prep_badger.py, Korrektur tools/badger.override.json",
+   "detail": "Automatisch gefunden: Augen (zwei Glanzlichter auf gleicher Höhe, richtig), Halswickel. Das automatisch gefundene Schalende umfasste auch das vorn hängende Ende; von Hand auf das nach rechts wehende Ende begrenzt (Polygon) und eine Schalachse vom Ansatz am Hals zur Mitte der Fransen gesetzt. Magenta-Entfernung abgeschaltet (Codex-Alpha). Zielhöhe von Hand 198 statt 230 (tools/badger.override.json). Dann Schalende als eigene Ebene, Körper dahinter aufgefüllt, Lider aus umgebendem Fell; vormultipliziert verkleinert (Maßstab 0,143)."
+  },
+  {
+   "step": "Alles in einem Aufruf",
+   "tool": "tools/process.py",
+   "detail": "Verarbeitet die drei Rohbilder aus assets/raw/, legt die Korrekturen aus tools/scene.override.json und tools/badger.override.json darüber, schreibt nach assets/, kopiert nach demo/art/ und macht einen Godot-Probelauf; rund 17 s."
+  },
+  {
+   "step": "Godot-Demo",
+   "tool": "Godot 4.7.2, GDScript, 3 eigene Shader",
+   "detail": "still.gdshader (alle Hintergrundebenen in einem Durchgang), badger.gdshader (Atmen, Gewicht verlagern, Schal, Lider, Kantenlicht), panel.gdshader (Textfeld). Aufnahme mit tools/capture.py, Poster bei 3,6 s."
+  },
+  {
+   "step": "Prüfen",
+   "tool": "tools/measure_fx.py, measure_badger.py, selftest.py, render.py",
+   "detail": "measure_fx.py: Bewegung je Maskenbereich und Anteil der Sprünge > 20 Stufen je Bild; measure_badger.py: Füße und Kopf je Bild (Differenz mit/ohne Figur); measure_sky.py: feinste Pinselstruktur des Himmels gegen das Gemälde zu beliebigen Zeitpunkten (--t0); selftest.py: verschiebt, skaliert und verkleinert die echte Maske als JPEG (wie agy sie liefern würde) und prüft, ob die Verarbeitung dieselben Masken und Positionen wiederfindet; render.py: Aufnahme in beliebigen Ordner, auch mit --method mobile|gl_compatibility. Langzeitverhalten (Möwen, Blinzeln, Himmel) mit --t0=… und einer Vergleichskopie der Demo ohne den jeweiligen Effekt gemessen."
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, stretch mode canvas_items, Forward+ (Standard), nur 2D",
+  "Still: Sprite2D mit still.png und ShaderMaterial still.gdshader; Texturen plate, mask_a (R Wasser, G Himmel, B Sterne), mask_b (R Fenster, G Laterne, B Leuchtfeuer), mask_c (R Boot 1, G Boot 2, B Sichtbarkeit des Strahls), noise (drei kachelbare Rauschkanäle). Daten nur in RGB, nicht im Alphakanal, damit der Import nichts verändert; Import verlustfrei ohne Mipmaps",
+  "Wasser: Abtastung der Platte an p + Verschiebung aus zwei Rauschebenen (Kachel 600×44 px vorn, perspektivisch kleiner zum Horizont); Glitzern als Produkt zweier Rauschkanäle in Koordinaten der Wasserfläche (logarithmisch in der Tiefe, am Horizont 3×1 px je Texel, vorn etwa 7×2,3 px, nie feiner als 1 px je Texel), über einer Schwelle und nur bei Helligkeit der Spiegelung ab 0,38–0,60",
+  "Himmel: reine Verschiebung u = 24 px · sin(2π (t − 3) / 80), Abtastung der Platte am Bildrand gespiegelt (keine Randstreifen); keine Überblendung, kein Wabern; Wolkenschatten aus dem glatten Rauschkanal ziehen mit; Sterne aus dem Standbild mit langsamem Funkeln",
+  "Boote: je Boot Drehung um einen Punkt auf der Wasserlinie (±1,0° bzw. ±0,8°, Perioden 4,2 und 5,0 s, leichtes Heben), Abtastung von Standbild und Bootsmaske an der gedrehten Stelle, dahinter die Platte",
+  "Strahl: Winkel phi aus der Zeit (Umdrehung 10 s); sichtbare Länge beam_len (800 px) × |cos phi|, Breite wächst mit dem Abstand, Dunststreifen aus Rauschen quer zum Strahl, additiv, mal mask_c.b; Lichthof der Lampe wächst mit sin(phi)^4",
+  "Rauch: Kette weicher Ballen, alle 0,55 s einer (bis 20 gleichzeitig), Steigen 22 px/s, Windbiegung 0,0035·h² + 0,32·h, Radius 8,5 px + 0,36 px je px Höhe mit Streuung, Versatz und Dichte je Ballen aus einem Hash der Ballennummer (ohne sin, damit alle Renderer gleich rechnen), Rand aus glattem Rauschen (≥ 1 px je Texel), jeder Ballen oben heller als unten; darunter ein kurzer Gauß-Stiel; nur in einem Rechteck um den Schornstein berechnet. Möwen: zwei Kurven-Silhouetten mit Flügelschlag und Gleitphasen; Lage aus main.gd, nach dem Bildrand Wiedereintritt auf der anderen Seite in einer Höhe aus einer geseedeten Tabelle",
+  "Dachs: Sprite2D mit badger_body.png, Ursprung an den Füßen (offset), vertex() streckt um den Atemfaktor (1,1 %, 3,2 s) und schert seitlich um bis zu 1,6 px am Kopf (Periode 5,3 s; Füße bleiben); fragment() verschiebt das Schalende quer zur Achse tail_root → tail_tip (aus art/badger.json) über dem aufgefüllten Körper, blendet Lider ein (1,55 s und 4,85 s, danach aus einer geseedeten Tabelle alle 3–6 s, 15 % doppelt, Wiederholung nach 600 s), tönt die Figur (0,84/0,82/0,90) und setzt ein Kantenlicht zur Laterne, dessen Stärke dem Laternenflackern folgt; die Kante wird an Körper und Schal zusammen gemessen. Darunter ein Schatten aus GradientTexture2D",
+  "UI: CanvasLayer, ColorRect mit panel.gdshader (weicher Rand 14 px, Linie unter dem Ortsnamen), Feld 645/532, 615×176 px (unten 12 px, rechts 20 px Rand), Ortsname Alegreya SC 19 px mit Laufweite 2, Zeile einzeilig in Alegreya 20 px, Antworten 19 px im Abstand 23 px, Parserzeile kursiv 18 px; visible_characters_behavior nach dem Shaping; geschütztes Leerzeichen in „auf dich.“",
+  "main.gd: t aus aufsummiertem delta, Flacker-, Böen-, Blinzel- und Möwenhöhentabellen aus RandomNumberGenerator mit Seed 20261010 (neue Tabellen nach den alten gezogen, Flackern unverändert), weich interpoliert; Positionen aus art/scene.json und art/badger.json (von prep.py/prep_badger.py geschrieben)",
+  "Vergleichsschalter: godot --path demo -- --frozen (Standbild ohne Leben), --no-badger, --no-shadow, --no-ui, --t0=SEKUNDEN (Start zu einem späteren Zeitpunkt, für Langzeitprüfungen)"
+ ],
+ "techniques": [
+  "kinemagramm",
+  "saubere-platte",
+  "masken-guided-filter",
+  "shader-wasser",
+  "additiver-lichtkegel",
+  "figur-als-standbild",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 3,
+  "effort": 2,
+  "text_adventure": 5,
+  "mobile": 4
+ },
+ "ratings_note": "ai_fit 4: Die KI liefert den ganzen Bildinhalt (Gemälde, Maske, Figur) jeweils im ersten Versuch, die Farbcode-Maske passte ohne Korrektur; Abzug, weil das Gemälde trotz Prompt eher detailreich-postkartenhaft ist und der Dachs heller und niedlicher gemalt ist als die Szene (Tönung im Shader nötig). Die Bewegung selbst kommt vollständig aus Shadern und Code. consistency 3: nur ein Ort gebaut; ob Gemälde, Masken und Figur über viele Orte gleich aussehen, ist nicht geprüft, die Figur weicht schon hier leicht vom Gemälde ab. effort 2: je Ort zwei KI-Bilder und ein Aufruf von process.py, von Hand nur Textfeldlage, Rauchpunkt, Bodenlichtschein, Tönung, Dachsgröße und das Schalende (ein Polygon, eine Achse). mobile 4 geschätzt: ein Vollbild-Shader mit rund 18 Texturzugriffen je Pixel und ein Draw-Call; im Rechteck um den Schornstein zusätzlich eine Schleife über bis zu 20 Rauchballen (nur Rechnen, keine Texturzugriffe). Forward+, mobile und gl_compatibility liefern auf dem Mac dieselben Bilder (mobile ohne Abweichung, gl_compatibility höchstens 2 Stufen); auf einem Smartphone nicht gemessen.",
+ "verdict": "Gut geeignet und Kernkandidat für die Hintergründe des Textadventures: Pro Ort genügen ein Gemälde und eine KI-Farbcode-Maske; Masken, Platte, Lichter, Drehpunkte, Takelage und Positionen entstehen automatisch, der Shader ist für alle Orte gleich und kostet einen Draw-Call. Alle Schleifen laufen beliebig lange (Möwen kehren wieder, Blinzeln wiederholt sich, Himmel pendelt ohne Überblendung). Das Ergebnis wirkt wie ein fertiger Adventure-Bildschirm, nicht wie eine Diashow. Bewusste Abweichungen vom Auftrag: Der Dachs läuft nicht, er ist wie der Hintergrund ein lebendes Standbild (Atmen, Gewicht, Schal, Blinzeln); für Gänge über den Kai bräuchte es einen eigenen Laufzyklus aus einem anderen Eintrag. Er ist mit 196–199 px bewusst etwas größer als maßstäblich (Fässer weiter hinten 103 px), damit Gesicht, Lider und Kostüm lesbar bleiben. Der Himmel pendelt statt endlos zu ziehen, weil die Überblendung doppelte Wolken zeigte. Für mehrere Orte vorher prüfen, ob gpt-image Gemälde und Figuren über viele Bilder im selben Stil hält.",
+ "pitfalls": [
+  "Das Gemälde ist trotz Stilblock („moderate detail“, „not a saturated postcard sunset“) detailreich und sehr gesättigt (Sonnenuntergangsband, Steinpflaster, Takelage) – gpt-image zieht zur Postkarten-Romantik. Für die Technik ist das unschädlich, für einen eigenen Spielstil müsste der Stilblock noch stärker reduzieren.",
+  "Der gemalte Dachs ist niedlicher, frontaler und heller ausgeleuchtet als die Szene; ohne Tönung (0,84/0,82/0,90 im Shader) wirkte er wie aufgeklebt. Er schaut gerade nach vorn statt leicht zur Laterne.",
+  "Der Dachs war zuerst 227 px hoch (so hoch wie die Haustür, mehr als doppelt so hoch wie die Fässer) und wirkte menschengroß. Jetzt 196–199 px (badger.override.json: height 198); bewusst noch über Maßstab, siehe verdict.",
+  "Die automatische Schalerkennung nahm auch das vorn hängende Schalende in die bewegte Ebene; beim Wehen wurde dahinter die aufgefüllte (verwischte) Weste sichtbar. Gelöst mit einem Polygon um das wehende Ende in tools/badger.override.json. Der alte Shader verschob den Schal nur waagerecht mit wachsender Höhe – für einen waagerecht wehenden Schal falsch; jetzt Auslenkung quer zu einer Schalachse.",
+  "Das Kantenlicht der Laterne wurde nur am Körper gemessen; das frei wehende Schalende galt dadurch ganz als Kante und leuchtete orange. Jetzt wird die Kante an Körper und Schal zusammen bestimmt.",
+  "Rauch war lange das schwächste Element: Rauschen in feiner Abtastung (0,5 px je Texel) sah aus wie Funkenregen; grob abgetastet (Rauch-UV /420, /300) waren die Ballen größer als die 30–50 px breite Säule, und der Rauch blieb eine glatte, helle, durchscheinende Bahn, die im Poster wie ein zweiter Lichtkegel wirkte (unabhängige Prüfung). Engeres Abtasten des glatten Kanals ergab helle Fetzen, bandbegrenztes Rauschen Würmer und Bänder. Erst eine Kette einzelner Ballen (Hash je Ballen, Rand aus Rauschen, oben heller) mit kurzem Stiel wirkt wie Rauch. Grenze: In voller Bildgröße sind die Ballen weich und nur mäßig ausgeprägt; kein Volumenrauch, kein Licht vom Abendhimmel auf dem Rauch.",
+  "Der Schornsteinpunkt aus der KI-Maske lag zwischen den beiden Aufsätzen und 2 px über der Oberkante; der Rauch begann dadurch dünn und blass im Leeren. Von Hand auf den rechten (höheren) Aufsatz gesetzt (scene.override.json: chimney).",
+  "Ein sin-Hash (fract(sin(x)·43758)) für die Rauchballen rechnete im mobile-Renderer anders (bis 18 Stufen Abweichung im Rauch); ein Hash nur aus Multiplikation und fract liefert in allen drei Renderern dieselben Werte.",
+  "Glitzern war pixelweises Salzrauschen über dem ganzen fernen Wasserband (Abtastung vertikal 0,01–0,05 px je Texel, Schwelle ab Wasser-Median; ~5 % der Pixel sprangen je Bild um mehr als 20 Stufen). Jetzt in Koordinaten der Wasserfläche mit ≥ 1 px je Texel und Helligkeitsschwelle 0,38–0,60: Sprünge > 20 Stufen im fernen Band 0,06 % der Pixel, im ganzen Wasser 0,24 %. Das Glitzern ist dadurch ruhiger und seltener (1,6 % der Wasserpixel gleichzeitig); wer mehr will, hebt sparkle_k oder senkt die Schwelle des Rauschprodukts.",
+  "Himmel: Die alte Überblendung zeigte alle 16 s für 4 s doppelte weiche Wolken (36 px Versatz, nachgerendert bei t = 13 s); das 0,8-px-Wabern machte die Pinselstruktur weicher. Ersetzt durch langsames Pendeln ohne Überblendung und ohne Wabern. Gemessen mit measure_sky.py (feinste Struktur gegen das Gemälde): 0,93–1,05 zu acht Zeitpunkten zwischen 0 und 57 s, Verluste nur durch bilineare Abtastung bei Bruchteil-Verschiebung; die alte Fassung kam nach demselben Maß auf 0,86 (die Prüfung maß mit ihrem Maß −29 %). Preis: Die Wolken ziehen nicht endlos in eine Richtung, sondern kehren alle 40 s langsam um (höchstens 1,9 px/s, an den Umkehrpunkten fast still); ob das Spielern auffällt, ist nicht geprüft.",
+  "In der ersten Fassung flogen die Möwen linear und verließen das Bild nach 38 bzw. 53 s für immer, und der Dachs blinzelte nur bei 1,55 und 4,85 s. Behoben und gemessen: Möwenlagen bis t = 3600 s ausgegeben (Wiedereintritt auf der anderen Seite, Höhe 60–200 px); Blinzeln in einer 20-s-Aufnahme ab t = 100 s per Vergleich mit einer Kopie ohne Blinzeln bei 101,9 / 102,2 / 106,6 / 112,0 / 117,2 s.",
+  "Die Takelage der Boote lag nicht in der Bootsmaske, sondern im Wasser: Sie wurde mit der Wasserverzerrung zur wabernden Zickzacklinie und riss beim Schaukeln vom Mast ab; die Platte enthielt an Booten und Masten Pull-Push-Schmierflecken, die die Verzerrung als Saum ums Boot zog. Jetzt wird die Takelage automatisch der Bootsmaske zugeschlagen und die Platte unter dem Horizont aus gespiegeltem Wasser gefüllt. Rest: Tiefer als 48 px im Rumpfloch bleibt die Platte ein weicher dunkler Fleck (vom Rumpf verdeckt); zwischen Mast und Wanten von Boot 2 liegt etwas Wasser in der KI-Bootsmaske und steht still; Festmacherleinen zum Steg schaukeln nicht mit (bei ±1° nicht sichtbar).",
+  "Der gemalte Lichtschein der Laterne auf dem Kai flackerte nicht (mask_b.G unterhalb Zeile 580 ≤ 0,03, Lichtfleck schwankte 0,4 Stufen): Der kreisförmige Lichtschein fällt quadratisch ab und erreicht den Boden kaum. Jetzt eine flache Ellipse auf dem Boden (floor_pools in scene.override.json); der Kai-Lichtfleck (250–420 × 570–640) schwankt um 24 Stufen, im Takt der Flamme. Dadurch steigt der Anteil bewegter Pixel im „ruhigen Rest“ von measure_fx von 0,6 auf 1,8 % (weiche Ränder des Lichtscheins unter der Schwelle der Laternenmaske).",
+  "Die dunkle Kontur des Schornsteins lag in der Himmelsmaske (Kantenglättung) und wanderte beim Ziehen des Himmels als Geisterlinie links neben dem Schornstein mit. Gelöst, indem die Platte 3 px Objektsaum nicht übernimmt.",
+  "Das Textfeld aus Phase 1 (232 px hoch, ab Zeile 470) verdeckte Boot 2 und die halbe Wasserfläche; danach (178 px ab Zeile 538) endete es 4 px vor dem Bildrand, und die Parserzeile lag im weichen Auslauf. Jetzt 176 px ab Zeile 532 (12 px Rand unten), Auslauf 14 statt 18 px, Zeilen 3–6 px enger; der weiche obere Rand liegt knapp über dem Heck von Boot 2. Ein tieferer 16:9-Schnitt hätte mehr Kai gebracht, aber die wenigen gemalten Sterne oben abgeschnitten.",
+  "Nur 12 Sternpixel: Das Gemälde hat kaum Sterne, und die meisten liegen im oberen Rand, der für 16:9 wegfällt. Das Funkeln ist messbar, aber kaum zu sehen.",
+  "Die Bootsformen in der KI-Maske stimmen nur grob (Aufbauten von Boot 2 erfunden); die Verfeinerung über den Farbabstand zur hineingefüllten Umgebung gleicht das aus.",
+  "Laterne flackert absichtlich schnell (mittlerer Sprung 7,2 Stufen je Bild im Laternenbereich samt Kai); wer ruhigeres Licht will, senkt die Rate der Flackertabelle.",
+  "Nicht geprüft: Verhalten auf einem echten Smartphone; ob die KI-Maske die Handarbeit an weiteren Orten ersetzt (hier keine Handfassung zum Vergleich mit compare_masks.py); Gleichmäßigkeit über mehrere Orte; ob die automatische Takelage-Erkennung an anderen Booten Wellenstriche oder Stegkanten mitnimmt."
+ ],
+ "lessons": [
+  "Eine KI-Farbcode-Maske als zweites Bild mit dem Gemälde als Referenz trifft bei gpt-image die Komposition praktisch deckungsgleich (Ausrichtung = unverändert); damit entfallen alle Polygone von Hand. Für Bildmodelle, die verschieben oder skalieren (agy, JPEG), richtet aimask.align die Maske automatisch aus: Im Selbsttest mit verschobener, skalierter und als JPEG verkleinerter Maske IoU Himmel 0,999, Wasser 0,993, Boote 0,96/0,98 (mit Takelage, Stand nach der Nachbesserung), Lichter ≤ 0,5 px, Ausrichtung ≤ 1,9 px.",
+  "Im Bild-Prompt Flächen trennen lassen, die später Masken werden (großer offener Himmel, ruhige Wasserfläche mit senkrechten Spiegelungen, Lampe und Schornstein vor Himmel, Lichter als kleine Punkte ohne Strahl und Rauch): gpt-image hielt sich daran, nichts musste weggeflickt werden.",
+  "Alle Hintergrundebenen in einem canvas_item-Shader: ein Draw-Call, deterministisch über eine Zeit-Uniform, in allen drei Renderern praktisch gleich.",
+  "Eine saubere Platte (Objekte aus der Umgebung gefüllt, Objektsaum ausgespart) ist die Voraussetzung dafür, dass Verzerrung, Ziehen und Schaukeln keine Objektfarben ins Wasser oder in den Himmel ziehen.",
+  "Den Strahl nur dort zeichnen, wo Himmel ist (mask_c.b aus der Himmelsmaske): Häuschen, Masten und Laterne verdecken ihn dann von selbst.",
+  "Figur als Standbild: Ursprung an die Füße legen und im vertex() strecken und scheren, dann bleiben die Füße stehen. Gemessen mit measure_badger.py über 180 Bilder: Fußzeile immer 656, Fußspalten 486 und 569 (±0 px), Kopf 457–460 (Atem), höchstens 1 px Änderung je Bild.",
+  "Wehende Teile (Schal) über eine Achse vom Ansatz zur Spitze bewegen, quer zur Achse auslenken und die Welle entlang der Achse laufen lassen; nur das frei hängende Stück in die bewegte Ebene nehmen, nichts, was vor dem Körper liegt.",
+  "Rauschtexturen im Shader nie feiner als etwa 1 px je Texel abtasten (Rauch), sonst Körnung.",
+  "Codex liefert Figuren mit echtem Alphakanal; Magenta-Entfernung abschalten (despill), Saum nur um 1 px zurücknehmen.",
+  "Messen statt schätzen: measure_fx.py zeigt je Maskenbereich, ob ein Effekt sichtbar ist (Anteil der Pixel, die um mehr als 12 Stufen schwanken: Wasser 27 %, Himmel 27 %, Boote 75 %, Fenster 68 %, Laterne samt Kai 100 %, Strahlzone 52 %, Rauchzone 7 % – der dichte Rauch ändert sich je Pixel wenig, nur die Ballen wandern), ob etwas flimmert (Sprünge > 20 Stufen je Bild: fernes Wasser 0,06 %) und dass der Rest ruhig bleibt (1,8 %).",
+  "Korrekturen nie in erzeugte Dateien schreiben, sondern in tools/scene.override.json und tools/badger.override.json; process.py baut dann alles in 17 s neu.",
+  "Rauch als Kette einzelner Ballen (je Ballen Hash für Größe, Versatz, Dichte; Rand aus glattem Rauschen; oben heller als unten) plus kurzer Stiel wirkt wie Rauch; reines Rauschen in einer Säule wirkt wie eine Lichtbahn oder zerfällt in Fetzen.",
+  "Hashes im Shader ohne sin bauen (nur Multiplikation und fract): sin-Hashes rechnen je Renderer anders.",
+  "Feine Effekte auf dem Wasser in Koordinaten der Wasserfläche abtasten (Tiefe logarithmisch) und nie feiner als 1 px je Texel; eine Abtastung, die sich pro Zeile im Maßstab ändert, erzeugt Salzrauschen.",
+  "Ein Himmel, der beliebig lange läuft, ohne jede Überblendung geht nur als Pendeln; die Überblendung zweier um 36 px verschobener Lagen zeigte doppelte Wolken (eine Flow-Map mit kleinem Versatz je Zyklus ist nicht getestet). Am Bildrand gespiegelt abtasten, sonst entstehen Randstreifen.",
+  "Langzeitfehler (Möwen weg, Blinzeln hört auf) zeigt die 6-s-Aufnahme nicht: Einen Startzeit-Schalter (--t0) einbauen und Effekte per Vergleichskopie der Demo ohne den Effekt messen.",
+  "Dünne Linien an Objekten (Takelage) gehören in die Objektmaske: waagerechter Hochpass in der konvexen Hülle des Objekts trennt sie von waagerechten Wellenstrichen."
+ ],
+ "assets": [
+  {
+   "file": "assets/still.png",
+   "kind": "background",
+   "made_with": "gpt-image (Codex) + Schnitt auf 16:9 und Verkleinerung auf 1280×720 (prep.py)",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/plate.png",
+   "kind": "plate",
+   "made_with": "prep.py: Himmel und Wasser über Objekte und Boote fortgesetzt (gespiegelte Pinsel- und Wellenstruktur, Pull-Push)",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/mask_ai.png",
+   "kind": "mask",
+   "made_with": "gpt-image (Codex) Farbcode-Maske, eingeordnet, ausgerichtet und auf den Ausschnitt gebracht (auto_scene.py, aimask.py)",
+   "prompt": "assets/raw/mask.json"
+  },
+  {
+   "file": "assets/mask_a.png",
+   "kind": "mask",
+   "made_with": "prep.py: R Wasser, G Himmel, B Sterne (Guided Filter)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/mask_b.png",
+   "kind": "mask",
+   "made_with": "prep.py: R Fenster, G Laterne (samt Lichtschein auf Kai und Steg), B Leuchtfeuer (Leuchtfläche + gemalter Lichtschein)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/mask_c.png",
+   "kind": "mask",
+   "made_with": "prep.py: R Boot 1, G Boot 2 (samt Takelage), B Sichtbarkeit des Strahls",
+   "prompt": ""
+  },
+  {
+   "file": "assets/noise.png",
+   "kind": "noise",
+   "made_with": "prep.py: drei kachelbare Rauschkanäle 256×256 aus dem Frequenzspektrum (1/f^β, feste Seeds)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/badger_body.png",
+   "kind": "character",
+   "made_with": "gpt-image (Codex, echter Alphakanal) + prep_badger.py: Körper ohne wehendes Schalende, dahinter aufgefüllt, auf 198 px Figurenhöhe verkleinert",
+   "prompt": "assets/raw/badger.json"
+  },
+  {
+   "file": "assets/badger_scarf.png",
+   "kind": "character",
+   "made_with": "prep_badger.py: wehendes Schalende als eigene Ebene",
+   "prompt": "assets/raw/badger.json"
+  },
+  {
+   "file": "assets/badger_lids.png",
+   "kind": "character",
+   "made_with": "prep_badger.py: geschlossene Lider aus dem umgebenden Fell (Blinzeln)",
+   "prompt": "assets/raw/badger.json"
+  },
+  {
+   "file": "assets/ref/badger_front.png",
+   "kind": "reference",
+   "made_with": "Ausschnitt der Vorderansicht aus shared/badger/master_sheet.png auf Magenta (erste Referenz für den gemalten Dachs)",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Alegreya (Regular und Italic, variabel)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/alegreya"
+  },
+  {
+   "item": "Schrift Alegreya SC Medium",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/alegreyasc"
+  },
+  {
+   "item": "Hash without Sine (Shader-Funktion), Copyright (c) 2014 David Hoskins – in demo/shaders/still.gdshader",
+   "license": "MIT",
+   "source": "https://www.shadertoy.com/view/4djSRW"
+  }
+ ],
+ "image_generations": 3,
+ "tool_issues": [
+  "tools/genimg.py (Backend agy, Stand 10.10.2026): Bei Fehlern zeigte die Ausgabe nur die ersten 80 Zeichen der Meldung und schrieb keine .json; damals lokal umgangen (Protokoll assets/raw/bg.agylog.json). In der Fassung vom 11.10.2026 behoben (<name>.fail.json mit voller Antwort); das lokale Ersatzskript ist entfernt.",
+  "tools/genimg.py (Backend agy): Der agy-Hauptagent übergibt die Erzeugung an einen Unteragenten und antwortet zunächst „I am generating the image …“; die Fehlermeldung des Unteragenten steht erst in der zweiten Zeile der Antwort. Die Einstufung als „usage limit“ stimmte hier, beruht aber nur auf Wörtern wie „quota“/„limit“ im Antworttext.",
+  "tools/genimg.py (Backend agy): Sobald Referenzen übergeben werden, hängt die Anweisung an agy „Keep the character design and palette from them.“ an. Für Bearbeitungen wie die Farbcode-Maske widerspricht das dem Prompt. Hier nicht wirksam geworden, weil alle Bilder über Codex kamen; ungeprüft."
+ ],
+ "status": "done"
+}

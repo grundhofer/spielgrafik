@@ -1,0 +1,286 @@
+{
+ "slug": "kachelsatz",
+ "name": "Kachelsätze & Autotiling",
+ "family": "technik",
+ "kind": "technique",
+ "era": "1985 bis heute (Karten aus Kacheln in Rollen- und Abenteuerspielen; Autotiling in Editoren seit den 1990ern, heute in Tiled, LDtk und Godot)",
+ "summary": "Ein KI-Kachelblatt liefert nur die Materialien (Gras, Sand, Wasser, Pflaster, Bretter). Ein Skript bringt sie auf ein echtes Pixelraster, macht sie per Min-Cut nahtlos und rechnet daraus je Ebene die 15 Übergangskacheln eines Corner-Terrains (der 16. Fall ist leer). Godot legt die Hafenkarte aus einer Textdatei als Dual-Grid an: fünf TileMapLayer, um eine halbe Kachel versetzt. Wasser und Brandung sind Kachel-Animationen des TileSets.",
+ "references": [
+  "Stadt- und Weltkarten der 16-Bit-Konsolen-Rollenspiele aus 16-px-Kacheln mit animiertem Wasser",
+  "RPG Maker (ab 2000): Autotile-Blätter, aus Viertelkacheln zu allen Übergängen zusammengesetzt",
+  "Stardew Valley (2016): Draufsicht-Karten mit Übergangskacheln und Tageszeitlicht",
+  "Dual-Grid-Technik (Anzeige um eine halbe Kachel gegen das logische Raster versetzt), bekannt u. a. aus den Vorträgen zu Townscaper (Oskar Stålberg) und aus der Godot-Gemeinde"
+ ],
+ "traits": [
+  "Karte aus 16×16-Kacheln in 426×240, ganzzahlig ×3: Karte, Figur und Oberfläche teilen ein Pixelraster ohne Kantenglättung.",
+  "Übergänge entstehen nur aus Ecken: Jede Anzeigekachel liest die vier logischen Zellen an ihren Ecken (Dual-Grid). Je Ebene gibt es 15 Übergangskacheln (Sand über Wasser, Gras über Sand, Kaipflaster, Steg); das Übersichtsbild liegt in assets/tiles/overview.png.",
+  "Strand- und Graskanten sind rund und unregelmäßig (Rundung 8/7 bzw. 7/6 px, Rauschen nur nach innen). Kai und Steg haben gerade Kanten; nach Süden zeigen sie eine 8 px hohe Quadermauer bzw. eine 2 px hohe Brett-Stirnseite mit Pfählen.",
+  "Das Wasser ist als Kachel animiert: 16 Bilder zu 0,1 s, die Kräuselstriche schwingen zeilenweise um ±1 px. Die Brandung hat 6 Bilder zu 0,2 s, die Schaumlinie wandert dabei 1 bis 2,8 px vom Ufer weg.",
+  "Alle Kanten sind nahtlos: Godots Bild der Kachelebenen stimmt mit der Python-Referenz überein (0 Pixel mit mehr als 2 Stufen Abweichung zu 6 Zeitpunkten, die Animationsbilder eingeschlossen).",
+  "Der Dachs-Kurier (30 px) kommt aus der Tür und läuft über den Kai: 8 Laufphasen mit 15 Bildern/s, der Standfuß bleibt dabei stehen. Dann dreht er sich nach vorn, blinzelt und grüßt.",
+  "Dämmerung über CanvasModulate. Dazu warmes Licht aus Fenster und Laterne (flackernd), ein drehender Leuchtturmstrahl, Rauch aus dem Schornstein, eine Möwe mit Bodenschatten und Boote, die um 1 px schaukeln.",
+  "Textfenster im Rollenspielstil mit Pixel Operator 8: Ortsschild, Erzählzeile mit Schreibmaschinen-Effekt, Auswahl mit Zeiger und Parserzeile mit Schreibmarke. Es deckt etwa 24 % des Bildes ab."
+ ],
+ "camera": "Schräge Draufsicht wie in Rollenspielkarten: Der Boden ist von oben zu sehen, Gebäude zeigen Dach und Südseite. Die Kamera steht fest; die Welt ist um 8 px nach unten versetzt, damit über dem Schornstein Platz für den Rauch bleibt. Das Poster liegt bei 0,75 (Bild 135, 4,5 s: der Dachs steht vorn neben dem Paket).",
+ "resolution": "Basisauflösung 426×240, ganzzahlig ×3 mit Nearest (1278×720, je 1 px Rand links und rechts). Kacheln 16×16. Die Materialpaletten kommen aus dem KI-Blatt (Gras 7, Sand 5, Wasser 6, Pflaster 7, Bretter 7 Farben), dazu wenige Überlagerungsfarben mit Alpha (Schaum, Flachwasser, Schatten, Wasserlinie). Requisiten haben je Objekt eine eigene Palette mit 6 bis 24 Farben, der Dachs 32. Licht und Dämmerung mischen frei; eine feste Hardwarepalette gibt es nicht.",
+ "pipeline": [
+  {
+   "step": "Kachelblatt erzeugen",
+   "tool": "genimg (gpt-image über Codex)",
+   "detail": "Angefordert 1024×1024, geliefert 1254×1254. Ein Raster aus 8×8 Kacheln: fünf Reihen Füllkacheln (Gras, Sand, Wasser, Pflaster, Bretter), drei Reihen Übergänge (Gras/Sand, Sand/Wasser mit Schaum, Kaikante mit Mauer). Verlangt waren 16 Kunstpixel je Kachel, geliefert wurden etwa 24 (Pseudo-Raster rund 6,5 Bildpixel, je Reihe gemessen 5,6 bis 7,8). Zwischen den Kacheln liegen gemalte Trennlinien, obwohl der Prompt sie verbot. Ein Versuch. Prompt: assets/prompts/tiles.txt"
+  },
+  {
+   "step": "Auf das echte Raster bringen",
+   "tool": "scripts/materials.py, scripts/pxlib.py",
+   "detail": "Je Materialreihe eine Palette per k-means in Oklab (echte Bildfarben, Medoid je Cluster). Je KI-Kachel 24×24 Zielzellen; jede Zelle bekommt die Mehrheitsfarbe aus ihrer inneren Hälfte. So entstehen harte Pixel ohne Mischfarben. Mit den bestellten 16 Zellen je KI-Kachel wurden Gras und Wasser zu Rauschen. Deshalb gilt die native Dichte: eine KI-Kachel ergibt 1,5 Spielkacheln."
+  },
+  {
+   "step": "Nahtlos machen",
+   "tool": "scripts/materials.py",
+   "detail": "Aus einem Innenausschnitt ohne Trennlinien entsteht per Min-Cut, erst waagrecht und dann senkrecht, eine 16×16-Kachel, die an sich selbst anschließt. Ausschnitt (x0, y0 zwischen 1 und 4) und Überlappung (3 oder 4 px) wählt das Skript nach dem kleinsten Nahtfehler, also dem Farbabstand über die Umbruchkante im Verhältnis zu den Innenkanten: Gras 0,52, Sand 0,27, Pflaster 0,53. Beim Wasser gilt ein fester Ausschnitt (0,37), weil die Suche ein zu gleichförmiges Strichmuster wählte. Varianten: Gras 4, Sand 2, Pflaster 1. Ihre Mitte stammt aus anderen KI-Kacheln, der 3-px-Rand von der Grundkachel, die Grenze ist verrauscht. Jede Variante passt dadurch an jede Kante."
+  },
+  {
+   "step": "Steg-Bretter",
+   "tool": "scripts/build_tiles.py",
+   "detail": "Die KI-Bretter haben eine Teilung von 6 px, die nicht in 16 px aufgeht. Daraus werden drei Bretter zu 5, 5 und 6 px (mit Fuge) aus den Holzzeilen eines KI-Bretts. Der Brettstoß liegt bei x = 8, also genau an den Kanten des 1 Zelle breiten Stegs. Nägel und Hirnholz setzt das Skript."
+  },
+  {
+   "step": "Übergangskacheln rechnen",
+   "tool": "scripts/autotile.py, scripts/build_tiles.py",
+   "detail": "Für jeden Eckfall (Bits oben links, oben rechts, unten links, unten rechts) entsteht die Form auf einem erweiterten 32×32-Raster, das die vier logischen Zellen ganz enthält; Abstände bis 8 px sind damit exakt. Die Form besteht aus Quadranten mit Rundung nur um die Kachelmitte (Sand 8/7 px, Gras 7/6 px, Kai und Steg 0) und Rauschen, das sich alle 16 px wiederholt und nur nach innen wirkt. Daraus werden die Bänder: nasser Sand, Flachwasser, Schaum (6 Bilder), Grasschatten, Bordsteine mit Fugen, Kaimauer 8 px nach Süden (Quaderreihen, Algen, nasser Sockel), Wasserlinie, Steg-Stirnseite, Pfahlköpfe und Pfähle an der Spitze, Schatten auf dem Wasser. So entstehen 15 Kacheln je Ebene ohne Handarbeit."
+  },
+  {
+   "step": "Wasseranimation",
+   "tool": "scripts/build_tiles.py",
+   "detail": "Der Grund der KI-Wasserkachel bleibt stehen. Die hellen Kräuselstriche schwingen paarweise zeilenweise um ±1 px; ihre Phase wiederholt sich alle 16 px. Versetzt blitzen sie eine Stufe heller auf. Das ergibt 16 Bilder, nahtlos in Raum und Zeit."
+  },
+  {
+   "step": "TileSet anlegen",
+   "tool": "Godot 4.7 headless (demo/tools/build_tileset.gd)",
+   "detail": "demo/tiles/harbour_tileset.tres enthält fünf Atlasquellen und fünf Terrain-Sets im Modus Match Corners mit je einem Terrain gegen 'leer'. Jede Kachel trägt ihre Ecken-Bits und eine probability für Varianten (Grundkachel 0,4, Varianten zusammen 0,6). Wasser (16 × 0,1 s) und Sand (6 × 0,2 s) sind als Kachel-Animation hinterlegt."
+  },
+  {
+   "step": "Requisiten",
+   "tool": "genimg (gpt-image über Codex) + scripts/build_sprites.py",
+   "detail": "Ein Blatt (1536×1024) in schräger Draufsicht: Häuschen, Leuchtturm, zwei Boote, zwei Fässer, Kistenstapel, Taurolle, Laterne am Pfosten, Paket, drei Felsen, Möwe. Codex lieferte Alpha um 250 statt 255 und einen Dunst (Alpha 1 bis 15) um alle Objekte; geschnitten wird bei Alpha ≥ 200. Jedes Objekt bekommt eine eigene Palette (6 bis 24 Farben) und wird um 5,5 bis 8 Bildpixel je Zielpixel verkleinert (Häuschen 95×76, Leuchtturm 43×110); jede Zelle bekommt die Mehrheitsfarbe. Die beiden Boote berührten sich am Mast; das Skript trennt sie an der Zeile mit den wenigsten deckenden Pixeln. Ein Versuch. Prompt: assets/prompts/props.txt"
+  },
+  {
+   "step": "Dachs-Kurier",
+   "tool": "genimg (gpt-image über Codex, Referenz shared/badger/master_sheet.png) + scripts/build_sprites.py",
+   "detail": "Ein Blatt mit vier Laufbildern von der Seite und drei Standbildern von vorn (neutral, blinzelnd, grüßend); das Kostüm folgt der Referenz. Verkleinert auf 30 px Höhe (13,7 bis 14,4 Bildpixel je Zielpixel) mit einer gemeinsamen Palette aus 32 Farben; seltene Farben schützt eine entdoppelte Farbliste. Danach Außenkontur nachgezogen und am Kopf ausgerichtet. Die vier KI-Laufbilder hatten fast dieselbe Beinstellung: drei von vier zeigen den hinteren Fuß bei x 10 bis 14 und den vorderen bei 19 bis 26, eine Durchgangspose fehlt. Deshalb stammt der Oberkörper aus Bild 0, die Beine sind gezeichnet (8 Phasen), und das Schalende wechselt zwischen Bild 0 und 1. Blinzeln und Gruß liegen nur als Fenster über dem neutralen Bild (Augenpartie bzw. rechte Zellhälfte). Ein Versuch. Prompt: assets/prompts/badger.txt"
+  },
+  {
+   "step": "Licht und Möwe",
+   "tool": "scripts/build_lights.py",
+   "detail": "Lichttexturen in 4 Stufen, an den Stufenkanten mit Bayer-Raster (runder Lichthof, Leuchtturmkegel mit 2 × 11°). Für den Flügelschlag gibt es ein zweites Möwenbild mit angelegten Flügeln (70 % Breite, nächster Nachbar)."
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/preview_map.py, scripts/probe.py",
+   "detail": "preview_map.py setzt die Karte ohne Godot zusammen und dient als Referenz. probe.py vergleicht das Godot-Bild damit (tiles), misst die Füße (feet), malt die Ebenen zum Vergleich mit Godots eigenem Terrain-Löser (terrain), vergleicht die Renderer (renderer) und prüft einen Dauerlauf ab t0 = 30 s (long). Die Ergebnisbilder liegen in assets/probe/. Reihenfolge zum Nachbauen: scripts/build_tiles.py, scripts/build_sprites.py, scripts/build_sprites.py badger, scripts/build_lights.py, godot --headless --path demo --import, godot --headless --path demo --script res://tools/build_tileset.gd, tools/capture.py styles/kachelsatz --poster-at 0.75. Alle Schritte sind deterministisch (zweimal gebaut: Atlanten und Sprites bytegleich)."
+  }
+ ],
+ "godot": [
+  "project.godot: Viewport 426×240, stretch mode viewport, scale_mode integer, Standardfilter Nearest, Fenster 1278×720, snap_2d_transforms/vertices_to_pixel. Hauptszene main.tscn: Daemmerung (CanvasModulate), Welt (um 8 px versetzt) mit Karte, Objekte (y_sort_enabled), Rauch und Effekte, dazu UI (CanvasLayer 10).",
+  "Karte: map/harbour.txt mit 27 × 15 logischen Zellen, die Zeichen W/S/G/C/J stehen für Wasser, Sand, Gras, Kaipflaster und Steg. main.gd legt fünf TileMapLayer (Wasser, Sand, Gras, Kai, Steg) an, um (−8, −8) versetzt. Für die Anzeigekachel (dx, dy) gelten die logischen Zellen (dx−1, dy−1), (dx, dy−1), (dx−1, dy) und (dx, dy); am Kartenrand wird geklemmt.",
+  "Welche Zellen eine Ebene deckt: Sand = S, G, C (alles Land, Schaum am Wasser), Gras = G, Kai = C, Steg = J, Wasser überall. Höhere Ebenen liegen mit Alpha darüber. Ecken, an denen drei Terrains zusammentreffen (Kai, Sand und Wasser in einer Kachel), brauchen daher keine eigenen Kacheln.",
+  "Die Nachschlagetabelle entsteht zur Laufzeit aus dem TileSet selbst: TileData.get_terrain_peering_bit der vier Ecken ergibt einen 4-Bit-Schlüssel und dazu die Liste [Atlas-Koordinate, probability]. Die Variante wählt ein 32-Bit-Zellen-Hash über die probability; das ist deterministisch und in scripts/preview_map.py identisch umgesetzt.",
+  "Kachel-Animationen über TileSetAtlasSource (animation_columns, animation_frames_count, frame_duration) im Standardmodus, also synchron für alle Kacheln. Im Movie-Maker-Lauf folgen sie exakt der festen Bildrate: Wasserbild = floor(t / 0,1) mod 16, Sandbild = floor(t / 0,2) mod 6 (geprüft).",
+  "Objekte als Sprite2D (centered = false, Offset = −Breite/2, −Höhe, Position = Fußpunkt), die y-Sortierung erledigt der Elternknoten. Der Dachs ist ein Sprite2D mit region_rect auf badger.png (Zellen 40×36, Anker 20/34).",
+  "Dachs: Laufbild n = floor((t − 0,4) × 15), x = 38 + 2n, Phase n mod 8. Nach 54 Laufbildern (Phase 6, Füße beisammen) Wechsel auf das Bild von vorn; Blinzeln bei 4,57–4,72 s, Gruß bei 4,97–5,77 s.",
+  "Licht: CanvasModulate (0,56; 0,58; 0,82). PointLight2D für Fenster, Laterne (Flackern aus fester Zufallsfolge, RandomNumberGenerator mit seed 4711, 12 Werte/s überblendet), Lichthof des Leuchtfeuers und den Leuchtturmstrahl (Kegeltextur, dreht mit 20°/s von 95° auf 215° in 6 s). Der Strahl hat range_item_cull_mask = 2; alle anderen Objekte tragen light_mask = 3, der Turm nur 1, damit ihn sein eigener Strahl nicht erhellt.",
+  "Rauch (scripts/smoke.gd): Ballen aus ganzen Pixeln, rein aus der Zeit berechnet (alle 0,42 s ein Ballen, 2,6 s Lebensdauer, Wind nach rechts). Die Möwe hat einen Bodenschatten (gleiche Textur, modulate schwarz mit Alpha 0,35) und schlägt mit zwei Bildern; die Boote schaukeln um ganze Pixel.",
+  "Oberfläche (scripts/ui.gd): Pixel Operator 8 ohne Kantenglättung, Hinting und Subpixel. Rahmen aus ganzen Pixeln (dunkle Außenlinie, Messing oben links, dunkles Messing unten rechts, abgeschrägte Ecken). Schreibmaschine mit 30 Zeichen/s, Parserzeile mit 9 Zeichen/s und blinkender Marke, Auswahlzeiger wippt um 1 px.",
+  "Benutzerargumente nach '--': --t0=<s>, --tiles-only (nur Kachelebenen, ohne Licht), --badger-only (nur der Dachs auf Schwarz), --godot-terrain (Ebenen mit set_cells_terrain_connect statt Dual-Grid)."
+ ],
+ "techniques": [
+  "kachelsatz",
+  "ki-spritesheet",
+  "sprite-animation",
+  "fuss-halten",
+  "mimik-aus-teilen",
+  "palette-einrasten",
+  "additiver-lichtkegel",
+  "prozedurale-animation",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 3,
+  "consistency": 4,
+  "effort": 2,
+  "text_adventure": 3,
+  "mobile": 5
+ },
+ "ratings_note": "ai_fit 3: Die KI traf im ersten Versuch den Pixel-Look aller fünf Materialien, der Requisiten und der Figur. Die technischen Forderungen erfüllte sie nicht: das Raster (24 statt 16 Kunstpixel je Kachel), nahtlose Füllkacheln (gemalte Trennlinien, Nahtfehler 0,6 bis 1,7), einen brauchbaren Übergangssatz (Kanten bei 23 bis 76 % der Kachelbreite, nur 8 von 15 Fällen je Paar) und eine Laufbewegung (keine Durchgangspose). Alle Übergänge, Nähte, Animationen und das Autotiling kommen aus Code. consistency 4: Jede Ebene entsteht aus derselben Geometriefunktion; ein neues Terrain braucht nur eine Materialreihe und eine Zeile Einstellung, und alle Kanten passen nachweislich. Abzug, weil die KI-Pixeldichte nicht frei wählbar ist (die Texturgröße gibt das Modell vor) und weil die Requisiten mit 5,5 bis 8 Bildpixeln je Zielpixel leicht verschieden dicht sind. effort 2: Nach dem einmaligen Aufbau entsteht ein neues Material oder Terrain in Minuten und eine Karte als Textdatei. Mehr Arbeit machen nur Figuren mit echter Laufbewegung (Beine gezeichnet). text_adventure 3: Als Ortskarte oder Erkundungsansicht eines Textabenteuers gut lesbar, günstig erweiterbar und mit Textfenster sofort spielartig. Die Figur ist aber nur 30 px groß (Kopf 17 px breit, Gesicht etwa 9 px hoch); für erzählerische Nahszenen braucht es eine zweite Darstellung. mobile 5, nur auf dem Mac geprüft, nicht auf einem Smartphone: Der Mobile-Renderer ist bitgleich mit Forward+ (0 abweichende Pixel über 110 Bilder). gl_compatibility weicht nur beim Licht ab (mittlere Abweichung 0,8 Stufen, höchstens 5,3 % der Pixel um mehr als 8 Stufen). Die Szene braucht 865 gesetzte Kacheln in fünf Ebenen (448 davon Wasser), 16 Sprites, 4 Punktlichter und Kachelatlanten von zusammen 10 KB.",
+ "verdict": "Für unser Textadventure ist das eine günstige, gut wiederholbare Grundlage, wenn das Spiel eine Karte oder Erkundungsansicht bekommt. Das Bildmodell liefert Materialien und Objekte im ersten Versuch in einem Look, der sofort als Kachel-Rollenspiel erkennbar ist. Kachelgrenzen, Nahtlosigkeit und Übergänge sollten wir aber nie vom Modell erwarten. Bewährt hat sich: KI-Materialblatt, Raster in nativer Dichte messen, Min-Cut-Nähte, Übergänge per Skript, Dual-Grid in Code, TileSet mit Ecken-Bits als einzige Quelle. Daraus lässt sich jeder weitere Ort in wenigen Minuten als Textdatei bauen. Für Gespräche und Nahszenen braucht der Stil eine zweite, größere Figurendarstellung (Porträt), weil die Kartenfigur dafür zu klein ist.",
+ "pitfalls": [
+  "Das KI-Kachelblatt hält kein Raster: verlangt waren 16 Kunstpixel je Kachel, geliefert wurden etwa 24 mit schwankender Teilung (5,6 bis 7,8 Bildpixel je Kunstpixel, Bild 1254 statt 1024 px). Auf 16 Zellen gerastert wurden Gras und Wasser zu Rauschen. Deshalb gilt die native Dichte, und eine KI-Kachel ergibt 1,5 Spielkacheln; wie groß die Texturen wirken, bestimmt also das Modell.",
+  "Die KI-Füllkacheln sind nicht nahtlos. Zwischen den Kacheln liegen gemalte Trennlinien, obwohl der Prompt sie verbot. Ohne diese Linien ist der Farbsprung über die Umbruchkante 0,6- bis 1,7-mal so groß wie an Innenkanten (Wasser 1,25 bis 1,71, Pflaster bis 1,70). Erst der Min-Cut mit Ausschnittsuche bringt ihn auf 0,27 bis 0,53.",
+  "Die KI-Übergangskacheln (Reihen 6 bis 8) sind unbrauchbar und nur ausgewertet, nicht verwendet: Ihre Kanten treffen bei 23 bis 76 % der Kachelbreite auf den Rand statt immer an derselben Stelle, je Paar gibt es nur 8 von 15 Fällen, und die Kaimauer hat in jeder Kachel eine andere Höhe.",
+  "Godots eigener Terrain-Löser passt nicht zu diesem Satz. Mit demselben TileSet und set_cells_terrain_connect auf den logischen Zellen schrumpfen alle Flächen um eine halbe Kachel, der 1 Zelle breite Steg und der Sandweg verschwinden fast, und am Kartenrand entsteht ein Ufer (Vergleich in assets/probe/terrain_compare.png). Die Ecken-Bits im TileSet sind korrekt, gemalt wird aber im Code per Dual-Grid. Wer im Editor mit dem Terrain-Pinsel malt, erhält dieselben Fehler.",
+  "Diagonale Küsten sind im Dual-Grid mit 16 Fällen Treppen aus 16-px-Stufen mit gerundeten Ecken. Das liest sich als buchtiger Strand; gerade 45°-Küsten gehen aber nicht ohne weitere Kacheln oder ein feineres logisches Raster.",
+  "Die Texturen wiederholen sich alle 16 px. Auf großen Gras- und Wasserflächen sieht man das Raster trotz Varianten, und das Wasser hat keine Varianten. Alle Wasserkacheln animieren synchron; das ist so gewollt, wirkt aber gleichförmig.",
+  "Wegen der Schichtung dürfen Sand und Gras nur nach innen ausfransen, sonst ragen sie unter der geraden Kaikante hervor. Ihre Kanten liegen deshalb 0 bis 1,8 px innerhalb der Zellgrenze, und zwischen Gras und Kai bleibt ein 0 bis 2 px breiter Sandstreifen.",
+  "Godot spielt Animationsbilder nur der Reihe nach ab. Die hin- und herlaufende Brandung braucht deshalb 6 Atlasbilder, von denen 2 doppelt sind.",
+  "Die KI-Laufbilder des Dachses taugen nicht zum Laufen (fast gleiche Schrittstellung, keine Durchgangspose). Die gezeichneten Beine sind einfache 3-px-Stummel. Arme, Paket und Tasche schwingen nicht mit; der Körper hebt sich nur beim Durchgang um 1 px, und das Schalende flattert über zwei Teilbilder.",
+  "Maßstab bewusst abweichend: Der Dachs ist 30 px groß, die Haustür etwa 14 px. Er ist also gut doppelt so hoch wie die Tür (Chibi-Konvention von Rollenspielkarten). Kleiner wurde das Gesicht unlesbar; schon so sind die Augen im dunklen Streifen nur 1-px-Punkte.",
+  "Die Lichter (CanvasModulate und additive Punktlichter) erzeugen Farben außerhalb der Materialpaletten; eine strenge Pixel-Palette gilt nur für die Kacheln selbst. In der ersten Fassung erhellte der Leuchtturmstrahl den eigenen Turm; das beheben Lichtmasken.",
+  "In der Draufsicht fehlt der Himmel: Horizontglut und erste Sterne aus dem Motiv sind nicht darstellbar, die Abendstimmung kommt nur aus Tönung und Lichtern. Der Strahl streicht als Lichtkegel über den Boden und liest sich eher als Suchscheinwerfer, weil der Dunst fehlt.",
+  "Das Häuschen steht am oberen Bildrand. Die Welt ist deshalb um 8 px nach unten versetzt, und der Rauch treibt mit dem Wind nach rechts; ein Teil der Ballen verlässt das Bild trotzdem nach etwa 2 s oben.",
+  "Die Fußmessung über Bodenläufe allein ist irreführend: Beim Durchgang verschmelzen beide Füße zu einem Lauf, was scheinbare Sprünge bis 2,5 px ergibt. Erst die Messung je Bein über die Beinfarbe zeigt den echten Wert (siehe lessons)."
+ ],
+ "lessons": [
+  "Ein KI-Kachelblatt dient als Materiallieferant, nicht als Kachelsatz: die Füllkacheln nehmen, die Pixelteilung messen, in nativer Dichte rastern (Oklab-k-means plus Mehrheitsfarbe je Zelle) und die Spielkachelgröße unabhängig davon wählen.",
+  "Nahtlos per Min-Cut: einen Ausschnitt nehmen, der um die Überlappung größer ist als die Kachel, und erst waagrecht, dann senkrecht die günstigste Schnittlinie durch die Überlappung legen. Ausschnitt und Überlappung nach dem Nahtfehler (Umbruchkante zu Innenkanten) wählen und das Ergebnis ansehen; beim Wasser wählte die Suche ein zu gleichförmiges Muster. Varianten bekommen den Rand der Grundkachel und passen dadurch an alle Kanten.",
+  "Übergänge vollständig aus Geometrie rechnen: Werden Form, Abstände und Rauschen auf einem erweiterten Raster mit den vier Eckzellen berechnet (exakt bis 8 px) und ist das Rauschen periodisch in der Kachelgröße, passen auch breite Bänder über alle Kachelgrenzen: Schaum, Mauer (8 px, ragt in die Nachbarkachel), Schatten. Eine Funktion ergibt so alle 15 Kacheln je Ebene.",
+  "Dual-Grid mit geschichteten Ebenen (Terrain gegen 'leer', Reihenfolge Wasser < Sand < Gras < Kai < Steg) löst Ecken mit drei oder mehr Terrains ohne zusätzliche Kacheln. Statt 16 Kacheln je Terrainpaar braucht jedes Terrain nur 15 Kacheln gegen die Ebene darunter; einen 47er-Satz braucht es nicht.",
+  "Das TileSet mit Ecken-Bits (Match Corners) im Code zur Nachschlagetabelle machen: Das TileSet bleibt die einzige Quelle, Varianten laufen über probability, die Auswahl über einen Zellen-Hash ist deterministisch.",
+  "Eine Python-Referenz, die die Karte genauso zusammensetzt, ergibt einen pixelgenauen Test: Das Godot-Bild war zu 6 Zeitpunkten gleich (0 Pixel mit mehr als 2 Stufen Abweichung). Dabei zeigte sich auch, dass Kachel-Animationen in Movie Maker exakt der festen Bildrate folgen.",
+  "Laufen mit festem Standfuß: Oberkörper aus dem KI-Bild, Beine gezeichnet, Vorschub je Phase gleich dem Rückweg des Standfußes (2 px bei 15 Bildern/s). Gemessen liegt die Sohlenzeile in allen 185 Bildern auf derselben Höhe (y = 104). Je Bein streut die Spalte über eine Standphase von 4 Laufbildern um höchstens 1 px (7 bzw. 6 Standphasen); die Sohle selbst bleibt exakt stehen.",
+  "Blinzeln und Gruß als Fenster über dem neutralen Bild (Augenpartie, Arm) statt ganzer KI-Bilder: Der Körper bleibt beim Wechsel pixelgleich.",
+  "Lichttexturen in wenigen Stufen mit Bayer-Raster an den Kanten halten Lichthöfe im Pixel-Look. Mit Lichtmasken (range_item_cull_mask) lässt sich ein Objekt von einem bestimmten Licht ausnehmen.",
+  "Bei Codex-Sprites mit Alpha um 250 und Dunst bei Alpha ≥ 200 schneiden. Berühren sich Objekte im Blatt, an der Zeile mit den wenigsten deckenden Pixeln trennen."
+ ],
+ "assets": [
+  {
+   "file": "assets/raw/tiles.png",
+   "kind": "KI-Kachelblatt (Materialien und versuchte Übergänge)",
+   "made_with": "gpt-image (Codex)",
+   "prompt": "assets/raw/tiles.json"
+  },
+  {
+   "file": "assets/tiles/fills_preview.png",
+   "kind": "nahtlose Füllkacheln, je 4×4 gekachelt",
+   "made_with": "scripts/build_tiles.py (Raster + Min-Cut)"
+  },
+  {
+   "file": "assets/tiles/overview.png",
+   "kind": "16 Eckfälle je Ebene (Sand, Gras, Kai, Steg)",
+   "made_with": "scripts/build_tiles.py"
+  },
+  {
+   "file": "assets/tiles/sand.png",
+   "kind": "Atlas Sand über Wasser, 15 Übergänge × 6 Brandungsbilder + 2 Varianten",
+   "made_with": "scripts/build_tiles.py"
+  },
+  {
+   "file": "assets/tiles/grass.png",
+   "kind": "Atlas Gras über Sand, 15 Übergänge + 4 Varianten",
+   "made_with": "scripts/build_tiles.py"
+  },
+  {
+   "file": "assets/tiles/stone.png",
+   "kind": "Atlas Kaipflaster mit Mauer, 15 Übergänge + 1 Variante",
+   "made_with": "scripts/build_tiles.py"
+  },
+  {
+   "file": "assets/tiles/jetty.png",
+   "kind": "Atlas Steg, 15 Übergänge",
+   "made_with": "scripts/build_tiles.py"
+  },
+  {
+   "file": "assets/tiles/water.png",
+   "kind": "Wasserkachel, 16 Animationsbilder",
+   "made_with": "scripts/build_tiles.py"
+  },
+  {
+   "file": "demo/tiles/harbour_tileset.tres",
+   "kind": "Godot-TileSet mit Terrain-Sets (Match Corners) und Animationen",
+   "made_with": "demo/tools/build_tileset.gd"
+  },
+  {
+   "file": "demo/map/harbour.txt",
+   "kind": "logische Karte (27×15 Zellen)",
+   "made_with": "von Hand"
+  },
+  {
+   "file": "assets/map_preview.png",
+   "kind": "Referenzbild der Kachelebenen ohne Godot",
+   "made_with": "scripts/preview_map.py"
+  },
+  {
+   "file": "assets/raw/props.png",
+   "kind": "KI-Requisitenblatt",
+   "made_with": "gpt-image (Codex)",
+   "prompt": "assets/raw/props.json"
+  },
+  {
+   "file": "assets/sprites/props_check.png",
+   "kind": "Requisiten auf dem Kartenraster (Kontrollblatt)",
+   "made_with": "scripts/build_sprites.py"
+  },
+  {
+   "file": "demo/art/cottage.png",
+   "kind": "Requisit Häuschen 95×76",
+   "made_with": "gpt-image + build_sprites.py"
+  },
+  {
+   "file": "demo/art/lighthouse.png",
+   "kind": "Requisit Leuchtturm 43×110",
+   "made_with": "gpt-image + build_sprites.py"
+  },
+  {
+   "file": "assets/raw/badger.png",
+   "kind": "KI-Figurenblatt Dachs (4 Laufbilder, 3 Standbilder)",
+   "made_with": "gpt-image (Codex) mit Referenz shared/badger/master_sheet.png",
+   "prompt": "assets/raw/badger.json"
+  },
+  {
+   "file": "assets/sprites/badger_ai_frames.png",
+   "kind": "KI-Bilder auf 30 px (unbearbeitet, zum Vergleich)",
+   "made_with": "scripts/build_sprites.py"
+  },
+  {
+   "file": "assets/sprites/badger_check.png",
+   "kind": "Dachs: 8 Laufphasen mit gezeichneten Beinen, vorn, blinzeln, grüßen",
+   "made_with": "scripts/build_sprites.py"
+  },
+  {
+   "file": "demo/art/badger.png",
+   "kind": "Sprite-Blatt Dachs (11 Zellen zu 40×36)",
+   "made_with": "scripts/build_sprites.py"
+  },
+  {
+   "file": "demo/art/light_beam.png",
+   "kind": "Lichttextur Leuchtturmstrahl (Stufen + Bayer)",
+   "made_with": "scripts/build_lights.py"
+  },
+  {
+   "file": "assets/probe/terrain_compare.png",
+   "kind": "Vergleich Dual-Grid (oben) gegen Godots set_cells_terrain_connect (unten)",
+   "made_with": "scripts/probe.py terrain"
+  },
+  {
+   "file": "assets/probe/render_compare.png",
+   "kind": "Forward+ (links) gegen gl_compatibility (rechts), Bild 108",
+   "made_with": "scripts/probe.py renderer"
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Pixel Operator 8 (Jayvee Enaguas)",
+   "license": "CC0-1.0",
+   "source": "https://www.dafont.com/pixel-operator.font (Lizenztext: demo/fonts/PixelOperator-LICENSE.txt; Datei aus styles/vga-adventure/demo/fonts kopiert)"
+  },
+  {
+   "item": "Kachelblatt, Requisitenblatt, Figurenblatt",
+   "license": "eigene KI-Bilder (gpt-image über Codex)",
+   "source": "assets/raw/"
+  },
+  {
+   "item": "Figurenreferenz Dachs-Kurier",
+   "license": "eigenes Motiv des Katalogs",
+   "source": "shared/badger/master_sheet.png"
+  },
+  {
+   "item": "Übergangskacheln, Animationen, Lichttexturen, Beine, Rauch, Oberfläche, Skripte",
+   "license": "eigener Code, keine fremden Grafiken",
+   "source": "styles/kachelsatz/"
+  }
+ ],
+ "image_generations": 3,
+ "tool_issues": [
+  "tools/capture.py hat keine Option --t0 für die in PIPELINE.md verlangte Dauerlauf-Prüfung (20–40 s). Umgangen: main.gd liest --t0=<s> als Benutzerargument, scripts/probe.py long nimmt ab 30 s auf (assets/probe/long_t*.png, keine Fehler, keine Schlieren)."
+ ],
+ "status": "done"
+}

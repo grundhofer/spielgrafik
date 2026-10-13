@@ -1,0 +1,54 @@
+{
+ "full": {
+  "errors": [],
+  "warnings": []
+ },
+ "smooth": {
+  "errors": [],
+  "warnings": [],
+  "changed_share": {
+   "60": 0.1468,
+   "150": 0.1191
+  },
+  "mean_abs_diff": {
+   "60": 3.56,
+   "150": 3.06
+  }
+ },
+ "no-jitter": {
+  "errors": [],
+  "warnings": [],
+  "changed_share": {
+   "60": 0.0332,
+   "150": 0.0246
+  },
+  "mean_abs_diff": {
+   "60": 1.57,
+   "150": 1.11
+  }
+ },
+ "mobile": {
+  "errors": [],
+  "warnings": [],
+  "changed_share": {
+   "60": 0.054,
+   "150": 0.0431
+  },
+  "mean_abs_diff": {
+   "60": 0.97,
+   "150": 0.77
+  }
+ },
+ "gl_compatibility": {
+  "errors": [],
+  "warnings": [],
+  "changed_share": {
+   "60": 0.9303,
+   "150": 0.7887
+  },
+  "mean_abs_diff": {
+   "60": 32.06,
+   "150": 30.28
+  }
+ }
+}

@@ -1,0 +1,142 @@
+{
+ "stance": [
+  {
+   "step": 0,
+   "leg": "n",
+   "frames": [
+    1,
+    11
+   ],
+   "heel_span": 0,
+   "toe_span": 0,
+   "bottom_span": 0,
+   "bottom": [
+    575,
+    575
+   ]
+  },
+  {
+   "step": 1,
+   "leg": "f",
+   "frames": [
+    13,
+    23
+   ],
+   "heel_span": 0,
+   "toe_span": 0,
+   "bottom_span": 0,
+   "bottom": [
+    574,
+    574
+   ]
+  },
+  {
+   "step": 2,
+   "leg": "n",
+   "frames": [
+    25,
+    35
+   ],
+   "heel_span": 0,
+   "toe_span": 0,
+   "bottom_span": 0,
+   "bottom": [
+    574,
+    574
+   ]
+  },
+  {
+   "step": 3,
+   "leg": "f",
+   "frames": [
+    37,
+    47
+   ],
+   "heel_span": 0,
+   "toe_span": 0,
+   "bottom_span": 0,
+   "bottom": [
+    574,
+    574
+   ]
+  },
+  {
+   "step": 4,
+   "leg": "n",
+   "frames": [
+    49,
+    59
+   ],
+   "heel_span": 0,
+   "toe_span": 0,
+   "bottom_span": 0,
+   "bottom": [
+    574,
+    574
+   ]
+  },
+  {
+   "step": 5,
+   "leg": "f",
+   "frames": [
+    61,
+    71
+   ],
+   "heel_span": 0,
+   "toe_span": 0,
+   "bottom_span": 0,
+   "bottom": [
+    574,
+    574
+   ]
+  },
+  {
+   "step": 6,
+   "leg": "n",
+   "frames": [
+    73,
+    80
+   ],
+   "heel_span": 0,
+   "toe_span": 0,
+   "bottom_span": 0,
+   "bottom": [
+    575,
+    575
+   ]
+  }
+ ],
+ "stand": {
+  "n": {
+   "frames": [
+    82,
+    179
+   ],
+   "heel_span": 0,
+   "toe_span": 0,
+   "bottom": [
+    575
+   ]
+  },
+  "f": {
+   "frames": [
+    82,
+    179
+   ],
+   "heel_span": 0,
+   "toe_span": 0,
+   "bottom": [
+    575
+   ]
+  }
+ },
+ "head_top_rows": [
+  368,
+  375
+ ],
+ "head_max_jump_px": 3,
+ "head_max_jump_walk_px": 3,
+ "head_max_jump_stand_px": 1,
+ "pose_changes_per_6s": 89,
+ "t_stop": 2.677
+}

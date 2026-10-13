@@ -1,0 +1,5 @@
+forward_plus: 0 Fehler/Warnungen
+mobile: 0 Fehler/Warnungen
+gl_compatibility: 0 Fehler/Warnungen
+mobile gegen forward_plus: Bild 60: 6.1 %, Bild 150: 3.4 %
+gl_compatibility gegen forward_plus: Bild 60: 75.6 %, Bild 150: 61.8 %

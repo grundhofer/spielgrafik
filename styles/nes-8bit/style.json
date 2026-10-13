@@ -1,0 +1,213 @@
+{
+ "slug": "nes-8bit",
+ "name": "8-Bit-Konsole",
+ "family": "pixel",
+ "kind": "style",
+ "era": "1985–1993",
+ "summary": "Kachelgrafik einer 8-Bit-Heimkonsole: 256×240 Pixel (sichtbar 256×224), feste Systempalette, Hintergrund aus 8×8-Kacheln mit vier Paletten zu je drei Farben plus Schwarz, wobei jeder 16×16-Block nur eine Palette wählt. Figuren und farbige Akzente sind Sprites mit eigenen Paletten (3 Farben + Durchsichtig), höchstens 8 je Bildzeile. Die Demo bildet die Bildeinheit im Shader nach: Musterspeicher in umschaltbaren Bänken, Namens- und Attributtabelle, Paletten-RAM, Sprite-Tabelle und Scroll je Zeile.",
+ "references": [
+  "Nintendo Entertainment System / Famicom (Nintendo 1983/1985), Bildeinheit 2C02",
+  "Dragon Quest / Dragon Warrior (Enix 1986): schwarzes Textfenster mit weißem Rahmen, Titel im Rahmen",
+  "Final Fantasy (Square 1987)",
+  "Zelda II: The Adventure of Link (Nintendo 1987): Städte in Seitenansicht",
+  "Super Mario Bros. 3 (Nintendo 1988): Kachelanimation über umgeschaltete Musterbänke (MMC3)",
+  "Shadowgate und Déjà Vu (NES-Fassungen 1989/1990): Abenteuer mit Bild und Textfenster",
+  "Mother (Nintendo 1989)"
+ ],
+ "traits": [
+  "Bild 256×224 (Zeilen 8–231 des 240-Zeilen-Bildes), ganzzahlig ×3 (768×672 in der 1280×720-Aufnahme), harte Pixel ohne Filter, bewusst quadratische Pixel (siehe pitfalls)",
+  "jede Ausgabefarbe liegt in der Systempalette (probe.py: 0 fremde Farben in 180 Bildern); Hintergrund 11 Farben aus Grundfarbe Schwarz + 4 Paletten (02 21 27 | 02 03 24 | 00 10 30 | 07 17 27), Sprites 4 Paletten (0F 30 0A | 0F 16 0A | 07 27 38 | 0F 00 30); je Bild höchstens 14 Farben (11 Hintergrund + 3 nur in Sprites: 0A, 16, 38)",
+  "Attributregel: jeder 16×16-Block nutzt nur Schwarz + seine Palette, jede 8×8-Kachel höchstens 4 Farben; probe.py prüft das am gerenderten Bild ohne Sprites: 0 Verstöße. Die Attributtabelle liegt als 64 gepackte Bytes im ROM",
+  "Kachelbudget mit Bankumschaltung wie ein Mapper mit Zeilen-Interrupt: Himmel/Dach und Kai teilen sich 137 Kacheln, der Wasserstreifen (Zeilen 64–127) hat 82 feste und 111 animierte Kacheln in 8 Phasen, das Textfenster eigene Schrift- und Titelbänke; Umschalten an den Zeilen 64, 128 und 168",
+  "Hintergrundbewegung ohne neue Pixel: Wellen über den Wechsel einer 2-KB-Musterbank (8 Phasen, gemessen gleichmäßig alle 4 Bilder, Wellenzeilen laufen abwechselnd nach links und rechts), Wolken per Zeilen-Scroll (Zeilen 28–47, 5 px/s, gemessen genau 1 px alle 6 Bilder, nahtloser Umlauf über die zweite Namenstabelle)",
+  "farbige Akzente als Sprites vor dem Hintergrund, weil die Hintergrundpaletten sie nicht hergeben: Leuchtturm (weiß/grau mit eigenem rotem Band-Sprite), Leuchtfeuer mit kurzen Strahlen (blitzt alle 2,4 s für 0,5 s), gelbes Fensterlicht, flackerndes Laternenglas (3 Zustände, fester Seed), Rauchwölkchen, zwei Möwen (15 px/s, gemessen 1 px alle 2 Bilder), Paket am Kai",
+  "Dachs-Kurier 16×24, gedrungen und kleiner als die Haustür (24 zu ≈28 px): spitze Schnauze mit schwarzer Nasenspitze, weißer Streif von der Nase bis unter die Mütze, schwarzer Streif schräg von der Nase durchs Auge zum Ohr, weiße Wange, schwarze Kehle, Ohr hinter der Mütze; Mütze, Weste, Ärmel, roter Schal, Paket mit Schnur, Tasche. Aus 8 Sprites (8×16) in vier Ebenen: Auflage (Palette 2), Kopf (Palette 0), Körper (Palette 1), Beine (Palette 3)",
+  "Laufzyklus aus 4 verschiedenen Bildern (probe.py) bei 10 Bildern/s, 4 px je Bild: Kopf, Körper und Auflage heben sich im Durchgang um 1 px (Kopfoberkante gemessen 126 im Ausschritt, 125 im Durchgang), die Beine liegen in einer eigenen Sprite-Ebene und bleiben am Boden (Fußzeile 149 in allen Bildern, Standfuß 0 px Drift über 33 Posenwechsel); fernes Bein dunkelgrau, nahes schwarz, dadurch unterscheiden sich a- und b-Posen; Schalende schwingt je Pose, Tasche hängt im Durchgang nach; Blinzeln über ausgetauschte Kopfkacheln; Blick nach links über das Flip-Bit",
+  "höchstens 7 Sprites je Bildzeile (Grenze 8, im Shader erzwungen), höchstens 29 von 64 Sprites gleichzeitig",
+  "Textfenster wie in Konsolen-Rollenspielen: schwarz mit 2 px breiter weißer Linie und runden Ecken, Ortsname im oberen Rahmen mit 2 px Schwarz darüber (eigene, 1 px tiefer gesetzte Titelglyphen, Kai-Stirnseite 1 px kürzer), Schrift Press Start 2P als 8×8-Kacheln im Musterspeicher; Schreibmaschine (30 Zeichen/s) mit blinkendem ▼ (Wechsel alle 8 Bilder), ab 3,9 s Auswahl mit ▶; 8 Kachelzeilen = 28,6 % des Bildes"
+ ],
+ "camera": "Seitenansicht wie ein Ortsbild eines Konsolen-Abenteuers, feste Kamera; nur die Wolkenzeilen scrollen",
+ "resolution": "256×240, sichtbar 256×224 (Szene 256×160 + Textfenster 256×64), Systempalette: bis 13 Hintergrund- und 12 Sprite-Farben möglich, hier 11 + 3 = 14 je Bild; 8×8-Kacheln, Attribute je 16×16, Sprites 8×16",
+ "pipeline": [
+  {
+   "step": "Hintergrund erzeugen, Versuch 1 (verworfen)",
+   "tool": "genimg (gpt-image)",
+   "detail": "Stilblock: Ortsbild eines 8-Bit-Konsolenspiels, 256 px breit, höchstens 13 Farben aus festen Paletten, Attributblöcke, wiederholte Kacheln; Lampe ohne Strahl, kein Rauch. Ergebnis hübsch, aber mit Perspektive (Steg als Trapez), ≈280 Kunstpixel Detail, verrauschtem Stein und gemaltem Rauch; die automatische Attributzuordnung machte daraus Farbblöcke. Prompt: prompts/bg.txt"
+  },
+  {
+   "step": "Hintergrund erzeugen, Versuch 2",
+   "tool": "genimg (gpt-image)",
+   "detail": "Zusätzlich verlangt: strenge Seitenansicht ohne Perspektive (Boote im Profil, Steg auf Pfählen), saubere Pixelgruppen mit einer Farbe je Fläche und schwarzer Kontur, Himmel in drei flachen Bändern mit einer Schachbrettzeile dazwischen, Meer aus gleichmäßigen Strichreihen. Ein Versuch, gut verwendbar; Rauch wieder gemalt. Prompt: prompts/bg2.txt"
+  },
+  {
+   "step": "Auf das eigene Kunstpixelraster zurückführen",
+   "tool": "scripts/reduce_grid.py",
+   "detail": "Das Modell zeichnet Pixel mit 5–8 Bildpixeln Breite und wandernder Phase (gridscan.py: Mittel 6,48 × 6,36). Dynamische Programmierung je Achse legt die Zellgrenzen auf die stärksten Farbkanten (Abstand 5–8, Abweichung vom Mittel kostet); je Zelle gewinnt die häufigste Farbe im Zellinneren nach Median-Cut auf 96 Farben. Ergebnis 237×161 Kunstpixel ohne Mischfarben"
+  },
+  {
+   "step": "Leinwand 256×176 und Retusche",
+   "tool": "scripts/build_bg.py",
+   "detail": "Rechts 19 Spalten ergänzt (Himmel aus wolkenfreien Spalten mit gerader Verschiebung, Felsen aus der Landzunge), 3 Zeilen tiefer gelegt, damit der Horizont auf der Attributgrenze 64 liegt; gemalter Rauch durch Himmel derselben Zeilen ersetzt. Leuchtturm ausgeschnitten (wird Sprite), dahinter Himmel derselben Zeile"
+  },
+  {
+   "step": "Farben auf die Systempalette, Attributkarte",
+   "tool": "scripts/build_bg.py (+ attrpal.py)",
+   "detail": "Vier Paletten von Hand gewählt (Meer/Nacht, Abendhimmel, Stein/Weiß, Holz/Abendrot), Attributkarte als 11 Zeilen à 16 Ziffern von Hand nach Bildinhalt. Grautöne vor dem Abbilden auf die Grauleiter der Konsole (Schwarz, 00, 10, 30) gehoben. Gegenstände in Wasserblöcken im Gegenlicht: dunkle Töne schwarz, helles Holz orange, Weiß hellblau; Wasser in Holzblöcken schwarz. Je Pixel die nächste Farbe (Oklab) aus Schwarz + Blockpalette. Danach von Hand: zwei Fässer (runde Oberkante, Reifen) und zwei Kisten im Holzblock (Spalten 32–63, Zeilen 112–127, genau an der Blockgrenze), Reste der KI-Kiste im Meerblock als Wasser, Schattenseite des Hauses als flache tiefblaue Fläche mit vier kurzen Fugen"
+  },
+  {
+   "step": "Wasser und Kai als Kachelmuster",
+   "tool": "scripts/build_bg.py",
+   "detail": "Wasser: Wellenzeilen alle 4 px mit 16-px-Muster (Strichlänge 2–6 px nach Tiefe, orange Glanzpunkte), 8 Phasen mit 2 px Versatz, Richtung je Zeile abwechselnd; nur Pixel, die im KI-Bild Wasser sind. Kai: Gehweg 36 px aus Platten 32×9 im Verband mit periodischen Steinpunkten, helle Kante, Stirnseite 4 px (Zeile 167 schwarz als Abstand zum Fenstertitel)"
+  },
+  {
+   "step": "Dachs pixeln",
+   "tool": "scripts/badger_px.py (von Hand) + genimg (gpt-image) als Lageplan",
+   "detail": "KI-Blatt (prompts/badger.txt, Referenz master_sheet) kam mit ≈31×47 statt 16×32 Kunstpixeln und vielen Farben; nur Kostüm und Kopfform übernommen. Erste Fassung 16×32 mit waagerechtem Augenband las sich als Waschbär oder Bandit und war mit dünnen Beinen höher als die Haustür. Zweite Fassung 16×24: Kopf in mehreren Varianten in der Szene in Originalgröße verglichen (gewählt: drei schräge Bänder weiß/schwarz/weiß zur Nasenspitze, Kopf hinter der Mütze länger als hoch), Rumpf 12 px breit, Beine 4 px. Beine je Pose von Hand (Fuß vorn x 10–13, Durchgang 6–9, hinten 2–5: je 4 px Vorschub); Ebenen-Zerlegung in build_rom.py"
+  },
+  {
+   "step": "ROM bauen",
+   "tool": "scripts/build_rom.py",
+   "detail": "Kacheln je Streifen zusammenlegen (Satz X: 137, Wasser fest: 82, Wasser animiert: 111 Folgen × 8 Phasen), 30 Bänke à 1 KB im 2-Bit-Planarformat, Namenstabelle, gepackte Attributtabelle, Paletten-RAM; Schrift aus PressStart2P-Regular.ttf in 8 px (Pillow, ohne Kantenglättung) als Kacheln, dieselben Glyphen 1 px tiefer als Titelschrift (Bänke 24–25), Fensterrahmen als 10 Kacheln; Sprites: Leuchtturm, Band, Lampe, Fenster, Laterne aus den Pixeln des KI-Bildes, Rauch, Möwe, Paket als Textmuster, Dachs je Pose als 8 Sprites in vier Ebenen; Metasprites als [dx, dy, Kachel, Palette]. Ausgabe demo/rom/rom.json (66 KB)"
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/probe.py, tools/capture.py",
+   "detail": "probe.py nimmt in 256×224 auf: Dachs allein auf Hellblau (Fußzeile 149 in allen Bildern, Kopfoberkante 126/125 je nach Pose, 4 verschiedene Laufbilder, a- und b-Posen verschieden, Standfuß 0 px Drift über 33 Posenwechsel, ein einziges Fußbild im Stehen), Hintergrund allein (0 Block-, 0 Kachelverstöße, 11 Farben), ganzes Bild (0 fremde Farben, höchstens 14 Farben, höchstens 7 Sprites je Zeile; Haltezeiten Wolken 6, Möwen 2, Wasser 4 Bilder ohne Ausreißer; Zeilen 159–160 über dem Titel schwarz), Mobile- und Compatibility-Renderer (je 60 von 60 Bildern pixelgleich zu Forward+), Dauerlauf ab t = 30 s ohne Fehler (media/probe_t30.png). Ergebnis in media/probe.json"
+  }
+ ],
+ "godot": [
+  "Viewport 256×224, stretch mode viewport, scale_mode integer, Standardfilter Nearest, snap_2d an; Fenster 768×672",
+  "Die ganze Szene ist ein ColorRect mit shaders/ppu.gdshader: je Pixel Hintergrundkachel über Namenstabelle (64×30, zwei Tabellen nebeneinander) und Scroll X der Zeile, Kachelpixel über acht 1-KB-Bankfenster der Zeile (0–3 Hintergrund, 4–7 Sprites), Palette aus der Attributtextur, Farbe aus Paletten-RAM (32 Systemfarbnummern) und Systempalette (64 Einträge); Sprites im 8×16-Modus aus 64 OAM-Einträgen, nur die ersten 8 je Zeile, erster deckender Eintrag gewinnt, Flip- und Prioritätsbit ausgewertet",
+  "scripts/main.gd ist das Spielprogramm: baut beim Start den Musterspeicher aus rom.json (R8-Textur 128×960), entpackt die Attributbytes, schreibt jedes Bild die OAM (Metasprites mit Spiegelung) und die Zeilentabelle (Scroll, Bankwechsel an 64/128/168, Wasserphase) und bei Bedarf Textkacheln in die Namenstabelle (höchstens 106 Bytes in einem Bild beim Seitenwechsel, sonst 1–2); der Ortsname nutzt die Titelglyphen aus den Bänken 24–25",
+  "Ablauf: Textfenster steht von Bild 0 an mit Ortsname; Text ab 0,4 s mit 30 Zeichen/s, ▼ blinkt alle 8 Bilder; ab 3,9 s Auswahl mit ▶, Sprung auf „Das Paket ansehen“ bei 5,1 s. Dachs erscheint am rechten Rand (X > 255 wird nicht gezeigt, zuerst nur das linke 8-px-Sprite), läuft 34 Bilder nach links und hält bei 3,4 s neben dem Paket, blinzelt bei 3,8 und 5,2 s. Leuchtfeuer blitzt bei 1,2 und 3,6 s (nächster bei 6,0 s, nach dem Ende der Aufnahme); Poster bei 3,8 s (--poster-at 0.63) mit Blitz",
+  "Alle ganzzahligen Bewegungen (Laufbilder, Wasserphase, Wolken-Scroll, Möwen, Schreibmaschine, Blitz) über Schrittzähler floor(t·Rate + 0,001): so halten Wolken genau 6, Möwen 2 und Wasser 4 Bilder, auch wenn sich Rundungsfehler der aufsummierten delta-Werte ansammeln",
+  "Zeit über delta aufsummiert, Laterne mit festem Seed 1986. Prüfschalter nach --: --t0=<s>, --only=badger (nur Dachs, Grundfarbe Hellblau), --only=bg (ohne Sprites), --probe=<datei> (je Bild Pose, X, Sprites je Zeile, Wolken-, Möwen- und Wasserschritt, Blitz); HWSTAT beim Beenden im Log",
+  "Forward+, Mobile und Compatibility liefern pixelgleiche Bilder (je 60 Bilder verglichen)"
+ ],
+ "techniques": [
+  "kachelsatz",
+  "textoberflaeche",
+  "sprite-animation",
+  "fuss-halten",
+  "palette-einrasten",
+  "mimik-aus-teilen",
+  "zeilen-scroll"
+ ],
+ "ratings": {
+  "ai_fit": 3,
+  "consistency": 3,
+  "effort": 4,
+  "text_adventure": 3,
+  "mobile": 5
+ },
+ "ratings_note": "Die KI lieferte im zweiten Versuch eine saubere Seitenansicht, deren Haus, Boote, Steg, Felsen, Leuchtturm und Himmel nach dem Einrasten fast unverändert im Bild stehen; Wasser, Kai, Fässer, Kisten, die Attributkarte, alle Lichter als Sprites und der Dachs (KI-Blatt nur als Kostüm-Lageplan) sind Handarbeit oder Code (ai_fit 3). Systempalette und Attributregel halten den Look einheitlich, aber jeder Ort braucht eigene Palettenwahl, eine Attributkarte von Hand und Gegenstände an Blockgrenzen, die von Hand nachgezeichnet werden (consistency 3, effort 4). Für das Textadventure passen 30 Zeichen je Zeile, mit doppeltem Zeilenabstand aber nur 3 Zeilen je Seite (text_adventure 3). Mobile geprüft nur über die Renderer: Mobile und Compatibility pixelgleich zu Forward+; ein Draw-Call mit kleinen Texturen, nicht auf einem echten Telefon getestet.",
+ "verdict": "Sofort als 8-Bit-Konsolenspiel erkennbar und als Weg wiederholbar: ein KI-Bild in strenger Seitenansicht, reduce_grid.py, eine Attributkarte von Hand, build_bg.py und build_rom.py ergeben einen Ort, der die Hardwareregeln nachweislich einhält; Shader und main.gd bleiben für weitere Orte gleich. Für unser Textadventure eignet sich der Stil, wenn Texte kurz sind: Das schwarze Fenster mit Titel im Rahmen und ▶-Auswahl trägt Dialoge gut, längere Beschreibungen brauchen aber mehrere Seiten (oder einfachen Zeilenabstand mit 6 Zeilen). Figuren sind mit 16×24 klein und müssen von Hand gepixelt werden; ob ein Tier bei dieser Größe erkennbar ist, hängt an wenigen Pixeln (Schnauze, Streifen), deshalb Kopfvarianten immer in der Szene vergleichen. Porträts im Textfenster wären der nächste Schritt für Gespräche. Der Aufwand liegt vor allem in Farbentscheidungen an Blockgrenzen, nicht im Zeichnen.",
+ "pitfalls": [
+  "Erster KI-Hintergrund unbrauchbar: Perspektive (Steg als Trapez), Detail für ≈280 statt 256 Pixel, Rauschen im Stein; die Attributzuordnung färbte Leuchtturm halb orange, Boote violett, Felsen hellblau. Erst der Prompt mit strenger Seitenansicht und sauberen Pixelgruppen ergab eine verwendbare Vorlage (3 Bilderzeugungen insgesamt, in der Nachbesserung keine weitere).",
+  "Das Pixelraster des Modells ist ungleichmäßig (5–8 Bildpixel je Kunstpixel, Phase wandert über das Bild); ein festes Raster (6,0 px) verschmolz Linien. Gelöst mit Zellgrenzen per dynamischer Programmierung (reduce_grid.py). Das Bild hatte dann nur 237 Spalten; rechts wurden 19 Spalten aus Himmel und Felsen ergänzt.",
+  "Automatische Palettenwahl (abwechselnd Blöcke zuordnen und Farbtripel suchen) lief in schlechte Lösungen: dunkles Oliv ($08) in allen Paletten, weil die Konsole kein Dunkelgrau hat, oder Grau überall statt Hellblau im Wasser. Paletten und Attributkarte sind deshalb von Hand gesetzt; das Skript bildet nur noch die Pixel ab.",
+  "Attributkonflikte an Gegenständen im Wasser lassen sich nicht wegoptimieren: Boote, Steg, Pfähle, Felsen und Laternenpfahl stehen als Gegenlicht-Silhouetten in der Meerpalette (Schwarz, Hellblau, Orange) statt in Holzbraun. Fässer und Kisten verloren beim Abbilden ihre Form (gestreifter Block, halb schwarze Kiste) und sind jetzt von Hand im Holzblock nachgezeichnet; dahinter bleibt Schwarz, weil die Holzpalette weder Stein noch Wasser hat. Die Schattenseite des Hauses ist eine flache tiefblaue Fläche mit vier kurzen Fugen (ein Fugenraster las sich als Leiter). Die Tür ist grau statt braun, das Häuschen neben dem Leuchtturm nur ein oranger Fleck, das Gras auf der Landzunge fehlt.",
+  "Leuchtturm, Lampe, Fensterlicht und Laternenglas sind Sprites, weil ihre Farben in den Hintergrundpaletten fehlen (Weiß-Rot im Abendhimmel, Gelb neben Grau). Das kostet bis zu 7 Sprites in den Zeilen des Leuchtturms; mehr Rauchwölkchen oder Möwen dort würden die Grenze von 8 reißen, deshalb Rauch nur alle 0,8 s und Möwen tiefer über dem Wasser.",
+  "Sprite-Palette 3 hatte Hellgrau $10, dieselbe Farbe wie der Gehweg: ein fernes Bein darin verschwand auf dem Kai. Sie ist jetzt 0F 00 30; Graustufen des Leuchtturms und der Rauch sind dadurch dunkler als in der ersten Fassung.",
+  "Gemaltes Leuchtfeuer: Beim Ausschneiden wurde das gelbe Lampenglas als Himmel verworfen; ohne Füllung schien im Aus-Zustand der rosa Himmel durch. Jetzt ist der Laternenraum im Turm-Sprite dunkel und das Licht ein eigenes Sprite (an/aus).",
+  "KI-Figurenblatt: verlangt 16×32, geliefert ≈31×47 Kunstpixel mit vielen Farben und Schatten; nicht verkleinerbar, der Dachs ist von Hand gepixelt. Die erste Fassung (16×32, waagerechtes schwarzes Band über weißem Gesicht, dünne Beine) las sich in der Prüfung als Waschbär oder Bandit und war höher als die Haustür. Die zweite Fassung (16×24) zeigt die Dachszeichnung als drei schräge Bänder zur Nasenspitze; die Mütze verdeckt den weißen Scheitelstreif, und bei 16 px Breite bleibt die Erkennung eine Frage weniger Pixel. Kostümdetails (Messingknopf, Weste mit Taschen, Hemdkragen) fehlen; der Schal ist um den Hals nur ein roter Kragen mit Ende im Nacken.",
+  "Laufzyklus mit 4 Bildern, aber weiterhin knapp: Der Arm mit dem Paket bleibt starr (er trägt es, schwingt also nicht), die Beine sind 4 px kurze Stümpfe ohne Kniebeuge, und das Auf und Ab ist 1 px. Beim Hereinlaufen ist zuerst nur das linke 8-px-Sprite sichtbar (Kopfoberkante dort 129), weil X über 255 nicht geht. Die Figur ist mit 24 px kleiner als die Tür (≈28 px), wie bei kurzbeinigen Figuren in Konsolen-Rollenspielen; Kostüm und Gesicht sind dadurch nur in der Vergrößerung im Detail zu sehen.",
+  "Wasser und Kai stammen nicht aus dem KI-Bild, sondern sind als Kachelmuster neu gesetzt: Die KI-Striche waren unregelmäßig (kaum animierbar mit wenigen Kacheln), der KI-Gehweg nur 10 px tief; der Dachs stand davor auf dunklem Wasser und verschwand mit seiner schwarzen Kontur. Jetzt 36 px Gehweg, der Dachs steht ganz auf Hellgrau.",
+  "Kachelbudget ohne Bankumschaltung nicht machbar: Das ganze Bild braucht 137 + 82 + 111 Kacheln (plus 7 weitere Wasserphasen), mehr als die 256 eines Musterspeichers. Gelöst wie mit einem Mapper (MMC3): Hintergrundbänke werden an den Zeilen 64, 128 und 168 umgeschaltet, dazu zwei Scroll-Splits für die Wolken – fünf Zeilen-Interrupts je Bild. Ob das mit echter CPU-Zeit aufgeht, ist nicht geprüft.",
+  "Vereinfacht gegenüber der Hardware: Bankwechsel und Scroll gelten exakt ab einer Zeile (keine Störpixel durch Schreiben mitten in der Zeile, kein Fine-X-Problem, kein Sprite-0-Treffer nötig), Attribute stehen entpackt in einer Textur (aus den gepackten ROM-Bytes erzeugt), der Musterspeicher wird als Textur statt aus CHR-ROM gelesen. Beim Seitenwechsel schreibt main.gd bis zu 106 Namenstabellen-Bytes in einem Bild; gegen das VBlank-Zeitbudget nicht geprüft. Sprite-Flackern (mehr als 8 je Zeile) kommt nicht vor und ist daher nicht zu sehen. Keine NTSC-/Röhrenbild-Nachbildung.",
+  "Seitenverhältnis: Am Fernseher waren die Pixel etwa 8:7 breiter als hoch; hier quadratisch, weil Grafik und Prüfung mit quadratischen Pixeln arbeiten und 8:7 bei ganzzahliger Vergrößerung nicht in 1280×720 passt.",
+  "Schrift Press Start 2P: Großbuchstaben mit Umlaut (Ä, Ö, Ü) sind auf 5 Zeilen gestaucht, im Demotext nicht nötig. Der Satz musste umbrochen werden (30 Zeichen je Zeile); die Parser-Zeile „> nimm paket“ hat im Fenster keinen Platz und fehlt. Die 1 px tiefer gesetzte Titelschrift hat keine Glyphen mit Unterlänge (, _ g j p q y); ein Ortsname mit diesen Zeichen nimmt dort die normale Glyphe und stößt dann oben wieder an.",
+  "Das Textfenster hat eine 2 px breite weiße Linie, keine Doppellinie; die erste Fassung von style.json nannte das falsch."
+ ],
+ "lessons": [
+  "Prompt für Konsolen-Pixelbilder: strenge Seitenansicht ohne Perspektive, „one or two flat colours inside a black outline, no texture noise“, Himmel als flache Bänder mit einer Schachbrettzeile, Meer aus gleichmäßigen Strichreihen. Das ergibt Vorlagen, die sich in Attributblöcke zwingen lassen; eine reiche, perspektivische Vorlage nicht.",
+  "KI-Pixelbilder auf ihr eigenes Raster zurückführen statt auf ein festes: Zellgrenzen per dynamischer Programmierung auf die stärksten Spalten- und Zeilenkanten legen (reduce_grid.py, < 1 s), dann die häufigste Farbe im Zellinneren nehmen.",
+  "Grautöne vor dem Abbilden auf die Grauleiter der Konsole heben (Schwarz, $00, $10, $30); sonst wählt der Oklab-Abstand für dunkles Grau dunkles Oliv ($08).",
+  "Palettenwahl und Attributkarte von Hand (4 Tripel + 11×16 Ziffern) sind schneller und besser als eine Optimierung; das Skript bildet danach nur Pixel ab. Den Horizont und Himmelsbänder beim Einsetzen auf Blockgrenzen (Vielfache von 16) legen. Kleine Gegenstände (Fässer, Kisten) nach dem Abbilden von Hand als Zeichenraster in genau die Blöcke ihrer Palette setzen, statt das KI-Pixelbild abzubilden.",
+  "Gegenstände vor Wasser bei Abendlicht als Silhouetten in der Meerpalette zeichnen (Schwarz + Orange-Kante + Hellblau für Weiß): Das wirkt gewollt und umgeht die Attributkonflikte. Farbige Einzelheiten (Leuchtturm, Fenster, Laterne) als Sprites über den Hintergrund legen.",
+  "Wasser als Kachelmuster mit Periode 16 px und 8 Phasen: ein Wechsel der 2-KB-Musterbank animiert 111 Kacheln auf einmal, der Rest des Bildes bleibt unberührt. Wolken per Zeilen-Scroll nur dort, wo keine anderen Gegenstände im Hintergrund liegen (Leuchtturm deshalb als Sprite).",
+  "Bildeinheit als Shader (Bänke je Zeile, Namens- und Attributtabelle, Paletten-RAM, OAM) macht die Regeln zur Bauweise; ein Messmodus in der Demo (--only=badger mit eigener Grundfarbe, --only=bg) macht Fuß-, Attribut- und Farbprüfungen am gerenderten Bild einfach.",
+  "Dachskopf in Seitenansicht bei 16 px: drei schräge Bänder (weiß, schwarz mit Auge, weiß) laufen zur Nasenspitze, darunter eine schwarze Kehle; die Schnauze ragt 3–4 px vor die Mütze. Ein waagerechtes schwarzes Band über weißem Gesicht liest sich dagegen als Maske (Waschbär).",
+  "16×24-Figur aus 8×16-Sprites: die Kopfreihe 4 Zeilen über der Figur ansetzen (−4..11), dann liegt die Palettengrenze am Kinn und der rote Schal schon in der Körperpalette. Weitere Farben (Paket, Ärmel, Tasche) über Auflage-Sprites.",
+  "Beine als eigene Sprite-Ebene: Kopf, Körper und Auflage heben sich im Durchgang per OAM-Y um 1 px, die Beinkacheln je Pose bleiben am Boden, so bleibt der Standfuß stehen. Ein dunkelgraues fernes Bein unterscheidet a- und b-Posen ohne weitere Kacheln. Sprite-Farben gegen den Untergrund prüfen: Hellgrau auf hellgrauem Gehweg verschwindet.",
+  "Walk-Posen mit gleichem Vorschub: Füße bei Ausschritt (a, b) und Durchgang mit Standfuß bei (a+b)/2 ergeben gleiche Schritte (hier 4 px), die Zehenkante bleibt gemessen stehen. Den Lauf auf dem Durchgang enden lassen, dessen Standfuß die Stehpose übernimmt.",
+  "Ganzzahlige Bewegungen über Schrittzähler floor(t·Rate + 0,001) mit Raten, die in 30 fps aufgehen (5, 7,5, 10, 15 je Sekunde): gemessene Haltezeiten sind dann gleichmäßig (Wolken 6, Wasser 4, Möwen 2 Bilder).",
+  "Godot --write-movie: Aufnahmebild k zeigt den Zustand nach dem (k+1)-ten Update (Zeile 0 des eigenen Protokolls stammt aus _ready). Die Zuordnung zwischen Protokoll und Bild einmal messen (eine Pose darf nur eine Kopfhöhe haben), sonst stimmen Posen-Etiketten nicht.",
+  "Eine Pixelschrift mit 8×8-Raster (Press Start 2P, OFL) lässt sich mit Pillow ohne Kantenglättung exakt in Kacheln umwandeln; Großbuchstaben-Umlaute vorher prüfen. Für Titel im Rahmen eine zweite, 1 px tiefer gesetzte Glyphenbank anlegen."
+ ],
+ "assets": [
+  {
+   "file": "assets/raw/bg2.png",
+   "kind": "background",
+   "made_with": "gpt-image (Codex)",
+   "prompt": "assets/raw/bg2.json"
+  },
+  {
+   "file": "assets/raw/bg.png",
+   "kind": "background",
+   "made_with": "gpt-image (Codex); verworfen (Perspektive, zu viel Detail)",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/raw/badger.png",
+   "kind": "sprite-sheet",
+   "made_with": "gpt-image (Codex), Referenzblatt; nur Kostüm-Lageplan für das handgepixelte Sprite",
+   "prompt": "assets/raw/badger.json"
+  },
+  {
+   "file": "assets/bg_preview.png",
+   "kind": "background",
+   "made_with": "build_bg.py: 256×176 in Systemfarben nach Attributregel (Wasserphase 0, ohne Sprites)"
+  },
+  {
+   "file": "assets/bg_build.npz",
+   "kind": "background",
+   "made_with": "build_bg.py: Farbnummern je Pixel (8 Wasserphasen), Attributkarte, Paletten, Sprite-Ausschnitte"
+  },
+  {
+   "file": "assets/chr_banks.png",
+   "kind": "tileset",
+   "made_with": "sheets.py: alle 30 Musterbänke (Graustufen = Farbnummer 0–3), darunter Schrift- und Titelbänke"
+  },
+  {
+   "file": "assets/sprites.png",
+   "kind": "sprite-sheet",
+   "made_with": "build_rom.py + sheets.py: Sprite-Kacheln in ihren Paletten (Dachs 16×24 in vier Ebenen, Leuchtturm, Lichter, Rauch, Möwe, Paket)"
+  },
+  {
+   "file": "assets/palette_ram.png",
+   "kind": "palette",
+   "made_with": "sheets.py: Paletten-RAM (4 Hintergrund-, 4 Sprite-Paletten)"
+  },
+  {
+   "file": "demo/rom/rom.json",
+   "kind": "data",
+   "made_with": "build_rom.py: Musterbänke, Namens- und Attributtabelle, Paletten, Metasprites, Schrift"
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Press Start 2P (CodeMan38)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/pressstart2p (Datei und Lizenztext aus styles/raycaster/demo/fonts übernommen; demo/fonts/OFL-PressStart2P.txt)"
+  },
+  {
+   "item": "Figurenblatt Dachs-Kurier (Referenz für Kostüm und Kopfform)",
+   "license": "eigenes Motiv des Katalogs",
+   "source": "shared/badger/master_sheet.png"
+  },
+  {
+   "item": "Hintergrund, Figurenblatt",
+   "license": "eigene KI-Bilder (gpt-image über Codex)",
+   "source": "assets/raw/"
+  },
+  {
+   "item": "Dachs-Sprite, Fässer, Kisten, Wasser, Kai, Rauch, Möwe, Paket, Fensterrahmen, Shader, Skripte",
+   "license": "eigener Code und eigene Pixel, keine fremden Grafiken",
+   "source": "styles/nes-8bit/"
+  }
+ ],
+ "image_generations": 3,
+ "tool_issues": [],
+ "status": "done"
+}

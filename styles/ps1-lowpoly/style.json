@@ -1,0 +1,394 @@
+{
+ "slug": "ps1-lowpoly",
+ "name": "PS1-Look",
+ "family": "retro3d",
+ "kind": "style",
+ "era": "1995–2000",
+ "summary": "Echtzeit-3D wie auf der ersten 32-Bit-Konsolengeneration: 320×240, Eckpunkte ohne Subpixel-Genauigkeit (Geometrie wackelt bei jeder Bewegung), Texturen ohne Perspektivkorrektur auf großen Polygonen, kleine 64er-Texturen mit 16 Farben, Nearest-Filter und ohne Mipmaps, Gouraud-Licht mit vorberechneten Vertexfarben, Nebel als Depth Cueing je Eckpunkt, Polygone nach ihrer Mitteltiefe sortiert statt Z-Puffer, 15-Bit-Farbe mit der typischen 4×4-Dithertabelle. Dazu eine reduzierte Hafenfassung aus Blender, ein 2D-Himmel aus Code, zwei Kameraeinstellungen mit hartem Schnitt (Totale mit Fahrt, feste Nahaufnahme der Low-Poly-Figur) und ein Rollenspiel-Dialogfenster mit Farbverlauf und Handzeiger.",
+ "references": [
+  "Final Fantasy VII (Square 1997): Dialogfenster mit Vier-Ecken-Verlauf und hellem Rahmen, geglättete Schrift",
+  "Resident Evil (Capcom 1996) und Silent Hill (Konami 1999): Nebel, feste bzw. langsam geführte Kameras",
+  "Metal Gear Solid (Konami 1998): wackelnde Geometrie, kleine Texturen, Vertexlicht",
+  "Spyro the Dragon (Insomniac 1998): Gouraud-Licht, Entfernungsnebel in Himmelsfarbe",
+  "MediEvil (SCE Cambridge 1998): Abendstimmung mit gemaltem Himmel",
+  "Allgemein: PlayStation-Spiele 1995–2000"
+ ],
+ "traits": [
+  "Bild 320×240 (4:3), alles in dieser Auflösung gerendert (3D, Himmel, Oberfläche), ganzzahlig ×3 hochskaliert; capture.py füllt die Ränder auf 1280×720 schwarz",
+  "15-Bit-Farbe: jeder Kanal ist ein Vielfaches von 255/31 (geprüft in allen 180 Bildern der verlustfreien 320×240-Aufnahme), Dithering mit der 4×4-Tabelle der Konsole (Versatz −4…+3 vor dem Abschneiden auf 5 Bit) über das ganze Bild; 1460–1735 Farben je Bild (alle 180 Bilder)",
+  "Zwei Einstellungen wie in Spielen der Zeit: 0–4,0 s (Bild 0–118) Totale mit langsamer Fahrt und Schwenk um 3,5° (Gieren +2° → −1,5°), an deren Ende sich der Dachs auf der Stelle zur Kamera dreht (Bild 104–118); dann harter Schnitt (Bild 119) auf eine feste Nahaufnahme (fov 80°, Kamera 0,5 m hoch, 2,8 m vor dem Dachs, 12° nach links Richtung Häuschen versetzt): Dachs links vorn im Dreiviertelprofil, Leuchtturm in der Mitte, Laternenpfahl rechts ganz im Bild; der Dachs steht und winkt ab 4,15 s",
+  "Vertex-Snapping: Clip-Position jedes Eckpunkts auf ganze Pixel des 320×240-Rasters gerundet; durch Fahrt und Schwenk springen alle Kanten einzeln (Bild 45/60: 17,6 % bzw. 16,2 % der Pixel anders als ohne Snapping, Mittel der Totale 17,4 %), in der Nahaufnahme wackelt die animierte Figur (Bild 136/150: je 11,1 %)",
+  "Affine Texturen ohne Perspektivkorrektur (UV·w und w als Varyings, im Fragment geteilt) auf einem Kaiboden aus 35 Vierecken mit 2,25–2,67 m Kantenlänge: Die geraden Plattenfugen knicken an den Dreiecksdiagonalen ab und schwimmen bei der Fahrt (Bild 45/60: 14,5 % bzw. 15,2 %, Bild 136/150: 16,0 % der Pixel anders als perspektivisch korrekt, davon 4,4–6,8 % deutlich)",
+  "Texturen 64×64 (Geländer 32×32), Nearest, ohne Mipmaps: In der Ferne flimmert es (am Horizont der Totale ändern sich von Bild zu Bild 5,0 % der Pixel deutlich, mit Mipmaps 2,9 %; in der Totale sind 25,1 % der Pixel anders als mit Mipmaps); höchstens 16 Farben je Textur wie eine 4-Bit-CLUT, 15-Bit-Farbwerte; 16 Materialien aus einem KI-Blatt, dazu Kaipflaster, Fass, Kiste und Geländer per Code aus Zellen dieses Blatts; Kai mit 6 m je Kachel (9,4 cm je Texel)",
+  "Gouraud-Shading mit Vertexfarben: Licht nur je Eckpunkt (Grundlicht, Abendsonne, Laterne, Fenster, Leuchtfeuer), dazu je Ecke vorberechnete Umgebungsverdeckung als Vertexfarbe (in Blender gebacken), die Grundlicht und Sonne dämpft; ohne Vertexfarben sind 11,7 % (Totale) bzw. 9,5 % (Nahaufnahme) der Pixel anders, vor allem an der Häuschenfront unter dem Dachüberstand, an der Tür des Leuchtturms, am Ruderhaus des Boots, an der hinteren Kaikante und am Fuß der Fässer; Vertexfarbe sättigt bei 2×; keine Echtzeit-Schatten. Die Farben werden wie auf der Konsole linear im Bildraum interpoliert (mal w übergeben, im Fragment durch w geteilt, wie die UVs): gegenüber Godots perspektivisch korrekter Interpolation 2,2 % (Totale) bzw. 5,0 % (Nahaufnahme) der Pixel anders, höchstens 17 Stufen, vor allem auf den großen Bodenvierecken des hinteren Kais und im Lichtkegel",
+  "Nebel als Depth Cueing je Eckpunkt über zwei Vertexfarben: Farbe = Textur × Licht·(1 − f) + Horizontfarbe·f, f aus der Eckpunkttiefe (30–560 m); Meer und ferne Inseln laufen in den Himmel aus, im Fragment-Shader wird nur noch gemischt",
+  "Kein Z-Puffer: Jedes Dreieck schreibt für alle seine Pixel dieselbe Tiefe (die seines Mittelpunkts, wie der Eintrag in der Ordering Table), das nähere Polygon gewinnt ganz. Feste Versätze je Objekt/Material (Häuschenwand hinter Tür, Fenster und Dach; Meer ganz hinten) und in Blender entfernte Geometrie unter Wasser und unter dem Kaiboden fangen grobe Fehler ab, wie es Spiele der Zeit taten; der Kaiboden und der Rundschatten sortieren je Pixel. Gegenüber einem Z-Puffer sind 0,9 % (Totale) bzw. 0,4 % (Nahaufnahme) der Pixel anders: Fensterrahmen und Türkanten des Häuschens, Taue und Bootskanten, Augenpartie der Figur",
+  "Hafen in eigener PS1-Fassung (demo/models/harbor_ps1.glb, Blender-Skript aus shared/3d/harbor.glb): 12 774 statt 17 932 Dreiecke; Fässer 8 Seiten (54 Dreiecke je Fass statt 308), Poller 8 Seiten, Leuchtturm 10 Seiten (514 statt 1674 Dreiecke), Kistenstapel aus vier Würfeln mit gemalten Brettern (40 statt 624), Galeriegeländer als Ausschnitt-Textur; Namen, Eltern und Lage aller Objekte und Empties wie im gemeinsamen glb (in Blender verglichen)",
+  "Figur 789 Dreiecke (Dachs 777 + Paket 12, in Blender gezählt), geriggt, Walk/Idle/Wave; in der Nahaufnahme 76–77 px hoch: Facetten an Mütze, Schnauze, Armen und Silhouette, Gouraud-Verläufe über Weste und Bauch, Gesicht im Dreiviertelprofil mit Nase, Paket unter dem Arm und roter Schal zu erkennen; in der Totale 17–24 px",
+  "Rundschatten unter der Figur: 1-Bit-Kreis 0,75 × 0,55 m im Mischmodus B/2 + F/2 der Konsole mit schwarzem F: Der Boden darunter ist im Mittel 0,68-mal so hell (sRGB; jedes 6. Bild der Nahaufnahme, Bild 119–179, mit --no-shadow verglichen), kein Pixel wird schwarz, die Plattenfugen bleiben erkennbar; in der Nahaufnahme 52 px breit (Füße 31 px, Figur mit Armen im Poster 58 px)",
+  "Halbtransparenz nur in festen Mischmodi: Lichtkegel und Lichthöfe additiv, Rauch 50/50, Rundschatten B/2 + Schwarz/2, Ausblenden des Rauchs per Bildschirmraster statt Deckkraft",
+  "Laterne flackert zwischen 55 und 100 %: Glas, Lichthof (Helligkeit und Größe) und Punktlicht gemeinsam; in der Nahaufnahme gemessen (Bild 119–179, Ausschnitt 42×46 px um die Laterne): heller Lichthof (Helligkeit über 150) 48–102 px, Mitte des Glases 182–207 von 255",
+  "Lichtkegel des Leuchtfeuers 16 m lang, warmgelb, Helligkeit je Eckpunkt über 3 Ringe von hell an der Lampe bis schwarz am Ende; das Ende liegt im Bild (im Poster schräg nach links über den Himmel)",
+  "Himmel als 2D-Hintergrund 352×160 aus Code (Verlauf in 15-Bit-Stufen mit leicht welligen Bandgrenzen, Nachglühen links der Mitte, acht flache Wolkenstreifen mit angeleuchteter Unterkante, 46 Sterne, fester Seed, 114 Farben), je Bild nach Neigung und Gieren der Kamera auf ganze Pixel verschoben (Horizontzeile 120 + f·tan(Neigung), seitlich f·tan(Gieren)); springt beim Schwenk in 1-px-Schritten mit. Oben 48 px (Totale) bzw. 24 px (Nahaufnahme) Rand: in keinem der 180 Bilder ist eine Zeile ganz schwarz",
+  "Dialogfenster unten (300×68) und Ortsfenster oben links, zusammen etwa 30 % des Bildes: Verlauf aus vier Eckfarben (gedithert), heller Doppelrahmen, geglättete weiße Schrift mit Schatten und +2 px Wortabstand, Text Zeichen für Zeichen (30 Zeichen/s, genau ein Zeichen je Bild); alle Optionen weiß, die Auswahl zeigt nur ein hüpfender Handzeiger (15×9 px), der je 9 Bilder oben und unten steht (0,3 s, in der Aufnahme nachgemessen)"
+ ],
+ "camera": "Zwei Einstellungen. 0–4,0 s (Bild 0–118): Totale ab der Position der Hauptkamera aus shared/3d (−1,8 | 3,4 | 14,5), Fahrt auslaufend Richtung (−2,3 | 2,1 | 11,0), Neigung fest 6° nach unten (Hauptkamera 3°, siehe pitfalls), Schwenk von +2° auf −1,5° Gieren; Keep Width mit 68,61° horizontal (gleiche Breite wie die Hauptkamera bei 16:9). Ab Bild 119 (4,0 s) harter Schnitt auf eine feste Kamera 2,8 m vor dem stehenden Dachs, 12° nach links (Richtung Häuschen) versetzt, 0,5 m hoch, 0,19° nach unten, 33,74° nach rechts gedreht, 80° horizontal (Werte aus scripts/frame_closeup.py): Füße unten in Zeile 157 bei x = 69–99, Leuchtfeuer bei (134 | 49), Laternenpfahl bei x = 276 von Zeile 74 bis 131.",
+ "resolution": "320×240, 15 Bit (32 768 Farben) mit 4×4-Dithering; Texturen 64×64 (Geländer 32×32) mit je höchstens 16 Farben, ohne Mipmaps; Himmel 352×160; Hafen 12 774 Dreiecke, Figur 789",
+ "pipeline": [
+  {
+   "step": "Texturblatt erzeugen",
+   "tool": "genimg (agy, Gemini-Bildmodell)",
+   "detail": "Ein Bild 1024×1024: 16 Materialien als exaktes 4×4-Raster mit schwarzen Fugen, Stil als Technik der 32-Bit-Konsolen beschrieben (64×64, 16 Farben, kräftige mittlere Details, flaches neutrales Licht, nahtlos). Erster Versuch brauchbar. Codex war ohne Guthaben, daher --backend agy (siehe tool_issues). Prompt: prompts/textures.txt, Rohbild assets/raw/textures.png"
+  },
+  {
+   "step": "Himmel erzeugen (erste Fassung, verworfen)",
+   "tool": "genimg (agy, Gemini-Bildmodell)",
+   "detail": "Abendhimmel ohne Land, Unterkante = Horizont, kam als 1264×848 statt 1536×1024. agy hat den Prompt umformuliert und dabei Konsolennamen eingefügt (siehe pitfalls, tool_issues); zudem war das daraus gebaute Himmelsbild (352×128) für die Nahaufnahme zu niedrig. Ersetzt durch einen Himmel aus Code (nächster Schritt). Rohbild und Begleitdatei liegen umbenannt als assets/raw/sky_verworfen.png und .meta, damit tools/collect_prompts.py den umformulierten Prompt nicht mehr in prompts.json übernimmt; unser eigener Prompt steht in prompts/sky.txt"
+  },
+  {
+   "step": "Himmel aus Code",
+   "tool": "scripts/build_textures.py (NumPy, Pillow)",
+   "detail": "352×160, Horizont in Zeile 143: Verlauf über 16 Farbstufen (Orange am Horizont, Rosa, staubiges Violett, Nachtblau oben), auf 15 Bit gerundet, sodass Bänder wie bei gemalten Hintergründen entstehen; Bandgrenzen mit periodischem Wertrauschen leicht wellig (nahtlos über die Breite), Nachglühen links der Mitte, acht flache Wolkenstreifen (oben dunkel blaugrau, unten wärmer, Unterkante orange/rosa), 46 Sterne in drei Helligkeiten; fester Seed, 114 Farben. Die untersten Zeilen behalten die Horizontfarbe der ersten Fassung (Nebelfarbe jetzt #ee9152 statt #ef9452), sodass Meer und Inseln gleich auslaufen. Ein Neubau aller Texturen ergab bis auf sky.png bytegleiche Dateien"
+  },
+  {
+   "step": "Texturen bauen",
+   "tool": "scripts/build_textures.py (Pillow, NumPy)",
+   "detail": "Zellgrenzen an den schwarzen Fugen gemessen, 6 px Rand weg, mit LANCZOS auf 76×76 verkleinert, 12 px Überstand rechts/unten in den linken/oberen Rand überblendet (nahtlos 64×64), Mittelwert in linearem Licht auf die glTF-Materialfarbe aus harbor_notes.md gezogen (Szenenpalette bleibt vergleichbar), Median Cut auf 16 Farben ohne Dithering, Kanäle auf 5 Bit gerundet. Ergebnis 4–16 Farben je Textur, Übersicht assets/textures/textures_sheet.png (2×2 gekachelt, Nähte geprüft)"
+  },
+  {
+   "step": "Kaipflaster bauen",
+   "tool": "scripts/build_textures.py (Code)",
+   "detail": "Granit-Zelle des KI-Blatts als Grundlage, Körnung auf 55 % gedämpft, darüber per Code ein Plattenmuster: 8 Reihen zu 8 Texeln, Plattenbreiten 8–20 Texel im Läuferverband (fester Seed), 1 Texel dunkle Fuge unten/rechts, helle Kante oben/links, jede Platte leicht anders getönt; 16 Farben, 15 Bit. Gerade Fugen machen das affine Verziehen auf dem Boden aus großen Vierecken (harbor_ps1.glb, Material Paving) sichtbar. Vorschau assets/textures/flagstone_preview.png"
+  },
+  {
+   "step": "Fass-, Kisten- und Geländertextur",
+   "tool": "scripts/build_textures.py (Code)",
+   "detail": "Aus den Zellen des KI-Blatts: Fass 64×64 (8 Dauben zu 8 Texeln = 8 Seiten des Fasses, Maserung senkrecht, je Daube eigener Ton, vier Eisenreifen in den Zeilen der Knicke des Drehkörpers, 16 Farben), Kiste 64×64 (Bretter aus wood.png, Rahmen aus wooddark.png mit Licht- und Schattenkante, Nägel, 15 Farben), Galeriegeländer 32×32 (Handlauf, Mittelholm, zwei Stäbe aus iron.png, sonst Alpha 0 wie Farbe 0 einer CLUT, 8 Farben). Sie ersetzen modellierte Dauben, Reifen, Leisten und Stäbe."
+  },
+  {
+   "step": "Hafen in PS1-Fassung",
+   "tool": "Blender 5.2 (blender/build_harbor_ps1.py)",
+   "detail": "Importiert shared/3d/harbor.glb und ersetzt nur Mesh-Daten (Objekte, Eltern, Empties und Lage bleiben): Fässer als Drehkörper mit 8 Seiten und 3 Bändern ohne Boden (54 Dreiecke), Poller 8 Seiten, Leuchtturm und Lampenglas 10 Seiten, Kisten als Würfel ohne Boden mit Kistentextur, Geländer als Band mit Ausschnitt-Textur. Kaiboden: modellierte Platten und Fugenfläche entfernt, dafür 35 große Vierecke (Material Paving, UV in Metern). Weil die Demo keinen Z-Puffer hat, wird alles unter der Wasserlinie (Mauern, Pfähle, Gelände, Außenhaut der Boote) und unter dem Kaiboden abgeschnitten. Vertexfarben: Umgebungsverdeckung je Ecke aus 48 festen Strahlen (0,9 m) über einen BVH-Baum. 17 932 → 12 774 Dreiecke. Deterministisch: ein Neubau ergab ein bytegleiches glb; Namen, Eltern, Transformationen und Hüllquader (bis auf die Schnitte unter Wasser) mit dem gemeinsamen glb verglichen."
+  },
+  {
+   "step": "Effekt-Texturen",
+   "tool": "scripts/build_textures.py (Code)",
+   "detail": "Rauchwölkchen 16×16 (drei auf 5 Bit gerundete Grautöne mit leichtem Blaustich, Licht von oben links, 1-Bit-Alpha, fester Seed), Lichthof 32×32 mit 6 Helligkeitsstufen, Rundschatten 16×16 (1 Bit)"
+  },
+  {
+   "step": "Figur aufs Dreiecksbudget bringen",
+   "tool": "Blender 5.2 (blender/decimate_badger.py) + shared/3d/blender/preview_badger.py",
+   "detail": "badger_low.glb (864 + 12 Dreiecke) importiert, Decimate (Collapse, 0,90) als erster Modifier vor dem Armature-Modifier angewendet, als glb mit allen Aktionen exportiert: 777 + 12 = 789 Dreiecke, Knochen, Gewichte, Idle/Walk/Wave und Materialnamen bleiben. Verglichen mit 0,80 (703 Dreiecke, Splitter an Mützenschirm und Ohren, Linie im Gesicht) und 0,80/0,90 mit Symmetrie (Kerben im Gesicht) über preview_badger.py; 0,90 ohne Symmetrie ist sauber. preview_badger.py --check: tiefster Punkt 3,5 mm, Fußhub 7,3 cm"
+  },
+  {
+   "step": "Nahaufnahme einrichten",
+   "tool": "scripts/frame_closeup.py (Python, ohne Godot)",
+   "detail": "Projiziert Dachs, Laterne mit Pfahl, Leuchtturm, Boote und Kisten für eine Kamera vor dem Dachs und löst Neigung und Gieren so, dass die Füße bei (84 | 156) über dem Dialogfenster stehen; prüft, dass der Laternenpfahl ganz im Bild und das Leuchtfeuer neben dem Kopf liegt (--search listet Kandidaten). Gewählt: fov 80°, 2,8 m, 12° links, 0,5 m hoch: Dachs 74 px (in Godot gemessen 76–77). Drehwinkel der Figur in Godot (Schalter --turn=) an −75/−90/−105/−120° in Bild 118, 136 und 150 der ersten Fassung (Drehung damals in der Nahaufnahme) verglichen: −90°."
+  },
+  {
+   "step": "Godot-Demo",
+   "tool": "Godot 4.7.2 (Forward+), handgeschriebene Shader",
+   "detail": "main.gd bereitet jedes Mesh für die Sortierung nach Polygonen auf (Dreiecke entflochten, Mittelpunkt in CUSTOM0), ersetzt alle glTF-Materialien nach Namen durch ps1_lit.gdshader (Textur je Material bzw. Objekt, Sortierversatz je Objekt/Material), Wasser durch ps1_water.gdshader; Licht, Nebel, Zeit und Vergleichsschalter als globale Shader-Uniforms; Vertexfarben und UVs mit w multipliziert übergeben und im Fragment geteilt (linear im Bildraum); Dither-Nachbearbeitung als canvas_item über allem"
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/probe.py, scripts/compare_switches.py, scripts/measure_feet.py, tools/capture.py",
+   "detail": "probe.py nimmt verlustfrei in 320×240 auf und prüft 15 Bit und Farbzahl je Bild; compare_switches.py misst die Merkmale mit den Schaltern --no-snap, --no-affine, --no-affine-vc, --zbuffer, --mipmaps, --no-vc und prüft alle 180 Bilder auf 15 Bit, Farbzahl und ganz schwarze Zeilen (Werte in traits); measure_feet.py misst Standfuß beim Laufen, Fußabdruck beim Drehen und Bodenzeile, Füße und Kopf in der Nahaufnahme (Ergebnis in lessons und pitfalls). Rundschatten (--no-shadow), Flackern der Laterne, Haltezeiten des Handzeigers und Schreibtempo wurden mit Wegwerf-Skripten im Temp-Ordner aus der verlustfreien Aufnahme gemessen. capture.py mit --poster-at 0,775 (Bild 139: Nahaufnahme beim Winken); das Poster gleicht Bild 139 der verlustfreien Aufnahme pixelgenau. Probeläufe mit --rendering-method mobile und gl_compatibility (siehe ratings_note)"
+  }
+ ],
+ "godot": [
+  "project.godot: Viewport 320×240, stretch mode viewport, scale_mode integer, Fenster 960×720, MSAA/FXAA/TAA aus, 2D-Filter Nearest; 18 globale Shader-Uniforms unter [shader_globals] (ps1_snap_res, ps1_ambient, ps1_sun_dir, ps1_sun_color, ps1_light0..2_pos/_color, ps1_fog_color, ps1_fog_range, ps1_time, Schalter ps1_affine, ps1_affine_vc, ps1_ot, ps1_mip, ps1_vc_strength)",
+  "shaders/ps1_common.gdshaderinc: ps1_snap() rundet clip.xy/clip.w auf das 320×240-Raster, ps1_light() rechnet Grundlicht + Sonne + 3 Punktlichter je Eckpunkt und dämpft Grundlicht und Sonne mit der Vertexfarbe (Umgebungsverdeckung, Gewicht 0,8), Summe bei 2 begrenzt; ps1_fog() je Eckpunkt; ps1_ot_depth() wandelt einen Abstand in einen Tiefenwert (Compatibility-Renderer mit eigenem Wertebereich)",
+  "shaders/ps1_lit.gdshader: unshaded, cull_back; vertex() setzt POSITION = ps1_snap(...), übergibt UV·w und w, rechnet zwei Vertexfarben (v_mul = Licht·(1 − Nebel), v_add = Horizontfarbe·Nebel + Leuchten) und die Sortiertiefe des Dreiecks (Mittelpunkt aus CUSTOM0 + Versatz, flat); v_mul und v_add gehen zusätzlich mal w als Varyings hinaus; fragment() teilt UV und beide Farben durch w (linear im Bildraum wie auf der Konsole; ps1_affine bzw. ps1_affine_vc = 0 schaltet zum Vergleich auf perspektivisch korrekt), tastet mit filter_nearest ohne Mipmaps ab, ALBEDO = Textur·v_mul + v_add, DEPTH = Sortiertiefe. Uniform light_boost gibt der Figur eigenes Zusatzlicht je Einstellung (wie eine eigene Lichtmatrix je Objekt)",
+  "Sortierung nach Polygonen in main.gd: _ot_mesh() entflicht jedes Mesh (jede Ecke ein eigener Eckpunkt) und legt Mittelpunkt − Eckpunkt in CUSTOM0 (RGBA float); fehlen Vertexfarben (Figur), werden sie weiß ergänzt. OT_BIAS: Cottage/Stone +0,4 m, Cottage/WoodDark +0,06, Cottage/Roof −0,3, CottageWindow/Glass +0,12, Badger/Scarf −0,04, Paving +0,3; Paving sortiert je Pixel (OT_PER_PIXEL). Bei der geriggten Figur gilt der Versatz aus der Ruhepose (Dreiecke klein)",
+  "Kaiboden: Teil von harbor_ps1.glb (Material Paving, 35 Vierecke, UV in Metern); ps1_lit mit flagstone.png und 6 m je Kachel. Der Dachs steht auf y = 0",
+  "shaders/ps1_water.gdshader: Dünung als Verschiebung der Gitterpunkte (1,5-m-Gitter im Hafen), Licht und Glanz je Eckpunkt, Depth Cueing über Vertexfarben (linear im Bildraum wie bei ps1_lit), 64er-Wassertextur wandert über die Fläche (UV aus Weltkoordinaten + Zeit), affin; Sortierversatz 1000 m (immer hinten)",
+  "shaders/ps1_beam.gdshader: Lichtkegel als CylinderMesh (16 m, Radius 0,3 → 2,2 m, 8 Segmente, 3 Ringe), additiv, Helligkeit nur an den Eckpunkten ((1 − Abstand)^1,5, Lampe hell, Ende schwarz), linear im Bildraum interpoliert, warmgelb; ps1_glow.gdshader: additive Lichthöfe für Laterne und Leuchtfeuer, jeweils zur aktuellen Kamera hin vor das Glas gesetzt; der Lichthof des Leuchtfeuers wächst und blitzt, wenn der Strahl zur Kamera zeigt",
+  "shaders/ps1_shadow.gdshader: Rundschatten liegend (QuadMesh 0,75 × 0,55 m), blend_mix mit ALBEDO Schwarz und ALPHA 0,5 (B/2 + F/2), 1-Bit-Kreis, Eckpunkte gerundet, je Pixel sortiert knapp vor dem Kaiboden (+0,28 m); shaders/ps1_sprite.gdshader: Rauch (zur Kamera gedreht), 50/50-Mischung, Ausblenden per Bayer-4×4 auf Bildschirmpixel (discard)",
+  "Kamera in main.gd: bis CUT_T = 3,983 s (Bild 0–118; der Schnitt liegt zwischen zwei Bildern, damit Rundungsfehler der aufsummierten Zeit nicht entscheiden) Fahrt (Kurve wie zuvor über 6 s, auslaufend) und linearer Schwenk über Basis.from_euler(Neigung, Gieren, 0); ab CUT_T Position = Dachs + CU_OFFSET, feste Drehung, fov 80. Der Dachs steht ab 3,45 s und hat sich bei 3,95 s fertig gedreht, deshalb ist die Nahaufnahme ab dem Schnitt fest",
+  "Himmel: Environment background_mode Canvas (max layer −1), TextureRect mit sky.png (352×160) in CanvasLayer −1; _place_sky() setzt die Position je Bild aus fov, Neigung und Gieren der Kamera (ganze Pixel). Nebelfarbe liest main.gd aus den 4 Zeilen über dem Horizont (139–142)",
+  "shaders/dither.gdshader: ColorRect in CanvasLayer 10 liest hint_screen_texture, addiert die 4×4-Tabelle in 8-Bit-Stufen und schneidet auf 5 Bit ab; wirkt auch auf die Fensterverläufe",
+  "Tonemapping linear, kein Glow, kein SSAO, keine Godot-Lichter; models/*.glb.import mit generate_lods=false (feste Geometrie), textures/*.png.import mit detect_3d/compress_to=0 und compress/mode=0 (keine VRAM-Kompression, die die 16-Farben-Paletten verfälschen würde; bei neuen Texturen von Hand setzen). Die Mipmaps in den Importen braucht nur der Vergleichsschalter --mipmaps; im normalen Lauf tastet der Sampler ohne Mipmaps ab",
+  "Ablauf: Walk mit speed_scale 2 (0,73 m/s), Bremsen ab 3,1 s, Idle ab 3,45 s, Drehung auf −90° 3,5–3,95 s (noch in der Totale) um die Mitte der Pfoten (FEET_MID = 6 cm vor dem Ursprung: der Ursprung wird mitverschoben, sodass dieser Punkt stehen bleibt), Schnitt bei 4,0 s, Wave ab 4,15 s; Boote schaukeln, Laterne flackert (FastNoiseLite, Seed 20261010, Spannweite über die 6 s gemessen und auf 0,55–1,0 abgebildet; Lichthof 1,6 × Flackerwert groß), Leuchtfeuer dreht in 8 s, Rauch aus 8 Wölkchen; alles über aufsummiertes delta",
+  "ui.gd: zeichnet in _draw(): Fenster als draw_polygon mit vier Eckfarben, Rahmen aus 1-px-Rechtecken, Schrift Nunito als FontVariation (wght 750, spacing_space +2) 12 px, Graustufen-Glättung, ganze Pixelpositionen, Zeilen über feste Grundlinien; Schreibmaschine mit 30 Zeichen/s über einen Bildzähler (round((t − Start)·30)); Optionen alle weiß, Handzeiger pixelweise aus einem 15×9-Muster, hüpft je 9 Bilder (Bildzähler ab dem ersten Bild der Auswahl, Start CHOICES_T = 77,5/30 s zwischen zwei Bildern)",
+  "Vergleichs- und Messschalter: godot --path demo -- --no-snap --no-affine --no-affine-vc --no-dither --zbuffer --mipmaps --no-vc --no-shadow --figure-only --measure-cam --turn=<Grad> (die ersten sieben taugen auch als Optionsmenü in einem echten Spiel)"
+ ],
+ "techniques": [
+  "vertex-snapping",
+  "affine-texturen",
+  "vertexlicht-gouraud",
+  "vertex-nebel",
+  "polygon-sortierung",
+  "dithering-15bit",
+  "ki-texturblatt",
+  "blender-dezimieren",
+  "blender-lowpoly-variante",
+  "2d-himmel",
+  "feste-kameras",
+  "kameraschnitt",
+  "nachbearbeitung",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 2,
+  "consistency": 5,
+  "effort": 4,
+  "text_adventure": 3,
+  "mobile": 4
+ },
+ "ratings_note": "ai_fit 2: Die KI hat nur Rohmaterial geliefert, ein Blatt mit 16 Materialtexturen, im ersten Versuch brauchbar. Der KI-Himmel der ersten Fassung ist durch einen Himmel aus Code ersetzt (agy hatte den Prompt umformuliert, siehe pitfalls). Alle Merkmale des PS1-Looks (Snapping, affine Texturen und Gouraud linear im Bildraum, Vertexfarben, Depth Cueing, Sortierung nach Polygonen, 15-Bit-Dithering), die Low-Poly-Geometrie, die Figur, der Himmel sowie Kaipflaster, Fass-, Kisten- und Geländertextur stammen aus Shadern, Blender-Skripten und Code; ohne KI wären nur die 16 Grundtexturen anders entstanden (zum Beispiel aus CC0-Fotos). consistency 5: Der Look entsteht in Shadern, jedes neue Modell sieht automatisch gleich aus. effort 4: Aufwand entsteht vor allem durch die 3D-Geometrie je Ort (Low-Poly-Fassung, Vertexfarben, Sortierversätze gegen Sortierfehler) und die Kameraeinstellungen, nicht durch den Stil. mobile 4 per Probelauf geprüft (nach dieser Überarbeitung wiederholt), nicht auf einem Smartphone gemessen: Die Szene ist billig (320×240, unbeleuchtete Shader mit Vertexlicht, 64er-Texturen, rund 13 600 Dreiecke); dass jeder Pixel seine Tiefe selbst schreibt (Sortierung nach Polygonen), schaltet frühe Tiefentests ab, was bei 320×240 kaum ins Gewicht fallen dürfte. Mit --rendering-method mobile liefen alle 180 Bilder ohne ERROR/WARNING und weichen (alle 180 Bilder verglichen) in 4,9–6,1 % der Pixel um höchstens 9 Stufen (eine Ditherstufe) ab; mit gl_compatibility (ältere Geräte, Web) ebenfalls fehlerfrei und richtig sortiert, aber im Mittel 6 (Rot) bis 10 (Grün, Blau 9) Stufen dunkler und damit orangestichiger (27–33 % der Pixel je Bild um mehr als 24 Stufen anders); die Farben müssten dort neu abgestimmt werden.",
+ "verdict": "Für ein Textadventure nur bedingt die erste Wahl: Jeder Ort braucht ein 3D-Modell in reduzierter Fassung, und der Reiz des Stils (Wackeln, schwimmende Texturen, Flimmern in der Ferne) zeigt sich erst mit Bewegung. Lohnend ist er, wenn das Spiel kleine 3D-Szenen mit festen Kameras, einer Figur und einem Dialogfenster zeigen will: Die Kombination aus Totale und fester Nahaufnahme mit Schnitt passt gut zu Gesprächsszenen. Shader, Texturblatt-Pipeline, Blender-Skript für die Low-Poly-Fassung, Bildausschnitt-Skript und Oberfläche sind wiederverwendbar; ein neuer Ort kostet ein Blender-Skript (Geometrie, Vertexfarben), ein paar Sortierversätze, zwei bis drei Kamerapositionen und höchstens ein KI-Texturblatt. Eine Zwischenlösung: je Ort ein festes Bild aus dieser Demo plus wenige animierte Teile (Wasser, Licht, Rauch).",
+ "pitfalls": [
+  "Bildausschnitt der Totale: Bei 4:3 mit Keep Height fehlen links das halbe Häuschen und rechts die Kisten; mit Keep Width und 3° Neigung standen die Füße des Dachses auf der Oberkante des Dialogfensters. Lösung: Neigung 6° (Horizont in Zeile 95). Der Ausschnitt weicht also von der Hauptkamera ab.",
+  "In der Totale ist die Figur nur 17–23 px hoch; Facetten, Paket und Gesicht sind dort nicht zu erkennen. Näher heran ging nicht, ohne Häuschen oder Laterne zu verlieren. Gelöst mit einem Schnitt auf eine feste Nahaufnahme; dort sind Laterne mit Pfahl, Leuchtturm, Boote und Kisten zu sehen, Häuschen und Rauch aber nicht (sie liegen links außerhalb des Bildes).",
+  "Auf den modellierten Pflasterplatten (etwa 0,7 m, je Platte eigene Polygone) fiel das affine Verziehen kaum auf (2,7 % der Pixel). Erst ein Boden aus großen Polygonen mit geraden Fugen macht es sichtbar. Die PS1-Fassung des Hafens ersetzt deshalb das Pflaster aus shared/3d durch 35 große Vierecke; der Kai sieht anders aus als in den übrigen 3D-Stilen (größere Platten, dunkle Fugen aus der Textur statt aus Geometrie). Die Polygongröße (2,25–2,67 m) ist nicht systematisch ausprobiert; größere Polygone verziehen stärker, kleinere schwächer.",
+  "Der Lichtfleck der Laterne und das Fensterlicht werden auf den großen Bodenpolygonen grob und eckig, weil Licht nur an den Eckpunkten gerechnet wird. Das entspricht der Technik, wirkt aber weniger weich als auf dem feinen Pflaster.",
+  "Die PS1-Fassung des Hafens hat noch 12 774 Dreiecke, mehr, als die Konsole bei 30 fps pro Bild zeichnen konnte (einige Tausend). Reduziert wurden nur Fässer, Poller, Leuchtturm, Kisten und Kaiboden; Häuschen (1006), Boote (1079 und 1181, durch den Schnitt an der Wasserlinie sogar etwas mehr), Taurolle (566), Laternenpfahl (322) und Meer (3200) sind unverändert, das Gelände ist nur unter Wasser und am Kai beschnitten. Ein echtes Budget bräuchte auch dort gröbere Modelle.",
+  "Ein Z-Puffer fehlt wie gefordert, aber Sortierfehler sieht man kaum (0,9 % bzw. 0,4 % der Pixel anders als mit Z-Puffer): Die Versätze je Objekt/Material, die entfernte Geometrie unter Wasser und unter dem Kaiboden und die Sortierung je Pixel für Kaiboden und Schatten fangen sie ab, wie es Entwickler der Zeit taten. Das ist für ein Spiel gewollt, zeigt das Merkmal aber nur als Kantenunterschiede (Fensterrahmen, Türkanten, Taue, Augenpartie der Figur). Der Kaiboden sortiert je Pixel und nicht als Polygon; laut Aufbau würden seine großen Vierecke sonst Boote, Steg und Kaimauer dahinter überdecken. Ein Lauf ohne diese Versätze wurde nicht einzeln gemessen. Nachbau über den Tiefentest der GPU (eine Tiefe je Dreieck), keine echte Ordering Table mit Malen von hinten nach vorn und begrenzter Tiefenauflösung.",
+  "Nicht nachgebaut: Lücken an T-Kreuzungen, verschwindende Polygone an der Nahebene, echte indizierte Texturen im Videospeicher (die PNGs sind RGB mit höchstens 16 Farben) und die genaue Rechenweise der Mischmodi. Die Vertexfarben interpolierte Godot bis zur Prüfung perspektivisch korrekt; jetzt linear im Bildraum wie die UVs (Unterschied klein: höchstens 17 Stufen, 2–5 % der Pixel). Die Interpolation selbst rechnet die GPU in Gleitkomma, die Konsole mit Festkomma.",
+  "Rundschatten: Ein subtraktiver Schatten (B − F) mit einem Abzug von 0,08–0,10 linear, wie zunächst vorgesehen, setzt auf dem abendlichen Pflaster (unter dem Schatten linear im Mittel 0,07–0,12 Rot, 0,04–0,07 Grün und Blau) bei 79–97 % der Schattenpixel Grün und Blau auf null; der Schatten wäre wieder fast schwarz. Deshalb der Mischmodus B/2 + F/2 mit schwarzem F: halb so hell (linear), Fugen und Plattentöne bleiben stehen. In der Totale verdecken die Füße den Schatten fast ganz (2–24 px sichtbar); er wirkt vor allem in der Nahaufnahme.",
+  "Drehwinkel für die Nahaufnahme: Bei −75° lag die weiße Schnauze vor dem weißen Ärmel des Winkarms und ging im Poster darin unter; ab −105° liest sich das frontale Gesicht als dunkle Maske. −90° (12° an der Kamera vorbei) zeigt Schnauze mit Nase, Winkarm und Paket getrennt. Augen sind bei 76 px Figurhöhe nur als dunkles Band zu sehen.",
+  "Das Flackern der Laterne sieht man vor allem in der Nahaufnahme; in der Totale ist die Laterne nur wenige Pixel groß.",
+  "Der Himmel ist ein festes 2D-Bild: In der Nahaufnahme (fov 80°) hat er denselben Maßstab wie in der Totale (68,6°), streng genommen müsste er kleiner erscheinen. Fällt nicht auf, ist aber eine Vereinfachung. Seitlich hat er 16 px Rand je Seite; beim Schwenk der Totale werden davon bis zu 8 px gebraucht.",
+  "Schwarzer Streifen über dem Himmel (erste Fassung, von der Prüfung gefunden): Das Himmelsbild war 128 px hoch (Horizont in Zeile 111). In der Nahaufnahme liegt der Horizont wegen der fast waagrechten Kamera (0,19° nach unten) in Zeile 119,4, das Bild begann also erst bei y = 8, und die obersten 8 Zeilen (24 px in 1280×720) waren in Bild 105–179 (42 % der Laufzeit, auch im Poster) reines Schwarz. Beim Ansehen von frames.jpg und Poster übersehen, weil das Ortsfenster oben links und der dunkle Nachthimmel daneben liegen. Jetzt 160 px hoch (Horizont 143): 24 px Rand oben in der Nahaufnahme, 48 px in der Totale; compare_switches.py prüft alle 180 Bilder auf ganz schwarze Zeilen (keine).",
+  "KI-Himmel und Namensregel: agy hat den Himmel-Prompt nicht wörtlich weitergegeben, sondern umformuliert und '(PS1 / Sega Saturn era)' eingefügt; tools/collect_prompts.py übernahm diesen Wortlaut als prompt_sent in das veröffentlichte prompts.json. Das Bild selbst enthielt keine Schrift und keine Logos und wurde zunächst behalten. Statt es neu zu erzeugen (agy-Kontingent knapp, Ergebnis wieder ungewiss), entsteht der Himmel jetzt aus Code; keine neue Bilderzeugung. Der Code-Himmel ist etwas regelmäßiger als das gemalte KI-Bild (Wolken als gleichförmige, spitz auslaufende Streifen ohne Pinselstruktur), passt aber zum 15-Bit-Banding der Zeit.",
+  "Drehung ohne Schritte: Die gemeinsame Figur hat keine Drehanimation, gedreht wird die ganze Figur in Idle. In der ersten Fassung lag die Drehung in der Nahaufnahme, und der vordere Fuß wanderte dort um etwa 15 px (≈ 20 cm in 0,4 s). Jetzt liegt sie am Ende der Totale (3,5–3,95 s, Bild 104–118), gedreht wird um die Mitte der Pfoten, und die Nahaufnahme beginnt mit dem stehenden Dachs. Gemessen mit der Messkamera (measure_feet.py, Figur 68 px): Der Fußabdruck beider Pfoten bleibt stehen (Mitte ±1,3 px), aber jede Pfote schwenkt um diese Mitte, der vordere Fuß um 14 px (≈ 21 cm). In der Totale (Figur 23–24 px) sind das umgerechnet etwa 5 px. So drehten sich Figuren in Spielen der Zeit oft auf der Stelle; sauber ginge es nur mit einer eigenen Drehanimation mit zwei kleinen Schritten im Rig.",
+  "Bildgenaue Zeiten: Mit 0,25 s Takt hielt der Handzeiger abwechselnd 8 und 7 Bilder, mit 32 Zeichen/s kamen je Bild mal 1, mal 2 Zeichen. Jetzt 9/9 Bilder (0,3 s) und 30 Zeichen/s über einen Bildzähler. Schaltpunkte, die genau auf einem Bild liegen (früher Schnitt bei 3,5 s, Auswahl bei 2,6 s), hängen vom Rundungsfehler der aufsummierten Zeit ab; sie liegen jetzt zwischen zwei Bildern (Schnitt 3,983 s, Auswahl 77,5/30 s).",
+  "Pixel-Schriften: Pixelify Sans ist erst bei 20 px pixelgenau, Jersey 10 im Bereich 7–25 px nie; bei 11 px zeigte Pixelify eine kaputte fl-Ligatur, und Z las sich wie 2. Ersetzt durch Nunito 12 px mit Graustufen-Glättung. Bei ganzen Pixelpositionen war der Wortabstand zu eng ('Mitdem'); spacing_space +2 behebt das.",
+  "Der Mittelwertabgleich auf die glTF-Farbe sättigt Rot: redplaster hat nur noch 4 Farben und wirkt flach (Fensterläden, Band am Leuchtturm).",
+  "Decimate auf 0,80 hinterließ Splitter an Mützenschirm und Ohren und eine Linie im Gesicht, die in der Nahaufnahme sichtbar geworden wären; mit 0,90 (789 Dreiecke) ist die Figur sauber, liegt aber nahe an der Obergrenze von 800.",
+  "Godot importiert neue Texturen, die nur per load() genutzt werden, mit detect_3d/compress_to=1 (VRAM-Kompression bei 3D-Nutzung); für flagstone, barrel, crate und railing von Hand auf 0 gesetzt wie bei den übrigen Texturen.",
+  "Mit dem Compatibility-Renderer laufen alle Shader, die Farben werden aber deutlich dunkler und orangestichiger; für Web oder ältere Geräte wäre eine eigene Abstimmung nötig."
+ ],
+ "lessons": [
+  "Ein KI-Bild mit 16 Materialien als 4×4-Raster mit schwarzen Fugen ergibt einen zusammenpassenden Texturensatz; Zellgrenzen an den Fugen messen, 12 px Überstand überblenden macht ihn nahtlos, Mittelwertabgleich auf die Materialfarben hält die Szenenpalette. Aus den Zellen lassen sich per Code Objekttexturen bauen (Fass mit Dauben und Reifen, Kiste mit Rahmen, Geländer als Ausschnitt), die modellierte Details ersetzen.",
+  "Der PS1-Look lässt sich vollständig per Shader auf die gemeinsamen Modelle legen: Clip-Position runden (Snapping), UV·w/w (affin), Licht und Nebel im vertex() als zwei Vertexfarben (Textur·v_mul + v_add). Globale Shader-Uniforms in project.godot halten Licht, Nebel, Zeit und Vergleichsschalter für alle Materialien gleich.",
+  "Sortierung nach Polygonen statt Z-Puffer in Godot: Meshes beim Laden entflechten, Mittelpunkt − Eckpunkt in CUSTOM0 legen, im Shader die Tiefe des Mittelpunkts als flat-Varying übergeben und in DEPTH schreiben. Ohne Z-Puffer gibt es kein 'unter Wasser' und kein 'unter dem Boden': Was verdeckt sein soll, muss in der Geometrie fehlen (in Blender abschneiden), und feste Versätze je Objekt/Material beheben vorhersehbare Fehler.",
+  "Eine Low-Poly-Fassung der gemeinsamen Szene per Blender-Skript: glb importieren, nur die Mesh-Daten ausgewählter Objekte ersetzen (Drehkörper mit wenigen Seiten, Würfel mit gemalter Textur), dann bleiben Namen, Eltern, Empties und Lage erhalten; Umgebungsverdeckung als Vertexfarbe mit festen Strahlen über einen BVH-Baum ist deterministisch (Neubau bytegleich) und braucht kein Cycles.",
+  "Die bekanntesten Merkmale brauchen die passende Szene: Wackeln wird mit Kameradrehung deutlicher (Fahrt plus Schwenk um 3,5°: 17–18 % der Pixel anders als ohne Snapping), affines Verziehen erst auf großen Polygonen mit geraden Linien in der Textur (Plattenfugen), Flimmern ohne Mipmaps am Horizont, die Low-Poly-Figur erst ab etwa 60–70 px Höhe.",
+  "Feste Kameras mit hartem Schnitt sind zeittypisch und lösen den Konflikt zwischen Übersicht (Ort erkennen) und Nahaufnahme (Figur erkennen). Den Bildausschnitt vorher in Python ausrechnen (scripts/frame_closeup.py, mit Bedingungen wie 'Laternenpfahl ganz im Bild') spart Probeläufe; den Drehwinkel der Figur mit einem Schalter (--turn=) an mehreren Bildern vergleichen.",
+  "Messung der Figur (scripts/measure_feet.py): Beim Laufen bleibt die Zehenkante des Standfußes in 12 Standphasen auf 0–1 px stehen (Figur 65–69 px hoch, feste Messkamera); beim Drehen bleibt der Fußabdruck stehen (Mitte ±1,3 px), die Pfoten schwenken (vorderer Fuß 14 px); in der Nahaufnahme (Bild 119–179) liegt die Bodenzeile in allen Bildern auf Zeile 157, die Kante des vorderen Fußes bei 69–70, der Kopf oben bei 81–82. Die Messung des Fußabdrucks über 6 statt 3 Zeilen trennt 'Paar wandert' von 'Pfote schwenkt'.",
+  "Zusatzlicht der Figur je Kameraeinstellung setzen: kräftig in der Totale (Lesbarkeit), schwach in der Nahaufnahme (Gouraud-Verläufe sichtbar).",
+  "Das ganze Spiel in einem 320×240-Viewport (stretch mode viewport) rendern und ein canvas_item mit hint_screen_texture darüberlegen: Dithering trifft dann 3D, Himmel und Fensterverläufe gleich, wie auf der Konsole.",
+  "Himmel als 2D-Hintergrund (Environment-Hintergrund Canvas) mit Rand anlegen und je Bild aus Neigung und Gieren verschieben (Horizont 120 + f·tan(Neigung), seitlich f·tan(Gieren)); den oberen Rand für jede Einstellung ausrechnen (Horizontzeile im Bild minus Horizontzeile im Himmelsbild muss ≤ 0 sein), eine fast waagrechte Nahaufnahme braucht viel mehr als die geneigte Totale. Nebelfarbe aus den Horizontzeilen lesen, dann verschwindet die Meereskante. Ein schlichter Abendhimmel lässt sich ohne KI aus Code bauen: Verlauf, auf 15 Bit gerundet (gibt das Banding), wellige Bandgrenzen, Wolkenstreifen und Sterne mit festem Seed.",
+  "Ein Lichtkegel, dessen Ende im Bild liegt, liest sich als Strahl; endet er außerhalb, wirkt er als gleichmäßige Fläche. Zwischenringe im Kegel geben dem Helligkeitsabfall je Eckpunkt Stufen.",
+  "Rundschatten im Mischmodus B/2 + F/2 mit Schwarz halbiert die Helligkeit des Bodens und lässt die Textur stehen; ein fester Abzug (B − F) schwärzt dunklen Abendboden, weil einzelne Kanäle auf null fallen. Mit einem Schalter ohne Schatten lässt sich messen, wie stark er abdunkelt.",
+  "Flackern muss sichtbar groß sein: Spannweite der Rauschsumme über die Laufzeit messen und auf 0,55–1,0 abbilden, Glas, Lichthof (Helligkeit und Größe) und Punktlicht gemeinsam steuern.",
+  "Decimate als erster Modifier vor dem Armature-Modifier anwenden und als glb exportieren: Rig, Gewichte und alle drei Animationen bleiben; mehrere Verhältnisse mit preview_badger.py nebeneinander rendern und das sauberste innerhalb des Budgets nehmen.",
+  "Ausblenden per Bildschirmraster (discard nach Bayer 4×4) statt Deckkraft wirkt bei Rauch sofort zeitgemäß und braucht keine Sortierung.",
+  "Vergleichsschalter (--no-snap, --no-affine, --no-dither, --zbuffer, --mipmaps, --no-vc) machen die Effekte messbar und taugen später als Optionsmenü.",
+  "Für feste Geometrie generate_lods=false und für Texturen detect_3d/compress_to=0 in den .import-Dateien setzen.",
+  "TextServer.name_to_tag ist keine statische Funktion: TextServerManager.get_primary_interface().name_to_tag(\"wght\") benutzen, um eine variable Schrift auf eine Strichstärke zu setzen; FontVariation.spacing_space erhöht den Wortabstand.",
+  "Gouraud wie auf der Konsole: Vertexfarben genauso wie UVs mit w multiplizieren und im Fragment durch w teilen (ein w-Varying für alle); der Unterschied zu Godots perspektivisch korrekter Interpolation zeigt sich nur auf großen, schräg gesehenen Polygonen (hinterer Kai, Lichtkegel).",
+  "Zeitabläufe in ganzen Bildern denken: Takte, die in 30 fps aufgehen (0,3 s statt 0,25 s, 30 statt 32 Zeichen/s), Bildzähler statt floor(t · Rate), Schaltpunkte auf halbe Bilder legen; Haltezeiten in der verlustfreien Aufnahme nachzählen.",
+  "Bewegungen, die mit dem Rig nicht sauber gehen (Drehen ohne Schritte), in die Totale legen, wo die Figur klein ist, und die Nahaufnahme mit einer ruhigen Pose beginnen."
+ ],
+ "assets": [
+  {
+   "file": "assets/textures/granite.png",
+   "kind": "texture",
+   "made_with": "agy-Bild (Texturblatt) + build_textures.py: 64×64, nahtlos, Abgleich auf #8C877D, 13 Farben; Kantensteine am Kai mit 6 m je Kachel",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/fieldstone.png",
+   "kind": "texture",
+   "made_with": "Texturblatt + build_textures.py, Abgleich #8C877D, 16 Farben (Häuschen)",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/darkstone.png",
+   "kind": "texture",
+   "made_with": "Texturblatt + build_textures.py, Abgleich #5A5650, 9 Farben",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/wood.png",
+   "kind": "texture",
+   "made_with": "Texturblatt + build_textures.py, Abgleich #8E6440, 12 Farben",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/wooddark.png",
+   "kind": "texture",
+   "made_with": "Texturblatt + build_textures.py, Abgleich #4E3726, 8 Farben",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/plaster.png",
+   "kind": "texture",
+   "made_with": "Texturblatt + build_textures.py, Abgleich #E8E4DA, 8 Farben (Leuchtturm, Häuschen)",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/redplaster.png",
+   "kind": "texture",
+   "made_with": "Texturblatt + build_textures.py, Abgleich #B02A22, 4 Farben",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/slate.png",
+   "kind": "texture",
+   "made_with": "Texturblatt + build_textures.py, Abgleich #4A5361, 10 Farben",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/rope.png",
+   "kind": "texture",
+   "made_with": "Texturblatt + build_textures.py, Abgleich #BFA77A, 16 Farben",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/iron.png",
+   "kind": "texture",
+   "made_with": "Texturblatt + build_textures.py, Abgleich #3C3D40, 9 Farben",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/rock.png",
+   "kind": "texture",
+   "made_with": "Texturblatt + build_textures.py, Abgleich #6E6A64, 16 Farben",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/sand.png",
+   "kind": "texture",
+   "made_with": "Texturblatt + build_textures.py, Abgleich #C9B48A, 13 Farben",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/grass.png",
+   "kind": "texture",
+   "made_with": "Texturblatt + build_textures.py, Abgleich #6E8048, 13 Farben",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/water.png",
+   "kind": "texture",
+   "made_with": "Texturblatt + build_textures.py, Abgleich #2B5A6B, 7 Farben",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/boatwhite.png",
+   "kind": "texture",
+   "made_with": "Texturblatt + build_textures.py, Abgleich #E8E4DA, 13 Farben (Boote)",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/boatred.png",
+   "kind": "texture",
+   "made_with": "Texturblatt + build_textures.py, Abgleich #B02A22, 10 Farben (Boote)",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/flagstone.png",
+   "kind": "texture",
+   "made_with": "Granit-Zelle des agy-Texturblatts + Plattenmuster aus Code (build_textures.py): 64×64, nahtlos, 13 Farben, Kaiboden (Material Paving in harbor_ps1.glb) mit 6 m je Kachel",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/barrel.png",
+   "kind": "texture",
+   "made_with": "build_textures.py aus wood.png und iron.png (Texturblatt) + Code: 64×64, 8 Dauben, 4 Reifen, 16 Farben (Fässer in harbor_ps1.glb)",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/crate.png",
+   "kind": "texture",
+   "made_with": "build_textures.py aus wood.png und wooddark.png (Texturblatt) + Code: 64×64, Bretter, Rahmen, Nägel, 15 Farben (Kistenwürfel)",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/railing.png",
+   "kind": "texture",
+   "made_with": "build_textures.py aus iron.png (Texturblatt) + Code: 32×32 Ausschnitt-Textur mit 1-Bit-Alpha, 8 Farben (Galeriegeländer des Leuchtturms)",
+   "prompt": "assets/raw/textures.json"
+  },
+  {
+   "file": "assets/textures/flagstone_preview.png",
+   "kind": "preview",
+   "made_with": "build_textures.py: flagstone 2×2 gekachelt, 4-fach vergrößert",
+   "prompt": ""
+  },
+  {
+   "file": "assets/textures/textures_sheet.png",
+   "kind": "preview",
+   "made_with": "build_textures.py: die 16 Texturen aus dem KI-Blatt 2×2 gekachelt, 4-fach vergrößert",
+   "prompt": ""
+  },
+  {
+   "file": "assets/textures/sky.png",
+   "kind": "background",
+   "made_with": "build_textures.py (Code, fester Seed): 352×160, Horizont Zeile 143, 16 px Rand je Seite, 114 Farben, 15 Bit; ersetzt das agy-Himmelbild der ersten Fassung",
+   "prompt": ""
+  },
+  {
+   "file": "assets/textures/smoke.png",
+   "kind": "effect",
+   "made_with": "build_textures.py (Code): 16×16, drei auf 5 Bit gerundete Grautöne (148/197/239, Blau +1 Stufe), 1-Bit-Alpha",
+   "prompt": ""
+  },
+  {
+   "file": "assets/textures/glow.png",
+   "kind": "effect",
+   "made_with": "build_textures.py (Code): 32×32, 6 Helligkeitsstufen, additiv",
+   "prompt": ""
+  },
+  {
+   "file": "assets/textures/shadow.png",
+   "kind": "effect",
+   "made_with": "build_textures.py (Code): 16×16, 1 Bit; als Quad 0,75 × 0,55 m im Mischmodus B/2 + F/2 mit Schwarz gezeichnet (ps1_shadow.gdshader)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/models/badger_ps1.glb",
+   "kind": "model",
+   "made_with": "shared/3d/badger_low.glb + blender/decimate_badger.py (Decimate 0,90): 789 Dreiecke, Rig und Animationen unverändert",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/compare.png",
+   "kind": "preview",
+   "made_with": "preview_badger.py (EEVEE): reduzierte Figur vorn, seitlich, winkend, rechts das Original badger_low",
+   "prompt": ""
+  },
+  {
+   "file": "demo/models/harbor_ps1.glb",
+   "kind": "model",
+   "made_with": "shared/3d/harbor.glb + blender/build_harbor_ps1.py: 12 774 statt 17 932 Dreiecke (Fässer 8 Seiten mit 54 Dreiecken, Poller 8 und Leuchtturm 10 Seiten, Kisten als Würfel, Kaiboden aus 35 großen Vierecken, Geometrie unter Wasser und Kaiboden entfernt), Umgebungsverdeckung als Vertexfarben; Namen, Eltern und Lage wie im gemeinsamen glb; Kopie in assets/models/",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Nunito (variable, Strichstärke 750)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/nunito (Lizenztext: demo/fonts/Nunito-OFL.txt)"
+  },
+  {
+   "item": "Texturblatt",
+   "license": "eigene KI-Erzeugung (agy, Gemini-Bildmodell), keine fremden Bilder",
+   "source": "assets/raw/textures.json"
+  },
+  {
+   "item": "Hafen und Dachs",
+   "license": "eigene Modelle aus shared/3d (Blender-Skripte)",
+   "source": "shared/3d/blender/"
+  },
+  {
+   "item": "Himmel",
+   "license": "eigener Code (scripts/build_textures.py), keine KI, keine fremden Bilder",
+   "source": "scripts/build_textures.py → build_sky()"
+  }
+ ],
+ "image_generations": 2,
+ "tool_issues": [
+  "tools/genimg.py (Backend codex): Codex antwortete mit „out of credits“ genimg.py sucht nur nach \"usage limit\", \"usage_limit\" und \"429\", meldete deshalb \"no-image\" (nach 4 s, ohne Antworttext) und wich nicht auf agy aus. Zwei Aufrufe ohne Bild. Umgangen mit --backend agy; ermittelt mit einem direkten codex exec --json.",
+  "tools/genimg.py mit agy: Den Himmel-Prompt hat der agy-Agent nicht wörtlich weitergegeben, sondern umformuliert und dabei \"(PS1 / Sega Saturn era)\" eingefügt, entgegen der Regel ohne Namen. genimg.py vermerkt nur \"verbatim\": false in der Begleitdatei und warnt nicht in der Ausgabe. Das Bild ist inzwischen durch einen Himmel aus Code ersetzt; Rohbild und Begleitdatei liegen umbenannt als assets/raw/sky_verworfen.png/.meta.",
+  "tools/genimg.py mit agy: Die Prüfung \"verbatim\" ist bei langen Prompts unzuverlässig. Das agy-Protokoll kürzt den Prompt nach etwa 2 000 Zeichen (\"<truncated 732 bytes>\") und speichert ihn in Anführungszeichen; textures.json meldet deshalb \"verbatim\": false, obwohl der Text bis zur Kürzung identisch ist und das Bild auch die Materialien aus dem gekürzten Teil enthält.",
+  "tools/genimg.py mit agy: Bei --size 1536x1024 kam der Himmel als 1264×848 (3:2, aber kleiner); genimg.py meldet die Abweichung nicht. Für einen 320 px breiten Himmel unerheblich.",
+  "tools/capture.py legt die Einzelbilder mit tempfile.TemporaryDirectory() im System-Temp an (Ordner tmpXXXX), nicht in einem Unterordner mit dem Namen des Eintrags, wie es PIPELINE.md für Temp-Dateien verlangt. Umgangen mit TMPDIR=<Scratchpad>/ps1-lowpoly/ beim Aufruf; die eigenen Prüfskripte in scripts/ benennen ihre Temp-Ordner jetzt mit dem Präfix ps1-lowpoly-.",
+  "tools/collect_prompts.py übernimmt bei agy-Bildern den tatsächlich gesendeten Wortlaut aus actual_calls als prompt_sent in das eingecheckte und auf der Website gezeigte prompts.json, ohne Prüfung auf die Namensregel; so stand der von agy eingefügte Konsolenname in prompts.json. Außerdem sammelt es jede Begleitdatei unter assets/raw/ (rekursiv) ein, auch die verworfener Bilder; einen Vermerk 'verworfen' gibt es nicht. Umgangen durch Umbenennen der Begleitdatei (sky_verworfen.meta), danach collect_prompts.py ps1-lowpoly: prompts.json enthält nur noch das Texturblatt."
+ ],
+ "status": "done"
+}

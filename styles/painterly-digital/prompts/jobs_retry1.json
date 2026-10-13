@@ -1,0 +1,10 @@
+[
+ {
+  "out": "styles/painterly-digital/assets/raw/backdrop.png",
+  "size": "1536x1024",
+  "prompt": "Edit of the reference image, a painted game background. Paint the farthest parallax layer of this scene: only the sky and the open sea. Keep the sky, the clouds, the first stars, the band of orange light at the horizon and the calm sea exactly as in the reference: same painting technique, same palette, same horizon height (45 % of the image height), same layout. Remove everything else: the cottage, the stone quay with its front wall, the wooden jetty, the two boats, the lantern post, the barrels, crates and rope, the rocky headland with the lighthouse and the rocks in the water. Where they were, continue the sky and the calm sea seamlessly, so that the open sea reaches from the left to the right edge and down to the bottom edge, with a soft reflection of the orange horizon band and thin veils of mist on the water. The horizon is one straight, level line across the whole width.\nStyle: Atmospheric digital painting for a 2D side-scrolling adventure game: large soft digital brushes, soft edges, visible brush texture, big simplified shapes, little fine detail, no outlines; limited palette of deep teal, slate blue and dusty violet, with warm amber and orange only at the horizon and in the lights. Not a photograph, not a 3D render, not a postcard.\nNo text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.\nImage format: landscape 3:2.",
+  "refs": [
+   "styles/painterly-digital/assets/raw/master.png"
+  ]
+ }
+]

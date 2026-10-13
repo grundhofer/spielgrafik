@@ -1,0 +1,16 @@
+Zeichensatz „font8“, Fassung 2 (8x8-Bitmapschrift des Textbereichs dieses Eintrags)
+
+Eigener Entwurf für den Katalogeintrag c64-multicolor (Glyphen als Text in scripts/font8.py, Vorschau
+assets/font_preview.png). Die Demo liest die Glyphen als 2048 Bytes aus rom/c64.json.
+
+Herkunft: Fassung 1 war entgegen ihrer damaligen Beschreibung weitgehend eine Nachbildung des Zeichensatz-ROMs
+des Rechners (47 von 75 verglichenen Zeichen pixelgleich). Sie wurde verworfen und vollständig ersetzt. Fassung 2
+ist neu gezeichnet: 7 px breite Zeichen mit 3 px Innenraum und 1 px Abstand statt 6 px / 2 px / 2 px, eigene
+Formen u. a. für A, M, Q, c, i, l, m, r, t, w und Ü. Abgleich gegen einen ROM-Abzug (nur lokal, nicht Teil
+des Eintrags), kleinster Abstand über Verschiebungen um ±1 Zeile/Spalte: 0 von 62 Buchstaben und Ziffern
+pixelgleich (Fassung 1: 39), Median 9 abweichende Pixel; nahe am ROM bleiben nur Formen ohne Spielraum (L 1 px,
+F 3 px sowie Leerzeichen, Punkt, Komma, Bindestrich).
+
+Lizenz: CC0 1.0 Universal (gemeinfrei), https://creativecommons.org/publicdomain/zero/1.0/
+Soweit gesetzlich möglich, verzichtet der Urheber auf alle Urheber- und verwandten Schutzrechte an diesen
+Glyphen.

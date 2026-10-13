@@ -1,0 +1,32 @@
+{
+ "boil_change_between_phases": 0.207,
+ "boil_vs_off": 0.1664,
+ "drawing_mask_share": 0.778,
+ "fx_change_per_0_5s": {
+  "Rauch": {
+   "mean": 0.0694,
+   "max": 0.0706
+  },
+  "Leuchtturmstrahl (Himmel)": {
+   "mean": 0.046,
+   "max": 0.1566
+  },
+  "Laternenschein": {
+   "mean": 0.0406,
+   "max": 0.0547
+  },
+  "Wasser rechts": {
+   "mean": 0.0355,
+   "max": 0.0481
+  },
+  "Wasser unter den Booten": {
+   "mean": 0.0161,
+   "max": 0.0277
+  },
+  "Möwen (Himmel oben)": {
+   "mean": 0.016,
+   "max": 0.017
+  }
+ },
+ "still_area_without_boil": 0.0
+}

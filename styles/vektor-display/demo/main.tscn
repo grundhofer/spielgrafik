@@ -1,0 +1,80 @@
+[gd_scene load_steps=11 format=3]
+
+; Vektorbildschirm: main.gd baut jedes Bild die Anzeigeliste neu auf, Beams zeichnet sie additiv in den
+; HDR-Phosphorpuffer (SubViewport, wird nie ganz gelöscht: Fade dunkelt jedes Bild ab = Nachleuchten).
+; Screen zeigt den Puffer im Fenster; der Glow der WorldEnvironment (HDR-2D, Hintergrund Canvas) gibt den Lichthof.
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="Script" path="res://beams.gd" id="2_beams"]
+[ext_resource type="Shader" path="res://shaders/beam.gdshader" id="3_beam"]
+[ext_resource type="Shader" path="res://shaders/screen.gdshader" id="4_screen"]
+[ext_resource type="Shader" path="res://shaders/fade.gdshader" id="5_fade"]
+[ext_resource type="Shader" path="res://shaders/add.gdshader" id="6_add"]
+
+[sub_resource type="Environment" id="GlowEnv"]
+background_mode = 3
+background_canvas_max_layer = 1
+tonemap_mode = 0
+glow_enabled = true
+glow_levels/1 = 0.0
+glow_levels/2 = 0.55
+glow_levels/3 = 0.6
+glow_levels/4 = 0.45
+glow_levels/5 = 0.25
+glow_levels/6 = 0.0
+glow_intensity = 0.55
+glow_strength = 1.0
+glow_bloom = 0.0
+glow_blend_mode = 0
+glow_hdr_threshold = 0.5
+glow_hdr_scale = 1.0
+
+[sub_resource type="ShaderMaterial" id="BeamMat"]
+shader = ExtResource("3_beam")
+
+[sub_resource type="ShaderMaterial" id="ScreenMat"]
+shader = ExtResource("4_screen")
+
+[sub_resource type="ShaderMaterial" id="FadeMat"]
+shader = ExtResource("5_fade")
+
+[sub_resource type="ShaderMaterial" id="AddMat"]
+shader = ExtResource("6_add")
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("GlowEnv")
+
+; Phosphorpuffer: wird nie ganz gelöscht. Pro Bild: abdunkeln (Fade), frisches Strahlbild addieren (Fresh).
+; Beam ist darin verschachtelt und wird deshalb vor dem Puffer gerendert.
+[node name="Phosphor" type="SubViewport" parent="."]
+own_world_3d = true
+use_hdr_2d = true
+size = Vector2i(1280, 720)
+render_target_clear_mode = 2
+render_target_update_mode = 4
+
+[node name="Fade" type="ColorRect" parent="Phosphor"]
+material = SubResource("FadeMat")
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[node name="Fresh" type="Sprite2D" parent="Phosphor"]
+material = SubResource("AddMat")
+centered = false
+
+[node name="Beam" type="SubViewport" parent="Phosphor"]
+own_world_3d = true
+use_hdr_2d = true
+size = Vector2i(1280, 720)
+render_target_update_mode = 4
+
+[node name="Beams" type="Node2D" parent="Phosphor/Beam"]
+material = SubResource("BeamMat")
+script = ExtResource("2_beams")
+
+[node name="Screen" type="Sprite2D" parent="."]
+material = SubResource("ScreenMat")
+centered = false

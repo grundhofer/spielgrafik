@@ -1,0 +1,17 @@
+{
+ "prompt": "Badger sprite test prompt, isolated on a fully transparent background.",
+ "size": "1024x1024",
+ "refs": ["../../../../shared/badger/master_sheet.png", "bg.png"],
+ "backend": "agy",
+ "seconds": 50.0,
+ "generated_at": "2026-10-10T10:05:00+00:00",
+ "tool": "Antigravity CLI (agy) generate_image",
+ "conversation_id": "c-2",
+ "tool_version": "agy 0.0.0",
+ "images_in_conversation": 1,
+ "actual_calls": [{"Prompt": "Badger sprite test prompt, isolated on a plain flat solid pure magenta background (#FF00FF).", "AspectRatio": "1:1"}],
+ "verbatim": true,
+ "source_format": "jpg",
+ "transparency": "Schlüsselfarbe #ff00ff statt Transparenz, automatisch freigestellt; Original: sprite.keyed-src.png",
+ "prompt_sent": "Badger sprite test prompt, isolated on a plain flat solid pure magenta background (#FF00FF)."
+}

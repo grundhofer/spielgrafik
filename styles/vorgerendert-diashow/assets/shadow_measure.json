@@ -1,0 +1,76 @@
+{
+ "kai": {
+  "key": {
+   "pixels": 13304,
+   "share": 0.0737,
+   "baked_Y_with": 46.4,
+   "baked_Y_without": 82.2,
+   "baked_drop": 0.435,
+   "raw_drop": 0.435
+  },
+  "fill": {
+   "pixels": 300,
+   "share": 0.0017,
+   "baked_Y_with": 39.6,
+   "baked_Y_without": 48.8,
+   "baked_drop": 0.189,
+   "raw_drop": 0.185
+  }
+ },
+ "steg": {
+  "key": {
+   "pixels": 4157,
+   "share": 0.023,
+   "baked_Y_with": 50.4,
+   "baked_Y_without": 98.6,
+   "baked_drop": 0.489,
+   "raw_drop": 0.489
+  },
+  "fill": {
+   "pixels": 500,
+   "share": 0.0028,
+   "baked_Y_with": 52.6,
+   "baked_Y_without": 66.7,
+   "baked_drop": 0.212,
+   "raw_drop": 0.208
+  }
+ },
+ "tuer": {
+  "key": {
+   "pixels": 10518,
+   "share": 0.0582,
+   "baked_Y_with": 53.3,
+   "baked_Y_without": 90.3,
+   "baked_drop": 0.409,
+   "raw_drop": 0.409
+  },
+  "fill": {
+   "pixels": 176,
+   "share": 0.001,
+   "baked_Y_with": 53.5,
+   "baked_Y_without": 67.3,
+   "baked_drop": 0.206,
+   "raw_drop": 0.205
+  }
+ },
+ "badger": {
+  "frame": 100,
+  "key": {
+   "pixels": 411,
+   "share": 0.0108,
+   "baked_Y_with": 66.7,
+   "baked_Y_without": 99.3,
+   "baked_drop": 0.328,
+   "raw_drop": 0.328,
+   "bbox": [
+    291,
+    291,
+    350,
+    304
+   ]
+  },
+  "fill": {
+   "pixels": 0
+  }
+ }
+}

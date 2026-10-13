@@ -1,0 +1,22 @@
+{
+ "frames": 90,
+ "godot_errors": [],
+ "godot_warnings": [],
+ "hdma_rows_diff": 0,
+ "plane_pixels_checked": 2432154,
+ "plane_pixels_diff": 0,
+ "off_grid_pixels": 0,
+ "colors_per_frame_max": 273,
+ "sprites_per_line_max": 18,
+ "slivers_per_line_max": 36,
+ "oam_entries_max": 76,
+ "obj_bytes_max": 7104,
+ "math_sprites_in_haze": 0,
+ "window_tiles_checked": 16380,
+ "window_tile_colors_max": 3,
+ "sprites8_per_line_max": 31,
+ "oam8_entries_max": 239,
+ "mix_sprites_per_line_max": 21,
+ "mix_slivers_per_line_max": 32,
+ "mix_oam_entries_max": 97
+}

@@ -1,0 +1,11 @@
+Style: animation frames of a character from a European clear-line comic album of the 1960s (ligne claire). Clean black ink outlines of one constant, uniform thickness around every shape and between colour areas, drawn with a technical pen; no hatching, no cross-hatching, no fur strokes, no texture, no line-weight variation. Flat, solid printed colours, no gradients, no shading, no highlights, no shadows: dark green cap with a brass button, a slightly lighter green vest, cream shirt, bright red scarf, brown satchel, light brown paper parcel with string, dark grey and white fur. A simple, friendly, readable cartoon face as in classic Franco-Belgian comics: black dot eye, black nose, a clear white stripe along the top of the snout and a dark stripe through the eye. Not a 3D render, not a painting, not anime.
+
+Task: the first reference image is a walk cycle rendered from a 3D model, ten frames in two rows of five on a magenta background. Redraw it as hand-drawn clear-line comic frames: keep exactly the same layout, the same ten poses in the same order, the same size and position of each figure, the same leg, foot and arm positions and the same foot baseline in each row. Only the drawing style and the face change. The second reference image is the character sheet: take only the costume and proportions from it; the drawing style follows this prompt. All ten frames show the same character with identical costume details, colours and line thickness.
+
+The badger courier: an original mascot character, a stout, short-legged badger with a broad black-and-white striped face, wearing a dark green peaked cap with a brass button, a dark green vest with pockets over a cream shirt with rolled-up sleeves, a long red knitted scarf, a brown leather satchel on a shoulder strap, and a brown paper parcel tied with string under one arm.
+
+The figure walks to the right in side view, the parcel under the arm facing the viewer. Ten frames in two rows of five, evenly spaced, same scale, feet on the same baseline in each row, isolated on a fully transparent background.
+
+No text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.
+
+Image format: landscape 3:2.

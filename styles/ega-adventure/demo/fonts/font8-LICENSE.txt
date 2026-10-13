@@ -1,0 +1,22 @@
+font8.png / font8.json – 8×8-Systemschrift für den Katalogeintrag ega-adventure, Fassung 2.
+
+Eigener Entwurf (Glyphen als Text in styles/ega-adventure/scripts/build_font.py, Kopie des Atlas in
+assets/font8.png).
+
+Herkunft: Fassung 1 war im Bau der PC-Textmodus-Schriften gezeichnet und entgegen ihrer damaligen Beschreibung
+(„keine Kopie einer bestehenden Schrift“) zu nah an bestehenden Schriften: 35 von 88 verglichenen Zeichen waren
+pixelgleich mit der IBM-EGA/CGA-8×8-Schrift, 58 mit einer weiteren 8×8-Schrift. Sie wurde verworfen und
+vollständig ersetzt. Fassung 2 ist neu gezeichnet und anders gebaut: 7 px breite Zeichen mit 3 px Innenraum und
+1 px Abstand, Versalien und Ziffern 6 Zeilen hoch, Kleinbuchstaben mit 4 Zeilen x-Höhe, eigene Formen u. a. für
+A, C, G, K, M, N, U, Z, a, p, s, u, v, y, 6, 8 und für die Umlautpunkte.
+
+Abgleich (nur lokal, die Vergleichsschriften sind nicht Teil des Eintrags; scripts/font_compare.py) gegen die
+60 8×8-Bitmapschriften des Ultimate Oldschool PC Font Pack v2.2 (int10h.org), kleinster Abstand über
+Verschiebungen um ±1 Zeile/Spalte: Gegen die IBM-EGA-Schrift ist keiner der 69 Buchstaben und Ziffern
+pixelgleich (kleinster Abstand 6 px, Median 12 px); gegen alle 60 Schriften ist nur L pixelgleich (ohne
+Gestaltungsspielraum), O, P, R und Ö liegen bei 2 px. Mit einzelnen Schriften pixelgleich bleiben einfache
+Satzzeichen (. , : ; ! - + = _ / ' " *).
+
+Lizenz: CC0 1.0 Universal (gemeinfrei), https://creativecommons.org/publicdomain/zero/1.0/
+Soweit gesetzlich möglich, verzichtet der Urheber auf alle Urheber- und verwandten Schutzrechte an diesen
+Glyphen.

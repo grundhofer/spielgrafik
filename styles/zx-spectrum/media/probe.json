@@ -1,0 +1,45 @@
+{
+ "badger": {
+  "errors": [],
+  "pose_changes": 27,
+  "standfoot_max_dev_px": 0,
+  "feet_rows": [
+   135
+  ],
+  "head_rows": [
+   97
+  ]
+ },
+ "rules": {
+  "lauf_0_6s": {
+   "frames": 180,
+   "errors": [],
+   "frames_with_foreign_colours": 0,
+   "frames_with_cell_rule_violations": 0,
+   "max_bad_cells": 0,
+   "frames_with_bright_border": 0,
+   "colours_used": 13
+  },
+  "dauer_ab_30s": {
+   "frames": 60,
+   "errors": [],
+   "frames_with_foreign_colours": 0,
+   "frames_with_cell_rule_violations": 0,
+   "max_bad_cells": 0,
+   "frames_with_bright_border": 0,
+   "colours_used": 13
+  }
+ },
+ "renderers": {
+  "gl_compatibility": {
+   "frames": 160,
+   "errors": [],
+   "max_share_pixels_different": 0.0
+  },
+  "mobile": {
+   "frames": 160,
+   "errors": [],
+   "max_share_pixels_different": 0.0
+  }
+ }
+}

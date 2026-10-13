@@ -1,0 +1,17 @@
+[
+ {
+  "out": "styles/anime-visual-novel/assets/raw/sheet.png",
+  "status": "skip",
+  "tries": 0
+ },
+ {
+  "out": "styles/anime-visual-novel/assets/raw/bg.png",
+  "status": "skip",
+  "tries": 0
+ },
+ {
+  "out": "styles/anime-visual-novel/assets/raw/faces.png",
+  "status": "ok",
+  "tries": 1
+ }
+]

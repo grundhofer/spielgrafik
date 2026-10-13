@@ -1,0 +1,149 @@
+{
+ "slug": "sprite-skalierung",
+ "name": "Sprite-Skalierung & Rasterstraße (Arcade-Pseudo-3D)",
+ "family": "retro3d",
+ "kind": "style",
+ "era": "1982–1990",
+ "summary": "Pseudo-3D der Arcade-Automaten mit Skalierhardware: Der Kai ist keine Geometrie, sondern eine Straße, die Bildzeile für Bildzeile aus einer Tabelle gezeichnet wird (Mitte, Breite, Weltposition), mit Hell-Dunkel-Bändern, die das Tempo zeigen. Fässer, Kisten, Poller, Laternenpfähle, Boote und das Häuschen sind vorgezeichnete Sprites, die stufenlos und ohne Filter auf die Kamera zu wachsen; der Himmel mit dem Leuchtturm ist eine Horizontebene, die in Kurven seitlich wandert, und der Dachs läuft von hinten gesehen in die Tiefe.",
+ "references": [
+  "Pole Position (Namco 1982): Rennstrecke aus Zeilen, Schilder und Wagen als skalierte Sprites",
+  "Hang-On (Sega 1985) und Space Harrier (Sega 1985): erste Spiele der Sega-Skalierhardware, Space Harrier mit Figur von hinten, die in die Tiefe läuft",
+  "Buggy Boy (Tatsumi 1985): Streifenstraße mit Kuppen",
+  "Out Run (Sega 1986): Kurven über Zeilenversatz, Kuppen, Horizontebene mit Küste, kräftige Sonnenuntergangsfarben",
+  "After Burner (Sega 1987), Super Hang-On (Sega 1987), Power Drift (Sega 1988)",
+  "Chase H.Q. (Taito 1988)"
+ ],
+ "traits": [
+  "Bild 320×224 mit quadratischen Pixeln, ganzzahlig ×3 (960×672 in der 1280×720-Aufnahme), Abtastung ohne Filter, Sprites mit 1-Bit-Alpha",
+  "Straße ohne Polygone und ohne Texturebene: je Bild füllt ein GDScript-Zeilenpass eine Tabelle mit 224 Zeilen × 5 Texeln (Mitte x, halbe Breite, Kantensteinbreite, Weltposition s, Entfernung z, Materialien links/rechts, Belag, Wasserfarben der Zeile); ein Shader liest nur seine Zeile. 115–116 Straßenzeilen je Bild, darüber 2 Zeilen offenes Meer bis zum Horizont (Zeile 106)",
+  "Kurven über aufsummierten Versatz: je Weltschritt dx += k·dz, x += dx·dz, Krümmung bis ±0,012 1/m mit 6-m-Rampen; die Kamera bleibt tangential, die Horizontebene wandert in den 6 s über 35 px (Kurs −0,068 bis +0,091 rad)",
+  "Kuppe über Zeilenauswahl: Ein Buckel im Kai (1,1 m, 24–46 m) liegt unter Augenhöhe; eine Bildzeile wird nur belegt, wenn sie über der bisher obersten liegt. Bei t = 0 s verdeckt die Kuppe den Kai von 36 bis 97 m, bei 3,0 s von 36 bis 66 m (Kuppenzeile 113,8), bei 4,5 s von 39 bis 44 m; dahinter taucht der Holzsteg wieder auf. Sprites hinter der Kuppe werden an der Kuppenzeile abgeschnitten (Laternenpfähle ragen nur mit dem Kopf heraus). Ohne Kuppe ändern sich im Posterbild 18,6 % der Pixel",
+  "Hell-Dunkel-Bänder nach Weltposition: Pflaster 2 m mit Steinreihen alle 0,5 m (Fugen nur, wo sie mindestens 1 px breit sind), Kantensteine 1 m (wie Rüttelstreifen), Gras 3 m, Holzplanken 0,4 m mit Fuge, Wasser 2,5 m mit eigener Phase (1,6 m/s schneller als der Boden, wirkt als Wellengang); in der Ferne treppen und flimmern die Bänder wie auf der Hardware. Ohne Bänder und Fugen ändern sich 23 % der Pixel",
+  "Stufenlose Sprite-Skalierung mit Nearest: Requisiten in einer Speicherdichte von 40 px/m (Größe der gespeicherten Stufe), Maßstab = (220 px / z) / 40; in den 6 s von 0,025× (Laternenpfahl in etwa 220 m) bis 2,2× (Taurolle neben dem Dachs), also Verkleinern mit wegfallenden und Vergrößern mit verdoppelten Pixeln. 21–33 Sprites je Bild, Reihenfolge fern → nah. Mit linearer Filterung würden sich im Posterbild 9,1 % der Pixel ändern",
+  "Jedes Sprite 4 Bit: höchstens 15 Farben + durchsichtig, alle Farben auf dem 15-Bit-Raster (5 Bit je Kanal), 20 Sprite-Bilder geprüft; im fertigen Bild liegen 99,25 % der Pixel auf dem Raster (Rest: aufhellende Lichthöfe, Lichtkegel, abdunkelnder Schatten), 276 Farben je Bild",
+  "Horizontebene unendlich fern: Felsnase mit Leuchtturm (146×48), Inseln, zwei Wolkenreihen (hintere mit 0,7-fachem Versatz und 2 px/s Wind), 46 Sterne; der Leuchtturm kommt nicht näher",
+  "Dachs-Kurier von hinten mit 3 KI-Laufbildern (Folge 0-1-2-1, 10 Bilder/s, jedes Bild genau 3 Aufnahmebilder), 64 px hoch; gemessen in allen 180 Bildern Fußzeile 215 und Kopfoberkante 152; Seitenneigung in Kurven als ganzzahliger Zeilenversatz von −3 bis +4 Texeln an der Kopfzeile (Füße bleiben stehen), Schatten als abdunkelnde Ellipse",
+  "Umgebung: Wasserbänder laufen, Glitzern auf fernem Wasser (15 Hz), Leuchtfeuer dreht sich alle 5 s mit hartkantigem Lichtkegel und Blitz zur Kamera, Laternen flackern im Gleichtakt (eine Palettenfarbe im Glas plus gestufter Lichthof, Seed 1986), Fenster glimmt, Rauch aus dem Schornstein (9 skalierte Ballen), 3 Möwen, Boote wippen, Wolken ziehen, Sterne funkeln",
+  "Textfenster im Arcade-Stil oben über dem Himmel: Press Start 2P in 8 px ohne Kantenglättung, Ort gelb mit rotem Schatten, Text mit 40 Zeichen/s, Parserzeile grün mit Blockcursor; 312×44 px = 19,2 % des Bildes"
+ ],
+ "camera": "Verfolgerkamera hinter dem Dachs wie bei Arcade-Rennspielen: Blick waagrecht, Horizont fest in Zeile 106, Brennweite 220 px (73° waagrecht), Augenhöhe 1,72 m über dem Boden unter dem Dachs (die Kamera steigt mit ihm über den Buckel), Dachs 3,44 m vor der Kamera; Tempo 6 m/s, Kurs folgt der Straßentangente.",
+ "resolution": "320×224, quadratische Pixel (×3 = 960×672); Sprites 4 Bit (15 Farben + durchsichtig) aus 15-Bit-RGB, Requisiten mit 40 px/m gespeichert; die nicht quadratischen Pixel der 4:3-Automatenmonitore (bei 320×224 etwa 0,93:1) sind nicht nachgebildet",
+ "pipeline": [
+  {
+   "step": "KI-Sprites erzeugen",
+   "tool": "genimg (Codex, gpt-image)",
+   "detail": "6 Bilder, alle über Codex (Transparenz verlangt, daher Codex zuerst; backend_choice „Transparenz“), alle im ersten Versuch brauchbar: Dachs von hinten als Blatt mit 3 Laufbildern (Referenz shared/badger/master_sheet.png, Figurenblock aus motif.json wörtlich), Requisitenblatt (Fass, Kistenstapel, Poller, Laternenpfahl, Taurolle, Paket), zwei Boote in Dreiviertel-Rückansicht, Häuschen, Horizontstreifen (Inseln, Felsnase mit Leuchtturm), Wolkenbänder. Stilblock: Arcade-Pixel-Art der Mitte der 1980er für Skalierhardware, große Pixel, höchstens 15 Farben, farbige Kontur, Abendlicht; Lampen ohne Schein, kein Rauch, Leuchtfeuer ohne Strahl. Das Häuschen kam als 1254×1254 statt 1024×1024. Prompts: prompts/*.txt, scripts/make_jobs.py"
+  },
+  {
+   "step": "Ausschneiden und auf ein echtes Raster bringen",
+   "tool": "scripts/build_assets.py, scripts/sslib.py (Python, NumPy)",
+   "detail": "Objekte als Zusammenhangskomponenten (Alpha ≥ 128; Codex lieferte höchstens 254 und weiche Ränder). Das Modell zeichnete feiner als bestellt und mit ungleichmäßigem Raster (6–7 px je Kunstpixel), deshalb feste Zielgrößen: Dachs 64 px hoch (Zelle 11,2 px), Requisiten 40 px/m nach realer Größe (Fass 0,95 m, Kisten 1,35 m, Poller 0,6 m, Laternenpfahl 2,8 m, Boote 4,6/5,0 m, Häuschen 5,6 m), Horizont Zelle 4,8 px, Wolken 6 px. Je Zelle gewinnt die häufigste von 48 vorquantisierten Farben (k-means in Oklab) im Zellinneren, Alpha nach Mehrheit. Danach je Sprite höchstens 15 Farben auf dem 15-Bit-Raster (Dachs: eine Palette für alle 3 Bilder). Lichter bekommen eine eigene Palettenfarbe (Laternenglas 213 px, Fenster 429 px, Leuchtfeuer 3 px), sonst verschwindet das Fenstergelb in den Steinlichtern. Läuft in etwa 45 s und liefert byte-gleiche Dateien"
+  },
+  {
+   "step": "Strecke und Zeilenpass",
+   "tool": "demo/scripts/main.gd (GDScript)",
+   "detail": "Strecke als Daten: Krümmung je Abschnitt, Buckel als Kosinus, Materialien je s (Kai mit Gras links und Wasser rechts bis 60 m, danach Holzsteg mit Wasser auf beiden Seiten bis 230 m). Je Bild Weltschritte von 0,8 m bis zum Stegende (dz = 0,2 + 0,012·z, etwa 220 Schritte), Krümmung aufsummiert, projiziert; Zeilen zwischen zwei Schritten bekommen 1/z linear interpoliert. Jeder Schritt merkt sich die bisher oberste belegte Zeile; damit werden auch Sprites hinter der Kuppe abgeschnitten"
+  },
+  {
+   "step": "Straße, Himmel, Sprites, Horizont",
+   "tool": "Godot 4.7.2 (canvas_item-Shader, Sprite2D)",
+   "detail": "road.gdshader zeichnet je Pixel Pflaster/Planken, Kantensteine, Gras oder Wasser aus der Zeilentabelle und einer 16-Farben-Palette; sky.gdshader eine Farbe je Zeile; prop.gdshader skaliert ohne Filter, schneidet an der Kuppenzeile ab und ersetzt die Lichtfarbe (Palettenanimation); halo.gdshader additiv; badger.gdshader verschiebt jede Texelzeile ganzzahlig (Neigung). Rauch, Lichthof, Möwen und Schatten sind Code-Grafiken"
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/measure_badger.py, scripts/compare.py, scripts/stills.py, tools/capture.py",
+   "detail": "measure_badger.py nimmt 180 Bilder nur mit dem Dachs auf Schwarz auf (Fußzeile, Kopf, Füße, Kopfmitte gegen Neigung); compare.py vergleicht das Posterbild mit --smooth, --nostripes, --nohill und mit den Renderern Mobile und Compatibility und nimmt 60 Bilder ab t = 30 s auf; stills.py rendert Einzelbilder zur Sichtprüfung"
+  }
+ ],
+ "godot": [
+  "project.godot: Basis 320×224, stretch viewport, scale_mode integer, Fenster 960×672, 2D-Filter Nearest, Snap auf Pixel; run/delta_smoothing=false und physics/common/physics_jitter_fix=0.0 (aus mode7 übernommen), damit delta mit --fixed-fps genau 1/30 s ist",
+  "main.tscn: Sky (ColorRect, Farbe je Zeile), Backdrop (Node2D mit _draw: Sterne, Wolken, Inseln, Möwen; Felsnase als Sprite2D mit Palettenanimation), Beam (additiver Lichtkegel), Road (ColorRect über das ganze Bild, verwirft Zeilen über dem Horizont), Objs (61 Sprite2D: 37 Requisiten, 15 Lichthöfe, 9 Rauchballen; z_index nach Entfernung), Shadow (CanvasItemMaterial Multiplizieren), Badger, UI",
+  "Zeilentabelle als Image FORMAT_RGBAF 5×224 + ImageTexture.update() je Bild; Shader liest mit texelFetch nur die eigene Zeile",
+  "Sprites: centered=false, Ursprung unten Mitte, position gerundet, scale = Pixel je Meter am Ort / 40; ausgeblendet unter 1,5 px Höhe, außerhalb des Bildes oder ganz hinter der Kuppe; Laternenglas und Fenster als genau eine Farbe, die prop.gdshader ersetzt",
+  "Schrift Press Start 2P als FontFile aus den TTF-Bytes, Kantenglättung, Hinting und Subpixel aus; Ligaturen (liga, clig) abgeschaltet, sonst setzt die Schrift „fl“ in eine Zelle",
+  "Benutzerargumente nach --: --t0=<s>, --measure (nur der Dachs auf Schwarz), --nostripes, --smooth (Sprites linear gefiltert), --nohill (Buckel flach), --dump=<datei> (je Bild Kurs, Neigung, Laufbild, Straßenzeilen, verdeckter Bereich und alle sichtbaren Sprites mit Maßstab und Lage)",
+  "Ablauf: Dachs läuft durchgehend mit 6 m/s; Rechtskurve bis 14 m, Linkskurve ab 22 m, Buckel 24–46 m; Text ab 0,1 s mit 40 Zeichen/s, Parserzeile ab 1,9 s; Leuchtfeuer zeigt bei 3,8 s zur Kamera (Blitz); Poster bei 3,0 s (Bild 90)"
+ ],
+ "techniques": [
+  "rasterstrasse",
+  "zeilenauswahl-kuppe",
+  "stufenlose-sprite-skalierung",
+  "billboard-sprites",
+  "horizontebene",
+  "ki-spritesheet",
+  "palette-einrasten",
+  "palettenanimation",
+  "zeilenversatz",
+  "additiver-lichtkegel",
+  "farbverlauf-himmel",
+  "prozedurale-animation",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 4,
+  "effort": 2,
+  "text_adventure": 2,
+  "mobile": 5
+ },
+ "ratings_note": "ai_fit 4: Alle Sprites stammen aus 6 Codex-Bildern, alle im ersten Versuch brauchbar, auch der schwierige Laufzyklus von hinten; Abzug, weil das Modell feiner und mit ungleichmäßigem Raster zeichnet (Einrasten nötig) und Lichter beim Reduzieren auf 15 Farben untergehen. Der eigentliche Pseudo-3D-Look (Rasterstraße, Bänder, Kuppe, Skalierung, Horizontversatz) kommt vollständig aus Code. consistency 4: gleicher Stilblock, gleiche Speicherdichte und dieselbe Einrastung für alle Requisiten, die Teile passen ohne Nacharbeit zusammen; Abzug, weil Horizont und Wolken gröber gerastert sind als die Requisiten und der Dachs nur eine Ansicht hat. effort 2: Straße, Shader und Werkzeuge sind fertig; ein neuer Ort braucht Streckendaten (Krümmung, Höhen, Materialien) und je Requisit ein KI-Blatt plus einen Lauf von build_assets.py. text_adventure 2: Für Wege zwischen Orten oder eine Verfolgung sofort als Arcade-Spiel erkennbar, als Grundstil eines Textadventures ungeeignet: Die Kamera ist immer in Bewegung, die Figur nur von hinten, Räume und Gespräche gibt es nicht. mobile 5 nach Probeläufen, nicht auf einem Gerät gemessen: --rendering-method mobile bitgleich zu Forward+, gl_compatibility in 0,29 % der Pixel um höchstens 1/255 anders, keine Fehler oder Warnungen; die Szene sind zwei bildfüllende Rechtecke mit kleinen Shadern, 61 Sprite-Knoten und ein GDScript-Zeilenpass mit etwa 220 Schritten und einer 5×224-Textur je Bild.",
+ "verdict": "Für unser Textadventure ein Szenentyp für Wege und Übergänge, kein Grundstil: Der Gang über den Kai zum Leuchtturm, eine Verfolgung oder eine Reise zwischen zwei Orten lassen sich so sofort als Arcade-Sequenz erzählen, und die Bausteine sind wiederholbar (Strecke als Daten, Zeilenpass und Straßen-Shader unverändert, Requisiten als KI-Blätter mit festem Stilblock und automatischer Einrastung). Für Orte mit Gesprächen, Gegenständen und Rätseln fehlt eine feste Ansicht; dort einen Ortsbild-Stil nehmen und diesen Eintrag als Zwischensequenz einsetzen.",
+ "pitfalls": [
+  "Der Kai sieht durch Kantensteine im Rüttelstreifen-Takt und die gestrichelte Mittelrinne eher wie eine Rennstrecke aus als wie ein Hafenkai. Das ist im Auftrag gewollt (der Kai wird zur Straße), eine Spieleentwicklerin liest es aber zuerst als Rennspiel.",
+  "Kuppen wirken auf die ganze Bildzeile: Mit dem Buckel im Kai steigen auch Gras und Wasser daneben mit an, das Wasser hinter der Kuppe fehlt in diesen Zeilen. Läge die Kuppe über Augenhöhe, würde sie das Meer bis zum Horizont über die ganze Breite verdecken; der Buckel ist deshalb mit 1,1 m unter der Augenhöhe von 1,72 m geblieben. Ab t = 5 s steht die Kamera auf dem Buckel, dann verdeckt die Kuppe nichts mehr.",
+  "Vereinfachte Tiefe wie bei den Vorbildern: z ist der Weg entlang der Straße, Kurven verschieben nur seitlich; Requisiten werden von der Straßenmitte aus seitlich versetzt. Alle Sprites haben nur eine Ansicht: Häuschen und Boote zeigen in Kurven dieselbe Seite.",
+  "Der Leuchtturm liegt wie im Auftrag auf der Horizontebene und kommt beim Laufen nicht näher. Die hintere Wolkenreihe verschiebt sich mit dem 0,7-fachen Kurs (Parallaxe wie bei den Automaten), obwohl beide Ebenen unendlich fern sein müssten.",
+  "Das Modell zeichnete den Dachs etwa 110 Kunstpixel hoch statt der bestellten 64 und mit ungleichmäßigem Raster; beim Einrasten auf 64 px (Zelle 11,2 px) verschmelzen kleine Teile (Tasche, Paket, Schalfransen). Der Laufzyklus hat kein Auf und Ab (Kopfoberkante in allen Bildern Zeile 152) und der angehobene Fuß steht nur 4 px höher; das Laufen wirkt dadurch etwas steif.",
+  "Die Neigung in Kurven ist ein Zeilenversatz derselben 3 Bilder (höchstens 4 Texel), keine eigens gezeichneten Neigungsbilder wie die Kurvenbilder der Automaten-Fahrzeuge; bei 3 Texeln sieht man sie, mehr würde die Figur verzerren.",
+  "Beim Reduzieren auf 15 Farben fiel das Fenstergelb des Häuschens mit den Steinlichtern zusammen (2968 Pixel derselben Farbe). Gelöst mit einer reservierten Palettenfarbe für Glas, die nur in einem Bildbereich vergeben wird; der Leuchtturm verlor sein rotes Band, bis die oberen Zeilen der Felsnase beim Reduzieren 40-fach zählten.",
+  "In der Ferne treppen und flimmern Bänder, Fugen und kleine Sprites; das ist gewollt und hardwaretypisch, wirkt aber unruhig. Sprites unter 1,5 px Höhe werden ausgeblendet und tauchen dann mit 2 px auf. An der Kuppe drängen sich viele kleine Sprites (Pfähle, Boote); die Zahl der Stegpfähle wurde deshalb von alle 11 m auf alle 15 m gesenkt.",
+  "Nicht nachgebildet: Grenzen der Skalierhardware (Sprites je Zeile, Größe des Sprite-Speichers, Zeilenpuffer). Godot skaliert Rechtecke mit Nearest; das ergibt dasselbe Wegfallen und Verdoppeln von Pixeln, ist aber nicht bitgleich mit einer bestimmten Platine. Lichthöfe, Lichtkegel und Schatten mischen additiv bzw. multiplikativ und verlassen das 15-Bit-Raster (0,75 % der Pixel).",
+  "Die Strecke endet nach 230 m (t ≈ 38 s); danach liefe der Dachs über offenes Meer. Ein Dauerlauf ab t = 30 s (60 Bilder, Steg) zeigt keine Fehler, eine Schleife ist nicht gebaut.",
+  "Die drei Auswahlantworten aus ui_text fehlen: Ort, zwei Zeilen und Parserzeile füllen das Fenster schon; mehr Zeilen hätten den Himmel mit dem Leuchtturm verdeckt. Das Fenster liegt über dem oberen Himmel, die meisten Sterne sind darunter.",
+  "Das Glitzern nutzt einen Sinus-Hash im Shader; deshalb weicht gl_compatibility in 0,29 % der Pixel um 1/255 ab."
+ ],
+ "lessons": [
+  "Rasterstraße in Godot: GDScript füllt je Bild eine RGBAF-Tabelle mit einer Zeile je Bildzeile, ein bildfüllendes ColorRect mit canvas_item-Shader liest per texelFetch nur seine Zeile. Zwischen zwei Weltschritten 1/z linear über die Bildzeilen interpolieren, dann liegen Bänder und Fugen perspektivisch richtig.",
+  "Kuppen über Zeilenauswahl brauchen nur eine Zahl: die bisher oberste belegte Bildzeile. Jeder Weltschritt speichert sie; Sprites übernehmen sie als Abschneidezeile und ragen dann korrekt über die Kuppe. Den Buckel unter Augenhöhe halten und die Kamera an die Höhe der Figur hängen, dann bleibt die Figur fest in ihrer Bildzeile.",
+  "Stufenlose Skalierung wie auf der Hardware: alle Requisiten in einer festen Speicherdichte (hier 40 px/m) speichern und mit Maßstab = Pixel je Meter am Ort / Speicherdichte zeichnen, Position runden, Filter Nearest. Ergibt beim Verkleinern wegfallende und beim Nahkommen verdoppelte Pixel; der Vergleichsschalter --smooth zeigt den Unterschied (9,1 % der Pixel).",
+  "Codex liefert mit „isolated on a fully transparent background“ und einem Stilblock, der Hardware und Technik beschreibt (Skalierhardware, große Pixel, 15 Farben, farbige Kontur, Abendlicht), brauchbare Arcade-Sprites im ersten Versuch, auch einen Laufzyklus von hinten mit dem Dreiansichten-Blatt als Referenz.",
+  "KI-Pixelbilder mit festen Zielgrößen statt Rastersuche einrasten, wenn das Modell ungleichmäßig rastert: Zelle = Objekthöhe / Zielhöhe, je Zelle häufigste vorquantisierte Farbe im Zellinneren, Raster an Unterkante und Mitte des Objekts verankern (die Fußzeile bleibt in allen Laufbildern gleich).",
+  "Lichter, die später animiert werden, vor dem Reduzieren auf 15 Farben als eigene Palettenfarbe reservieren (Maske aus Farbton und Bildbereich); der Shader ersetzt genau diese Farbe. Das ist Palettenanimation wie auf der Hardware und überlebt jede weitere Verarbeitung.",
+  "Seitenneigung ohne neue Bilder: jede Texelzeile ganzzahlig verschieben (oben um n, an den Füßen um 0) und das Bild seitlich um einige Spalten auffüllen; die Pixel bleiben auf dem Raster.",
+  "Fugen und feine Muster nur zeichnen, wo sie mindestens 1 px breit werden (Pixel je Meter als Schwelle); sonst wird die Ferne zu Rauschen.",
+  "Press Start 2P setzt in Godot „fl“ als Ligatur; opentype_feature_overrides mit liga = 0 und clig = 0 am FontFile schaltet das ab.",
+  "Vergleichsschalter (--nostripes, --nohill, --smooth) machen die Technik messbar: Bänder 23 %, Kuppe 18,6 %, Nearest 9,1 % geänderte Pixel im Posterbild."
+ ],
+ "assets": [
+  {"file": "assets/sprites/badger_0.png", "kind": "sprite", "made_with": "gpt-image (Codex) + build_assets.py: Laufbild 1 von hinten, 44×64, 15 Farben", "prompt": "assets/raw/badger_run.json"},
+  {"file": "assets/sprites/badger_1.png", "kind": "sprite", "made_with": "gpt-image (Codex) + build_assets.py: Laufbild 2 (Durchgang)", "prompt": "assets/raw/badger_run.json"},
+  {"file": "assets/sprites/badger_2.png", "kind": "sprite", "made_with": "gpt-image (Codex) + build_assets.py: Laufbild 3", "prompt": "assets/raw/badger_run.json"},
+  {"file": "assets/sprites/post.png", "kind": "sprite", "made_with": "gpt-image (Codex) + build_assets.py: Laternenpfahl 70×112 (2,8 m bei 40 px/m), Glas als eigene Palettenfarbe", "prompt": "assets/raw/props.json"},
+  {"file": "assets/sprites/barrel.png", "kind": "sprite", "made_with": "gpt-image (Codex) + build_assets.py: Fass 30×38", "prompt": "assets/raw/props.json"},
+  {"file": "assets/sprites/crates.png", "kind": "sprite", "made_with": "gpt-image (Codex) + build_assets.py: Kistenstapel 60×54", "prompt": "assets/raw/props.json"},
+  {"file": "assets/sprites/bollard.png", "kind": "sprite", "made_with": "gpt-image (Codex) + build_assets.py: Poller 26×24", "prompt": "assets/raw/props.json"},
+  {"file": "assets/sprites/rope.png", "kind": "sprite", "made_with": "gpt-image (Codex) + build_assets.py: Taurolle 38×19", "prompt": "assets/raw/props.json"},
+  {"file": "assets/sprites/parcel.png", "kind": "sprite", "made_with": "gpt-image (Codex) + build_assets.py: Paket 22×14", "prompt": "assets/raw/props.json"},
+  {"file": "assets/sprites/boat_a.png", "kind": "sprite", "made_with": "gpt-image (Codex) + build_assets.py: Fischerboot rot 162×184", "prompt": "assets/raw/boats.json"},
+  {"file": "assets/sprites/boat_b.png", "kind": "sprite", "made_with": "gpt-image (Codex) + build_assets.py: Fischerboot blau mit Segel 162×200", "prompt": "assets/raw/boats.json"},
+  {"file": "assets/sprites/cottage.png", "kind": "sprite", "made_with": "gpt-image (Codex) + build_assets.py: Häuschen 280×224, Fenster als eigene Palettenfarbe", "prompt": "assets/raw/cottage.json"},
+  {"file": "assets/sprites/hz_headland.png", "kind": "background", "made_with": "gpt-image (Codex) + build_assets.py: Horizontebene Felsnase mit Leuchtturm 146×48", "prompt": "assets/raw/horizon.json"},
+  {"file": "assets/sprites/hz_islands.png", "kind": "background", "made_with": "gpt-image (Codex) + build_assets.py: Horizontebene Inseln 166×21", "prompt": "assets/raw/horizon.json"},
+  {"file": "assets/sprites/cloud_0.png", "kind": "background", "made_with": "gpt-image (Codex) + build_assets.py: Wolkenband (eines von sechs, gemeinsame Palette)", "prompt": "assets/raw/clouds.json"},
+  {"file": "assets/sprites_sheet_dark.png", "kind": "sprite-sheet", "made_with": "build_assets.py: alle Sprites in Speichergröße (×2) auf dunklem Grund"},
+  {"file": "assets/sprites_sheet_light.png", "kind": "sprite-sheet", "made_with": "build_assets.py: dieselben Sprites auf hellem Grund (Säume prüfen)"},
+  {"file": "assets/compare_switches.png", "kind": "comparison", "made_with": "compare.py: Posterbild normal | lineare Filterung | ohne Bänder | ohne Kuppe"},
+  {"file": "assets/compare.json", "kind": "measurement", "made_with": "compare.py: geänderte Pixel je Schalter und Renderer, 15-Bit-Anteil, Dauerlauf ab 30 s"},
+  {"file": "assets/measure_badger.json", "kind": "measurement", "made_with": "measure_badger.py: Fußzeile, Kopf, Füße und Kopfmitte je Bild"},
+  {"file": "demo/data/sprites.json", "kind": "data", "made_with": "build_assets.py: Größen, Farbzahlen, Zellgrößen, Palettenschlüssel, Laternen-, Fenster-, Schornstein- und Leuchtfeuerpunkte"}
+ ],
+ "licenses": [
+  {"item": "Schrift Press Start 2P (CodeMan38, unverändert)", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/pressstart2p (Lizenztext: demo/fonts/OFL-PressStart2P.txt; Datei aus styles/raycaster/demo/fonts kopiert)"},
+  {"item": "Dachs, Requisiten, Boote, Häuschen, Horizont, Wolken", "license": "eigene KI-Erzeugung (Codex, gpt-image), keine fremden Bilder", "source": "assets/raw/"},
+  {"item": "Figurenblatt Dachs-Kurier (Referenz für Kostüm und Proportionen)", "license": "eigenes Motiv des Katalogs", "source": "shared/badger/master_sheet.png"},
+  {"item": "Straße, Himmel, Rauch, Lichthof, Lichtkegel, Möwen, Sterne, Schatten, Shader, Skripte", "license": "eigener Code, keine fremden Grafiken", "source": "styles/sprite-skalierung/"}
+ ],
+ "image_generations": 6,
+ "tool_issues": [],
+ "status": "done"
+}

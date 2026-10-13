@@ -1,0 +1,87 @@
+{
+ "_comment": "Von Hand aus dem Bodenprofil (scripts/split_sheet.py, scripts/foot_match.py) und vergrößerten Fußausschnitten gelesen. Alle Werte in Pixeln des KI-Bogens, x relativ zur linken Kante des Hüllrechtecks. advance[i] = Lage des Standfußes in Bild i minus Lage in Bild i+1 (Anker: Zehenspitze des Fußes, der in beiden Bildern am Boden ist; bei walk_4 -> walk_5 die Ferse des aufsetzenden Fußes). head_x = Schwerpunkt der oberen 75 Zeilen. shear = Versatz des Oberkörpers gegen die Beine, damit der Kopf je Bildwechsel gleich weit (132/8 = 16,5 px) vorrückt; die Füße bleiben dabei unverändert.",
+ "frames": [
+  "walk_0",
+  "walk_1",
+  "walk_2",
+  "walk_3",
+  "walk_4",
+  "walk_5",
+  "walk_6",
+  "walk_7"
+ ],
+ "anchors": {
+  "walk_0->walk_1": "hinterer Fuß Q, Zehenspitze 122 -> 108",
+  "walk_1->walk_2": "vorderer Fuß P flach, Zehenspitze 172 -> 163, Ferse 110 -> 104",
+  "walk_2->walk_3": "Fuß P, Zehenspitze 163 -> 134",
+  "walk_3->walk_4": "Fuß P (jetzt hinten, Abdruck), Zehenspitze 134 -> 98",
+  "walk_4->walk_5": "Fuß Q setzt mit der Ferse auf und rollt ab, Ferse 104 -> 108",
+  "walk_5->walk_6": "Fuß Q flach, Zehenspitze 171 -> 155",
+  "walk_6->walk_7": "Fuß Q, Zehenspitze 155 -> 130",
+  "walk_7->walk_0": "Fuß Q (jetzt hinten), Zehenspitze 130 -> 122",
+  "walk_6->stand": "Fuß Q, Zehenspitze 155 -> 128",
+  "walk_2->stand": "Fuß P, Zehenspitze 163 -> 128",
+  "stand->turn": "keine gemeinsame Sohle (Drehung auf der Stelle); Kopfschwerpunkt bleibt stehen"
+ },
+ "advance": [
+  14,
+  8,
+  29,
+  36,
+  -4,
+  16,
+  25,
+  8
+ ],
+ "advance_to_stand": {
+  "walk_6": 27,
+  "walk_2": 35
+ },
+ "head_x": {
+  "walk_0": 118.3,
+  "walk_1": 114.9,
+  "walk_2": 135.6,
+  "walk_3": 119.2,
+  "walk_4": 105.8,
+  "walk_5": 117.5,
+  "walk_6": 118.9,
+  "walk_7": 108.6,
+  "stand": 92.3,
+  "turn": 96.0
+ },
+ "leg_stretch": {
+  "walk_5": [
+   230,
+   10
+  ],
+  "walk_6": [
+   230,
+   10
+  ],
+  "walk_7": [
+   230,
+   10
+  ]
+ },
+ "shear_band": [
+  235,
+  300
+ ],
+ "turn_eyes": [
+  [
+   126,
+   122,
+   7,
+   -15,
+   0
+  ],
+  [
+   158,
+   118,
+   3,
+   -7,
+   0
+  ]
+ ],
+ "_comment_eyes": "Augen der Dreiviertelansicht im Ausschnitt 249x415 (x, y, Radius, Versatz der Fellquelle dx, dy), aus einer 5-fach-Vergrößerung abgelesen."
+}

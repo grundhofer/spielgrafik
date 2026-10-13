@@ -1,0 +1,66 @@
+{
+ "raw_walk_head_x_spread_px": 6.8,
+ "raw_walk_head_x_step_px": [
+  -3.4,
+  -1.7,
+  3.4,
+  -1.7,
+  0.0,
+  -3.4,
+  1.7,
+  5.1
+ ],
+ "raw_walk_heights_px": [
+  186,
+  176,
+  186,
+  198,
+  184,
+  177,
+  189,
+  193
+ ],
+ "corrected_walk_heights_px": [
+  182,
+  176,
+  189,
+  198
+ ],
+ "raw_note": "rohe Laufbilder (sprites.py slice, Schwerpunkt waagerecht, Unterkante senkrecht) auf die mittlere Höhe der korrigierten skaliert; Kopf = Schnauzenspitze im oberen Drittel",
+ "raw_heights_by_state_px_at_slice120": {
+  "walk": [
+   109,
+   103,
+   109,
+   116,
+   108,
+   104,
+   111,
+   113
+  ],
+  "idle": [
+   115,
+   115,
+   118,
+   116,
+   113,
+   115
+  ],
+  "jump": [
+   90,
+   118,
+   102,
+   115,
+   111,
+   83
+  ],
+  "wave": [
+   105,
+   105,
+   118,
+   111,
+   109,
+   106
+  ]
+ }
+}

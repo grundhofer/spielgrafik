@@ -1,0 +1,12 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://art/harbor.tscn" id="2_harbor"]
+[ext_resource type="PackedScene" path="res://art/badger.tscn" id="3_badger"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="harbor" parent="." instance=ExtResource("2_harbor")]
+
+[node name="badger" parent="." instance=ExtResource("3_badger")]

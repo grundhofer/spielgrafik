@@ -1,0 +1,121 @@
+{
+ "slug": "ki-3d-modell",
+ "name": "KI-3D-Modell (lokal)",
+ "family": "technik",
+ "kind": "technique",
+ "era": "Technik: Bild-zu-3D mit einem vortrainierten Rekonstruktionsmodell (seit 2023/24); hier TripoSR lokal auf einem M4 Pro, Blender 5.2 per Skript, Godot 4.7",
+ "summary": "Aus je einem KI-Bild (gpt-image) macht TripoSR lokal und kostenlos in etwa 15 Sekunden ein 3D-Mesh mit Eckpunktfarben. Ein Blender-Skript räumt auf (Schwebeteile, Aufrichten, Maßstab, Dezimieren, Normalen, UVs), backt eine 1024er-Textur und projiziert dabei das scharfe Eingabebild auf die zugewandten Flächen. Den Dachs setzt ein zweites Skript auf das Rig aus shared/3d, indem es die Gewichte überträgt. In der Demo laufen Dachs, zwei Fässer, Laterne und ein Boot aus TripoSR im Hafen, oben links drehen sich alle vier Modelle einmal ganz herum.",
+ "references": [
+  "TripoSR (Tochilkin u. a., Stability AI und Tripo AI, 2024): Transformer erzeugt aus einem Bild ein Triplane-NeRF, daraus Marching Cubes; Code und Gewichte MIT",
+  "LRM – Large Reconstruction Model (Hong u. a., 2023): Grundidee Bild → Triplane → 3D, auf der TripoSR aufbaut",
+  "Projektionsmalerei (Camera Projection) aus Matte Painting und Blender: ein Bild von der Kamera aus auf Geometrie werfen und in eine UV-Textur backen",
+  "Photogrammetrie-Assets in Spielen (z. B. The Vanishing of Ethan Carter, 2014; Star Wars Battlefront, 2015): echte Objekte als texturierte Meshes, die danach dezimiert und gebacken werden",
+  "Bezahldienste mit demselben Ziel (Meshy, Tripo, Rodin): nur als Vergleich genannt, nicht genutzt"
+ ],
+ "traits": [
+  "Vier Modelle aus je einem KI-Bild: Dachs (Vorderansicht), Fass, Laterne am Pfosten, Ruderboot; alle im Hafen der Demo und auf den Drehtellern oben links zu sehen",
+  "TripoSR läuft lokal auf dem M4 Pro (MPS): Gewichte laden 1,6–1,8 s, Modell 1,1–2,1 s, Marching Cubes bei 256³ 2,6–3,4 s, sechs NeRF-Kontrollansichten 7–12 s, zusammen 13–19 s je Bild; auf der CPU Modell 1,9 s und Marching Cubes 6,6 s (Fass). Rohmeshes: Dachs 121 822, Fass 199 796, Laterne 64 860, Boot 113 052 Dreiecke, alle geschlossen",
+  "Reproduzierbar: scripts/build_models.sh baut alle Modelle in 1:36 min neu; TripoSR auf MPS liefert bytegleiche Meshes, Blender bytegleiche glb (geprüft mit cmp). CPU und MPS ergeben gleich viele Eckpunkte, aber leicht andere Werte",
+  "Säubern per Skript (blender/clean_bake.py): Schwebeteile unter 0,2–0,4 % der Flächen entfernt, aufgerichtet (Fass −30,5°, Laterne −11°, Boot −11°, Dachs 6°), auf echte Größe skaliert (Fass 0,9 m, Laterne 2,45 m, Boot 4 m lang, Dachs 1,011 m), zweimal geglättet, auf 4 000–8 000 Dreiecke dezimiert, Normalen nach außen, harte Kanten ab 35–50°, Smart-UV",
+  "Textur 1024² je Modell aus Cycles-Bake (EMIT, selected to active, 0,2 s): Eckpunktfarbe von TripoSR, auf 26–35 % der Eckpunkte (zugewandt und sichtbar) überblendet mit dem projizierten Eingabebild; Gesicht, Knöpfe, Fassrisse und Holzmaserung sind dadurch vorn scharf (Vergleich in assets/compare_badger.png)",
+  "Projektion angepasst statt angenommen: Mit den Standardwerten von TripoSR (1,9 m, 40°) deckte die Silhouette das Eingabebild nur zu 53–91 % (IoU), nach Anpassung von Abstand, Maßstab und Mitte zu 94,6–98,5 % (scripts/fit_projection.py)",
+  "Dachs auf dem vorhandenen Rig: Gewichte per Data Transfer von der Figur aus shared/3d (21 Knochen), an den Sohlen ausgerichtet (3,6 cm verschoben); Idle und Walk aus badger.glb laufen unverändert; 0 Eckpunkte ohne Gewicht",
+  "Füße gemessen (assets/measure/feet_report.txt): aufgesetzter Fuß wandert beim Laufen höchstens 0,38 px je Bild, beim Bremsen 0,35, beim Überblenden 0,56, im Stehen 0,14 px; Silhouette: Fußlinie im Stehen 637 px ohne Sprung, Kopf springt höchstens 2 px (Laufwippen); Dachs am Ende 270 px hoch",
+  "Feste Nahaufnahme statt der Hauptkamera: Dachs kommt schräg auf die Kamera zu (70° zur x-Achse), bremst ab 3,15 s und blendet von 3,65 s an auf Idle; Poster bei 4,4 s",
+  "Umgebungsanimationen: Wasser, zwei schaukelnde Boote (eines davon aus TripoSR), flackernde Laterne (Licht und Glühen am Laternenkörper des KI-Modells), drehendes Leuchtfeuer mit Strahl",
+  "Oberfläche: Fenster „KI-Bild → 3D-Modell“ mit Eingabebild, großem Drehteller (Dachs in Idle) und drei kleinen Drehtellern samt Dreieckszahlen, Dialogkasten mit ui_text (Source Sans 3, IBM Plex Mono); zusammen etwa 23 % des Bildes"
+ ],
+ "camera": "Feste Nahaufnahme statt der Hauptkamera aus shared/3d: Position (−0,5 | 0,95 | 6,0), Neigung +1,5°, Gieren −6°, fov 46 vertikal; Bildlage vorab mit scripts/frame_shot.py gerechnet. Hauptkamera wäre zu weit weg: dort ist der Dachs 71 px hoch, die Textur der KI-Modelle wäre nicht zu beurteilen.",
+ "resolution": "1280×720 nativ, Forward+, MSAA 2× (3D und 2D); Modelle 4 000–8 000 Dreiecke mit je einer Textur 1024²; Dachs am Ende 270 px hoch; Drehteller als SubViewports 306×238 und 98×92 px",
+ "pipeline": [
+  {"step": "Eingabebilder erzeugen", "tool": "genimg (gpt-image über Codex, Regel Transparenz)", "detail": "5 Bilder, 1254×1254 statt 1024² geliefert, echter Alphakanal: Dachs von vorn (Referenz master_sheet.png), Fass, Laterne am Pfosten, Ruderboot, dazu ein Dachs im Halbprofil als Versuch (Referenz master_sheet.png und das eigene Vorderbild). Stilblock „stylised 3D game asset preview, soft matte hand-painted materials, soft even studio light, whole object visible“, weil TripoSR mit Renderings gelernt hat."},
+  {"step": "Lokale Umgebung", "tool": "uv, eigenes venv in tsr/venv (Python 3.11)", "detail": "torch 2.7.1, transformers 4.46.3, omegaconf, einops, trimesh, huggingface-hub, scikit-image, Pillow, imageio, numpy 1.26; TripoSR-Code als Klon in tsr/TripoSR (Commit 107cefdc), Gewichte stabilityai/TripoSR (Revision 5b521936) in tsr/hf. Nicht installiert: torchmcubes, rembg, gradio, xatlas, moderngl."},
+  {"step": "Bild → Mesh", "tool": "scripts/tsr_run.py (TripoSR, MPS)", "detail": "Vordergrund auf 85 % eines Quadrats, auf Grau 0,5; Triplane, Dichte auf 256³, Marching Cubes aus scikit-image statt torchmcubes (Ersatzmodul, Umlaufsinn gedreht, sonst zeigten die Normalen nach innen), Eckpunktfarben aus dem NeRF; PLY und 6 NeRF-Kontrollansichten."},
+  {"step": "Projektion anpassen", "tool": "scripts/fit_projection.py", "detail": "Abstand D, Maßstab und Bildmitte so gesucht, dass die Silhouette des Meshes den Alphakanal deckt (IoU 0,946–0,985)."},
+  {"step": "Säubern, dezimieren, backen", "tool": "Blender 5.2: blender/clean_bake.py", "detail": "Schwebeteile weg, Gewicht der Projektion je Eckpunkt (zugewandt, per Strahl sichtbar, im Alphakanal), Aufrichten (größte ebene Standfläche oder flachste Lage), Drehen (lange Achse), Maßstab, Glätten, Dezimieren, Normalen, Smart-UV, Cycles-Bake EMIT der gemischten Farbe in 1024², glb mit eingebetteter Textur. Sonderfälle als Schalter: --bridge (Laterne), --squash-back (Dachs)."},
+  {"step": "Dachs riggen", "tool": "shared/3d/blender/build_badger.py (eigenes --out) + blender/rig_transfer.py", "detail": "Rig-Quelle bytegleich zu shared/3d/badger.glb neu gebaut; KI-Mesh an den Sohlen ausgerichtet, Gewichte von Figur und Paket per Data-Transfer (nächste Fläche, interpoliert), 102 braune Eckpunkte der Umhängetasche vom linken Arm auf die Hüfte, höchstens 4 Einflüsse; Export mit den Einstellungen von build_badger.py (Idle, Walk, Wave)."},
+  {"step": "Demo", "tool": "Godot 4.7.2: main.gd, ui.gd", "detail": "Probeszene aus shared/3d/demo als Grundlage; Barrel1/2, LanternPost und BoatB ausgeblendet, KI-Modelle an ihrer Stelle; AnimationTree (TimeScale, Blend2) für Laufen, Bremsen und Überblenden; Drehteller als SubViewports mit eigener Welt."},
+  {"step": "Prüfen und aufnehmen", "tool": "scripts/measure_feet.py, blender/compare_views.py, scripts/compose_compare.py, tools/capture.py --poster-at 0.733", "detail": "Füße über Knochenpunkte und Silhouetten gemessen, Vergleichstafeln für Dachs und Requisiten, Probeläufe mit Mobile und Compatibility, Lauf ab 30 s, zwei Aufnahmen bildgleich."}
+ ],
+ "godot": [
+  "project.godot: 1280×720, Forward+, MSAA 2× für 3D und 2D; Hauptszene main.tscn mit Kamera, Sonne, WorldEnvironment (aus shared/3d/demo), Hafen, KI-Dachs, Props-Knoten mit den KI-Requisiten, Attach-Knoten für Fenster- und Leuchtturmlicht, CanvasLayer mit ui.gd",
+  "models/*_tsr.glb mit eingebetteter PNG-Textur; Godot extrahiert sie beim Import als models/<name>_tex.png (VRAM-komprimiert). Standard-Import, LODs an",
+  "Dachs: Idle und Walk auf LOOP_LINEAR; AnimationTree im Code (Idle | Walk → TimeScale → Blend2), callback_mode_process MANUAL, advance(delta) je Bild. Vorschub = 0,367 m/s × Tempo; Tempo 2 → 0 ab 3,15 s in 0,5 s, danach Walk eingefroren in 0,45 s nach Idle überblendet",
+  "Laterne: Lage des Laternenkörpers aus den Eckpunkten des KI-Meshes gesucht (weiter als 0,55 m vom Pfosten, 0,5–1,7 m hoch); dort OmniLight3D und ein additives Billboard (Verlauf, no_depth_test) als Glühen, beide mit FastNoiseLite (Seed 20261013) geflackert",
+  "BoatB durch das KI-Boot ersetzt (Pivot auf der Wasserlinie, Kiel 0,42 m darunter), schaukelt wie BoatA; BoatA um 180° gedreht, damit sein Mast nicht über dem Kopf des Dachses steht",
+  "ui.gd: Drehteller = SubViewportContainer + SubViewport (own_world_3d, transparent_bg, MSAA 4×) mit eigenem Environment, zwei DirectionalLight3D, Scheibe und Kamera; Abstand aus Höhe und größtem Radius um die Drehachse; 60°/s; Dreieckszahl aus den Index-Arrays",
+  "Schalter nach --: --t0=S, --cam=x,y,z,neigung,gieren,fov, --measure (Fuß- und Kopfpunkte je Bild), --mask (Dachs weiß auf Schwarz), --no-ui"
+ ],
+ "techniques": [
+  "ki-3d-modell",
+  "bild-zu-3d",
+  "textur-backen",
+  "projektionsmalerei",
+  "gewichtsuebertragung",
+  "drehteller",
+  "skelett-animation",
+  "animation-tree",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 3,
+  "consistency": 3,
+  "effort": 2,
+  "text_adventure": 3,
+  "mobile": 4
+ },
+ "ratings_note": "ai_fit 3: Die KI liefert hier fast alles – Bildmodell und TripoSR zusammen ergeben in Minuten Modelle, die von vorn wie gemalte Spiel-Requisiten aussehen; Seiten und Rückseiten sind aber geraten und unschärfer, dünne Teile zerfallen, und der Dachs aus der Vorderansicht hat im Profil keine Schnauze. consistency 3: Gleicher Stilblock, gleiche Bake-Kette und gleiches Licht halten die vier Modelle zusammen, die Qualität schwankt je Objekt (Fass gut, Laterne nur mit Reparatur, Boot zu breit). effort 2: Ein Requisit kostet ein Bild (gut 1 min), 15 s TripoSR und 1–2 s Blender, alles per Skript; Figuren brauchen zusätzlich Gewichte und Handarbeit an Einzelstellen. text_adventure 3: Für feste Kameras und Requisiten brauchbar, Figuren nur mit kleinen Bewegungen; ein 2D-Weg ist für unser Textadventure einfacher. mobile 4 ist geschätzt: Die Modelle sind klein (4 000–8 000 Dreiecke, 1024²); Probeläufe auf dem Mac mit Mobile (42,9 % der Pixel weichen um mehr als 8 Stufen ab, Szene deutlich dunkler) und Compatibility (63,4 %, heller, Warnung „2D MSAA is not yet supported for GLES3“) laufen ohne Fehler, die Szene müsste dafür neu abgestimmt werden; auf einem Smartphone nicht gemessen.",
+ "verdict": "Bild-zu-3D läuft lokal, gratis und schnell genug, um es in einen Asset-Weg einzubauen: KI-Bild, TripoSR, ein Blender-Skript, und nach zwei Minuten steht eine texturierte Requisite mit 4 000 Dreiecken in Godot. Von vorn und schräg vorn sehen die Modelle dank projiziertem Eingabebild wie gemalte Spiel-Assets aus; von hinten und von der Seite sind sie geraten und unschärfer. Für unser Textadventure eignet sich der Weg vor allem für Requisiten und Kulissen in festen Kamerasichten (Fässer, Laternen, Kisten, Möbel), die man von der Bildseite aus zeigt. Figuren gehen nur eingeschränkt: Das Mesh ist ein einziger Klumpen, Arme und Körper sind verwachsen, deshalb funktionieren Laufen und Idle auf einem übertragenen Rig, große Gesten (Winken) nicht. Bewusste Abweichungen vom Auftrag: Nahaufnahme statt Hauptkamera (sonst ist die Textur nicht zu beurteilen) und kein Winken, siehe pitfalls.",
+ "pitfalls": [
+  "Aus der Vorderansicht fehlt die Tiefe: Der Dachs hat im Profil ein flaches Gesicht ohne Schnauze, TripoSR hat ihm einen knapp 30 cm langen Schwanz am Boden geraten (per --squash-back hinter x = −0,2 m auf 30 % gestaucht, hintere Kante von −0,53 auf −0,34 m), die Weste hinten ist fleckig. Die Demo zeigt ihn deshalb nur von vorn und schräg vorn; der Drehteller zeigt alle Seiten.",
+  "Versuch mit einem Halbprofil-Bild (1 zusätzliches Bild): Schnauze vorhanden, dafür eine braune Beule auf dem Rücken (geratene Tasche) und ein verzerrtes Gesicht in der Projektion; nicht verwendet (assets/compare_badger.png, unterste Zeile).",
+  "Winken nicht gezeigt: Arm und Körper sind im KI-Mesh verwachsen. Beim Heben des Arms (Wave aus shared/3d) zieht sich eine dunkle Haut von der Hüfte bis zur Pfote; auch die Umhängetasche zog sich lang, bis ihre Eckpunkte auf die Hüfte gelegt wurden. Laufen und Idle mit kleinen Armbewegungen gehen.",
+  "Dünne Teile zerfallen: Die Kette der Laterne kam als vier Splitter (64, 52, 20, 16 Flächen) und wurde entfernt; der Laternenkörper hing danach frei in der Luft und lag 38,5 cm hinter dem Ausleger. clean_bake.py --bridge schiebt ihn darunter und ergänzt einen dunklen Stab – Handarbeit als Schalter, nicht allgemein.",
+  "Proportionen und Maße stimmen nicht von selbst: Das Boot wurde auf 4 m Länge 2,48 m breit (BoatB: 1,55 m), sein Mast steht schief; das Fass hat hinten helle Flecken. Größe, Lage und Aufrichten müssen je Objekt im Skript stehen.",
+  "TripoSR rekonstruiert im Blickwinkel des Bildes: Ein Fass „leicht von oben“ steht im Mesh um 30,5° gekippt. Aufrichten über die größte ebene Standfläche (Fass, Laterne, Dachs) oder die flachste Lage (Boot) klappte hier; bei Objekten ohne ebenen Boden muss man den Winkel vorgeben.",
+  "Die Standardkamera aus TripoSR.render (1,9 m, 40°) passt nicht zum Eingabebild (IoU nur 0,53 bei der Laterne); ohne angepasste Projektion säße das gebackene Bild verschoben auf dem Mesh.",
+  "Licht doppelt: Das weiche Studiolicht und die Verschattung des KI-Bildes stecken in der Textur, die Szene beleuchtet noch einmal. In der Abendszene fällt das kaum auf, unter hartem Mittagslicht wäre es sichtbar.",
+  "Rückseiten und Seiten nur aus den Eckpunktfarben von TripoSR (Raster 256³): weich und ohne Details; scharf ist nur, was im Eingabebild zu sehen war.",
+  "torchmcubes wurde nach Auftrag nicht gebaut; der Ersatz aus scikit-image lieferte zuerst nach innen zeigende Normalen (Volumen des Fasses −0,42), der Umlaufsinn musste gedreht werden. Blenders automatische Gewichte (Bone Heat) auf dem KI-Mesh meldeten „failed to find solution for one or more bones“, der Export hatte danach keinen Skin; deshalb Data Transfer.",
+  "Lizenz und Herkunft: Die Model Card von stabilityai/TripoSR nennt „license: mit“, enthält aber Formularfelder (Name, E-Mail, Land) für ein Zugangs-Gate; das Repo ist laut API nicht gesperrt (gated: false), der Download lief ohne Konto. Aus facebook/dino-vitb16 (Apache-2.0) lädt TripoSR nur config.json; die Gewichte des Bildkodierers stecken im TripoSR-Checkpoint.",
+  "Platz: venv tsr/venv 667 MB, Gewichte tsr/hf 1,6 GB (model.ckpt), TripoSR-Klon tsr/TripoSR 64 MB; alles liegt im Eintragsordner und ist per .gitignore ausgeschlossen. Im Git: glb je 1,3–1,8 MB mit eingebetteter Textur, dazu die von Godot extrahierten PNGs (je etwa 1,1 MB) und die Texturkopien in assets/models – dieselbe Textur liegt also dreimal vor.",
+  "Mobile und Compatibility weichen stark ab (42,9 % bzw. 63,4 % der Pixel); Smartphone nicht gemessen.",
+  "Pflichtelement fehlt: Das Häuschen mit erleuchtetem Fenster (data/motif.json, elements_required) ist in keinem Bild der Demo zu sehen, ebenso Schornstein und Rauch. Beide liegen links außerhalb der festen Nahaufnahme (scripts/frame_shot.py: Fenster bei x ≈ −1079, Schornstein bei x ≈ −646); eine Totale oder ein Schnitt auf das Häuschen ist nicht eingebaut. Grund ist die Kamerawahl: Die Nahaufnahme soll die Texturen der KI-Modelle beurteilbar machen (in der Hauptkamera wäre der Dachs nur 71 px hoch). Sichtbar sind Wasser, Boote, Laterne und Leuchtfeuer."
+ ],
+ "lessons": [
+  "Eingabebilder als „3D game asset preview“ bestellen (weiches Studiolicht, ganzes Objekt mit Rand, transparent): TripoSR ist mit Renderings trainiert; alle fünf Bilder von gpt-image waren im ersten Versuch brauchbar.",
+  "Das scharfe Eingabebild zurück auf das Mesh projizieren und nur dort einblenden, wo die Fläche zur Kamera zeigt und sichtbar ist; Seiten und Rückseite behalten die Eckpunktfarben. Vorher die Projektion an die Silhouette anpassen (Abstand, Maßstab, Mitte).",
+  "TripoSR-Ergebnisse liegen im Kamerarahmen: vorn = +X, oben = +Z, rechts im Bild = +Y. In Blender ohne Achsentausch importieren; Godot übernimmt +X als Blickrichtung wie beim Dachs aus shared/3d.",
+  "Ein KI-Mesh lässt sich auf ein vorhandenes Rig setzen: an den Sohlen ausrichten, Gewichte per Data Transfer von einer handgebauten Figur gleicher Proportionen. Für Laufen und Idle reicht das; Teile, die falsch mitgehen, lassen sich über die Texturfarbe finden und umhängen.",
+  "Überblenden Walk → Idle mit eingefrorenem Walk (AnimationTree: TimeScale 0, dann Blend2) statt AnimationPlayer.play(\"Idle\", x): Beim Player läuft Walk während der Überblendung weiter, der Standfuß rutschte 1,35 px je Bild; mit dem Baum höchstens 0,56 px.",
+  "Auf der Stelle drehen lässt die Füße rutschen (gemessen 1,8 px je Bild); besser die Laufrichtung so wählen, dass die Figur am Ende schon richtig steht.",
+  "Alles als Skript mit festen Parametern (scripts/build_models.sh): Neubau bytegleich, Parameter je Objekt nachvollziehbar, und neue Requisiten brauchen nur ein Bild und eine Zeile.",
+  "Drehteller als SubViewport mit eigener Welt zeigen ehrlich alle Seiten eines Modells neben der Szene; für einen Asset-Katalog des Spiels direkt wiederverwendbar.",
+  "Für unser Spiel: KI-3D lohnt sich zuerst für Requisiten in festen Kamerasichten; Figuren besser handgebaut (blender-rig) oder in 2D, und KI-Meshes höchstens als Vorlage für Proportionen."
+ ],
+ "assets": [
+  {"file": "demo/models/badger_tsr.glb", "kind": "model", "made_with": "gpt-image + TripoSR (lokal) + Blender (clean_bake.py, rig_transfer.py), Rig aus shared/3d", "prompt": "assets/raw/badger_front.json"},
+  {"file": "demo/models/barrel_tsr.glb", "kind": "model", "made_with": "gpt-image + TripoSR (lokal) + Blender (clean_bake.py)", "prompt": "assets/raw/barrel.json"},
+  {"file": "demo/models/lantern_tsr.glb", "kind": "model", "made_with": "gpt-image + TripoSR (lokal) + Blender (clean_bake.py --bridge)", "prompt": "assets/raw/lantern.json"},
+  {"file": "demo/models/boat_tsr.glb", "kind": "model", "made_with": "gpt-image + TripoSR (lokal) + Blender (clean_bake.py)", "prompt": "assets/raw/boat.json"},
+  {"file": "assets/models/badger_tex.png", "kind": "texture", "made_with": "Cycles-Bake: Eckpunktfarben + projiziertes Eingabebild"},
+  {"file": "assets/models/barrel_tex.png", "kind": "texture", "made_with": "Cycles-Bake: Eckpunktfarben + projiziertes Eingabebild"},
+  {"file": "assets/models/lantern_tex.png", "kind": "texture", "made_with": "Cycles-Bake: Eckpunktfarben + projiziertes Eingabebild"},
+  {"file": "assets/models/boat_tex.png", "kind": "texture", "made_with": "Cycles-Bake: Eckpunktfarben + projiziertes Eingabebild"},
+  {"file": "assets/compare_badger.png", "kind": "comparison", "made_with": "Blender Workbench (compare_views.py) + Pillow: roh, nur Eckpunktfarben, projiziert, Halbprofil-Versuch", "prompt": "assets/raw/badger_34.json"},
+  {"file": "assets/compare_props.png", "kind": "comparison", "made_with": "Blender Workbench (compare_views.py) + Pillow"},
+  {"file": "assets/measure/feet_report.txt", "kind": "measurement", "made_with": "scripts/measure_feet.py"}
+ ],
+ "licenses": [
+  {"item": "TripoSR, Quellcode (Klon in tsr/TripoSR, Commit 107cefdc, nicht eingecheckt)", "license": "MIT (Copyright 2024 Tripo AI & Stability AI)", "source": "https://github.com/VAST-AI-Research/TripoSR"},
+  {"item": "TripoSR, Gewichte model.ckpt und config.yaml (Revision 5b521936b01fbe1890f6f9baed0254ab6351c04a, in tsr/hf, nicht eingecheckt)", "license": "MIT (Model Card: license: mit; Repo nicht gesperrt)", "source": "https://huggingface.co/stabilityai/TripoSR"},
+  {"item": "DINO ViT-B/16, nur config.json (Architektur des Bildkodierers)", "license": "Apache-2.0", "source": "https://huggingface.co/facebook/dino-vitb16"},
+  {"item": "Python-Pakete im venv (torch, transformers, scikit-image, trimesh, omegaconf, einops, huggingface-hub, numpy, scipy, Pillow, imageio), nicht eingecheckt", "license": "BSD-3-Clause, Apache-2.0, MIT bzw. HPND je Paket", "source": "https://pypi.org"},
+  {"item": "Schrift Source Sans 3 (variabel)", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/sourcesans3 (Lizenztext: demo/fonts/OFL-SourceSans3.txt)"},
+  {"item": "Schrift IBM Plex Mono (Regular, SemiBold)", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/ibmplexmono (Lizenztext: demo/fonts/OFL-IBMPlexMono.txt)"},
+  {"item": "Hafen und Dachs-Rig", "license": "projekteigen", "source": "shared/3d (harbor.glb, build_badger.py)"}
+ ],
+ "image_generations": 5,
+ "tool_issues": [],
+ "status": "done"
+}

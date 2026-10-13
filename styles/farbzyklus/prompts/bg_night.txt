@@ -1,0 +1,9 @@
+The attached image is the dusk version of a game background. Repaint exactly this picture as its night version, as if traced on a clear sheet laid on top of it: the same pixel grid and resolution, and every object, outline, cloud, rock, stone, plank, rope, star, ripple stroke and the horizon line stay exactly in place with exactly the same shapes and sizes. Only the colours and the light change, nothing moves, nothing is added or removed. Keep the same technique: hand-painted 256-colour pixel art built from graded colour ramps, crisp square pixels, fine regular ordered dithering, no anti-aliasing, no blur.
+
+Night, about one hour after sunset: the orange band at the horizon has faded to a dark blue-violet glow; the sky is deep navy to indigo; the clouds are dark slate blue with faint cool rims; the stars stay where they are and shine a little brighter. The sea is dark blue-black, and the ripple strokes keep their positions but become cool, dim silver-blue instead of orange. Stone, wood, rocks, boats and the lighthouse are cool, dark blue-grey night colours. The lit cottage window and the lantern glow warmer and brighter than before, and their warm light falls on the nearby stones, barrels and the paving of the quay. The lighthouse lamp stays a small bright yellow spot without any beam or rays. No moon, no smoke, no rain, no fog, no new objects.
+
+Leave the quay in the foreground free of characters: it is a game background, characters are added later as separate sprites.
+
+No text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.
+
+Image format: landscape 3:2, same framing as the attached image.

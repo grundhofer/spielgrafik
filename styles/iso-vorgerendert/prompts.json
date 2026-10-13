@@ -1,0 +1,12 @@
+[
+ {
+  "file": "assets/raw/portrait.png",
+  "prompt": "Painted character portrait for the party panel of a late-1990s isometric role-playing game on the PC: head and shoulders of one character, a traditional oil painting on board that was scanned and reduced for the game, rich chiaroscuro, a warm lantern-coloured key light from the left of the picture, a cool blue-grey rim light from behind on the right, a dark smoky background in umber and deep teal with a soft vignette, no scenery. Visible but fine brush strokes, glazed shadows, realistic fur rendered with small directional strokes, slightly desaturated earthy palette with a strong red accent in the scarf. A calm, dignified, slightly heroic bust pose; the face in three-quarter view looking toward the left of the picture, eyes clearly visible below the peak of the cap, a small confident smile. Not a 3D render, not a photograph, not a cartoon, not anime, not pixel art, no painted frame, no border, no ornament.\n\nThe first reference image is the layout: a plain 3D render of the same character. Keep its framing, pose, head angle and the position of the head in the picture, but paint everything anew in the technique described above. The second reference shows the costume and the proportions of the character: take only the costume, the colours of the clothes and the face markings from it; drawing style, lighting and palette follow this description.\n\nThe badger courier: an original mascot character, a stout, short-legged badger with a broad black-and-white striped face, wearing a dark green peaked cap with a brass button, a dark green vest with pockets over a cream shirt with rolled-up sleeves, a long red knitted scarf, a brown leather satchel on a shoulder strap, and a brown paper parcel tied with string under one arm.\n\nNo text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.\n\nImage format: portrait 2:3.",
+  "refs": [
+   "styles/iso-vorgerendert/assets/ref/portrait_layout.png",
+   "shared/badger/master_sheet.png"
+  ],
+  "size": "1024x1536",
+  "backend": "agy"
+ }
+]

@@ -1,0 +1,66 @@
+{
+ "typing_holds": [
+  3,
+  3,
+  3,
+  6,
+  3,
+  3,
+  3,
+  3
+ ],
+ "typing_first_frame": 65,
+ "selection_red_from_frame": 123,
+ "holds": [
+  {
+   "from_frame": 0,
+   "frames": 65,
+   "amber_px": 18
+  },
+  {
+   "from_frame": 65,
+   "frames": 3,
+   "amber_px": 45
+  },
+  {
+   "from_frame": 68,
+   "frames": 3,
+   "amber_px": 57
+  },
+  {
+   "from_frame": 71,
+   "frames": 3,
+   "amber_px": 99
+  },
+  {
+   "from_frame": 74,
+   "frames": 6,
+   "amber_px": 141
+  },
+  {
+   "from_frame": 80,
+   "frames": 3,
+   "amber_px": 178
+  },
+  {
+   "from_frame": 83,
+   "frames": 3,
+   "amber_px": 210
+  },
+  {
+   "from_frame": 86,
+   "frames": 3,
+   "amber_px": 241
+  },
+  {
+   "from_frame": 89,
+   "frames": 3,
+   "amber_px": 274
+  },
+  {
+   "from_frame": 92,
+   "frames": 88,
+   "amber_px": 299
+  }
+ ]
+}

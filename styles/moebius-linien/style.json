@@ -1,0 +1,324 @@
+{
+ "slug": "moebius-linien",
+ "name": "Linienzeichnung in 3D",
+ "family": "modern3d",
+ "kind": "style",
+ "era": "Comicvorbild ab 1975, als Echtzeit-3D-Stil seit etwa 2015",
+ "summary": "Eine 3D-Szene, die aussieht wie eine kolorierte Tuschezeichnung: flache Pastellfarben mit genau einer Schattenstufe, im Schatten parallele Schraffurstriche, schwarze Konturen, Knick-, Farbgrenz- und Faltenlinien aus einem Nachbearbeitungs-Shader und ein großer, heller Himmel mit umrissenen Wolken, Mond und Möwen. Der ganze Look entsteht aus Shadern auf den gemeinsamen Modellen aus shared/3d, ohne Texturen und ohne KI-Bilder.",
+ "references": [
+  "Moebius (Jean Giraud): Arzach (1975) und Le Garage hermétique (1976–1979) – feine, gleichmäßige Tuschelinie, Schraffur statt Verlauf, helle Pastell- und Wüstentöne, weite Himmel mit kleinen Figuren",
+  "Sable (Shedworks 2021): 3D-Spiel mit schwarzen Konturen, flachen Farben und hellem Wüstenlicht, nach Aussage des Studios von Moebius beeinflusst",
+  "Verwandt: die Ligne claire der franko-belgischen Comics (gleichmäßige Linie, flache Farben); im Katalog als 2D-Eintrag ligne-claire, als 3D-Eintrag mit kräftigeren Farben und Stufenlicht toon-cel"
+ ],
+ "traits": [
+  "Schwarze Tuschelinien als Nachbearbeitung über die ganze Szene (ink_lines.gdshader): Silhouetten aus dem Tiefenpuffer (1/z-Vorhersage auf Pixelmitten mit den echten Abständen, Tiefensprung mindestens 6 cm, auf der Figur 1 cm), 2,2 px breit in der Nähe, 1,1 px ab 45 m; Innenlinien an Knicken (1 − N·N > 0,3) und Farbgrenzen (Material-ID im Rauheitskanal) 1,25 px mit 85 % Deckkraft; ab 80 m blasser bis 50 % bei 700 m; jeder Strich um bis zu 0,7 px verwackelt (feste Rauschtextur). Mit Vergleichsschalter --no-lines gemessen: 13,8 % (Totale, Bild 60) bzw. 9,2 % (Nahaufnahme, Bild 145) der Pixel anders",
+  "Flache Farben mit genau einer Schattenstufe (ink.gdshader, eigene light()-Funktion): beleuchtet = Palettenfarbe, Schatten = Palettenfarbe × (0,56 | 0,52 | 0,70) linear, also kühl-lila; Eigen- und Schlagschatten der Sonne mit harter Kante; kein Umgebungslicht, kein Glanz, keine Spiegelung, Tonemapping linear. Ohne Schattenstufe (--no-shade) 6,5 % bzw. 11,5 % der Pixel anders",
+  "Schraffur nur im Schatten: parallele Tuschestriche im Bild, 5 px Abstand, 1,15 px breit, steigend unter etwa 55°; Deckkraft je Material (Standard 0,82, Pflaster 0,65, Fugen und Mauern 0,5, Rauch 0); das Muster ist am Bildpunkt des Objekt-Ursprungs verankert und wandert mit Dachs und Booten mit. Ohne Schraffur (--no-hatch) 3,1 % bzw. 5,2 %",
+  "Faltenlinien auf der Figur: zusätzlich zu Silhouette und Farbgrenzen zieht der Shader auf dem Dachs schon bei schwachen Wölbungsknicken (1 − N·N > 0,03) und 1 cm Tiefensprung eine Linie; damit sind Schalende, Ärmel und Schulter abgesetzt. Kleine Wirkung: ohne Faltenlinien (--no-folds) 0,26 % bzw. 0,18 % der Pixel anders, sichtbar nur in der Nahaufnahme",
+  "Heller Wüsten- und Pastellton: alle 13 Hafen- und 11 Figurenmaterialien per Name ersetzt (Pflaster #ECD7AC, Fels #E0AA86, Gras #C4CF91, Sand #F0DCAE, Dach #79A6B4, Holz #DCA274, rote Farbe #E3755D, Schal #E65A42, Weste #6FA070); Wasser #8CCCC7, zum Horizont #D6E6DB; Nebel in Horizontfarbe macht die fernen Inseln blass",
+  "Große Himmelsfläche: in der Totale 43 % des Bildes (Hauptkamera aus shared/3d), in der Nahaufnahme 54 % (Horizont bei y 388). Der Himmel ist gezeichnet (ink_sky.gdshader): Verlauf Aprikose, Creme, Rosé, Flieder; drei Haufenwolken als Vereinigung von Kreisen mit flacher Unterkante, Tuscheumriss, Innenbögen und schraffiertem Schattenband; Mond (Radius 3,6°) mit schraffierter Schattensichel und drei Kratern; drei Möwen als Tuschestriche mit Flügelschlag (1,6 Hz), die langsam hin und her gleiten",
+  "Wasser im Strich (ink_water.gdshader): flache Fläche, Schlagschatten von Häuschen, Booten und Steg schraffiert, kurze waagerechte Wellenstriche in Weltkoordinaten (zwei Zellengrößen, 1,3 px breit über fwidth), die auftauchen, sich strecken und verschwinden, dazwischen helle Glanzstriche; ausgeblendet, sobald ein Pixel mehr als ein Achtel einer Zelle überdeckt",
+  "Licht und Rauch im selben Strich: Lichtkegel des Leuchtturms als blasse Fläche mit zwei Tuscherändern (dort, wo die Kegelwand quer zum Blick steht); Laterne und Leuchtfeuer mit blassem Hof und Strahlenkranz aus kurzen Tuschestrichen (Laterne flackert mit festem Rauschen, das Leuchtfeuer blitzt bei 5,6 s mit 16 Strahlen auf, wenn der Strahl zur Kamera zeigt); Rauch als umrissene Bällchen, die wachsen, steigen, im Wind nach rechts treiben und schrumpfen",
+  "Zwei feste Einstellungen mit hartem Schnitt wie zwischen zwei Comicbildern: 0–2,7 s Totale mit der unveränderten Hauptkamera (Dachs 68–73 px hoch), dann tiefe Nahaufnahme mit viel Himmel (Dachs 229–250 px); Poster bei Bild 145 (etwa 4,8 s): Dachs winkt, Lichtkegel quer über den Himmel",
+  "Animierte 3D-Figur: Walk mit 0,73 m/s, biegt ab 2,7 s zur Kamera der Nahaufnahme ab (−55°, Drehung höchstens 3° je Bild um den Bodenpunkt des Standfußes), bremst ab 3,2 s so, dass der Lauf in der Durchgangsphase endet, Idle ab 3,6 s (0,45 s Überblendung, Standfuß festgehalten), Wave ab 4,1 s. Gemessen (scripts/measure_badger.py): flach stehender Fuß beim Laufen höchstens 1,7 mm je Bild (Totale 0,12 px, Nahaufnahme 0,4 px); im Stehen Fußpunkte innerhalb 0,34 px, Fußzeile der gerenderten Silhouette 542–543, Kopfzeile 294–295",
+  "Textoberfläche als Comic-Bildunterschrift (ui.gd): cremefarbene Kästen mit Tuscherand und schraffiertem Versatzschatten, Handlettering Patrick Hand; Ortsschild in Kapitälchen von Anfang an, der Textkasten erscheint mit dem Schnitt, Text läuft Zeichen für Zeichen ein, Auswahl mit Nummern in gezeichneten Kreisen und Textmarker, Parserzeile mit Schreibmarke. Kasten 612 × 168 px (11,2 %), mit Ortsschild (248 × 46 px) 12,4 % des Bildes"
+ ],
+ "camera": "0–2,7 s die Hauptkamera aus shared/3d unverändert (−1,8 | 3,4 | 14,5, 3° nach unten, fov 42). Ab 2,7 s harter Schnitt auf eine feste, tiefe Nahaufnahme: Position (−2,3 | 0,62 | 4,6), Blick auf (−2,0 | 1,0 | −6,0), fov 50 vertikal (Keep Height); Werte aus scripts/frame_shot.py (Füße bei x 439, Dachs etwa 245 px, Leuchtturm bei x 930 mit Spitze bei y 44, Boot A über dem Textkasten, Horizont y 388).",
+ "resolution": "1280×720 nativ, Forward+, SMAA statt MSAA (glättet auch die Linien der Nachbearbeitung); Linien 1,1–2,2 px, Schraffur 5 px Abstand",
+ "pipeline": [
+  {
+   "step": "Keine KI-Bilder",
+   "tool": "–",
+   "detail": "Laut Auftrag ohne Bildmodell gebaut; tools/genimg.py wurde nicht aufgerufen. Der Look kommt vollständig aus Shadern, Code und den gemeinsamen Modellen."
+  },
+  {
+   "step": "Modelle übernehmen",
+   "tool": "cp aus shared/3d",
+   "detail": "harbor.glb und badger.glb unverändert nach demo/models kopiert; in den .import-Dateien generate_lods=false, damit Knicklinien nicht mit der LOD-Stufe wechseln"
+  },
+  {
+   "step": "Tusche-Material per Name",
+   "tool": "Godot 4.7.2, shaders/ink.gdshader, main.gd",
+   "detail": "Alle glTF-Materialien aus Hafen und Dachs per resource_name durch einen ShaderMaterial ersetzt: Farbe, Material-ID (Hafen 1–13, Rauch 14, Wasser 15, Figur 16–26) und Zusatzwerte je Material in PALETTE/BADGER_PALETTE; light() mit einer Schattenstufe und Schraffur"
+  },
+  {
+   "step": "Linien als Nachbearbeitung",
+   "tool": "shaders/ink_lines.gdshader + ink_lines_common.gdshaderinc",
+   "detail": "Bildschirmfüllendes QuadMesh vor der Kamera liest hint_depth_texture, hint_normal_roughness_texture und hint_screen_texture, zeichnet Silhouetten, Knicke, Farbgrenzen und Faltenlinien und legt Papierkorn über das Bild; für Mobile und Compatibility lädt main.gd ink_lines_depth.gdshader (nur Silhouetten)"
+  },
+  {
+   "step": "Himmel zeichnen",
+   "tool": "shaders/ink_sky.gdshader, scripts/frame_shot.py",
+   "detail": "Wolken, Mond und Möwen als Abstandsfunktionen in Winkelkoordinaten mit Tuscheumriss (Linienbreite über Grad je Pixel der aktiven Kamera); ihre Lage so gewählt, dass sie in Totale und Nahaufnahme frei vom Leuchtturm und vom Rauch stehen"
+  },
+  {
+   "step": "Wasser, Lichtkegel, Lichtschein, Rauch",
+   "tool": "ink_water / ink_beam / ink_glow.gdshader, main.gd",
+   "detail": "Wasser deckend (liegt im Tiefen- und Normalenpuffer, bekommt also Linien an Kaimauer und Booten), Wellenstriche über Weltkoordinaten, Zeit als globale Uniform ink_time; Lichtkegel und Lichtschein mit render_priority über den Linien; Rauch aus SphereMesh-Kugeln mit festem Seed"
+  },
+  {
+   "step": "Bildausschnitt und Ablauf rechnen",
+   "tool": "scripts/frame_shot.py (Python, ohne Godot)",
+   "detail": "Nahaufnahme per Projektion gesucht (Dachs links, Leuchtturm ganz im Bild, Boot über dem Textkasten, über 50 % Himmel); Bremsbeginn so gelegt, dass der Lauf in der Durchgangsphase endet (Phase 2·3,2 + 0,4 ≡ 0,8)"
+  },
+  {
+   "step": "Textoberfläche",
+   "tool": "ui.gd, Schriften Patrick Hand und Patrick Hand SC (OFL)",
+   "detail": "Control in einer CanvasLayer, gezeichnet in _draw(): Kasten, schraffierter Versatzschatten (Strecken auf das Rechteck beschnitten), Text, Auswahl, Parserzeile"
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/measure_badger.py, compare_switches.py, compare_renderers.py, render_frames.py, tools/capture.py",
+   "detail": "Füße und Kopf über Knochenpunkte (Welt und Bild) und über die weiße Silhouette gemessen; Vergleichsschalter mit Pixelanteilen (assets/measure/switches.json), zwei Läufe ohne Schalter bitgleich; Probeläufe Mobile und Compatibility (assets/measure/renderers.json); Lauf ab 30 s mit --t0 angesehen; capture.py mit --poster-at 0.81"
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, Forward+, MSAA aus, SMAA an, Richtungsschatten 8192 px mit weichem Filter (Stufe 2, im Shader danach hart geschnitten), globale Shader-Uniforms ink_time, ink_color, ink_shadow, ink_hatch, ink_shade",
+  "Globale Shader-Parameter vom Typ color werden nicht aus sRGB umgerechnet, auch nicht mit source_color: ink_color steht deshalb linear in project.godot (0,012 | 0,0095 | 0,011), die Uniforms sind ohne source_color deklariert",
+  "ink.gdshader: render_mode ambient_light_disabled; fragment() setzt ALBEDO, SPECULAR 0, Material-ID als ROUGHNESS = (id + 0,5)/32 und den Schraffurstrich als varying; light() addiert nur für die Sonne DIFFUSE_LIGHT = mix(Schattenfaktor × (1 − Strich × Stärke), 1, beleuchtet) mit beleuchtet = smoothstep um N·L (Schwelle je Material, Pflaster −0,25) mal smoothstep(0,42, 0,58, ATTENUATION); Glas leuchtet über EMISSION",
+  "Schraffur-Anker: vertex() projiziert den Objekt-Ursprung (PROJECTION_MATRIX × MODELVIEW_MATRIX × (0,0,0,1)) als varying flat auf Bildpunkte; fragment() misst FRAGCOORD relativ dazu",
+  "ink_lines.gdshader: render_mode unshaded, depth_test_disabled, render_priority 100; vertex() setzt POSITION = vec4(VERTEX.xy, 1, 1); alle Tiefenproben auf Pixelmitten (filter_nearest), Vorhersage von 1/z mit den echten Abständen a/b zur Mitte; Material-ID aus dem Alphakanal des Normalenpuffers (dynamische Objekte als 1 − Rauheit, 7 Bit; Befund aus toon-cel), 32 IDs",
+  "Renderer-Weiche in ink_lines_common.gdshaderinc: #if CURRENT_RENDERER == RENDERER_COMPATIBILITY rechnet die Tiefe mit NDC-z = 2·d − 1 um und schwächt das Papierkorn (dort nicht linear); den Himmel erkennt der Shader am Abstand (über 2900 m, Kamera far 3000 m) statt am Tiefenwert, damit die Tiefenrichtung des Renderers egal ist",
+  "hint_screen_texture wird vor dem durchsichtigen Durchgang kopiert: Lichtkegel (render_priority 110) und Lichtschein (120) liegen deshalb über dem Linien-Rechteck, sonst übermalt die Nachbearbeitung sie",
+  "Environment: Himmel mit ink_sky.gdshader (radiance_size 32), Umgebungslicht und Spiegelungen aus, Tonemapping linear, kein Glow, Tiefennebel 70–900 m in Horizontfarbe",
+  "Dachs: AnimationPlayer im manuellen Modus (advance): Pose, Vorschub entlang der Blickrichtung (0,367 m/s × speed_scale), Drehung um den Standfuß nur bei genau einem Fuß am Boden; bei der Überblendung Walk → Idle wird die Figur so nachgeschoben, dass der Standfuß stehen bleibt; Idle und Walk auf LOOP_LINEAR",
+  "Attach-Muster aus shared/3d übernommen (Lichtkegel am Empty LighthouseLight); keine Punktlichter, nur die Sonne (DirectionalLight3D mit Schatten, Richtung 0,62 | −0,38 | −0,69, etwa 22° hoch, von links vorn)",
+  "Alles hängt an aufsummiertem delta und festen Seeds (Rauch, Laternenrauschen, Papierkorn, Strichzittern); Schalter nach --: --no-lines, --no-ids, --no-folds, --no-hatch, --no-shade, --no-ui, --shot=1|2, --t0=SEKUNDEN, --debug-lines, --measure, --mask"
+ ],
+ "techniques": [
+  "konturen-nachbearbeitung",
+  "material-id-linien",
+  "schraffur",
+  "gestuftes-licht",
+  "shader-wasser",
+  "farbverlauf-himmel",
+  "kameraschnitt",
+  "fuss-halten",
+  "prozedurale-animation",
+  "nachbearbeitung",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 1,
+  "consistency": 4,
+  "effort": 2,
+  "text_adventure": 4,
+  "mobile": 3
+ },
+ "ratings_note": "ai_fit 1, weil die KI hier nichts beigetragen hat: Der Eintrag ist laut Auftrag ohne Bildmodell gebaut, der Look kommt vollständig aus Shadern und Code. Wie gut ein Bildmodell diesen Stil trifft, ist damit nicht geprüft. consistency 4: Jedes Modell bekommt Linien, Schattenstufe und Schraffur automatisch, ein neues Material braucht nur Farbe und ID; die Liniendichte folgt aber der Geometrie (fein gefaste Pflastersteine ergeben viele Striche und schraffierte Fugen), Modelle müssen also für die Linie gebaut oder je Material nachgestellt werden. effort 2: wenig Aufwand je Asset, der Aufwand steckt in 3D-Modellen und Kameras je Ort. text_adventure 4: ruhige, gut lesbare Bilder mit viel Platz für Text, die Comic-Bildunterschrift passt; Abzug für die Bindung an Forward+. mobile 3 ist geschätzt: Die Szene ist leicht (etwa 30 500 Dreiecke, ein Schattenlicht, ein Vollbild-Shader mit etwa 28 Texturzugriffen je Pixel, ein prozeduraler Himmel mit 16 Kreisen), aber Knick-, Farbgrenz- und Faltenlinien brauchen den Normalenpuffer von Forward+. Probeläufe auf dem Mac: Mobile ohne Fehler mit der Ersatzkontur (nur Silhouetten), 10,5 % (Totale) bzw. 4,8 % (Nahaufnahme) der Pixel weichen um mehr als 8 Stufen ab, vor allem fehlen Pflasterfugen und Farbgrenzen; Compatibility läuft ebenfalls (nur die Warnung, dass SMAA fehlt) und zeichnet nach einer Anpassung der Tiefenumrechnung ebenfalls nur Silhouetten, dünner und stellenweise lückenhaft; 16,5 % bzw. 10,7 % der Pixel abweichend (zusätzlich heller Wasserstreifen am Horizont, kantige Linien ohne SMAA). Auf einem Smartphone nicht gemessen.",
+ "verdict": "Gut geeignet für unser Textadventure, wenn wir Orte in 3D bauen wollen und einen eigenständigen, ruhigen Zeichenstil suchen: Die Bilder wirken wie kolorierte Tuschezeichnungen, sind hell und gut lesbar, der große Himmel lässt Platz für Text, und die Oberfläche als Comic-Bildunterschrift passt dazu. Ein Ort kostet ein 3D-Modell, eine Palette (Farbe und ID je Material) und zwei, drei feste Kameras; Shader, Himmel, Messskripte und Oberfläche sind wiederverwendbar. Modelle sollten für die Linie gebaut sein (klare Silhouetten, wenige Fasen), sonst entstehen zu viele Striche. Der volle Look braucht Forward+ (Desktop); auf Smartphones bleiben nur die Silhouetten, oder man rendert je Ort Standbilder aus dieser Demo und belebt nur Wasser, Lichter und Figur. Gegenüber toon-cel heller, zeichnerischer und ohne Glanz; die Schraffur gibt den Bildern den Charakter einer Illustration.",
+ "pitfalls": [
+  "Keine KI-Bilder (Vorgabe des Auftrags): Ob KI-Texturen mit gezeichneten Strukturen (Felsrisse, Holzmaserung, Stofffalten) den Look verbessern würden, ist nicht geprüft.",
+  "Bewusste Abweichungen: harter Schnitt auf eine tiefe Nahaufnahme (in der Totale ist der Dachs nur 68–73 px hoch, Schraffur und Linien der Figur sind dort kaum zu sehen); Sonne von links vorn mit etwa 22° statt 14°; der Dachs startet bei x = −5,6 und dreht sich nur auf −55°; der Textkasten erscheint erst mit dem Schnitt (das Ortsschild ist immer da). Die Abenddämmerung ist als heller Pastellabend umgesetzt, wie der Auftrag es verlangt; ohne dunklen Himmel fehlen die ersten Sterne (kleine Tuschesterne wirkten auf dem hellen Himmel wie Schmutz und wurden weggelassen).",
+  "Die Linien waren zuerst grau statt schwarz: Globale Shader-Parameter vom Typ color werden auch mit source_color nicht aus sRGB umgerechnet. Lösung: Tintenfarbe linear eintragen.",
+  "Lichtkegel und Laternenschein fehlten zunächst ganz: hint_screen_texture wird vor dem durchsichtigen Durchgang kopiert, das Linien-Rechteck schrieb das Bild ohne sie zurück. Lösung: render_priority der durchsichtigen Effekte über das Linien-Rechteck legen; dafür bekommen Kegel und Schein kein Papierkorn und keine Linien aus der Nachbearbeitung (sie zeichnen ihre Ränder selbst).",
+  "Am Horizont entstanden flächige graue Fehllinien: Mit filter_nearest und Bruchteil-Abständen (Strichzittern, 2,2 px Breite) rundeten Nachbar und Gegenseite ungleich, und weil sich 1/z nahe dem Horizont je Pixel stark ändert, schlug die Vorhersage fehl. Lösung: alle Proben auf Pixelmitten und die Vorhersage mit den echten Abständen.",
+  "In Compatibility fehlten die Linien zuerst ganz: Die Tiefe liegt dort in NDC-z von −1 bis 1, und der Himmel lässt sich nicht am Tiefenwert 0 erkennen. Mit Renderer-Weiche (CURRENT_RENDERER) gibt es dort jetzt Silhouetten, aber dünner und stellenweise lückenhaft; Knick-, Farbgrenz- und Faltenlinien fehlen in Mobile und Compatibility ganz (kein Normalenpuffer).",
+  "Pflaster: 8 mm hohe, gefaste Steine ergaben zuerst ein Gitter aus dicken Linien und Schraffurstreifen. Gemildert durch 6 cm Mindest-Tiefensprung, schwächere Innenlinien, Licht-Schwelle −0,25 und leichtere Schraffur für Stein; in der Nahaufnahme bleiben die Fugen als schraffierte Keile im Vordergrund und wirken unruhig.",
+  "Faltenlinien sind schwach (0,2 % der Pixel): Das Modell hat keine Stofffalten. Linien in Mulden ergaben am Modell fast nichts (ausprobiert); übernommen wurden Linien an starken Wölbungen und kleinen Tiefensprüngen, die Schalende, Ärmel und Schulter absetzen. Echte Falten bräuchten Geometrie oder gemalte Linien in einer Textur.",
+  "Schraffur im Bildraum: Das Muster wandert mit dem Ursprung eines Objekts, dreht sich aber nicht mit. Bei schaukelnden Booten und bei Armen und Beinen des Dachses gleitet es deshalb leicht über die Fläche (Duschtür-Effekt im Kleinen); bei Kamerafahrten würde es stärker auffallen, deshalb feste Kameras und ein harter Schnitt.",
+  "Füße beim Übergang Walk → Idle (3,6–4,0 s): Der Standfuß bleibt dank Nachschieben stehen, der Schwungfuß rutscht beim Aufsetzen aber bis 17,8 mm je Bild (2,25 px in der Nahaufnahme) über drei Bilder in die Ruhestellung. Beim Abbiegen rollen Ferse und Zehe bis 11,8 mm je Bild ab (2,1 px); der flach stehende Fuß bleibt innerhalb 1,7 mm (0,4 px).",
+  "Laterne und Rauch sind nur in der Totale zu sehen (in der Nahaufnahme außerhalb des Bildes); dort tragen Lichtkegel mit Aufblitzen, Boote, Wellenstriche und Möwen die Umgebungsanimation.",
+  "Ein Lichtkegel, der zur Kamera zeigt, war nur ein heller Keil über der Lampe; er wird dann ausgeblendet und der Strahlenkranz übernimmt.",
+  "SMAA glättet die 1-px-Schraffur und Innenlinien etwas weich; ohne SMAA werden sie treppig."
+ ],
+ "lessons": [
+  "Ein Tuschezeichnungs-Look lässt sich vollständig per Shader auf die gemeinsamen Modelle legen: light() mit einer Schattenstufe und Schraffur, Umgebungslicht aus, Tonemapping linear – die beleuchtete Fläche zeigt dann genau die Palettenfarbe. Neue Modelle brauchen nur Palette-Einträge (Farbe, ID).",
+  "Linienhierarchie wie beim Zeichnen: Silhouetten kräftig (2,2 px nah, 1,1 px fern), Innenlinien dünner und blasser, ferne Linien blasser; dazu ein Mindest-Tiefensprung je Material (Szene 6 cm, Figur 1 cm), damit flache Stufen ruhig bleiben und überlappende Kleidungsteile trotzdem Linien bekommen.",
+  "Silhouetten aus der Tiefe nur auf Pixelmitten abtasten und 1/z mit den echten Abständen vorhersagen; sonst entstehen nahe dem Horizont flächige Fehllinien, sobald Strichzittern oder Bruchteil-Breiten ins Spiel kommen.",
+  "Schraffur im Bildraum am projizierten Objekt-Ursprung verankern (varying flat aus vertex()): Bewegte Figuren nehmen ihr Muster mit, statt durch ein stehendes Muster zu laufen.",
+  "Himmel als Zeichnung im Sky-Shader: Formen als Abstandsfunktionen in Winkelkoordinaten, Linienbreite über Grad je Pixel der aktiven Kamera; Wolken, Mond und Möwen bleiben so in beiden Einstellungen an derselben Stelle, und scripts/frame_shot.py rechnet vorab, wo sie im Bild landen.",
+  "Durchsichtige Effekte und eine Nachbearbeitung, die hint_screen_texture zurückschreibt, vertragen sich nur, wenn die Effekte eine höhere render_priority haben; Ränder solcher Effekte zeichnet man im eigenen Shader (N·V ≈ 0 für den Kegel, Strahlenkranz im Billboard).",
+  "Globale Shader-Farben in Godot sind linear: Werte in project.godot umgerechnet eintragen.",
+  "Bremsen in die Durchgangsphase legen und beim Überblenden auf Idle die Figur so nachschieben, dass der Standfuß stehen bleibt; das senkt das Rutschen beim Anhalten deutlich (Standfuß 0 mm statt bis zu 1,2 cm je Bild).",
+  "Vergleichsschalter für jeden Baustein (--no-lines, --no-hatch, --no-shade, --no-ids, --no-folds) und ein Farbmodus für die Linienarten (--debug-lines) machen sichtbar, welche Linie woher kommt, und messen, was ein Baustein im Bild ausmacht."
+ ],
+ "assets": [
+  {
+   "file": "demo/shaders/ink.gdshader",
+   "kind": "shader",
+   "made_with": "flache Farbe, eine Schattenstufe, Schraffur im Schatten, Material-ID",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/ink_lines.gdshader",
+   "kind": "shader",
+   "made_with": "Tuschelinien als Nachbearbeitung (Forward+): Silhouetten, Knicke, Farbgrenzen, Faltenlinien, Papierkorn",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/ink_lines_common.gdshaderinc",
+   "kind": "shader",
+   "made_with": "gemeinsamer Teil der Linien: Tiefe auf Pixelmitten, 1/z-Vorhersage, Strichzittern, Papier",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/ink_lines_depth.gdshader",
+   "kind": "shader",
+   "made_with": "Ersatzlinien für Mobile und Compatibility (nur Silhouetten)",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/ink_sky.gdshader",
+   "kind": "shader",
+   "made_with": "gezeichneter Pastellhimmel mit Wolken, Mond und Möwen",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/ink_water.gdshader",
+   "kind": "shader",
+   "made_with": "Wasser mit Wellenstrichen, Glanzstrichen und schraffierten Schlagschatten",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/ink_beam.gdshader",
+   "kind": "shader",
+   "made_with": "Lichtkegel als blasse Fläche mit Tuscherändern",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/ink_glow.gdshader",
+   "kind": "shader",
+   "made_with": "Lichtschein als Hof mit Strahlenkranz (Laterne, Leuchtfeuer)",
+   "prompt": ""
+  },
+  {
+   "file": "demo/main.gd",
+   "kind": "code",
+   "made_with": "Palette je Material, Ablauf von Dachs und Kamera, Effekte, Mess- und Vergleichsschalter",
+   "prompt": ""
+  },
+  {
+   "file": "demo/ui.gd",
+   "kind": "code",
+   "made_with": "Textoberfläche als Comic-Bildunterschrift mit schraffiertem Schatten",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/frame_shot.py",
+   "kind": "code",
+   "made_with": "Bildausschnitt und Himmelskoordinaten vorab rechnen",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/measure_badger.py",
+   "kind": "code",
+   "made_with": "Füße und Kopf messen (Knochenpunkte und gerenderte Silhouette)",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/compare_switches.py",
+   "kind": "code",
+   "made_with": "Vergleichsschalter rendern und Pixelanteile messen",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/compare_renderers.py",
+   "kind": "code",
+   "made_with": "Probelauf Mobile und Compatibility",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/render_frames.py",
+   "kind": "code",
+   "made_with": "einzelne Bilder der Demo rendern (für Prüfungen)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/totale_f060.png",
+   "kind": "preview",
+   "made_with": "Godot-Aufnahme, Bild 60 (2,0 s): Totale mit der Hauptkamera aus shared/3d",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/badger_close.png",
+   "kind": "preview",
+   "made_with": "Ausschnitt aus dem Poster, 2-fach: Dachs mit Linien, Schattenstufe, Schraffur und Faltenlinien",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/sky_close.png",
+   "kind": "preview",
+   "made_with": "Ausschnitt aus dem Poster: Himmel mit Wolken, Mond, Möwen, Lichtkegel und Strahlenkranz",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/switches_f060.png",
+   "kind": "preview",
+   "made_with": "compare_switches.py, Totale: voll / ohne Linien / ohne Schraffur / ohne Schattenstufe / ohne Farbgrenzlinien / ohne Faltenlinien / zweiter Lauf",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/switches_f145.png",
+   "kind": "preview",
+   "made_with": "compare_switches.py, Nahaufnahme, gleiche Anordnung",
+   "prompt": ""
+  },
+  {
+   "file": "assets/preview/renderers.png",
+   "kind": "preview",
+   "made_with": "compare_renderers.py: Spalten Forward+, Mobile, Compatibility; Zeilen Bild 60 und 145",
+   "prompt": ""
+  },
+  {
+   "file": "assets/measure/measure_badger.json",
+   "kind": "data",
+   "made_with": "Messwerte Füße und Kopf (measure_badger.py)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/measure/switches.json",
+   "kind": "data",
+   "made_with": "Pixelanteile der Vergleichsschalter",
+   "prompt": ""
+  },
+  {
+   "file": "assets/measure/renderers.json",
+   "kind": "data",
+   "made_with": "Abweichungen und Meldungen der Renderer",
+   "prompt": ""
+  },
+  {
+   "file": "demo/models/harbor.glb",
+   "kind": "model",
+   "made_with": "unveränderte Kopie von shared/3d/harbor.glb (17 932 Dreiecke)",
+   "prompt": ""
+  },
+  {
+   "file": "demo/models/badger.glb",
+   "kind": "model",
+   "made_with": "unveränderte Kopie von shared/3d/badger.glb (7 348 Dreiecke, Idle/Walk/Wave)",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Patrick Hand",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/patrickhand (Lizenztext: demo/fonts/OFL-PatrickHand.txt)"
+  },
+  {
+   "item": "Schrift Patrick Hand SC",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/patrickhandsc (Lizenztext: demo/fonts/OFL-PatrickHandSC.txt)"
+  },
+  {
+   "item": "Hafen und Dachs",
+   "license": "eigene Modelle aus shared/3d (Blender-Skripte)",
+   "source": "shared/3d/blender/"
+  },
+  {
+   "item": "Shader, Himmel, Rauch, Oberfläche",
+   "license": "eigener Code, keine fremden Texturen oder Bilder",
+   "source": "styles/moebius-linien/demo/"
+  },
+  {
+   "item": "Distanzfunktion Strecke nach Inigo Quilez (Shader-Funktion), Copyright (c) Inigo Quilez – in demo/shaders/ink_sky.gdshader",
+   "license": "MIT",
+   "source": "https://iquilezles.org/articles/distfunctions2d/"
+  }
+ ],
+ "image_generations": 0,
+ "tool_issues": [],
+ "status": "done"
+}

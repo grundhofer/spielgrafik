@@ -1,0 +1,238 @@
+{
+ "slug": "anime-visual-novel",
+ "name": "Anime & Visual Novel",
+ "family": "gemalt",
+ "kind": "style",
+ "era": "2000er bis heute (Visual Novels, Erzählspiele)",
+ "summary": "Visual-Novel-Format: gemalter Anime-Hintergrund mit großem Abendhimmel, davor der Dachs als großes, feststehendes Figurenbild mit sechs Mimik-Fassungen (neutral, Blinzeln, Sprechen, freudig, freudig mit geschlossenem Mund, überrascht), unten das typische Textfenster mit Namensfeld, Tippeffekt und Auswahl. Drei KI-Bilder (Figurenblatt, Hintergrund, Mimik-Bearbeitung, alle gpt-image); beim Mimikwechsel ändert sich nur das Gesicht.",
+ "references": [
+  "Visual Novels mit gemalten Anime-Hintergründen und stehenden Figurenbildern (Standbild mit Mimik-Fassungen, Textfenster mit Namensfeld)",
+  "Hintergrundmalerei moderner Anime-Kinofilme: großer Himmel, plastische Wolken, warmes Kantenlicht"
+ ],
+ "traits": [
+  "Hintergrund ohne Konturen, großer Abendhimmel mit plastischen Kumuluswolken, warmem Kantenlicht und gespiegeltem Himmel im Wasser",
+  "Figur im Anime-Zeichenstil: dünne dunkelbraune Kontur, große glänzende Augen mit Lichtpunkten, rosa Wangen; überwiegend weich schattiert (Mützenkrone mit Verlauf, Schal mit voller Stricktextur, Fell mit Strichen), harte Schattenkanten nur an Taschenklappen und Mützenschirm",
+  "Figur groß und feststehend: Mütze bis Bauch über dem Textfenster sichtbar, Füße unter dem Bildrand (Halbfigur im Bild)",
+  "Mimik neutral, freudig und überrascht; beim Wechsel ändert sich nur das Gesicht, Silhouette und Körper bleiben pixelgleich (gemessen mit tools/measure.py)",
+  "Blinzeln (3 Bilder) und Lippenbewegung im festen 3-Bilder-Takt des Tippeffekts; Mimikwechsel hart, ohne Überblendung (alle Haltezeiten mindestens 3 Bilder, gemessen)",
+  "Textfenster unten mit Namensfeld, Tippeffekt, Weiter-Pfeil, Schnellmenü und drei Auswahlfeldern, gesetzt in Godot mit Zen Maru Gothic",
+  "Umgebung bewegt: Leuchtturmstrahl, Laternenflackern, vom Wind nach rechts gedrückter Rauch, Glitzern auf dem Wasser, funkelnde Sterne, ferne Möwen und eine nahe Möwe, die über den Kopf des Dachses streift"
+ ],
+ "camera": "Feste Kamera auf Augenhöhe am Kai; Figur als Standbild vor dem Hintergrund",
+ "resolution": "1280×720, volle Farbtiefe; Figur wird offline auf Anzeigegröße gebracht und 1:1 gezeigt",
+ "pipeline": [
+  {
+   "step": "Layoutbild für den Figurenauftrag",
+   "tool": "tools/make_refs.py (Pillow)",
+   "detail": "Zweimal die Vorderansicht aus shared/badger/master_sheet_alpha.png nebeneinander auf Magenta, 1536×1024 (assets/ref_pair.png), als erste Referenz für Lage, Pose und Größe beider Figuren."
+  },
+  {
+   "step": "Bildaufträge schreiben",
+   "tool": "tools/make_jobs.py",
+   "detail": "Drei Prompts aus Stilblock, Motivblock (wörtlich aus data/motif.json), Schutzregeln und Format; assets/image_jobs.json in Prioritätsreihenfolge: Figurenblatt, Hintergrund, Mimik-Bearbeitung. Abgearbeitet von tools/imagequeue.py."
+  },
+  {
+   "step": "Figurenblatt erzeugen (Auftrag 1)",
+   "tool": "genimg (gpt-image über Codex) mit --ref assets/ref_pair.png und shared/badger/master_sheet.png",
+   "detail": "1536×1024 angefordert und geliefert, echter Alphakanal. Der Körper hat darin Alpha 250–254 statt 255 (Hintergrund schien zu ~1 % durch), dazu ein kaum sichtbarer Schein mit Alpha 1–2 um die Figur; prep.py setzt ≥ 250 auf 255 und ≤ 2 auf 0. Danach, gezählt über das ganze Blatt sheet.png: 46,8 % transparent, 51,5 % deckend, 1,6 % dazwischen (Kanten und ein Schein mit Alpha 3–10). Erster Versuch brauchbar: zwei Figuren mit gleicher Pose, links neutral, rechts lachend mit Bogenaugen; die rechte Figur liegt nach der Ausrichtung fast deckungsgleich auf der linken (Maßstab 1,000, Restfehler 0,04). Geplant war agy; die Bilder kamen über Codex."
+  },
+  {
+   "step": "Hintergrund erzeugen (Auftrag 2)",
+   "tool": "genimg (gpt-image über Codex)",
+   "detail": "1536×1024, erster Versuch. Häuschen am linken Rand, Laterne bei 23 %, Mitte frei, Leuchtturm bei 90 % (verlangt 84 %), Lampe ohne Strahl, kein Rauch, keine Vögel, keine Figuren, wie im Prompt verlangt; einige Sterne gemalt."
+  },
+  {
+   "step": "Mimik-Bearbeitung (Auftrag 3)",
+   "tool": "genimg (gpt-image über Codex) mit --ref assets/raw/sheet.png und shared/badger/master_sheet.png",
+   "detail": "Bearbeitung von Auftrag 1 im selben Layout: links Augen zu und Mund offen (liefert Blinzeln und Sprechen als getrennte Teile), rechts überrascht. Layout gehalten (Maßstab 0,996, Versatz 1,7/2,4 px), Konturen und Mützenband leicht neu gezeichnet (Restfehler 0,10). Referenz war sheet.png statt der geplanten sheet.keyed-src.png, die es auf dem Codex-Weg nicht gibt."
+  },
+  {
+   "step": "Ausrichten und Mimik aus Teilen",
+   "tool": "tools/prep.py sprite + tools/prep_config.json",
+   "detail": "Alpha wie geliefert, nur auf 0/255 eingerastet (siehe Auftrag 1; kein eigenes Freistellen nötig), Blatt an der Lücke teilen, alle Figuren auf die neutrale ausrichten (Maßstab, Unterpixel-Versatz). Masken aus der Differenz zum neutralen Körper, aber nur in zwei von Hand gesetzten Rechtecken für Augen und Mund; Flecken unter 40 px verworfen, gewachsen und weich gezeichnet. Sechs Fassungen, gemeinsam zugeschnitten und mit vormultipliziertem Alpha auf 79 % verkleinert (516×769, 1:1 in Godot; 63 % der Fläche voll deckend, im Körper überall 255)."
+  },
+  {
+   "step": "Hintergrund zuschneiden und vermessen",
+   "tool": "tools/prep.py bg + tools/prep_config.json",
+   "detail": "Pseudo-Schrift entfernt: gpt-image malte ein weißes Namensschild mit unleserlichen Kringeln auf den blauen Bootsrumpf rechts (Rohbild x 1303–1343, y 666–673); prep.py übermalt es per senkrechter Überblendung zwischen den Rumpfzeilen darüber und darunter (tools/prep_config.json → retouch). Der weiße Fleck am Bug desselben Boots ist eine Klampe mit Leine und bleibt; sonst keine Schilder oder Zeichen gefunden. Dann auf 1280×853 skaliert, 720 Zeilen ab y = 40. Lampe, Horizont, Wasserfläche und Glitzerstellen gemessen; Fenster, Laterne, Schornstein und acht Sterne von Hand gesetzt, weil die Messung auf hellen Wolkenrändern bzw. Dach und Wolken landete (Prüfbild assets/raw/debug/bg_marks.jpg)."
+  },
+  {
+   "step": "Effekt-Texturen",
+   "tool": "tools/fx.py (Pillow, NumPy)",
+   "detail": "Funkelstern, Lichthof, Strahlenkranz, Lichtkegel, Cel-Rauchwolken, ferne Möwe (4 Bilder, 128×80), nahe Möwe für den Vorbeiflug (gull_near.png, 4 Bilder je 512×256: gleiche M-Silhouette, aber mit dunkler Kontur, zwei harten Tönen und warmem Kantenlicht wie die Figur, Unterseite im Gegenlicht kühl-lila), Schreck-Striche; 4-fach überabgetastet."
+  },
+  {
+   "step": "Prüfen",
+   "tool": "tools/measure.py, tools/renderers.py, tools/capture.py",
+   "detail": "Figur im Messmodus (nur Figur vor Magenta) über 180 Bilder vermessen: 151 Ruhebilder ohne Abweichung von Silhouette und Kopfmitte; alle Mimikwechsel nur im Gesicht (Kopf plus Augen-/Mund-Rechtecke mit 3 px Rand für die weich gezeichnete Maskenkante); Haltezeiten der Gesichtszustände, am oberen Figurenrand ausgerichtet und auch während der Hüpfer gemessen: 25 Haltezeiten, keine unter 3 Bildern. Flugbahn der nahen Möwe in den Einzelbildern 88–105 angesehen (Gesicht bleibt frei). Renderer-Vergleich bei t = 3,2 s (Möwe im Bild); Aufnahme mit --poster-at 0.85 (t ≈ 5,1 s: offene Augen, Auswahl, Strahl)."
+  }
+ ],
+ "godot": [
+  "Godot 4.7, Forward+, 1280×720, stretch canvas_items; alles hängt nur von der aufsummierten Zeit ab, Zufall mit festem Seed.",
+  "Figur: Sprite2D mit Shader (Abendtönung hell warm/dunkel kühl; warmes Kantenlicht additiv und nur innerhalb der dunklen Kontur: Richtung Licht nach 2,5 Texeln noch Figur, nach 5 Texeln transparent, Linienpixel mit Luminanz unter 0,2 ausgenommen). Der Shader könnte zwei Mimik-Fassungen überblenden; genutzt wird das nicht mehr. Position immer auf ganze Pixel gerundet.",
+  "Mimik-Ablauf, alle Wechsel hart und auf dem 3-Bilder-Raster der Lippen: neutral mit Lippenbewegung (talk), Blinzeln bei 1,5 s, freudig ab 1,8 s mit kleinem Hüpfer und Lippenbewegung (happy/happy_closed), nahe Möwe über den Kopf 3,0–3,5 s, Schreck bei 3,4 s mit Hüpfer und Schreck-Strichen, zurück zu neutral bei 4,5 s, Blinzeln bei 5,22 s. Die Zeit wird dafür auf das aktuelle Bild gerundet; Mund offen oder zu wird je 3-Bilder-Phase einmal aus dem Zeichen am Phasenbeginn bestimmt.",
+  "Lage und Größe der Figur, Gesichtsteil-Bereiche und Ankerpunkt der Schreck-Striche in art/sprite.json, Lichter, Glitzerstellen, Sterne und Lage der Auswahlfelder in art/layout.json (beide von tools/prep.py). Fehlte eine Fassung, würde main.gd sie über FALLBACK ersetzen; mit den fertigen Bildern sind alle sechs vorhanden.",
+  "Leuchtturmstrahl als additives Sprite, das sich um die senkrechte Achse dreht (Breite folgt cos, Lichtkranz blitzt bei Blick zur Kamera); Laterne und Fenster als flackernde additive Lichthöfe; Rauch aus drei Cel-Wolken, die aufsteigen und vom Wind nach rechts gedrückt werden (Fahne von ~150 px unter der Ortskarte).",
+  "Nahe Möwe: Sprite2D mit 4 Bildern, Maßstab 1,15 (~440 px Spannweite), Flügelschlag mit 15 Bildern/s, fliegt in 0,5 s von rechts unten über den Kopf nach links oben aus dem Bild; ferne Möwen mit 10 Bildern/s.",
+  "Oberfläche aus Shadern: Textfenster (abgerundet, Verlauf, Doppelkante, feine Schrägstreifen, halbdurchsichtig), Namensfeld und Auswahlfelder (Pille mit Verlauf und Schatten, rechts neben der Figur), Ortskarte (schräges Band 440×60, wischt herein); Tippeffekt über visible_characters mit Pause nach Satzende.",
+  "Messmodus mit Benutzerargument --measure: nur die Figur vor Magenta, ohne Kantenlicht und Oberfläche (für tools/measure.py)."
+ ],
+ "techniques": [
+  "textoberflaeche",
+  "figur-als-standbild",
+  "mimik-aus-teilen",
+  "ki-bildbearbeitung",
+  "additiver-lichtkegel",
+  "rim-light",
+  "prozedurale-animation"
+ ],
+ "ratings": {
+  "ai_fit": 3,
+  "consistency": 4,
+  "effort": 3,
+  "text_adventure": 5,
+  "mobile": 5
+ },
+ "ratings_note": "ai_fit 3: Das VN-Format liefert gpt-image zuverlässig und im ersten Versuch: ein Blatt mit zwei fast deckungsgleichen Figuren, eine Mimik-Bearbeitung im selben Layout und ein Hintergrund, der die Lagevorgaben grob einhält; Kontur, glänzende Augen, Wangen und der Wolkenhimmel sitzen. Den verlangten Anime-Look mit harten Schattenformen trifft es aber nur zum Teil: Fell, Mützenkrone und Schal sind weich verlaufend bzw. mit voller Stricktextur gemalt (harte Kanten nur an Taschenklappen und Schirm), der Hintergrund neigt zu Postkarten-Detail, und ein Schild mit Pseudo-Schrift musste retuschiert werden. Der Look kommt aus den KI-Bildern; Code liefert Oberfläche, Lichteffekte, Möwen und das Zusammensetzen der Mimik. consistency 4: Die sechs Fassungen aus Blatt und Bearbeitung passen genau zusammen (Körper gemessen unverändert), und Figur und Hintergrund aus getrennten Aufträgen sind gleich weich gemalt; wie gleichmäßig weitere Posen, Figuren und Orte werden, ist nicht geprüft. effort 3: pro Figur zwei Bilder und zwei Rechtecke für Augen und Mund, pro Ort Lichter und Sterne von Hand nachtragen und das Bild nach Pseudo-Schrift absuchen; Oberfläche, Effekte und Verarbeitung sind wiederverwendbar. text_adventure 5: Textfenster, Namensfeld, Auswahl und Mimik sind das Format eines Erzählspiels. mobile 5: Probelauf mit --rendering-method mobile (pixelgleich zu Forward+) und gl_compatibility (mittlere Abweichung 0,09, höchstens 2 von 255) ohne Fehler, bei t = 3,2 s mit Möwe im Bild; nur 2D-Sprites, ein Figuren-Shader und wenige additive Sprites. Die Leistung auf echten Smartphones ist nicht gemessen.",
+ "verdict": "Naheliegender Kandidat für unser Textadventure: Ein Hintergrundbild pro Ort und je Figur ein Blatt plus Bearbeitung ergeben eine Szene, die sofort als Visual Novel lesbar ist; Textfenster, Namensfeld, Auswahl, Tippeffekt und Mimik aus Teilen sind gebaut und lassen sich übernehmen. Die Figur läuft nicht durch die Szene (Standbild mit Mimik, Hüpfern und Blinzeln), das passt zu einem textgeführten Spiel und spart Laufzyklen. Pro Ort fallen Lichterpositionen von Hand an, pro Figur zwei Bilder und zwei Rechtecke. Zeichnerisch ist das Ergebnis eher ein weich schattiertes Maskottchen-VN als harter TV-Anime-Cel-Look; wer den härteren Look will, muss den Stilblock für Fell und Kleidung strenger fassen und das zuerst an einem einzelnen Figurenblatt prüfen. Offen ist, ob gpt-image weitere Orte und Figuren im selben Look trifft.",
+ "pitfalls": [
+  "Phase 1 rechnete mit agy (JPEG auf Magenta, 1264×848, eigenes Freistellen aus *.keyed-src.png). Die Bilder kamen über Codex mit echtem Alphakanal in 1536×1024; prep.py nimmt dann das gelieferte Alpha. make_jobs.py verwies für Auftrag 3 auf sheet.keyed-src.png, die es auf dem Codex-Weg nicht gibt; die Warteschlange lief mit sheet.png, make_jobs.py ist angepasst.",
+  "Codex hielt „No fur texture“ und „exactly two tones per material“ nur teilweise ein: Das Fell ist mit feinen Strichen und weichen Verläufen gemalt (Beine, Arme, Bauch, Ohren), die Mützenkrone weich verlaufend schattiert, der Schal mit voller Stricktextur und weichen Verläufen statt „knit suggested by a few clean lines“. Harte Schattenkanten gibt es nur an Taschenklappen und Mützenschirm. Kontur, Augen mit Lichtpunkten und Wangen treffen den Anime-Look, die Schattierung wirkt eher wie eine Maskottchen-Illustration. Nicht nachgebessert: Eine Neumalung hätte Blatt und Bearbeitung gekostet (beide erlaubten Nachbesserungen) und die gemessene Deckung der sechs Fassungen gefährdet; eine Bearbeitung nur der Kleidung hätte wie Auftrag 3 alle Konturen neu gezeichnet und den Körper zwischen den Fassungen wechseln lassen. Deshalb ai_fit 3.",
+  "Die Bearbeitung (Auftrag 3) hält das Layout, zeichnet aber alle Konturen leicht neu (Restfehler 0,10 statt 0,05 bei den Testbildern, Mützenband und Ohrkanten verändert). Die automatische Trennung Augen/Mund an der Zeilenlücke landete deshalb an der Mützenkante: Blinzeln zeigte keine Änderung, Sprechen das ganze Bearbeitungsgesicht. Behoben mit zwei von Hand gesetzten Rechtecken für Augen und Mund in tools/prep_config.json; einmal je Figurenblatt nötig.",
+  "Die Ellipsenmasken aus Phase 1 (freudig und überrascht auf den neutralen Körper) schnitten die offenen Münder ab, weil diese bis in den Schal reichen. Ersetzt durch Differenzmasken innerhalb der Rechtecke; das geht ohne sichtbare Nähte nur, weil die beiden Figuren des Blatts so genau übereinander liegen (Restfehler 0,04).",
+  "tools/measure.py ließ Änderungen nur bis 20 % unter dem Kopf zu; die offenen Münder reichen bis y = 325 (Grenze 306) und lösten 27 Meldungen aus. Erlaubt sind jetzt Kopf plus die Gesichtsteil-Rechtecke aus sprite.json; außerhalb davon bleibt der Körper geprüft unverändert.",
+  "Die Lichtermessung traf nur Lampe und Horizont. Fenster und Laterne landeten auf hellen Wolkenrändern (dieser Himmel ist heller und wärmer als der Testhintergrund), die Füllsterne auf Dach und Wolken. Fenster, Laterne, Schornstein und Sterne sind von Hand gesetzt.",
+  "Hintergrund: gpt-image neigt trotz „not a postcard“ zu Postkarten-Detail (sehr gesättigter Sonnenuntergang, viele Requisiten, fein texturiertes Pflaster); der Wolkenhimmel trifft den Look von Anime-Kinohintergründen gut. Die Sonnenspiegelung in der Bildmitte verdeckt die Figur, deshalb sitzen die Glitzerstellen nur links und rechts davon.",
+  "Die Schreck-Striche ragten beim Hüpfer oben aus dem Bild; Ankerpunkt von 12 % auf 30 % der Kopfhöhe gesenkt.",
+  "Die nahe Möwe war zuerst die kleine flache Code-Form der fernen Möwen (gull.png ×1,7, ~218 px, 12 Bilder/s) und flog genau beim Schreck über das Gesicht; auf der Nase las sie sich wie ein weißer Balken. Jetzt eine eigene große Möwe (gull_near.png, ~440 px Spannweite, Kontur und zwei Töne wie die Figur, Gegenlicht), die in 0,5 s von rechts unten über den Kopf nach links oben fliegt (15 Bilder/s) und das Gesicht frei lässt; sie streift die Mütze, der Schreck folgt 0,15 s später. Sie bleibt Code, kein gemaltes Sprite: Im Zeichenstil passt sie zur Figur, nicht zur Malerei des Hintergrunds, und im Kontaktbogen ist sie nicht zu sehen (Vorbeiflug zwischen 3,0 und 3,5 s).",
+  "Bewusst nach Auftrag statt nach den allgemeinen Demo-Anforderungen: Der Dachs läuft nicht, er gleitet als VN-Standbild herein und zeigt Bewegung über Hüpfer, Mimik, Blinzeln und Lippenbewegung.",
+  "Das Textfenster ist halbdurchsichtig, der Unterkörper der Figur scheint durch (VN-üblich); der Text bleibt dank Kontur und Schatten lesbar. Die Oberfläche deckt ohne Auswahlfelder etwa 24 %, mit ihnen ab 4,2 s etwa 29 % des Bildes (Rechtecke gezählt).",
+  "Das Layoutbild zu flachen Farbflächen zu vereinfachen (k-means auf 8 bzw. 12 Farben) schlug in Phase 1 fehl: Weste, Mütze und dunkles Fell zerfielen in Tarnflecken, die Augen verschwanden. Verworfen; der Stil kommt nur aus dem Prompt.",
+  "Aufteilung: Die Auswahlfelder lagen zuerst über dem rechten Ärmel des Dachses und verdeckten das rechte Boot, und der Rauch stieg nur ~50 px auf, bevor er hinter der Ortskarte verschwand. Jetzt liegen die Auswahlfelder rechts neben der Figur (x 884–1236, y 338–470, über Felsen und Mast; der Bootsrumpf bleibt frei), die Ortskarte ist niedriger (y 20–80), und der Wind drückt den Rauch nach rechts, sodass eine Fahne von ~150 px unter der Karte sichtbar bleibt.",
+  "Das Kantenlicht im Figuren-Shader übermalte oben und rechts (Mützenoberkante, rechtes Ohr, rechter Ärmel) die dunkle Kontur mit einem 3–5 px breiten Khaki-Band, das wie ein Freistell-Saum aussah. Jetzt wirkt es additiv und nur innerhalb der Kontur (Linienpixel ausgenommen); die Kontur bleibt dunkel, das Kantenlicht ist dafür dezent, an Mütze, Weste und Ärmel ein schmaler hellerer Streifen.",
+  "Lippen und Mimik flackerten: Leerzeichen und Satzzeichen schlossen den Mund mitten in einer 3-Bilder-Phase (Haltezeiten von 1 und 2 Bildern), und die Überblendungen zu freudig (0,12 s) und zurück zu neutral (0,15 s) zeigten 3–4 Bilder lang doppelte Augen und Münder. Jetzt wird offen/zu je Phase einmal entschieden, alle Mimikwechsel sind hart und liegen auf dem 3-Bilder-Raster (freudig 1,80 s statt 1,82 s, Schreck 3,40 s statt 3,42 s); measure.py misst die Haltezeiten.",
+  "gpt-image malte trotz „No text, letters …“ ein Namensschild mit Pseudo-Schrift auf das blaue Boot; im Rohbild retuschiert (prep_config.json → retouch). Neue Hintergründe vor dem Einbau gezielt nach Schildern und Beschriftungen absuchen.",
+  "Codex-Alpha ist sauber, aber nicht ganz deckend: Körper mit Alpha 250–254 (meist 253), kein Pixel mit 255. Das sieht man nicht, ließ den Hintergrund aber zu ~1 % durchscheinen; die frühere Angabe „47 % transparent, 0,9 % halbtransparent“ war so nicht nachzurechnen. prep.py rastet jetzt ≥ 250 auf 255 und ≤ 2 auf 0 ein; die Zahlen im Pipeline-Schritt sind danach gezählt.",
+  "Die Mimik-Masken werden am Rechteck abgeschnitten und dann weich gezeichnet; dadurch ändern sich beim Wechsel zu überrascht bis zu 3 px unter dem Mund-Rechteck noch einzelne Pixel leicht (höchstens 15 von 255, 3 Pixel über der Schwelle, am Schalrand, ohne sichtbare Naht). measure.py lässt deshalb 3 px Rand um die Rechtecke zu.",
+  "Pillow: ImageDraw.floodfill ändert Bilder aus Image.fromarray nicht (keine Fehlermeldung); die Lochfüllung der Masken war dadurch zuerst wirkungslos. Behoben mit .copy()."
+ ],
+ "lessons": [
+  "Drei Bildaufträge reichen für sechs Mimik-Fassungen: ein Blatt mit zwei Figuren (neutral, freudig) und eine Bearbeitung davon im selben Layout (links Augen zu und Mund offen zugleich, rechts überrascht). Daraus entstehen Blinzeln und Sprechen getrennt, und aus freudigen Augen mit neutralem Mund ein geschlossenes Lächeln für die Lippenbewegung.",
+  "Zwei Figuren in einem Bild hält gpt-image fast deckungsgleich (Maßstab 1,000, Restfehler 0,04). Deshalb lassen sich auch die Gesichter der zweiten Figur auf den Körper der ersten setzen, ohne dass der Körper wechselt.",
+  "Masken aus der Differenz, beschränkt auf von Hand gesetzte Rechtecke für Augen und Mund, statt Ellipsen oder einer Trennzeile: Die Maskenkante liegt dort, wo beide Bilder übereinstimmen, deshalb ist keine Naht zu sehen, auch wenn der offene Mund bis in den Schal reicht. Kleine Differenzflecken (unter 40 px, Linienzittern der Bearbeitung) verwerfen.",
+  "Codex-Alpha ist sauber: Vor heller und dunkler Fläche keine Säume, kein eigenes Freistellen nötig; nur auf 0/255 einrasten (Körper kommt mit 250–254).",
+  "Figuren als Ganzkörper erzeugen und im Bild unten abschneiden: Die Füße liegen beim Hüpfen sicher unter dem Bildrand, eine Schnittkante ist nie zu sehen, und dieselben Bilder taugen später für andere Ausschnitte.",
+  "Testbilder, die Fehler der erwarteten Bilder nachahmen (Größe, JPEG, Lageunterschiede), fanden vor dem ersten KI-Bild vier Fehler in der Verarbeitung. Die echten Bilder wichen trotzdem anders ab (Konturen neu gezeichnet statt verschoben); deshalb Prüfbilder (sprite_debug.png, bg_marks.jpg) immer ansehen, statt der Messung zu trauen.",
+  "Lichtpositionen messen und jede Messung in einer Konfigurationsdatei überschreibbar machen: Das Prüfbild mit Markierungen zeigt Fehlgriffe sofort, die Korrektur ist eine Zeile. Wasser als meerfarbene Fläche bis zum Horizont zu bestimmen, hielt die Glitzerstellen zuverlässig auf dem Wasser.",
+  "Mimikwechsel und Lippenbewegung auf ein festes Bildraster legen (Zeit auf das Bild runden, offen/zu einmal je Phase entscheiden) und die Haltezeiten im Messmodus messen: Gesichtsausschnitt je Bild, am oberen Figurenrand ausgerichtet, mit dem vorigen vergleichen. Das findet 1–2-Bild-Flackern und Überblend-Doppelbilder, die im Kontaktbogen nicht zu sehen sind.",
+  "Kantenlicht für Figuren mit dunkler Kontur nur innerhalb der Kontur setzen (Richtung Licht nach Linienbreite noch Figur, nach ein paar Texeln transparent, dunkle Linienpixel ausnehmen) und additiv mischen; sonst übermalt es die Kontur und wirkt wie ein Freistell-Saum.",
+  "Ein Vorbeiflug dicht vor der Kamera braucht Größe und Tempo (hier ~440 px Spannweite, 0,5 s quer durchs Bild) und eine Bahn, die das Gesicht frei lässt; die Flugbahn in den Einzelbildern um den Schreck herum ansehen, nicht nur im Kontaktbogen.",
+  "Pseudo-Schrift auf Bootsrümpfen oder Schildern lässt sich bei waagerechten Planken mit einer senkrechten Überblendung zwischen den Zeilen über und unter dem Schild entfernen (eine Zeile in der Konfiguration)."
+ ],
+ "assets": [
+  {
+   "file": "assets/bg.png",
+   "kind": "background",
+   "made_with": "gpt-image (Codex), auf 1280×720 zugeschnitten (tools/prep.py)",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/badger_neutral.png",
+   "kind": "sprite",
+   "made_with": "gpt-image (Codex), linke Figur des Blatts, ausgerichtet und auf 79 % verkleinert (tools/prep.py)",
+   "prompt": "assets/raw/sheet.json"
+  },
+  {
+   "file": "assets/badger_happy.png",
+   "kind": "sprite",
+   "made_with": "neutraler Körper + Augen und Mund der rechten Figur des Blatts (tools/prep.py)",
+   "prompt": "assets/raw/sheet.json"
+  },
+  {
+   "file": "assets/badger_happy_closed.png",
+   "kind": "sprite",
+   "made_with": "neutraler Körper + Augen der rechten Figur des Blatts (tools/prep.py)",
+   "prompt": "assets/raw/sheet.json"
+  },
+  {
+   "file": "assets/badger_blink.png",
+   "kind": "sprite",
+   "made_with": "neutraler Körper + Augen der linken Figur der Bearbeitung (tools/prep.py)",
+   "prompt": "assets/raw/faces.json"
+  },
+  {
+   "file": "assets/badger_talk.png",
+   "kind": "sprite",
+   "made_with": "neutraler Körper + Mund der linken Figur der Bearbeitung (tools/prep.py)",
+   "prompt": "assets/raw/faces.json"
+  },
+  {
+   "file": "assets/badger_surprised.png",
+   "kind": "sprite",
+   "made_with": "neutraler Körper + Augen und Mund der rechten Figur der Bearbeitung (tools/prep.py)",
+   "prompt": "assets/raw/faces.json"
+  },
+  {
+   "file": "assets/ref_pair.png",
+   "kind": "reference",
+   "made_with": "tools/make_refs.py aus shared/badger/master_sheet_alpha.png (kein KI-Bild)"
+  },
+  {
+   "file": "assets/fx/sparkle.png",
+   "kind": "effect",
+   "made_with": "tools/fx.py (Code)"
+  },
+  {
+   "file": "assets/fx/beam.png",
+   "kind": "effect",
+   "made_with": "tools/fx.py (Code)"
+  },
+  {
+   "file": "assets/fx/glow.png",
+   "kind": "effect",
+   "made_with": "tools/fx.py (Code)"
+  },
+  {
+   "file": "assets/fx/flare.png",
+   "kind": "effect",
+   "made_with": "tools/fx.py (Code)"
+  },
+  {
+   "file": "assets/fx/puff1.png",
+   "kind": "effect",
+   "made_with": "tools/fx.py (Code), eine von drei Rauchwolken"
+  },
+  {
+   "file": "assets/fx/gull.png",
+   "kind": "sprite",
+   "made_with": "tools/fx.py (Code), 4 Bilder nebeneinander, ferne Möwen"
+  },
+  {
+   "file": "assets/fx/gull_near.png",
+   "kind": "sprite",
+   "made_with": "tools/fx.py (Code), 4 Bilder je 512×256, nahe Möwe für den Vorbeiflug"
+  },
+  {
+   "file": "assets/fx/emote.png",
+   "kind": "effect",
+   "made_with": "tools/fx.py (Code)"
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schrift Zen Maru Gothic (Medium, Bold, Black)",
+   "license": "OFL-1.1",
+   "source": "https://github.com/google/fonts/tree/main/ofl/zenmarugothic"
+  },
+  {
+   "item": "Distanzfunktion abgerundetes Rechteck nach Inigo Quilez (Shader-Funktion), Copyright (c) Inigo Quilez – in demo/shaders/ui_box.gdshader, demo/shaders/ui_plate.gdshader",
+   "license": "MIT",
+   "source": "https://iquilezles.org/articles/distfunctions2d/"
+  }
+ ],
+ "image_generations": 3,
+ "tool_issues": [
+  "tools/imagequeue.py: prüft die agy-Sperre nur nach dem eigenen --backend. Setzt ein Auftrag \"backend\": \"agy\" (genimg.py --jobs erlaubt das), Codex gilt gerade nicht als gesperrt und agy ist gesperrt, kehrt genimg.run sofort mit „usage limit“ zurück; die Schleife schläft aber nur, wenn agy nicht gesperrt ist, und liefe ohne Pause im Kreis. Nicht ausgelöst, beim Lesen gefunden; umgangen, indem die Aufträge dieses Eintrags kein backend setzen."
+ ],
+ "status": "done"
+}

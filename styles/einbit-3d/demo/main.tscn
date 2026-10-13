@@ -1,0 +1,139 @@
+[gd_scene load_steps=12 format=3]
+
+; Katalogeintrag einbit-3d: Hafen und Dachs aus shared/3d (unveränderte glb-Kopien). main.gd ersetzt alle
+; glTF-Materialien nach Namen durch Grauwerte (onebit_surface.gdshader), die Nachbearbeitung (Rechteck "Post"
+; vor der Kamera) macht daraus Papier oder Tinte, ui.gd zeichnet die Oberfläche in Schwarz/Weiß, und die
+; Ebene "Palette" setzt am Ende genau zwei Farben. Die Szene rendert in 640×360 (project.godot).
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://models/harbor.glb" id="2_harbor"]
+[ext_resource type="PackedScene" path="res://models/badger.glb" id="3_badger"]
+[ext_resource type="Shader" path="res://shaders/onebit_water.gdshader" id="4_water"]
+[ext_resource type="Shader" path="res://shaders/palette.gdshader" id="5_palette"]
+[ext_resource type="Script" path="res://ui.gd" id="6_ui"]
+
+; Hintergrund schwarz: den Himmel rechnet die Nachbearbeitung. Kein Nebel, kein Glow, Tonemapping linear,
+; damit die Nachbearbeitung lineare Helligkeiten liest und 0/1 unverändert ausgibt.
+[sub_resource type="Environment" id="Env"]
+background_mode = 1
+background_color = Color(0, 0, 0, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.12
+reflected_light_source = 1
+tonemap_mode = 0
+glow_enabled = false
+fog_enabled = false
+
+[sub_resource type="ShaderMaterial" id="WaterMat"]
+render_priority = 0
+shader = ExtResource("4_water")
+
+[sub_resource type="QuadMesh" id="ScreenQuad"]
+size = Vector2(2, 2)
+
+; Shader setzt main.gd je nach Renderer (Forward+: onebit_post, sonst onebit_post_depth)
+[sub_resource type="ShaderMaterial" id="PostMat"]
+render_priority = 10
+
+[sub_resource type="ShaderMaterial" id="PaletteMat"]
+shader = ExtResource("5_palette")
+shader_parameter/ink = Color(0.1137, 0.1059, 0.1725, 1)
+shader_parameter/paper = Color(0.9373, 0.8941, 0.7961, 1)
+shader_parameter/gray_preview = 0.0
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_main")
+water_material = SubResource("WaterMat")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Env")
+
+; Letztes Abendlicht von links vorn oben; Richtung setzt main.gd (SUN_TRAVEL). Harte Schatten.
+[node name="Sun" type="DirectionalLight3D" parent="."]
+light_energy = 1.0
+shadow_enabled = true
+shadow_bias = 0.1
+shadow_normal_bias = 2.5
+shadow_blur = 0.0
+directional_shadow_mode = 1
+directional_shadow_max_distance = 60.0
+light_cull_mask = 4294967293
+
+; Figurenlicht: eigenes Führungslicht nur für den Dachs (Ebene 2) von rechts vorn oben, ohne Schatten.
+; Hält die Figur in Totale und Nahaufnahme hell genug, um sich vor dunklen Fässern und Wasser abzuheben;
+; den Schlagschatten wirft der Dachs weiter über die Sonne. Richtung setzt main.gd (KEY_TRAVEL).
+[node name="FigureKey" type="DirectionalLight3D" parent="."]
+light_energy = 2.0
+light_cull_mask = 2
+
+; Hauptkamera wie shared/3d: Position (-1.8, 3.4, 14.5), rotation_degrees (-3, 0, 0), fov 42 (vertikal).
+; main.gd schneidet bei CUT_T auf die zweite Einstellung (Schwenk mit dem Dachs).
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.9986295, 0.05233596, 0, -0.05233596, 0.9986295, -1.8, 3.4, 14.5)
+current = true
+fov = 42.0
+near = 0.1
+far = 3000.0
+
+; 1-Bit-Nachbearbeitung: bildschirmfüllendes Rechteck, Position im Shader (POSITION), nie weggeschnitten
+[node name="Post" type="MeshInstance3D" parent="Camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+cast_shadow = 0
+extra_cull_margin = 16384.0
+mesh = SubResource("ScreenQuad")
+surface_material_override/0 = SubResource("PostMat")
+
+[node name="Harbor" parent="." instance=ExtResource("2_harbor")]
+
+[node name="Badger" parent="." instance=ExtResource("3_badger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 1.2)
+
+; Alles unter "Attach" hängt main.gd an das gleichnamige Empty bzw. Objekt im Hafen (lokale Lage bleibt).
+[node name="Attach" type="Node3D" parent="."]
+
+[node name="LanternLight" type="Node3D" parent="Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="Attach/LanternLight"]
+light_energy = 1.6
+omni_range = 5.0
+omni_attenuation = 1.3
+
+[node name="CottageWindow" type="Node3D" parent="Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="Attach/CottageWindow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.6)
+light_energy = 1.2
+omni_range = 3.6
+omni_attenuation = 1.3
+
+[node name="LighthouseLight" type="Node3D" parent="Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="Attach/LighthouseLight"]
+light_energy = 2.0
+omni_range = 4.0
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="Box" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("6_ui")
+
+[node name="Palette" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="Rect" type="ColorRect" parent="Palette"]
+material = SubResource("PaletteMat")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

@@ -1,0 +1,14 @@
+{
+ "slug": "probe-gemalt",
+ "name": "Probe gemalt",
+ "family": "gemalt",
+ "kind": "style",
+ "era": "zeitlos",
+ "summary": "Teilweise gelungen: Figur zittert.",
+ "techniques": ["probe-technik"],
+ "ratings": {"ai_fit": 5, "consistency": 2, "effort": 3, "text_adventure": 3, "mobile": 4},
+ "verdict": "Nur mit Nacharbeit.",
+ "pitfalls": ["Figur zittert zwischen den Einzelbildern"],
+ "image_generations": 9,
+ "status": "partial"
+}

@@ -1,0 +1,93 @@
+{
+ "source": "shared/3d/harbor.glb",
+ "objects": {
+  "Barrel1": {
+   "before": 308,
+   "after": 308
+  },
+  "Barrel2": {
+   "before": 308,
+   "after": 308
+  },
+  "BoatA": {
+   "before": 1012,
+   "after": 1012
+  },
+  "BoatB": {
+   "before": 1096,
+   "after": 1096
+  },
+  "Bollards": {
+   "before": 468,
+   "after": 468
+  },
+  "Cottage": {
+   "before": 1006,
+   "after": 1006
+  },
+  "CottageWindow": {
+   "before": 24,
+   "after": 24
+  },
+  "CrateStack": {
+   "before": 624,
+   "after": 624
+  },
+  "Headland": {
+   "before": 998,
+   "after": 299
+  },
+  "IslandsFar": {
+   "before": 262,
+   "after": 157
+  },
+  "Jetty": {
+   "before": 730,
+   "after": 730
+  },
+  "LanternGlass": {
+   "before": 12,
+   "after": 12
+  },
+  "LanternPost": {
+   "before": 322,
+   "after": 322
+  },
+  "Lighthouse": {
+   "before": 1674,
+   "after": 1674
+  },
+  "LighthouseLamp": {
+   "before": 44,
+   "after": 44
+  },
+  "Quay": {
+   "before": 3070,
+   "after": 3070
+  },
+  "RocksSea": {
+   "before": 640,
+   "after": 288
+  },
+  "RopeCoil": {
+   "before": 566,
+   "after": 566
+  },
+  "Sea": {
+   "before": 3200,
+   "after": 3200
+  },
+  "WestHill": {
+   "before": 1568,
+   "after": 343
+  }
+ },
+ "total_before": 17932,
+ "total_after": 15551,
+ "decimate": {
+  "WestHill": 0.22,
+  "Headland": 0.3,
+  "RocksSea": 0.45,
+  "IslandsFar": 0.6
+ }
+}

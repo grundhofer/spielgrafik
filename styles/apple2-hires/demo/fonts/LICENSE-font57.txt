@@ -1,0 +1,22 @@
+font57 – Zeichensatz in 7×8-Zellen (Großbuchstaben, Ziffern, Satzzeichen, Ä/Ö/Ü) – Katalogeintrag apple2-hires,
+Fassung 2
+
+Eigener Entwurf für diesen Eintrag. Die Glyphen stehen als Text in scripts/font57.py und werden über
+demo/data/font.json geladen; es gibt keine Schriftdatei.
+
+Herkunft: Fassung 1 war im üblichen 5×7-Punktraster der Zeichengeneratoren um 1980 gezeichnet und lag zu nah am
+Original: Ein Abgleich gegen eine 5×7-Nachbildung der 40-Zeichen-Schrift des Rechners ergab 21 von 44 Zeichen
+pixelgleich (18 von 36 Buchstaben und Ziffern). Sie wurde verworfen und vollständig ersetzt. Fassung 2 ist neu
+gezeichnet und anders gebaut: die meisten Zeichen 4 Punkte breit mit 2 Punkten Innenraum und 3 Punkten Abstand
+(Vorbild: 5 Punkte, 3 Punkte Innenraum), nur M, N, V, W, Y 5 Punkte breit, eigene Formen u. a. für A, I, J, M, X,
+Y, 4 und die Satzzeichen.
+
+Abgleich (nur lokal, die Vergleichsschrift ist nicht Teil des Eintrags; scripts/font_compare.py) gegen
+„Print Char 21“ von Kreative Korp, auf das 7×8-Raster abgetastet, kleinster Abstand über Verschiebungen um
+±1 Zeile/Spalte: 0 von 36 Buchstaben und Ziffern pixelgleich, Median 7 Punkte; nahe bleiben nur L (1 Punkt),
+T (2), Bindestrich (1) und Komma (2). Nicht gegen ein ROM-Abbild des Zeichengenerators geprüft.
+
+Lizenz: CC0 1.0 Universal (Public Domain Dedication)
+https://creativecommons.org/publicdomain/zero/1.0/
+Soweit gesetzlich möglich, verzichtet der Urheber auf alle Urheber- und verwandten Schutzrechte an diesen
+Glyphen. Sie dürfen ohne Genehmigung kopiert, verändert und verwendet werden, auch kommerziell.

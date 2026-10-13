@@ -1,0 +1,39 @@
+{
+ "name": "BadgerTSR",
+ "dir": "styles/ki-3d-modell/work/tsr/badger_front",
+ "input_faces": 121822,
+ "input_vertices": 60907,
+ "components": [
+  121806,
+  16
+ ],
+ "components_removed": 1,
+ "faces_removed": 16,
+ "projected_share": 0.317,
+ "projection": {
+  "D": 2.0,
+  "iou": 0.9796,
+  "iou_default_1.9m_40deg": 0.8848
+ },
+ "tilt_deg": 6.0,
+ "yaw_deg": 0.0,
+ "scale": 1.0053,
+ "squash_back": {
+  "x0": -0.2,
+  "zmax": 0.42,
+  "f": 0.3,
+  "vertices": 15404,
+  "x_min_before": -0.534,
+  "x_min_after": -0.34
+ },
+ "size_m": [
+  0.498,
+  0.728,
+  1.011
+ ],
+ "tris": 8000,
+ "vertices": 3994,
+ "t_bake": 0.25,
+ "glb_bytes": 1425476,
+ "t_total": 1.18
+}

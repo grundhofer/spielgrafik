@@ -1,0 +1,13 @@
+{
+ "frames": 180,
+ "recorded_by_godot": 180,
+ "duplicate_frames": [],
+ "scarf_change_first12_max": 2.76,
+ "scarf_change_rest_median": 1.6,
+ "scarf_change_rest_max": 4.57,
+ "beam_axis_max_step_poster": 6.7,
+ "water_px_visible": 73854,
+ "water_still_share_std_lt_0_5": 0.005,
+ "water_moving_share_std_gt_1_5": 0.688,
+ "water_std_median": 1.97
+}

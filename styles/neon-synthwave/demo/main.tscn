@@ -1,0 +1,114 @@
+[gd_scene load_steps=11 format=3]
+
+; Neon & Synthwave: Der gemeinsame Hafen (shared/3d) wird in einen ID-Puffer gerendert (IdView, doppelte
+; Auflösung, eigene Welt ohne Licht); eine Spiegelkamera rendert dieselbe Welt von unter der Wasserfläche
+; (ReflView). Composite setzt daraus in einem Bildschirm-Shader Himmel, Wasser, Raster und Neonröhren
+; zusammen. Glow kommt aus der WorldEnvironment des Hauptfensters (HDR-2D, Hintergrund Canvas).
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://models/harbor.glb" id="2_harbor"]
+[ext_resource type="PackedScene" path="res://models/badger.glb" id="3_badger"]
+[ext_resource type="Shader" path="res://shaders/neon.gdshader" id="4_neon"]
+[ext_resource type="Script" path="res://ui.gd" id="5_ui"]
+[ext_resource type="Shader" path="res://shaders/post.gdshader" id="6_post"]
+[ext_resource type="Script" path="res://gulls.gd" id="7_gulls"]
+
+[sub_resource type="Environment" id="GlowEnv"]
+background_mode = 3
+background_canvas_max_layer = 1
+tonemap_mode = 0
+glow_enabled = true
+glow_levels/1 = 0.6
+glow_levels/2 = 1.0
+glow_levels/3 = 1.0
+glow_levels/4 = 0.7
+glow_levels/5 = 0.5
+glow_levels/6 = 0.3
+glow_intensity = 0.85
+glow_strength = 1.0
+glow_bloom = 0.0
+glow_blend_mode = 1
+glow_hdr_threshold = 0.9
+glow_hdr_scale = 1.4
+
+[sub_resource type="Environment" id="IdEnvRes"]
+background_mode = 1
+background_color = Color(0, 0, 0, 1)
+tonemap_mode = 0
+ambient_light_source = 1
+reflected_light_source = 1
+
+[sub_resource type="ShaderMaterial" id="NeonMat"]
+shader = ExtResource("4_neon")
+
+[sub_resource type="ShaderMaterial" id="PostMat"]
+shader = ExtResource("6_post")
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("GlowEnv")
+
+[node name="IdView" type="SubViewport" parent="."]
+own_world_3d = true
+use_hdr_2d = true
+size = Vector2i(2560, 1440)
+render_target_update_mode = 4
+
+[node name="IdEnv" type="WorldEnvironment" parent="IdView"]
+environment = SubResource("IdEnvRes")
+
+; Kamera: Lage setzt main.gd je Einstellung (siehe SHOTS)
+[node name="Cam" type="Camera3D" parent="IdView"]
+current = true
+fov = 42.0
+near = 0.1
+far = 3000.0
+
+[node name="Harbor" parent="IdView" instance=ExtResource("2_harbor")]
+
+[node name="Badger" parent="IdView" instance=ExtResource("3_badger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 1.2)
+
+[node name="Smoke" type="Node3D" parent="IdView"]
+
+[node name="ReflView" type="SubViewport" parent="."]
+use_hdr_2d = true
+size = Vector2i(1280, 720)
+render_target_update_mode = 4
+
+[node name="ReflCam" type="Camera3D" parent="ReflView"]
+current = true
+fov = 42.0
+near = 0.1
+far = 3000.0
+
+[node name="Composite" type="ColorRect" parent="."]
+material = SubResource("NeonMat")
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+
+[node name="FX" type="Node2D" parent="."]
+script = ExtResource("7_gulls")
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 1
+
+[node name="Panel" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+script = ExtResource("5_ui")
+
+[node name="Post" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Screen" type="ColorRect" parent="Post"]
+material = SubResource("PostMat")
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2

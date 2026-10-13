@@ -1,0 +1,232 @@
+{
+ "slug": "c64-multicolor",
+ "name": "Heimcomputer-Multicolor (C64)",
+ "family": "computer",
+ "kind": "style",
+ "era": "1984–1990",
+ "summary": "Grafik eines 8-Bit-Heimcomputers im Multicolor-Bitmap-Modus: 160×200 doppelt breite Pixel auf 320×200, feste 16-Farben-Palette, je 4×8-Zelle höchstens drei eigene Farben plus die Hintergrundfarbe, die per Rasterinterrupt zeilenweise wechselt (Himmelsbalken). Figuren sind Hardware-Sprites (Hires-Kontur über Multicolor), um das Bild liegt der farbige Rahmen. Die Demo bildet den Videochip im Shader nach und liest ein Speicherabbild in dessen Formaten.",
+ "references": [
+  "Commodore 64 (1982), Videochip VIC-II: Multicolor-Bitmap, Sprites 24×21 / 12×21, Rahmenfarbe $D020, Hintergrund $D021",
+  "Koala Painter (1983): Malprogramm, dessen Bildformat (Bitmap, Bildschirm- und Farbspeicher) die Zellregel abbildet",
+  "The Last Ninja (System 3, 1987): Multicolor-Hintergründe mit Hires-Sprite-Konturen",
+  "Maniac Mansion und Zak McKracken (C64-Fassungen, Lucasfilm Games 1987/1988): Abenteuer mit Sprite-Figuren und Textbereich unter dem Bild (dort allerdings Zeichensatz- statt Bitmap-Grafik)",
+  "The Bard's Tale (C64-Fassung 1985): geteilter Bildschirm aus Grafik und Text"
+ ],
+ "traits": [
+  "Bild 384×240 mit Rahmen (×3 = 1152×720 in der 1280×720-Aufnahme), sichtbarer Bildschirm 320×200, Szene als Multicolor-Bitmap 160×144 mit doppelt breiten Pixeln (probe.py: 0 ungleiche Spaltenpaare); Pixel bewusst quadratisch (siehe pitfalls)",
+  "nur die 16 Farben der festen Palette (tools/sprites.py --palette c64): 0 fremde Farben in allen geprüften Bildern, alle 16 kommen vor",
+  "Zellregel am gerenderten Bild ohne Sprites geprüft: in keiner der 720 Zellen mehr als 3 Farben neben der Hintergrundfarbe der jeweiligen Zeile; der Wandler hat dafür 253 von 23 040 Pixeln umgefärbt",
+  "Rasterzeilen-Tabelle: 16 Wechsel der Hintergrundfarbe, davon 13 in der Szene (Himmel Blau → Lila → Hellrot → Gelb mit verzahnten Übergangszeilen A B A B, hellblaue Horizontlinie, Wasser Blau, Kai Grau) und ein schwarzer Balken hinter der Ortszeile; Moduswechsel Bitmap → Hires-Text an Zeile 144",
+  "hellblauer Rahmen ($D020) um das ganze Bild; Sprites verschwinden hinter dem Rahmen (Dachs läuft von links aus dem Rahmen herein)",
+  "Textbereich als Hires-Textmodus 40×7 Zeichen mit eigenem 8×8-Zeichensatz font8 (Fassung 2: 7 px breite Zeichen, 3 px Innenraum, senkrechte Striche 2 px; gegen einen ROM-Abzug geprüft: 0 von 62 Buchstaben und Ziffern pixelgleich, Median 9 px Abstand): Ort gelb auf schwarzem Rasterbalken, Beschreibung als Schreibmaschine (30 Zeichen/s) mit Revers-Cursorblock, Auswahl 1–3 (Ziffern gelb, Text cyan), Eingabezeile „> nimm paket“ mit blinkendem Cursor; 56 von 240 Zeilen = 23 % des Bildes",
+  "Dachs-Kurier 24×42 Pixel aus Hardware-Sprites: schwarzes Hires-Sprite (Kontur, Auge, Nase) vor hellrotem Hires-Sprite (Schal) und orangem Hires-Sprite (Paket, Tasche) vor dem Multicolor-Sprite (Weiß und Dunkelgrau = gemeinsame Farben $D025/$D026, Grün = eigene Farbe); Kontur- und Multicolor-Sprite je zweimal untereinander verwendet (Multiplexing), höchstens 4 Sprites je Zeile für den Dachs",
+  "Laufzyklus aus 4 verschiedenen Posen bei 10 Bildern/s: Beine in 2 Stellungen (Kontakt, Durchgang), der zweite Schritt (walk3/walk4) mit gegenschwingender Tasche (1 px vor, 1 Zeile höher) und nachgezogenem Schalende; gemessen im Render: walk1/walk3 und walk2/walk4 je 39 Pixel verschieden, Standfuß 0 px Abweichung über 29 Posenwechsel, Vorschub 6 px aus den Fersen (3 / 9 / 15), Fußzeile in allen Bildern 141, Kopf 102/103 (1 Zeile Wippen); steht ab 2,9 s rechts neben der Bootskabine, Blinzeln bei 3,4 s und 5,2 s",
+  "Umgebung über Farbzyklen im Bildschirm- und Farbspeicher (198 Plätze, keine Pixel neu gezeichnet): Wasserglitzern in zwei Phasengruppen je Zelle (warme Folge unter dem Horizont, kalte darunter), funkelnde Sterne, Laternenflackern (fester Seed 1982), Leuchtfeuer mit Lampe und Glas als eigene Plätze (Blitz Weiß/Gelb, sonst Gelb auf Orange bzw. Braun, nie aus)",
+  "Leuchtfeuer-Strahl aus zwei waagerecht gedehnten Hires-Sprites (gelb, am Turm dicht, außen gerastert), blitzt alle 3 s für 1,1 s; zwei Möwen als weiße Hires-Sprites mit Flügelschlag in Schüben, 30 bzw. 15 px/s aus der ganzzahligen Bildnummer (1 px je Bild bzw. alle 2 Bilder, gemessen), Wippen in ganzen Pixeln alle 6 Bilder; Rauch als Multicolor-Sprites: alle 0,6 s ein Wölkchen direkt über dem Schornstein, 4 gleichzeitig, wächst von 2 auf 4 Zeilen und treibt schräg nach rechts oben (15 px/s rechts, 2,5 px/s hoch), ohne den Rahmen zu berühren",
+  "Multiplexer in main.gd: bis zu 14 virtuelle Sprites gleichzeitig auf 8 Hardware-Nummern, höchstens 6 je Bildzeile (Rauch und Strahl oben, der Rauch nutzt dort die Nummern 2 und 3 des Dachses), 0 Überschneidungen derselben Nummer (HWSTAT im Log)"
+ ],
+ "camera": "Seitenansicht wie ein Ortsbild eines Heimcomputer-Abenteuers, feste Kamera, Text unter dem Bild",
+ "resolution": "384×240 mit Rahmen, Bildschirm 320×200: Szene 160×144 Multicolor-Bitmap (doppelt breite Pixel), Text 40×7 Zeichen Hires; 16 feste Farben, je 4×8-Zelle 3 + Zeilen-Hintergrund",
+ "pipeline": [
+  {
+   "step": "Hintergrund erzeugen",
+   "tool": "genimg (gpt-image über Codex)",
+   "detail": "Stilblock: Ortsbild eines Heimcomputer-Abenteuers im Multicolor-Bitmap-Modus, 160 Pixel breit, doppelt breite Pixel, die 16 Palettenfarben als Hex-Werte, flache Flächen, Schachbrett- und Zeilenraster statt Verläufen, Himmel als waagerechte Farbbänder, strenge Seitenansicht; Komposition zwischen 14 und 86 % der Bildhöhe, weil oben und unten abgeschnitten wird; Leuchtfeuer ohne Strahl, kein Rauch. Ein Versuch, sofort verwendbar (prompts/bg.txt). Das Modell zeichnete trotzdem quadratische Pixel von etwa 6–7 Bildpunkten"
+  },
+  {
+   "step": "Auf 160×144 Doppelpixel und Palette einrasten",
+   "tool": "scripts/build_bg.py",
+   "detail": "Ausschnitt volle Breite × 691 Zeilen ab y = 150 (Seitenverhältnis 320:144). Jeder Quellpixel auf die nächste Palettenfarbe (Oklab), je Zielpixel (9,6 × 4,8 Quellpixel) die häufigste Farbe im Blockinneren"
+  },
+  {
+   "step": "Handretusche",
+   "tool": "scripts/patches.txt (von build_bg.py angewendet)",
+   "detail": "1207 Pixel (5 %) von Hand gesetzt, Zeichen je Pixel, „.“ = behalten, „_“ = Zeilenhintergrund: Schornstein ohne Aufsatz (Platz für Rauch), zwei Fässer und ein Kistenstapel zellgenau in Schwarz/Braun/Orange vor schwarzem Schlagschatten, das kleine Boot mit roter Bauchbinde neu, Leuchtturmspitze symmetrisch über dem Turm (Knauf, Dach, Laternenraum mit schwarzem Rahmen, Glas und mittiger Lampe, Galerie mit Geländer) so gesetzt, dass jede Zelle nur Schwarz + Glas + Lampe braucht; im Skript dazu die Laterne mit 2 Doppelpixel breitem Glas"
+  },
+  {
+   "step": "Rasterbalken und Himmel",
+   "tool": "scripts/build_bg.py",
+   "detail": "Hintergrundfarbe je Zeile von Hand gesetzt (Blau, Lila, Hellrot, Gelb mit verzahnten Übergängen, hellblaue Horizontlinie, Blau, Grau). Himmelspixel in Bandfarben werden zu Bitpaar 00, also zur Zeilenfarbe; Wolken (Läufe ab 3 Pixeln in fremder Bandfarbe) bleiben, Dither-Krümel des KI-Bildes verschwinden; 13 Sterne gesetzt"
+  },
+  {
+   "step": "Zellregel einrasten",
+   "tool": "scripts/build_bg.py",
+   "detail": "Je 4×8-Zelle: animierte Gruppen (Glitzern a/b, Leuchtfeuer, Laternenglas, Sterne) belegen je einen der drei Plätze; für die übrigen Farben wird die Kombination mit dem kleinsten Oklab-Fehler erschöpfend gesucht, Abbilden auf die Zeilen-Hintergrundfarbe kostet das Dreifache (sonst blaue Löcher in grauen Mauern). Ergebnis: Bitpaare, Bildschirm- und Farbspeicher, Liste der Farbzyklus-Plätze (assets/bg_build.npz, Vorschau assets/bg_preview.png)"
+  },
+  {
+   "step": "Figurenblatt erzeugen",
+   "tool": "genimg (gpt-image über Codex), Referenz shared/badger/master_sheet.png",
+   "detail": "5 Bilder (Stehen + 4 Laufposen) als Hardware-Sprites eines Heimcomputers, 24 Pixel breit, Farbflächen in Doppelpixeln, schwarze Kontur einfach breit, fünf Farben vorgegeben (prompts/badger.txt). Ein Versuch; Ergebnis sauber, aber mit ≈ 40 × 70 Kunstpixeln viel feiner als 24 × 40"
+  },
+  {
+   "step": "Figur auf das Sprite-Raster bringen",
+   "tool": "scripts/badger_from_ai.py, dann Handarbeit in scripts/badger_sprites.txt",
+   "detail": "Quellpixel nach Material (Kontur, Fell, Weiß, Rot, Grün, Braun, Hellbraun) einteilen, je Zielpixel Anteile auszählen, Kontur ab 30 %; Ausrichtung am Kopf, Füße auf einer Linie (scripts/badger_ai/). Als Vorlage genutzt, die Sprites sind von Hand gesetzt: Gesicht (weißer Stirnstreif, dunkler Augenstreif mit Glanzpunkt, schwarze Nase), Paket als Kasten mit Schnur, Tasche hinten, Beine mit festgelegten Fersen"
+  },
+  {
+   "step": "In Hardware-Sprites zerlegen",
+   "tool": "scripts/build_sprites.py",
+   "detail": "Oberkörper + Beine zu 6 Bildern (Stehen, Blinzeln, 4 Laufposen; walk3/walk4 mit Überlagerung [swing] für Tasche und Schal); je Bild schwarze Hires-Ebene oben/unten, Multicolor-Ebene oben/unten, hellrote und orange Hires-Ebene (je höchstens 21 Zeilen). Prüft die Multicolor-Regel (je Spaltenpaar nur eine der Farben Weiß/Dunkelgrau/Grün). Dazu Möwe (3 Formen), Rauch (4 Formen, ohne Mittelstrich), Strahl (2 Formen) aus Text bzw. Code; 45 Formen, davon 29 verschieden (gleiche Beinhälften werden nicht zusammengelegt)"
+  },
+  {
+   "step": "Zeichensatz zeichnen und prüfen",
+   "tool": "scripts/font8.py, scripts/rom_compare.py",
+   "detail": "Glyphen als Text, 7 px breit mit 3 px Innenraum und 1 px Abstand; font8.py schreibt die Vorschau assets/font_preview.png. rom_compare.py vergleicht jede Glyphe mit einem Zeichensatz-ROM (kleinster Pixelabstand über Verschiebungen um ±1): Fassung 1 hatte 39 von 62 Buchstaben und Ziffern pixelgleich und wurde ersetzt; Fassung 2 hat 0 pixelgleiche, nur L (1 px) und F (3 px) liegen nahe. Der ROM-Abzug wurde nur für den Vergleich temporär außerhalb des Projekts geladen und nicht in den Eintrag übernommen"
+  },
+  {
+   "step": "Speicherabbild bauen",
+   "tool": "scripts/build_rom.py, scripts/font8.py",
+   "detail": "demo/rom/c64.json (29 KB): 8000 Bytes Bitmap und je 1000 Bytes Bildschirm- und Farbspeicher im Format des Chips, 2048 Bytes eigener Zeichensatz (Codes 128–255 invertiert), 45 × 64 Bytes Sprites, Rasterzeilen-Tabelle für 240 Zeilen, Farbzyklus-Plätze, Metasprites des Dachses"
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/probe.py, scripts/scarf_compare.py, tools/capture.py",
+   "detail": "probe.py rendert mit --only=badger (Füße, Kopf, Standfuß, Unterschied der Posen), --only=bg (Zellregel, Doppelpixel, Palette, Textzellen), das ganze Bild 0–6 s (Palette, Sprites je Zeile), einen Dauerlauf ab t = 30 s (media/probe_t30.png) und Mobile/Compatibility gegen Forward+; Ergebnis media/probe.json. scarf_compare.py stellt die Schalfarben Rot und Hellrot vor dem Steg gegenüber (assets/scarf_compare.png). Möwen- und Rauchtakt aus Render minus Hintergrund nachgemessen"
+  }
+ ],
+ "godot": [
+  "Viewport 384×240, stretch mode viewport, scale_mode integer, Standardfilter Nearest, Fenster 1152×720",
+  "Die ganze Szene ist ein ColorRect mit shaders/vic.gdshader: je Bildpunkt Rahmen oder Bildschirm; Rasterzeilen-Textur (1×240: $D021, $D020, Modus); Multicolor-Bitmap (Bitpaar 00 Zeilenhintergrund, 01/10 Bildschirmspeicher, 11 Farbspeicher) oder Hires-Text (Zeichencode aus dem Bildschirmspeicher, Farbe aus dem Farbspeicher); bis zu 16 Sprites aus einer Registertextur (16×2 RGBAF), der Sprite mit der kleinsten Hardware-Nummer entscheidet, Multicolor, X-/Y-Dehnung und Hintergrund-Priorität ausgewertet; Farben aus einer 16×1-Palettentextur, alles mit texelFetch",
+  "scripts/main.gd ist das Spielprogramm: entpackt beim Start Bitmap, Zeichensatz und Sprite-Bytes aus rom/c64.json zu Texturen; schreibt jedes Bild die Farbzyklen in Bildschirm- und Farbspeicher, den Text in die Zeilen 18–24 und die Sprite-Register (Multiplexer mit festen Nummern: Dachs 0–3, Strahl und Möwen 4–5 in getrennten Zeilenbereichen, Rauch 6, 7, 2, 3 oberhalb des Dachses) und lädt die 40×25-Speichertextur hoch",
+  "Ablauf: Dachs ab Bild 6 aus dem linken Rahmen, 27 Posen, steht ab 2,9 s; Beschreibung ab 0,3 s, Auswahl ab 2,7 s, Eingabe ab 3,6 s; Strahl bei 1,5–2,6 s und 4,5–5,6 s; Poster bei 5,0 s (capture.py --poster-at 0.83)",
+  "Zeit über delta aufsummiert; Möwen, Rauch und Farbzyklen aus der ganzzahligen Bildnummer, Laterne mit RandomNumberGenerator (Seed 1982, ein Wert je Bild, bei --t0 vorgespult); Möwen und Rauch laufen periodisch weiter. Prüfschalter nach --: --t0=<s>, --only=badger (nur Dachs vor Hellblau), --only=bg (ohne Sprites), --probe=<datei>, --scarf=<Farbe> (Vergleichsbilder); HWSTAT beim Beenden im Log",
+  "Zeit über delta aufsummiert, Laterne mit RandomNumberGenerator (Seed 1982, ein Wert je Bild, bei --t0 vorgespult); Möwen und Rauch laufen periodisch weiter. Prüfschalter nach --: --t0=<s>, --only=badger (nur Dachs vor Hellblau), --only=bg (ohne Sprites), --probe=<datei>; HWSTAT beim Beenden im Log"
+ ],
+ "techniques": [
+  "farbzyklus",
+  "textoberflaeche",
+  "ki-spritesheet"
+ ],
+ "ratings": {
+  "ai_fit": 3,
+  "consistency": 4,
+  "effort": 4,
+  "text_adventure": 4,
+  "mobile": 5
+ },
+ "ratings_note": "Das KI-Bild trägt Aufbau, Haus, Steg, Boot, Felsen, Leuchtturm, Wolken und Wasserstriche nach dem Einrasten fast unverändert; den Heimcomputer-Look (Doppelpixel, Zellregel, Rasterbalken, Rahmen) liefern aber Wandler und Shader, kleine Requisiten und die Leuchtturmspitze mussten von Hand neu gesetzt werden (5 % der Pixel), der Dachs ist trotz gutem KI-Blatt Handarbeit, und der Zeichensatz ist ohne KI gezeichnet (ai_fit 3). Feste Palette, Zellregel und Wandler halten weitere Orte gleichmäßig, Shader, main.gd und Zeichensatz bleiben gleich (consistency 4); jede Figur und jede Pose braucht aber Pixelarbeit in mehreren Sprite-Ebenen, jeder Ort eine Retusche und eine Rastertabelle (effort 4). 40 Spalten Text in einer eigenen, gut lesbaren 8×8-Schrift unter dem Bild sind das klassische Abenteuer-Layout, der Platz reicht aber nur für 2 Zeilen Beschreibung plus Auswahl (text_adventure 4). Mobil nur über die Renderer geprüft: Mobile und Compatibility pixelgleich zu Forward+, ein Draw-Call mit kleinen Texturen; nicht auf einem Telefon getestet.",
+ "verdict": "Sofort als Heimcomputer-Spiel der 80er erkennbar (Rahmen, Doppelpixel, Palette, Himmelsbalken, Zeichensatz-Text) und als Weg wiederholbar: ein KI-Bild in Seitenansicht, build_bg.py mit einer Rastertabelle und einer kurzen Retusche ergibt einen Ort, der die Zellregel nachweislich einhält; Shader, main.gd und Zeichensatz bleiben für alle Orte gleich. Für unser Textadventure passt die geteilte Anzeige (Bild oben, 40×7 Zeichen Text unten) sehr gut; längere Beschreibungen brauchen Seiten oder einen kleineren Bildteil. Der Zeichensatz ist jetzt ein geprüft eigener Entwurf (CC0) und kann so ins Spiel; ein Zeichensatz „im Stil“ muss vor der Verwendung gegen das Vorbild abgeglichen werden, sonst landet er unbemerkt bei der Kopie. Teuer sind die Figuren: Jede Pose besteht aus 4 Sprite-Ebenen, die von Hand gepixelt werden, das KI-Blatt taugt nur als Vorlage. Für ein Spiel mit vielen Figuren wären einfachere Sprites (Kontur + Multicolor ohne Zusatzebenen) oder Porträts im Textbereich zu prüfen.",
+ "pitfalls": [
+  "Zeichensatz Fassung 1 war keine eigene Zeichnung: Trotz der Angabe „jede Glyphe von Hand gesetzt, keine Kopie eines ROMs, CC0“ waren 39 von 62 Buchstaben und Ziffern (47 von 75 Zeichen mit Satzzeichen) pixelgleich mit dem Zeichensatz-ROM des Rechners, weitere nur 1–3 px oder um eine Zeile verschoben; eine externe Prüfung fand das, ein ROM-Abgleich bestätigte es. Beim Zeichnen „nach dem Bauprinzip“ (2-px-Striche, 6 px breit) aus dem Gedächtnis entsteht fast zwangsläufig das Original. Fassung 2 ist neu gezeichnet und anders gebaut (7 px breit, 3 px Innenraum, 1 px Abstand, eigene Formen für A, M, Q, c, i, l, m, r, t, w, Ü); Abgleich: 0 von 62 pixelgleich, Median 9 px, nahe bleiben nur L (1 px), F (3 px), Leerzeichen, Punkt, Komma und Bindestrich, die keinen Gestaltungsspielraum haben. Für den Abgleich wurde ein ROM-Abzug aus dem Quellbaum eines Emulators nur temporär außerhalb des Projekts geladen und danach gelöscht.",
+  "Der neue Zeichensatz wirkt breiter und dichter als der vertraute Heimcomputer-Satz (1 px statt 2 px Abstand); I, T, Y, X und V haben 3 px breite Mittelstämme, damit sie in 7 px mittig sitzen, das I wirkt dadurch etwas schwer. Ä und Ö haben nur 6 Zeilen Körper mit 1-px-Punkten, die die Ecken des Körpers diagonal berühren; beim Ü stehen die Punkte im Innenraum. Großbuchstaben-Umlaute wirken daher klein; der Demotext enthält keine Umlaute.",
+  "Das KI-Bild ist 3:2, die Szene 320×144 (2,2:1): Oben und unten fehlen 32 % der Höhe, darunter das schwarz-blaue Himmelsband des KI-Bildes (oben ersetzt durch Rasterzeilen) und der größte Teil des Kais (nur 16 Zeilen Gehweg). Der Schornstein steht nur 10 Zeilen unter dem Rand; der Rauch muss deshalb flach und schräg nach rechts ziehen (steigt 6 px auf 36 px Weg), sonst stößt er an den Rahmen.",
+  "Rauch Fassung 1 waren flache graue Ellipsen mit einem waagerechten Mittelstrich in einer gemeinsamen Multicolor-Farbe, die nur 7 px stiegen und oben vom Rahmen abgeschnitten wurden (wirkten wie Scheiben). Wegen der doppelt breiten Multicolor-Pixel wird jede runde Form zur Zigarre; die neuen Formen sind schmal, schräg und ausgefranst und kommen dichter (alle 0,6 s, 4 gleichzeitig). Das braucht 4 Sprites in den obersten Zeilen; zusammen mit dem Strahl sind es dort 6 von 8 je Zeile.",
+  "Kleine Requisiten wurden beim Einrasten auf 160 Doppelpixel zu Brei (Fässer, Kisten, das zweite Boot, Schornsteinaufsatz, Laternenglas nur 1 Doppelpixel breit) und sind von Hand in patches.txt neu gesetzt; die Fässer stehen dafür vor einem schwarzen Schlagschatten, weil Mauer und Fass zusammen in einer Zelle zu viele Farben brauchen.",
+  "Leuchtturmspitze Fassung 1 lag um 1 Doppelpixel neben der Turmmitte und genau über der Zellgrenze (x 152): Das rechte Glaspixel fand in seiner Zelle keinen Platz mehr und wurde zu lila Himmel, die dunkelgraue Galerie verschwand ebenso, übrig blieb ein schwarzes Gekritzel mit einer Lampe am linken Rand, die außerhalb der Blitze dunkelgrau war. Neu: symmetrisch um die Zellgrenze gebaut, Laternenraum ganz in Zellzeile 0, je Zelle nur Schwarz + Glas + Lampe; das Glas ist 4 Doppelpixel breit (2 je Seite der Zellgrenze) mit 2 Doppelpixel Lampe in der Mitte, weil eine 3 breite Fassung nicht mittig über dem 4 breiten Turm sitzen kann. Während des Blitzes deckt der Strahl das linke Glas ab.",
+  "Erste Fassung der Zellregel bildete überzählige Farben oft auf die Zeilen-Hintergrundfarbe ab: dunkelgraue Mauerpixel wurden blau (Löcher neben dem Fenster). Gelöst mit dreifachen Kosten für den Zeilenhintergrund. Die Gelbwerte des Fensters wurden anfangs als Wasserglitzern erkannt und blinkten; Glitzern zählt jetzt nur neben blauen Wasserpixeln und rechts vom Haus.",
+  "Die Figur braucht mehr als die im Auftrag genannte Hires-über-Multicolor-Kombination: Mit zwei Sprites je Zeile bleiben 4 Farben, für Dachsgesicht, Mütze/Weste, Schal und Paket sind es 6. Deshalb vier Ebenen (schwarz, hellrot, orange, Multicolor), bis zu 4 Sprites je Zeile und 6 Formen je Pose; mit weiteren Figuren in derselben Zeile wäre die Grenze von 8 schnell erreicht.",
+  "KI-Figurenblatt: gutes Design, aber etwa 40 × 70 Kunstpixel statt 24 × 40; die automatische Verkleinerung (badger_from_ai.py) ergab ein unruhiges Gesicht ohne klaren Stirn- und Augenstreif, Paket und Tasche als Flecken (das Paket zunächst ganz als Fell erkannt) und kennt die Multicolor-Regel (gleiche Farbe je Spaltenpaar) nicht. Alle Sprites sind von Hand gesetzt, das Blatt diente nur als Vorlage für Proportionen und Posen.",
+  "Laufen: Fassung 1 hatte nur 2 verschiedene Posen (walk1 = walk3, walk2 = walk4, je 0 Pixel Unterschied), obwohl 4 angegeben waren. Jetzt unterscheiden sich die Schritte durch die gegenschwingende Tasche und das Schalende (je 39 Pixel); die Beine selbst haben weiterhin nur 2 Stellungen, nahes und fernes Bein sind nicht unterschieden, Arme schwingen nicht (der vordere Arm hält das Paket). Eine Probe mit schwarz gefülltem fernem Bein sah aus wie ein Stiefel und wurde verworfen. Von den 45 Sprite-Formen sind 16 Doppel, die das Speicherabbild nicht zusammenlegt.",
+  "Schalfarbe: Rot (#68372B) las sich neben Paket und Tasche (#6F4F25) und vor den braunroten Stegplanken als Braun. Vergleich vor dem Steg in assets/scarf_compare.png: Hellrot (#9A6759) hebt sich deutlich von Paket und Planken ab und ist gewählt, wirkt aber eher lachs- als signalrot; ein kräftiges Rot gibt die Palette nicht her.",
+  "Möwen und Rauch zogen in Fassung 1 mit 26 bzw. 17 px/s (0,57–0,87 px je Bild) und stockten durch Rundung; jetzt 30 bzw. 15 px/s aus der ganzzahligen Bildnummer (gemessen: Möwe 1 bewegt sich jedes Bild um 1 px, Möwe 2 jedes zweite) und Wippen in ganzen Pixeln mit festem Takt von 6 Bildern.",
+  "Vereinfacht gegenüber der Hardware: Register gelten exakt ab einer Zeile, ohne Zeitbedarf der CPU, ohne Badlines und ohne Prüfung, ob 16 Rasterwechsel, Moduswechsel, Multiplexer und das Umschreiben von bis zu 198 Farbplätzen je Bild in die Rechenzeit passen. Sprite-Hintergrund-Priorität ist eingebaut, aber ungenutzt. Keine Bildröhren-Nachbildung.",
+  "Seitenverhältnis: Am PAL-Fernseher sind die Pixel etwa 0,94:1 (etwas schmaler als hoch); hier quadratisch, damit die ganzzahlige Vergrößerung ×3 in 1280×720 passt.",
+  "Die feste Palette ist gedeckt: Für das orange Abendlicht gibt es kein Orange, der Horizont wird Gelb (#B8C76F) und Hellrot; warmes Glitzern in Hellrot wirkt rosa.",
+  "Farbzyklen gelten je Zelle: Alle Glitzerpixel einer 4×8-Zelle wechseln gemeinsam die Farbe; zwei Phasengruppen gibt es nur in Zellen mit freiem Platz.",
+  "Der Textbereich ist mit 7 Zeilen voll; die Hervorhebung „2 Das Paket ansehen“ ab 5 s ist fest eingeplant, keine echte Eingabe.",
+  "Der Leuchtturm steht oben rechts, der Strahl liegt deshalb in den Zeilen 1–9 direkt unter dem Rahmen; die Möwen sind mit 11 × 4 Pixeln klein."
+ ],
+ "lessons": [
+  "Prompt für Heimcomputer-Bilder: „multicolour bitmap mode, 160 pixels wide, every pixel twice as wide as tall“, die 16 Farben als Hex-Liste, „sky as horizontal colour bands like colour bars changed line by line“ und strenge Seitenansicht ergaben im ersten Versuch eine verwendbare Vorlage. Die Doppelpixel entstehen beim Einrasten (häufigste Palettenfarbe je 2:1-Block), nicht im Modell.",
+  "Wandler-Rezept für die Zellregel: zuerst die Hintergrundfarbe je Zeile festlegen (Rasterbalken machen Himmel und Wasser frei), dann je Zelle die beste Dreierkombination erschöpfend in Oklab suchen, Abbilden auf den Zeilenhintergrund verteuern, animierte Pixelgruppen als feste Plätze reservieren. 0,5 s Rechenzeit für ein Bild.",
+  "Handretusche als Textdatei mit „.“ (behalten) und „_“ (Zeilenhintergrund) neben dem Wandler: wiederholbar, versionierbar, und Requisiten lassen sich zellgenau mit höchstens 3 Farben setzen.",
+  "Sprites als Text mit Ebenenbuchstaben (K/R/P hires, W/F/G Multicolor) und einem Prüfskript für Spaltenpaare und 21-Zeilen-Fenster: Fehler zeigen Zeile und Spalte, die Zerlegung in Hardware-Sprites ist automatisch.",
+  "Fersen der Laufposen vorher festlegen (Kontakt 3 und 15, Durchgang 9 = Mitte) ergibt gleiche Schritte von 6 px; gemessen bleibt der Standfuß auf 0 px stehen. Das Wippen entsteht über eine um 1 Zeile kürzere Kontaktbein-Zeichnung.",
+  "Videochip als Shader plus Speicherabbild: Palette, Zellregel und Sprite-Grenzen sind Bauweise statt Absicht; Umgebungsanimation über Farbzyklen kostet keine neuen Pixel. Messmodi (--only=badger, --only=bg) machen die Prüfungen einfach.",
+  "Der farbige Rahmen und ein Rasterbalken hinter der Ortszeile machen das Bild sofort als Heimcomputer erkennbar; der hellblaue Rahmen darf nicht dieselbe Farbe wie ein Revers-Balken im Text haben (verschmilzt mit dem Rand).",
+  "Ein eigener Zeichensatz „nach dem Bauprinzip“ ist erst eigen, wenn er gegen das Vorbild gemessen ist: scripts/rom_compare.py zählt je Glyphe die abweichenden Pixel, auch nach Verschiebung um 1 Zeile/Spalte. Eine andere Grundgeometrie (7 statt 6 px Breite, 3 px Innenraum) löst sich systematisch vom ROM, statt Glyphe für Glyphe zu flicken, und bleibt als Text in font8.py direkt in Zeichensatz-Bytes wandelbar.",
+  "Kleine animierte Details (Leuchtfeuer) zuerst auf das Zellraster legen: symmetrisch um eine Zellgrenze gebaut, bekommt jede Hälfte ihre eigenen drei Plätze (Rahmen, Glas, Lampe), und die Farbzyklen funktionieren ohne Verlust.",
+  "Zweite Schrittphase ohne neue Beine: eine Zeilen-Überlagerung ([swing] in badger_sprites.txt) für Tasche und Schal macht aus 2 Beinstellungen 4 unterscheidbare Posen, ohne den gemessenen Standfuß anzutasten.",
+  "Bewegung in Pixel-Stilen aus der ganzzahligen Bildnummer rechnen (x = x0 + Bild / 2), nicht aus Zeit × Geschwindigkeit: dann gibt es nur Takte, die in 30 Bilder/s aufgehen, und kein Stocken durch Rundung.",
+  "Sprite-Multiplexing lohnt sich auch für Umgebung: Der Rauch oben im Bild nutzt die Hardware-Nummern, die der Dachs erst weiter unten braucht; HWSTAT im Log beweist, dass keine Nummer doppelt belegt ist."
+ ],
+ "assets": [
+  {
+   "file": "assets/raw/bg.png",
+   "kind": "background",
+   "made_with": "gpt-image (Codex)",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/raw/badger.png",
+   "kind": "sprite-sheet",
+   "made_with": "gpt-image (Codex), Referenzblatt; nur Vorlage für die handgesetzten Sprites",
+   "prompt": "assets/raw/badger.json"
+  },
+  {
+   "file": "assets/bg_preview.png",
+   "kind": "background",
+   "made_with": "build_bg.py: 320×144 Doppelpixel nach Zellregel und Rastertabelle (Farbzyklen in Grundfarbe, ohne Sprites)"
+  },
+  {
+   "file": "assets/bg_build.npz",
+   "kind": "data",
+   "made_with": "build_bg.py: Bitpaare, Bildschirm- und Farbspeicher, Rastertabelle, Farbzyklus-Plätze"
+  },
+  {
+   "file": "scripts/patches.txt",
+   "kind": "data",
+   "made_with": "Handretusche des eingerasteten Hintergrunds (1207 Pixel)"
+  },
+  {
+   "file": "scripts/badger_sprites.txt",
+   "kind": "sprite-sheet",
+   "made_with": "von Hand gesetzte Sprite-Quelle des Dachses (Oberkörper, drei Beinposen, Blinzeln, Gegenschwung für den zweiten Schritt)"
+  },
+  {
+   "file": "assets/sprites_preview.png",
+   "kind": "sprite-sheet",
+   "made_with": "build_sprites.py: Dachsbilder aus allen Sprite-Ebenen zusammengesetzt (Stehen, Blinzeln, 4 Laufposen)"
+  },
+  {
+   "file": "assets/sprites.json",
+   "kind": "data",
+   "made_with": "build_sprites.py: 45 Sprite-Formen und Metasprites (Dachs, Möwe, Rauch, Strahl)"
+  },
+  {
+   "file": "assets/scarf_compare.png",
+   "kind": "comparison",
+   "made_with": "scarf_compare.py: Schal in Rot (vorher) und Hellrot (gewählt) vor dem Steg, Standbild bei 5,0 s"
+  },
+  {
+   "file": "assets/font_preview.png",
+   "kind": "font",
+   "made_with": "font8.py: eigener 8×8-Zeichensatz Fassung 2 mit Umlauten (Vorschau aus font8.py)"
+  },
+  {
+   "file": "demo/rom/c64.json",
+   "kind": "data",
+   "made_with": "build_rom.py: Speicherabbild (Bitmap, Bildschirm- und Farbspeicher, Zeichensatz, Sprites, Rastertabelle)"
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Zeichensatz font8, Fassung 2 (eigener Entwurf, gegen den ROM-Zeichensatz geprüft; Fassung 1 war eine ROM-Nachbildung und ist ersetzt)",
+   "license": "CC0-1.0",
+   "source": "scripts/font8.py, demo/fonts/LICENSE-font8.txt"
+  },
+  {
+   "item": "Figurenblatt Dachs-Kurier (Referenz für Kostüm und Proportionen)",
+   "license": "eigenes Motiv des Katalogs",
+   "source": "shared/badger/master_sheet.png"
+  },
+  {
+   "item": "Hintergrund, Figurenblatt",
+   "license": "eigene KI-Bilder (gpt-image über Codex)",
+   "source": "assets/raw/"
+  },
+  {
+   "item": "Dachs-Sprites, Retusche, Möwe, Rauch, Strahl, Shader, Skripte",
+   "license": "eigener Code und eigene Pixel, keine fremden Grafiken; der für den Schriftabgleich genutzte ROM-Abzug ist nicht Teil des Eintrags",
+   "source": "styles/c64-multicolor/"
+  },
+  {
+   "item": "Palette",
+   "license": "Farbwerte der Hardware-Palette aus tools/sprites.py (palette c64)",
+   "source": "tools/sprites.py"
+  }
+ ],
+ "image_generations": 2,
+ "tool_issues": [],
+ "status": "done"
+}

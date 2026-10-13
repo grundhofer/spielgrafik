@@ -1,0 +1,29 @@
+[
+ {
+  "name": "Totale",
+  "sky_cloud_px": 173892,
+  "checked_px": 155331,
+  "changed_px": 0,
+  "max_change": 0,
+  "star_px": 1345,
+  "max_at_stars": 216
+ },
+ {
+  "name": "Nahaufnahme",
+  "sky_cloud_px": 68056,
+  "checked_px": 66047,
+  "changed_px": 0,
+  "max_change": 0,
+  "star_px": 0,
+  "max_at_stars": null
+ },
+ {
+  "name": "Totale ab t0=31 s",
+  "sky_cloud_px": 173892,
+  "checked_px": 155331,
+  "changed_px": 0,
+  "max_change": 0,
+  "star_px": 1345,
+  "max_at_stars": 216
+ }
+]

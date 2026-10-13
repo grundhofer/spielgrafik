@@ -1,0 +1,49 @@
+{
+ "walk": {
+  "frames": 4,
+  "cell": [
+   31,
+   41
+  ],
+  "anchor_x": 18,
+  "source_frames": [
+   0,
+   2,
+   3,
+   5
+  ],
+  "step_px": [
+   3,
+   3,
+   2,
+   2
+  ],
+  "up_frame": 2
+ },
+ "stand": {
+  "frames": 5,
+  "cell": [
+   32,
+   40
+  ],
+  "anchor_x": 16,
+  "transition_frame": 4
+ },
+ "items": {
+  "cell": [
+   26,
+   17
+  ],
+  "count": 4
+ },
+ "parcel": {
+  "pos": [
+   149,
+   138
+  ],
+  "size": [
+   14,
+   11
+  ]
+ }
+}

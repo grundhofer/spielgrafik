@@ -1,0 +1,18 @@
+{
+ "_comment": "Einstellungen für prep_scene.py. retouch in Pixeln des Rohbilds (1264x848), alles andere in Bildschirmpixeln (1280x720) nach dem Ausschnitt crop_y.",
+ "crop_y": 137,
+ "retouch": [[674, 569, 707, 582], [914, 591, 946, 604]],
+ "horizon_y": 289,
+ "quay_y": 580,
+ "lights": [
+  {"name": "window", "code": "window", "channel": "window", "pool_r": 70, "pool_k": 0.5},
+  {"name": "lantern", "code": "lantern", "channel": "lantern", "pool_r": 95, "pool_k": 0.8,
+   "floor_pools": [{"center": [330, 405], "rx": 170, "ry": 40, "k": 0.6}]},
+  {"name": "lamp", "code": "lamp", "channel": "lamp"}
+ ],
+ "boats": [
+  {"pivot": [734, 474], "amp_deg": 1.4, "period": 4.6, "phase": 0.0, "bob": 1.8},
+  {"pivot": [962, 499], "amp_deg": 1.2, "period": 5.3, "phase": 1.9, "bob": 1.6}
+ ],
+ "chimney": [130, 76]
+}

@@ -1,0 +1,257 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="Texture2D" path="res://art/bg.png" id="2_bg"]
+[ext_resource type="Texture2D" path="res://art/water_mask.png" id="3_wmask"]
+[ext_resource type="Texture2D" path="res://art/sky_mask.png" id="4_smask"]
+[ext_resource type="Texture2D" path="res://art/paper.png" id="5_paper"]
+[ext_resource type="Texture2D" path="res://art/fx/water_glaze.png" id="6_wglaze"]
+[ext_resource type="Texture2D" path="res://art/fx/beam.png" id="7_beam"]
+[ext_resource type="Texture2D" path="res://art/fx/glow.png" id="8_glow"]
+[ext_resource type="Texture2D" path="res://art/fx/shadow.png" id="9_shadow"]
+[ext_resource type="Texture2D" path="res://art/ui/swatch.png" id="11_swatch"]
+[ext_resource type="Texture2D" path="res://art/ui/rule.png" id="12_rule"]
+[ext_resource type="Texture2D" path="res://art/ui/dot_0.png" id="13_dot0"]
+[ext_resource type="Texture2D" path="res://art/ui/dot_1.png" id="14_dot1"]
+[ext_resource type="Texture2D" path="res://art/ui/dot_2.png" id="15_dot2"]
+[ext_resource type="Shader" path="res://shaders/painting.gdshader" id="20_painting"]
+[ext_resource type="Shader" path="res://shaders/glaze.gdshader" id="21_glaze"]
+[ext_resource type="Shader" path="res://shaders/lift.gdshader" id="22_lift"]
+[ext_resource type="Shader" path="res://shaders/sprite_mask.gdshader" id="23_sprite"]
+[ext_resource type="Shader" path="res://shaders/paper.gdshader" id="24_paper"]
+[ext_resource type="FontFile" path="res://fonts/Alegreya-wght.ttf" id="30_text"]
+[ext_resource type="FontFile" path="res://fonts/Alegreya-Italic-wght.ttf" id="31_italic"]
+[ext_resource type="FontFile" path="res://fonts/AlegreyaSC-Medium.ttf" id="32_caps"]
+
+[sub_resource type="ShaderMaterial" id="M_painting"]
+shader = ExtResource("20_painting")
+shader_parameter/water_mask = ExtResource("3_wmask")
+shader_parameter/time_s = 0.0
+shader_parameter/tex_size = Vector2(1280, 720)
+shader_parameter/amp_px = 1.6
+
+[sub_resource type="ShaderMaterial" id="M_water_glaze"]
+shader = ExtResource("21_glaze")
+shader_parameter/region_mask = ExtResource("3_wmask")
+shader_parameter/use_region = 1.0
+shader_parameter/paint_mask = ExtResource("2_bg")
+shader_parameter/strength = 0.8
+
+[sub_resource type="ShaderMaterial" id="M_sky_glaze"]
+shader = ExtResource("21_glaze")
+shader_parameter/region_mask = ExtResource("4_smask")
+shader_parameter/use_region = 1.0
+shader_parameter/paint_mask = ExtResource("2_bg")
+shader_parameter/strength = 1.0
+
+[sub_resource type="ShaderMaterial" id="M_glaze"]
+shader = ExtResource("21_glaze")
+shader_parameter/use_region = 0.0
+shader_parameter/paint_mask = ExtResource("2_bg")
+shader_parameter/strength = 1.0
+
+[sub_resource type="ShaderMaterial" id="M_lift"]
+shader = ExtResource("22_lift")
+shader_parameter/paint_mask = ExtResource("2_bg")
+
+[sub_resource type="ShaderMaterial" id="M_badger"]
+shader = ExtResource("23_sprite")
+shader_parameter/paint_mask = ExtResource("2_bg")
+shader_parameter/tint = Vector3(1, 1, 1)
+shader_parameter/breath = 1.0
+
+[sub_resource type="ShaderMaterial" id="M_paper"]
+shader = ExtResource("24_paper")
+shader_parameter/paper_tex = ExtResource("5_paper")
+
+[sub_resource type="FontVariation" id="F_text"]
+base_font = ExtResource("30_text")
+variation_opentype = {2003265652: 420}
+
+[sub_resource type="FontVariation" id="F_choice"]
+base_font = ExtResource("30_text")
+variation_opentype = {2003265652: 500}
+
+[sub_resource type="FontVariation" id="F_caps"]
+base_font = ExtResource("32_caps")
+spacing_glyph = 2
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Paper" type="ColorRect" parent="World"]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.957, 0.937, 0.894, 1)
+
+[node name="Painting" type="Sprite2D" parent="World"]
+material = SubResource("M_painting")
+texture = ExtResource("2_bg")
+centered = false
+
+[node name="WaterGlaze" type="Sprite2D" parent="World"]
+texture_repeat = 2
+material = SubResource("M_water_glaze")
+texture = ExtResource("6_wglaze")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 1280, 200)
+
+[node name="Clouds" type="Node2D" parent="World"]
+
+[node name="Gulls" type="Node2D" parent="World"]
+
+[node name="Beam" type="Node2D" parent="World"]
+
+[node name="BeamSprite" type="Sprite2D" parent="World/Beam"]
+material = SubResource("M_lift")
+modulate = Color(1, 0.96, 0.84, 0.8)
+texture = ExtResource("7_beam")
+centered = false
+offset = Vector2(-30, -60)
+
+[node name="LampGlow" type="Sprite2D" parent="World"]
+material = SubResource("M_lift")
+modulate = Color(1, 0.95, 0.8, 0.8)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("8_glow")
+
+[node name="LanternGlow" type="Sprite2D" parent="World"]
+material = SubResource("M_lift")
+modulate = Color(1, 0.9, 0.62, 0.6)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("8_glow")
+
+[node name="WindowGlow" type="Sprite2D" parent="World"]
+material = SubResource("M_lift")
+modulate = Color(1, 0.88, 0.6, 0.35)
+scale = Vector2(0.7, 0.8)
+texture = ExtResource("8_glow")
+
+[node name="Smoke" type="Node2D" parent="World"]
+
+[node name="BadgerShadow" type="Sprite2D" parent="World"]
+material = SubResource("M_glaze")
+modulate = Color(1, 1, 1, 0.75)
+texture = ExtResource("9_shadow")
+
+[node name="Badger" type="Sprite2D" parent="World"]
+material = SubResource("M_badger")
+centered = false
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Location" type="Label" parent="UI"]
+offset_left = 52.0
+offset_top = 616.0
+offset_right = 600.0
+offset_bottom = 642.0
+theme_override_colors/font_color = Color(0.275, 0.333, 0.478, 1)
+theme_override_fonts/font = SubResource("F_caps")
+theme_override_font_sizes/font_size = 19
+text = "Hafen von Lornholm"
+
+[node name="Rule" type="TextureRect" parent="UI"]
+offset_left = 44.0
+offset_top = 636.0
+offset_right = 260.0
+offset_bottom = 655.0
+texture = ExtResource("12_rule")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Line" type="Label" parent="UI"]
+offset_left = 52.0
+offset_top = 652.0
+offset_right = 720.0
+offset_bottom = 684.0
+theme_override_colors/font_color = Color(0.227, 0.188, 0.212, 1)
+theme_override_fonts/font = SubResource("F_text")
+theme_override_font_sizes/font_size = 24
+text = "Die Laterne flackert im Wind. Am Kai wartet ein Paket auf dich."
+visible_characters = 0
+visible_characters_behavior = 1
+
+[node name="Parser" type="Label" parent="UI"]
+offset_left = 52.0
+offset_top = 684.0
+offset_right = 600.0
+offset_bottom = 714.0
+theme_override_colors/font_color = Color(0.36, 0.3, 0.34, 1)
+theme_override_fonts/font = ExtResource("31_italic")
+theme_override_font_sizes/font_size = 21
+
+[node name="Swatch" type="TextureRect" parent="UI"]
+modulate = Color(1, 1, 1, 0)
+offset_left = 778.0
+offset_top = 642.0
+offset_right = 1150.0
+offset_bottom = 682.0
+texture = ExtResource("11_swatch")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Choice1" type="Label" parent="UI"]
+offset_left = 820.0
+offset_top = 618.0
+offset_right = 1240.0
+offset_bottom = 648.0
+theme_override_colors/font_color = Color(0.29, 0.25, 0.28, 1)
+theme_override_fonts/font = SubResource("F_choice")
+theme_override_font_sizes/font_size = 22
+text = "Zum Leuchtturm gehen"
+
+[node name="Dot" type="TextureRect" parent="UI/Choice1"]
+offset_left = -30.0
+offset_top = 6.0
+offset_right = -10.0
+offset_bottom = 26.0
+texture = ExtResource("13_dot0")
+expand_mode = 1
+
+[node name="Choice2" type="Label" parent="UI"]
+offset_left = 820.0
+offset_top = 648.0
+offset_right = 1240.0
+offset_bottom = 678.0
+theme_override_colors/font_color = Color(0.29, 0.25, 0.28, 1)
+theme_override_fonts/font = SubResource("F_choice")
+theme_override_font_sizes/font_size = 22
+text = "Das Paket ansehen"
+
+[node name="Dot" type="TextureRect" parent="UI/Choice2"]
+offset_left = -30.0
+offset_top = 6.0
+offset_right = -10.0
+offset_bottom = 26.0
+texture = ExtResource("14_dot1")
+expand_mode = 1
+
+[node name="Choice3" type="Label" parent="UI"]
+offset_left = 820.0
+offset_top = 678.0
+offset_right = 1240.0
+offset_bottom = 708.0
+theme_override_colors/font_color = Color(0.29, 0.25, 0.28, 1)
+theme_override_fonts/font = SubResource("F_choice")
+theme_override_font_sizes/font_size = 22
+text = "Mit dem Dachs sprechen"
+
+[node name="Dot" type="TextureRect" parent="UI/Choice3"]
+offset_left = -30.0
+offset_top = 6.0
+offset_right = -10.0
+offset_bottom = 26.0
+texture = ExtResource("15_dot2")
+expand_mode = 1
+
+[node name="Post" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="PaperGrain" type="ColorRect" parent="Post"]
+material = SubResource("M_paper")
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2

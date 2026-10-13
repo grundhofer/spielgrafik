@@ -1,0 +1,245 @@
+{
+ "anchor": "hafen",
+ "palette_anchor": [
+  "e39151",
+  "b87755",
+  "9f6754",
+  "74626a",
+  "795452",
+  "5f5163",
+  "4e4f6e",
+  "374c72",
+  "564043",
+  "433f53",
+  "393d59",
+  "2b3d6d",
+  "29384f",
+  "362d32",
+  "292d3e",
+  "252b3d",
+  "202b46",
+  "1e263e",
+  "1f2636",
+  "1e1f27",
+  "17253c",
+  "161e30",
+  "131824",
+  "0d0d11"
+ ],
+ "sources": {
+  "hafen": "assets/raw/hafen.png",
+  "leuchtturm": "assets/raw/leuchtturm.png",
+  "stube": "assets/raw/stube.png",
+  "klippe": "assets/raw/klippe.png"
+ },
+ "layout_rows_expected": {
+  "eye": 260,
+  "walk": [
+   414,
+   533
+  ],
+  "ui_top": 534
+ },
+ "locations": {
+  "hafen": {
+   "lab_mean_before": [
+    27.2,
+    7.9,
+    -5.8
+   ],
+   "lab_std_before": [
+    15.4,
+    8.2,
+    19.9
+   ],
+   "lab_mean_after": [
+    27.2,
+    7.9,
+    -5.9
+   ],
+   "lab_std_after": [
+    15.4,
+    8.2,
+    19.9
+   ],
+   "mean_dE_to_anchor_mean_before": 0.0,
+   "mean_dE_to_anchor_mean_after": 0.0,
+   "palette_dE_mean_before": 5.7,
+   "palette_dE_p90_before": 10.7,
+   "palette_dE_mean_after": 5.7,
+   "palette_dE_p90_after": 10.7,
+   "lut_change_dE_mean": 0.2,
+   "lut_changed_share_dE_gt_5": 0.0,
+   "texture_energy": 7.18,
+   "look_before": {
+    "L_mean": 30.9,
+    "L_left_minus_right": 10.1,
+    "chroma_mean": 21.5,
+    "warm_light_share": 0.0692,
+    "dark_share_L_lt_20": 0.26
+   },
+   "look_after": {
+    "L_mean": 30.9,
+    "L_left_minus_right": 10.0,
+    "chroma_mean": 21.5,
+    "warm_light_share": 0.069,
+    "dark_share_L_lt_20": 0.263
+   },
+   "params": null,
+   "horizon_row": 258,
+   "horizon_edge": 7.5
+  },
+  "leuchtturm": {
+   "lab_mean_before": [
+    31.1,
+    10.7,
+    7.2
+   ],
+   "lab_std_before": [
+    18.1,
+    7.3,
+    21.3
+   ],
+   "lab_mean_after": [
+    29.3,
+    8.9,
+    -1.4
+   ],
+   "lab_std_after": [
+    16.3,
+    7.1,
+    18.6
+   ],
+   "mean_dE_to_anchor_mean_before": 13.9,
+   "mean_dE_to_anchor_mean_after": 5.0,
+   "palette_dE_mean_before": 7.9,
+   "palette_dE_p90_before": 16.0,
+   "palette_dE_mean_after": 4.7,
+   "palette_dE_p90_after": 8.7,
+   "lut_change_dE_mean": 9.6,
+   "lut_changed_share_dE_gt_5": 0.887,
+   "texture_energy": 9.31,
+   "look_before": {
+    "L_mean": 34.1,
+    "L_left_minus_right": 13.8,
+    "chroma_mean": 22.6,
+    "warm_light_share": 0.1132,
+    "dark_share_L_lt_20": 0.267
+   },
+   "look_after": {
+    "L_mean": 32.0,
+    "L_left_minus_right": 13.2,
+    "chroma_mean": 19.8,
+    "warm_light_share": 0.0789,
+    "dark_share_L_lt_20": 0.284
+   },
+   "params": {
+    "g_l": 0.5,
+    "g_ab": 0.6,
+    "snap": 0.5
+   }
+  },
+  "stube": {
+   "lab_mean_before": [
+    28.2,
+    10.8,
+    7.4
+   ],
+   "lab_std_before": [
+    15.8,
+    8.1,
+    20.2
+   ],
+   "lab_mean_after": [
+    27.9,
+    8.7,
+    -1.7
+   ],
+   "lab_std_after": [
+    15.2,
+    7.3,
+    18.0
+   ],
+   "mean_dE_to_anchor_mean_before": 13.6,
+   "mean_dE_to_anchor_mean_after": 4.3,
+   "palette_dE_mean_before": 8.4,
+   "palette_dE_p90_before": 18.0,
+   "palette_dE_mean_after": 4.6,
+   "palette_dE_p90_after": 8.7,
+   "lut_change_dE_mean": 9.6,
+   "lut_changed_share_dE_gt_5": 0.903,
+   "texture_energy": 8.79,
+   "look_before": {
+    "L_mean": 29.7,
+    "L_left_minus_right": 13.0,
+    "chroma_mean": 20.8,
+    "warm_light_share": 0.0548,
+    "dark_share_L_lt_20": 0.331
+   },
+   "look_after": {
+    "L_mean": 29.4,
+    "L_left_minus_right": 13.3,
+    "chroma_mean": 18.0,
+    "warm_light_share": 0.0525,
+    "dark_share_L_lt_20": 0.334
+   },
+   "params": {
+    "g_l": 0.5,
+    "g_ab": 0.6,
+    "snap": 0.5
+   }
+  },
+  "klippe": {
+   "lab_mean_before": [
+    28.4,
+    10.6,
+    -1.8
+   ],
+   "lab_std_before": [
+    16.0,
+    10.4,
+    24.4
+   ],
+   "lab_mean_after": [
+    27.9,
+    8.5,
+    -4.7
+   ],
+   "lab_std_after": [
+    15.3,
+    7.4,
+    19.1
+   ],
+   "mean_dE_to_anchor_mean_before": 5.0,
+   "mean_dE_to_anchor_mean_after": 1.4,
+   "palette_dE_mean_before": 8.6,
+   "palette_dE_p90_before": 17.0,
+   "palette_dE_mean_after": 4.6,
+   "palette_dE_p90_after": 7.7,
+   "lut_change_dE_mean": 7.3,
+   "lut_changed_share_dE_gt_5": 0.727,
+   "texture_energy": 8.66,
+   "look_before": {
+    "L_mean": 32.5,
+    "L_left_minus_right": 11.0,
+    "chroma_mean": 27.7,
+    "warm_light_share": 0.079,
+    "dark_share_L_lt_20": 0.196
+   },
+   "look_after": {
+    "L_mean": 31.8,
+    "L_left_minus_right": 10.7,
+    "chroma_mean": 21.9,
+    "warm_light_share": 0.0748,
+    "dark_share_L_lt_20": 0.2
+   },
+   "params": {
+    "g_l": 0.5,
+    "g_ab": 0.6,
+    "snap": 0.5
+   },
+   "horizon_row": 257,
+   "horizon_edge": 8.2
+  }
+ }
+}

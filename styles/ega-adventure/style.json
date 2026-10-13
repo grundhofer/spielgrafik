@@ -1,0 +1,277 @@
+{
+ "slug": "ega-adventure",
+ "name": "EGA-Adventure (16 Farben)",
+ "family": "computer",
+ "kind": "style",
+ "era": "1984–1988",
+ "summary": "Parser-Adventure im 16-Farben-EGA-Modus: ein Bild aus 160×168 doppelt breiten Pixeln, flache Farbflächen mit harten Treppenkanten, gespeichert als Zeichenbefehle (Linien und Flutfüllungen), die sich beim Betreten des Orts sichtbar aufbauen. Kleine Figuren als Views mit Prioritätsbändern, oben eine Statuszeile, unten die Eingabezeile für getippte Befehle. Das Hafenbild entstand aus einer KI-Vorlage, automatisch in Befehle umgewandelt; Steg, Boote, Kisten, Fässer und Laternenpfahl sind von Hand nachgezeichnet.",
+ "references": [
+  "King's Quest I–III (Sierra On-Line, 1984–1987, AGI-Interpreter)",
+  "Space Quest I und II (Sierra On-Line, 1986/1987)",
+  "Police Quest I (Sierra On-Line, 1987)",
+  "Leisure Suit Larry in the Land of the Lounge Lizards (Sierra On-Line, 1987)",
+  "Gold Rush! und Manhunter: New York (Sierra On-Line, 1988)"
+ ],
+ "traits": [
+  "Bildschirm 320×200, ganzzahlig ×3 hochskaliert; Bildfläche 160×168 mit doppelt breiten Pixeln (2×1), darüber 8 px Statuszeile, darunter 24 px Eingabebereich",
+  "nur die 16 festen EGA-Farben (im Hafenbild 13 davon), flache Flächen ohne Dithering und ohne Verläufe, harte Treppenkanten; Dämmerung als Farbbänder Schwarz – Dunkelblau – Dunkelmagenta – Hellrot – Gelb mit flachen Wolken",
+  "das Bild ist eine Befehlsliste (1486 Befehle: 1314 Linienzüge, 76 Füllbefehle mit 107 Startpunkten, 31 KB JSON) und baut sich in den ersten 1,6 s sichtbar auf: Umrisse der großen Flächen, Flutfüllungen Zeile für Zeile, Details als Linien darüber",
+  "Prioritätsebene: der Dachs (Fußlinie y=152, Band 13) taucht hinter dem linken Fass auf (Band 14 ab der Deckelzeile 130; in Bild 53–61 ragen nur Mütze und Kopf heraus, Zeilen 122–129), ist kurz in der Spalte zwischen Fass und Laternenpfahl zu sehen und geht hinter dem Pfahl vorbei (Band 14 auf voller Breite x 123–126 ab Zeile 118)",
+  "Dachs als View: 30 Doppelpixel hoch, Körper 8 breit (10 mit Schalende und Schnauze), 6 Laufbilder mit 10 Bildern/s, Vorschub 2/1/1 Doppelpixel, Standfuß ortsfest; danach Stehen mit Schal im Wind und Drehung zum Spieler",
+  "Statuszeile weiß mit Ort und Punktestand, Eingabezeile mit Prompt „> nimm paket“ und blinkendem Unterstrich, Meldungsfenster weiß mit rotem Rahmen (senkrechte Linien 2 px, waagerechte 1 px breit)",
+  "eigene 8×8-Systemschrift font8, Fassung 2 (7 px breit mit 3 px Innenraum, Versalien 6 und x-Höhe 4 Zeilen; gegen 60 8×8-PC-Schriften geprüft: kein Buchstabe und keine Ziffer pixelgleich mit der IBM-EGA-Schrift), 40 Zeichen je Zeile, ohne Mischfarben",
+  "Umgebung als Views: Wasserglitzern, Blitz des Leuchtfeuers mit kurzen Strahlen, flackernde Laterne (nur das gelbe Glas, die Sprossen bleiben), Schornsteinrauch im Wind, Möwe über dem Wasser; nach der Eingabe verschwindet das Paket vom Kai, Punkte 0 → 2",
+  "zum Schluss 0,6 s CGA-Fassung desselben Bildes: 4 Farben, jedes Doppelpixel als Paar aus zwei CGA-Pixeln"
+ ],
+ "camera": "Seitenansicht wie eine Bühne, feste Kamera; Haus links, Steg mit zwei Booten in der Mitte, Leuchtturm rechts, der Kai als schmaler begehbarer Streifen vorn (28 Zeilen), naive Perspektive (Pflasterfugen laufen schräg zur Bildmitte)",
+ "resolution": "320×200 (Bild 160×168 Doppelpixel, Statuszeile 8 px, Eingabebereich 24 px), 16 EGA-Farben; kurz CGA mit 4 Farben; Pixel bewusst quadratisch (×3 = 960×600 in der 1280×720-Aufnahme), auf einem 4:3-Monitor waren sie 1,2-mal so hoch wie breit; die KI-Vorlage ist deshalb auf 320:168 zugeschnitten (ab 6 % der Höhe), nicht gestaucht",
+ "pipeline": [
+  {
+   "step": "Bildaufträge planen",
+   "tool": "prompts/make_jobs.py -> assets/image_jobs.json (tools/imagequeue.py)",
+   "detail": "Zwei Aufträge, kein Figurenbild (der Dachs ist als 10×30-View von Hand gesetzt). Stilblock: Hintergrund eines Parser-Adventures Mitte der 1980er, nur die 16 EGA-Farben als Liste, jede Form eine flache Farbe, Treppenkanten, kein Detail kleiner als 1/100 der Bildbreite, Lage in Prozent der Bildhöhe, Laterne und Fässer vorn rechts, Leuchtfeuer ohne Strahl, Schornstein ohne Rauch; Motivblock wörtlich, keine Namen. Die erste Welle in Phase 1 scheiterte (agy 429, Codex ohne Guthaben)."
+  },
+  {
+   "step": "Hintergrund erzeugen",
+   "tool": "genimg (gpt-image über Codex, zentrale Warteschlange)",
+   "detail": "assets/raw/bg_flat.png, 1536×1024, erster Versuch (63 s, backend codex laut .json; Codex bekommt den Prompt direkt, daher kein verbatim-Feld). Mittlerer Oklab-Abstand zur nächsten EGA-Farbe 0,064; außerhalb der Palette nur ein oranges Horizontband und dunkle Brauntöne. Komposition im Wesentlichen wie verlangt (Horizont bei 44 % statt 40 %); jeder Gegenstand hat eine schwarze Kontur."
+  },
+  {
+   "step": "Strichvorlage erzeugen",
+   "tool": "genimg (gpt-image über Codex), Referenz bg_flat.png",
+   "detail": "assets/raw/bg_lines.png, 1536×1024 (76 s, backend codex): dieselbe Komposition als schwarze Linien auf Weiß. 74 % der Linien liegen auf Farbkanten des umgewandelten Farbbilds (±1 Doppelpixel). Der ref_note im Auftrag („ignore its colours“) betrifft nur agy; Codex hielt sich auch so daran."
+  },
+  {
+   "step": "Farben und Raster",
+   "tool": "scripts/process_raw.py (ai_convert.py), Einstellungen scripts/ai_settings.json",
+   "detail": "Ausschnitt 320:168 ab 6 % der Höhe (Sterne oben bleiben im Bild; die Fässer unten schneidet er knapp über ihrem Fuß ab, sie sind deshalb neu gezeichnet); 24 Farbgruppen (k-means in Oklab) auf EGA abgebildet, zwei dunkle Brauntöne von Hand auf Schwarz (cluster_map über die Mittelfarbe #24170b/#441e0c, sonst wurden Fässer und Kisten dunkelrot); Mehrheit je Doppelpixel, Flächen unter 5 Pixeln gehen in der Nachbarfarbe auf. Orange wird Gelb. Ergebnis allein: assets/ai_bg_flat_visual.png (975 Befehle, Masten, Fugen und Sterne fehlen)."
+  },
+  {
+   "step": "Dünne Details aus der Strichvorlage",
+   "tool": "scripts/ai_convert.py (detail_from_lines)",
+   "detail": "Wo die Strichvorlage eine Linie hat und eine dunklere Minderheitsfarbe mindestens 25 % des Doppelpixels deckt (Nachbarpixel quer zur Linie mitgeprüft), wird diese gesetzt: 2987 Pixel, 113 einzelne zurückgenommen. Bringt Pflasterfugen, Masten, Fensterkreuz und Sterne zurück. Ergebnis ohne Nacharbeit: assets/ai_bg_flat_detail_visual.png (1609 Befehle). Die Flächen-Kombination aus Phase 1 (ai_bg_flat_lines) machte trotz guter Deckung aus Booten, Steg und Fässern Klumpen."
+  },
+  {
+   "step": "Handnacharbeit",
+   "tool": "scripts/ai_touchup.py",
+   "detail": "139 Zeichenoperationen (Rechtecke, Linienzüge mit dem Linienalgorithmus der Demo, Polygone) auf dem Indexbild vor dem Vektorisieren. Bereich x 10–112, y 56–141: Masten und Takelage aus dem Himmel genommen, Wasser neu angelegt, Steg, zwei Boote mit Steuerhaus, Mast und Takelage, acht Pfosten, Taue, zwei Kisten, Tauring, Poller und Spiegelungen nach dem KI-Bild nachgezeichnet (Koordinaten am Rohbild mit eingeblendetem Zielraster abgelesen); grau gewordene Wellenstriche wieder Hellcyan. Zweite Runde nach der Prüfung, Bereich x 122–157, y 82–167: Laternenpfahl (2 Doppelpixel Holz zwischen schwarzen Konturen, Manschette, Fuß) und beide Fässer (flacher brauner Körper, 1 Doppelpixel schwarze Kontur in Treppenstufen, ovaler Deckel, zwei Dauben, eine Schattenspalte, zwei dunkelgraue Reifen, Boden 3 Zeilen über der Unterkante) über kleine Zeichenfunktionen neu gezeichnet; 3 weiße Streupixel auf der Kaikante (Zeile 140, x 44/45/47) sind Pflaster. 2649 Doppelpixel geändert, 9,9 % des Bildes."
+  },
+  {
+   "step": "Befehlsliste und Lage",
+   "tool": "scripts/vectorize.py, scripts/ai_layout.py",
+   "detail": "1486 Befehle (1314 Linienzüge, 107 Füllstartpunkte, 31 KB). Automatisch: Kaikante 140, Wasserfarbe, Horizont 82, Leuchtfeuer, 12 Glitzerstellen, Prioritätsflächen (Pfahl und Fässer Band 14, Kisten und Poller Band 12). Die Prioritätsflächen zieht ai_layout.priority von der Kaikante aus nach oben, solange weder Wasser noch Himmel kommt (Schwarz und Dunkelgrau zählen zum Gegenstand), bis 4 Zeilen über die Mütze; nebeneinanderliegende Teile werden nur bei gleichem Band zusammengefasst. Von Hand (ai_settings.json → layout): Fußlinie 152 (die geschätzte 156 liegt im selben Band wie die Fässer, dann verdeckt nichts), Laternenglas [116, 83, 120, 93] (die Erkennung fand das Hausfenster), Schornstein [12, 21] (gefunden wurde die Dachkante), Start x=132. Godot spielt die Liste bitgleich zur Python-Wiedergabe ab (0 Pixel auf beiden Ebenen), das Bild steht nach 47 Bildern."
+  },
+  {
+   "step": "Vergleich und Wahl",
+   "tool": "assets/ai_compare.png, tools/capture.py",
+   "detail": "Verglichen: Handbild (370 Befehle), Farbbild allein, Flächen-Kombination, Detail-Variante und Detail-Variante mit Nacharbeit, jeweils in der laufenden Demo. Gewählt: KI-Bild mit Nacharbeit (Begründung unter verdict). Das Handbild bleibt als demo/art/harbor.pic.json und ist über demo/art/scene.json umschaltbar."
+  },
+  {
+   "step": "Handbild (Vergleich, Phase 1)",
+   "tool": "scripts/pic_harbor.py + scripts/agipic.py",
+   "detail": "Der Hafen als von Hand geschriebene Befehlsliste (Koordinaten im 160×168-Raster): Silhouetten, Himmelsbänder, Flutfüllungen, Details als Linien; Fässer und Laternenpfahl mit Priorität 14. 370 Befehle, 8,3 KB, 27 784 gezeichnete Pixel; Ansicht assets/harbor_visual.png"
+  },
+  {
+   "step": "Dachs-Vorlage",
+   "tool": "scripts/draft_badger.py",
+   "detail": "Das vorhandene Laufblatt shared/badger/walk_painted.png materialtreu (Fell, Weiß, Grün, Schal, Leder, Paket, Messing) auf ein Doppelpixel-Raster mit 30 Zeilen verkleinert und als Buchstabenraster ausgegeben: liefert Proportionen (Mütze 3, Kopf 5, Schal 3, Körper 11, Beine 7 Zeilen), aber keine brauchbaren Einzelbilder"
+  },
+  {
+   "step": "Dachs von Hand setzen",
+   "tool": "scripts/build_views.py",
+   "detail": "Körper nach rechts als Zeichenraster (10×31), Schalende in drei Windstellungen, Beine je Bild aus Hüfte und Fußposition gezogen (nahes Bein schwarz, fernes dunkelgrau), 1 Zeile Körperhub in den Durchgangsbildern, Vorderansicht mit zweiter Schalstellung. Ansicht assets/views_preview.png"
+  },
+  {
+   "step": "Systemschrift zeichnen und prüfen",
+   "tool": "scripts/build_font.py, scripts/font_compare.py",
+   "detail": "89 Zeichen 8×8 (A–Z, a–z, Umlaute, ß, Ziffern, Satzzeichen) als Text im Skript gezeichnet, Fassung 2: 7 px breit, senkrechte Striche 2 px, Innenräume 3 px, 1 px Abstand, Versalien und Ziffern 6 Zeilen, x-Höhe 4 Zeilen; Atlas font8.png + font8.json. font_compare.py vergleicht jede Glyphe mit den 60 8×8-Bitmapschriften des Ultimate Oldschool PC Font Pack v2.2 (kleinster Abstand über Verschiebungen um ±1): Fassung 1 hatte 35 von 88 Zeichen pixelgleich mit der IBM-EGA-Schrift und 58 mit einer weiteren und wurde ersetzt; Fassung 2 hat gegen die IBM-EGA-Schrift 0 von 69 Buchstaben und Ziffern pixelgleich (kleinster Abstand 6 px, Median 12 px), gegen alle 60 nur L. Das Schriftpaket wurde nur temporär außerhalb des Projekts geladen und nicht übernommen"
+  },
+  {
+   "step": "Godot-Demo",
+   "tool": "Godot 4.7, GDScript",
+   "detail": "Befehls-Interpreter, Views mit Prioritätsprüfung, Palettenshader (EGA/CGA), Oberfläche; Einzelheiten unter godot"
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/check_pic.py, scripts/probe_badger.py, tools/capture.py",
+   "detail": "check_pic.py: Godot-Interpreter und Python-Wiedergabe bitgleich, für das KI-Bild und das Handbild. probe_badger.py nimmt mit und ohne Dachs auf und misst die Differenz: Standfuß bei allen 24 sichtbaren Laufbildwechseln auf ±1 Doppelpixel fest, 0 Sprünge, 6 Wechsel mit Füßen hinter Fass und Pfahl; Kopfzeile 123 bzw. 122 in den Durchgangsbildern, Fußzeile 152 in allen Steh- und Vorderbildern, jedes Laufbild genau 3 Aufnahmebilder. Verdeckung (seit der Prüfung, die Fußmessung allein hatte die Lücken am Fassdeckel nicht gefunden): Silhouetten von Pfahl und Fässern aus der sichtbaren Ebene (je Zeile erste bis letzte schwarze Konturspalte, ab Zeile 118) gegen Prioritätsebene und Dachs: 958 Silhouettenpixel, 0 ohne Band 14, 0 Band-14-Pixel außerhalb; 0 Dachspixel in einer Silhouette in allen 180 Bildern; in Bild 53–61 steht der Dachs ganz in den Spalten des linken Fasses, sichtbar sind nur die Zeilen 122–129. Zwei Forward+-Aufnahmen bitgleich (180/180); Mobile und Kompatibilität in RGB bitgleich zu Forward+ (0 von 180 Bildern abweichend). capture.py: 0 Godot-Fehler, 0 Warnungen."
+  }
+ ],
+ "godot": [
+  "Viewport 320×200, stretch mode viewport, scale_mode integer, Standardfilter Nearest, Fenster 1280×800; keine Projektplugins",
+  "Bildfläche: Sprite2D bei (0, 8) mit scale (2, 1); Textur ist ein 160×168-Indexbild (Image FORMAT_R8), das jedes Bild per ImageTexture.update() neu hochgeladen wird",
+  "shaders/ega.gdshader: Index per texelFetch, Farbe aus fester 16-Farben-Tabelle; mode 1 = CGA: je Doppelpixel zwei Bildschirmpixel aus einer Paartabelle (links/rechts nach Bildschirm-x gerade/ungerade)",
+  "main.gd führt die Befehlsliste aus: Linien mit demselben Algorithmus wie agipic.py, Flutfüllung zeilenweise aus einer Warteschlange (die Fläche wächst sichtbar Zeile um Zeile); Budget je Bild aus build_rate der Bilddatei (KI-Bild 972 Pixel, Handbild 560) plus 8 je Linienbefehl, das KI-Bild steht nach 47 Bildern (1,6 s)",
+  "Views (Dachs, Paket, Möwe, Rauch, Glitzern, Leuchtfeuer) werden auf der CPU in eine Kopie des Indexpuffers gesetzt; ein View-Pixel erscheint nur, wenn seine Priorität ≥ der Prioritätsebene an dieser Stelle ist. Dachs: Priorität aus der Fußlinie (Band 13), gespiegelt für den Weg nach links",
+  "Laufen: Bildzähler statt aufsummierter Zeit für die Haltezeiten (Laufbild 3, Stehen 5, Vorderansicht 6 Aufnahmebilder); Position je Laufbild um den Vorschub aus views.json (2/1/1) versetzt, Start x=132 (layout.start_x, ganz hinter dem linken Fass), Halt nach 30 Laufbildern bei x=93 in Bild 5, dessen Standfuß zur Stehhaltung passt",
+  "Laterne: flackert nur auf den gelben Glaspixeln der Bilddatei (Kern = mittlere Spalte), damit Rahmen und Sprossen der großen KI-Laterne stehen bleiben; Möwe in der Flughöhe layout.gull_y (KI-Bild 90 über dem Wasser, Handbild 74)",
+  "ui.gd zeichnet Statuszeile, Eingabezeile und Meldungsfenster mit draw_rect und draw_texture_rect_region aus dem Schrift-Atlas (40 Spalten à 8 px); im CGA-Teil wird Rot zu Magenta",
+  "Ablauf: 0–1,6 s Bildaufbau, ab 1,8 s kommt der Dachs hinter dem linken Fass hervor und geht hinter dem Laternenpfahl vorbei, 2,3–5,1 s Meldungsfenster, ab 3,8 s wird „nimm paket“ getippt, bei 5,1 s Eingabe: Paket weg, Punkte 2, Dachs dreht sich zum Spieler; 5,4–6,0 s CGA",
+  "Zeit über delta, Zufall nur aus RandomNumberGenerator mit Seed 1986 (Flackern, Glitzerphasen)",
+  "Mess-Schalter (nur Kommandozeile, ohne Wirkung im normalen Lauf): --no-badger, --dump-pic=<Datei>, --timing, --pic=<Befehlsliste>",
+  "Rechenzeit je Bild (Desktop, --timing, KI-Bild, zwei Läufe): Mittel 0,43 ms (höchstens 0,61 ms) während des Aufbaus, 0,11 ms danach (headless 0,38–0,41 und 0,07–0,08 ms); Aufnahmen mit --rendering-method mobile und gl_compatibility sind in RGB bitgleich zur Forward+-Aufnahme (0 von 180 Bildern abweichend; gl_compatibility schreibt RGBA-PNGs)",
+  "Bildwahl über demo/art/scene.json: aktiv ist harbor_ai.pic.json (KI-Bild mit Nacharbeit, von scripts/process_raw.py geschrieben), harbor.pic.json ist das Handbild; Lage der animierten Teile (walk_y, lamp/lamp_origin, lantern, chimney_top, water, glints, start_x, parcel_x, gull_y) und Aufbau-Tempo (build_rate) stehen in der Bilddatei"
+ ],
+ "techniques": [
+  "textoberflaeche",
+  "zeichenbefehle-bildaufbau",
+  "prioritaetsbaender",
+  "sprite-animation"
+ ],
+ "ratings": {
+  "ai_fit": 3,
+  "consistency": 4,
+  "effort": 4,
+  "text_adventure": 5,
+  "mobile": 5
+ },
+ "ratings_note": "ai_fit 3: Das KI-Bild (Codex) ist in hoher Auflösung fast schon ein EGA-Bild und liefert Komposition und Farben des Raums; auf dem echten Raster von 160 Doppelpixeln brauchte es aber zwei Farbzuordnungen, vier Lagewerte und 139 Zeichenoperationen Nacharbeit. Steg, Boote, Kisten, Fässer und Laternenpfahl sind nachgezeichnet, unverändert aus der Umwandlung kommen Himmel, Meer, Haus, Leuchtturmfelsen und Pflaster; der Dachs ist ganz von Hand gesetzt. consistency 4: feste Palette, festes Raster und derselbe Stilblock halten Räume gleich, und die nachgezeichneten Gegenstände entstehen aus wiederverwendbaren Zeichenfunktionen (Pfosten, Fass, Pfahl); die Umwandlung allein ist nicht gleichmäßig (Klumpen an jeder dichten Gegenstandsgruppe). effort 4 (vorher 3): je Raum zwei Bildaufträge und Sekunden für die Umwandlung, dann aber rund 140 Zeichenoperationen an allen dichten Vordergrundgegenständen, Lagewerte und eine Verdeckungsmessung; weniger als 370 ganz von Hand geschriebene Befehle (Handbild), aber mehr als zuerst angenommen, weil außer Steg und Booten auch Fässer und Pfahl Nacharbeit brauchten. text_adventure 5: Statuszeile, Parserzeile und Bilder aus wenigen KB Befehlen sind genau die Form eines Parser-Adventures. mobile 5 gemessen: 0,43 ms Rechenzeit je Bild beim Aufbau, 0,11 ms danach, Mobile- und Kompatibilitäts-Renderer bitgleich.",
+ "verdict": "Für unser Textadventure passt der Stil sehr gut: Statuszeile, Parserzeile und ein Bild aus wenigen KB Befehlen, das sich beim Betreten sichtbar aufbaut, dazu Figuren, die hinter Gegenständen vorbeigehen. Verglichen wurden drei Wege für das Hafenbild (assets/ai_compare.png): Das Handbild (370 Befehle) ist sauber, aber karg und naiv, etwa auf dem Stand der ersten Titel von 1984. Das KI-Bild automatisch umgewandelt (1609 Befehle) hat die reichere Bühne mit Steinhaus, Wolkenbändern, großer Laterne und Fässern, aber Steg, Boote, Kisten, Fässer und Laternenpfahl zerfallen zu schwarz-braunen Klumpen. Das KI-Bild mit Nacharbeit (1486 Befehle, 9,9 % der Pixel neu gezeichnet) hat keine Klumpen mehr und läuft deshalb in der Demo; Haus, Felsen und Wolken stammen unverändert aus der Umwandlung und haben etwas unruhigere Kanten als die nachgezeichneten Gegenstände. Für viele Räume heißt das: KI-Vorlage und Strichvorlage je Raum, automatische Umwandlung, dann alle dichten Vordergrundgegenstände nachzeichnen (scripts/ai_touchup.py hat Zeichenfunktionen für Pfosten, Fässer und Pfahl) und die Verdeckung mit probe_badger.py messen. Figuren bleiben Handarbeit, 30 Doppelpixel hohe Views setzt man besser direkt.",
+ "pitfalls": [
+  "Steg mit Booten, Kisten und Tauwerk, Fässer und Laternenpfahl zerfallen bei der automatischen Umwandlung zu schwarz-braunen Klumpen: Das KI-Bild umrandet jeden Gegenstand schwarz und hat Schatten unter Steg und Fässern, und auf 160 Doppelpixeln Breite gewinnt dort oft Schwarz die Mehrheit. Behoben nur von Hand (scripts/ai_touchup.py, 139 Operationen); den Stand ohne Nacharbeit zeigt assets/ai_bg_flat_detail_visual.png. Die erste Fassung hatte nur Steg, Boote und Kisten nachgezeichnet (x 10–112); die Fässer blieben Klumpen mit schwarzen rechten Hälften, braun-schwarz gestreiften Deckeln und zerfransten Böden bis in die letzte Bildzeile, und auf der Kaikante lagen 3 weiße Streupixel. Erst die unabhängige Prüfung fand das.",
+  "Prioritätslücken über der Kaikante in der ersten Fassung: ai_layout.priority suchte Gegenstände nur ab der Kaikante (Zeile 140) und zählte beim Hochziehen Schwarz (oberstes Himmelsband) und Dunkelgrau (Pflasterfuge) als Hintergrund. Der linke Fassdeckel (Zeilen 131–139) lag deshalb auf Band 4, und der Dachs zeichnete sich in Bild 53–88 mit Schal, Weste und Paket vor den Deckel, während seine Beine ab Zeile 140 hinter dem Fassbauch verschwanden; vom Laternenpfahl hatte nur die Mittelspalte ab Zeile 128 Band 14 (in Bild 92–95 lagen Mütze und Kopf vor dem Pfahl, der Körper dahinter). probe_badger.py maß nur die Füße und fand das nicht. Behoben in ai_layout.priority (beim Hochziehen zählen nur Wasser und Himmel ohne Schwarz/Dunkelgrau, bis 4 Zeilen über die Mütze) und mit einer Verdeckungsmessung in probe_badger.py.",
+  "Nach der Korrektur fasste die Gruppierung den Poller (Fuß bei Zeile 142, Band 12) mit dem 1 Doppelpixel entfernten neuen Pfahlfuß zu einem Band-14-Gegenstand zusammen; der Poller hätte den Dachs verdeckt. Nebeneinanderliegende Teile werden jetzt nur bei gleichem Band zusammengefasst, übereinanderliegende (Deckel und Bauch eines Fasses) wie zuvor immer.",
+  "Der 320:168-Ausschnitt schneidet die Fässer knapp über ihrem Fuß ab (im KI-Bild bei Zeile 166,5 von 168). Ein tieferer Ausschnitt hätte die Farbgruppen und alle Koordinaten der Nacharbeit verschoben; die Fässer sind deshalb 2 Zeilen kürzer neu gezeichnet, Boden bei Zeile 164, darunter Fuge und Pflaster. Das linke Fass beginnt bei Zeile 130 statt 131,4, damit in den Durchgangsbildern keine Schalzeile neben der Deckelrundung hervorsteht.",
+  "Die Mehrheit je Doppelpixel verschluckt alles, was schmaler als etwa 10 Quellpixel ist (Masten, Takelage, Pflasterfugen, Sterne). Die Strichvorlage als Detailhinweis holt Fugen, Masten, Fensterkreuz und einige Sterne zurück, die Takelage aber nur als lose Punkte; deshalb ist sie nachgezeichnet.",
+  "Die Flächen-Kombination aus Phase 1 (Flächen aus der Strichvorlage, Farben aus dem Farbbild) machte trotz 74 % Deckung aus Booten, Steg und Fässern Klumpen. Die automatische Wahl in process_raw.py hätte sie genommen, weil sie nur Deckung und Befehlszahl prüfte; jetzt hat die Detail-Variante Vorrang.",
+  "Farbgruppen hängen vom Ausschnitt ab: Nach dem Wechsel des Ausschnitts trafen die Gruppennummern in cluster_map andere Farben (Wellen schwarz, Rumpf braun). Mit 20 Gruppen gingen der rote Rumpf und die hellblauen Wellen in Nachbargruppen auf, erst 24 trennten sie. Die hellcyanen Wellenstriche bekamen keine eigene Gruppe und wurden grau (in der Nacharbeit per Regel wieder Hellcyan).",
+  "EGA hat kein Orange: Das orange Horizontband des KI-Bilds wurde Gelb, der Sonnenuntergang ist deshalb ein breites gelbes Band unter Hellrot.",
+  "Lageschätzung am KI-Bild: Leuchtfeuer, Kaikante, Wasser und Glitzer stimmten automatisch, die Prioritätsflächen erst nach der Korrektur in ai_layout.priority (siehe oben). Die große Laterne mit Sprossen (5×11 Doppelpixel) fiel durch die Größenprüfung, erkannt wurde stattdessen das Hausfenster; der Schornstein landete an der Dachkante. Laterne, Schornstein, Fußlinie und Start sind von Hand gesetzt.",
+  "Die Kaikante liegt im KI-Bild bei 72 % der Bildhöhe, und die Fässer stehen, wie im Prompt verlangt, ganz vorn: Der begehbare Streifen ist nur 28 Zeilen hoch (Handbild 52), und die Fässer sind fast so hoch wie der Dachs. Er läuft deshalb nicht vom Bildrand herein, sondern taucht bei x=132 hinter dem linken Fass auf (ganz in dessen Spalten x 129–142; beim früheren Start x=137 stand sein Rücken über dem niedrigeren rechten Fass frei). Im KI-Bild berühren sich Pfahlfuß und Fass; nachgezeichnet bleibt dazwischen eine Spalte von 2 Doppelpixeln (x 127–128), damit die Prioritätsebene dort kein Pflaster verdeckt, und man sieht den Dachs darin kurz (Bild 62–80). Bei 6 von 30 Laufbildwechseln sind die Füße verdeckt und nicht messbar.",
+  "Bildaufbau des KI-Bilds: vectorize.py zeichnet die größten Flächen zuerst (Himmelsbänder, Meer, Kai), es sind 1486 Befehle und 31 KB JSON (Handbild 370 und 8,3 KB). Damit das Bild wie das Handbild nach etwa 1,6 s steht, setzt die Demo 972 statt 560 Pixel je Bild, schneller, als ein PC der Zeit ein so dichtes Bild gezeichnet hätte.",
+  "Pixel quadratisch statt 1,2-mal so hoch wie auf einem 4:3-Monitor: Das Bild wirkt etwas flacher als damals. Die KI-Vorlage wird deshalb auf 320:168 zugeschnitten, nicht gestaucht; oben fehlen 6 %, unten 15 % des KI-Bilds.",
+  "Vereinfacht gegenüber den Vorbildern: keine Steuerlinien in der Prioritätsebene (begehbare Fläche, Wasserkante), eigene 8×8-Schrift statt der BIOS-Schrift. Die CGA-Fassung nutzt eine eigene Paartabelle je EGA-Farbe.",
+  "Systemschrift Fassung 1 war keine eigene Zeichnung im Sinne ihrer Beschreibung („keine Kopie einer bestehenden Schrift“): Im Bau der PC-Textmodus-Schriften gezeichnet (6 px breit, 2 px Innenraum, Versalien 7 Zeilen), waren 35 von 88 Zeichen pixelgleich mit der IBM-EGA/CGA-Schrift und 58 mit einer weiteren 8×8-Schrift (dort um eine Spalte verschoben); eine externe Prüfung fand das. Fassung 2 ist neu gezeichnet und anders gebaut (7 px breit, 3 px Innenraum, Versalien 6 Zeilen, x-Höhe 4 Zeilen, eigene Formen u. a. für A, C, G, K, M, N, U, Z, a, p, s, u, v, y, 6, 8). Abgleich gegen alle 60 8×8-Schriften des Ultimate Oldschool PC Font Pack v2.2: gegen die IBM-EGA-Schrift kein Buchstabe und keine Ziffer pixelgleich (kleinster Abstand 6 px, Median 12 px); gegen alle 60 nur L, das keinen Spielraum hat, und O, P, R, Ö mit 2 px Abstand zu je einer Schrift. Einfache Satzzeichen (. , : ; ! - + = _ / ' \" *) bleiben mit einzelnen Schriften pixelgleich. Das Paket wurde nur temporär außerhalb des Projekts geladen und danach gelöscht.",
+  "Die Systemschrift Fassung 2 ist kleiner als die BIOS-Schrift (Versalien 6 statt 7 Zeilen, x-Höhe 4 statt 5) und mit 1 px Abstand dichter; in der Statuszeile bleibt dafür oben 1 px Rand. a, e, g und s haben in 4 Zeilen x-Höhe wenig Platz (e mit geschlossenem Auge ohne Innenraum, s als Zickzack), Umlautpunkte sind nur 1 px groß. Lesbar im Meldungsfenster und in der Eingabezeile, aber nicht auf einem echten Monitor geprüft.",
+  "Die Möwe ist nur 3–4 Doppelpixel groß und weiß; auf den hellen Himmelsbändern war sie nicht zu sehen, deshalb fliegt sie im KI-Bild über dem Wasser.",
+  "Erste Bildwelle in Phase 1: agy-Kontingent erschöpft (429 RESOURCE_EXHAUSTED), Codex ohne Guthaben, kein Bild. Die zentrale Warteschlange hat beide Bilder später über Codex erzeugt, nicht über agy wie in Phase 1 angenommen."
+ ],
+ "lessons": [
+  "Codex (gpt-image) trifft EGA fast direkt, wenn der Prompt die 16 Farben aufzählt, Treppenkanten und eine Mindestgröße der Details verlangt und die Lage der Bildteile in Prozent der Bildhöhe angibt: mittlerer Abstand zur Palette 0,064, Komposition beim ersten Versuch im Wesentlichen wie verlangt (Horizont bei 44 % statt 40 %), Leuchtfeuer ohne Strahl, kein Rauch.",
+  "Eine Strichvorlage mit dem Farbbild als Referenz übernimmt Codex genau (74 % der Linien auf Farbkanten). Als Detailhinweis genutzt statt als Flächengrenze (entlang der Linien die stärkste dunklere Minderheitsfarbe ab 25 % setzen), bringt sie dünne Linien zurück, ohne Flächen umzufärben.",
+  "Handzuordnungen von Farbgruppen über die Mittelfarbe (#rrggbb) angeben, nicht über die Gruppennummer; die ändert sich mit Ausschnitt und Gruppenzahl.",
+  "Nacharbeit als Rasteroperationen auf dem Indexbild vor dem Vektorisieren (scripts/ai_touchup.py): Die Befehlsliste entsteht danach wie gewohnt, und nach einer neuen Umwandlung lässt sich die Nacharbeit erneut anwenden. Koordinaten am Rohbild mit eingeblendetem 160×168-Raster ablesen.",
+  "Die Demo bekommt die Lage aller animierten Teile aus der Bilddatei (jetzt auch Startpunkt und Flughöhe der Möwe). Für das KI-Bild war außer der Laterne, die nur noch gelbe Glaspixel flackern lässt, kein neuer Code nötig.",
+  "Bild als Befehlsliste (Linien + Flutfüllungen) mit identischem Linienalgorithmus in Python und GDScript: Die Prüfung über --dump-pic zeigt für Handbild und KI-Bild 0 abweichende Pixel auf beiden Ebenen.",
+  "Flutfüllung zeilenweise aus einer Warteschlange mit festem Pixelbudget je Bild: Der Aufbau sieht aus wie auf einem langsamen PC, und mit build_rate in der Bilddatei steht jedes Bild nach etwa 50 Bildern.",
+  "Prioritätsebene automatisch: Gegenstand ist, was auf dem Kai nicht in allen senkrechten Streifen vorkommt (Pflaster und Fugen schon). Teile mit höchstens 1 px Abstand zusammenfassen (nebeneinander nur bei gleichem Band) und je Spalte füllen, sonst scheint der Dachs durch Fassreifen in Pflasterfarbe. Über der Kaikante nach oben fortsetzen, solange weder Wasser noch Himmel kommt; Schwarz und Dunkelgrau gehören dabei zum Gegenstand, auch wenn sie im Himmel oder im Pflaster vorkommen.",
+  "Farben von KI-Bildern über Gruppen statt Pixel auf eine feste Palette bringen; unbunte Gruppen nur auf Graustufen, bunte nur auf bunte Farben. Die reine Zuordnung je Pixel machte hier Orange und Grün zu Grau.",
+  "Verdeckung messen, nicht nur Füße: probe_badger.py vergleicht das Dachs-Differenzbild und die Prioritätsebene mit den sichtbaren Silhouetten der Verdecker (je Zeile erste bis letzte schwarze Konturspalte). Das findet Lücken und zu große Prioritätsflächen, die man in frames.jpg nicht sieht.",
+  "Gegenstände, die in vielen Räumen vorkommen, als kleine Zeichenfunktionen nachzeichnen (ai_touchup.py: post, barrel, lamp_pole): wenige Operationen je Gegenstand, gleiche Formensprache in allen Räumen, und die Lage steht als Konstante für die Prüfung bereit.",
+  "Eine eigene Pixelschrift gegen eine ganze Sammlung messen, nicht nur gegen das eine Vorbild: Die Bauweise 7 px breit mit 3 px Innenraum (wie font8 Fassung 2 im Eintrag c64-multicolor) ist selbst eine verbreitete PC-Bauweise; jener Satz hat gegen das PC-Schriftpaket 32 Zeichen pixelgleich mit einer Amstrad-Schrift. Hier trennen erst die geringere Höhe (Versalien 6, x-Höhe 4 Zeilen) und eigene Einzelformen die Schrift von allen 60 Schriften; scripts/font_compare.py macht die Messung wiederholbar."
+ ],
+ "assets": [
+  {
+   "file": "assets/ai_bg_flat_touchup.pic.json",
+   "kind": "background",
+   "made_with": "gpt-image (Codex) + scripts/process_raw.py (Farbgruppen, Details aus der Strichvorlage, vectorize.py) + Handnacharbeit scripts/ai_touchup.py; 1486 Befehle mit Lage, in der Demo als demo/art/harbor_ai.pic.json",
+   "prompt": "assets/raw/bg_flat.json"
+  },
+  {
+   "file": "assets/ai_bg_flat_touchup_visual.png",
+   "kind": "background",
+   "made_with": "Wiedergabe der Demo-Fassung (320×168, Doppelpixel)",
+   "prompt": "assets/raw/bg_flat.json"
+  },
+  {
+   "file": "assets/ai_bg_flat_touchup_priority.png",
+   "kind": "background",
+   "made_with": "Prioritätsebene der Demo-Fassung (Rot = 4, Hellrot = 12, Gelb = 14)",
+   "prompt": "assets/raw/bg_flat.json"
+  },
+  {
+   "file": "assets/ai_bg_flat_touchup_cga.png",
+   "kind": "background",
+   "made_with": "CGA-Fassung der Demo-Fassung über die Paartabelle",
+   "prompt": "assets/raw/bg_flat.json"
+  },
+  {
+   "file": "assets/ai_bg_flat_touchup_layout.png",
+   "kind": "background",
+   "made_with": "Prüfansicht: Kaikante, Fußlinie, Dachs an Start und Halt, Prioritätsflächen, Lampe, Laterne, Schornstein, Glitzer",
+   "prompt": "assets/raw/bg_flat.json"
+  },
+  {
+   "file": "assets/ai_bg_flat_detail_visual.png",
+   "kind": "background",
+   "made_with": "automatisch ohne Nacharbeit: Farbbild + Strichvorlage als Detailhinweis (1609 Befehle; Prompt der Strichvorlage: assets/raw/bg_lines.json)",
+   "prompt": "assets/raw/bg_flat.json"
+  },
+  {
+   "file": "assets/ai_bg_flat_visual.png",
+   "kind": "background",
+   "made_with": "automatisch, nur Farbbild (975 Befehle; Masten, Fugen und Sterne fehlen)",
+   "prompt": "assets/raw/bg_flat.json"
+  },
+  {
+   "file": "assets/ai_bg_flat_lines_visual.png",
+   "kind": "background",
+   "made_with": "automatisch, Flächen aus der Strichvorlage (Phase-1-Verfahren, verworfen; Prompt der Strichvorlage: assets/raw/bg_lines.json)",
+   "prompt": "assets/raw/bg_flat.json"
+  },
+  {
+   "file": "assets/bg_lines_mask.png",
+   "kind": "reference",
+   "made_with": "Linienraster der Strichvorlage (160×168, verdünnt)",
+   "prompt": "assets/raw/bg_lines.json"
+  },
+  {
+   "file": "assets/bg_flat_clusters.png",
+   "kind": "reference",
+   "made_with": "Farbzuordnung: Ausschnitt, 24 Farbgruppen, EGA-Fassung, Liste Gruppe -> EGA (grün = Handzuordnung)",
+   "prompt": "assets/raw/bg_flat.json"
+  },
+  {
+   "file": "assets/ai_compare.png",
+   "kind": "reference",
+   "made_with": "Vergleichsbogen: Handbild und alle KI-Fassungen",
+   "prompt": ""
+  },
+  {
+   "file": "assets/harbor.pic.json",
+   "kind": "background",
+   "made_with": "Handbild: von Hand geschriebene Zeichenbefehle (scripts/pic_harbor.py), 370 Befehle, sichtbare und Prioritätsebene; über demo/art/scene.json umschaltbar",
+   "prompt": ""
+  },
+  {
+   "file": "assets/harbor_visual.png",
+   "kind": "background",
+   "made_with": "Wiedergabe des Handbilds (320×168, Doppelpixel)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/harbor_cga.png",
+   "kind": "background",
+   "made_with": "CGA-Fassung des Handbilds (scripts/cga_preview.py)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/views.json",
+   "kind": "sprite",
+   "made_with": "von Hand gesetzte Views (scripts/build_views.py; Vorlage draft_badger.py aus shared/badger/walk_painted.png): Dachs 6 Laufbilder, 3 Stehbilder, 2 Vorderansichten; Leuchtfeuer, Möwe, Rauch",
+   "prompt": ""
+  },
+  {
+   "file": "assets/views_preview.png",
+   "kind": "sprite",
+   "made_with": "Ansicht der Dachs-Views vor Hellgrau und Dunkelblau",
+   "prompt": ""
+  },
+  {
+   "file": "assets/font8.png",
+   "kind": "ui",
+   "made_with": "eigene 8×8-Systemschrift Fassung 2, 89 Zeichen (scripts/build_font.py), CC0",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "8×8-Systemschrift font8, Fassung 2 (eigener Entwurf, scripts/build_font.py; gegen 60 8×8-PC-Schriften geprüft, Fassung 1 lag zu nah an der IBM-Schrift und ist ersetzt)",
+   "license": "CC0-1.0",
+   "source": "eigene Arbeit (Lizenztext: demo/fonts/font8-LICENSE.txt)"
+  }
+ ],
+ "image_generations": 2,
+ "tool_issues": [],
+ "status": "done"
+}

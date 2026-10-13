@@ -1,0 +1,9 @@
+Technical layer mask for a 2D game engine: exactly the attached pixel-art harbour picture, as if traced on a clear sheet laid on top of it, same size, same framing, every object at exactly the same position and with exactly the same outline, nothing moved, nothing added, nothing redrawn. Paint three kinds of areas in flat pure colours, everything else stays exactly as it is in the original, pixel for pixel, with its original colours:
+1. The whole sky, including the clouds, the stars, the orange horizon band and the small grey chimney smoke: one flat pure magenta #FF00FF.
+2. All open water, both the sea in the distance and the water strip at the bottom in front of the quay wall, including all coloured reflections and light dashes on the water: one flat pure cyan #00FFFF.
+3. Everything far away: the distant hills and the far shore with its small houses, the small rocky islets in the sea, and the whole rocky headland on the right with the lighthouse, the keeper's house and the trees: one flat pure yellow #FFFF00.
+Keep every near object exactly as it is in the original, with its original colours: the cottage with roof, chimney, window, door, drainpipe and steps, the plants, the lobster pot, the barrels, the crates, the rope coil, the lantern with its post, the quay paving, the stone front wall of the quay, the wooden posts, the bollards, the wooden jetty with all its posts and ropes, and both boats including masts, rigging lines and fenders. Hard pixel edges between the flat colours and the objects, no anti-aliasing, no outline, no glow, no shadow on the flat colours.
+
+No text, letters, numbers, signatures, watermarks or logos anywhere in the image.
+
+Image format: landscape 3:2.

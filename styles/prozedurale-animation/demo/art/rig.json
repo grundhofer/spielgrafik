@@ -1,0 +1,121 @@
+{
+ "_comment": "Einheit: Texturpixel (Blatt x 0,30). Ursprung: Bodenpunkt unter der Hüfte des nahen Beins.",
+ "scale": 0.3,
+ "display_scale": 0.6667,
+ "body_tex_origin": [
+  -63.3,
+  -267.3
+ ],
+ "body_pivot": [
+  0.0,
+  -74.4
+ ],
+ "leg_tex_origin": [
+  -28.5,
+  -95.4
+ ],
+ "leg_local": {
+  "hip": [
+   28.5,
+   21.0
+  ],
+  "knee": [
+   27.0,
+   49.5
+  ],
+  "ankle": [
+   26.4,
+   76.5
+  ],
+  "sole": 95.4,
+  "toe": [
+   67.8,
+   90.0
+  ],
+  "heel": [
+   12.6,
+   93.6
+  ]
+ },
+ "far_leg_offset": [
+  -21.0,
+  -1.8
+ ],
+ "scarf_anchor": [
+  -30.3,
+  -195.9
+ ],
+ "strap_anchor": [
+  -34.8,
+  -181.8
+ ],
+ "back_capsule": {
+  "a": [
+   6.3,
+   -153.3
+  ],
+  "b": [
+   6.3,
+   -87.3
+  ],
+  "r": 52.5
+ },
+ "eye": [
+  45.3,
+  -222.3
+ ],
+ "eye_r": 4.5,
+ "satchel_size": [
+  52.5,
+  58.5
+ ],
+ "satchel_attach": [
+  26.4,
+  3.0
+ ],
+ "satchel_rings": [
+  [
+   4.8,
+   4.8
+  ],
+  [
+   48.0,
+   4.8
+  ]
+ ],
+ "scarf_size": [
+  37,
+  102
+ ],
+ "sizes": {
+  "body": [
+   146,
+   226
+  ],
+  "leg": [
+   70,
+   98
+  ],
+  "scarf": [
+   37,
+   102
+  ],
+  "satchel": [
+   52,
+   58
+  ],
+  "assembled": [
+   146,
+   271
+  ]
+ },
+ "assembled_origin": [
+  -63.3,
+  -268.5
+ ],
+ "lid_color": [
+  0.263,
+  0.216,
+  0.204
+ ]
+}

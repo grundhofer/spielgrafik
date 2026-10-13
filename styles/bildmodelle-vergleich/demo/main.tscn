@@ -1,0 +1,90 @@
+[gd_scene load_steps=16 format=3]
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="Shader" path="res://shaders/compare.gdshader" id="2_compare"]
+[ext_resource type="Script" path="res://hud.gd" id="3_hud"]
+[ext_resource type="Shader" path="res://shaders/final_wipe.gdshader" id="4_wipe"]
+[ext_resource type="Texture2D" path="res://art/final_bg.png" id="5_bg"]
+[ext_resource type="Texture2D" path="res://art/glow_lamp.png" id="6_lamp"]
+[ext_resource type="Texture2D" path="res://art/glow_lantern.png" id="7_lantern"]
+[ext_resource type="Texture2D" path="res://art/glow_window.png" id="8_window"]
+[ext_resource type="Script" path="res://glints.gd" id="9_glints"]
+[ext_resource type="Texture2D" path="res://art/badger_walk.png" id="10_walk"]
+[ext_resource type="Script" path="res://pixel_ui.gd" id="11_ui"]
+
+[sub_resource type="ShaderMaterial" id="M_compare"]
+shader = ExtResource("2_compare")
+shader_parameter/split_cur = 0.85
+shader_parameter/split_next = 0.85
+shader_parameter/change = 0.0
+shader_parameter/size = Vector2(870, 580)
+
+[sub_resource type="ShaderMaterial" id="M_wipe"]
+shader = ExtResource("4_wipe")
+shader_parameter/reveal = 0.0
+
+[sub_resource type="CanvasItemMaterial" id="M_add"]
+blend_mode = 1
+
+[sub_resource type="CanvasItemMaterial" id="M_add2"]
+blend_mode = 1
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="Compare" type="ColorRect" parent="."]
+material = SubResource("M_compare")
+offset_left = 205.0
+offset_top = 20.0
+offset_right = 1075.0
+offset_bottom = 600.0
+
+[node name="Hud" type="Node2D" parent="."]
+script = ExtResource("3_hud")
+
+[node name="Pixel" type="SubViewport" parent="."]
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+canvas_item_default_texture_filter = 0
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+
+[node name="Bg" type="Sprite2D" parent="Pixel"]
+texture = ExtResource("5_bg")
+centered = false
+
+[node name="WindowGlow" type="Sprite2D" parent="Pixel"]
+material = SubResource("M_add")
+position = Vector2(16, 56)
+texture = ExtResource("8_window")
+centered = false
+
+[node name="LanternGlow" type="Sprite2D" parent="Pixel"]
+material = SubResource("M_add")
+position = Vector2(62, 55)
+texture = ExtResource("7_lantern")
+centered = false
+
+[node name="LampGlow" type="Sprite2D" parent="Pixel"]
+material = SubResource("M_add2")
+position = Vector2(287, 11)
+texture = ExtResource("6_lamp")
+centered = false
+
+[node name="Glints" type="Node2D" parent="Pixel"]
+script = ExtResource("9_glints")
+
+[node name="Badger" type="Sprite2D" parent="Pixel"]
+texture = ExtResource("10_walk")
+centered = false
+hframes = 6
+
+[node name="Ui" type="Node2D" parent="Pixel"]
+script = ExtResource("11_ui")
+
+[node name="Final" type="TextureRect" parent="."]
+texture_filter = 1
+material = SubResource("M_wipe")
+offset_right = 1280.0
+offset_bottom = 720.0
+expand_mode = 1

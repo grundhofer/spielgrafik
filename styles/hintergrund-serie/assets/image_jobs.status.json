@@ -1,0 +1,27 @@
+[
+ {
+  "out": "styles/hintergrund-serie/assets/raw/hafen.png",
+  "status": "ok",
+  "tries": 1
+ },
+ {
+  "out": "styles/hintergrund-serie/assets/raw/leuchtturm.png",
+  "status": "ok",
+  "tries": 1
+ },
+ {
+  "out": "styles/hintergrund-serie/assets/raw/stube.png",
+  "status": "ok",
+  "tries": 1
+ },
+ {
+  "out": "styles/hintergrund-serie/assets/raw/klippe.png",
+  "status": "ok",
+  "tries": 1
+ },
+ {
+  "out": "styles/hintergrund-serie/assets/raw/walk.png",
+  "status": "ok",
+  "tries": 1
+ }
+]

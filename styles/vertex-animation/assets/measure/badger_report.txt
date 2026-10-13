@@ -1,0 +1,11 @@
+Messbilder: 180 (t = 0.025 … 5.992 s)
+Aufgesetzter Fuß (Zehe), Wanderung von Bild zu Bild:
+  Laufen                         Paare  38  max   9.2 mm / 1.16 px  Mittel  0.6 mm / 0.08 px  (schlimmstes: Bild 4, Fuß L); über 1 px: 1
+  Abbiegen im Gehen              Paare  17  max   5.8 mm / 0.73 px  Mittel  4.0 mm / 0.40 px  (schlimmstes: Bild 71, Fuß R); über 1 px: 0
+  Bremsen + Überblenden          Paare  17  max  19.4 mm / 1.08 px  Mittel  5.9 mm / 0.36 px  (schlimmstes: Bild 93, Fuß R); über 1 px: 1
+  Stehen (Idle, Winken, Idle)    Paare 162  max   4.9 mm / 0.40 px  Mittel  0.1 mm / 0.02 px  (schlimmstes: Bild 100, Fuß L); über 1 px: 0
+Mützendeckel (Bild-y) Sprung von Bild zu Bild: max 1.90 px, Mittel 0.32 px
+Silhouette: 180 Bilder; Höhe im Stehen 128 px
+  Fußzeile im Stehen (t ≥ 3,3 s): Werte [678]  Spanne 0 px
+  Fußzeile im Laufen: 655 … 677 px (Schritte heben die Füße)
+  oberste Zeile, Sprung von Bild zu Bild: max 2 px (Bild 1), Mittel 0.32 px

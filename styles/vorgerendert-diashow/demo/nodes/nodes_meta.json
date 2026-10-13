@@ -1,0 +1,165 @@
+{
+ "image_size": [
+  544,
+  332
+ ],
+ "fps": 15,
+ "loop_frames": 30,
+ "palette": "palette.png",
+ "glare": {
+  "steg": [
+   318.4,
+   24.4
+  ]
+ },
+ "nodes": {
+  "kai": {
+   "name": "Kai",
+   "base": "base.png",
+   "clips": [
+    {
+     "file": "clip_0.png",
+     "rect": [
+      213,
+      0,
+      57,
+      85
+     ],
+     "frames": 30,
+     "cols": 30,
+     "loop_from": 0,
+     "kind": "ambient"
+    },
+    {
+     "file": "clip_1.png",
+     "rect": [
+      325,
+      79,
+      18,
+      24
+     ],
+     "frames": 30,
+     "cols": 30,
+     "loop_from": 0,
+     "kind": "ambient"
+    },
+    {
+     "file": "clip_2.png",
+     "rect": [
+      269,
+      106,
+      15,
+      18
+     ],
+     "frames": 30,
+     "cols": 30,
+     "loop_from": 0,
+     "kind": "ambient"
+    },
+    {
+     "file": "clip_3.png",
+     "rect": [
+      243,
+      107,
+      13,
+      16
+     ],
+     "frames": 30,
+     "cols": 30,
+     "loop_from": 0,
+     "kind": "ambient"
+    },
+    {
+     "file": "clip_4.png",
+     "rect": [
+      410,
+      229,
+      134,
+      103
+     ],
+     "frames": 30,
+     "cols": 15,
+     "loop_from": 0,
+     "kind": "ambient"
+    }
+   ]
+  },
+  "steg": {
+   "name": "Steg",
+   "base": "base.png",
+   "clips": [
+    {
+     "file": "clip_0.png",
+     "rect": [
+      274,
+      0,
+      91,
+      52
+     ],
+     "frames": 30,
+     "cols": 22,
+     "loop_from": 0,
+     "kind": "ambient"
+    },
+    {
+     "file": "clip_1.png",
+     "rect": [
+      0,
+      119,
+      509,
+      213
+     ],
+     "frames": 30,
+     "cols": 4,
+     "loop_from": 0,
+     "kind": "ambient"
+    },
+    {
+     "file": "badger.png",
+     "rect": [
+      193,
+      184,
+      257,
+      148
+     ],
+     "frames": 117,
+     "cols": 7,
+     "loop_from": 87,
+     "kind": "badger"
+    }
+   ]
+  },
+  "tuer": {
+   "name": "Leuchtturmtür",
+   "base": "base.png",
+   "clips": [
+    {
+     "file": "clip_0.png",
+     "rect": [
+      398,
+      214,
+      146,
+      118
+     ],
+     "frames": 30,
+     "cols": 14,
+     "loop_from": 0,
+     "kind": "ambient"
+    },
+    {
+     "file": "clip_1.png",
+     "rect": [
+      0,
+      215,
+      241,
+      117
+     ],
+     "frames": 30,
+     "cols": 8,
+     "loop_from": 0,
+     "kind": "ambient"
+    }
+   ]
+  }
+ }
+}

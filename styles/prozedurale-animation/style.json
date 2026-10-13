@@ -1,0 +1,194 @@
+{
+ "slug": "prozedurale-animation",
+ "name": "Prozedurale Animation",
+ "family": "technik",
+ "kind": "technique",
+ "era": "In Spielen seit den 1990ern (Physik-Ketten, Fuß-IK), als eigener Ansatz für ganze Figuren seit etwa 2008 (Spore) und in Indie-Spielen der 2010er; für 2D-Figuren heute vor allem als Feder- und Tween-Bewegung einzelner Bilder",
+ "summary": "Der Dachs bewegt sich ohne ein einziges Animationsbild: Ein starres KI-Körperbild, ein KI-Bein (zweimal verwendet), ein Schalende und die Tasche werden zur Laufzeit von Code bewegt. Schrittauslösung mit Zwei-Gelenk-IK hält die Standfüße fest, Federn wippen, neigen und stauchen den Körper, Schal und Taschenriemen sind Verlet-Ketten mit festem Zeitschritt, ein weicher Kontaktschatten folgt den Füßen. Die Boote reiten als Feder-Dämpfer auf derselben Wellenfunktion wie der Wasser-Shader, die Möwen fliegen als Schwarm, die Laterne flackert nach Rauschen und Böen, und der Schornsteinrauch treibt als Partikelzug im selben Wind wie der Schal. Eine Einblendung im Himmel zeigt live Gelenke, Ketten und Federwerte.",
+ "references": [
+  "Spore (Maxis, 2008) – Laufbewegung beliebig gebauter Kreaturen vollständig aus Code",
+  "Rain World (Videocult, 2017) – Kreaturen aus Ketten, IK und Physik statt Animationsbildern",
+  "Grow Home (Ubisoft Reflections, 2015) – prozedural laufender und kletternder Roboter",
+  "Overgrowth (Wolfire Games, 2017) und der GDC-Vortrag „An Indie Approach to Procedural Animation“ (David Rosen, 2014) – wenige Schlüsselposen, Rest aus Federn und Interpolation",
+  "Viele 2D-Mobil- und Casualspiele – einzelne Figurenbilder mit Wippen, Squash & Stretch und Feder-Nachschwingen statt Bildfolgen"
+ ],
+ "traits": [
+  "Kein Animationsbild und kein AnimationPlayer: Der Dachs ist ein KI-Teileblatt (Codex) aus Körper (Kopf, Rumpf, Arm mit Paket, starr), einem Bein (für das ferne Bein mit Faktor 0,62 abgedunkelt), dem Schalende und der Tasche; die Schalwicklung liegt als Deckebene darüber, aus dem Körperbild selbst geschnitten",
+  "Gehen per Schrittauslösung: Steht kein Fuß in der Luft, schwingt der Fuß mit dem größten Rückstand (0,23 s, glatte Bahn mit min. Ruck, Hub bis 7 Texturpixel) zum vorausberechneten Ziel; 3,2 Schritte/s bei 75 px/s, beim Bremsen von selbst kürzere Schritte, bis die Füße nebeneinander stehen. Im Bild: Lauf von x 250 (rechts der Hausecke, Füße auf dem Pflaster) bis x 520 rechts neben dem Laternenpfahl, Bremsen 3,4–3,8 s, letzter Schritt landet bei 3,87 s, danach 2,1 s Stand; 13 Schritte im Bild (Zähler 9 → 22, die ersten 9 fallen in den 3-s-Vorlauf)",
+  "Standfuß ortsfest, gemessen in der Godot-Ausgabe (Bein einzeln vor Magenta, untere 5 Zeilen, Figurpixel = Summe |RGB − Magenta| > 90): in allen 14 Standphasen (7 je Bein) Ferse, Zehe und Sohlenzeile 0 px Spanne; im Stand Sohlenzeile 585 (nah) und 583 (fern) in jedem Bild, ebenso ab t = 40 s. Die Sohlenzeile hängt an der Schwelle: fern 584 bei Schwelle ≤ 60, nah 584 bei Schwelle ≥ 250 (weich auslaufender Rand)",
+  "Beine als Gitter (379 Punkte, 658 Dreiecke je Bein) mit drei Knochen (Oberschenkel, Unterschenkel, Fuß) und weichen Gewichten; Knie aus Zwei-Gelenk-IK nach vorn, Fuß rollt im Schwung um bis zu 12,6° ab und setzt mit der Ferse auf, die Sohle wird nie unter den Boden gedreht",
+  "Körper aus Federn: Hüfthöhe aus der Reichweite der Standbeine plus Heben im Durchschwung (Mützenoberkante wippt zwischen Zeile 406 und 416, größter Sprung 4 px je Bild, größte zweite Differenz 3 px, beides aus dem Wippen mit 3,2 Hz, kein Springen); Stauchung aus vertikaler Beschleunigung und Aufsetzimpuls (Höhe 96,4–101,8 %); Vorlage 4,3° beim Gehen, 9,1° beim Bremsen, Rückfedern bis −2,6°; im Stand Atmen (±1,4 %, 2,7 s) und gezeichnetes Lid (Blinzeln bei 1,35 s und 4,45 s, danach alle 3–5 s, Seed 5)",
+  "Schalende (7 Glieder) und Taschenriemen (6 Glieder, Tasche als schweres Endglied) als Verlet-Ketten mit 120 Hz und 8 Iterationen, quadratischer Luftwiderstand (Schal k = 0,05, Riemen k = 0,085) gegen Fahrtwind plus Wind (Grundwind −24 Texturpx/s und Böen aus Rauschen). Schal beim Gehen 26–31° nach hinten; beim Anhalten schwingt er über die Senkrechte 11,4° nach vorn (bei 4,07 s), federt auf 15,9° nach hinten zurück und pendelt sich bei 4–6° hinten ein (Winkel Wurzel → Spitze gegen die Senkrechte, aus dem Zustandsprotokoll). Die Tasche pendelt nach (Taschenring zwischen 42 und 58 Texturpixeln hinter der Hüfte, rund 11 Bildpixel Weg, zwei Ausschläge) und stößt an eine Rückenkapsel. Kettenlängen beim Gehen und Bremsen höchstens 0,54 % (Schal) bzw. 1,8 % (Riemen mit schwerer Tasche) gedehnt, im Stand bis 120 s höchstens 0,25 % bzw. 0,57 %",
+  "Eine Wellenfunktion für alles: h(X, Z, t) aus drei Tiefwasserwellen (λ 9 / 5,5 / 3,2 m, ω = √(g·k)), Z aus der Bildzeile einer ebenen Wasserfläche; der Wasser-Shader verschiebt die gemalte Fläche um ganze Pixel und setzt kurze, an den Enden weich auslaufende Kammstriche und Glitzer, die Boote folgen h an Bug, Mitte und Heck als Feder-Dämpfer (Fischerboot bis 3,6 px Hub und 1,5°, Ruderboot bis 8 px und 3,4°), Wasserlinie mit Schaumsaum und Spiegelbild werden mit demselben h geschnitten; Festmacher sind Verlet-Seile. Die Wassermaske folgt den gemalten Umrissen von Kaiplatte, Pfählen, Fässern und Kisten",
+  "Fünf Möwen als Boids (Trennung, Ausrichtung, Zusammenhalt, wandernder Zielpunkt, weiche Ränder) als Linienzüge gezeichnet; Flügelschlag beim Steigen und bei wenig Tempo, Gleiten beim Sinken",
+  "Laterne flackert nach fBm-Rauschen und stärker bei Böen (dieselbe Böenfunktion bewegt Schal und Rauch), mit Lichtfleck auf dem Kai und warmem Schein auf dem Dachs nach Abstand; Leuchtfeuer aus zwei Keilen, die sich um die senkrechte Achse drehen, Aufblitzen in Blickrichtung; gemalter Lichthof und heller Wolkenstreifen auf Lampenhöhe sind aus dem Hintergrund retuschiert, damit es nur den animierten Strahl gibt",
+  "Schornsteinrauch aus Code: Partikelzug aus dem höheren Topf (alle 0,11 s ein Teilchen, 4 s Lebensdauer, rund 36 weiche Scheiben), Auftrieb nimmt ab, seitliches Rauschen, Teilchen nehmen den gemeinsamen Wind verzögert an; bei Böen biegt die Fahne nach links",
+  "Kontaktschatten aus Code: schwache Gesamtellipse unter dem Körper und je Fuß eine weiche Ellipse (radialer Verlauf), die mit der Fußhöhe schmaler und blasser wird (bei vollem Hub von 7 Texturpixeln auf gut 40 % Deckkraft)",
+  "Einblendung „Bewegung nur aus Code“ im freien Himmel zwischen Laterne und Leuchtfeuer (x 486–816, y 12–248), Pfostenkopf, Ausleger und Haken der Laterne bleiben frei: SubViewport mit geteilter 2D-Welt zeigt dieselbe Figur abgedunkelt mit Körperrahmen, Neigungsachse, IK-Beinen, Standpunkten, Ketten, Rückenkapsel, Fahrtwindpfeil und Live-Werten (Schritt, Stauchung, Neigung)",
+  "Textleiste unten mit ui_text (Baloo 2): Ort, getippte Zeile, drei Antworten, Parserzeile mit Schreibmarke; deckt 14,9 % des Bildes, die Einblendung weitere 8,5 % (zusammen 23,3 %)",
+  "Deterministisch: fester Schritt 1/120 s, 3 s Vorlauf, Zufall nur mit festen Seeds; Zeit aus aufsummierten delta-Werten, im Movie-Maker-Lauf aus Bildzähler × 1/30, sodass Bild k genau t = k/30 zeigt und je Bild genau 4 Simulationsschritte laufen; zwei Läufe ergeben bitgleiche Bilder (180 Bilder, md5)"
+ ],
+ "camera": "Feste Seitenansicht über den Kai wie im Hintergrundbild, keine Kamerafahrt; der Dachs läuft von x 250 (rechts der Hausecke, bei t = 0 schon im Gehen) bis rechts neben den Laternenpfahl (x 520) und bleibt unter der Laterne stehen",
+ "resolution": "1280×720. Hintergrund aus dem agy-Bild (1264×848, 3:2) auf die Zeilen 24–735 beschnitten (16:9) und auf 1280×720 vergrößert (×1,013). Figurenteile im Maßstab 0,30 des KI-Blatts (Körper 146×226), im Bild mit 0,667 und Mipmaps verkleinert (Dachs etwa 180 px hoch); Boote im Maßstab 0,40, im Bild 232 bzw. 150 px breit",
+ "pipeline": [
+  {
+   "step": "Prompts",
+   "tool": "scripts/make_prompts.py",
+   "detail": "Stilblock (sauberer dunkelbrauner Umriss, flache Zellschattierung wie das Referenzblatt der Figur, damit Figur und Hintergrund zusammenpassen) + Motivblock und Schutzregeln wörtlich aus data/motif.json + Formatangabe; Hintergrund ausdrücklich ohne Boote, Rauch, Vögel, Strahl und Lichthof, weil diese animiert werden (alle fünf sind jetzt in Code animiert). Alle drei Aufträge in assets/jobs.json."
+  },
+  {
+   "step": "Hintergrund",
+   "tool": "genimg (agy, verbatim: true), 1536×1024 bestellt",
+   "detail": "Erster Versuch, 67 s, geliefert 1264×848 JPEG. Ohne Boote, Rauch und Möwen wie verlangt; Kai als freie Lauffläche, Laterne bei 35 % der Breite, Steg, Leuchtturm auf der Felsnase rechts. Trotz Prompt gemalt: ein Lichthof um das Leuchtfeuer und ein heller, rosa Wolkenstreifen genau auf Lampenhöhe (in prep_assets.py retuschiert)."
+  },
+  {
+   "step": "Teileblatt des Dachses",
+   "tool": "genimg (Codex, Weg „Transparenz“), 1536×1024, Referenz shared/badger/master_sheet.png",
+   "detail": "Erster Versuch, 93 s, echter Alphakanal. Links die zusammengesetzte Figur in Seitenansicht als Vorlage, rechts Körper ohne Beine, Tasche und loses Schalende, ein Bein, das Schalende und die Tasche. scripts/pa_cc.py findet ohne Nacharbeit genau 5 Komponenten."
+  },
+  {
+   "step": "Boote",
+   "tool": "genimg (Codex, Weg „Transparenz“), 1536×1024",
+   "detail": "Erster Versuch, 62 s, echter Alphakanal: Fischerboot mit Mast und Ruderboot in reiner Seitenansicht mit ganzem Rumpf bis zum Kiel (wird im Spiel an der Wasserlinie geschnitten)."
+  },
+  {
+   "step": "Lage der Teile",
+   "tool": "scripts/pa_align.py",
+   "detail": "Körper über den Kopfbereich, Bein über die Pfote gegen die Vorlage verschoben (kleinste Farbabweichung plus Strafterm für ungleiche Deckung): Körper (−585, −15), Bein (−932, 14) Blattpixel. Von Hand abgelesen nur Hüfte, Knie, Knöchel, Zehe und Ferse am Bein, Schal- und Riemenanker, Rückenkapsel, Augenmitte und die Wasserlinien der Boote."
+  },
+  {
+   "step": "Aufbereiten",
+   "tool": "scripts/prep_assets.py (Pillow, NumPy)",
+   "detail": "Teile vormultipliziert mit Lanczos auf 0,30 (Boote 0,40), Alpha 254 → 255. Schalwicklung als Deckebene: rote Pixel plus angrenzende dunkle Kontur aus dem Körperbild (Augenzeilen ausgenommen, braune Iris). Hintergrund beschnitten, skaliert und retuschiert: Wolkenstreifen auf Lampenhöhe (x ≈ 878–1280, y ≈ 142–160, erkannt an Blau kaum über Rot) je Spalte aus den geglätteten Himmelszeilen darüber und darunter gefüllt und weich überblendet; gemalter Lichthof bis r ≈ 76 px zum waagerecht gemittelten Himmel gezogen, der Turm bleibt durch eine an seiner Kontur gestoppte Flutfüllung unberührt. Wassermaske über die Farbe (grün > rot, blau > rot) plus Flutfüllung ab drei offenen Wasserpunkten, die an der dunklen Kontur (Helligkeit < 75) stoppt: Kaiplatte, Laternenpfahl, Stegpfosten, Fässer und Kisten fallen entlang ihrer gemalten Umrisse heraus (125 704 statt 116 014 Wasserpixel im Rohbild), geprüft als Overlay über bg.png. Lichtpunkte, Schornsteintopf, Stegpfosten, Horizont in assets/scene.json, Rig-Punkte in assets/rig.json, Lidfarbe als Median des dunklen Fells im Ring um das Auge."
+  },
+  {
+   "step": "Bewegung",
+   "tool": "demo/scripts/badger.gd, chain.gd, waves.gd, boat.gd, gulls.gd, fx.gd, smoke.gd",
+   "detail": "Alles zur Laufzeit in GDScript, fester Schritt 1/120 s: Tempoprofil (75 px/s, Bremsen ab 3,4 s in 0,4 s), Schrittauslösung, Zwei-Gelenk-IK, Gitterverformung der Beine auf der CPU, Körperfedern, Verlet-Ketten, Kontaktschatten, Feder-Dämpfer-Boote, Boids, Rauschen, Rauchteilchen. Rund 0,8 ms GDScript je Bild auf einem Apple M4 Pro (Zeit um _advance() im Fensterlauf, Mittel über 179 Bilder, 4 Simulationsschritte plus Zeichnen-Update), davon rund 0,1 ms für den Rauch; die frühere Angabe 0,46 ms war ohne Rauch und Schatten gemessen und ist nicht direkt vergleichbar."
+  },
+  {
+   "step": "Prüfung",
+   "tool": "scripts/measure_badger.py, scripts/make_checks.py",
+   "detail": "Drei Läufe vor Magenta (nur nahes Bein, nur fernes Bein, nur Körper) mit Zustandsprotokoll je Bild: Standphasen aus dem Protokoll, Ferse/Zehe/Sohlenzeile je Phase 0 px, Kopf ohne Sprünge über 4 px, Schalwinkel und Taschenweg aus dem Protokoll; Wiederholung ab t = 40 s. Kettendehnung aus dem Protokoll über 6 s und 120 s. Zwei Läufe bitgleich. Renderer: mobile pixelgleich, gl_compatibility mittlere Abweichung 0,12 Tonwerte, in 90 Bildern ein einziges Pixel über 8 (110, am Festmacher des Fischerboots). Einzelbilder 20/120 (Strahl abgewandt), 60/140 (Wasserränder) und ein Bild bei t = 40 s angesehen. Prüfbilder assets/check/rig_rest.png und motion_strip.png."
+  },
+  {
+   "step": "Aufnahme",
+   "tool": "tools/capture.py --poster-at 0.556",
+   "detail": "6 s, 30 fps, ohne Godot-Fehler und -Warnungen; Poster bei 3,33 s (Bild 100): Dachs rechts neben dem Laternenpfahl mitten im Schritt mit wehendem Schal, Laterne mit Ausleger frei, Rauch und vollständige Textleiste."
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, stretch mode canvas_items, Forward+, nur 2D, keine Plugins; Hauptszene main.tscn mit main.gd, alle Knoten im Code gebaut",
+  "main.gd: Zeit aus aufsummiertem delta, im Movie-Maker-Lauf (Engine.get_write_movie_path() nicht leer) aus Bildzähler × 1/fps (fps aus --fixed-fps), weil Godot dort anfangs ungleiche delta-Werte liefert (0,025 / 0,033 / 0,042 / 0,029 s); Schritte als ganze Zahl round((t + 3) · 120), damit in der Aufnahme genau 4 Schritte je Bild laufen; 3 s Vorlauf vor dem ersten Bild; Prüfargumente nach \"--\": --t0, --only=<teile> (near_leg, far_leg, body, scarf, strap, shadow), --keycol, --log, --no-ui, --no-inset, --overlay-main",
+  "badger.gd: Beine als Polygon2D (polygon jedes Bild neu aus linearer Mischung von drei Knochentransformationen, uv fest), Körper, Tasche und Schalwicklung als Sprite2D mit derselben Transform2D(tilt, Stauchung, Hüfte), Schalende als Polygon2D-Streifen entlang einer Catmull-Rom-Kurve durch die Kettenglieder, Riemen als zwei Line2D (Kontur und Füllung), Lid per _draw; alle Teile mit LINEAR_WITH_MIPMAPS (Mipmaps in den .import-Dateien eingeschaltet); Kontaktschatten als Node2D mit _draw (draw_texture_rect einer radialen GradientTexture2D, dunkel mit Alpha, ohne Dämmerungs-Shader)",
+  "Zeichenreihenfolge: Kontaktschatten, fernes Bein, nahes Bein (beide hinter dem Körper, die Oberschenkel verschwinden unter Bauch und Hüfte), Körper, Schalende, Riemen, Tasche, Schalwicklung, Lid",
+  "chain.gd: Verlet mit Abstands- und Knickbedingung (kleinster Abstand zwischen i−1 und i+1), quadratischer Luftwiderstand je Glied, Kapsel-Kollision; erstes Glied jedes Schritts an den mit dem Körper bewegten Anker gesetzt, zweites Schalglied weich in Körperrichtung gezogen",
+  "shaders/badger.gdshader: Dämmerungstönung (0,86/0,84/0,95) und Laternenschein nach Weltabstand (MODEL_MATRIX im vertex(), damit unabhängig von Gitterverformung)",
+  "shaders/water.gdshader: Wasser nur in der Maske, Verschiebung um ganze Pixel und nur aus Wasserpixeln, Kammstriche und Glitzer als weiche Striche je Zelle in 3-px-Bildzeilen (Länge 40–72 % der Zelle, Enden mit smoothstep ausgeblendet, zur Mitte dicker), Glitzerbahn unter dem hellsten Himmelsteil; Wellenparameter je Bild aus waves.gd",
+  "shaders/boat.gdshader: Boot oberhalb und Spiegelbild (zweites Sprite2D mit scale.y = −1 und Drehung −a) unterhalb der Oberfläche h an der Bildspalte, Schaumsaum 2 px, Spiegelbild zur Wasserfarbe gezogen und nach unten ausgeblendet",
+  "Einblendung: SubViewport (310×156, Zoom 0,76) bei x 486–816, y 12–248; world_2d = Hauptviewport.world_2d, canvas_cull_mask 1|2, canvas_transform folgt der Figur; Abdunkelung und Röntgenlinien haben visibility_layer 2, der Hauptviewport canvas_cull_mask 1 – so gibt es keine zweite Figur und die Linien erscheinen nur in der Einblendung (läuft auch in gl_compatibility)",
+  "fx.gd: Lichter als Sprite2D mit GradientTexture2D (radial) und CanvasItemMaterial BLEND_MODE_ADD, Leuchtfeuer als Polygon2D mit vertex_colors",
+  "smoke.gd: Rauch als Partikelzug mit festem Schritt (Teilchen in PackedArrays, Ausstoß alle 0,11 s), Wind aus der statischen Funktion badger.gd → wind_at(), Rauschen aus util.gd, weiche Scheiben per draw_texture_rect; hinter Leuchtfeuer, Möwen und Booten gezeichnet",
+  "ui.gd: Panel mit StyleBoxFlat, Baloo 2 als FontVariation (wght 500/600/700/800), Tipptext über visible_characters, Schreibmarke als ColorRect hinter der gemessenen Textbreite; Einblendung mit JetBrains Mono in einem RichTextLabel"
+ ],
+ "techniques": [
+  "prozedurale-animation",
+  "bein-ik",
+  "fuss-halten",
+  "squash-and-stretch",
+  "verlet-ketten",
+  "schwimmen-auf-wellen",
+  "shader-wasser",
+  "boids",
+  "additiver-lichtkegel",
+  "ki-teileblatt",
+  "drahtgitter-overlay",
+  "textoberflaeche",
+  "partikel",
+  "rundschatten"
+ ],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 4,
+  "effort": 2,
+  "text_adventure": 4,
+  "mobile": 4
+ },
+ "ratings_note": "ai_fit 4: Alle drei KI-Bilder kamen im ersten Versuch; das Teileblatt lieferte genau die gewünschten Teile mit Alphakanal und ausgemalten Ansatzstellen. Der Hintergrund brauchte eine kleine Code-Retusche, weil das Modell trotz Prompt einen Lichthof um das Leuchtfeuer und einen hellen Wolkenstreifen auf Lampenhöhe malte. Die Bewegung selbst kommt vollständig aus Code, die KI hat dazu nichts beigetragen; Abzug, weil das Bein eine dicke Säule ohne erkennbares Knie ist, das Schalende viel zu breit kam und die Boote feiner schraffiert sind als der flächige Hintergrund. consistency 4: Jede Figur ist in jedem Bild dieselbe Textur, daher kein Flimmern; Strich und Umriss von Figur und Hintergrund passen ohne nachgezogene Kontur, die Boote und der umrisslose weiche Rauch weichen etwas ab; ob weitere Figuren im selben Strich gelingen, ist nicht geprüft. effort 2: Die Bewegungsbausteine sind geschrieben und wiederverwendbar; je weitere Figur bleiben ein Teileblatt (ein Bild), rund zehn abgelesene Punkte und das Abstimmen weniger Konstanten (Schal: Widerstand und Wind gegeneinander abwägen), für weitere Bewegungen keine neuen Bilder. mobile 4 geschätzt: mobile pixelgleich, gl_compatibility nahezu gleich (0,12 Tonwerte, ein Pixel über 8 in 90 Bildern), rund 0,8 ms GDScript je Bild auf einem M4 Pro; kein Test auf einem Telefon, die CPU-Gitterverformung, mehrere Ketten je Figur und der Rauch kosten bei vielen Figuren spürbar mehr.",
+ "verdict": "Für unser Textadventure der günstigste Weg zu lebendigen Figuren: Ein einziges KI-Teileblatt je Figur reicht für Gehen in jedem Tempo, Anhalten, Atmen, Blinzeln und Nachschwingen von Schal und Tasche, und die Figur reagiert auf den Spielzustand (Tempo, Wind, Halt) statt auf feste Bildfolgen. Die Standfüße rutschen messbar nicht, das Kostüm flimmert nie. Die Grenzen liegen bei allem, was die Form verändert: Drehungen aus der Bildebene, Gesten (Arm und Paket sind Teil des starren Körpers), Mimik über ein gezeichnetes Lid hinaus und Sprechen brauchen zusätzliche Teile oder Bild-für-Bild-Einsätze. Empfehlung: prozedurale Bewegung als Grundschicht für alle Figuren, Skelett (skelett-2d) nur für Hauptfiguren mit Gesten, einzelne KI-Bildfolgen (ki-spritesheet) für wenige ausdrucksstarke Momente. Bewusste Abweichung vom Auftrag: vier statt höchstens drei Teile, weil der Taschenriemen als Federkette eine eigene, bewegliche Tasche braucht; alle Teile stammen aus einer einzigen Bilderzeugung.",
+ "pitfalls": [
+  "Abweichung vom Auftrag: Statt „ein Bild plus höchstens zwei Teile“ sind es Körper, Bein, Schalende und Tasche. Mit der Tasche im Körperbild hätte der Riemen als Federkette nichts bewegen können. Die Schalwicklung als Deckebene ist kein weiteres KI-Teil, sondern aus dem Körperbild geschnitten.",
+  "Bein: Die KI malte eine dicke Fellsäule mit kugeligem Oberschenkel und ohne Knie. Weil der Oberschenkel hinter dem Körper liegt, sieht man von der IK-Beugung nur ein leichtes Einknicken über der Pfote; der Gang bleibt ein Watscheln mit kurzen Schritten. In Einzelaufnahmen des Beins entsteht bei starker Beugung an der Kniekehle eine Kerbe (lineare Mischung zweier Knochen); in der Szene liegt sie hinter dem Körper.",
+  "Nahes und fernes Bein haben dieselbe Textur und Farbe; das ferne ist nur abgedunkelt (0,62). Bei 180 px Figurenhöhe verschmelzen beide Beine in der Bewegung oft zu einer dunklen Fläche.",
+  "Schalende kam 123 Blattpixel breit, so breit wie die ganze Wicklung. Gezeichnet mit 76 % der Breite und auf 88 statt 102 Texturpixel gestaucht; das Strickmuster ist dadurch leicht verzerrt.",
+  "Nachschwingen des Schals verlangt wenig Luftwiderstand: Mit der ersten Abstimmung (k = 0,085, Grundwind −45 Texturpx/s) wehte der Schal beim Gehen mit 43–49°, fiel beim Anhalten aber nur auf 7° und federte nie über die Senkrechte nach vorn, weil der quadratische Widerstand jede Pendelbewegung dämpft und der Dauerwind ihn hinten hielt. Mit k = 0,05 und Grundwind −24 schwingt er 11,4° nach vorn und einmal auf 15,9° zurück, weht beim Gehen aber nur noch 26–31° nach hinten. Starkes Wehen und deutliches Nachschwingen zugleich gehen mit einem einzigen quadratischen Widerstand nicht. Ein Abflauen des Grundwinds genau beim Halt wurde geprüft und verworfen: Die Böe drehte in diesem Moment auf etwa +15 Texturpx/s und blies den Schal mit nach vorn, das wäre Inszenierung statt Trägheit gewesen.",
+  "Eine erste Fassung mit Rückenkapsel-Kollision für den Schal legte ihn nur auf den Rücken; ohne Kollision hängt er im Stand und beim Nachschwingen vor der Brust (2D-Vereinfachung, keine echte Tiefe).",
+  "Der Riemen ist bei 180 px Figurenhöhe ein gut 2 px breiter Strich und verläuft im Stand größtenteils unter der Wicklung; die Tasche wirkt dann fast angeklebt. Ihre Nachbewegung beim Anhalten (rund 16 Texturpixel bzw. 11 Bildpixel, zwei Ausschläge) kommt zu einem guten Teil von der Rückfederung der Körperneigung, nicht vom Schwung allein.",
+  "Wippen: Die Mützenkante bewegt sich beim Gehen um 10 px (Zeile 406–416; Hüfte aus der Reichweite plus Heben, dazu Stauchung bis 3,6 %); das wirkt munter, kann bei längeren Wegen aber hüpfig wirken. Die Werte sind Konstanten in badger.gd und müssten je Figur abgestimmt werden.",
+  "Kopf, Arm und Paket sind starr mit dem Rumpf verbunden: kein Nicken, kein Armschwung, kein Mund. Drehungen zur Kamera oder ein Umdrehen sind mit einem Seitenansicht-Bild grundsätzlich nicht möglich (zum Umdrehen reicht Spiegeln, die Tasche wechselt dann aber die Seite).",
+  "Laufweg: Die erste Fassung begann bei x 112; die Bodenlinie 585 setzte die Füße dort auf das Türblatt des Häuschens (Schwelle ≈ 605), der Dachs stand 15–20 px über der Türunterkante und wirkte angeklebt. Jetzt Start bei x 250 rechts der Hausecke, wo y 585 auf dem Pflaster liegt, und Halt bei x 520 rechts neben dem Laternenpfahl. Eine eigene Tiefenlinie entlang der Fassade gibt es nicht; der Dachs ist deshalb bei t = 0 schon mitten im Bild und im Gehen, statt vom Bildrand aufzutreten (sonst kreuzt er die Fassade wieder). Zwischen etwa 2,4 und 3,2 s läuft er vor dem Pfahl vorbei; dabei scheint der Pfahl kurz aus Tasche und Rücken zu wachsen.",
+  "Einblendung: Die erste Fassung (x 300–640, y 14–296) verdeckte Pfostenkopf und Ausleger der Laterne, die Laterne hing sichtbar an ihrer Unterkante. Jetzt im Himmel zwischen Laterne und Leuchtfeuer (x 486–816, y 12–248) mit kleinerem Ausschnitt (Zoom 0,76 statt 0,95); die Figur ist darin nur noch etwa 135 px hoch, und die Wertezeile reicht bis knapp an den rechten Rand. Das Schwarmgebiet der Möwen beginnt bei x 700: In den 6 s bleiben sie rechts davon, bei längerem Lauf können sie hinter die Einblendung fliegen.",
+  "Wassermaske: Die erste Fassung schloss Kaiplatte sowie Fässer und Kisten als Rechtecke aus (x 380–516 ab y 490, x ≥ 1048 ab y 452); Kammstriche und Pixelverschiebung endeten an harten senkrechten Kanten, die freie Wasserfläche rechts vom Ruderboot blieb starr. Die Flutfüllung an der gemalten Kontur funktioniert nur, weil der Hintergrund geschlossene dunkle Umrisse hat; der Laternenpfahl teilt das Wasser in zwei Flächen, deshalb braucht es eine eigene Saat links davon. Ein heller Spiegelfleck am Horizont (x ≈ 455–515, y ≈ 375) bleibt ausgespart und steht still.",
+  "Wasserstriche: Kammstriche und Glitzer waren harte, rechteckige 1–3-px-Striche mit Treppenkanten und wirkten auf der weich gemalten Fläche wie eingestreute Pixel-Art. Jetzt kurze, weich auslaufende Striche; die Flächenverschiebung bleibt bewusst in ganzen Pixeln, um die Malerei nicht zu verwischen.",
+  "Leuchtfeuer: Das Modell malte trotz Prompt einen Lichthof um die Lampe und einen hellen Wolkenstreifen genau auf Lampenhöhe; zeigte der animierte Strahl weg, las sich der Streifen wie ein zweiter, stehender Strahl. Beides ist in prep_assets.py retuschiert; am linken Ende des früheren Streifens (x ≈ 880–920) bleibt eine schwache Kante der alten Wolke sichtbar.",
+  "Rauch fehlte in der ersten Fassung, obwohl style.json ihn als animiert bezeichnete. Der Partikelrauch sitzt nahe am oberen Bildrand (Topf bei y 63), man sieht nur die ersten rund 60 px der Fahne; die weichen Scheiben ohne Umriss sind weicher als der Strich des Hintergrunds.",
+  "Kontaktschatten: Ohne ihn hob sich der helle Bauch kaum vom hellen Pflaster ab und der Fußhub hatte keinen Bodenbezug. Der neue Schatten ist bewusst schwach und liegt immer senkrecht unter der Figur; einen gerichteten Schatten von der Laterne weg gibt es nicht.",
+  "Boote (Codex) sind feiner schraffiert und verwitterter gemalt als der flächige agy-Hintergrund; die Tönung gleicht das nur teilweise aus. Sie sind exakt von der Seite gemalt, der Hintergrund leicht von oben.",
+  "Ruderboot hebt sich bis 8 px (nah an der Kamera, Feder nahe der Wellenfrequenz); für eine „ruhige See“ eher lebhaft. Dämpfung 0,5 und kleinere Amplituden haben es von anfangs 11 px gesenkt.",
+  "Gegen den hellen Horizontstreifen ist das Flackern der Laterne selbst kaum zu sehen; sichtbar wird es vor allem am Lichtfleck auf dem Kai und am warmen Schein auf dem Dachs.",
+  "Messfehler unterwegs: Das Zustandsprotokoll schrieb eine Zeile schon im Vorlauf; dadurch lag es ein Bild versetzt zu den Aufnahmen, und die Standfüße schienen um 2–11 px zu wandern. Nach dem Öffnen des Protokolls erst nach dem Vorlauf: 0 px. Zweiter Zeitfehler: Godot liefert im Movie-Maker-Lauf ungleiche delta-Werte, das erste Bild lag bei t = 0,025 statt 0 bzw. 0,033 und zwischen den ersten Bildern liefen 3–5 statt 4 Simulationsschritte; jetzt Bildzähler × 1/30.",
+  "Die Einblendung ist eine Erklärhilfe, kein Spielbestandteil: Sie deckt 8,5 % des Bildes, zusammen mit der Textleiste 23,3 %."
+ ],
+ "lessons": [
+  "Ein Teileblatt mit der zusammengesetzten Figur links als Vorlage und den Teilen rechts liefert mit Codex und dem Referenzblatt im ersten Versuch saubere, gleich große Teile; die Lage der Teile lässt sich automatisch über Kopf- und Pfotenabgleich finden (pa_align.py) statt rund 50 Punkte von Hand abzulesen.",
+  "Schrittauslösung statt Gangzyklus: Steht kein Fuß in der Luft, schwingt der Fuß mit dem größten Rückstand zu „Ruhelage zur Landezeit + Tempo · Standdauer / 2“. Das ergibt bei konstantem Tempo von selbst einen gleichmäßigen Rhythmus, beim Bremsen kürzere Schritte und am Ende geschlossene Füße – ohne Sonderfall für Start und Halt.",
+  "Hüfthöhe nicht vorgeben, sondern aus der Reichweite der Standbeine begrenzen (|Hüfte − Knöchel| ≤ 98,5 % Beinlänge) und über eine steife Feder glätten: Die IK erreicht den Standfuß immer, der Fuß bleibt auf 0 px stehen, und das Wippen entsteht aus der Geometrie.",
+  "Squash & Stretch als Feder, angetrieben von der vertikalen Beschleunigung der Hüfte plus einem Impuls beim Aufsetzen; Vorlage als Feder auf das Tempo, angetrieben von der Bremsbeschleunigung. So reagiert der Körper auf jede Bewegung, auch auf neue, ohne Schlüssel.",
+  "Verlet-Ketten ohne Rückstellkraft, mit quadratischem Luftwiderstand gegen die relative Luft (Wind minus Gliedgeschwindigkeit) und festem Schritt 1/120 s bleiben stabil (Längen im Stand über 120 s ≤ 0,5 % gedehnt, beim Bremsen ≤ 1,7 %) und zeigen den Fahrtwind als Winkel; die Fassung mit Drehfedern in skelett-2d war nötig, weil dort eine Rückstellkraft aufschwang.",
+  "Eine Wellenfunktion in GDScript und Shader zugleich (gleiche Parameter je Bild als Uniforms) hält Boote, Wasserlinie, Schaumsaum, Spiegelbild und Glitzer deckungsgleich; die Tiefe Z aus der Bildzeile einer ebenen Fläche gibt Perspektive ohne 3D.",
+  "Einblendungen ohne doppelte Knoten: SubViewport mit dem world_2d des Hauptviewports, Hilfslinien mit visibility_layer 2 und unterschiedliche canvas_cull_mask; funktioniert in Forward+, Mobile und gl_compatibility.",
+  "Prüfprotokoll erst nach dem Vorlauf öffnen, sonst liegt es ein Bild versetzt; Standphasen aus dem Protokoll statt aus dem Bild ableiten, dann misst man echte Standfüße und nicht die eigene Gruppierung.",
+  "Blinzeln aus Code: Lid als Ellipsenausschnitt in der Fellfarbe (Median der dunklen Pixel im Ring um das Auge) mit Wimpernlinie; mit einer Probe aus einem einzelnen Pixel wirkte es als brauner Fleck.",
+  "Wind als gemeinsame Funktion (Schal, Laterne) macht die Szene zusammenhängend: Eine Bö lässt den Schal wehen und die Laterne gleichzeitig stärker flackern.",
+  "Wassermaske per Flutfüllung an der gemalten Kontur (Farbtest plus dunkle Umrisse als Sperre, je abgetrennter Wasserfläche eine Saat) statt Rechteck- oder Polygon-Ausschlüssen: bei Cartoon-Hintergründen mit geschlossenen Umrissen rund 20 Zeilen NumPy, folgt Kaiplatte, Pfählen und Fässern pixelgenau.",
+  "Nachschwingen am Protokoll messen (Winkel Wurzel → Spitze gegen die Senkrechte), nicht am Augenschein: Der quadratische Widerstand, der beim Gehen einen großen Wehwinkel ergibt, dämpft das Pendeln beim Halt fast vollständig weg; Widerstand und Grundwind sind gegeneinander abzuwägen.",
+  "Im Movie-Maker-Lauf die Zeit aus dem Bildzähler bilden (Engine.get_write_movie_path(), fps aus --fixed-fps), nicht aus delta; sonst liegt das erste Bild nicht bei t = 0 und die Schrittzahl je Bild schwankt.",
+  "Gemalte Lichteffekte neben animierten (Lichthof, angestrahlte Wolke) verdoppeln den Effekt, sobald der animierte wegschaut; einzelne Bildbänder lassen sich per Spalte aus den Nachbarzeilen füllen, wenn man Grenzen und Ergebnis waagerecht glättet (ungeglättet entstehen senkrechte Streifen).",
+  "Einblendungen und Laufwege erst nach dem Hintergrund festlegen und im Poster gegen die Pflichtelemente prüfen (Laterne mit Pfosten, Tür, Hausecke)."
+ ],
+ "vergleich_bild_fuer_bild_und_skelett": [
+  "Prozedural (diese Demo): ein KI-Bild (Teileblatt, 4 Teile), rund zehn abgelesene Punkte, keine Schlüssel und keine Bildfolgen. Jede Geschwindigkeit, jeder Halt und jede Ruhephase entsteht zur Laufzeit; Figur reagiert auf Zustand und Wind. Wirkung: lebendig und weich, aber „gummiartig“ – die Silhouette bleibt die des einen Bildes, große Ausdrucksbewegungen fehlen. Aufwand: einmal gut 700 Zeilen Figurencode (badger.gd, chain.gd), je Figur ein Bild und Konstanten.",
+  "Bild für Bild (ki-spritesheet): je Bewegung ein KI-Blatt; ausdrucksstarke Posen, Gesten und Vorderansicht sind möglich, aber Blätter kommen mit doppelten Posen, Maßstabssprüngen, Seitenwechseln und flimmernden Einzelbildern; Füße müssen von Hand tabelliert werden, Wiedergabe in Stufen (6 Bilder/s). Jede neue Bewegung kostet neue Bilder und Nacharbeit.",
+  "Skelett (skelett-2d): sieben Teile auf 23 Knochen mit weicher Gitterverformung; Knie, Bauch, Schwanz und Arme biegen sich, Bewegungen sind als Schlüssel planbar und überblendbar. Mehr Einrichtung (rund 50 Ankerpunkte, Gewichte, Szenenschreiber) und dieselben Grenzen bei Drehung und Mimik. Prozedurale Federn und IK lassen sich auf ein Skelett setzen – beides schließt sich nicht aus.",
+  "Grenzen aller drei: Drehungen aus der Bildebene und Mimik brauchen weitere Bilder oder Teile; prozedural ist am billigsten für Gehen, Stehen und Nachschwingen, Bild für Bild am besten für einzelne Gesten."
+ ],
+ "assets": [
+  {"file": "assets/bg.png", "kind": "background", "made_with": "agy (Gemini) + prep_assets.py (16:9-Ausschnitt, 1280×720, Wolkenstreifen und Lichthof am Leuchtfeuer retuschiert)", "prompt": "assets/raw/bg.json"},
+  {"file": "assets/bg_mask.png", "kind": "mask", "made_with": "prep_assets.py: R = Wasser über die Farbe plus Flutfüllung, an der gemalten Kontur gestoppt", "prompt": ""},
+  {"file": "assets/badger_body.png", "kind": "character-part", "made_with": "Codex Teileblatt + prep_assets.py: Körper mit Kopf, Arm und Paket (starr), Maßstab 0,30", "prompt": "assets/raw/badger.json"},
+  {"file": "assets/badger_leg.png", "kind": "character-part", "made_with": "Codex Teileblatt: ein Bein, für nahes und fernes Bein verwendet, als IK-Gitter verformt", "prompt": "assets/raw/badger.json"},
+  {"file": "assets/badger_scarf.png", "kind": "character-part", "made_with": "Codex Teileblatt: loses Schalende, als Streifen auf der Verlet-Kette", "prompt": "assets/raw/badger.json"},
+  {"file": "assets/badger_satchel.png", "kind": "character-part", "made_with": "Codex Teileblatt: Tasche am Ende der Riemenkette", "prompt": "assets/raw/badger.json"},
+  {"file": "assets/badger_wrap.png", "kind": "character-part", "made_with": "prep_assets.py: Schalwicklung aus dem Körperbild geschnitten (Deckebene über Riemen und Schalende)", "prompt": ""},
+  {"file": "assets/badger_assembled.png", "kind": "reference", "made_with": "Codex Teileblatt: zusammengesetzte Vorlage, nur zum Ausrichten", "prompt": "assets/raw/badger.json"},
+  {"file": "assets/boat_a.png", "kind": "sprite", "made_with": "Codex: Fischerboot mit Mast, ganzer Rumpf, Maßstab 0,40", "prompt": "assets/raw/boats.json"},
+  {"file": "assets/boat_b.png", "kind": "sprite", "made_with": "Codex: Ruderboot, ganzer Rumpf, Maßstab 0,40", "prompt": "assets/raw/boats.json"},
+  {"file": "assets/rig.json", "kind": "data", "made_with": "prep_assets.py: Gelenke, Anker, Rückenkapsel, Auge, Lidfarbe in Texturpixeln", "prompt": ""},
+  {"file": "assets/scene.json", "kind": "data", "made_with": "prep_assets.py: Horizont, Lichter, Schornsteintopf, Stegpfosten, Wasserlinien der Boote", "prompt": ""},
+  {"file": "demo/scripts/badger.gd", "kind": "code", "made_with": "GDScript: Schrittauslösung, Zwei-Gelenk-IK, Gitterverformung, Körperfedern, Verlet-Schal und -Riemen, Lid, Kontaktschatten, gemeinsamer Wind", "prompt": ""},
+  {"file": "demo/scripts/waves.gd", "kind": "code", "made_with": "GDScript: gemeinsame Wellenfunktion für Shader, Boote und Seile", "prompt": ""},
+  {"file": "demo/scripts/smoke.gd", "kind": "code", "made_with": "GDScript: Schornsteinrauch als Partikelzug im gemeinsamen Wind", "prompt": ""},
+  {"file": "assets/check/rig_rest.png", "kind": "check", "made_with": "make_checks.py: KI-Vorlage neben der Ruhelage aus Teilen mit Gelenken, Ankern und Rückenkapsel", "prompt": ""},
+  {"file": "assets/check/motion_strip.png", "kind": "check", "made_with": "make_checks.py: Godot-Ausgabe nur des Dachses mit Kontaktschatten, Gehen (jedes 3. Bild) und Anhalten mit Nachschwingen", "prompt": ""},
+  {"file": "assets/check/measure.json", "kind": "check", "made_with": "measure_badger.py: Standfüße, Sohlenzeilen, Kopfbewegung, Schalwinkel, Taschenweg, Federwerte (t = 0–6 s)", "prompt": ""},
+  {"file": "assets/check/measure_t40.json", "kind": "check", "made_with": "measure_badger.py --t0 40: dieselben Messungen im Dauerlauf", "prompt": ""}
+ ],
+ "licenses": [
+  {"item": "Schrift Baloo 2 (variabel)", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/baloo2"},
+  {"item": "Schrift JetBrains Mono (variabel)", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/jetbrainsmono"},
+  {"item": "Hash without Sine (Shader-Funktion), Copyright (c) 2014 David Hoskins – in demo/shaders/water.gdshader", "license": "MIT", "source": "https://www.shadertoy.com/view/4djSRW"}
+ ],
+ "image_generations": 3,
+ "tool_issues": [],
+ "status": "done"
+}

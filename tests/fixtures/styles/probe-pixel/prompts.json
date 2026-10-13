@@ -1,0 +1,20 @@
+[
+ {
+  "file": "assets/raw/bg.png",
+  "prompt": "Pixel art background test prompt.",
+  "refs": [],
+  "size": "1536x1024",
+  "backend": "codex"
+ },
+ {
+  "file": "assets/raw/sprite.png",
+  "prompt": "Badger sprite test prompt, isolated on a fully transparent background.",
+  "refs": [
+   "shared/badger/master_sheet.png",
+   "styles/probe-pixel/assets/raw/bg.png"
+  ],
+  "size": "1024x1024",
+  "backend": "agy",
+  "prompt_sent": "Badger sprite test prompt, isolated on a plain flat solid pure magenta background (#FF00FF)."
+ }
+]

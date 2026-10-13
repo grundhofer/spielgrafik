@@ -1,0 +1,164 @@
+[gd_scene load_steps=14 format=3]
+
+; Katalogeintrag voxel: Hafen und Dachs als Voxelmodelle (scripts/voxelize_harbor.py, voxelize_badger.py),
+; gleiche Kamera, Empties und Laufweg wie die gemeinsame 3D-Grundlage (shared/3d). Licht, Himmel, Nebel und
+; Kamera stehen hier; main.gd baut Wasser, Wolken und Rauch aus Würfeln und steuert den Ablauf.
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://models/harbor_voxel.glb" id="2_harbor"]
+[ext_resource type="PackedScene" path="res://models/badger_voxel.glb" id="3_badger"]
+[ext_resource type="Shader" path="res://shaders/voxel_sky.gdshader" id="4_sky"]
+[ext_resource type="Shader" path="res://shaders/beam.gdshader" id="5_beam"]
+[ext_resource type="Script" path="res://ui.gd" id="6_ui"]
+
+[sub_resource type="ShaderMaterial" id="SkyMat"]
+shader = ExtResource("4_sky")
+
+[sub_resource type="Sky" id="Sky"]
+sky_material = SubResource("SkyMat")
+radiance_size = 1
+
+[sub_resource type="Environment" id="Env"]
+background_mode = 2
+sky = SubResource("Sky")
+ambient_light_source = 3
+ambient_light_color = Color(0.55, 0.52, 0.72, 1)
+ambient_light_sky_contribution = 0.55
+ambient_light_energy = 0.75
+reflected_light_source = 2
+tonemap_mode = 4
+tonemap_white = 6.0
+glow_enabled = true
+glow_intensity = 0.55
+glow_strength = 0.9
+glow_bloom = 0.02
+glow_hdr_threshold = 1.0
+glow_blend_mode = 1
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.72, 0.52, 0.56, 1)
+fog_density = 1.0
+fog_sky_affect = 0.0
+fog_depth_begin = 45.0
+fog_depth_end = 520.0
+fog_depth_curve = 1.4
+adjustment_enabled = true
+adjustment_saturation = 1.08
+
+[sub_resource type="CylinderMesh" id="BeamMesh"]
+top_radius = 3.0
+bottom_radius = 0.45
+height = 31.0
+radial_segments = 24
+rings = 1
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="ShaderMaterial" id="BeamMat"]
+render_priority = 0
+shader = ExtResource("5_beam")
+shader_parameter/color = Color(1, 0.86, 0.6, 1)
+shader_parameter/intensity = 0.22
+shader_parameter/length_m = 31.0
+shader_parameter/start_m = 1.1
+
+[sub_resource type="Theme" id="UiTheme"]
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_main")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Env")
+
+; Abendsonne von links (Richtung wird in main.gd gesetzt), fast harte Schatten (flache Farbe je Würfelfläche);
+; bias 0,15 und normal_bias 4 gegen Schattenakne (bei 0,03 / 1,2 lagen diagonale Streifen auf dem Pflaster)
+[node name="Sun" type="DirectionalLight3D" parent="."]
+light_color = Color(1, 0.7, 0.46, 1)
+light_energy = 1.55
+light_angular_distance = 0.2
+shadow_enabled = true
+shadow_bias = 0.15
+shadow_normal_bias = 4.0
+shadow_blur = 0.5
+directional_shadow_mode = 2
+directional_shadow_max_distance = 60.0
+
+; Fülllicht nur für den Dachs (Ebene 2), ohne Schatten
+[node name="CharFill" type="DirectionalLight3D" parent="."]
+light_color = Color(1, 0.86, 0.76, 1)
+light_energy = 0.7
+light_cull_mask = 2
+sky_mode = 1
+
+; Hauptkamera wie shared/3d: Position (-1.8, 3.4, 14.5), rotation_degrees (-3, 0, 0), fov 42 (vertikal)
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.9986295, 0.05233596, 0, -0.05233596, 0.9986295, -1.8, 3.4, 14.5)
+current = true
+fov = 42.0
+near = 0.1
+far = 3000.0
+
+[node name="Harbor" parent="." instance=ExtResource("2_harbor")]
+
+[node name="Badger" parent="." instance=ExtResource("3_badger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.3, 0, 1.2)
+
+[node name="Effects" type="Node3D" parent="."]
+
+; Alles unter "Attach" hängt main.gd an das gleichnamige Empty bzw. Objekt im Hafen (wie shared/3d)
+[node name="Attach" type="Node3D" parent="."]
+
+[node name="LanternLight" type="Node3D" parent="Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="Attach/LanternLight"]
+light_color = Color(1, 0.7, 0.38, 1)
+light_energy = 2.2
+omni_range = 6.5
+omni_attenuation = 1.4
+
+[node name="CottageWindow" type="Node3D" parent="Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="Attach/CottageWindow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.6)
+light_color = Color(1, 0.72, 0.4, 1)
+light_energy = 1.4
+omni_range = 4.5
+
+[node name="LighthouseLight" type="Node3D" parent="Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="Attach/LighthouseLight"]
+light_color = Color(1, 0.84, 0.58, 1)
+light_energy = 2.0
+omni_range = 5.0
+
+[node name="Rotor" type="Node3D" parent="Attach/LighthouseLight"]
+
+[node name="Tilt" type="Node3D" parent="Attach/LighthouseLight/Rotor"]
+transform = Transform3D(1, 0, 0, 0, 0.9961947, 0.08715574, 0, -0.08715574, 0.9961947, 0, 0, 0)
+
+[node name="Spot" type="SpotLight3D" parent="Attach/LighthouseLight/Rotor/Tilt"]
+light_color = Color(1, 0.86, 0.6, 1)
+light_energy = 30.0
+spot_range = 180.0
+spot_angle = 7.0
+
+; Kegel beginnt 1,1 m vor der Lampenmitte, außerhalb des Laternenhauses (Glas 0,72 m Radius); vor dem
+; Lampenhaus blendet beam.gdshader ihn aus (sonst lag sein Ansatz als beiger Schleier darüber)
+[node name="Beam" type="MeshInstance3D" parent="Attach/LighthouseLight/Rotor/Tilt"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, -16.6)
+cast_shadow = 0
+mesh = SubResource("BeamMesh")
+surface_material_override/0 = SubResource("BeamMat")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("UiTheme")
+script = ExtResource("6_ui")

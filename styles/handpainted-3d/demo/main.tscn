@@ -1,0 +1,164 @@
+[gd_scene load_steps=20 format=3]
+
+; Handbemalte Texturen (stilisiert): Hafen von Lornholm mit dem Dachs-Kurier.
+; Hafen = shared/3d/harbor.glb mit flachem Kaiboden, stilisierten Formen, Steinflächen je Fläche und gebackener
+; Verdeckung (blender/build_harbor_hp.py),
+; Dachs = shared/3d/badger.glb mit gebackener Verdeckung als Vertexfarbe (blender/bake_badger_ao.py).
+; Materialien ersetzt main.gd nach Namen (hp_world / hp_actor).
+; main.gd hängt die Knoten unter "Attach" an die Empties im Hafen (Muster aus shared/3d/demo).
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://models/harbor_hp.glb" id="2_harbor"]
+[ext_resource type="PackedScene" path="res://models/badger_hp.glb" id="3_badger"]
+[ext_resource type="Shader" path="res://shaders/hp_water.gdshader" id="4_water"]
+[ext_resource type="Shader" path="res://shaders/hp_beam.gdshader" id="5_beam"]
+[ext_resource type="Shader" path="res://shaders/hp_sky.gdshader" id="6_sky"]
+[ext_resource type="Texture2D" path="res://textures/sky.png" id="7_skytex"]
+[ext_resource type="Script" path="res://ui.gd" id="8_ui"]
+
+[sub_resource type="ShaderMaterial" id="SkyMat"]
+shader = ExtResource("6_sky")
+shader_parameter/sky_tex = ExtResource("7_skytex")
+
+[sub_resource type="Sky" id="Sky"]
+sky_material = SubResource("SkyMat")
+radiance_size = 0
+
+[sub_resource type="Environment" id="Env"]
+background_mode = 2
+sky = SubResource("Sky")
+ambient_light_source = 2
+ambient_light_color = Color(0.62, 0.56, 0.8, 1)
+ambient_light_energy = 0.95
+reflected_light_source = 1
+tonemap_mode = 0
+glow_enabled = true
+glow_intensity = 0.55
+glow_strength = 1.0
+glow_bloom = 0.0
+glow_hdr_threshold = 0.95
+glow_blend_mode = 1
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.92, 0.64, 0.6, 1)
+fog_density = 0.55
+fog_sky_affect = 0.0
+fog_depth_begin = 18.0
+fog_depth_end = 320.0
+fog_depth_curve = 1.4
+adjustment_enabled = true
+adjustment_saturation = 1.08
+
+[sub_resource type="ShaderMaterial" id="WaterMat"]
+render_priority = 0
+shader = ExtResource("4_water")
+shader_parameter/sky_tex = ExtResource("7_skytex")
+
+[sub_resource type="CylinderMesh" id="BeamMesh"]
+top_radius = 3.6
+bottom_radius = 0.35
+height = 34.0
+radial_segments = 32
+rings = 1
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="ShaderMaterial" id="BeamMat"]
+render_priority = 0
+shader = ExtResource("5_beam")
+shader_parameter/color = Color(1, 0.93, 0.74, 1)
+shader_parameter/intensity = 0.6
+shader_parameter/length_m = 34.0
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_main")
+water_material = SubResource("WaterMat")
+sky_material = SubResource("SkyMat")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Env")
+
+; Abendsonne von links vorn; Richtung setzt main.gd (SUN_TRAVEL). Weiche Schatten (blur), violett getönt im Shader.
+[node name="Sun" type="DirectionalLight3D" parent="."]
+light_color = Color(1, 0.78, 0.56, 1)
+light_energy = 1.55
+shadow_enabled = true
+shadow_blur = 2.5
+directional_shadow_max_distance = 60.0
+
+; Figurenlicht: nur Ebene 2 (der Dachs), von links vorn oben, ohne Schatten; hält die Figur lesbar
+[node name="CharKey" type="DirectionalLight3D" parent="."]
+light_color = Color(1, 0.86, 0.7, 1)
+light_energy = 0.75
+light_cull_mask = 4294967294
+sky_mode = 1
+
+[node name="Camera" type="Camera3D" parent="."]
+current = true
+fov = 44.0
+near = 0.1
+far = 3000.0
+
+[node name="Harbor" parent="." instance=ExtResource("2_harbor")]
+
+[node name="Badger" parent="." instance=ExtResource("3_badger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.6, 0, 1.2)
+
+[node name="Effects" type="Node3D" parent="."]
+
+; Alles unter "Attach" wird in main.gd an ein Empty bzw. Objekt des Hafens gehängt
+; (Name des Knotens = Ziel). Lokale Transformation bleibt erhalten.
+[node name="Attach" type="Node3D" parent="."]
+
+[node name="LanternLight" type="Node3D" parent="Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="Attach/LanternLight"]
+light_color = Color(1, 0.7, 0.36, 1)
+light_energy = 2.2
+omni_range = 6.5
+omni_attenuation = 1.4
+
+[node name="CottageWindow" type="Node3D" parent="Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="Attach/CottageWindow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+light_color = Color(1, 0.72, 0.4, 1)
+light_energy = 1.2
+omni_range = 4.0
+
+[node name="LighthouseLight" type="Node3D" parent="Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="Attach/LighthouseLight"]
+light_color = Color(1, 0.84, 0.58, 1)
+light_energy = 2.0
+omni_range = 5.0
+
+; Drehteil des Leuchtfeuers: main.gd dreht "Rotor" um Y; "Tilt" neigt Strahl und Spot 4° nach unten
+[node name="Rotor" type="Node3D" parent="Attach/LighthouseLight"]
+
+[node name="Tilt" type="Node3D" parent="Attach/LighthouseLight/Rotor"]
+transform = Transform3D(1, 0, 0, 0, 0.9975641, 0.06975647, 0, -0.06975647, 0.9975641, 0, 0, 0)
+
+[node name="Spot" type="SpotLight3D" parent="Attach/LighthouseLight/Rotor/Tilt"]
+light_color = Color(1, 0.86, 0.6, 1)
+light_energy = 30.0
+spot_range = 160.0
+spot_angle = 7.0
+
+[node name="Beam" type="MeshInstance3D" parent="Attach/LighthouseLight/Rotor/Tilt"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, -17)
+cast_shadow = 0
+mesh = SubResource("BeamMesh")
+surface_material_override/0 = SubResource("BeamMat")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("8_ui")

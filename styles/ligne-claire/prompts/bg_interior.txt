@@ -1,0 +1,11 @@
+Style: one wide panel from a European clear-line comic album of the 1960s (ligne claire), redrawn as a game background. Technique: clean black ink outlines of one constant, uniform thickness around every shape, drawn with a technical pen; no hatching, no cross-hatching, no stippling, no texture strokes, no line-weight variation, no sketchy lines. Colour: flat, solid printed colour fills inside the outlines, like flat tints in offset printing; no gradients, no airbrush, no soft shading, no glow, almost no shadows (at most one flat darker tint on a side). Drawing: very clear, precise and detailed architecture and objects, every element readable; everything equally sharp, no depth blur. Not a painting, not a watercolour, not a 3D render, not a photograph, not anime, not a sketch.
+
+Consistency test: the reference image is another background of the same game. Use it only for the drawing style, the line thickness and the colour palette. Do not copy its layout or its subject: this is a different place.
+
+Location: inside the small stone harbour-master's cottage of Lornholm, a fictional island in a northern sea, at dusk. A low room with whitewashed stone walls and dark wooden ceiling beams. On the left a cast-iron stove; in the middle a sturdy wooden table with a sea chart, a brass compass and an unlit oil lamp; on the right a window with small panes through which the harbour, the white lighthouse with one red band and the orange evening sky are visible. Shelves with coiled ropes, tin boxes and a lifebuoy on the wall, a coat on a hook by the door.
+
+Leave the floor in the foreground free of characters: it is a game background, characters are added later as separate sprites. The lighthouse lamp only as a small flat yellow spot without any beam, no smoke, no fire glow (effects are animated separately).
+
+No text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films. No panel border, no frame, no speech balloons.
+
+Image format: landscape 3:2.

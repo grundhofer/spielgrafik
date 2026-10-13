@@ -1,0 +1,82 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Godot-Cache je Demo
+**/demo/.godot/
+**/demo/*.import.bak
+
+# Rohbilder der Bilderzeugung (groß); verarbeitete Fassungen liegen in demo/ und media/.
+# Ausnahme: Rohbilder, die ein Steckbrief zeigt (style.json → assets[].file), sind eingecheckt, sonst bricht
+# build.py ab. Ihre Begleit-JSON, meta und Logs bleiben draußen (lokale Pfade, Sitzungsdaten). Die Liste ist aus allen
+# style.json erzeugt; tests/test_build.py (TestGitignore) scheitert, wenn eine gezeigte Datei ignoriert wird.
+styles/*/assets/raw/*
+!styles/apple2-hires/assets/raw/bg2_a.png
+!styles/apple2-hires/assets/raw/bg2_b.png
+!styles/apple2-hires/assets/raw/bg_a.png
+!styles/apple2-hires/assets/raw/bg_b.png
+!styles/aquarell/assets/raw/walk_v2.png
+!styles/bildmodelle-vergleich/assets/raw/master_sheet_agy.png
+!styles/bildmodelle-vergleich/assets/raw/oel_portrait_agy.png
+!styles/bildmodelle-vergleich/assets/raw/ps1_textures_codex.png
+!styles/bildmodelle-vergleich/assets/raw/vga_bg_agy_b.png
+!styles/bildmodelle-vergleich/assets/raw/vga_bg_codex_b.png
+!styles/bildmodelle-vergleich/assets/raw/vga_items_agy.png
+!styles/buchmalerei/assets/raw/bg.png
+!styles/c64-multicolor/assets/raw/badger.png
+!styles/c64-multicolor/assets/raw/bg.png
+!styles/einbit-pixel/assets/raw/badger.png
+!styles/einbit-pixel/assets/raw/bg_direct.png
+!styles/einbit-pixel/assets/raw/bg_tone.png
+!styles/einbit-pixel/assets/raw/mask.png
+!styles/einbit-pixel/assets/raw/tone.png
+!styles/flat-vektor/assets/raw/badger_ai.png
+!styles/flat-vektor/assets/raw/bg_ai.png
+!styles/gummischlauch/assets/raw/bg.png
+!styles/hd-2d/assets/raw/badger.png
+!styles/hd-2d/assets/raw/props.png
+!styles/hd-2d/assets/raw/textures.png
+!styles/hintergrund-serie/assets/raw/walk_layout_ref.png
+!styles/iso-pixel/assets/raw/diorama_test.png
+!styles/iso-pixel/assets/raw/portrait.png
+!styles/iso-pixel/assets/raw/props.png
+!styles/iso-vorgerendert/assets/raw/portrait.png
+!styles/kachelsatz/assets/raw/badger.png
+!styles/kachelsatz/assets/raw/props.png
+!styles/kachelsatz/assets/raw/tiles.png
+!styles/nes-8bit/assets/raw/badger.png
+!styles/nes-8bit/assets/raw/bg.png
+!styles/nes-8bit/assets/raw/bg2.png
+!styles/pico8-fantasy/assets/raw/badger.png
+!styles/pico8-fantasy/assets/raw/bg.png
+!styles/pico8-fantasy/assets/raw/bg_clean.png
+!styles/raycaster/assets/raw/textures.png
+!styles/rotoskopie/assets/raw/sheet.png
+!styles/rotoskopie/assets/raw/sheet_b.png
+!styles/snes-16bit/assets/raw/badger.png
+!styles/snes-16bit/assets/raw/badger2.png
+!styles/snes-16bit/assets/raw/bg.png
+!styles/snes-16bit/assets/raw/layers.png
+!styles/tusche-sumie/assets/raw/bg.png
+!styles/tusche-sumie/assets/raw/bg_v2.png
+!styles/tusche-sumie/assets/raw/bg_v3.png
+!styles/tusche-sumie/assets/raw/front.png
+!styles/tusche-sumie/assets/raw/front_v3.png
+!styles/tusche-sumie/assets/raw/strokes.png
+!styles/tusche-sumie/assets/raw/walk.png
+!styles/tusche-sumie/assets/raw/walk_v2.png
+!styles/tusche-sumie/assets/raw/walk_v3.png
+!styles/videotext/assets/raw/badger_ai.png
+!styles/videotext/assets/raw/bg_a.png
+!styles/videotext/assets/raw/bg_b.png
+!styles/zx-spectrum/assets/raw/badger.png
+!styles/zx-spectrum/assets/raw/bg.png
+# Zwischenschritte der Aufnahme
+**/media/godot.log
+
+# Gebaute Website
+/docs/
+/docs.tmp/
+tools/local.json

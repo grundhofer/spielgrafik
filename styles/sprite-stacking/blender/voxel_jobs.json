@@ -1,0 +1,28 @@
+{
+ "_comment": "Voxelgrößen [x/y, z] in Metern. Alle Aufträge haben dasselbe Verhältnis 4:3 (gleicher Blickwinkel). Der Dachs ist der Maßstab (0,04 m), Requisiten sind 0,8-fach, Laterne 0,65-fach, Häuschen und Boote 0,5-fach, der Leuchtturm 0,22-fach verkleinert, damit alles in 426x240 passt.",
+ "materials": ["Stone", "StoneDark", "Wood", "WoodDark", "WhitePaint", "RedPaint", "Roof", "Glass", "Rope", "Metal",
+               "Rock", "Sand", "Grass", "Water", "FurDark", "FurLight", "Cap", "Brass", "Vest", "Shirt", "Scarf",
+               "Satchel", "Parcel", "Nose", "Eye"],
+ "jobs": [
+  {"name": "badger_walk", "glb": "../../../shared/3d/badger.glb", "objects": ["Badger", "Parcel"], "armature": "Armature",
+   "action": "Walk", "frames": [0, 3, 6, 9, 12, 15, 18, 21],
+   "bone_scale": {"head": 1.25}, "bone_tilt": {"head": [[0, 1, 0], -22]},
+   "vs": [0.04, 0.03], "bounds": [-0.4, 0.4, -0.4, 0.4, 0.0, 1.14]},
+  {"name": "badger_idle", "glb": "../../../shared/3d/badger.glb", "objects": ["Badger", "Parcel"], "armature": "Armature",
+   "action": "Idle", "frames": [0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44],
+   "bone_scale": {"head": 1.25}, "bone_tilt": {"head": [[0, 1, 0], -22]},
+   "vs": [0.04, 0.03], "bounds": [-0.4, 0.4, -0.4, 0.4, 0.0, 1.14]},
+  {"name": "badger_wave", "glb": "../../../shared/3d/badger.glb", "objects": ["Badger", "Parcel"], "armature": "Armature",
+   "action": "Wave", "frames": [0, 2.4, 4.8, 7.2, 9.6, 12, 14.4, 16.8, 19.2, 21.6, 24, 26.4, 28.8, 31.2, 33.6],
+   "bone_scale": {"head": 1.25}, "bone_tilt": {"head": [[0, 1, 0], -22]},
+   "vs": [0.04, 0.03], "bounds": [-0.4, 0.4, -0.4, 0.4, 0.0, 1.14]},
+  {"name": "cottage", "glb": "../../../shared/3d/harbor.glb", "objects": ["Cottage"], "vs": [0.08, 0.06]},
+  {"name": "lighthouse", "glb": "../../../shared/3d/harbor.glb", "objects": ["Lighthouse"], "vs": [0.18, 0.135]},
+  {"name": "boat_a", "glb": "../../../shared/3d/harbor.glb", "objects": ["BoatA"], "vs": [0.08, 0.06], "zcut": 0.0},
+  {"name": "boat_b", "glb": "../../../shared/3d/harbor.glb", "objects": ["BoatB"], "vs": [0.08, 0.06], "zcut": 0.0},
+  {"name": "barrel", "glb": "../../../shared/3d/harbor.glb", "objects": ["Barrel1"], "vs": [0.05, 0.0375]},
+  {"name": "crates", "glb": "../../../shared/3d/harbor.glb", "objects": ["CrateStack"], "vs": [0.05, 0.0375]},
+  {"name": "rope", "glb": "../../../shared/3d/harbor.glb", "objects": ["RopeCoil"], "vs": [0.05, 0.0375]},
+  {"name": "lantern", "glb": "../../../shared/3d/harbor.glb", "objects": ["LanternPost"], "vs": [0.0615, 0.046]}
+ ]
+}

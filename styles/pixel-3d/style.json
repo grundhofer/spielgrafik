@@ -1,0 +1,178 @@
+{
+ "slug": "pixel-3d",
+ "name": "Pixel-3D",
+ "family": "hybrid",
+ "kind": "style",
+ "era": "2018–heute",
+ "summary": "Echte 3D-Szene, in sehr niedriger Auflösung (428×242) gerendert und mit Nearest dreifach vergrößert: Toon-Licht in drei Tönen, 1-Pixel-Konturen und Kantenlicht aus Tiefen- und Normalenpuffer, eine feste Palette von 39 Farben und eine Kamerafahrt, die sich nur in ganzen Pixeln bewegt und deshalb nicht flimmert. Das Ergebnis sieht aus wie gepixelt, bleibt aber frei beweglich und beleuchtet.",
+ "references": [
+  "Pixel-Art-3D-Experimente des Indie-Entwicklers t3ssel8r (niedrige Auflösung, Konturen und Kantenlicht als Nachbearbeitung, pixelstabile Kamera)",
+  "A Short Hike (3D in niedriger Auflösung mit Nearest-Vergrößerung)",
+  "Dead Cells (3D-Modelle als Pixel-Sprites gerendert)"
+ ],
+ "traits": [
+  "Ein Raster für das ganze Bild: 3D rendert in einen SubViewport mit 428×242 Pixeln (ein Pixel Rand für den Restversatz), sichtbar sind 426⅔×240, mit Nearest ×3 auf 1280×720; keine Kantenglättung (MSAA, FXAA, TAA aus). Die Oberfläche hat ein eigenes 427×240-Raster mit derselben Vergrößerung",
+  "Toon-Licht in drei harten Tönen (p3d_toon.gdshader, eigene light()-Funktion): Schatten = nur Umgebungslicht (violett), Mittelton = halbe Abendsonne ab N·L 0,02, Licht = volle Sonne ab N·L 0,42; Schlagschatten hart (Schwelle auf ATTENUATION); Laterne und Fenster als zwei harte Lichtringe auf dem Boden. Vergleichsschalter --no-toon (weiches Lambert): 27,0 % (Bild 60) bzw. 14,5 % (Poster, Bild 144) der Pixel um mehr als 24 Stufen anders",
+  "1-Pixel-Konturen als Nachbearbeitung in Renderauflösung (p3d_post.gdshader): Liegt ein Nachbar deutlich hinter der 1/z-Vorhersage aus Mitte und Gegenseite, ist der Pixel die Außenkante des vorderen Objekts und wird abgedunkelt (30 % Objektfarbe, 55 % Tinte). Die Linie liegt innerhalb der Silhouette wie bei gezeichneten Sprites. Ohne Konturen 2,9 % bzw. 2,7 % der Pixel anders",
+  "Kantenlicht: An konvexen Knicken (Normalen weichen um mehr als 1 − N·N = 0,22 ab, Tiefe stetig) wird der Pixel auf der lichtzugewandten Seite aufgehellt, etwa an Pflasterkanten, Dachkante, Fässern und Booten. Ohne Kantenlicht 4,0 % bzw. 2,5 % der Pixel anders",
+  "Pixelstabile Kamera: Die Fahrt (73 Renderpixel in 3,25 s, folgt dem Dachs) ist eine Objektivverschiebung der Projektion (Camera3D im Modus FRUSTUM, frustum_offset) um ganze Renderpixel; der Rest in Drittelpixeln wird beim Hochskalieren als ganzzahliger Bildschirmversatz des Sprite2D gezeigt. Gemessen mit angehaltener Szene (--freeze): Zwischen aufeinanderfolgenden Bildern ändern sich nach Herausrechnen der Verschiebung im Mittel 0,065 % der Pixel (höchstens 0,28 %), ohne Schnappen 6,1 % (höchstens 9,1 %), Vorschau assets/preview/snap_compare.png",
+  "Wenige Farben: palette.gdshader rastet jedes Pixel des 3D-Bildes in OKLab auf die nächste von 39 Farben ein (32 aus Probebildern der Szene per k-means mit Modus statt Mittelwert, davon eigene Gruppen für die Figur, dazu 7 Farben der Oberfläche). Alle 180 Bilder enthalten nur Palettenfarben (37–39 je Bild); ohne Palette sind es über 1300 Farben. Ohne Palette 4,9 % bzw. 6,6 % der Pixel um mehr als 24 Stufen anders",
+  "Gepixelte Verläufe: Himmel in sieben harten Farbbändern nach Höhe über dem Horizont mit Bayer-Dither an den Bandgrenzen, Wolkenbänke in drei Tönen mit angestrahlter Unterkante, Sterne als Einzelpixel (ein Teil blinkt in Stufen); Tiefennebel in vier Stufen mit Dither statt glattem Verlauf. Dithermuster und Sterne hängen an FRAGCOORD + ganzzahligem Pan und wandern deshalb mit dem Bild statt am Bildschirm zu kleben",
+  "Wasser (p3d_water.gdshader): Spiegelung der Himmelsbänder, von Kräuselwellen zu gepixelten Wellenstrichen verbogen, Wasserfarbe nach Fresnel in drei Stufen. Glitzern der Lampen und Schaum an Booten und Steg (aus dem Tiefenpuffer) sind eingebaut, im gewählten Ausschnitt aber nur je etwa 50 Renderpixel groß (mit Prüffarben gezählt) und kaum zu sehen",
+  "Dachs-Kurier aus shared/3d (7348 Dreiecke) läuft 3,25 s nach rechts, bremst, dreht sich zur Kamera und winkt; in Ruhe 48–50 px hoch, im Profil 45–48 px. Mütze, Gesicht mit Streifen, roter Schal, olivgrüne Weste, weißer Bauch und Paket sind als Pixelflächen zu erkennen, die Augen (1 px) nicht",
+  "Effekte im Stil: Lichthof um Laterne und Leuchtfeuer als harter innerer Ring plus 50-%-Schachbrett außen; Lichtkegel des Leuchtturms in drei gediterten Helligkeitsstufen; Laterne flackert in Stufen (10 Werte pro Sekunde); Boote schaukeln; Felsen der Landzunge mit Flächennormalen und Schichtflecken in Weltkoordinaten",
+  "Oberfläche in Pixelschrift ohne Kantenglättung (Pixel Operator 8 / HB 8): Ortsschild oben links, Dialogkasten unten (18,4 % des Bildes, mit Ortsschild etwa 21 %) mit abgeschrägten Pixelecken, klappt in 5 Bildern auf, Schreibmaschinentext, Parserzeile mit blinkender Schreibmarke, drei Auswahlen mit blinkendem Pfeil"
+ ],
+ "camera": "Eine Einstellung, perspektivisch: Kamera fest bei (−0,9 | 1,5 | 6,5), 1,8° nach unten, Bildwinkel 52° vertikal für 242 Renderzeilen, Projektion FRUSTUM. Die Fahrt ist eine waagerechte Objektivverschiebung von −61 auf +12 Renderpixel, die dem Dachs mit 70 % seiner Bildbewegung folgt und mit ihm abbremst (Werte aus scripts/frame.py). Am Anfang sind Häuschen mit Fenster, Fässer und Leuchtturm im Bild, am Ende Dachs links, Boote, Steg, Laterne mit Pfahl und Leuchtturm. Bewusst nicht die Hauptkamera aus shared/3d (Begründung in pitfalls).",
+ "resolution": "428×242 gerendert (sichtbar 426⅔×240), Nearest ×3 auf 1280×720 mit Restversatz in Bildschirmpixeln; Oberfläche 427×240 ×3; feste Palette mit 39 Farben; quadratische Pixel",
+ "pipeline": [
+  {
+   "step": "Keine KI-Bilder",
+   "tool": "–",
+   "detail": "Laut Auftrag ohne tools/genimg.py gebaut (das agy-Kontingent ist für andere Einträge reserviert). Der Look entsteht vollständig aus Shadern, Code und den gemeinsamen Modellen aus shared/3d."
+  },
+  {
+   "step": "Bildausschnitt rechnen",
+   "tool": "scripts/frame.py (Python, ohne Godot)",
+   "detail": "Projektion mit Godots YXZ-Euler und Objektivverschiebung. Ergab, dass eine Orthokamera (Vorbild t3ssel8r) hier nicht passt: Der Leuchtturm ist 14,4 m hoch und steht 27 m hinter dem Laufweg; orthografisch wäre er mindestens 14 Dachshöhen hoch, der Dachs bei 240 Zeilen also höchstens etwa 14 px, und über dem Meer gäbe es keinen Horizont. Gewählt: perspektivisch, Dachs 47 px, Leuchtturmspitze in Zeile 11, Laterne ganz im Bild."
+  },
+  {
+   "step": "Szene und Materialien",
+   "tool": "Godot 4.7.2, main.gd, p3d_toon.gdshader",
+   "detail": "harbor.glb und badger.glb unverändert aus shared/3d kopiert (LODs beim Import aus). Alle glTF-Materialien per resource_name durch den Toon-Shader ersetzt (Farbe aus dem glTF), Glas als reine Emission, Rock/Sand/Grass mit Flächennormalen, Rock zusätzlich mit Schichtflecken; Water durch p3d_water. Lichter mit dem Attach-Muster aus shared/3d an die Empties gehängt."
+  },
+  {
+   "step": "Konturen, Kantenlicht, Nebel",
+   "tool": "p3d_post.gdshader + p3d_post.gdshaderinc",
+   "detail": "Bildschirmfüllendes Rechteck vor der Kamera im SubViewport (also in Renderauflösung), liest Tiefe, Normalen und Farbe der deckenden Geometrie und schreibt jeden deckenden Pixel neu. render_priority −10: Es zeichnet vor dem durchsichtig gerenderten Wasser, sodass Linien an Unterwasser-Geometrie vom Wasser verdeckt werden. Für Mobile/Compatibility lädt main.gd p3d_post_depth.gdshader (ohne Normalenpuffer, nur Konturen)."
+  },
+  {
+   "step": "Himmel, Wasser, Effekte",
+   "tool": "p3d_sky / p3d_water / p3d_beam / p3d_halo.gdshader, p3d_common.gdshaderinc",
+   "detail": "Gemeinsame Funktionen: ortsfestes Bayer-Muster (FRAGCOORD + Pan), gestufte Werte mit gedithertem Übergang, gestufter Nebel, Tiefenpuffer je Renderer (umgekehrtes Z in Forward+/Mobile, OpenGL-Z in Compatibility). Zeit als globale Shader-Uniform p3d_time aus der aufsummierten Zeit."
+  },
+  {
+   "step": "Pixelstabile Kamera",
+   "tool": "main.gd (_update_camera)",
+   "detail": "frustum_offset = ganzzahliger Pan × Pixelgröße auf der Nahebene; Sprite2D-Position = −3 × (⅓ + Restversatz in Drittelpixeln), immer ganzzahlig; globale Uniform p3d_pan = ganzzahliger Pan für die Dithermuster. Schalter --no-snap verschiebt stufenlos zum Vergleich."
+  },
+  {
+   "step": "Palette bauen",
+   "tool": "scripts/build_palette.py (NumPy, Pillow)",
+   "detail": "Probelauf ohne Palette (--no-palette --dump) und mit Dachs-Maske (--mask); jedes 6. Bild, Dachs-Pixel ×12, sehr helle Pixel ×4 gewichtet, Wurzel der Häufigkeit; k-means in OKLab (Helligkeit ×1,3) mit 22 Gruppen, je Gruppe die häufigste echte Farbe; 8 Gruppen nur aus Dachs-Pixeln; danach häufige Farben mit großem Abstand zur Palette einzeln ergänzt (6); dazu die 7 Farben der Oberfläche. Ergebnis assets/palette.png (39 × 1) und demo/palette.png, Übersicht assets/palette_sheet.png."
+  },
+  {
+   "step": "Oberfläche",
+   "tool": "ui.gd, Schrift Pixel Operator 8 / HB 8",
+   "detail": "Eigener SubViewport 427×240 mit transparentem Hintergrund, Zeichnen in _draw() auf ganze Pixel; Schriftimport mit antialiasing=0, hinting=0, subpixel_positioning=0, oversampling=1."
+  },
+  {
+   "step": "Prüfen und messen",
+   "tool": "scripts/probe.py, check_snap.py, measure_feet.py, compare_switches.py, tools/capture.py",
+   "detail": "Probeläufe mit Schaltern in einen Temp-Ordner; Kamera-Stabilität mit --freeze; Füße und Kopf über eine weiße Dachs-Maske plus Fußknochen; Vergleichsschalter; Probeläufe mit --rendering-method mobile und gl_compatibility (assets/preview/renderers.png); Aufnahme mit --poster-at 0.8."
+  }
+ ],
+ "godot": [
+  "project.godot: Fenster 1280×720 ohne Stretch, MSAA/SMAA/TAA/Debanding aus, 2D-Filter Nearest, Pixel-Snapping für 2D, Richtungsschatten hart (soft_shadow_filter_quality 0, Atlas 4096); globale Shader-Uniforms p3d_time, p3d_pan, p3d_fog_color, p3d_fog_range",
+  "main.tscn: SubViewport World (428×242, UPDATE_ALWAYS) mit WorldEnvironment (Himmel-Shader, Umgebungslicht als Farbe, Spiegelungen aus, Tonemapping linear, kein Glow, kein Godot-Nebel), Sonne (Lichtrichtung wie shared/3d, light_cull_mask ohne Ebene 2), Figurenlicht (nur Ebene 2, ohne Schatten), Kamera mit Post-Rechteck, Hafen, Dachs, Attach-Knoten; SubViewport UIView (427×240, transparent); zwei Sprite2D mit scale 3 und texture_filter Nearest zeigen beide im Fenster",
+  "Kamera: projection = PROJECTION_FRUSTUM, size = 2 · near · tan(fov/2) (Höhe der Nahebene), Pixelgröße = size / 242; frustum_offset.x = ganzzahliger Pan × Pixelgröße. Eine Verschiebung um genau eine Pixelbreite verschiebt jeden Sehstrahl auf den des Nachbarpixels, deshalb rastert die Szene identisch",
+  "p3d_toon.gdshader: render_mode cull_back, specular_disabled; fragment() setzt ALBEDO, ROUGHNESS 1, EMISSION und optional Flächennormale (cross(dFdy(VERTEX), dFdx(VERTEX))) und Schichtflecken (3D-Wertrauschen in Weltkoordinaten); light() mit step() auf N·L und ATTENUATION",
+  "p3d_post.gdshader: unshaded, depth_test_disabled, POSITION = vec4(VERTEX.xy, 1, 1); liest hint_depth_texture, hint_screen_texture, hint_normal_roughness_texture mit filter_nearest; vier Nachbarn; Kontur, wenn 1/z des Nachbarn um mehr als 2,5 % hinter der Vorhersage 2/z_Mitte − 1/z_Gegenseite liegt; Kantenlicht, wenn konvex (dot(n_Mitte − n_Nachbar, Richtung) < −0,05) und die Mitte dem Licht mehr zugewandt ist",
+  "Wasser: unshaded, ALPHA = 1 (durchsichtiger Durchgang, damit der Tiefenpuffer lesbar ist), depth_draw_always; Dünung als Verschiebung wie shared/3d (5 cm), Kräuselung nur in der Normale, ab 28–70 m ausgeblendet",
+  "Dachs: Walk mit speed_scale 2 (0,734 m/s), Weg und Animation beim Bremsen gemeinsam gesenkt (shared/3d-Muster); die Kamera folgt einer geschlossenen Formel für den Weg (Integral von smoothstep), damit --freeze dieselbe Fahrt zeigt; Idle und Walk auf LOOP_LINEAR; Dachs auf Ebene 2 für das Figurenlicht",
+  "palette.gdshader (canvas_item auf dem Sprite2D der 3D-Szene): Schleife über die Palette (texelFetch), Abstand in OKLab; palette.png als importierte Textur (verlustfrei, ohne Mipmaps), nicht per Image.load_from_file (Warnung beim Export)",
+  "Messung: Schalter --measure misst nach dem Zeichnen (RenderingServer.frame_post_draw), dann passen Pose und Lage zum Bild; --dump speichert Render- und Fensterbilder im selben Rückruf"
+ ],
+ "techniques": [
+  "pixelstabile-kamera",
+  "cel-shading",
+  "konturen-nachbearbeitung",
+  "kantenlicht",
+  "palette-einrasten",
+  "dithering",
+  "shader-nebel",
+  "shader-wasser",
+  "additiver-lichtkegel",
+  "prozedurale-materialien",
+  "figurenlicht",
+  "kamerafahrt",
+  "nachbearbeitung",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 1,
+  "consistency": 4,
+  "effort": 2,
+  "text_adventure": 4,
+  "mobile": 4
+ },
+ "ratings_note": "ai_fit 1, weil die KI hier nichts beigetragen hat: Der Eintrag ist laut Auftrag ohne KI-Bilder gebaut, der Look kommt vollständig aus Shadern, Code und den gemeinsamen Modellen. Wie gut ein Bildmodell Pixel-3D trifft, ist damit nicht geprüft. consistency 4: Jedes Modell bekommt automatisch Stufenlicht, Konturen, Kantenlicht und Palette; Abzug, weil die Pixeldichte mit der Entfernung schwankt (nahe Dinge detailliert, ferne Dinge zu Pixelbrei, kleine Teile wie Augen fallen weg) und weil die Palette aus dieser einen Szene gerechnet ist (für weitere Orte eine gemeinsame Palette festlegen). effort 2: Ein Ort braucht ein einfaches 3D-Modell mit Flächenfarben, keine Texturen und keine UV-Arbeit; Shader, Palettenskript, Oberfläche und Messskripte sind wiederverwendbar. text_adventure 4 (siehe verdict). mobile 4, auf dem Mac geprüft, nicht auf einem Smartphone gemessen: Gerendert werden nur 428×242 Pixel, ein Schattenlicht, drei Punktlichter, ein Nachbearbeitungs-Shader mit 15 Texturzugriffen je Renderpixel, rund 25 300 Dreiecke. Mit --rendering-method mobile laufen alle 180 Bilder ohne ERROR/WARNING, 3,2–4,8 % der Pixel weichen ab (das Kantenlicht fehlt, weil Mobile keinen Normalenpuffer hat); mit gl_compatibility ebenfalls fehlerfrei, aber das Bild ist deutlich heller und blasser (im Mittel +25 bis +29 Stufen Rot, +16 bis +23 Grün; 60–75 % der Pixel um mehr als 24 Stufen anders) und müsste neu abgestimmt werden.",
+ "verdict": "Gut geeignet für unser Textadventure, wenn wir Orte in 3D bauen und trotzdem wie ein Pixel-Spiel aussehen wollen: Die Szene liest sich sofort als Spielbildschirm, Pixelschrift und Oberfläche passen ohne Bruch dazu, und eine Raumkamera mit pixelstabiler Fahrt entspricht den scrollenden Räumen klassischer Adventures. Ein Ort kostet ein einfaches 3D-Modell mit Flächenfarben, eine Kameraposition und einen Lauf des Palettenskripts; Licht, Tageszeit und Figurenanimation gibt es dafür geschenkt. Schwäche ist die Figur: Bei 48 px Höhe gehen Augen und Mimik verloren, für Gespräche bräuchte es Nahaufnahmen oder gezeichnete Porträts. Gegenüber Toon-Cel ist der Stil billiger zu rendern und läuft in Mobile fast gleich, gegenüber echten Pixel-Hintergründen (VGA-Adventure) wirkt er technischer und weniger gemalt.",
+ "pitfalls": [
+  "Keine KI-Bilder (Vorgabe des Auftrags). Gemalte Details, die Pixel-Künstler setzen würden (Augenpunkte, Lichtkanten von Hand, Texturen auf Fels und Pflaster), fehlen; die großen Flächen der Landzunge wirkten zuerst völlig flach und bekamen erst mit Flächennormalen und prozeduralen Schichtflecken etwas Struktur.",
+  "Bewusste Abweichung von shared/3d: nicht die Hauptkamera. In deren Totale wäre der Dachs bei 240 Zeilen nur etwa 24 px hoch und die Konturen und Töne auf ihm nicht zu sehen. Gewählt ist eine nähere Raumkamera (Dachs 45–50 px) mit Fahrt. Deshalb ist der Schornstein nie im Bild; der Rauch wurde wieder entfernt, das Häuschen mit Fenster ist nur in der ersten Hälfte der Fahrt zu sehen.",
+  "Bewusste Abweichung vom Vorbild: Perspektive statt Orthokamera. Mit der Orthokamera von t3ssel8r wäre der Leuchtturm bei lesbarem Dachs nicht ins Bild gegangen und das Meer liefe ohne Horizont bis zum oberen Bildrand. Die pixelstabile Fahrt ist deshalb eine Objektivverschiebung: exakt pixelstabil, aber ohne Parallaxe, also eher ein Scrollen über ein festes Raumbild als eine echte Kamerafahrt. Eine echte Seitwärtsfahrt einer perspektivischen Kamera lässt sich nur für eine Tiefe auf ganze Pixel einrasten, alles davor und dahinter flimmert. Große Verschiebungen verzerren außerdem zum Bildrand hin (wie Weitwinkel), deshalb ist die Fahrt auf 73 Renderpixel begrenzt.",
+  "Bewegte Dinge (Dachs, Boote, Wasser, Lichtkegel) werden in jedem Bild neu gerastert; ihre Kantenpixel springen um 1 px. Das gehört zum Stil, das Schnappen hilft nur den unbewegten Teilen beim Schwenken.",
+  "Gesicht des Dachses: Die Augen sind bei 48 px Höhe kleiner als ein Pixel und verschwinden im dunklen Streifen; das Gesicht liest sich als Streifenmaske. Mit der Abendsonne allein lag das Gesicht außerdem im Schattenton; gelöst mit einem eigenen Figurenlicht (Ebene 2, von links vorn oben, fast neutral), das physikalisch nicht zur Szene passt, aber kaum auffällt. Mit orangem Figurenlicht wurde die grüne Weste braun.",
+  "Palette: Die ersten Paletten aus k-means ließen Grün ganz weg (Gras und Weste wurden braun), weil Himmel und Pflaster die Häufigkeiten beherrschen und Mittelwerte trübe Töne ergeben. Erst Modus statt Mittelwert, Wurzel der Häufigkeit, eigene Gruppen für den Dachs und das Ergänzen weit entfernter Farben hielten Schal, Weste, Mütze und Gras. Das schmale Mützenband ist trotzdem rot statt braun. Die Palette ist aus dieser Szene gerechnet; ein neuer Ort braucht einen eigenen Lauf oder eine gemeinsame Palette.",
+  "Konturen sind zurückhaltend: Nur 2,7–2,9 % der Pixel ändern sich ohne sie um mehr als 24 Stufen, weil die abgedunkelte Linie auf dunklen Flächen (Hauswand, Schattenseiten) nahe an der Grundfarbe liegt und die Palette sie auf dieselbe dunkle Farbe legt. Deutlich sind sie gegen hellen Grund (Boot und Dachs vor dem Wasser, Pfähle, Laternenpfahl). Innenlinien entstehen nur bei mehr als 2,5 % Tiefensprung (Arm vor dem Körper teils ohne Linie).",
+  "Das Wasser muss durchsichtig gerendert werden, um den Tiefenpuffer für den Schaum zu lesen, und hat deshalb selbst keine Konturen. Von der gewählten Kamerahöhe (1,5 m) liegt die Wasserlinie an Kaimauer und Booten fast ganz hinter der Kaikante: Schaum und Lampenglitzern sind eingebaut, aber nur je etwa 50 Renderpixel sichtbar (an Heck von Boot A, Steg und Boot B). Die Wasserfläche lebt im Bild von den gespiegelten Himmelsbändern.",
+  "Bild 0 ist zwischen zwei Läufen nicht bitgleich (0,02 % der Pixel im Bereich von Wasser und Laterne), die Bilder 1–179 sind es. Ursache nicht geklärt; vermutlich der erste Bildaufbau (Schatten, globale Uniforms).",
+  "Compatibility-Renderer: läuft ohne Fehler, aber Farben deutlich heller und blasser; der Look müsste dort neu abgestimmt werden. Mobile ohne Kantenlicht (kein Normalenpuffer).",
+  "Fußmessung: Der ferne Fuß (links, 25 cm hinter dem nahen) wird in 4–7 Bildern jeder Standphase vom schwingenden nahen Bein verdeckt; gemessen sind dort nur 2–3 sichtbare Bilder je Standphase (in der letzten Standphase vor dem Bremsen gar keins)."
+ ],
+ "lessons": [
+  "Pixelstabile Kamera in Perspektive: Objektivverschiebung (Camera3D FRUSTUM, frustum_offset) um ganze Renderpixel plus Restversatz beim Hochskalieren in Bildschirmpixeln. Das hält unbewegte Teile beim Schwenken pixelgenau stehen (0,065 % statt 6,1 % geänderte Pixel je Bild) und lässt die Fahrt trotzdem in Drittelpixeln weich laufen. Für ein Adventure mit scrollenden Räumen ist das genau das richtige Werkzeug.",
+  "Alles, was gepixelt aussehen soll, in Renderauflösung erzeugen: Konturen, Kantenlicht, Dither, Lichthöfe und Text in den niedrig aufgelösten SubViewports, erst danach ganzzahlig vergrößern. Dann gibt es nur ein Pixelraster und keine gemischten Pixelgrößen.",
+  "Dithermuster und Sterne mit FRAGCOORD + ganzzahligem Pan adressieren, sonst bleiben sie beim Schwenken am Bildschirm kleben.",
+  "Nachbearbeitung als Rechteck vor der Kamera mit render_priority vor dem durchsichtigen Wasser: Linien an Unterwasser-Geometrie verdeckt dann das Wasser selbst, ohne Höhenschwelle.",
+  "Silhouetten über die 1/z-Vorhersage aus Mitte und Gegenseite: keine Fehllinien auf flach gesehenem Pflaster, dünne Pfähle und Masten bekommen trotzdem ihre Linie.",
+  "Palette aus dem eigenen Render: Modus je k-means-Gruppe statt Mittelwert, Wurzel der Häufigkeit, eigene Gruppen für die Figur und Ergänzen schlecht getroffener Farben. 39 Farben reichen, das Bild wirkt danach geschlossener als ungerastert (über 1300 Farben).",
+  "Erst rechnen, dann bauen: scripts/frame.py zeigte vor dem ersten Godot-Lauf, dass eine Orthokamera mit Leuchtturm und lesbarem Dachs nicht geht, und lieferte Kameraposition, Bildwinkel und Fahrt.",
+  "Figurenlicht auf eigener Ebene (light_cull_mask) hält Gesicht und Kostümfarben lesbar; es sollte fast neutral sein, sonst kippen Grüntöne unter dem Abendlicht nach Braun und fallen aus der Palette.",
+  "Pixelschrift scharf: Schrift-Import mit antialiasing=0, hinting=0, subpixel_positioning=0 und Oberfläche in eigenem SubViewport in Renderauflösung.",
+  "Messen: Weiße Dachs-Maske (--mask) plus Fußknochen nach dem Zeichnen (frame_post_draw); x-Werte auf den Bildinhalt beziehen (Renderspalte + Pan). Ergebnis: Der nahe Standfuß bleibt in 6–8 Bildern je Standphase auf 0–1 px stehen, der ferne in seinen sichtbaren Bildern auf 0 px; beim Stehen, Drehen und Winken liegt die unterste Zeile in 78 von 81 Bildern auf Zeile 183 (184 nur in drei Bildern der Drehung, der vordere Fuß kommt dabei näher), die Kopfzeile atmet zwischen 135 und 136.",
+  "Wo KI helfen könnte (hier nicht genutzt): ein übermaltes Zielbild der Blender-Vorschau im Pixel-Look als Farbskript für Palette und Licht; von Hand wirkende Pixel-Porträts des Dachses für Gespräche, weil das 3D-Gesicht bei 48 px keine Augen mehr hat; kleine Pixeltexturen für Fels und Pflaster, die die großen Flächen beleben, ohne die Pixelstabilität zu stören (in Weltkoordinaten, Nearest)."
+ ],
+ "assets": [
+  {"file": "demo/shaders/p3d_toon.gdshader", "kind": "shader", "made_with": "Toon-Licht in drei Tönen, harte Schatten, Punktlicht-Ringe, Flächennormalen, Felsflecken", "prompt": ""},
+  {"file": "demo/shaders/p3d_post.gdshaderinc", "kind": "shader", "made_with": "Pixelkonturen, Kantenlicht und gestufter Nebel in Renderauflösung", "prompt": ""},
+  {"file": "demo/shaders/p3d_post.gdshader", "kind": "shader", "made_with": "Nachbearbeitung für Forward+ (mit Normalenpuffer)", "prompt": ""},
+  {"file": "demo/shaders/p3d_post_depth.gdshader", "kind": "shader", "made_with": "Ersatz für Mobile und Compatibility (nur Konturen)", "prompt": ""},
+  {"file": "demo/shaders/p3d_common.gdshaderinc", "kind": "shader", "made_with": "ortsfestes Bayer-Muster, gestufte Werte, Nebel, Tiefenpuffer je Renderer", "prompt": ""},
+  {"file": "demo/shaders/p3d_sky.gdshader", "kind": "shader", "made_with": "Himmel in Farbbändern mit Dither, Wolkenbänke, Sterne", "prompt": ""},
+  {"file": "demo/shaders/p3d_water.gdshader", "kind": "shader", "made_with": "Wasser: gespiegelte Himmelsbänder, Glitzern, Schaum aus dem Tiefenpuffer", "prompt": ""},
+  {"file": "demo/shaders/p3d_beam.gdshader", "kind": "shader", "made_with": "Lichtkegel des Leuchtturms in gediterten Stufen", "prompt": ""},
+  {"file": "demo/shaders/p3d_halo.gdshader", "kind": "shader", "made_with": "Lichthof: harter Ring und Schachbrett", "prompt": ""},
+  {"file": "demo/shaders/palette.gdshader", "kind": "shader", "made_with": "Palette einrasten (OKLab)", "prompt": ""},
+  {"file": "demo/main.gd", "kind": "code", "made_with": "Materialien, Licht, pixelstabile Kamera, Dachs, Effekte, Prüfschalter", "prompt": ""},
+  {"file": "demo/ui.gd", "kind": "code", "made_with": "Pixel-Oberfläche: Ortsschild, Dialogkasten, Auswahl, Parserzeile", "prompt": ""},
+  {"file": "assets/palette.png", "kind": "palette", "made_with": "scripts/build_palette.py aus Probebildern der Szene, 39 Farben", "prompt": ""},
+  {"file": "assets/palette_sheet.png", "kind": "preview", "made_with": "Farbfelder der Palette", "prompt": ""},
+  {"file": "assets/preview/snap_compare.png", "kind": "preview", "made_with": "check_snap-Prinzip: geänderte Pixel zwischen Bild 40 und 41 bei angehaltener Szene, links mit, rechts ohne Schnappen", "prompt": ""},
+  {"file": "assets/preview/switches.png", "kind": "preview", "made_with": "compare_switches.py, Posterbild: voll / ohne Toon / ohne Konturen / ohne Kantenlicht / ohne Palette / ohne Nebel", "prompt": ""},
+  {"file": "assets/preview/renderers.png", "kind": "preview", "made_with": "Spalten Forward+, Mobile, Compatibility; Zeilen Bild 60 und 144", "prompt": ""},
+  {"file": "assets/preview/badger_close.png", "kind": "preview", "made_with": "Ausschnitt aus dem Poster, 2-fach: Dachs winkt", "prompt": ""},
+  {"file": "assets/preview/walk_frames.png", "kind": "preview", "made_with": "Aufnahme Bild 30–41: Laufzyklus mit Palette, am Dachs ausgerichtet", "prompt": ""},
+  {"file": "demo/models/harbor.glb", "kind": "model", "made_with": "unveränderte Kopie von shared/3d/harbor.glb (17 932 Dreiecke)", "prompt": ""},
+  {"file": "demo/models/badger.glb", "kind": "model", "made_with": "unveränderte Kopie von shared/3d/badger.glb (7348 Dreiecke, Idle/Walk/Wave)", "prompt": ""},
+  {"file": "scripts/frame.py", "kind": "code", "made_with": "Bildausschnitt und Fahrt vorab rechnen", "prompt": ""},
+  {"file": "scripts/build_palette.py", "kind": "code", "made_with": "Palette aus Probebildern", "prompt": ""},
+  {"file": "scripts/check_snap.py", "kind": "code", "made_with": "Pixelstabilität der Kamerafahrt messen", "prompt": ""},
+  {"file": "scripts/measure_feet.py", "kind": "code", "made_with": "Füße und Kopf des Dachses in den Renderbildern messen", "prompt": ""},
+  {"file": "scripts/compare_switches.py", "kind": "code", "made_with": "Vergleichsschalter aufnehmen und auszählen", "prompt": ""},
+  {"file": "scripts/probe.py", "kind": "code", "made_with": "Probelauf mit Schaltern in einen Temp-Ordner", "prompt": ""}
+ ],
+ "licenses": [
+  {"item": "Schriften Pixel Operator 8 und Pixel Operator HB 8 (Jayvee Enaguas)", "license": "CC0-1.0", "source": "https://www.dafont.com/pixel-operator.font (Kopie aus styles/vga-adventure/demo/fonts/, Lizenztext: demo/fonts/PixelOperator-LICENSE.txt)"},
+  {"item": "Hafen und Dachs", "license": "eigene Modelle aus shared/3d (Blender-Skripte)", "source": "shared/3d/blender/"},
+  {"item": "Shader, Palette, Oberfläche, Skripte", "license": "eigener Code, keine fremden Texturen, Bilder oder KI-Bilder", "source": "styles/pixel-3d/"},
+  {"item": "Hash without Sine (Shader-Funktion), Copyright (c) 2014 David Hoskins – in demo/shaders/p3d_sky.gdshader, demo/shaders/p3d_toon.gdshader", "license": "MIT", "source": "https://www.shadertoy.com/view/4djSRW"}
+ ],
+ "image_generations": 0,
+ "tool_issues": [
+  "tools/capture.py legt die Einzelbilder mit tempfile.TemporaryDirectory() im System-Temp an, nicht in einem Unterordner mit dem Namen des Eintrags (wie PIPELINE.md es für Temp-Dateien verlangt). Umgangen mit TMPDIR=<Scratchpad>/pixel-3d/tmp beim Aufruf.",
+  "tools/capture.py wertet nur ERROR und SCRIPT ERROR aus, keine WARNING. Eine Warnung wie \"Loaded resource as image file, this will not work on export\" (palette.png per Image.load_from_file) wäre unbemerkt durch die Prüfung gegangen; hier im eigenen Probeskript gefunden und behoben."
+ ],
+ "status": "done"
+}

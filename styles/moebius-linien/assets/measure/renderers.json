@@ -1,0 +1,15 @@
+{
+ "meldungen": {
+  "forward_plus": [],
+  "mobile": [],
+  "gl_compatibility": [
+   "WARNING: Screen-space AA is only available when using the Forward+ or Mobile renderer."
+  ]
+ },
+ "forward_plus_f60": 0.0,
+ "mobile_f60": 10.48,
+ "gl_compatibility_f60": 16.52,
+ "forward_plus_f145": 0.0,
+ "mobile_f145": 4.79,
+ "gl_compatibility_f145": 10.7
+}

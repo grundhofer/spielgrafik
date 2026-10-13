@@ -1,0 +1,226 @@
+{
+ "file": "assets/badger.png",
+ "frames": [
+  "walk_0",
+  "walk_1",
+  "walk_2",
+  "walk_3",
+  "walk_4",
+  "walk_5",
+  "walk_6",
+  "walk_7",
+  "stand",
+  "turn"
+ ],
+ "frame_w": 122,
+ "frame_h": 184,
+ "scale": 0.4,
+ "foot_y": 182.4,
+ "crop": [
+  1,
+  30,
+  306,
+  490
+ ],
+ "sole_shift_ai_px": {
+  "walk_0": 0,
+  "walk_1": 1,
+  "walk_2": 2,
+  "walk_3": 1,
+  "walk_4": -1,
+  "walk_5": 3,
+  "walk_6": 3,
+  "walk_7": 3,
+  "stand": 3,
+  "turn": 3
+ },
+ "heel_shift_ai_px": {
+  "walk_0": -2,
+  "walk_1": 0,
+  "walk_2": 1,
+  "walk_3": 4,
+  "walk_4": 0,
+  "walk_5": 1,
+  "walk_6": 4,
+  "walk_7": 4,
+  "stand": 7,
+  "turn": 6
+ },
+ "foot_residual_ai_px": {
+  "walk_0": {
+   "before": {
+    "L": {
+     "heel": 2,
+     "toe": 4
+    },
+    "R": {
+     "heel": -43,
+     "toe": 3
+    }
+   },
+   "after": {
+    "L": {
+     "heel": 0,
+     "toe": 2
+    },
+    "R": {
+     "heel": -45,
+     "toe": 1
+    }
+   }
+  },
+  "walk_1": {
+   "before": {
+    "L": {
+     "heel": 0,
+     "toe": 8
+    }
+   },
+   "after": {
+    "L": {
+     "heel": 0,
+     "toe": 8
+    }
+   }
+  },
+  "walk_2": {
+   "before": {
+    "L": {
+     "heel": -1,
+     "toe": 9
+    }
+   },
+   "after": {
+    "L": {
+     "heel": 0,
+     "toe": 10
+    }
+   }
+  },
+  "walk_3": {
+   "before": {
+    "L": {
+     "heel": -4,
+     "toe": 7
+    }
+   },
+   "after": {
+    "L": {
+     "heel": 0,
+     "toe": 11
+    }
+   }
+  },
+  "walk_4": {
+   "before": {
+    "L": {
+     "heel": -12,
+     "toe": -5
+    },
+    "R": {
+     "heel": 0,
+     "toe": 20
+    }
+   },
+   "after": {
+    "L": {
+     "heel": -12,
+     "toe": -5
+    },
+    "R": {
+     "heel": 0,
+     "toe": 20
+    }
+   }
+  },
+  "walk_5": {
+   "before": {
+    "R": {
+     "heel": -1,
+     "toe": -23
+    }
+   },
+   "after": {
+    "R": {
+     "heel": 0,
+     "toe": -22
+    }
+   }
+  },
+  "walk_6": {
+   "before": {
+    "R": {
+     "heel": -4,
+     "toe": 9
+    }
+   },
+   "after": {
+    "R": {
+     "heel": 0,
+     "toe": 13
+    }
+   }
+  },
+  "walk_7": {
+   "before": {
+    "R": {
+     "heel": -4,
+     "toe": 10
+    }
+   },
+   "after": {
+    "R": {
+     "heel": 0,
+     "toe": 14
+    }
+   }
+  },
+  "stand": {
+   "before": {
+    "L": {
+     "heel": -7,
+     "toe": 15
+    },
+    "R": {
+     "heel": -7,
+     "toe": 15
+    }
+   },
+   "after": {
+    "L": {
+     "heel": 0,
+     "toe": 22
+    },
+    "R": {
+     "heel": 0,
+     "toe": 22
+    }
+   }
+  },
+  "turn": {
+   "before": {
+    "L": {
+     "heel": -6,
+     "toe": 7
+    },
+    "R": {
+     "heel": -6,
+     "toe": 7
+    }
+   },
+   "after": {
+    "L": {
+     "heel": 0,
+     "toe": 13
+    },
+    "R": {
+     "heel": 0,
+     "toe": 13
+    }
+   }
+  }
+ },
+ "walk_step_px": 7.516,
+ "walk2_to_stand_px": 3.0,
+ "note": "walk_step_px = Vorschub je Laufbild (aus dem 3D-Modell); Halt nur aus walk_2 (Standfu\u00df L wandert 7,5 KI-px)"
+}

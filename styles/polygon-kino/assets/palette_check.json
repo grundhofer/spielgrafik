@@ -1,0 +1,14 @@
+{
+ "frames": 180,
+ "size": [
+  320,
+  200
+ ],
+ "max_colors": {
+  "A": 16,
+  "B": 16
+ },
+ "frames_with_foreign_colors": 0,
+ "examples": [],
+ "rendering_method": "forward_plus"
+}

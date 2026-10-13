@@ -1,0 +1,49 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1"]
+[ext_resource type="Texture2D" path="res://art/bg_index.png" id="2"]
+[ext_resource type="Shader" path="res://shaders/indexed.gdshader" id="3"]
+[ext_resource type="Texture2D" path="res://art/badger.png" id="4"]
+[ext_resource type="Script" path="res://scripts/ui.gd" id="5"]
+[ext_resource type="Script" path="res://scripts/title.gd" id="6"]
+[ext_resource type="Shader" path="res://shaders/ui_cycle.gdshader" id="7"]
+[ext_resource type="Texture2D" path="res://art/rain_front.png" id="8"]
+
+[sub_resource type="ShaderMaterial" id="mat_bg"]
+shader = ExtResource("3")
+shader_parameter/use_alpha = false
+
+[sub_resource type="ShaderMaterial" id="mat_badger"]
+shader = ExtResource("3")
+shader_parameter/use_alpha = true
+shader_parameter/probe = false
+shader_parameter/rain_over = true
+shader_parameter/rain_tex = ExtResource("8")
+
+[sub_resource type="ShaderMaterial" id="mat_title"]
+shader = ExtResource("7")
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Bg" type="Sprite2D" parent="."]
+material = SubResource("mat_bg")
+texture = ExtResource("2")
+centered = false
+
+[node name="Badger" type="Sprite2D" parent="."]
+material = SubResource("mat_badger")
+texture = ExtResource("4")
+centered = false
+flip_h = true
+region_enabled = true
+region_rect = Rect2(0, 0, 36, 49)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Box" type="Node2D" parent="UI"]
+script = ExtResource("5")
+
+[node name="Title" type="Node2D" parent="UI/Box"]
+material = SubResource("mat_title")
+script = ExtResource("6")

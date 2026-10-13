@@ -1,0 +1,323 @@
+{
+ "slug": "hibit-pixel",
+ "name": "Moderne Hi-Bit-Pixel-Art",
+ "family": "pixel",
+ "kind": "style",
+ "era": "seit etwa 2010 (Indie-Pixel-Art mit Licht, Partikeln und Glühen der Gegenwart)",
+ "summary": "Pixel-Art in höherer Auflösung (hier 640×360, ganzzahlig ×2) mit größeren Paletten und sauberem Raster, belebt durch Technik, die alte Hardware nicht hatte: dynamisches 2D-Licht mit Normal Maps, Partikel, Lichthöfe und atmosphärische Tiefe in getrennten Ebenen. Das Licht wird pro Bildschirmpixel gerechnet und in Stufen gesetzt, damit es wie gepixelt wirkt.",
+ "references": [
+  "Owlboy (D-Pad Studio 2016)",
+  "Dead Cells (Motion Twin 2018)",
+  "Blasphemous (The Game Kitchen 2019)",
+  "Hyper Light Drifter (Heart Machine 2016)",
+  "Celeste (Maddy Makes Games 2018)",
+  "Eastward (Pixpil 2021)",
+  "Sea of Stars (Sabotage Studio 2023)",
+  "Children of Morta (Dead Mage 2019)"
+ ],
+ "traits": [
+  "Spielbild 640×360, ganzzahlig ×2 auf 1280×720, Nearest, Sprite-Positionen und Vertices auf ganze Pixel gerastert; keine gemischten Pixelgrößen in Szene und Figur",
+  "Quellgrafik mit begrenzten Paletten: Hintergrund 120 Farben (k-means in Oklab), Dachs 31 Farben (30 aus dem Blatt + 1 Kantenlicht der Beine), Porträt 30; durch das dynamische Licht entstehen 3.724–4.466 Farben je Bild (alle 180 Bilder gezählt; Bild 0: 3.852, Bild 144: 4.233, Poster = Bild 151 bei t = 5,03 s: 4.295), ohne Lichtstufen (--smooth) wären es im Posterbild 17.594",
+  "Dynamisches 2D-Licht mit Normal Maps (CanvasTexture): Laterne (flackert, zwei Windböen), Fenster (Kaminfeuer), Leuchtfeuer-Blitz auf Turm und Landzunge, Abendrot als DirectionalLight2D von rechts oben; Fenster- und Laternenglas sind im Hintergrund nur mittelhell, das Leuchten kommt vom Licht (ohne Licht Fensterglas Median-L 0,52, mit Licht 0,69)",
+  "Licht in 6 Stufen (Dachs 5) mit geordnetem Dithering nur an den Stufengrenzen (eigener light()-Shader), farbtonerhaltend",
+  "Normal Maps per Skript aus der Helligkeit erzeugt (plus Wölbung zum Ebenenrand, Kai-Oberfläche nach oben gekippt); gemessen: Ohne Normal Maps ändern sich in der beleuchteten Fläche 55 % der Pixel um mehr als 8 Stufen (mittlere Abweichung 21; Bilder 0, 143, 144, 151)",
+  "Nasser Kai: Glanzkarte (Spekular) auf den hellen Plattenoberseiten, Glanzlicht der Laterne wandert mit dem Flackern",
+  "Partikel: Schornsteinrauch aus 8 gepixelten Wölkchen-Stufen (Bildwechsel statt Skalierung), vom Wind nach rechts getrieben: die Fahne zieht vom Schornstein (x 70) etwa 150 px weit über den freien Himmel (oberste Rauchzeile 3–7, nichts verdeckt sie); Lichtstaub, der nur im Laternenlicht sichtbar ist (LIGHT_ONLY)",
+  "Glühen als gestufte, geditherte Lichthöfe (additiv) um Laterne, Fenster und Leuchtfeuer; Stern-Aufblitzen, wenn der Strahl zur Kamera zeigt",
+  "Atmosphärische Tiefe: Himmel unbeleuchtet und unverdunkelt, Fernes heller und nur vom Leuchtfeuer und Abendrot beleuchtet, Nebelschwaden zwischen Fernem und Nahem, Nahes dunkler und von Laterne und Fenster beleuchtet; Inselchen und Fuß der Landzunge stehen vollständig im Wasser",
+  "Leuchtfeuer: Lichtkegel mit Verkürzung nach dem Drehwinkel, 5 Stufen, vom Nahen verdeckt; Spiegelung als Strichsäule im Wasser",
+  "Wasser: zeilenweiser Versatz um ganze Pixel, Glitzern, Spiegelung; deckend nur auf Wasserpixeln der Ebenenmaske (an der unverschobenen Position gelesen), gemessen: keines der 2.370 Fern-Pixel ab Zeile 173 wird vom Wasser verändert; erste Wasserzeile aus der Maske (173)",
+  "Dachs 64 px hoch, 8 Laufbilder mit 15 Bildern/s (jedes Bild genau 2 Aufnahmebilder), Spitze des Standfußes in allen 43 Wechseln mit demselben Standfuß 0 px Versatz; 1-px-Kantenlicht an der Vorderkante der Beine; im Stehen Atmen (Oberkörper 1 px) und Blinzeln, in der Atemphase mit eigenem Bild „Atmen + Blinzeln“ (Kopfoberkante bleibt 222, Haltezeiten 25/3/3/18), Kontaktschatten",
+  "Oberfläche: Ortsschild oben rechts im freien Himmel und Dialogfenster mit Porträt (52 px, spricht im 7,5-Hz-Takt, jede Mundstellung 4 Aufnahmebilder, blinzelt), Namensreiter, Schreibmaschinentext, Parserzeile, drei Auswahlpunkte; Pixel Operator 16 px, Namensreiter Pixel Operator 8 in 8 px, ohne Kantenglättung; zusammen etwa 19 % des Bildes"
+ ],
+ "camera": "Seitenansicht auf Augenhöhe, feste Kamera, ein Bildschirm eines 2D-Spiels",
+ "resolution": "640×360 (×2 = 1280×720), quadratische Pixel; Quellpaletten 120 (Hintergrund) und 31 Farben (Dachs), Licht erzeugt weitere Töne (3.724–4.466 Farben je Bild)",
+ "pipeline": [
+  {
+   "step": "Hintergrund erzeugen",
+   "tool": "genimg (gpt-image)",
+   "detail": "1536×1024, ein Versuch. Stilblock: Hi-Bit-Pixel-Art für eine Engine mit 2D-Licht, 640 px breit, Farbrampen mit Farbtonverschiebung, Konturen nur vorn, Tiefe in Ebenen; ausdrücklich gleichmäßiges Dämmerlicht ohne gemalte Lichtquellen, Lichtkegel, Spiegelungen und Rauch (macht die Engine). Kai-Band und Horizont in Prozent vorgegeben. Prompt: prompts/bg.txt"
+  },
+  {
+   "step": "Ebenenmaske erzeugen",
+   "tool": "genimg (gpt-image) mit bg.png als Referenz",
+   "detail": "Dasselbe Bild „wie auf Folie durchgepaust“: Himmel magenta, Wasser cyan, Fernes (Hügel, Inselchen, Landzunge mit Leuchtturm) gelb, Nahes unverändert. Ein Versuch, gemessener Versatz 0 px. Prompt: prompts/mask.txt"
+  },
+  {
+   "step": "Rauch entfernen, Ausschnitt, Raster",
+   "tool": "scripts/build_bg.py",
+   "detail": "Gemalten Schornsteinrauch durch Himmel derselben Zeilen 100 px weiter rechts ersetzt; 1536×864 ab Zeile 36 ausgeschnitten (2,4 Bildpixel je Zielpixel). k-means (Oklab) auf 120 Farben, je Zielpixel zuerst die Ebene per Mehrheit, dann die häufigste Farbe nur unter Pixeln dieser Ebene (keine Himmelsfarbe am Rand des Nahen). Danach: Fern-Inseln ohne Kontakt zu Himmel oder Wasser zum Nahen (164 Pixel helles gelbes Glas, das die Maske als Fernes las); gemaltes Licht gedämpft: Fenster- und Laternenglas um 0,17 in Oklab-L auf einen Bernsteinton der Palette (675 Pixel), warmer Schein auf den Steinen bis 22 px um den Fensterrahmen nach Farbton ausgewählt und zu Farbton/Sättigung der übrigen Mauer gezogen, auf die Palette eingerastet (2.113 Pixel)."
+  },
+  {
+   "step": "Ebenen, Normal Maps, Glanz",
+   "tool": "scripts/build_bg.py",
+   "detail": "sky.png (deckend, unter Objekten von oben fortgesetzt), far.png, water.png (unter Booten, Steg und Fernem zeilenweise aufgefüllt, nur als Quelle für den Zeilenversatz; deckend macht der Shader es nur auf Wasserpixeln der Maske), near.png, layers.png (Maske als RGB), bg.json (erste Wasserzeile 173 und Kai-Zeilen für den Shader). Normal Maps: Höhe = Oklab-L (Kasten 3×3 und 7×7 gemischt) + Wölbung zum Ebenenrand, Sobel-Gradient, OpenGL-Konvention (Grün = oben, in Godot geprüft); Kai-Zeilen 262–292 nach oben gekippt. near_s.png: Glanz auf hellen Plattenoberseiten."
+  },
+  {
+   "step": "Posen-Vorlage rendern",
+   "tool": "Blender 5.2 (blender/walk_layout.py) + scripts/compose_layout.py",
+   "detail": "Der geriggte Dachs aus shared/3d/badger.glb in Seitenansicht: 8 Phasen des Laufzyklus (Walk, je 1/8 s) und 4 Stehbilder (Idle), auf einem 1536×1024-Blatt am Ursprung der Figur ausgerichtet (assets/ref/pose_layout.png). Der Standfuß wandert darin je Phase 4,6 cm zurück."
+  },
+  {
+   "step": "Figurenblatt erzeugen",
+   "tool": "genimg (gpt-image), Referenzen pose_layout.png + master_sheet.png",
+   "detail": "Ein Versuch: 8 Laufbilder über den Blender-Posen, 4 Stehbilder (zweimal Augen zu, Sprechen mit Gruß, Sprechen). Prompt: prompts/badger.txt"
+  },
+  {
+   "step": "Figur auf 64 px",
+   "tool": "scripts/build_badger.py",
+   "detail": "Alpha ≥ 200 (das Blatt hat einen halbtransparenten Dunst), 30 Farben, je Bild ein Zielraster mit Ursprung am Kopf (Schwerpunkt im oberen Viertel) und Fußlinie unten, je Reihe eigener Maßstab (Stehreihe im Blatt 6 % größer). Deckung über die ganze Zelle, Farbe als häufigster Index im Zellinneren, dunkle Linien (Kontur, Auge, Nase) gewinnen schon ab 34 % Anteil; Umriss danach mit Pflaume-Kontur geschlossen."
+  },
+  {
+   "step": "Korrekturen aus Teilen",
+   "tool": "scripts/build_badger.py",
+   "detail": "Laufbild 2 hatte die Augen zu: Augenfenster aus Laufbild 1. Grundpose = Sprechbild B mit geschlossenem Mund (rote Mundpixel durch Schnauzenweiß ersetzt); Blinzeln = Grundpose mit Iris/Pupille durch Fell ersetzt und Lidstrich; Sprechen = Sprechbild B; Atmen = Oberkörper bis Zeile 44 um 1 px tiefer; Atmen + Blinzeln = Blinzelbild mit demselben Versatz (5 Stehbilder). Kantenlicht: ab Zellenzeile 49 bekommt das vorderste Pixel jedes Beinabschnitts (vor Kontur oder Leere) einen hellen Ton der Beinrampe (Oklab-L 0,62). Porträt 52×52 aus demselben Sprechbild in höherer Auflösung, ebenso aus Teilen. Normal Maps je Bild (Helligkeit + Wölbung zum Umriss); für die Laufrichtung links gespiegelt, dabei Normal-x umgedreht."
+  },
+  {
+   "step": "Effekte im Code",
+   "tool": "scripts/build_fx.py",
+   "detail": "Rauch-Bildfolge (8 Stufen 14×14, Lichtkante, Schatten, Zerfall durch geordnetes Ausdünnen), Lichtstaub, Lichthöfe und Aufblitzen in 4–5 Stufen mit Dithering, Nebelschwaden (9 Ellipsen, kachelbar), Möwe (4 Flügelbilder), Lichttextur, Kontaktschatten."
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/probe.py, scripts/measure_badger.py, scripts/measure_scene.py, tools/capture.py",
+   "detail": "measure_badger.py nimmt mit --solo nur den Dachs auf Schwarz in 640×360 auf: jedes Laufbild genau 2 Aufnahmebilder, Spitze des Standfußes je Schritt fest (z. B. 459, 447, 435 … in Zeile 284, Schrittlänge 12 px), Ferse rollt ab (1–4 px), unterste Zeile in allen 180 Bildern 284, Kopfoberkante 221/222; Halt in Bild 116, danach Haltezeiten 25/3/3/18 mit Kopfoberkante 222 in der ganzen Atemphase samt Blinzeln. measure_scene.py zählt Farben je Bild und vergleicht --nolight, --flatnormals, --smooth und die Renderer (Bilder 0, 143, 144, 151). Überdeckung des Wassers geprüft mit einer Kopie der Demo im Temp-Ordner, in der Water unsichtbar ist: 0 von 2.370 Fern-Pixeln ab Zeile 173 ändern sich. Mundbild im Porträt: alle Haltezeiten 4 Aufnahmebilder (Bild 32–87), Blinzeln 3. Rauch: oberste Rauchzeile 3–7 in allen geprüften Bildern. Dauerlauf mit --t0=34 ohne Fehler."
+  }
+ ],
+ "godot": [
+  "Viewport 640×360, stretch mode viewport, aspect keep, scale_mode integer, Fenster 1280×720 per window_*_override; default_texture_filter Nearest; snap_2d_transforms_to_pixel und snap_2d_vertices_to_pixel an",
+  "Ebenen als Sprite2D in Zeichenreihenfolge: Himmel → Sterne → Fernes → Lichtkegel → Möwen → Wasser → Nebel → Nahes → Kontaktschatten → Dachs → Rauch → Lichtstaub → Lichthöfe; Oberfläche in einer CanvasLayer (10)",
+  "Beleuchtete Ebenen (Nahes, Fernes, Dachs) mit CanvasTexture (diffuse + normal, beim Nahen zusätzlich specular) und shaders/lit.gdshader: light() rechnet N·L und Glanz (Halbvektor zur Kamera), nimmt das Maximum der Kanäle, setzt es in Stufen (bands 6, Dachs 5) und dithert mit Bayer 4×4 nur im Übergang an der Stufengrenze (band_width 0,3, Dachs 0,04)",
+  "Lichter: LanternLight (PointLight2D, Energie 1,85 ± Rauschen, zwei Böen, Höhe 26, Maske 1), WindowLight (0,78 ± 0,1, Höhe 10), LampLight (nur Maske 2 = Fernes, Blitz bis 1,85), Rim (DirectionalLight2D, Abendrot von rechts oben, rotation 1,31, 0,45, Höhe 0,3); CanvasModulate (0,6; 0,58; 0,76) dunkelt die Welt ab, Fernes hat self_modulate 1,3 (Dunst heller); Lichthöfe Fenster (Deckkraft 0,2 + 0,2·(Energie − 0,6)) und Laterne (0,38 + 0,3·(Energie − 1,65)) schwächer als in der ersten Fassung, damit Glas, Licht und Lichthof nicht überstrahlen",
+  "Himmel, Sterne, Möwen und Nebel mit CanvasItemMaterial unshaded: DirectionalLight2D beleuchtete den Himmel trotz light_mask = 0 (siehe pitfalls); unshaded nimmt auch CanvasModulate heraus, der Himmel bleibt so hell wie gemalt",
+  "Wasser: shaders/water.gdshader liest die Textur mit ganzzahligem Zeilenversatz (Amplitude nach Nähe, 0,4–3,2 px), Glitzern über Hash je 3-px-Strich, Spiegelung des Leuchtfeuers als schwankende Strichsäule, Stärke folgt dem Blitz; Deckkraft = Wassermaske (layers.png Grün per texelFetch an der unverschobenen Pixelposition), horizon und near_row setzt main.gd aus art/bg.json",
+  "Leuchtfeuer: ColorRect mit shaders/beam.gdshader (blend_add), Umdrehung 6 s; sichtbare Länge 330·|cos φ|, Blitz (FlareLamp, LampLight, Spiegelung) wenn sin φ > 0,82",
+  "Partikel: CPUParticles2D mit use_fixed_seed; Rauch mit CanvasItemMaterial particles_animation (8 Bilder, anim_speed 1 je Lebensdauer), 30 Teilchen, Lebensdauer 5 s, Anfangsgeschwindigkeit 4–6, Streuung 22°, gravity (16; 1,5) als Wind nach rechts, Dämpfung 1,2–1,8, randomness 0,5; Lichtstaub mit light_mode LIGHT_ONLY (nur im Laternenlicht sichtbar)",
+  "Dachs: Sprite2D, Texturen per Code als CanvasTexture; Laufbilder mit 15 Bildern/s aus floor(t·15), Vorschub je Bildwechsel [2, 5, 2, 2, 3, 3, 3, 4] px aus dem gemessenen Standfuß; Halt im nächsten Durchgangsbild nach x ≤ 300; Stehen mit 5 Bildern (hframes 5): Atmen (0,8 s), Blinzeln (3 Aufnahmebilder), in der Atemphase Bild „Atmen + Blinzeln“",
+  "Oberfläche (scripts/ui.gd): _draw() mit draw_rect/draw_string; FontFile mit antialiasing NONE, hinting NONE, subpixel_positioning DISABLED; Ortsschild rechtsbündig bis x 620, gleitet von rechts herein; Fenster fährt in ganzen Pixeln ein, Text 34 Zeichen/s, Porträt-Mund je 7,5-Hz-Takt entschieden (im Takt mit Punkt zu), Pfeil hüpft 5 Hz",
+  "Zeit über delta aufsummiert, Rauschen (FastNoiseLite) und Sterne mit festem Seed; Benutzerargumente --t0, --solo, --nolight, --only=<Licht>, --flatnormals, --smooth für Prüfläufe"
+ ],
+ "techniques": [
+  "licht-2d-normalmaps",
+  "normalmap-aus-helligkeit",
+  "gestuftes-licht",
+  "partikel",
+  "pixel-lichthof",
+  "additiver-lichtkegel",
+  "zeilenversatz-wasser",
+  "ebenenmaske-durchgepaust",
+  "posen-vorlage-3d",
+  "ki-spritesheet",
+  "sprite-animation",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 3,
+  "effort": 3,
+  "text_adventure": 4,
+  "mobile": 5
+ },
+ "ratings_note": "Das Bildmodell traf den Hi-Bit-Hintergrund und die dreifarbige Ebenenmaske jeweils im ersten Versuch und zeichnete das Figurenblatt über die Blender-Posen; Licht, Normal Maps, Partikel, Glühen, Kegel und Wasser – also das, was den Stil von älterer Pixel-Art unterscheidet – kommen aber aus Skripten und Godot (ai_fit 4). Das Pseudo-Raster der KI ist ungleichmäßig, die Figur ist feiner gezeichnet als 64 px tragen und brauchte Augen-, Mund- und Beinkorrekturen aus Teilen, der Vorschub je Laufbild ist ungleichmäßig, und das gemalte Licht im Hintergrund musste gedämpft werden (consistency 3). Je Ort kommen Maske, Lichtpositionen von Hand, Retusche gemalter Effekte und eine Prüfung der Ebenen-Überdeckung dazu (effort 3). Mobil geprüft: Aufnahme mit --rendering-method mobile pixelgleich zu Forward+, gl_compatibility weicht in 0,05 % der Pixel um mehr als 8 Stufen ab (einzelne Pixel an Stufengrenzen des Lichts), 99,9 % der abweichenden Pixel um höchstens 2 Stufen (gemessen in den Bildern 0, 143, 144, 151); Bildzeit auf echten Geräten nicht gemessen, die Szene ist 640×360 mit vier 2D-Lichtern.",
+ "verdict": "Für unser Textadventure gut geeignet: Ein Ort ist ein einziger Bildschirm, und das dynamische Licht macht ihn mit wenigen Mitteln lebendig (flackernde Laterne, Fenster, Leuchtfeuer, Staub im Licht), ohne dass jede Bewegung gezeichnet werden muss. Die Kette KI-Hintergrund → durchgepauste Ebenenmaske → Skripte (Raster, Ebenen, Normal Maps) ist wiederholbar; je Ort bleiben Lichtpositionen, Retusche und Blick auf die Maske Handarbeit. Figuren gelingen über eine Blender-Posen-Vorlage, müssen aber verkleinert, gemessen und aus Teilen korrigiert werden. Das Ergebnis wirkt wie ein aktuelles Indie-Spiel; wer eine feste Retro-Palette will, ist bei vga-adventure oder snes-16bit besser aufgehoben, denn das Licht erzeugt Tausende Zwischentöne.",
+ "pitfalls": [
+  "Das Bildmodell hielt sich nicht ganz an „keine gemalten Lichtquellen“: Fenster und Laterne sind leuchtend gemalt, um das Fenster liegt ein orangefarbener Schein auf den Steinen, und aus dem Schornstein steigt gemalter Rauch. Der Rauch wurde wegretuschiert (Himmel derselben Zeilen 100 px weiter rechts). In der ersten Fassung addierten sich gemaltes Leuchten, PointLight2D und Lichthof, das Fenster wirkte überstrahlt (Median-L des Glases 0,79, 526 von 924 Pixeln des Fensterausschnitts x 86–106, y 161–204 mit einem Kanal ≥ 250). Jetzt ist das Glas auf einen mittleren Bernsteinton gesetzt, der Schein auf den Steinen zur Mauerfarbe gezogen und Fensterlicht und Lichthöfe sind schwächer: Fensterglas Median-L 0,69, 309 Pixel mit einem Kanal ≥ 250, ohne Licht 0,52. Die Retusche des Scheins ist nur teilweise gelungen: warme Lichtkanten auf den Steinen bleiben, weil sie sich farblich nicht vom gemalten Abendlicht trennen lassen. Das Laternenglas bleibt hell (Median-L 0,76, ohne Licht 0,53), weil die Laterne direkt darauf scheint; das ist als hellster Punkt gewollt.",
+  "Erste Fassung: water.png war ab Zeile 173 über die volle Breite deckend (unter Fernem zeilenweise gestreckt aufgefüllt), und Water wird nach Far gezeichnet. Das Wasser übermalte 2.412 Fern-Pixel: die Inselgruppen links (x 200–270, y 181–196) fehlten ganz, die mittleren zur Hälfte, der Fuß der Landzunge wurde zu Schlieren, und durch Zeile 173 lief eine rote Linie (dort zeigt die Maske nur 61 Wasserpixel). Erst eine unabhängige Prüfung fand das. Behoben im Shader (Deckkraft aus der Wassermaske an der unverschobenen Position, erste Wasserzeile aus bg.json); gemessen 0 von 2.370 verbleibenden Fern-Pixeln ab Zeile 173 verdeckt. An den Inselrändern verschiebt sich das Wasser jetzt gegen die stehenden Inseln, das ist gewollt.",
+  "Die Maskenfarbe Gelb für Fernes kollidierte mit gelbem Fenster- und Laternenglas, das in der Maske „unverändert“ blieb: 164 Glaspixel landeten in der Fernebene (heller durch self_modulate 1,3, vom Laternen- und Fensterlicht unberührt) und leuchteten deshalb mit und ohne Licht fast gleich. Jetzt zählen Fern-Inseln ohne Kontakt zu Himmel oder Wasser zum Nahen.",
+  "Das Pseudo-Raster des Hintergrunds ist ungleichmäßig (Kantenverhältnis 1,10 mit styles/snes-16bit/scripts/gridfind.py, nur gelesen): feine Teile sind mit etwa 2,4 Bildpixeln je Kunstpixel gezeichnet, Wolkenränder und Himmelsstufen mit etwa 6. Bei 640×360 werden die groben Stufen 2–3 px breit und unregelmäßig; in der ×4-Ansicht sichtbar, in der Aufnahme kaum.",
+  "Das Figurenblatt ist viel feiner gezeichnet als verlangt (etwa 2,3 Bildpixel je Kunstpixel, rund 130 Kunstpixel Figurenhöhe statt 64). Beim Verkleinern auf 64 px werden Auge, Glanzpunkt und Knöpfe zu einzelnen Pixeln oder verschwinden; erst eine Regel, nach der dunkle Linien schon ab 34 % Anteil gewinnen, hielt Kontur, Auge und Nase. Die erste Fassung mit 60 px und eigener Konturregel hatte unruhige, fleckige Ränder.",
+  "Das Blatt hat einen halbtransparenten dunklen Dunst um alle Figuren (91.000 Pixel mit Alpha 1–49); geschnitten wird bei Alpha ≥ 200. Die Stehreihe ist 6 % größer gezeichnet als die Laufreihe (320 statt 300 px) und wird mit eigenem Maßstab verkleinert.",
+  "Verkleinert wird nach Palettenindex (30 Farben aus dem Blatt, Mehrheit im Zellinneren), nicht nach Kostüm-Materialien wie in PIPELINE.md empfohlen; Weste und Fell behalten dadurch etwas Sprenkel-Textur aus dem KI-Blatt, die zwischen den Laufbildern leicht wechselt.",
+  "Im Blatt fehlt ein Stehbild mit offenem Auge und geschlossenem Mund (beide „ruhigen“ Bilder haben die Augen zu), Laufbild 2 hat die Augen geschlossen. Grundpose, Blinzeln und Augenkorrektur sind aus Teilen gesetzt; der geschlossene Mund lässt zwei dunkle Lippenpixel stehen.",
+  "Der Standfuß steht fest (Spitze 0 px Versatz), aber der Körper rückt je Laufbild ungleichmäßig vor (2, 5, 2, 2, 3, 3, 3, 4 px): Nach dem Aufsetzen springt der Körper einmal je Schritt um 5 px. Das Auf und Ab beträgt nur 1 px in einem von vier Bildern. Die Ferse rollt beim Abheben um 1–4 px ab (gewollt). Gesten (erhobene Pfote) werden nicht genutzt, im Bild spricht nur das Porträt.",
+  "DirectionalLight2D beleuchtete den Himmel trotz light_mask = 0 und range_item_cull_mask = 3 (Rotkanal des Himmels um 43 % höher, gemessen mit --only=Rim); PointLight2D halten sich an die Maske. Lösung: Himmel, Sterne, Möwen und Nebel mit CanvasItemMaterial unshaded, das nimmt sie zugleich aus CanvasModulate heraus.",
+  "Die Richtung des DirectionalLight2D ist aus der Drehung schwer abzulesen: Mit rotation = 2,2 kam das Abendrot von rechts unten (gemessen an der mittleren Normale der aufgehellten Pixel: x +0,21, y −0,10). Jetzt rotation = 1,31, Licht von rechts oben (x +0,18, y +0,20).",
+  "Gestuftes Licht schluckt schwache Lichter: Das Abendrot (Energie 0,45) fällt auf dunklen Flächen unter die erste Stufe; es hellt nur 26 % der Pixel der Nahebene um mehr als 8 Stufen auf (--only=Rim gegen --nolight, Bild 151), vor allem helle, nach rechts oben gewandte Flächen. Ohne Stufen (--smooth) ändern sich 13,0 % der Szenenpixel, das Posterbild (Bild 151) hat dann 17.594 statt 4.295 Farben und wirkt wie ein weicher Filter.",
+  "Normal Maps aus Helligkeit sind eine Näherung: Dunkle Konturen und Fugen werden zu Rillen, helle Glanzpunkte zu Buckeln, und die KI-Grafik ist bereits von links oben schattiert, die Normal Map verstärkt diese gemalte Schattierung. Mit Normal Maps sind beleuchtete Flächen dunkler als mit flachen Normalen (gekippte Normalen verringern N·L); die Laternenenergie musste dafür von 1,5 auf 1,85.",
+  "Keine feste Palette im fertigen Bild: Quellgrafik 120 + 31 Farben, durch Licht, CanvasModulate, Lichthöfe und Halbtransparenz (Dialogfenster 90 % deckend, Nebel, Rauch) 3.724–4.466 Farben je Bild (alle 180 Bilder gezählt; Bild 0: 3.852, Bild 143: 4.119, Bild 144: 4.233, Poster = Bild 151: 4.295). Die erste Fassung nannte „rund 3.800 bei t = 4,8 s“; das war zu niedrig (3.786 galt nur für t = 0). Viele Farben sind bei den Vorbildern üblich, aber keine Hardware-Regel wie bei VGA oder SNES.",
+  "Der Nebel liest sich eher als Dunststreifen am Horizont denn als ziehende Schwaden; die erste Fassung (durchgehendes Band) wirkte wie ein Rasterfehler und wurde durch einzelne Schwaden ersetzt.",
+  "Lichtpositionen (Laterne 211/157, Fenster, Lampe), Kai-Zeilen für die gekippten Normalen, Rauchquelle und Laufweg sind von Hand aus dem eingerasterten Bild abgelesen; bei einem anderen Ausschnitt (Zeile 60 statt 36) mussten alle um 10 px verschoben werden. Mit Ausschnitt ab Zeile 60 lag der Schornstein 10 px unter dem Rand, und der Rauch verließ sofort das Bild.",
+  "Boote schaukeln nicht (sie sind Teil der Nahebene); ein Ausschneiden hätte Lücken in Steg und Seilen hinterlassen.",
+  "Mit --t0 laufen Zeit, Licht, Wasser und Nebel vor, die CPU-Partikel aber nicht (sie beginnen mit ihrer preprocess-Zeit); für die Aufnahme ohne Belang.",
+  "Der Leuchtturmkegel ist additiv und färbt sich über dem orange-violetten Himmel rosa statt gelblich weiß.",
+  "Erste Fassung: Das Ortsschild lag oben links mit Schrift und Goldlinie (y 12–27) genau auf der Schornsteinkappe; der Rauch stieg hinter die Schrift und verließ nach etwa 20 px den oberen Bildrand. Jetzt steht das Schild oben rechts (x ≈ 466–627, y 13–27) über dem Leuchtfeuerkegel, und der Wind treibt den Rauch nach rechts. Die Fahne ist dadurch flach (sie steigt nur von Zeile 19 auf 3–7) und wirkt wie bei kräftigem Wind; mit 12–15 Teilchen zerfiel sie in eine Perlenkette einzelner Wölkchen, erst 30 Teilchen mit Streuung 22° und zufälligem Ausstoß ergeben eine geschlossene Fahne.",
+  "Erste Fassung: Das einzige Blinzeln (s = 0,9) fiel in die Atemphase und nutzte das Blinzelbild der Grundpose, der Oberkörper sprang für 3 Aufnahmebilder 1 px hoch; das Poster (Bild 144) zeigte genau dieses Bild mit geschlossenem Auge. Jetzt gibt es ein fünftes Stehbild „Atmen + Blinzeln“ (Kopfoberkante bleibt 222), und das Poster ist Bild 151 (Dachs und Porträt mit offenen Augen).",
+  "Die Beine lesen sich vor dem abgedunkelten Kai schwach: Im Blatt unterscheiden sich vorderes und hinteres Bein nur um 0,04–0,08 in Oklab-L, gerendert liegen die Beine bei Median-L 0,29 vor einem Kai von 0,40. Gleichmäßiges Aufhellen der Beinrampe (+0,07) brachte sie auf 0,34, also näher an den Kai, und half nicht; ein Spreizen der Rampe ließ die Hose hellgrau wirken. Jetzt trennt ein 1-px-Kantenlicht an der Vorderkante die Beine (in Bild 16–30 geprüft); die Schritte sind erkennbar, in 2× aber noch eher schwach. Das Kantenlicht ist gemalt und wandert nicht mit der Laterne.",
+  "Erste Fassung: Das Porträt fragte das Mundbild in jedem Aufnahmebild neu ab (Leerzeichen und Punkt erzwingen „zu“) und hatte dadurch Haltezeiten von 1 Aufnahmebild. Das Zeichen am Taktbeginn zu nehmen traf bei 34 Zeichen/s zufällig fast nur Wortlücken (der Mund ging nur dreimal auf). Jetzt wechselt der Mund je 7,5-Hz-Takt und bleibt nur im Takt mit einem Punkt zu; gemessen hält jede Mundstellung 4 Aufnahmebilder."
+ ],
+ "lessons": [
+  "Ein Stilblock, der die Engine mitdenkt („Hi-Bit-Pixel-Art für eine Engine mit 2D-Licht, mittlere Helligkeiten, keine gemalten Lichtquellen“), liefert einen Hintergrund, auf dem dynamische Lichter wirken; ganz frei von gemaltem Licht ist er nicht.",
+  "Durchgepauste Maske mit drei Flächenfarben (Himmel magenta, Wasser cyan, Fernes gelb, Nahes unverändert) traf gpt-image im ersten Versuch mit 0 px Versatz. Daraus entstehen Ebenen, Licht-Masken (Laterne nur auf Nahes, Leuchtfeuer nur auf Fernes) und die Wasserfläche für den Shader. Maskenfarben wählen, die im Nahen nicht vorkommen (gelbes Glas wurde als Fernes erkannt), oder danach Fern-Inseln ohne Kontakt zu Himmel/Wasser dem Nahen zuschlagen.",
+  "Beim Einrasten erst die Ebene je Zielpixel per Mehrheit wählen und dann die Farbe nur unter Pixeln dieser Ebene: keine Himmelsfarbe am Rand der Nahebene, saubere Kanten für Licht und Normal Map.",
+  "Normal Maps aus Helligkeit: Oklab-L, fein (3×3) und grob (7×7) gemischt, plus Wölbung zum Ebenen- bzw. Figurenrand; große Flächen (Kai) nach ihrer echten Lage kippen. Godot 2D erwartet die OpenGL-Konvention (Grün = oben); mit einer Kugel-Probe in 2 Minuten geprüft. Gespiegelte Sprites mit umgedrehtem Normal-x vorab erzeugen.",
+  "Gestuftes 2D-Licht: im light()-Shader das Kanalmaximum quantisieren, den Farbton beibehalten und nur im schmalen Übergang an der Stufengrenze mit Bayer dithern; Lichtkreise sehen dann gepixelt aus. Für kleine Figuren schmalerer Übergang (0,04), sonst werden sie fleckig.",
+  "Posen-Vorlage aus dem Blender-Rig (8 Laufphasen am Ursprung ausgerichtet) als erste Referenz: gpt-image übernahm Layout und Beinstellungen, der Standfuß jedes Schritts bleibt bei gemessenem Vorschub auf 0 px fest.",
+  "Bei fein gezeichneten KI-Figuren dunkle Linien beim Verkleinern bevorzugen (Anteil ≥ 34 % genügt) und den Umriss danach mit einer Konturfarbe schließen.",
+  "Partikel bleiben auf dem Raster, wenn sie Einzelbilder wechseln statt zu skalieren (CanvasItemMaterial particles_animation, anim_speed 1); use_fixed_seed macht CPUParticles2D in der Aufnahme reproduzierbar.",
+  "Lichtstaub mit light_mode LIGHT_ONLY: die Teilchen sind nur im Laternenlicht sichtbar und flackern mit ihm, ohne eigene Logik.",
+  "Glühen als gestufte, geditherte Lichthof-Sprites (additiv) statt Engine-Glow: bleibt auf dem Raster und sieht in allen drei Renderern gleich aus.",
+  "Prüfläufe über Benutzerargumente (--solo, --nolight, --flatnormals, --smooth, --only=) machen Effekte messbar: ohne Licht ändern sich 12,3 % der Szenenpixel, ohne Normal Maps 55 % der beleuchteten Fläche (scripts/measure_scene.py). Die Richtung eines Lichts lässt sich prüfen, indem man die mittlere Normale der aufgehellten Pixel misst. Überdeckung zwischen Ebenen prüft man am sichersten mit einer Kopie der Demo im Temp-Ordner, in der eine Ebene unsichtbar ist, und einem pixelgenauen Vergleich.",
+  "Pixel Operator (16 px, CC0) ohne Kantenglättung ist bei 640×360 gut lesbar und hat Umlaute; Pixel Operator 8 in 8 px reicht für den Namensreiter. Das Porträt aus demselben KI-Blatt in höherer Auflösung (52 px Kopf) gibt dem Dialog Gesicht, ohne ein weiteres Bild zu erzeugen.",
+  "Wasser mit Zeilenversatz über Fernem: Farbe aus der verschobenen Position lesen, Deckkraft aber aus der Wassermaske an der unverschobenen Position (texelFetch in einer RGB-Maske). Die zeilenweise Auffüllung in der Wassertextur dient nur als Quelle, so entstehen keine Löcher an Inselrändern, und Inseln bleiben stehen.",
+  "Gemaltes Licht im KI-Hintergrund für dynamisches Licht dämpfen: Glas auf einen mittleren Ton der Palette (Oklab-L −0,17, Farbton auf Bernstein begrenzt, sonst wählt das Einrasten Oliv) und den Schein auf Nachbarflächen nach Farbton und Abstand zur Umgebungsfarbe ziehen, dann auf die vorhandene Palette einrasten; Lichthöfe danach schwächer stellen.",
+  "Mundbewegung im Porträt je Takt (7,5 Hz = 4 Aufnahmebilder) entscheiden, nicht je Aufnahmebild; Pausen nur an Satzzeichen, nicht an Leerzeichen.",
+  "Für Blinzeln, Atmen und Sprechen aus Teilen jede Kombination als eigenes Bild bauen (hier Atmen + Blinzeln), sonst springt der Körper, wenn sich zwei Bewegungen überschneiden."
+ ],
+ "assets": [
+  {
+   "file": "assets/bg_full.png",
+   "kind": "background",
+   "made_with": "gpt-image + build_bg.py (Ausschnitt ab Zeile 36, 120 Farben, Ebene per Mehrheit, Rauch retuschiert, Glas und Fensterschein gedämpft)",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/near.png",
+   "kind": "background",
+   "made_with": "build_bg.py: Nahebene (Häuschen, Kai, Steg, Boote, Requisiten) aus Maske",
+   "prompt": "assets/raw/mask.json"
+  },
+  {
+   "file": "assets/near_n.png",
+   "kind": "normalmap",
+   "made_with": "build_bg.py: Höhe aus Oklab-L + Wölbung, Kai nach oben gekippt",
+   "prompt": ""
+  },
+  {
+   "file": "assets/near_s.png",
+   "kind": "specular",
+   "made_with": "build_bg.py: Glanz auf hellen Kaiplatten",
+   "prompt": ""
+  },
+  {
+   "file": "assets/far.png",
+   "kind": "background",
+   "made_with": "build_bg.py: Fernebene (Hügel, Inselchen, Landzunge mit Leuchtturm)",
+   "prompt": "assets/raw/mask.json"
+  },
+  {
+   "file": "assets/far_n.png",
+   "kind": "normalmap",
+   "made_with": "build_bg.py",
+   "prompt": ""
+  },
+  {
+   "file": "assets/sky.png",
+   "kind": "background",
+   "made_with": "build_bg.py: Himmel deckend, unter Objekten fortgesetzt",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/water.png",
+   "kind": "background",
+   "made_with": "build_bg.py: Wasser, unter Objekten zeilenweise aufgefüllt (Quelle für den Zeilenversatz; deckend nur, wo die Maske Wasser zeigt)",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/layers.png",
+   "kind": "mask",
+   "made_with": "gpt-image (durchgepauste Maske) + build_bg.py, RGB = Himmel/Wasser/Fernes",
+   "prompt": "assets/raw/mask.json"
+  },
+  {
+   "file": "assets/ref/pose_layout.png",
+   "kind": "reference",
+   "made_with": "Blender (blender/walk_layout.py, shared/3d/badger.glb) + compose_layout.py",
+   "prompt": ""
+  },
+  {
+   "file": "assets/badger_walk.png",
+   "kind": "sprite",
+   "made_with": "gpt-image mit Posen-Vorlage + build_badger.py: 8 Laufbilder 52×68, 64 px Figur, 31 Farben, Augen in Bild 2 korrigiert, Kantenlicht an den Beinen",
+   "prompt": "assets/raw/badger.json"
+  },
+  {
+   "file": "assets/badger_walk_n.png",
+   "kind": "normalmap",
+   "made_with": "build_badger.py: Helligkeit + Wölbung zum Umriss",
+   "prompt": ""
+  },
+  {
+   "file": "assets/badger_stand.png",
+   "kind": "sprite",
+   "made_with": "gpt-image + build_badger.py: 5 Bilder stehen, blinzeln, sprechen, atmen, atmen + blinzeln (aus Teilen eines Bildes), Kantenlicht an den Beinen",
+   "prompt": "assets/raw/badger.json"
+  },
+  {
+   "file": "assets/badger_stand_n.png",
+   "kind": "normalmap",
+   "made_with": "build_badger.py",
+   "prompt": ""
+  },
+  {
+   "file": "assets/portrait.png",
+   "kind": "ui",
+   "made_with": "gpt-image + build_badger.py: Porträt 52×52 (neutral, blinzeln, sprechen) aus Sprechbild B",
+   "prompt": "assets/raw/badger.json"
+  },
+  {
+   "file": "assets/smoke.png",
+   "kind": "effect",
+   "made_with": "build_fx.py: 8 Rauchstufen 14×14 für Partikel",
+   "prompt": ""
+  },
+  {
+   "file": "assets/halo_lantern.png",
+   "kind": "effect",
+   "made_with": "build_fx.py: Lichthof 5 Stufen mit Dithering",
+   "prompt": ""
+  },
+  {
+   "file": "assets/flare_lamp.png",
+   "kind": "effect",
+   "made_with": "build_fx.py: Aufblitzen mit Strahlen",
+   "prompt": ""
+  },
+  {
+   "file": "assets/mist.png",
+   "kind": "effect",
+   "made_with": "build_fx.py: Nebelschwaden, kachelbar",
+   "prompt": ""
+  },
+  {
+   "file": "assets/gull.png",
+   "kind": "sprite",
+   "made_with": "build_fx.py: Möwe, 4 Flügelbilder als Pixelmuster",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/lit.gdshader",
+   "kind": "shader",
+   "made_with": "Code: gestuftes 2D-Licht mit Normal Map und Glanz",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/water.gdshader",
+   "kind": "shader",
+   "made_with": "Code: Zeilenversatz, Glitzern, Spiegelung",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/beam.gdshader",
+   "kind": "shader",
+   "made_with": "Code: Lichtkegel des Leuchtfeuers",
+   "prompt": ""
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Schriften Pixel Operator, Pixel Operator Bold, Pixel Operator 8 (Jayvee Enaguas)",
+   "license": "CC0-1.0",
+   "source": "https://www.dafont.com/pixel-operator.font (Lizenztext: demo/fonts/PixelOperator-LICENSE.txt)"
+  },
+  {
+   "item": "Dachs-Modell als Posen-Vorlage",
+   "license": "eigenes Modell aus shared/3d (Blender-Skript)",
+   "source": "shared/3d/badger.glb"
+  }
+ ],
+ "image_generations": 3,
+ "tool_issues": [
+  "tools/capture.py reicht keine Benutzerargumente an Godot weiter (z. B. --t0 für den Dauerlauf). Umgangen mit scripts/probe.py, das Godot mit --write-movie und eigenen Argumenten aufruft."
+ ],
+ "status": "done"
+}

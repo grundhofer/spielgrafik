@@ -1,0 +1,227 @@
+{
+ "_comment": "Geometrie des Hintergrunds in Anzeigepixeln (1280×720) nach dem 16:9-Schnitt; von Hand nach assets/bg_debug.png gesetzt. Wasser = Polygon minus enge Ausschlüsse (Steg, Rümpfe samt Kajüte, Felsfuß entlang der Wasserlinie, Laternenpfahl, Poller), darin nur wasserfarbene Pixel; Takelage, Kran und Masten nimmt prep_bg.py über die Farbe aus (line_dark, refl_run).",
+ "crop_top": 70,
+ "blur": 0.0,
+ "horizon": 318,
+ "near": 600,
+ "water_poly": [
+  [
+   430,
+   318
+  ],
+  [
+   1280,
+   318
+  ],
+  [
+   1280,
+   712
+  ],
+  [
+   1150,
+   690
+  ],
+  [
+   1000,
+   650
+  ],
+  [
+   620,
+   600
+  ],
+  [
+   430,
+   590
+  ]
+ ],
+ "water_exclude": [
+  [
+   [
+    410,
+    452
+   ],
+   [
+    1005,
+    412
+   ],
+   [
+    1012,
+    478
+   ],
+   [
+    650,
+    562
+   ],
+   [
+    410,
+    562
+   ]
+  ],
+  [
+   [
+    738,
+    440
+   ],
+   [
+    820,
+    414
+   ],
+   [
+    918,
+    412
+   ],
+   [
+    1010,
+    470
+   ],
+   [
+    1008,
+    572
+   ],
+   [
+    745,
+    568
+   ],
+   [
+    735,
+    470
+   ]
+  ],
+  [
+   [
+    1000,
+    440
+   ],
+   [
+    1100,
+    412
+   ],
+   [
+    1200,
+    408
+   ],
+   [
+    1272,
+    470
+   ],
+   [
+    1270,
+    562
+   ],
+   [
+    995,
+    562
+   ]
+  ],
+  [
+   [
+    860,
+    296
+   ],
+   [
+    1280,
+    296
+   ],
+   [
+    1280,
+    332
+   ],
+   [
+    1235,
+    330
+   ],
+   [
+    1110,
+    328
+   ],
+   [
+    960,
+    326
+   ],
+   [
+    872,
+    325
+   ],
+   [
+    860,
+    324
+   ]
+  ],
+  [
+   [
+    490,
+    160
+   ],
+   [
+    531,
+    160
+   ],
+   [
+    531,
+    445
+   ],
+   [
+    537,
+    445
+   ],
+   [
+    537,
+    610
+   ],
+   [
+    482,
+    610
+   ],
+   [
+    482,
+    445
+   ],
+   [
+    490,
+    445
+   ]
+  ],
+  [
+   [
+    1125,
+    618
+   ],
+   [
+    1242,
+    618
+   ],
+   [
+    1242,
+    720
+   ],
+   [
+    1125,
+    720
+   ]
+  ]
+ ],
+ "water_hue": [
+  0.5,
+  0.92
+ ],
+ "refl_val": 0.55,
+ "refl_run": 4,
+ "line_dark": 0.1,
+ "line_radius": 4,
+ "mast_run": 8,
+ "line_y_max": 470,
+ "water_min_area": 400,
+ "lamp": [
+  1127,
+  101
+ ],
+ "lantern": [
+  576,
+  252
+ ],
+ "window": null,
+ "params_panel": [
+  500,
+  16
+ ]
+}

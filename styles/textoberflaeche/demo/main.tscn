@@ -1,0 +1,86 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/ui_parser.tscn" id="1_ui_parser"]
+[ext_resource type="PackedScene" path="res://scenes/ui_choice.tscn" id="2_ui_choice"]
+[ext_resource type="PackedScene" path="res://scenes/ui_illustrated.tscn" id="3_ui_illustrated"]
+[ext_resource type="PackedScene" path="res://scenes/ui_fullscreen.tscn" id="4_ui_fullscreen"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[node name="Parser" type="SubViewportContainer" parent="."]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 640.0
+offset_bottom = 360.0
+stretch = true
+
+[node name="View" type="SubViewport" parent="Parser"]
+handle_input_locally = false
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+
+[node name="UI" parent="Parser/View" instance=ExtResource("1_ui_parser")]
+
+[node name="Choice" type="SubViewportContainer" parent="."]
+layout_mode = 0
+offset_left = 640.0
+offset_top = 0.0
+offset_right = 1280.0
+offset_bottom = 360.0
+stretch = true
+
+[node name="View" type="SubViewport" parent="Choice"]
+handle_input_locally = false
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+
+[node name="UI" parent="Choice/View" instance=ExtResource("2_ui_choice")]
+
+[node name="Illustrated" type="SubViewportContainer" parent="."]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 360.0
+offset_right = 640.0
+offset_bottom = 720.0
+stretch = true
+
+[node name="View" type="SubViewport" parent="Illustrated"]
+handle_input_locally = false
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+
+[node name="UI" parent="Illustrated/View" instance=ExtResource("3_ui_illustrated")]
+
+[node name="Fullscreen" type="SubViewportContainer" parent="."]
+layout_mode = 0
+offset_left = 640.0
+offset_top = 360.0
+offset_right = 1280.0
+offset_bottom = 720.0
+stretch = true
+
+[node name="View" type="SubViewport" parent="Fullscreen"]
+handle_input_locally = false
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+
+[node name="UI" parent="Fullscreen/View" instance=ExtResource("4_ui_fullscreen")]
+
+[node name="DividerV" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 638.0
+offset_right = 642.0
+offset_bottom = 720.0
+color = Color(0.02, 0.02, 0.025, 1)
+
+[node name="DividerH" type="ColorRect" parent="."]
+layout_mode = 0
+offset_top = 358.0
+offset_right = 1280.0
+offset_bottom = 362.0
+color = Color(0.02, 0.02, 0.025, 1)

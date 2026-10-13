@@ -1,0 +1,107 @@
+{
+ "slug": "textoberflaeche",
+ "name": "Textadventure-Oberflächen",
+ "family": "technik",
+ "kind": "technique",
+ "era": "späte 1970er bis heute",
+ "summary": "Vier Präsentationsformen für ein Textadventure gleichzeitig im 2×2-Raster, gerendert von Godot mit echten Schriften: klassischer Parser mit Statuszeile, Auswahlliste auf Papier mit Schreibmaschinen-Effekt, Bild oben/Text unten wie die illustrierten Adventures der 80er und ein Vollbild-Gemälde mit halbtransparentem Textpanel und Inventar-Icons. Alle Formen mit Bild teilen sich dieselbe animierte Hafenszene aus einem gemalten KI-Bild.",
+ "references": [
+  "Parser-Adventures mit Statuszeile und Eingabezeile der späten 70er und 80er (z. B. Zork und andere Infocom-Spiele)",
+  "Illustrierte Adventures der 80er mit Bild oben und Text unten (z. B. The Hobbit von 1982, Spiele von Level 9 und Magnetic Scrolls)",
+  "Auswahlbasierte Erzählspiele mit getipptem Text (z. B. 80 Days, mit Ink oder Twine gebaute Spiele)",
+  "Erzählspiele mit Textspalte neben dem Gemälde (z. B. Disco Elysium)",
+  "Point-and-Click-Adventures mit Vollbild-Hintergrund, Textpanel und Inventarleiste"
+ ],
+ "traits": [
+  "Vier Oberflächen gleichzeitig, jede 640×360 in einem eigenen SubViewport, zusammen 1280×720",
+  "Parser: Festbreitenschrift, invertierte Statuszeile mit Ort, Punkten und Zügen, getippte Eingaben mit Blockcursor, Antworten, Protokoll scrollt nach oben",
+  "Auswahl: Hochformat-Streifen des Gemäldes links, Papierseite rechts; Text erscheint Zeichen für Zeichen mit Pausen an Satzzeichen und Schreibmarke, drei nummerierte Antworten gleiten herein, die zweite wird angewählt, die Geschichte tippt weiter",
+  "Illustriert: Bildband oben (234 px), darunter Ortsname, Beschreibung, Eingabe „Was nun?“ mit getipptem Befehl, Antwort, Protokoll scrollt",
+  "Vollbild: Gemälde über die ganze Fläche, halbtransparentes Panel unten (22 % der Fläche) mit weich eingeblendetem Text, Inventar mit vier Plätzen; ein Mauszeiger zeigt auf das Paket am Kai (Hinweis „Paket“), klickt, das Paket fliegt in die Tasche, Meldung „Paket aufgenommen“",
+  "Eine Hafenszene für alle Bildformen, nur der Ausschnitt wechselt: Leuchtturmkegel dreht, Laterne und Fenster flackern, Rauch steigt, Wasser glitzert, zwei Möwen gleiten, der Dachs-Kurier läuft über den Kai und bleibt neben der Laterne stehen",
+  "Alle Texte mit echten Schriften (SIL OFL), kein Buchstabe im Bild"
+ ],
+ "camera": "Feste Kamera; je Oberfläche ein anderer Ausschnitt desselben Gemäldes (Vollbild, breites Band, Hochformat-Streifen), keine Kamerafahrt",
+ "resolution": "1280×720 aus vier 640×360-SubViewports; Gemälde 640×429 (aus 1264×848), Dachs 56 px hoch; Bildschirmschriften 12–18 px",
+ "pipeline": [
+  {"step": "Eigene Bilder angefordert (erster Bau, abgebrochen)", "tool": "genimg (agy)", "detail": "Geplant waren ein eigenes Gemälde (prompts/bg.txt), ein Icon-Blatt (prompts/icons.txt) und ein über eine Blender-Lagevorlage neu gemaltes Laufblatt (prompts/walk.txt, blender/walk_layout.py). Sieben Aufrufe endeten alle mit dem agy-Kontingentfehler; es entstand kein Bild, image_generations bleibt 0. Als Platzhalter diente ein verworfener Versuch aus oelmalerei (raw/bg2.png) mit gemalter Rauchfahne; er ist ersetzt."},
+  {"step": "Hintergrund wiederverwendet", "tool": "genimg (agy), aus styles/painterly-digital", "detail": "Hauptbild von painterly-digital (assets/raw/master.png, 1264×848, Gemini über agy, verbatim false), nur lesend genutzt und mit Lanczos auf 640×429 verkleinert (scripts/prep.py). Gewählt, weil es ruhig und wenig detailliert ist, keinen gemalten Rauch und keinen Leuchtturmkegel enthält und unten eine Kaimauer ohne Wichtiges hat, über die das Panel passt. Lagen (Lampe, Laterne, Fenster, Schornstein, Fußlinie, Glitzerzonen) von Hand in einem Rasterbild gemessen."},
+  {"step": "Dachs als Schnittfigur", "tool": "scripts/badger_rig.py (Pillow, NumPy)", "detail": "Quelle shared/badger/walk_painted.png, Bild 3 (Durchschwung), nur lesend. Rumpf unten mit gezackter Fellkante abgeschnitten, ein Bein als Polygon mit weichem oberem Rand; vormultipliziert mit Lanczos auf 56 px Figurenhöhe verkleinert, Ausschnitt so gelegt, dass die Hüfte auf einer ganzen Pixelkante liegt. Landmarken wie in painterly-digital (dort zuerst gemessen), hier nachgeprüft."},
+  {"step": "Gang aus Code", "tool": "Godot (harbor.gd)", "detail": "Hüfte auf ganze Pixel gerundet; das Standbein rollt vor der Hüfte über die Ferse, dahinter über die Zehe, der Drehwinkel wird für diese Hüfte geschlossen gelöst (acos), die Hüfthöhe folgt aus dem Kontaktpunkt. Schwungbein per smoothstep von der Zehenablösung zum Fersenaufsatz, 2,5 px Hub, nie unter der Fußlinie. Schrittlänge 14 px, 32 px/s, 0,7 s Abbremsen, Stillstand in Mittelstellung, danach Atmen (Rumpf 1,8 % gestreckt). Fernes Bein 2 px zurückversetzt und auf 62 % abgedunkelt."},
+  {"step": "Inventar-Icons aus Code", "tool": "scripts/draw_icons.py (Pillow)", "detail": "Paket, Schlüssel, Brief, Kompass, Seekarte, Hering aus Polygonen und Ellipsen auf 512 px, dunkelbraune Tuschekontur (22 px), je eine Schatten- und eine Lichtfläche; vormultipliziert auf 64 px verkleinert. In Godot mit Mipmaps auf 30 px angezeigt, das Paket am Kai auf 16 px."},
+  {"step": "Effekt-Texturen aus Code", "tool": "scripts/prep.py (NumPy)", "detail": "Leuchtturmkegel (Breite und Abfall analytisch), Glitzerstrich, Rauchwolke (Radialverlauf plus Rauschen, fester Seed, weichgezeichnet), Papierseite (warmes Off-White, Flecken, Korn, dunklerer Rand). Zwei Läufe von prep.py ergeben bitgleiche Dateien (geprüft)."},
+  {"step": "Laufen messen", "tool": "scripts/grab.py --mask, scripts/measure_walk.py", "detail": "Maskenlauf mit Rumpf blau, nahem Bein rot, fernem Bein grün, gemessen im Bildband der illustrierten Form: Standfuß 149/149 Bildwechsel je Bein auf ±1 px fest, Sohle in allen 49 Stehbildern dieselbe Zeile, beim Gehen höchstens 1 px höher (beim Aufsetzen von Ferse oder Zehe)."},
+  {"step": "Aufnahme und Renderer-Vergleich", "tool": "tools/capture.py, scripts/grab.py --method", "detail": "6 s, 30 fps, Poster bei 3,6 s. Probeläufe mit mobile (bitgleich zu Forward+) und gl_compatibility (mittlere Abweichung 0,15, höchstens 2 von 255)."}
+ ],
+ "godot": [
+  "main.tscn: Control 1280×720 mit vier SubViewportContainern (stretch) à 640×360 und dunklen Trennlinien; Projekt stretch mode canvas_items, aspect keep",
+  "scenes/harbor.tscn + harbor.gd: eine wiederverwendbare Hafenszene mit allen Animationen; Lagen, Ausschnitte und Laufplan aus art/scene.json (von prep.py geschrieben). Jede Oberfläche setzt sie in ein Control mit clip_contents und verschiebt sie um den Ausschnitt",
+  "Licht: Sprite2D mit radialer GradientTexture2D, Fenster und Laterne in Normalmischung plus kleiner additiver Kern; Leuchtturmkegel als Textur, die um die Lampe dreht (Umdrehung 5 s, Breite folgt |cos|), Lampe blitzt auf, wenn der Kegel zur Kamera zeigt; Flackern aus vorab gewürfelten Werten (RandomNumberGenerator, fester Seed)",
+  "Rauch: 9 Wolken-Sprites, die mit fposmod-Lebenszeit aufsteigen, nach rechts treiben, wachsen und verblassen; Möwen als Line2D mit Flügelschlag; Glitzern als additive Striche mit kurzem Aufblitzen",
+  "Parser (ui_parser.gd): Label-Pool in IBM Plex Mono 14 px, Zeilenumbruch nach Zeichenzahl, Blockcursor als ColorRect (beim Tippen fest, sonst blinkend), Punkte und Züge in der Statuszeile ändern sich nach jeder Eingabe",
+  "Getippter Text (typer.gd): Zeitplan je Zeichen mit festem Seed, Streuung und Pausen nach Satzzeichen",
+  "Auswahl (ui_choice.gd): RichTextLabel mit visible_characters und VC_CHARS_AFTER_SHAPING, damit Zeilenumbrüche von Anfang an feststehen; Schreibmarke als zweites RichTextLabel mit transparentem Text davor; Antworten als Panel mit StyleBoxFlat, Hervorhebung und kurzem Eindrücken",
+  "Illustriert (ui_illustrated.gd): Zeilen-Pool aus RichTextLabels (Alegreya 15 px), Bildbandhöhe aus scene.json → band_h, Unterstrich-Cursor",
+  "Vollbild (ui_fullscreen.gd): Panel mit StyleBoxFlat (80 % Deckung, Rundung 8), eigener RichTextEffect [reveal] (jedes Zeichen blendet in 0,28 s ein und hebt sich um 3 px, Zeit von außen gesetzt), Inventarplätze als Panel, Icons als TextureRect mit TEXTURE_FILTER_LINEAR_WITH_MIPMAPS, Zeiger als Polygon2D mit Line2D-Kontur, Paketflug als quadratische Bézierkurve",
+  "Dachs: Node2D auf der Fußlinie unter der Hüfte mit fernem Bein, nahem Bein und Rumpf (Sprite2D); Beine drehen um die Hüfte, Rumpf darüber verdeckt den Beinansatz. Messlauf mit -- --mask färbt die Teile per Shader-Uniform",
+  "Alles hängt nur von der aufsummierten Zeit ab (delta), Zufall nur mit festem Seed; keine Plugins, alle Szenen und Skripte von Hand geschrieben"
+ ],
+ "techniques": [
+  "textoberflaeche",
+  "prozedurale-animation"
+ ],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 4,
+  "effort": 2,
+  "text_adventure": 5,
+  "mobile": 5
+ },
+ "ratings_note": "ai_fit 4: Die KI-Bilder sind wiederverwendet, nicht für diesen Eintrag erzeugt (image_generations 0): Das Hintergrundgemälde stammt aus painterly-digital (agy), der Dachs ist aus shared/badger/walk_painted.png (Codex) geschnitten. Diese beiden Bilder tragen den Look der drei Formen mit Bild; Oberflächen, Icons, Effekte und der Gang kommen aus Code. Das ruhige Gemälde trägt ohne Nacharbeit, weil es keine gemalten Effekte enthält, aber seine Komposition legt fest, welche Ausschnitte gehen (das Band der illustrierten Form musste auf 234 px wachsen). Konsistenz 4: die Oberflächen sind Code und damit in jeder Szene gleich; Abzug, weil der Dachs mit Kontur und Cel-Schattierung neben dem weichen Gemälde etwas aufgeklebt wirkt. Aufwand 2: jede neue Szene braucht ein Gemälde und gemessene Lagen, die Oberflächen selbst werden wiederverwendet. Mobil 5 nach Probeläufen mit mobile (bitgleich) und gl_compatibility (höchstens 2 von 255 Abweichung); reine 2D-Szene, auf einem Telefon nicht gemessen.",
+ "verdict": "Alle vier Formen sind in Godot mit überschaubarem Code machbar, und eine einzige animierte Szene trägt sie alle. Für unser erstes Spiel empfiehlt sich das Vollbild-Gemälde mit Textpanel und Inventar als Hauptansicht (das Bild bleibt groß, das Panel deckt 22 %), dazu die Auswahlliste mit getipptem Text für Gespräche und Entscheidungen. Der Parser ist am billigsten und wirkt am klassischsten, verzichtet aber auf das Bild; er taugt als zuschaltbarer Modus. Die illustrierte Form trifft den Ton der 80er am besten, zwingt aber jede Szene in ein breites Band: Gemälde müssen dann für diesen Ausschnitt komponiert werden (Leuchtturmspitze und Fußlinie im selben Band). Für Gemälde unter Textoberflächen gilt: ruhig, ohne gemalte Effekte, das untere Fünftel ohne Wichtiges.",
+ "pitfalls": [
+  "Im ersten Bau endeten alle sieben agy-Aufrufe (Gemälde, Icon-Blatt, Laufblatt) mit dem Kontingentfehler; kein Bild entstanden. Deshalb ein wiederverwendetes Gemälde, Icons aus Code und der Dachs als Schnittfigur. Der verworfene Platzhalter (oelmalerei raw/bg2.png) hatte eine gemalte Rauchfahne, die mit dem animierten Rauch doppelt gewesen wäre.",
+  "Das gemeinsame Laufblatt shared/badger/walk_painted.png taugt nicht als Bildfolge: Zwischen Durchschwung (Bild 3) und dem nächsten Bild mit Standfuß fehlt die Hochphase, der Standfuß springt um 121 px Quellmaß, bei 56 px Figurenhöhe ≈ 13 px in einem Bildwechsel. Bild 1 und 5 sind zudem fast dieselbe Kontaktpose.",
+  "Starres Bein ohne Knie: Weil der Fuß über Ferse und Zehe rollt, ist die Hüfte beim Durchschwung am tiefsten statt am höchsten; bei 56 px nur ≈ 1 px und kaum zu sehen. Die Arme schwingen nicht (Paket unter dem Arm), Schal und Tasche hängen starr.",
+  "Der Dachs ist im Stil des gemeinsamen Blatts gemalt (dunkle Konturen, Cel-Schattierung) und wirkt neben dem weichen Gemälde etwas aufgeklebt (dieselbe Beobachtung wie in painterly-digital). Mit 56 px (Tür des Häuschens ≈ 60 px) ist das Kostüm erkennbar, das Gesicht kaum; für einen Eintrag über Oberflächen bewusst nicht vergrößert.",
+  "Bewusste Abweichung vom Szenenvertrag: Die Textflächen decken zusammen mehr als 30 % des Bildes. Der Parser ist laut Auftrag reiner Text, die Auswahlform braucht eine Papierseite (63 % ihres Viertels). Die 30-%-Grenze hält nur die Vollbildform ein (Panel 22 % ihres Viertels).",
+  "Die illustrierte Form braucht ein Bildband von 234 px (65 % der Höhe), damit Leuchtturmspitze und Fußlinie zugleich darin liegen; es bleiben 5 Textzeilen à 21 px, das Protokoll scrollt nach einer Eingabe sofort.",
+  "Messfalle: Bei der Übergabe zwischen den Füßen liegen alte Zehe und neue Ferse nur 2,4 px auseinander und verschmelzen im Bodenband. Die erste Messung mit einer Maske für die ganze Figur meldete deshalb 9 Mal Rutschen, das keines war. Ein echter Fehler blieb erst mit getrennten Farben je Bein übrig: Beim letzten Aufsetzen rutschte der Fuß 3 px, weil die Schwungphase aus der gerundeten Hüfte kam; behoben mit dem ungerundeten Weg als Phase.",
+  "Das wiederverwendete Gemälde hat um Laterne und Leuchtfeuer schon gemalte Lichthöfe; der animierte Schein liegt darüber, die Lampen wirken dadurch etwas heller als im Original.",
+  "Die Icons sind aus Code und nicht gemalt: Sie passen zur Kontur des Dachses, sind aber glatter als das Gemälde. Ein gemaltes Icon-Blatt wäre ein Bildauftrag (Prompt in prompts/icons.txt), wurde aber wegen des knappen Kontingents nicht angefordert."
+ ],
+ "lessons": [
+  "Eine Szene, viele Ausschnitte: Das Gemälde mit allen Animationen als eigene Godot-Szene (harbor.tscn), jede Oberfläche zeigt sie über clip_contents und eine Verschiebung. Lagen und Ausschnitte in einer JSON-Datei halten Code und Bild auseinander; ein anderes Gemälde braucht nur neue Zahlen.",
+  "Gemälde für Textoberflächen: ruhige, wenig detaillierte Bilder ohne gemalte Effekte (kein Rauch, kein Lichtkegel) eignen sich am besten; das untere Fünftel sollte Mauer oder Boden ohne Wichtiges sein, dort sitzt das Panel. Vorhandene KI-Bilder anderer Einträge nur lesend wiederzuverwenden spart Kontingent.",
+  "Getippter Text ohne springende Umbrüche: den ganzen Text setzen und visible_characters erhöhen (VC_CHARS_AFTER_SHAPING); die Schreibmarke als zweites Label mit transparentem Text davor. Weiches Einblenden je Zeichen per RichTextEffect, dessen Zeit von außen gesetzt wird, bleibt deterministisch.",
+  "Standfuß ohne Rutschen bei einer Schnittfigur: Hüfte auf ganze Pixel runden, dann den Beinwinkel für genau diese Hüfte geschlossen lösen (acos) und die Hüfthöhe aus dem Kontaktpunkt ableiten. Ferse und Zehe symmetrisch zur Hüfte legen, dann ist die Hüfthöhe beim Wechsel zwischen den Beinen stetig. Das Schwungbein aus dem ungerundeten Weg steuern.",
+  "Laufmessung je Bein: im Maskenlauf jedem Teil eine eigene Farbe geben (Shader-Uniform), sonst verschmelzen die Bodenkontakte beider Füße bei der Übergabe und die Messung meldet Rutschen, das keines ist.",
+  "Icons aus Code (Polygone, Tuschekontur, zwei Tonwerte, 8-fach überabgetastet und vormultipliziert verkleinert) lesen sich bei 30 px gut. In der .import-Datei Mipmaps einschalten und TEXTURE_FILTER_LINEAR_WITH_MIPMAPS setzen, sonst flimmern die Konturen beim Verkleinern.",
+  "Bei 2×2-SubViewports bleiben 12–18 px Schrift in der 1280×720-Aufnahme gut lesbar; Festbreitenschrift für den Parser, eine Buchschrift mit Kapitälchen für die erzählenden Formen."
+ ],
+ "assets": [
+  {"file": "assets/bg_640.png", "kind": "background", "made_with": "agy-Gemälde aus styles/painterly-digital/assets/raw/master.png (nur lesend, Prompt dort), Lanczos auf 640×429 (prep.py)", "prompt": ""},
+  {"file": "assets/badger_body.png", "kind": "sprite", "made_with": "badger_rig.py: Rumpf der Schnittfigur aus shared/badger/walk_painted.png (Bild 3), 56 px Figurenhöhe", "prompt": ""},
+  {"file": "assets/badger_leg.png", "kind": "sprite", "made_with": "badger_rig.py: Bein der Schnittfigur (nah und abgedunkelt fern) aus derselben Quelle", "prompt": ""},
+  {"file": "assets/badger_preview.png", "kind": "preview", "made_with": "badger_rig.py: Rumpf mit beiden Beinen in Ruhe, 6-fach vergrößert (Sichtprüfung)", "prompt": ""},
+  {"file": "assets/icons/parcel.png", "kind": "icon", "made_with": "draw_icons.py: Paket aus Code (auch als Paket am Kai)", "prompt": ""},
+  {"file": "assets/icons/key.png", "kind": "icon", "made_with": "draw_icons.py: Schlüssel aus Code", "prompt": ""},
+  {"file": "assets/icons/letter.png", "kind": "icon", "made_with": "draw_icons.py: Brief mit Siegel aus Code", "prompt": ""},
+  {"file": "assets/icons/compass.png", "kind": "icon", "made_with": "draw_icons.py: Kompass aus Code (Teilstriche statt Buchstaben)", "prompt": ""},
+  {"file": "assets/icons/chart.png", "kind": "icon", "made_with": "draw_icons.py: gerollte Seekarte aus Code", "prompt": ""},
+  {"file": "assets/icons/herring.png", "kind": "icon", "made_with": "draw_icons.py: Hering aus Code", "prompt": ""},
+  {"file": "assets/paper.png", "kind": "texture", "made_with": "prep.py: Papierseite der Auswahlform (Rauschen, fester Seed)", "prompt": ""},
+  {"file": "assets/beam.png", "kind": "effects", "made_with": "prep.py: Leuchtturmkegel, analytisch", "prompt": ""},
+  {"file": "assets/smoke.png", "kind": "effects", "made_with": "prep.py: Rauchwolke aus Radialverlauf und Rauschen", "prompt": ""},
+  {"file": "assets/glint.png", "kind": "effects", "made_with": "prep.py: Glitzerstrich", "prompt": ""}
+ ],
+ "licenses": [
+  {"item": "Schrift Alegreya (Regular und Italic, variabel)", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/alegreya (Lizenztext: demo/fonts/OFL-Alegreya.txt)"},
+  {"item": "Schrift Alegreya SC Medium", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/alegreyasc (Lizenztext: demo/fonts/OFL-AlegreyaSC.txt)"},
+  {"item": "Schrift Alegreya Sans Medium", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/alegreyasans (Lizenztext: demo/fonts/OFL-AlegreyaSans.txt)"},
+  {"item": "Schrift IBM Plex Mono (Regular, SemiBold)", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/ibmplexmono (Lizenztext: demo/fonts/OFL-IBMPlexMono.txt)"}
+ ],
+ "image_generations": 0,
+ "tool_issues": [],
+ "status": "done"
+}

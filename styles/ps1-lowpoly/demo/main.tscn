@@ -1,0 +1,174 @@
+[gd_scene load_steps=24 format=3]
+
+; PS1-Look (Katalogeintrag ps1-lowpoly). Hafen (harbor_ps1.glb: PS1-Fassung von shared/3d/harbor.glb, blender/build_harbor_ps1.py)
+; und Dachs (badger_ps1.glb: badger_low.glb aus shared/3d, per Blender auf 789 Dreiecke reduziert),
+; alle Materialien ersetzt main.gd durch eigene Shader (shaders/ps1_*.gdshader). Bild 320×240.
+; Himmel: 2D-Hintergrund (CanvasLayer -1, Environment-Hintergrund "Canvas"), wie bei vielen Spielen der Zeit.
+; Oberfläche (ui.gd) und 15-Bit-Dithering (shaders/dither.gdshader) liegen über allem.
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://models/harbor_ps1.glb" id="2_harbor"]
+[ext_resource type="PackedScene" path="res://models/badger_ps1.glb" id="3_badger"]
+[ext_resource type="Shader" path="res://shaders/ps1_water.gdshader" id="4_water"]
+[ext_resource type="Shader" path="res://shaders/ps1_beam.gdshader" id="5_beam"]
+[ext_resource type="Shader" path="res://shaders/ps1_glow.gdshader" id="6_glow"]
+[ext_resource type="Shader" path="res://shaders/dither.gdshader" id="8_dither"]
+[ext_resource type="Texture2D" path="res://textures/water.png" id="9_watertex"]
+[ext_resource type="Texture2D" path="res://textures/glow.png" id="10_glowtex"]
+[ext_resource type="Texture2D" path="res://textures/shadow.png" id="11_shadowtex"]
+[ext_resource type="Texture2D" path="res://textures/sky.png" id="12_sky"]
+[ext_resource type="Script" path="res://ui.gd" id="13_ui"]
+[ext_resource type="Shader" path="res://shaders/ps1_shadow.gdshader" id="14_shadow"]
+
+[sub_resource type="Environment" id="Env"]
+background_mode = 3
+background_canvas_max_layer = -1
+ambient_light_source = 1
+tonemap_mode = 0
+tonemap_exposure = 1.0
+
+[sub_resource type="ShaderMaterial" id="WaterMat"]
+render_priority = 0
+shader = ExtResource("4_water")
+shader_parameter/tex = ExtResource("9_watertex")
+shader_parameter/tex_mip = ExtResource("9_watertex")
+
+; Lichtkegel 16 m lang (vorher 30 m): Das dunkle Ende liegt im Bild, der Verlauf hell -> schwarz ist zu sehen.
+; 3 Ringe, damit die Helligkeit je Eckpunkt (Abfall mit Potenz 1,5) entlang des Kegels Stufen bekommt.
+[sub_resource type="CylinderMesh" id="BeamMesh"]
+top_radius = 2.2
+bottom_radius = 0.3
+height = 16.0
+radial_segments = 8
+rings = 3
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="ShaderMaterial" id="BeamMat"]
+render_priority = 1
+shader = ExtResource("5_beam")
+shader_parameter/color = Color(1, 0.76, 0.32, 1)
+shader_parameter/intensity = 0.42
+shader_parameter/length_m = 16.0
+
+[sub_resource type="QuadMesh" id="GlowQuad"]
+size = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="LanternGlowMat"]
+render_priority = 2
+shader = ExtResource("6_glow")
+shader_parameter/tex = ExtResource("10_glowtex")
+shader_parameter/tint = Color(1, 0.7, 0.35, 1)
+shader_parameter/strength = 0.8
+
+[sub_resource type="ShaderMaterial" id="LampGlowMat"]
+render_priority = 2
+shader = ExtResource("6_glow")
+shader_parameter/tex = ExtResource("10_glowtex")
+shader_parameter/tint = Color(1, 0.85, 0.6, 1)
+shader_parameter/strength = 0.6
+
+; Rundschatten knapp breiter als die Füße (Fußbreite ca. 0,45 m), Mischmodus B/2 + F/2 mit Schwarz
+[sub_resource type="QuadMesh" id="ShadowQuad"]
+size = Vector2(0.75, 0.55)
+orientation = 1
+
+[sub_resource type="ShaderMaterial" id="ShadowMat"]
+render_priority = 0
+shader = ExtResource("14_shadow")
+shader_parameter/tex = ExtResource("11_shadowtex")
+
+[sub_resource type="ShaderMaterial" id="DitherMat"]
+shader = ExtResource("8_dither")
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_main")
+water_material = SubResource("WaterMat")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Env")
+
+; Startpunkt = Position der Hauptkamera aus shared/3d, aber 6° statt 3° nach unten geneigt, damit der Dachs
+; über dem Dialogfenster steht. Bei 4:3 wird die Breite gehalten (Keep Width, horizontal 68,61° wie bei 16:9
+; mit vertikal 42°), oben und unten kommt Bild dazu. main.gd fährt die Kamera langsam heran und tiefer,
+; schwenkt dabei leicht nach rechts und schneidet bei 4,0 s auf eine feste Nahaufnahme (fov 80°).
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.9945219, 0.10452846, 0, -0.10452846, 0.9945219, -1.8, 3.4, 14.5)
+keep_aspect = 0
+current = true
+fov = 68.61
+near = 0.1
+far = 3000.0
+
+[node name="Harbor" parent="." instance=ExtResource("2_harbor")]
+
+[node name="Badger" parent="." instance=ExtResource("3_badger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 1.2)
+
+[node name="BlobShadow" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.02, 1.2)
+mesh = SubResource("ShadowQuad")
+material_override = SubResource("ShadowMat")
+
+; Alles unter "Attach" hängt main.gd an das gleichnamige Empty im Hafen (lokale Transformation bleibt).
+[node name="Attach" type="Node3D" parent="."]
+
+[node name="LanternLight" type="Node3D" parent="Attach"]
+
+[node name="Glow" type="MeshInstance3D" parent="Attach/LanternLight"]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0.25)
+mesh = SubResource("GlowQuad")
+material_override = SubResource("LanternGlowMat")
+
+[node name="LighthouseLight" type="Node3D" parent="Attach"]
+
+[node name="Glow" type="MeshInstance3D" parent="Attach/LighthouseLight"]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0.8)
+mesh = SubResource("GlowQuad")
+material_override = SubResource("LampGlowMat")
+
+[node name="Rotor" type="Node3D" parent="Attach/LighthouseLight"]
+
+[node name="Tilt" type="Node3D" parent="Attach/LighthouseLight/Rotor"]
+transform = Transform3D(1, 0, 0, 0, 0.9961947, 0.08715574, 0, -0.08715574, 0.9961947, 0, 0, 0)
+
+[node name="Beam" type="MeshInstance3D" parent="Attach/LighthouseLight/Rotor/Tilt"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, -8)
+mesh = SubResource("BeamMesh")
+material_override = SubResource("BeamMat")
+
+[node name="SkyLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+; 352×160 aus Code (scripts/build_textures.py), Horizont in Zeile 143; main.gd setzt die Position je Bild
+; nach Neigung und Gieren der Kamera.
+[node name="Sky" type="TextureRect" parent="SkyLayer"]
+offset_right = 352.0
+offset_bottom = 160.0
+texture = ExtResource("12_sky")
+stretch_mode = 0
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+layer = 1
+
+[node name="UI" type="Control" parent="UILayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("13_ui")
+
+[node name="PostLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="Dither" type="ColorRect" parent="PostLayer"]
+material = SubResource("DitherMat")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

@@ -1,0 +1,154 @@
+{
+ "badger": {
+  "cell": [
+   40,
+   46
+  ],
+  "origin": [
+   20,
+   43
+  ],
+  "poses": [
+   "walk0",
+   "walk1",
+   "walk2",
+   "walk3",
+   "idle0",
+   "wave0",
+   "wave1"
+  ],
+  "rotations": 8,
+  "scale": 32.0
+ },
+ "barrel": {
+  "size": [
+   28,
+   34
+  ],
+  "origin": [
+   14,
+   32
+  ]
+ },
+ "rope": {
+  "size": [
+   30,
+   14
+  ],
+  "origin": [
+   15,
+   12
+  ]
+ },
+ "bollard": {
+  "size": [
+   16,
+   22
+  ],
+  "origin": [
+   8,
+   20
+  ]
+ },
+ "lanternpost": {
+  "size": [
+   34,
+   84
+  ],
+  "origin": [
+   26,
+   81
+  ]
+ },
+ "lanternglow": {
+  "size": [
+   34,
+   84
+  ],
+  "origin": [
+   26,
+   81
+  ],
+  "frames": 4
+ },
+ "parcel": {
+  "size": [
+   12,
+   10
+  ],
+  "origin": [
+   6,
+   10
+  ]
+ },
+ "smoke0": {
+  "size": [
+   24,
+   24
+  ],
+  "origin": [
+   12,
+   12
+  ]
+ },
+ "smoke1": {
+  "size": [
+   24,
+   24
+  ],
+  "origin": [
+   12,
+   12
+  ]
+ },
+ "smoke2": {
+  "size": [
+   24,
+   24
+  ],
+  "origin": [
+   12,
+   12
+  ]
+ },
+ "smoke3": {
+  "size": [
+   24,
+   24
+  ],
+  "origin": [
+   12,
+   12
+  ]
+ },
+ "gull0": {
+  "size": [
+   24,
+   10
+  ],
+  "origin": [
+   12,
+   6
+  ]
+ },
+ "gull1": {
+  "size": [
+   24,
+   10
+  ],
+  "origin": [
+   12,
+   6
+  ]
+ },
+ "flare": {
+  "size": [
+   128,
+   24
+  ],
+  "origin": [
+   64,
+   12
+  ]
+ }
+}

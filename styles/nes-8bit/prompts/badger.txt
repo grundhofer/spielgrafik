@@ -1,0 +1,11 @@
+Character sprite sheet for a late-1980s 8-bit home video game console adventure game, authentic hand-pixelled sprite art within the console's hardware limits. The reference image shows only the costume and the proportions of the character; drawing style, resolution and palette follow this description. Each frame is TINY: exactly 16 art pixels wide and 32 art pixels tall, enlarged without smoothing so every art pixel is a crisp, clearly visible square block of the same size on one regular grid; no anti-aliasing, no blur, no gradients, no texture, no shading noise.
+
+Hardware colour limits: the sprite is made of 8 by 16 pixel pieces, and each piece uses only three colours plus transparency. The head piece uses only black, white and dark green (cap). The body pieces use only black, bright red (scarf) and dark green (vest). The parcel and the satchel use only dark brown, orange-tan and cream. Solid black outline around the whole figure, legs and arms black-grey fur drawn in black. Big head with the cap, about 40% of the height, so the striped face reads at this tiny size: a broad white stripe from the nose over the forehead, a black stripe through the eye, a white cheek, a black nose tip at the end of a short pointed snout, one white highlight pixel in the eye. Short stubby legs. Side view facing right.
+
+Layout: one row of 4 frames, evenly spaced with wide empty space between them, all at exactly the same scale, feet on one baseline: 1 standing still; 2 walking, front leg forward and back leg back (contact pose); 3 walking, legs together under the body (passing pose, body one pixel higher); 4 walking, the other leg forward (contact pose).
+
+The badger courier: an original mascot character, a stout, short-legged badger with a broad black-and-white striped face, wearing a dark green peaked cap with a brass button, a dark green vest with pockets over a cream shirt with rolled-up sleeves, a long red knitted scarf, a brown leather satchel on a shoulder strap, and a brown paper parcel tied with string under one arm.
+
+Isolated on a fully transparent background, no ground, no shadows, no glow, no frame borders, no grid lines. No text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.
+
+Image format: landscape 3:2.

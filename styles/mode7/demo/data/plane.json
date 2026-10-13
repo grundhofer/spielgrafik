@@ -1,0 +1,38 @@
+{
+ "tiles": 181,
+ "per_kind": {
+  "far": 1,
+  "water": 16,
+  "shore": 57,
+  "rock": 3,
+  "rock_grass": 36,
+  "grass": 3,
+  "quay_shadow_n": 5,
+  "quay_edge_w": 3,
+  "quay_edge_n": 5,
+  "quay_shadow_e": 4,
+  "quay": 8,
+  "quay_edge_e": 2,
+  "jetty_shadow": 23,
+  "jetty": 15
+ },
+ "colors": 41,
+ "map": [
+  128,
+  128
+ ],
+ "texel_m": 0.1,
+ "quay_u": [
+  392,
+  480
+ ],
+ "quay_v0": 480,
+ "jetty_u": [
+  480,
+  656
+ ],
+ "jetty_v": [
+  648,
+  672
+ ]
+}

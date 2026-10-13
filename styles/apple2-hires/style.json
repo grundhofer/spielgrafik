@@ -1,0 +1,167 @@
+{
+ "slug": "apple2-hires",
+ "name": "Hi-Res-Artefaktfarben (illustriertes Textadventure)",
+ "family": "computer",
+ "kind": "style",
+ "era": "1980–1985",
+ "summary": "Grafik eines 8-Bit-Heimcomputers im Hi-Res-Modus, wie ihn die illustrierten Textadventures um 1980 nutzten: 280×192 Punkte, je 7 Punkte ein Byte mit einem Farbgruppen-Bit, und die Farbe eines Punkts entsteht erst im NTSC-Signal aus Spalte, Nachbarn und Gruppe. Das Ortsbild ist eine Strichzeichnung mit Musterfüllungen, die sich wie auf dem langsamen Rechner live aufbaut; darunter stehen im gemischten Modus vier Zeilen Text mit Parser.",
+ "references": [
+  "Apple II (1977): Hi-Res-Grafik 280×192, 7 Punkte je Byte, Bit 7 verschiebt um einen halben Punkt (Farbgruppe Violett/Grün oder Blau/Orange), gemischter Modus mit 4 Textzeilen à 40 Zeichen",
+  "Mystery House (On-Line Systems, 1980): erstes Grafik-Adventure, weiße Strichzeichnungen auf Schwarz",
+  "The Wizard and the Princess (On-Line Systems, 1980): farbige Hi-Res-Bilder aus Linien und Füllungen, die sich sichtbar aufbauen",
+  "Ulysses and the Golden Fleece (1981), Time Zone (1982): weitere Hi-Res-Adventures desselben Bauprinzips",
+  "Transylvania (Penguin Software, 1982) und das Malprogramm The Graphics Magician (Penguin Software, 1982): Bilder als gespeicherte Linien- und Füllbefehle statt als Bitmap"
+ ],
+ "traits": [
+  "Bild 280×192 (×3 = 840×576 in der 1280×720-Aufnahme), quadratische Punkte (siehe pitfalls); gemischter Modus: Zeilen 0–159 Grafik, 160–191 vier Textzeilen mit 40 Zellen à 7×8 Punkten",
+  "Speicher wie im Original: 40 Bytes je Zeile, Bit 0–6 = 7 Punkte, Bit 7 = Farbgruppe; der Shader rechnet jede Farbe aus 4 Halbpunkten des 560er-Signals (Gruppe 1 = einen Halbpunkt später). Ergebnis: Einzelpunkt violett/grün (gerade/ungerade Spalte, Gruppe 0) oder blau/orange (Gruppe 1), zwei Nachbarn weiß, Muster 1010 = volle Farbfläche, an Enden weißer Läufe helle Säume (Hellblau, Rosa, Gelb, Türkis)",
+  "Gemessen über alle 180 Bilder: 12 verschiedene Farben, alle aus den 16 Farben des Modells, 0 fremde; im Grafikteil des Posters 96,4 % die sechs Hi-Res-Farben (Schwarz 41,5 %, Blau 16,4 %, Violett 16,2 %, Orange 10,9 %, Weiß 9,6 %, Grün 1,8 %), 3,6 % helle Säume (Rosa, Hellblau, Gelb, Türkis; Dunkelblau und Braun zusammen 29 Punkte)",
+  "Live-Bildaufbau als Hauptanimation: 0,1–1,0 s 96 weiße Linienzüge (3923 Punkte, 3968 Byte-Schreibvorgänge, Bresenham, Objekt für Objekt), 1,0–2,2 s 155 Flächen in 1378 Zeilenspannen (6938 Schreibvorgänge, größte Fläche zuerst), danach Sterne einzeln; die Folge ist ein Zeichenprogramm in demo/data/picture.json, kein Video",
+  "Farbgruppen-Konflikt sichtbar und gezählt: Jeder Schreibvorgang setzt Bit 7 des ganzen Byte; 96 Flächenpunkte in 49 Bytes haben am Ende eine andere Gruppe als ihr Muster und wechseln die Farbe (z. B. blaue Kerbe links am orangen Leuchtturmband, wo Band und violetter Himmel sich Bytes teilen); während des Aufbaus wechseln weiße Linien beim Füllen sichtbar ihre Säume",
+  "Mischtöne nur aus Mustern: Himmel oben als lockeres und dichtes Schachbrett aus blauen Einzelpunkten, darunter Blau/Schwarz-Zeilen, Abendrot als Orange/Violett-Zeilen, Meer 3 blaue + 1 schwarze Zeile, Fels Violett/Schwarz-Zeilen, Holz Orange/Schwarz, Gelb als Orange/Weiß-Zeilen; Stein und Kai bleiben schwarz mit weißen Umrissen (Grau gibt es nicht)",
+  "Dachs-Kurier als Hi-Res-Sprite 20×27 aus 10 Bildern (Stehen, 4 Laufposen, je 2 Stellungen des Schalendes): grüne Mütze, Gesicht von vorn mit weißen Wangen, schwarzen Augenstreifen, weißem Mittelstreif, Ohrspitzen seitlich unter dem Schirm und schwarzem Nasenpunkt (Weiß je 3 Punkte breit, sonst zeigt das Modell nur Säume), oranger Schal mit wehendem Ende, grüne Weste, weißes Paket mit farbiger Schnur, nahes Bein hell (2 Punkte), fernes violett (1 Punkt); jede Zeile setzt Bit 7 ihrer Bytes",
+  "Laufen gemessen (probe_badger.py, Render ohne Hintergrund; Zuordnung Bild zu Pose gemessen statt angenommen: Bild i der Aufnahme zeigt Godot-Bild i + 1): 15 Posen/s, Vorschub 2 Punkte je Pose (gerade Spalten, sonst tauschen Violett und Grün); bei allen 22 Posenwechseln der ganz sichtbaren Figur steht genau ein Fuß vorher und nachher in der Fußzeile und bleibt auf derselben Spalte (0 px), jeder Fuß setzt 8 Punkte weiter wieder auf, auch beim Anhalten (walk4 → Stehen bei x = 42: ferner Fuß bleibt auf Spalte 52, naher setzt auf 55 auf); Kopfzeile 131 und Fußzeile 157 in allen 71 ganz sichtbaren Lauf- und Stehbildern; kommt ab 3,0 s von links und steht ab 5,13 s",
+  "Figur und Ortsbild teilen sich keine Bytes: In den Zeilen 131–157, in denen der Dachs läuft, ist links von x = 63 kein Bildpunkt gesetzt (Fässer enden in Zeile 130). Gemessen für alle 71 Bilder: 0 Punkte außerhalb der Figur ändern durch ihr Bit 7 die Farbe. Bodenbezug über die vordere Kaikante (weiße Linie in Zeile 158 direkt unter den Füßen) und einen Holzpoller neben der Standposition",
+  "Umgebung nach dem Aufbau: Leuchtfeuer blitzt alle 30 Bilder für 12 Bilder (Lampe weiß, Lichtkeil nach links und rechts, außen nur jeder zweite Punkt), sonst glimmt die Lampe orange; Laterne flackert (Seed 1979, alle 3 Bilder einer von 4 Zuständen: Gelb, Weiß, Orange); 16 Sterne aus 3 Punkten erscheinen nacheinander, jeder dritte funkelt; 12 Glitzerstriche (3–5 Punkte) auf dem Meer mit eigenen Takten von 20–32 Bildern",
+  "Textzeilen im eigenen Zeichensatz font57, Fassung 2 (Großbuchstaben, eine Zelle = ein Byte; schmal gebaut: meist 4 Punkte breit mit 3 Punkten Abstand, M N V W Y 5 Punkte; gegen eine Nachbildung der Originalschrift geprüft: 0 von 36 Buchstaben und Ziffern pixelgleich): Ort und Beschreibung, Parser-Zeile „>NIMM PAKET“ wird ab 3,8 s mit 10 Zeichen/s getippt, Cursor als inverses Feld mit 1,9 Hz; die senkrechten Striche werden wie im Original farbig und wechseln je Zelle zwischen Violett und Grün; 32 von 192 Zeilen = 17 % des Bildes. Prüfschalter --text=mono zeigt nur die Textzeilen einfarbig wie am Monochrom-Monitor (bewusste Abweichung, nicht in der Aufnahme; Vergleich in assets/text_compare.png)"
+ ],
+ "camera": "Feste Seitenansicht wie ein Ortsbild eines Textadventures, Text unter dem Bild",
+ "resolution": "280×192, gemischter Modus (280×160 Grafik + 4×40 Zeichen); 6 Hi-Res-Farben plus Säume aus dem 16-Farben-NTSC-Modell",
+ "pipeline": [
+  {
+   "step": "Strichvorlage erzeugen",
+   "tool": "genimg (Gemini über agy)",
+   "detail": "Vier Bilder, alle agy, verbatim. Prompt 1 (prompts/bg.txt): Vektor-Strichzeichnung mit flachen Füllungen „wie mit dem Grafiktablett eingegeben“, geschlossene Umrisse, etwa zehn flache Farben, Schwarz nur als Linie, Lampe ohne Strahl, kein Rauch, keine Sterne. Beide Ergebnisse sauber, aber mit Steinfugen, Planken, Pflaster und Tauen zu fein für 280 Punkte. Prompt 2 (prompts/bg2.txt) zusätzlich: „so wenige Linien wie möglich, keine einzelnen Steine, Planken, Ziegel, Fensterkreuze“. Gewählt bg2_b (breiter Kai vorn für den Dachs); das Modell zeichnete trotzdem Planken, Bootsrippen und Fensterkreuze"
+  },
+  {
+   "step": "Linien nachzeichnen",
+   "tool": "scripts/trace_lines.py",
+   "detail": "Ganze Vorlage (1264×848) auf 280×160, also senkrecht 0,85-fach gestaucht; Umrisse = Helligkeit < 52, Verdünnen nach Zhang-Suen, Wege von den Endpunkten aus verfolgen, Sporne < 10 Quellpixel weg, Douglas-Peucker 2,2 Quellpixel, Ecken ins Zielraster: 253 Linienzüge (assets/lines.json, Vorschau assets/lines_preview.png)"
+  },
+  {
+   "step": "Farbklassen und Linienfilter",
+   "tool": "scripts/build_picture.py",
+   "detail": "14 Klassen mit Mittelfarben aus der Vorlage (Himmel, Wolke, Abendrot, Horizont, Meer, Kai, Stein, Dach, Holz, dunkles Holz, Weiß, Gras, Fels, Gelb), jeder Quellpunkt nach Oklab zur nächsten, je Zielpunkt die Mehrheit, Splitter unter 5 Punkten zum Nachbarn. Ein Linienzug bleibt nur, wenn links und rechts von ihm in mindestens 35 % der Stichproben verschiedene Klassen liegen: Planken, Steinfugen, Pflaster und Fensterkreuze fallen so automatisch weg"
+  },
+  {
+   "step": "Handbearbeitung",
+   "tool": "scripts/cleanup.txt (von build_picture.py gelesen)",
+   "detail": "Wie ein Grafiker mit Tablett: 9 Kästen, in denen alle automatischen Züge entfallen, und 43 Befehle (poly, area, line, dark, recolor), die Ruderboote (eines weiß mit schwarzer Bordlinie), Steg mit 4 Planken, Kaimauer, Kistenstapel, zwei Fässer (Unterkante Zeile 130, damit der Dachs darunter keine Fassbytes berührt), Tau, Laternenpfahl mit Laterne, Fenster mit schwarzem Kreuz, Schornstein, einen Holzpoller und die vordere Kaikante einfach neu zeichnen. Zusammen mit dem Filter bleiben 59 der 253 automatischen Züge"
+  },
+  {
+   "step": "Muster wählen",
+   "tool": "scripts/patterns.py, scripts/pattern_sheet.py",
+   "detail": "42 Füllmuster als Zeilen aus (Bitfolge, Gruppe), indiziert über die absolute Spalte; Übersicht mit Mittelfarben in assets/patterns_preview.png. Je Klasse von Hand eines gewählt (4 Fassungen verglichen). Für Schwarz und Weiß wählt das Skript die Gruppe, die die farbigen Nachbarflächen in den gemeinsamen Bytes haben (wie HCOLOR 0/4 bzw. 3/7)"
+  },
+  {
+   "step": "Zeichenprogramm erzeugen",
+   "tool": "scripts/build_picture.py",
+   "detail": "Simuliert den Aufbau Byte für Byte: Linien weiß mit der Gruppe, die ihre Bytes am Ende mehrheitlich haben, Flächen als Zeilenspannen (Muster-Bits, Bit 7 des Musters), zuletzt schwarze Detaillinien. Schreibt 10 906 Schreibvorgänge (Adresse, Wert) nach demo/data/picture.json, zählt gekippte Farben, rendert Vorschauen in drei Farbmodellen und exportiert das fertige Bild als echte Hi-Res-Seite mit verschachtelten Zeilen (assets/HARBOUR.BIN, 8192 Bytes; Rücklesen geprüft). Wählt außerdem Lampe, Laterne, 16 Sternplätze, 12 Glitzerstellen und den Lichtkeil (Seed 1980)"
+  },
+  {
+   "step": "Figur pixeln",
+   "tool": "scripts/build_sprites.py",
+   "detail": "Ohne KI: Entwurf in Farbbuchstaben (G, V, O, B, W, K), das Skript setzt die Bits nach Spalte und prüft, dass eine Zeile nur eine Farbgruppe braucht. Fester Oberkörper (Gesicht mit 3 Punkte breiten weißen Flächen, Ohrspitzen, Nasenpunkt), zwei Schalenden, Beine je Pose aus einer Fersentabelle; Vorschau vor Schwarz und vor dem Kai (assets/sprites_preview.png), Export demo/data/sprites.json"
+  },
+  {
+   "step": "Zeichensatz zeichnen und prüfen",
+   "tool": "scripts/font57.py, scripts/font_compare.py",
+   "detail": "48 Zeichen als Text in 7×8-Zellen (ein Byte je Zellzeile), Fassung 2: meist 4 Punkte breit mit 2 Punkten Innenraum und 3 Punkten Abstand, M, N, V, W, Y 5 Punkte; wo möglich ohne Zeilen der Form X.X, weil das Farbmodell die Lücke füllt. Vorschau in drei Farbmodellen und einbittig (assets/font_preview.png), Export demo/data/font.json. font_compare.py vergleicht jede Glyphe mit einer 5×7-Nachbildung der Originalschrift (Print Char 21 von Kreative Korp, mit FreeType auf das 7×8-Raster abgetastet; kleinster Abstand über Verschiebungen um ±1): Fassung 1 (5×7) hatte 18 von 36 Buchstaben und Ziffern pixelgleich und wurde ersetzt; Fassung 2 hat 0, Median 7 Punkte, nahe bleiben nur L (1) und T (2). Die Vergleichsschrift wurde nur temporär außerhalb des Projekts geladen und nicht übernommen"
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/probe_badger.py, scripts/check_render.py, tools/capture.py",
+   "detail": "Dachs gemessen (media/probe_badger.json: Versatz zwischen Probe-Zeilen und Aufnahmebildern aus der Mützenkante bestimmt, Füße je Posenwechsel, Schrittlängen, Farbänderungen am Hintergrund); Forward+, Mobile und Compatibility pixelgleich verglichen, Dauerlauf ab 30 s (media/probe_t30.png), dasselbe Bild in allen drei Farbmodellen (assets/model_compare.png) und die Textzeilen mit und ohne --text=mono (assets/text_compare.png), Beschriftungen im eigenen Zeichensatz; Aufnahme mit --poster-at 0.9 (Blitz, Dachs steht, Eingabe getippt)"
+  }
+ ],
+ "godot": [
+  "Viewport 280×192, stretch mode viewport, scale_mode integer, Standardfilter Nearest, Fenster 840×576",
+  "Ganze Anzeige ist ein ColorRect mit shaders/hires.gdshader: liest den Speicher als 40×192-R8-Textur mit texelFetch, baut für jeden Punkt 4 Halbpunkte (Gruppe 1 = verzögert, Lücke hält den letzten Halbpunkt des Byte davor) und schlägt die Farbe in einer 16-Farben-Tabelle nach; uniform model: 0 fringe (alle Säume), 1 crisp (Demo: dunkle Säume neben Linien weggelassen), 2 ideal (sechs Farben); uniform text_mono: Zeilen 160–191 einfarbig (Prüfschalter)",
+  "scripts/main.gd ist der Bild-Interpreter: spielt je Bild so viele Schreibvorgänge aus picture.json ab, wie der Zeitplan erlaubt (Linien bis Bild 30, Flächen bis Bild 66), kopiert den Speicher, setzt Umgebung (Bits und Bit 7 direkt), zeichnet den Dachs wie eine Sprite-Routine (deckende Punkte setzen/löschen, Bit 7 je berührtem Byte), schreibt die 4 Textzeilen in die Zeilen 160–191 und lädt die Textur hoch",
+  "Ablauf: Text steht ab Bild 0, Bild 0,1–2,2 s, Sterne ab 2,2 s, Leuchtfeuer und Laterne ab 2,2 s, Dachs läuft 3,0–5,13 s (32 Posen, endet mit walk4 bei x = 42, dann Stehen an derselben Stelle), Eingabe 3,8–4,8 s; Poster bei 5,4 s (Bild 162)",
+  "Deterministisch: Zeit über delta aufsummiert, alle Zustände aus der ganzzahligen Bildnummer; Zufall nur aus RandomNumberGenerator mit Seed 1979 als Tabelle (Laterne, Glitzertakte), damit --t0 dieselben Werte trifft. Prüfschalter nach --: --t0=<s>, --model=fringe|crisp|ideal, --only=badger, --probe=<datei>, --text=mono"
+ ],
+ "techniques": [
+  "textoberflaeche",
+  "sprite-animation",
+  "fuss-halten",
+  "dithering",
+  "live-bildaufbau",
+  "ki-strichvorlage",
+  "artefaktfarben-shader"
+ ],
+ "ratings": {
+  "ai_fit": 3,
+  "consistency": 4,
+  "effort": 3,
+  "text_adventure": 4,
+  "mobile": 5
+ },
+ "ratings_note": "Die KI liefert eine brauchbare Strichvorlage: Aufbau, Haus, Leuchtturm, Felsen, Wolken, Kai und die Farbklassen aller Flächen stammen daraus; aber 194 von 253 nachgezeichneten Zügen mussten weg (Kleinteile trotz Prompt), 9 Bereiche sind von Hand neu gezeichnet, Figur und Zeichensatz sind ohne KI, und den eigentlichen Look (Artefaktfarben, Muster, Aufbau) machen Skripte und Shader (ai_fit 3). Feste Musterbibliothek, Klassen-Tabelle, Interpreter und Shader bleiben für jeden Ort gleich, nur cleanup.txt ist je Ort Handarbeit (consistency 4). Ein Ort kostet 1–2 Bilder plus eine Handbearbeitung von etwa 50 Zeilen; jede Figur und Pose wird unter den Spalten- und Gruppenregeln von Hand gepixelt (effort 3). Bild + 4 Textzeilen + Parser ist genau das Spielprinzip unseres ersten Spiels, aber nur 4 × 40 Großbuchstaben und farbig gesäumter Text, in dem M, N und W zu Farbblöcken werden; einfarbig (--text=mono) gut lesbar, aber dann eine Abweichung (text_adventure 4). Mobil nur über die Renderer geprüft: Mobile und Compatibility pixelgleich zu Forward+ (nach den Änderungen erneut), ein Draw-Call mit einer 40×192-Textur; nicht auf einem Telefon getestet.",
+ "verdict": "Sofort als Heimcomputer-Adventure um 1980 erkennbar: das Bild baut sich aus weißen Linien und Musterfüllungen auf, Violett, Grün, Orange und Blau auf Schwarz, farbige Einzelpunkte an schrägen Linien, Streifenmuster und vier Zeilen Großbuchstaben mit Prompt darunter. Der Weg ist wiederholbar: KI-Strichvorlage, Nachzeichnen mit Linienfilter, eine Handbearbeitung als Textdatei, und Interpreter wie Shader bleiben gleich; ein Ort ist als Zeichenprogramm rund 48 KB JSON groß (32 KB Rohdaten) und der Aufbau kommt kostenlos mit. Für unser Textadventure ist das der direkte Vorfahr und passt im Prinzip sehr gut; ehrlich nachgebildet ist der Text aber farbig gesäumt und für längere Beschreibungen anstrengend zu lesen, und 4 Zeilen reichen nur für zwei Sätze. Wer den Stil wählt, sollte den Textbereich einfarbig darstellen (in der Demo als Prüfschalter --text=mono vorhanden, Vergleich in assets/text_compare.png) oder eine Hi-Res-Schrift mit 2 Punkte breiten Strichen nehmen (beides bewusste Abweichungen) und mehr Zeilen erlauben. Figuren sind unter den Farbregeln klein und mühsam: Der Dachs ist in 1:1 als Tier mit gestreiftem Gesicht, Ohren, Mütze und Paket zu lesen, als Dachs aber nur mit Vorwissen sicher. Das Spiel sollte mit wenigen, kleinen Figuren auf schwarzem Grund auskommen, dessen Bytes kein Bildpunkt teilt. Der eigene Zeichensatz (Fassung 2) ist gegen eine Nachbildung der Originalschrift geprüft (0 von 36 Buchstaben und Ziffern pixelgleich), aber nicht gegen ein ROM-Abbild des Zeichengenerators.",
+ "pitfalls": [
+  "Strichvorlage zu fein: Beide Bilder aus Prompt 1 hatten Steinfugen, Planken, Pflaster, Kistenstreben und Taurollen, die bei 280 Punkten zu Linienbrei wurden (erste Fassung bg_a: 296 Züge, 5606 Linienpunkte). Prompt 2 („so wenige Linien wie möglich“) half, aber das Modell zeichnete weiter Planken, Bootsrippen und Fensterkreuze; erst der Linienfilter (gleiche Farbklasse auf beiden Seiten = weg) und 9 von Hand neu gezeichnete Bereiche ergaben ein sauberes Bild.",
+  "Erste Musterwahl zu unruhig: Grau als Weiß/Schwarz- oder Violett/Grün-Zeilen für Kai, Haus und Felsen machte das Bild zu einem Streifenteppich, weiße Musterzeilen verschmolzen mit den weißen Umrissen. Die Hi-Res-Palette hat kein Grau; jetzt sind Kai und Haus schwarz mit weißen Umrissen, Mischmuster nur für Himmel, Abendrot, Meer, Fels, Holz und Gelb.",
+  "Farbmodell: Das vollständige Modell (4-Halbpunkte-Fenster für jeden Punkt) gibt jeder 1-Punkt-Linie dunkle Farbsäume zu beiden Seiten; Kleinteile und Text werden bei ×3 matschig. Die Demo nutzt „crisp“: helle Säume an gesetzten Punkten bleiben, dunkle Säume neben Linien fallen weg (Vereinfachung). Außerdem ist jeder Saum einen ganzen Punkt breit, im Signal nur einen halben; Vergleich in assets/model_compare.png und assets/picture_fringe.png.",
+  "Lesbarkeit im gemischten Modus: Senkrechte Striche sind 1 Punkt breit und werden farbig, und weil eine Zelle 7 Punkte breit ist, wechselt die Farbe von Zeichen zu Zeichen zwischen Violett und Grün. Zeilen mit X.X (in Fassung 2 bei G, K, M, N, R, V, W, 0 und 1) füllt das Modell zu Farbblöcken („LORNHOLM“, „WIND“, „WARTET“). So war es am Farbfernseher; es kostet Lesbarkeit, und die Aufnahme zeigt bewusst diese Fassung. Die lesbare Variante gibt es nur als Prüfschalter (--text=mono, assets/text_compare.png); sie ist eine Abweichung, weil ein Farbfernseher den Text im gemischten Modus genauso säumt wie die Grafik.",
+  "Zeichensatz font57 Fassung 1 war keine ausreichend eigene Zeichnung: Im 5×7-Raster des Zeichengenerators gezeichnet, waren 18 von 36 Buchstaben und Ziffern (21 von 44 Zeichen mit Satzzeichen) pixelgleich mit einer 5×7-Nachbildung der Originalschrift, darunter nicht triviale wie B, C, D, J, O, P, U, Y, Z, 2, 4, 5, 8; eine externe Prüfung fand das. Bei 5×7 Punkten bleibt kaum Spielraum. Fassung 2 ist neu gezeichnet und schmaler gebaut (meist 4 Punkte breit, 2 Punkte Innenraum, 3 Punkte Abstand; eigene Formen für A, I, J, M, X, Y, 4 und die Satzzeichen): 0 von 36 pixelgleich, Median 7 Punkte, nahe bleiben nur L (1 Punkt) und T (2). Geprüft gegen die Nachbildung „Print Char 21“ (nur temporär geladen, nicht Teil des Eintrags), nicht gegen ein ROM-Abbild des Zeichengenerators. Der schmale Satz wirkt luftiger als das Original; M und N sind 5 Punkte breit geblieben, weil sie 4 Punkte breit im Farbmodell ganz zulaufen.",
+  "Farbgruppen-Konflikte: 96 Flächenpunkte in 49 Bytes wechseln die Farbe, weil zwei Flächen verschiedener Gruppe ein Byte teilen und die zuletzt gefüllte gewinnt (u. a. blaue Kerbe links am orangen Leuchtturmband, Säume an Booten und Felsen). Bewusst stehen gelassen, weil es zum Stil gehört; vor der automatischen Gruppenwahl für Schwarz und Weiß hatte der Schornstein dadurch einen blauen Fleck.",
+  "Figur unter den Farbregeln: Farbflächen gibt es nur auf jeder zweiten Spalte, Weiß braucht mindestens 3 gesetzte Punkte nebeneinander (2 ergeben nur zwei Saumfarben), eine schwarze Lücke von 1 Punkt wird farbig gefüllt. Deshalb ist das nahe Bein nur 2 Punkte breit und erscheint hellblau/türkis statt weiß, das ferne Bein ist 1 Punkt violett, und beide brauchen 2 Punkte Abstand. Paket und Weste liegen in denselben Zeilen, also nur eine Gruppe: das Paket ist weiß statt braun, die Schnur eine bewusst farbig gefüllte 1-Punkt-Lücke. Der erste Kopf im Profil (weißer Streif, schwarzes Band, weiße Wange) las sich wie ein Entenschnabel; die zweite Fassung von vorn hatte 2 Punkte breite Wangen, die das Modell nur als Säume (Türkis, Gelb) zeigt, und las sich mit den schwarzen Streifen wie eine Brille. Jetzt sind die weißen Flächen 3 Punkte breit (Mitte weiß), dazu Ohrspitzen unter dem Schirm und ein schwarzer Nasenpunkt. In 1:1 liest sich das als Tier mit Streifengesicht und Ohren; ohne Vorwissen kann es auch ein Waschbär sein, ein klares Dachsprofil passt in 20 Punkte Breite unter diesen Regeln nicht.",
+  "Die Figur darf nur in Schritten von 2 Punkten wandern (ungerade Schritte tauschen Violett und Grün) und setzt Bit 7 aller Bytes, die sie berührt; vor farbigem Grund färbt sie 7 Punkte breite Kästen um. In der ersten Fassung reichten die Fässer bis Zeile 133, die Mütze lief in den Zeilen 131–133 über 1 s lang durch ihre Bytes: orange Fassstreifen wurden grün und die Mütze verschmolz mit den Fässern (nachgemessen nur für die ganz sichtbare Figur: bis 6 Punkte in 34 Bildern), obwohl hier stand, die Figur laufe nur über schwarzen Kai. Tiefer laufen kann der Dachs nicht (Füße in Zeile 157); jetzt enden die Fässer in Zeile 130, und die Messung ergibt 0 umgefärbte Punkte. Vor Meer, Steg oder Himmel ist die Figur nicht gezeigt.",
+  "Erste Standposition (x = 64) lag direkt an einer Kante des Rampenpflasters: die Linie neben der Mütze sah aus wie ein Stock in der Hand. Jetzt steht der Dachs bei x = 42, der Auftritt beginnt dafür erst bei 3,0 s. Ohne Bodenlinie schwebte er im Schwarz direkt über der Textkante; dafür gibt es jetzt die vordere Kaikante (Zeile 158, ganze Breite, wirkt zugleich als untere Bildkante) und einen Holzpoller, beides eigene Ergänzungen, nicht aus der Vorlage.",
+  "Messfehler in der ersten Prüfung: probe_badger.py ordnete die Posen um ein Bild versetzt zu (Bild i der --write-movie-Folge zeigt Godot-Bild i + 1). Jede Standfuß-Prüfung verglich deshalb zwei gleiche Bilder, und „0 px über 31 Posenwechsel“ war nicht belegt. Nachgemessen hielt der Laufzyklus, aber beim Anhalten (walk3 bei x = 40 direkt in die Standpose) rutschte der stehende ferne Fuß 2 Punkte zurück (52 → 50), der nahe sprang 6 vor (47 → 53), und die Beine tauschten in einem Bild. Jetzt misst das Skript den Versatz selbst, und der Lauf endet mit walk4 bei x = 42, dessen Standbein in der Standpose bleibt.",
+  "Seitenverhältnis: Die ganze 3:2-Vorlage ist auf 280×160 gebracht, also senkrecht 0,85-fach gestaucht. Am Fernseher mit seinen schmalen Punkten (280×192 auf 4:3) stimmt das; in der Aufnahme mit quadratischen Punkten wirkt alles etwa 15 % flacher.",
+  "Lichtkeil des Leuchtturms ist eine eigene Ergänzung: Ein erster Versuch als lockeres Punktmuster im Kegel sah über dem Schachbrett-Himmel wie ein Gitter aus; jetzt ein voller Keil nahe der Lampe, außen nur jeder zweite Punkt.",
+  "Vereinfacht gegenüber der Hardware: Der Text steht im selben Byte-Feld wie die Grafik (gleiches Signal, aber keine eigene Textseite und kein ROM); der Speicher der Demo ist linear (nur HARBOUR.BIN hat die verschachtelte Zeilenfolge, nicht in einem Emulator geprüft); das Zeichentempo ist nach Zeit gewählt, nicht aus Prozessortakten; Sprites ohne Zeitbedarf und Flackern; keine Bildröhren-Nachbildung; Farbwerte der 16 Farben wie in Emulatoren üblich, nicht gemessen.",
+  "Von der Vorlage weggelassen: zweite kleine Taurolle, Fässchen am Steg, Poller-Details; Rauch aus dem Schornstein und Möwen sind nicht animiert (Umgebung: Leuchtfeuer, Laterne, Sterne, Wasserglitzern, Schalende im Wind).",
+  "Vergleichsbild model_compare.png hatte in der ersten Fassung Ersatzkästchen statt „ä“ (Pillows eingebaute Schrift hat keine Umlaute). Jetzt sind alle Beschriftungen in check_render.py im eigenen Zeichensatz font57 gesetzt (Großbuchstaben mit Ä, Ö, Ü); patterns_preview.png nutzt nur ASCII-Namen.",
+  "Füllreihenfolge „größte Fläche zuerst“ ist eine Regel des Skripts; ein Grafiker hätte objektweise gefüllt. Der Himmel füllt sich daher vor dem Meer und alles Kleine kommt am Schluss."
+ ],
+ "lessons": [
+  "Prompt für eine Strichvorlage: „vector line art with flat colour fills, the way an artist entered it point by point with a graphics tablet … every shape fully enclosed … will be reduced to 280 × 160 pixels, so draw as few lines as possible … black appears only as outlines“ ergab mit dem Gemini-Modell in 4 von 4 Versuchen saubere, geschlossene Umrisse; Kleinteile kommen trotzdem und werden im Skript entfernt.",
+  "Linienfilter über Farbklassen: Ein Linienzug bleibt nur, wenn er zwei verschiedene Farbflächen der Vorlage trennt. Das entfernt Planken, Fugen, Pflaster und Fensterkreuze automatisch und ist für jeden Ort gleich.",
+  "Handbearbeitung als Textdatei (drop, poly, area, line, dark, recolor) neben dem Skript: wiederholbar, versionierbar, und kleine Gegenstände lassen sich in wenigen Zeilen als einfache Polygone neu setzen.",
+  "Bild als Zeichenprogramm (Adresse, Wert) statt als Bitmap: Der Live-Aufbau kommt gratis, ist ehrlich (dieselben Bytes wie am Ende), und Farbwechsel beim Füllen entstehen von selbst. Ein Ort sind ~10 900 Schreibvorgänge, 32 KB roh, 48 KB als JSON mit Base64.",
+  "Großflächiges Grau schwarz lassen und nur mit weißen Umrissen zeichnen; Mischmuster sparsam (Himmel, Meer, Abendrot). Die Gruppe von Schwarz und Weiß nach den farbigen Nachbarn im selben Byte wählen.",
+  "Farbmodell im Shader mit Umschalter (fringe, crisp, ideal): Alle Vergleichsbilder kommen aus derselben Demo, und für die Lesbarkeit lässt sich das Modell wählen, ohne Daten zu ändern.",
+  "Hi-Res-Sprites in Farbbuchstaben entwerfen und die Bits nach Spalte setzen lassen; Regeln: Farbflächen auf jeder zweiten Spalte, Weiß mindestens 3 Punkte breit (2 Punkte zeigen nur zwei Saumfarben), schwarze Lücken mindestens 2 Punkte, je Zeile eine Gruppe, Bewegung in 2er-Schritten, Figur auf schwarzem Grund.",
+  "Fersentabelle für den Laufzyklus (nahes Bein 11 → 9 → 7, fernes 12 → 10 → 8 bei 2 Punkten Vorschub) ergibt gemessen 0 px Fußrutschen. Anhalten aus einer Durchgangspose (walk4, ein Bein steht, das andere schwebt): Die Standpose an derselben Stelle behält das Standbein und setzt das schwebende vorn auf. Aus einer Kontaktpose (beide Füße am Boden) direkt in die Standpose springen beide Füße.",
+  "Probe-Zeilen aus _render() und Bilder aus --write-movie sind um ein Bild versetzt (Bild i = Godot-Bild i + 1). Den Versatz im Prüfskript messen (feste Kante der Figur gegen x), nicht annehmen; sonst vergleicht jede Prüfung zwei gleiche Bilder und meldet immer 0 px. Gegenprobe: Das Skript muss einen bekannten Fehler (alte Standposition) wiederfinden.",
+  "Farbgruppen-Konflikte der Figur messen statt behaupten: Sprite wie im Spiel in den Speicher schreiben, mit dem Farbmodell rendern und Farbänderungen außerhalb der Figur zählen; den Hintergrund in den Zeilen und Bytes ihres Wegs frei halten.",
+  "Für Schriften im Farbmodell Zeilen der Form X.X meiden (A mit flachem Dach statt Spitze, X mit 2 Punkte breiter Mitte, Y mit Querbalken); 2 Punkte Innenraum bleiben schwarz. Wo es nicht geht (M, N, W, K), ist das ein Hinweis, den Textbereich anders darzustellen (Shader-Uniform nur für Zeilen ≥ 160, Daten bleiben gleich)."
+ ],
+ "assets": [
+  {"file": "assets/raw/bg2_b.png", "kind": "reference", "made_with": "Gemini (agy), Strichvorlage, verwendet", "prompt": "assets/raw/bg2_b.json"},
+  {"file": "assets/raw/bg2_a.png", "kind": "reference", "made_with": "Gemini (agy), Strichvorlage Prompt 2, nicht verwendet (Kai vorn zu schmal)", "prompt": "assets/raw/bg2_a.json"},
+  {"file": "assets/raw/bg_a.png", "kind": "reference", "made_with": "Gemini (agy), Strichvorlage Prompt 1, verworfen (zu viele Kleinteile)", "prompt": "assets/raw/bg_a.json"},
+  {"file": "assets/raw/bg_b.png", "kind": "reference", "made_with": "Gemini (agy), Strichvorlage Prompt 1, verworfen", "prompt": "assets/raw/bg_b.json"},
+  {"file": "assets/lines_preview.png", "kind": "preview", "made_with": "trace_lines.py: alle 253 nachgezeichneten Linienzüge vor Filter und Handbearbeitung (×3)"},
+  {"file": "assets/lines.json", "kind": "data", "made_with": "trace_lines.py: Linienzüge in Ziel- und Quellkoordinaten"},
+  {"file": "scripts/cleanup.txt", "kind": "data", "made_with": "Handbearbeitung: 9 Kästen, 43 Zeichenbefehle"},
+  {"file": "assets/picture_regions.png", "kind": "check", "made_with": "build_picture.py: Farbklassen je Punkt mit Linien (×3)"},
+  {"file": "assets/patterns_preview.png", "kind": "palette", "made_with": "pattern_sheet.py: alle 42 Füllmuster nach dem Farbmodell"},
+  {"file": "assets/picture_preview.png", "kind": "background", "made_with": "build_picture.py: fertiges Ortsbild im Farbmodell der Demo (crisp, ×3)"},
+  {"file": "assets/picture_fringe.png", "kind": "comparison", "made_with": "dasselbe Bild mit allen Säumen (fringe)"},
+  {"file": "assets/picture_ideal.png", "kind": "comparison", "made_with": "dasselbe Bild nur mit den sechs Farben (ideal)"},
+  {"file": "assets/model_compare.png", "kind": "comparison", "made_with": "check_render.py: Godot-Bild bei 5,4 s mit --model=fringe, crisp, ideal (Beschriftung im Zeichensatz font57)"},
+  {"file": "assets/text_compare.png", "kind": "comparison", "made_with": "check_render.py: Textzeilen bei 5,4 s im Farbmodell der Demo und mit --text=mono (einfarbig, bewusste Abweichung)"},
+  {"file": "assets/HARBOUR.BIN", "kind": "data", "made_with": "build_picture.py: fertiges Bild als Hi-Res-Seite (8192 Bytes, verschachtelte Zeilen)"},
+  {"file": "demo/data/picture.json", "kind": "data", "made_with": "build_picture.py: Zeichenprogramm (10 906 Schreibvorgänge) und Animationsplätze"},
+  {"file": "assets/sprites_preview.png", "kind": "sprite-sheet", "made_with": "build_sprites.py: 10 Dachsbilder vor Schwarz und vor dem Kai (×4)"},
+  {"file": "demo/data/sprites.json", "kind": "data", "made_with": "build_sprites.py: Bits, Deckung und Gruppe je Zeile"},
+  {"file": "assets/font_preview.png", "kind": "font", "made_with": "font57.py: Zeichensatz Fassung 2 in fringe, crisp, ideal und einbittig"},
+  {"file": "demo/shaders/hires.gdshader", "kind": "shader", "made_with": "Farbmodell (4 Halbpunkte, drei Modelle)"},
+  {"file": "media/probe_badger.json", "kind": "measurement", "made_with": "probe_badger.py: Versatz Bild/Pose, Kopf, Füße je Bild, Standfuß je Posenwechsel, Farbänderungen am Hintergrund"},
+  {"file": "media/probe_t30.png", "kind": "check", "made_with": "check_render.py: Dauerlauf ab 30 s"}
+ ],
+ "licenses": [
+  {"item": "Zeichensatz font57, Fassung 2 (eigener Entwurf, gegen eine 5×7-Nachbildung der Originalschrift geprüft; Fassung 1 lag zu nah am Original und ist ersetzt)", "license": "CC0-1.0", "source": "scripts/font57.py, demo/fonts/LICENSE-font57.txt"},
+  {"item": "Strichvorlagen", "license": "eigene KI-Bilder (Gemini über agy)", "source": "assets/raw/"},
+  {"item": "Figurenblatt Dachs-Kurier (nur als Vorbild für Kostüm, nicht als Referenzbild an die KI gegeben)", "license": "eigenes Motiv des Katalogs", "source": "shared/badger/master_sheet.png"},
+  {"item": "Ortsbild-Bearbeitung, Muster, Dachs-Sprites, Shader, Skripte", "license": "eigener Code und eigene Pixel, keine fremden Grafiken, kein ROM", "source": "styles/apple2-hires/"},
+  {"item": "16 NTSC-Farbwerte", "license": "Farbwerte, wie sie Emulatoren für dieses Farbmodell verwenden (Fakten, nicht geschützt)", "source": "scripts/a2lib.py, demo/shaders/hires.gdshader"}
+ ],
+ "image_generations": 4,
+ "tool_issues": [],
+ "status": "done"
+}

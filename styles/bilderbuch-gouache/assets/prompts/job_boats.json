@@ -1,0 +1,10 @@
+[
+ {
+  "out": "styles/bilderbuch-gouache/assets/raw/boats.png",
+  "size": "1536x1024",
+  "prompt": "Two small wooden fishing boats as separate sprites for a 2D picture-book game, painted by hand in opaque gouache in exactly the technique, paper grain, warm palette and level of simplification of the reference image (the background of the same game): flat opaque colour shapes with visible brush marks and dry-brush edges, simple, rounded, friendly shapes for young children, no black outlines. Both boats seen from the side and a little from above, as boats moored in calm water look from a harbour quay, bow to the right, both at the same scale and side by side with clear empty space between them, each about 40% of the width of the sheet. Boat one (left): a plump, round-bellied wooden fishing boat with a terracotta-red hull, a cream stripe below the gunwale, a tiny cream wheelhouse with one small square window and a short, thick mast. Boat two (right): a slightly smaller open fishing boat with a dusty teal hull, an ochre stripe below the gunwale, a short, thick mast and one furled ochre sail. At most two simple lines of rigging per boat, no fine detail, no nets, no figures, no text or numbers on the hulls. Each hull ends at the bottom in a straight horizontal waterline: only the part above the water is painted, nothing below the waterline, no water, no reflection, no ripples. Each boat isolated on a fully transparent background; no ground, no cast shadow, no frame, nothing cut off at the edge of the sheet.\n\nNo text, letters, numbers, signatures, watermarks or logos anywhere in the image. No real places, brands, franchises or recognisable characters from existing games or films.\n\nImage format: landscape 3:2.",
+  "refs": [
+   "styles/bilderbuch-gouache/assets/raw/bg.png"
+  ]
+ }
+]

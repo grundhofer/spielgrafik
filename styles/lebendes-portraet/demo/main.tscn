@@ -1,0 +1,277 @@
+[gd_scene load_steps=27 format=3]
+
+[ext_resource type="Script" path="res://main.gd" id="1"]
+[ext_resource type="PackedScene" path="res://portrait.tscn" id="2"]
+[ext_resource type="Texture2D" path="res://art/bg.png" id="3"]
+[ext_resource type="Shader" path="res://shaders/bg.gdshader" id="4"]
+[ext_resource type="FontFile" path="res://fonts/Fraunces-var.ttf" id="5"]
+[ext_resource type="FontFile" path="res://fonts/Fraunces-Italic-var.ttf" id="6"]
+[ext_resource type="Texture2D" path="res://art/bg_masks.png" id="7"]
+
+[sub_resource type="ShaderMaterial" id="bgmat"]
+shader = ExtResource("4")
+shader_parameter/masks = ExtResource("7")
+shader_parameter/time = 0.0
+
+[sub_resource type="CanvasItemMaterial" id="add"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="glow_grad"]
+offsets = PackedFloat32Array(0, 0.25, 1)
+colors = PackedColorArray(1, 0.86, 0.55, 0.9, 1, 0.7, 0.35, 0.35, 1, 0.55, 0.2, 0)
+
+[sub_resource type="GradientTexture2D" id="glow_tex"]
+gradient = SubResource("glow_grad")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="Gradient" id="lamp_grad"]
+offsets = PackedFloat32Array(0, 0.18, 1)
+colors = PackedColorArray(1, 0.97, 0.85, 1, 1, 0.85, 0.55, 0.45, 1, 0.75, 0.4, 0)
+
+[sub_resource type="GradientTexture2D" id="lamp_tex"]
+gradient = SubResource("lamp_grad")
+width = 96
+height = 96
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="StyleBoxFlat" id="box_style"]
+bg_color = Color(0.105, 0.11, 0.2, 0.86)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.79, 0.64, 0.4, 0.85)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.35)
+shadow_size = 10
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="name_style"]
+bg_color = Color(0.56, 0.16, 0.13, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.79, 0.64, 0.4, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="FontVariation" id="f_text"]
+base_font = ExtResource("5")
+variation_opentype = {2003265652: 430, 1869640570: 24}
+
+[sub_resource type="FontVariation" id="f_name"]
+base_font = ExtResource("5")
+variation_opentype = {2003265652: 620, 1869640570: 18}
+spacing_glyph = 1
+
+[sub_resource type="FontVariation" id="f_place"]
+base_font = ExtResource("6")
+variation_opentype = {2003265652: 420, 1869640570: 14}
+
+[sub_resource type="FontVariation" id="f_choice"]
+base_font = ExtResource("5")
+variation_opentype = {2003265652: 470, 1869640570: 20}
+
+[sub_resource type="LabelSettings" id="ls_line"]
+font = SubResource("f_text")
+font_size = 24
+line_spacing = 2.0
+font_color = Color(0.97, 0.93, 0.84, 1)
+
+[sub_resource type="LabelSettings" id="ls_name"]
+font = SubResource("f_name")
+font_size = 18
+font_color = Color(0.99, 0.94, 0.82, 1)
+
+[sub_resource type="LabelSettings" id="ls_place"]
+font = SubResource("f_place")
+font_size = 16
+font_color = Color(0.85, 0.76, 0.6, 0.95)
+
+[sub_resource type="LabelSettings" id="ls_choice"]
+font = SubResource("f_choice")
+font_size = 20
+font_color = Color(0.9, 0.86, 0.78, 1)
+
+[sub_resource type="LabelSettings" id="ls_choice_hi"]
+font = SubResource("f_choice")
+font_size = 20
+font_color = Color(0.98, 0.8, 0.45, 1)
+
+[sub_resource type="StyleBoxFlat" id="choice_style"]
+bg_color = Color(0.105, 0.11, 0.2, 0.84)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.79, 0.64, 0.4, 0.55)
+corner_radius_top_left = 19
+corner_radius_top_right = 19
+corner_radius_bottom_right = 19
+corner_radius_bottom_left = 19
+content_margin_left = 22.0
+content_margin_top = 7.0
+content_margin_right = 18.0
+content_margin_bottom = 7.0
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 6
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="choice_hi"]
+bg_color = Color(0.23, 0.15, 0.13, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.96, 0.74, 0.4, 0.95)
+corner_radius_top_left = 19
+corner_radius_top_right = 19
+corner_radius_bottom_right = 19
+corner_radius_bottom_left = 19
+content_margin_left = 22.0
+content_margin_top = 7.0
+content_margin_right = 18.0
+content_margin_bottom = 7.0
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 6
+shadow_offset = Vector2(0, 3)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Magenta" type="ColorRect" parent="."]
+visible = false
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(1, 0, 1, 1)
+
+[node name="Bg" type="Sprite2D" parent="."]
+material = SubResource("bgmat")
+texture = ExtResource("3")
+centered = false
+
+[node name="FX" type="Node2D" parent="."]
+
+[node name="Beam" type="Polygon2D" parent="FX"]
+material = SubResource("add")
+polygon = PackedVector2Array(0, -2, 0, 2, 130, -10.67, 130, 0, 130, 10.67, 260, -19.33, 260, 0, 260, 19.33, 390, -28, 390, 0, 390, 28)
+vertex_colors = PackedColorArray(1, 0.9, 0.65, 0.42, 1, 0.9, 0.65, 0.42, 1, 0.8, 0.5, 0, 1, 0.87, 0.62, 0.36, 1, 0.8, 0.5, 0, 1, 0.8, 0.5, 0, 1, 0.85, 0.6, 0.21, 1, 0.8, 0.5, 0, 1, 0.8, 0.5, 0, 1, 0.85, 0.6, 0, 1, 0.8, 0.5, 0)
+polygons = [PackedInt32Array(0, 2, 3), PackedInt32Array(0, 3, 1), PackedInt32Array(1, 3, 4), PackedInt32Array(2, 5, 6), PackedInt32Array(2, 6, 3), PackedInt32Array(3, 6, 7), PackedInt32Array(3, 7, 4), PackedInt32Array(5, 8, 9), PackedInt32Array(5, 9, 6), PackedInt32Array(6, 9, 10), PackedInt32Array(6, 10, 7)]
+
+[node name="LampGlow" type="Sprite2D" parent="FX"]
+material = SubResource("add")
+texture = SubResource("lamp_tex")
+scale = Vector2(0.8, 0.8)
+
+[node name="LanternGlow" type="Sprite2D" parent="FX"]
+material = SubResource("add")
+texture = SubResource("glow_tex")
+
+[node name="WindowGlow" type="Sprite2D" parent="FX"]
+material = SubResource("add")
+texture = SubResource("glow_tex")
+scale = Vector2(0.7, 0.7)
+
+[node name="Gulls" type="Node2D" parent="FX"]
+
+[node name="Portrait" parent="." instance=ExtResource("2")]
+position = Vector2(-48, 26)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Box" type="Panel" parent="UI"]
+offset_left = 606.0
+offset_top = 592.0
+offset_right = 1262.0
+offset_bottom = 708.0
+theme_override_styles/panel = SubResource("box_style")
+
+[node name="Name" type="Panel" parent="UI/Box"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = -17.0
+offset_right = 176.0
+offset_bottom = 17.0
+theme_override_styles/panel = SubResource("name_style")
+
+[node name="Label" type="Label" parent="UI/Box/Name"]
+layout_mode = 0
+offset_right = 154.0
+offset_bottom = 34.0
+text = "Dachs-Kurier"
+label_settings = SubResource("ls_name")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Place" type="Label" parent="UI/Box"]
+layout_mode = 0
+offset_left = 386.0
+offset_top = 5.0
+offset_right = 640.0
+offset_bottom = 27.0
+text = "Hafen von Lornholm"
+label_settings = SubResource("ls_place")
+horizontal_alignment = 2
+
+[node name="Line" type="Label" parent="UI/Box"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 26.0
+offset_right = 630.0
+offset_bottom = 100.0
+text = "Die Laterne flackert im Wind. Am Kai wartet ein Paket auf dich."
+label_settings = SubResource("ls_line")
+autowrap_mode = 2
+visible_characters_behavior = 1
+
+[node name="Arrow" type="Polygon2D" parent="UI/Box"]
+position = Vector2(627, 97)
+color = Color(0.97, 0.93, 0.84, 1)
+antialiased = true
+polygon = PackedVector2Array(-6.5, -3.5, 6.5, -3.5, 0, 4)
+
+[node name="Choices" type="VBoxContainer" parent="UI"]
+offset_left = 878.0
+offset_top = 438.0
+offset_right = 1262.0
+offset_bottom = 576.0
+theme_override_constants/separation = 7
+
+[node name="C1" type="PanelContainer" parent="UI/Choices"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("choice_hi")
+
+[node name="L" type="Label" parent="UI/Choices/C1"]
+layout_mode = 2
+text = "1   Zum Leuchtturm gehen"
+label_settings = SubResource("ls_choice_hi")
+
+[node name="C2" type="PanelContainer" parent="UI/Choices"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("choice_style")
+
+[node name="L" type="Label" parent="UI/Choices/C2"]
+layout_mode = 2
+text = "2   Das Paket ansehen"
+label_settings = SubResource("ls_choice")
+
+[node name="C3" type="PanelContainer" parent="UI/Choices"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("choice_style")
+
+[node name="L" type="Label" parent="UI/Choices/C3"]
+layout_mode = 2
+text = "3   Mit dem Dachs sprechen"
+label_settings = SubResource("ls_choice")

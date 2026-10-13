@@ -1,0 +1,271 @@
+{
+ "source": "assets/raw/bg_v3.png",
+ "crop_y": 150,
+ "ink_floor": 0.04,
+ "ink_gamma": 1.0,
+ "ink_gain": 1.0,
+ "red_sat": 0.22,
+ "foot_y": 640,
+ "bg_anim": {
+  "start": -0.15,
+  "dur": 1.0
+ },
+ "lights": [
+  {
+   "kind": "lamp",
+   "x": 1138,
+   "y": 85,
+   "r": 24,
+   "amount": 0.95,
+   "period": 2.5,
+   "low": 0.0,
+   "color": [
+    0.77,
+    0.2,
+    0.14
+   ]
+  },
+  {
+   "kind": "lantern",
+   "x": 1170,
+   "y": 386,
+   "r": 20,
+   "amount": 0.5,
+   "color": [
+    0.77,
+    0.2,
+    0.14
+   ]
+  },
+  {
+   "kind": "window",
+   "x": 82,
+   "y": 328,
+   "r": 12,
+   "amount": 0.25,
+   "color": [
+    0.77,
+    0.2,
+    0.14
+   ]
+  }
+ ],
+ "mist": [
+  {
+   "tex": "mist_a",
+   "x": 0,
+   "y": 285,
+   "w": 1280,
+   "h": 120,
+   "amount": 0.8,
+   "speed": 16,
+   "phase": 0.0,
+   "repeat": 1.0
+  },
+  {
+   "tex": "mist_b",
+   "x": 800,
+   "y": 180,
+   "w": 480,
+   "h": 170,
+   "amount": 0.6,
+   "speed": -10,
+   "phase": 0.3,
+   "repeat": 0.6
+  },
+  {
+   "tex": "mist_b",
+   "x": 0,
+   "y": 430,
+   "w": 1280,
+   "h": 130,
+   "amount": 0.4,
+   "speed": 20,
+   "phase": 0.55,
+   "repeat": 1.2
+  }
+ ],
+ "water": [
+  180,
+  365,
+  1270,
+  570
+ ],
+ "no_ripple": [
+  [
+   190,
+   390,
+   565,
+   478
+  ],
+  [
+   760,
+   488,
+   1060,
+   605
+  ],
+  [
+   1115,
+   330,
+   1200,
+   580
+  ],
+  [
+   800,
+   330,
+   1280,
+   392
+  ]
+ ],
+ "ripple_textures": [
+  "ripple_a",
+  "ripple_b",
+  "ripple_c",
+  "ripple_d"
+ ],
+ "ripple_count": 20,
+ "ripple_amount": 0.6,
+ "smoke": {
+  "textures": [
+   "smoke_a",
+   "smoke_b",
+   "smoke_c"
+  ],
+  "count": 3,
+  "x": 93,
+  "y": 172,
+  "life": 4.5,
+  "rise": 95,
+  "drift": -28,
+  "s0": 0.24,
+  "s1": 0.42,
+  "amount": 0.7,
+  "rise_pow": 1.5,
+  "root": {
+   "texture": 1,
+   "scale": 0.24,
+   "amount": 0.75,
+   "fade_top": 0.45,
+   "fade_len": 0.35
+  }
+ },
+ "gulls": {
+  "frames": [
+   "gull_0",
+   "gull_1",
+   "gull_2"
+  ],
+  "birds": [
+   {
+    "x0": 470,
+    "x1": 50,
+    "y0": 78,
+    "y1": 58,
+    "dur": 6.0,
+    "t0": 0.0,
+    "fps": 6,
+    "scale": 0.14
+   },
+   {
+    "x0": 380,
+    "x1": -20,
+    "y0": 128,
+    "y1": 112,
+    "dur": 7.0,
+    "t0": 0.4,
+    "fps": 6,
+    "scale": 0.1,
+    "amount": 0.75
+   }
+  ]
+ },
+ "ui": {
+  "ink": [
+   0.09,
+   0.09,
+   0.11,
+   0.94
+  ],
+  "ink_dim": [
+   0.09,
+   0.09,
+   0.11,
+   0.66
+  ],
+  "title": {
+   "text": "Hafen von Lornholm",
+   "x": 480,
+   "y": 30,
+   "size": 40
+  },
+  "line": {
+   "text": "Die Laterne flackert im Wind.\nAm Kai wartet ein Paket auf dich.",
+   "x": 482,
+   "y": 92,
+   "size": 25
+  },
+  "seal": {
+   "x": 0,
+   "y": 56,
+   "gap": 34,
+   "scale": 0.52
+  },
+  "choice_size": 22,
+  "choices": [
+   {
+    "text": "Zum Leuchtturm gehen",
+    "x": 500,
+    "y": 178,
+    "dot": "dot_small",
+    "dot_scale": 0.15
+   },
+   {
+    "text": "Das Paket ansehen",
+    "x": 500,
+    "y": 210,
+    "dot": "dot_small",
+    "dot_scale": 0.15,
+    "selected": true
+   },
+   {
+    "text": "Mit dem Dachs sprechen",
+    "x": 500,
+    "y": 242,
+    "dot": "dot_small",
+    "dot_scale": 0.15
+   }
+  ],
+  "highlight": {
+   "tex": "stroke_pale",
+   "x": 486,
+   "y": 212,
+   "sx": 0.46,
+   "sy": 0.24,
+   "amount": 0.85
+  },
+  "parser": {
+   "text": "> nimm paket",
+   "x": 482,
+   "y": 282,
+   "size": 22
+  },
+  "reveal": {
+   "title": 0.55,
+   "line": 0.95,
+   "choices": 1.45,
+   "parser": 1.95,
+   "seal": 1.15,
+   "highlight": 2.2,
+   "speed": 650
+  },
+  "x_height_em": 0.45
+ },
+ "shadow": {
+  "tex": "stroke_pale",
+  "sx": 0.27,
+  "sy": 0.11,
+  "amount": 0.32,
+  "dx": -6,
+  "dy": 3
+ }
+}

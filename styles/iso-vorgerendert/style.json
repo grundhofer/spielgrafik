@@ -1,0 +1,119 @@
+{
+ "slug": "iso-vorgerendert",
+ "name": "Isometrisches CRPG mit vorgerenderter Szene",
+ "family": "retro3d",
+ "kind": "style",
+ "era": "1996–2000 (isometrische PC-Rollenspiele mit vorgerenderten Karten und Figuren)",
+ "summary": "Der Hafen ist in Blender mit einer orthografischen 2:1-Kamera als ein großes Kartenbild vorgerendert (prozedurale Materialien, tiefe Abendsonne mit harten Schatten) und auf 256 Farben mit leichtem geordnetem Dithering gesetzt. Der Dachs ist mit derselben Kamera als Sprite-Blatt gerendert (8 Richtungen, Laufzyklus aus 8 Bildern) und wird über das mitgerenderte Tiefenbild von Häuschen und Fass verdeckt. Godot macht die Szene dunkel und legt Lichtkreise um Figur, Laterne, Fenster und Leuchtfeuer, alles über eine Lichttabelle wie in 8-Bit-Rollenspielen; unten sitzt eine Bronzeleiste mit gemaltem Porträt, Nachrichtenprotokoll und Auswahlknöpfen.",
+ "references": [
+  "Diablo (Blizzard North 1996): vorgerenderte Iso-Grafik in 8 Bit, Lichttabellen statt echter Farbmischung, Lichtradius um die Spielfigur, Figuren in 8 Richtungen",
+  "Fallout (Interplay 1997) und Fallout 2 (1998): vorgerenderte Karten und Figuren, dunkle Nachtfassungen mit Lichtquellen, breite Bedienleiste unten mit Nachrichtenprotokoll",
+  "Baldur's Gate (BioWare 1998), Planescape: Torment (1999), Icewind Dale (2000): große vorgerenderte, teils übermalte Kartenbilder, vorgerenderte Figuren-Sprites, Verdeckung durch Wände, grüner Auswahlring, gemalte Porträts in ornamentierten Leisten",
+  "Arcanum (Troika 2001): spätes Beispiel für vorgerenderte Iso-Karten mit Tag-Nacht-Licht über Palettenstufen"
+ ],
+ "traits": [
+  "Orthografische Kamera mit 30° Neigung und 45° Drehung: Weltachsen am Boden exakt 2:1 (ein Laufzyklus 0,458 m = (10, 5) px, aus Blender gemessen (9,999 | 5,000)). Kartenbild, Tiefenbild und alle 99 Dachsbilder kommen aus derselben Kamera und demselben Pixelraster (30,85 px/m).",
+  "Karte 640×480 als eine vorgerenderte Fläche; der Viewport 640×360 (×2 auf 1280×720) zeigt die Kartenzeilen 40 bis 399, die unteren 84 px deckt die Bedienleiste, die Spielfläche ist 640×276.",
+  "Vorgerendert in Cycles (Metal, 96 Abtastungen, 2× überabgetastet, linear verkleinert): Bruchsteinmauer, Schieferdach mit Moos, Pflaster mit Fugen und Pfützen, Holzmaserung, Rost, Lack mit Abplatzungen, alles prozedural; tiefe Abendsonne (24° hoch, Scheibe 0,4°) wirft harte, lange Schlagschatten nach rechts oben, Dämmerungshimmel als kühles Umgebungslicht, Laterne und Fenster als warme Lichter.",
+  "256 Farben: eine Palette (k-Mittel in Oklab) für Karte, Wasserfolge, Dachs, Porträt und Leiste, geordnetes Dithering Bayer 8×8 mit ±4/255. Lichttabelle mit 16 Stufen × 256 Einträgen, jede Zelle wieder eine Palettenfarbe (Stufe 10 wie gerendert, darunter dunkler und blauer, darüber wärmer). Geprüft: In 30 Bildern über 6 s und im Dauerlauf ab 30 s ist jedes Pixel der Spielfläche eine Palettenfarbe (0 fremde Pixel), im Posterbild 247 verschiedene Farben.",
+  "Dunkle Szene mit Lichtkreisen: Grundlicht 0,33 (Stufe 1–2), Kugellichter um den Dachs (2,7 m, wandert mit), die Laterne (3,8 m, flackert in Stufen), das Fenster (2,4 m) und das Leuchtfeuer (2,6 m). Der Weltpunkt jedes Kartenpixels kommt aus Kartenkoordinate und Tiefenbild; die Stufen gehen mit 4×4-Bayer-Rastern ineinander über.",
+  "Dachs als vorgerendertes Sprite-Blatt (Zellen 112×76): 8 Richtungen × 8 Laufbilder, 8 Stehbilder, 12 Idle- und 15 Winkbilder, mit Tiefe je Pixel und eigenem Schlagschatten; auf der Karte 40 bis 42 px hoch. Er läuft 7 Zyklen diagonal nach Südost (15 Bilder/s, Wurzelbewegung im Bild, Sprung von (10, 5) px je Zyklus), hält, dreht sich zur Kamera und winkt (10 Bilder/s), danach Idle (6 Bilder/s). Gemessen: der Standfuß steht in 28 von 28 Standbildpaaren still (höchstens 0,2 px im Bild), auch beim Halt (Verschiebung 0, 0).",
+  "Verdeckung über die mitgerenderte Tiefe: Karte 16 Bit, Dachs 8 Bit relativ zum Fußpunkt (1 cm Stufe), Vergleich je Pixel. Mit Vergleichsschalter gemessen: Von 0 bis 1,2 s verdeckt das Häuschen den Dachs (100 % → 6 %), von 1,4 bis 2,6 s das Fass seine Beine (10 bis 27 %), ab 2,8 s steht er frei.",
+  "Bildfolgen-Overlays aus Blender: Wasser und schaukelnde Boote als 30 Bilder (3-s-Schleife, 10 Bilder/s, Palettenindizes mit fester Maske), der Strahl des Leuchtfeuers als Volumen-Render in 90 Bildern (eine Umdrehung in 6 s, 15 Bilder/s), im Spiel als Lichtzuschlag über die Lichttabelle; dazu flackernde Laterne.",
+  "Bedienleiste wie in den Vorbildern: gegossene Bronze mit Flechtband, Eckrosetten und Medaillons mit rotem Stein, eingelassenes Porträtfeld (gemaltes Brustbild 56×66), Nachrichtenprotokoll mit Ort, Erzählzeile (Schreibmaschine) und Parserzeile mit blinkendem Cursor, drei Steinknöpfe mit hervorgehobener Auswahl; grüner Auswahlring unter der Figur."
+ ],
+ "camera": "Isometrisch (dimetrisch 2:1), orthografisch, 30° Neigung, 45° gedreht; feste Einstellung von vorne links über den Kai nach hinten rechts",
+ "resolution": "Karte 640×480 (30,85 px/m), Viewport 640×360 ganzzahlig ×2 auf 1280×720; Spielfläche 256 Farben, Leiste 84 px",
+ "pipeline": [
+  {"step": "Ausschnitt festlegen", "tool": "Blender 5.2, EEVEE (blender/scout.py, blender/render_bg.py --pass preview)", "detail": "Vier Blickrichtungen (±45°, ±135°) verglichen. Gewählt: Kamera vorne links (Euler 60°, 0°, −45°), weil Häuschen und Fenster zur Kamera zeigen und der Dachs auf dem Laufweg sein Gesicht und das Paket zeigt. Kartenmaßstab 30,85 px/m (ein Zyklus des Dachses in Originalgröße = (8, 4) px), Ausschnitt in Iso-Koordinaten in assets/scene.json; Dachs-Marker im Vorschaubild zum Prüfen von Weg und Verdeckung."},
+  {"step": "Karte vorrendern", "tool": "Blender 5.2, Cycles Metal (blender/render_bg.py, blender/isocam.py)", "detail": "shared/3d/harbor.glb importiert, Materialien nach Namen durch prozedurale Knoten ersetzt (Grundlage aus vorgerendert-fixkamera, für Aufsicht und Sonne angepasst), Leuchtturm 0,55-fach auf einen neuen Felssockel vor der Kaikante und Fass 1 vor die Hausecke versetzt (siehe pitfalls). Pässe: beauty/Bildfolge (1280×960, 96 Abtastungen, entrauscht; ein Einzelbild samt Blender-Start etwa 10 s), Tiefe entlang der Blickachse (1 Strahl je Pixelmitte, EXR → depth.npy), Leuchtflächen allein (emit), Strahl allein als Emissionsvolumen (90 Bilder 640×480)."},
+  {"step": "Dachs vorrendern", "tool": "Blender 5.2, Cycles Metal (blender/render_badger.py)", "detail": "shared/3d/badger.glb, 1,25-fach skaliert, Kopf über Transform-Constraints 1,3-fach und 28° nach hinten gekippt. Gleiche Kameradrehung und gleiches Pixelraster, Ursprung auf der Pixelecke (36, 58) jeder Zelle. Schrittlänge aus den Sohlen gemessen (0,4583 m). Je Bild drei Pässe in 4-facher Überabtastung: Farbe mit Sonne und Himmel der Karte, Tiefe relativ zum Anker (Raw, ±1,28 m), Schatten auf einer weißen Bodenebene (Figur für die Kamera unsichtbar). 99 Bilder in etwa 2,5 min (aus 18 Probebildern in 25 s hochgerechnet)."},
+  {"step": "Gemaltes Porträt", "tool": "genimg (agy), 1 Erzeugung; blender/render_portrait.py als Vorlage", "detail": "Erste Referenz: Blender-Brustbild des Dachses in Dreiviertelansicht (assets/ref/portrait_layout.png), zweite: shared/badger/master_sheet.png nur für Kostüm und Gesichtszeichnung. Prompt: Ölbild für die Gruppenleiste eines isometrischen PC-Rollenspiels der späten 1990er, Hell-Dunkel, warmes Licht von links, kühles Kantenlicht (assets/raw/portrait_prompt.txt). Geliefert 848×1264 statt 1024×1536, Prompt wörtlich übernommen (verbatim: true), sofort verwendbar; bake.py schneidet Kopf und Schal aus und setzt 56×66 Pixel in die Palette."},
+  {"step": "Bedienleiste", "tool": "scripts/build_ui.py (NumPy, ohne KI)", "detail": "Höhenfeld in 4-facher Auflösung: Grundplatte gehämmert, Wulst am Rand, zwei verflochtene Stränge als Zierband oben und unten, Eckrosetten, Rauten-Medaillons mit Stein, eingesenkte Felder und erhabene Steinknöpfe; Normalen beleuchtet (Licht von links oben, Glanzlicht), Bronze mit Grünspan-Flecken. Rechtecke der Felder als ui_layout.json für Godot."},
+  {"step": "Palette, Lichttabelle, Indexbilder", "tool": "scripts/bake.py", "detail": "Karte 2×2 und Dachs 4×4 in linearem Licht gemittelt (Belichtung ×1,3), Dachs-Deckung 1 Bit, Tiefe nur über gedeckte Unterpixel gemittelt, Schatten 1 Bit mit Bayer-Rand. Palette: k-Mittel (14 Durchläufe) in Oklab über rund 170 000 Stichproben aus Karte, Wasser, Dachs, Porträt und Leiste, jeweils in den Lichtstufen, die das Spiel zeigt; Schwarz, Weiß und das Grün des Auswahlrings fest. Lichttabelle 16 × 256 durch Farbstufung (Nacht: ×Stufe und Tönung (0,50, 0,56, 1,0); Licht: wärmer und additiv) und Suche der nächsten Palettenfarbe. Ausgaben: bg.png (R Index, G Leuchtstufe), depth.png (16 Bit in RG), lut.png, water/w_XX.png (L8) + water_mask.png, beam/b_XX.png (L8, halbe Auflösung), badger.png (R Index, G Tiefe, B Schatten), portrait.png, bar.png. Laufzeit etwa 45 s."},
+  {"step": "Szene in Godot", "tool": "Godot 4.7.2 (main.gd, shaders/map.gdshader, shaders/badger.gdshader, shaders/palette_light.gdshaderinc)", "detail": "Zwei Sprite2D (Karte, Dachs) mit Palettenshadern, Leiste als CanvasLayer; Zeitplan über den Aufnahmebild-Zähler, Laternenflackern aus RandomNumberGenerator mit Seed je 3 Aufnahmebilder."},
+  {"step": "Prüfen und aufnehmen", "tool": "scripts/measure_badger.py, scripts/check_frames.py, tools/capture.py --poster-at 0.78", "detail": "Fußmessung aus Figurmasken (Lauf mit und ohne Figur) gegen die Sohlenlage aus Blender, Haltekorrektur (2, 1) px daraus abgeleitet; Palettentest, Verdeckungsanteil mit und ohne --noocc, Forward+/Mobile/Compatibility, zwei Läufe bytegleich, Dauerlauf ab 30 s. Reihenfolge zum Nachbauen: blender … render_bg.py -- --out <tmp>/bg --pass beauty|depth|emit|frames|beam; render_badger.py -- --out <tmp>/badger; render_portrait.py; genimg; scripts/build_ui.py; scripts/bake.py --raw <tmp>; godot --headless --path demo --import; tools/capture.py styles/iso-vorgerendert --poster-at 0.78."}
+ ],
+ "godot": [
+  "project.godot: Viewport 640×360, stretch mode viewport, scale_mode integer, Fenster 1280×720, Texturfilter Nearest, Snap von Transformationen und Eckpunkten auf Pixel, Forward+.",
+  "Karte als Sprite2D (bg.png, 640×480) bei y = −40; map.gdshader liest per texelFetch Index und Leuchtstufe, ersetzt im Wasserbereich den Index durch das aktuelle Wasserbild, rechnet aus Kartenpixel und 16-Bit-Tiefe den Blender-Weltpunkt, summiert sechs Kugellichter, zieht Licht im Schatten des Dachses ab (nur wo die Tiefe der Bodenebene y = 0 entspricht), addiert den Strahl, rundet die Lichtstufe mit 4×4-Bayer und holt die Farbe aus der Lichttabelle.",
+  "Dachs als Sprite2D mit region_rect je Bild; badger.gdshader verwirft Pixel ohne Figur (G = 0) und Pixel, deren Tiefe (Anker + Pixeltiefe) hinter der Kartentiefe liegt (Toleranz 3 cm), und färbt den Rest über dieselbe Lichttabelle. Gemeinsamer Teil in palette_light.gdshaderinc.",
+  "Wurzelbewegung steckt in den Laufbildern; main.gd setzt die Zelle je Zyklus um (10, 5) px weiter und beim Halt um (2, 1) px zurück, damit der zuletzt aufgesetzte Fuß stehen bleibt. Fußpunkt des Weges auf ganze Kartenpixel gerundet, Tiefe des Ankers aus dem Schnitt mit der Bodenebene.",
+  "Auswahlring als 1-px-Ellipse (12×6 px) im Kartenshader: Pixel, an dessen Ecken die Ellipsengleichung das Vorzeichen wechselt, nur auf Bodenpixeln, feste Palettenfarbe.",
+  "Schrift Alegreya (Gewicht 500, 13 px) und Alegreya SC über FontVariation mit spacing_space = 2, Hinting normal, ohne Subpixel-Lage; Labels mit 1-px-Schatten, ReferenceRect als goldener Rahmen um die gewählte Antwort.",
+  "Texturimport verlustfrei ohne Mipmaps (Standard); Wasserbilder und Strahl als L8. Benutzerargumente: --t0=, --noocc, --noshadow, --noring, --nobadger, --noui, --nolight, --pose=<bild>@<x>,<z>."
+ ],
+ "techniques": [
+  "vorgerenderter-hintergrund",
+  "3d-zu-sprite",
+  "blender-rig",
+  "blender-cycles",
+  "prozedurale-materialien",
+  "tiefenbild-verdeckung",
+  "bildfolge-overlay",
+  "lichttabelle",
+  "palette-einrasten",
+  "dithering",
+  "fuss-halten",
+  "sprite-animation",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 2,
+  "consistency": 4,
+  "effort": 4,
+  "text_adventure": 3,
+  "mobile": 4
+ },
+ "ratings_note": "KI-Beitrag 2 (ai_fit): Die KI hat nur das Porträt beigetragen (ein Bild, sofort brauchbar und im Genre stimmig); Karte, Dachs, Licht, Leiste und Effekte kommen aus Blender, Python und Shadern. Für den Kern des Stils taugt ein Bildmodell nicht ohne Weiteres, weil Karte, Tiefenbild und Figur dieselbe exakt bekannte Kamera brauchen; Übermalen eines Renders bei gleichbleibender Geometrie ist nicht erprobt. Konsistenz 4: Alle Teile der Spielfläche stammen aus einer Szene, einer Kamera und einer Palette, weitere Richtungen und Bewegungen kosten nur Renderzeit; Abzug, weil es nur ein KI-Porträt gibt und eine Porträtserie im selben Pinselstrich ungeprüft ist. Aufwand 4: Jeder Ort braucht ein 3D-Modell mit Materialien und einen eigenen Ausschnitt, hier mussten Leuchtturm und Fass dafür umgestellt werden; danach laufen Rendern und Backen automatisch (geschätzt 10 bis 20 min je Ort samt Bildfolgen, nicht einzeln gemessen). Textadventure 3: Stimmung, Protokoll und Auswahlknöpfe passen gut, aber die Figur ist klein und jeder Schauplatz ist ein 3D-Projekt. Mobil 4 geschätzt: reine 2D-Szene mit einem Vollbild-Shader (6 Lichter, Stufensuche über 16 Werte, bis zu 7 Texturzugriffe je Pixel) und etwa 20 MB Texturen; --rendering-method mobile ist bei Bild 0, 60 und 140 pixelgleich mit Forward+, gl_compatibility in der Spielfläche ebenfalls pixelgleich, nur die geglättete Schrift weicht um höchstens 1 Stufe ab (0,8 bis 1,4 % der Bildpixel). Auf einem Smartphone wurde nicht gemessen.",
+ "verdict": "Der Stil ist sofort als isometrisches PC-Rollenspiel der späten Neunziger zu erkennen und lässt sich aus der gemeinsamen 3D-Grundlage vollständig per Skript wiederholen: Kartenbild, Tiefenbild, Sprite-Blatt und Bildfolgen aus einer Kamera, Licht und Dunkelheit zur Laufzeit über eine Lichttabelle, ohne eine Farbe außerhalb der Palette. Für unser Textadventure ist er eine starke Wahl, wenn Orte begehbar sein sollen und Text als Protokoll unten läuft; dann lohnt der Einmalaufwand für 3D-Orte, und die Figur bekommt alle Richtungen aus demselben Rig. Für ein reines Textadventure mit festen Bildern ist er zu teuer: jeder Schauplatz braucht ein Modell mit gezieltem Ausschnitt, und die Figur ist mit rund 40 px klein, das Gesicht trägt das gemalte Porträt.",
+ "pitfalls": [
+  "Leuchtturm bewusst versetzt und verkleinert: In shared/3d steht er 26 m hinter dem Kai und ist 14,4 m hoch; bei 30,85 px/m läge seine Lampe rund 600 px über der Kaikante. Er steht hier 0,55-fach auf einem neuen Felssockel (verzerrte Ikosphäre, Material Rock) im Wasser vor der rechten Kaikante. Das weicht vom Motiv ab (Felsnase rechts hinten) und ist die größte Abweichung des Eintrags.",
+  "Fass 1 bewusst versetzt: In der gemeinsamen Szene stehen beide Fässer an der Wasserkante hinter jedem möglichen Laufweg. Aus dieser Blickrichtung kann der Dachs in einem einzigen diagonalen Weg hinter dem Häuschen hervorkommen, aber nicht zugleich hinter ein Fass geraten. Fass 1 steht deshalb vor der Hausecke (Godot (−6,62 | 0 | 1,5) statt (−5,25 | 0 | −0,15)).",
+  "Die Figur ist 1,25-fach überhöht (Spielmaßstab) und der Kopf 1,3-fach vergrößert und 28° nach hinten gekippt; ohne das verdeckt die Mützenkrempe aus 30° Höhe das Gesicht. Der Dachs ist damit 40 bis 42 px hoch, aber das Winken ist in Originalgröße nur als kurzer Strich zu erkennen; Gesicht und Kostüm zeigt das Porträt.",
+  "Die mittlere Kaifläche ist leer, weil die gemeinsame Szene dort keine Gegenstände hat; in der Dunkelheit fällt das wenig auf, ein echtes Spiel würde den Ort dichter möblieren.",
+  "Beim Drehen von Südost zur Kamera springt die Fußzeile um 2 px (244 → 242 im 640×360-Bild): Die Pose von schräg und von vorn steht verschieden tief. Innerhalb einer Blickrichtung sind Fußzeile und Kopfoberkante (203) in allen Steh-, Idle- und Winkbildern gleich.",
+  "Aufsetzen und Abrollen des Fußes: Zwischen den Laufbildern 0→1 und 3→4 berührt die Sohle schon bzw. noch den Boden, wandert aber laut Blender um bis zu 3,2 px; das ist die Bewegung der Walk-Animation selbst, kein Versatz der Bilder. Gezählt wurden nur echte Standpaare (vorhergesagte Bewegung 0).",
+  "Dynamische Lichter werfen keine Schatten: Steht der Dachs ganz hinter dem Häuschen (0 bis 0,5 s), beleuchtet sein Lichtkreis trotzdem das Pflaster vor der Hausecke. Auch der Strahl des Leuchtfeuers ist nur ein Lichtzuschlag: Er hellt alles unter dem Kegel auf, auch den Boden, und zeigt er zur Kamera, liegt der Kegel als heller Fleck über dem Turm (Aufblitzen bei 0,8–1,0 s).",
+  "Die erste Nachttönung (0,42, 0,58, 1,0) färbte braunes Pflaster in mittleren Lichtstufen oliv; mit (0,50, 0,56, 1,0) bleiben die Schatten blaugrau.",
+  "Schrift: Alegreya bei 13 px ohne Subpixel-Lage rundet das Leerzeichen so stark, dass Wörter zusammenkleben („Zum Leuchtturmgehen“); behoben mit spacing_space = 2. Geglättete Schrift, Labelschatten und der Auswahlrahmen liegen außerhalb der Palette (etwa 6 000 Pixel je Bild in der Leiste).",
+  "Pillow liest 16-Bit-RGB(A)-PNGs aus Blender nur als 8 Bit; die Renderings werden deshalb gleich in 8 Bit geschrieben (vor dem Verkleinern und Dithern unkritisch).",
+  "Grafikspeicher: Wasser- und Strahlbilder waren zuerst volle RGB-Bilder (entpackt rund 110 bis 150 MB, je nach Speicherformat); jetzt Wasser als L8 mit fester Maske und Strahl als L8 in halber Auflösung, zusammen etwa 16 MB.",
+  "Sprites haben 1-Bit-Deckung und dadurch harte Kanten gegen die Karte; die Dachsfarben stammen aus dem Render mit der Kartensonne, auf der dunklen Karte wirken sie im eigenen Lichtkreis etwas heller als die Umgebung."
+ ],
+ "lessons": [
+  "Eine Kamera für alles: Karte, Tiefenbild und Sprites mit derselben orthografischen Drehung und demselben Pixelraster rendern; den Ursprung jeder Sprite-Zelle auf eine Pixelecke legen. Den Maßstab so wählen, dass ein Laufzyklus eine ganzzahlige 2:1-Strecke ist (hier (10, 5) px), die Wurzelbewegung in die Bilder rendern und Godot nur je Zyklus verschieben: Der Standfuß steht ohne Nacharbeit still (≤ 0,2 px gemessen).",
+  "Lichttabelle statt Farbmischung: Karte und Figur als Palettenindex, Licht als Stufe 0–15, Farbe aus einer 256×16-Tabelle, deren Zellen wieder Palettenfarben sind. So entstehen Dunkelheit, Lichtkreise, Flackern, Schatten und der Strahl zur Laufzeit, und trotzdem bleibt jedes Pixel der Spielfläche in der Palette. Die Palette muss dafür aus allen gezeigten Lichtstufen gelernt werden, nicht nur aus dem Render.",
+  "Verdeckung ohne Wandpolygone: Tiefe des Kartenbilds (16 Bit) und Tiefe je Sprite-Pixel relativ zum Fußpunkt (8 Bit, 1 cm) aus derselben Kamera; ein Vergleich je Pixel ersetzt die von Hand gezogenen Verdeckungsflächen der Vorbilder und stimmt auch für Teile der Figur, die nur halb hinter einem Fass stehen.",
+  "Kartenpixel + Tiefe = Weltpunkt: Damit werden Lichtkreise echte Kugeln (Wände und Boden richtig ausgeleuchtet, Lichtpfütze als 2:1-Ellipse) und der Figurenschatten lässt sich auf Bodenpixel beschränken.",
+  "Bildfolgen für Wasser und Boote: ganze Bilder rendern, den animierten Bereich aus der zeitlichen Differenz bestimmen und mit geordnetem Dithering quantisieren; da das Dithering nur vom Ort abhängt, gibt es außerhalb der Maske keine Säume und kein Krabbeln.",
+  "Halt messen statt schätzen: Die Figurmaske aus zwei Läufen (mit und ohne Figur) gegen die Sohlenlage aus Blender legen; die Haltekorrektur (2, 1) px ergab sich daraus und ist dieselbe wie in iso-pixel.",
+  "Gemaltes Porträt mit einem Versuch: agy mit einem Blender-Brustbild als erster Referenz (Ausschnitt, Pose) und dem Figurenblatt als zweiter (nur Kostüm) hielt Pose und Kostüm und lieferte den Ölbild-Look der Vorbilder; für eine Porträtserie dasselbe Bild als Stilreferenz mitgeben.",
+  "Genresignale, die viel bewirken und wenig kosten: grüner Auswahlring als 1-px-Ellipse, ornamentierte Leiste aus einem Höhenfeld, Protokoll mit Schreibmaschine und Parserzeile, ein hervorgehobener Antwortknopf.",
+  "GDScript: TextServer.name_to_tag ist keine statische Funktion; TextServerManager.get_primary_interface().name_to_tag(\"wght\") verwenden."
+ ],
+ "assets": [
+  {"file": "demo/art/bg.png", "kind": "background", "made_with": "Blender/Cycles 1280×960 + bake.py: 640×480, 256 Farben, Bayer 8×8; R Palettenindex, G Leuchtstufe", "prompt": ""},
+  {"file": "demo/art/depth.png", "kind": "depth", "made_with": "Cycles View Z Depth, 1 Strahl je Pixel + bake.py: 16 Bit in R/G (95–140 m)", "prompt": ""},
+  {"file": "demo/art/lut.png", "kind": "palette", "made_with": "bake.py: Lichttabelle 256 × 16, Zeile 10 = Palette", "prompt": ""},
+  {"file": "assets/palette.png", "kind": "palette", "made_with": "bake.py: 256 Farben, k-Mittel in Oklab", "prompt": ""},
+  {"file": "demo/art/badger.png", "kind": "sprite sheet", "made_with": "Blender/Cycles (render_badger.py) + bake.py: 99 Zellen 112×76; R Index, G Tiefe, B Schatten", "prompt": ""},
+  {"file": "assets/badger_sheet_preview.png", "kind": "sprite sheet", "made_with": "bake.py: Ansicht des Blatts in Palettenfarben (8 Richtungen × 8 Laufbilder, Stehen, Idle, Winken)", "prompt": ""},
+  {"file": "demo/art/water/w_00.png", "kind": "animation", "made_with": "Cycles-Schleife 30 Bilder (3 s) + bake.py: Palettenindex L8, Maske demo/art/water_mask.png", "prompt": ""},
+  {"file": "demo/art/beam/b_00.png", "kind": "animation", "made_with": "Cycles, Emissionsvolumen allein, 90 Bilder (6 s) + bake.py: L8, halbe Auflösung", "prompt": ""},
+  {"file": "assets/raw/portrait.png", "kind": "portrait", "made_with": "agy (Gemini) über Blender-Brustbild + master_sheet", "prompt": "assets/raw/portrait.json"},
+  {"file": "assets/ref/portrait_layout.png", "kind": "reference", "made_with": "Blender/Cycles (render_portrait.py), Vorlage für das Porträt", "prompt": ""},
+  {"file": "demo/art/portrait.png", "kind": "portrait", "made_with": "bake.py: Ausschnitt 56×66, Palette, Bayer", "prompt": ""},
+  {"file": "assets/ui/bar.png", "kind": "ui", "made_with": "scripts/build_ui.py: Höhenfeld, beleuchtet (Echtfarbe)", "prompt": ""},
+  {"file": "demo/art/bar.png", "kind": "ui", "made_with": "bake.py: Leiste in Palettenfarben", "prompt": ""}
+ ],
+ "licenses": [
+  {"item": "Schrift Alegreya (variabel)", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/alegreya (Lizenztext: demo/fonts/OFL-Alegreya.txt)"},
+  {"item": "Schrift Alegreya SC Medium", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/alegreyasc (Lizenztext: demo/fonts/OFL-AlegreyaSC.txt)"},
+  {"item": "Hafen und Dachs", "license": "eigene Modelle aus shared/3d (Blender-Skripte)", "source": "shared/3d/blender/"},
+  {"item": "Materialien, Himmel, Felssockel, Bedienleiste", "license": "eigene prozedurale Blender-Knoten und Python-Skripte, keine fremden Texturen", "source": "blender/isocam.py, scripts/build_ui.py"}
+ ],
+ "image_generations": 1,
+ "tool_issues": [],
+ "status": "done"
+}

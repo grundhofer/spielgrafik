@@ -1,0 +1,45 @@
+{
+ "image": "styles/ki-3d-modell/assets/raw/barrel.png",
+ "device": "mps",
+ "mc_resolution": 256,
+ "threshold": 25.0,
+ "ratio": 0.85,
+ "torch": "2.7.1",
+ "revision": "5b521936b01fbe1890f6f9baed0254ab6351c04a",
+ "t_load": 1.63,
+ "crop": {
+  "src_bbox": [
+   189,
+   52,
+   1066,
+   1201
+  ],
+  "square": 1352,
+  "offset": [
+   237,
+   101
+  ],
+  "ratio": 0.85
+ },
+ "t_model": 1.12,
+ "t_render": 7.04,
+ "t_mesh": 3.44,
+ "vertices": 99900,
+ "faces": 199796,
+ "bounds": [
+  [
+   -0.5191,
+   -0.4147,
+   -0.5411
+  ],
+  [
+   0.4926,
+   0.4165,
+   0.5558
+  ]
+ ],
+ "watertight": true,
+ "signed_volume": 0.4215833316337982,
+ "components": 1,
+ "t_total": 14.18
+}

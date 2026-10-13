@@ -1,0 +1,247 @@
+{
+ "screen_scale": 0.1784037558685446,
+ "tex_scale": 0.3568075117370892,
+ "fig_h": 190.0,
+ "sole_c1": 1165,
+ "body_fit": {
+  "scale": 0.769371378363809,
+  "offset": [
+   39.60990044928246,
+   248.09269307935125
+  ],
+  "button_residual_px": 0.36471878423617454
+ },
+ "parts": {
+  "body": {
+   "file": "body.png",
+   "shadow": "body_shadow.png",
+   "size": [
+    202,
+    261
+   ],
+   "shadow_pad": 12,
+   "origin_c1": [
+    102,
+    355
+   ],
+   "pivots": {
+    "root": [
+     94.2,
+     215.15
+    ],
+    "neck": [
+     117.03,
+     41.03
+    ],
+    "shoulder": [
+     82.78,
+     61.73
+    ],
+    "hip_n": [
+     94.2,
+     215.15
+    ],
+    "hip_f": [
+     104.9,
+     213.01
+    ],
+    "scarf": [
+     62.08,
+     31.04
+    ],
+    "parcel": [
+     177.69,
+     87.42
+    ]
+   }
+  },
+  "scarf": {
+   "file": "scarf.png",
+   "shadow": "scarf_shadow.png",
+   "size": [
+    89,
+    116
+   ],
+   "shadow_pad": 12,
+   "origin_c1": [
+    30,
+    355
+   ],
+   "pivots": {
+    "root": [
+     76.0,
+     14.27
+    ]
+   }
+  },
+  "head": {
+   "file": "head.png",
+   "shadow": "head_shadow.png",
+   "size": [
+    192,
+    196
+   ],
+   "shadow_pad": 12,
+   "origin_c1": [
+    204,
+    75
+   ],
+   "pivots": {
+    "root": [
+     80.64,
+     140.94
+    ]
+   }
+  },
+  "upper_arm": {
+   "file": "upper_arm.png",
+   "shadow": "upper_arm_shadow.png",
+   "size": [
+    84,
+    104
+   ],
+   "shadow_pad": 12,
+   "origin_c1": [
+    217,
+    454
+   ],
+   "pivots": {
+    "root": [
+     41.75,
+     26.4
+    ],
+    "elbow": [
+     43.89,
+     87.77
+    ]
+   }
+  },
+  "forearm": {
+   "file": "forearm.png",
+   "shadow": "forearm_shadow.png",
+   "size": [
+    88,
+    113
+   ],
+   "shadow_pad": 12,
+   "origin_c1": [
+    230,
+    620
+   ],
+   "pivots": {
+    "root": [
+     39.25,
+     28.54
+    ]
+   }
+  },
+  "parcel": {
+   "file": "parcel.png",
+   "shadow": "parcel_shadow.png",
+   "size": [
+    67,
+    89
+   ],
+   "shadow_pad": 12,
+   "origin_c1": [
+    570,
+    558
+   ],
+   "pivots": {
+    "root": [
+     10.7,
+     14.99
+    ]
+   }
+  },
+  "shin": {
+   "file": "shin.png",
+   "shadow": "shin_shadow.png",
+   "size": [
+    77,
+    90
+   ],
+   "shadow_pad": 12,
+   "origin_c1": [
+    294,
+    906
+   ],
+   "pivots": {
+    "root": [
+     25.69,
+     18.55
+    ],
+    "ankle": [
+     25.69,
+     69.22
+    ]
+   }
+  },
+  "foot": {
+   "file": "foot.png",
+   "shadow": "foot_shadow.png",
+   "size": [
+    95,
+    52
+   ],
+   "shadow_pad": 12,
+   "origin_c1": [
+    290,
+    1042
+   ],
+   "pivots": {
+    "root": [
+     27.12,
+     20.69
+    ]
+   }
+  }
+ },
+ "c1": {
+  "neck": [
+   430,
+   470
+  ],
+  "shoulder": [
+   334,
+   528
+  ],
+  "elbow": [
+   340,
+   700
+  ],
+  "far_arm_shift": [
+   60,
+   -12
+  ],
+  "hip_n": [
+   366.0,
+   958
+  ],
+  "hip_f": [
+   396.0,
+   952
+  ],
+  "ankle_n": [
+   366,
+   1100
+  ],
+  "scarf": [
+   276,
+   442
+  ],
+  "scarf_root_body_img": [
+   243.0,
+   395.0
+  ],
+  "parcel": [
+   600,
+   600
+  ],
+  "sole": 1165,
+  "far_leg_shift": [
+   30,
+   -6
+  ]
+ }
+}

@@ -1,0 +1,180 @@
+{
+ "source": {
+  "walk": "assets/raw/walk_v3.png",
+  "front": "assets/raw/front_v3.png"
+ },
+ "register_via": {
+  "walk": "assets/raw/walk.png"
+ },
+ "foot_fix": {
+  "walk_3": {
+   "dx": 4,
+   "span": 60
+  }
+ },
+ "sheet_scale": {
+  "front": 1.06
+ },
+ "scale": 0.45,
+ "use": [
+  "walk_0",
+  "walk_1",
+  "walk_2",
+  "walk_3",
+  "walk_4",
+  "walk_5",
+  "walk_6",
+  "walk_7",
+  "stand",
+  "turn",
+  "front",
+  "wave_raise",
+  "wave_out",
+  "wave_in",
+  "blink",
+  "talk"
+ ],
+ "walk_order": [
+  "walk_0",
+  "walk_1",
+  "walk_2",
+  "walk_3",
+  "walk_4",
+  "walk_5",
+  "walk_6",
+  "walk_7"
+ ],
+ "plan": {
+  "x_start": -110,
+  "x_stop": 400,
+  "walk_hold": 2,
+  "stop_frames": [
+   "walk_2",
+   "walk_6"
+  ],
+  "after": [
+   [
+    "stand",
+    0.1
+   ],
+   [
+    "turn",
+    0.167
+   ],
+   [
+    "front",
+    0.2
+   ],
+   [
+    "wave_raise",
+    0.1
+   ],
+   [
+    "wave_out",
+    0.2
+   ],
+   [
+    "wave_in",
+    0.2
+   ],
+   [
+    "wave_out",
+    0.2
+   ],
+   [
+    "wave_in",
+    0.2
+   ],
+   [
+    "wave_raise",
+    0.1
+   ],
+   [
+    "front",
+    0.4
+   ],
+   [
+    "blink",
+    0.1
+   ],
+   [
+    "front",
+    1.0
+   ]
+  ]
+ },
+ "ink_floor": 0.05,
+ "red_sat": 0.25,
+ "wash_var": 0.25,
+ "red_gain": 0.85,
+ "bleed": 0.5,
+ "bleed_sigma": 1.1,
+ "root_px": {
+  "walk": 158.4,
+  "front": 235.5
+ },
+ "parts": {
+  "wave_raise": {
+   "base": "front",
+   "region": [
+    250,
+    -60,
+    576,
+    430
+   ],
+   "thresh": 0.25,
+   "grow": 6,
+   "feather": 3
+  },
+  "wave_out": {
+   "base": "front",
+   "region": [
+    250,
+    -60,
+    576,
+    430
+   ],
+   "thresh": 0.25,
+   "grow": 6,
+   "feather": 3
+  },
+  "wave_in": {
+   "base": "front",
+   "region": [
+    250,
+    -60,
+    576,
+    430
+   ],
+   "thresh": 0.25,
+   "grow": 6,
+   "feather": 3
+  },
+  "blink": {
+   "base": "front",
+   "region": [
+    188,
+    126,
+    306,
+    170
+   ],
+   "whole_region": true,
+   "feather": 3
+  },
+  "talk": {
+   "base": "front",
+   "region": [
+    212,
+    171,
+    290,
+    206
+   ],
+   "whole_region": true,
+   "feather": 3
+  }
+ },
+ "base": {
+  "front": "front"
+ },
+ "advance_px": 9.25
+}

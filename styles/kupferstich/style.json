@@ -1,0 +1,181 @@
+{
+ "slug": "kupferstich",
+ "name": "Kupferstich & Radierung",
+ "family": "grafisch",
+ "kind": "style",
+ "era": "Kupferstich seit dem 15. Jahrhundert; Stahl- und Holzstich als Buchillustration im 19. Jahrhundert; im Spiel als Bildtafel auf einer Buchseite",
+ "summary": "Das Bild besteht nur aus gestochenen Linien in einer Druckfarbe auf altem Papier: Kreuzschraffur, waagerecht gezogener Himmel, Tonwert allein über Linienstärke und -abstand. Die Szene ist eine Bildtafel mit Plattenrand auf einer Buchseite, der Text steht darunter mit Initiale und Kapitälchen. Licht wird nicht aufgehellt, sondern dünnt die Linien aus.",
+ "references": [
+  "Albrecht Dürer: Kupferstiche wie Melencolia I (1514): Kreuzschraffur, Tonwert über Linienabstand und Linienstärke",
+  "Gustave Doré: Illustrationen zu Coleridges „Ballade vom alten Seemann“ (1876), Holzstiche nach seinen Zeichnungen: dichte Nachtszenen auf See, Licht als ausgespartes Papier",
+  "Stahlstich-Ansichten in Reise- und Länderbüchern des 19. Jahrhunderts (z. B. Meyers Universum, ab 1833): waagerecht gezogene Himmel, Bildtafel mit Plattenrand und Unterschrift",
+  "Fighting-Fantasy-Spielbücher (ab 1982): schraffierte Federzeichnungen als Bild zu Textabschnitten eines Abenteuers",
+  "Pentiment (Obsidian Entertainment, 2022): Buchseite, gedruckte Bilder und Initialen als Spieloberfläche",
+  "Return of the Obra Dinn (Lucas Pope, 2018): einfarbige Grafik aus Strich- und Rastermustern für eine Schauergeschichte auf See"
+ ],
+ "traits": [
+  "Nur Linien, eine Druckfarbe: Jedes Pixel ist Papier, Druckfarbe (#2B2017) oder eine Mischung aus beiden; es gibt keine zweite Farbe und keinen additiven Lichteffekt. Der Flächenton, den das Bildmodell zwischen die Linien legt, ist zu 60 % abgezogen (mittlere Tuschedeckung der Platte 0,60).",
+  "Gestochener Himmel: waagerechte Linien im Abstand von 3 px (Autokorrelation in 18 Spalten der Platte: Abstand 3 px, Korrelation 0,63–0,86), Wolken nur über dickere und dünnere Linien.",
+  "Tonwert über Linienstärke auch in den Effekten: Laterne, Fenster, Leuchtturmstrahl und Glitzern erhöhen eine Schwelle auf dem weichgezeichneten Linienbild (Kammfeld), feine Linien verschwinden zuerst, breite werden dünner. Der Strahl ist ein Keil aus fast linienfreiem Papier im Himmel; der Laternenschein ein Hof ausgedünnter Linien, die zum Rand über etwa 40 px allmählich dünner werden (Radius 66–82 px, Stärke 0,92–1,0; alle 0,1 s ein neuer Zufallswert, zu dem über 2 Takte übergeblendet wird); gemessen ändern sich im Lichtkreis 7,4 % der Himmelspixel je 0,5 s (bis 19 %), im Strahlband bis 12 %.",
+  "Wasser: die waagerechten Wasserlinien wellen sich (Versatz vorn bis 2,2 px, am Horizont 0,5 px) und werden danach wieder scharf gedruckt; 36 % der Wasserpixel ändern sich je 0,5 s um mehr als 24 Stufen, das übrige Bild ohne Effekte 0,3 % (scripts/measure_fx.py). Dazu Glitzerstriche in den hellen Spiegelungen, 6-mal pro Sekunde neu.",
+  "Rauch als gestochene Wolkenballen: gebogter Umriss (harte Vereinigung von je zwei Kreisen) mit einer Kontur, die zur Schattenseite unten rechts anschwillt; innen eigene waagerechte Linien im Abstand der Himmelslinien (3 px), zur Mitte leicht gewölbt, dünn auf der Lichtseite und kräftig auf der Schattenseite. Alte Ballen werden nicht durchsichtig: Eine steigende Schwelle dünnt Kontur und Linien aus (Lichtseite zuerst), und die Himmelslinien darunter kehren zurück. Alle 0,8 s ein Ballen, der Wind treibt ihn flach nach rechts. Zwei Möwen als spitz zulaufende Federstriche mit 6 Flügelstellungen (10 bzw. 6 Bilder/s).",
+  "Bildtafel als Druck: 1120×525 mit gestochener Einfassungslinie (bleibt auch stehen, wenn der Dachs am linken Rand angeschnitten ins Bild kommt), darum ein Plattenrand (1148×551) als Prägung im Papier mit Plattenton innen, Schatten oben/links und Licht unten/rechts; das Papier hat Fasern, Fleckung, nachgedunkelte Ränder und Stockflecken außerhalb der Platte.",
+  "Der Dachs ist selbst ein Stich (KI-Laufbogen in Spielgröße, 191 px hoch) und auf dasselbe Papier gedruckt: In der Silhouette deckt die Papiertextur derselben Bildschirmstelle, keine Kante zum Hintergrund. Schlagschatten als waagerechte Linien, deren Stärke zum Rand abnimmt.",
+  "Laufen: 7 Laufbilder, Vorschub je Bildwechsel aus dem Standfuß bzw. bei den zwei Fußwechseln aus der landenden Spitze (3–18 px, 69 px je Zyklus), Haltezeit proportional zum Vorschub, nur 2 oder 3 Takte (15 bzw. 10 Bilder/s). Gemessen im Godot-Bild (scripts/probe_feet.py): Standfuß in 29 von 29 Bildwechseln mit gemeinsamem Standfuß höchstens 1 px; bei den 11 Fußwechseln setzt die Spitze 1–2 px hinter ihrer Lage in der Luft auf; der Rumpf rückt in allen 37 Laufwechseln (ohne die am Tafelrand angeschnittenen) 5 bis 17 px vor, nie zurück; Sohlenzeile in allen 180 Bildern 518. Danach Stehen, Dreiviertelansicht zur Kamera, zweimal Blinzeln.",
+  "Textbox als Buchseite (unter der Tafel, 22 % der Bildhöhe): Initiale „D“ in einem gestochenen Initialrahmen mit leerem Feld, danach das erste Wort in Kapitälchen; Ort als gesperrter Kolumnentitel in Kapitälchen; Zierlinie mit Knoten und ovale Schlussvignette; Auswahl mit römischen Ziffern in Kursive, die gewählte Antwort mit einer geschwellten Unterstreichung; Parserzeile tippt mit Schreibmarke. Schrift IM Fell English (Nachschnitt der Fell-Typen, 17. Jahrhundert)."
+ ],
+ "camera": "Feste Kamera auf Augenhöhe einer kleinen Figur, Seitenansicht des Hafens mit nahem Kai; die Szene ist eine gedruckte Bildtafel auf der Buchseite",
+ "resolution": "1280×720; Bildtafel 1120×525 (Ausschnitt 1536×720 aus dem 1536×1024-KI-Bild, Faktor 0,729); Dachs 191 px hoch (Bogenfiguren etwa 301 px, Faktor 0,63); Linienabstand im Himmel 3 px; Initialrahmen 111×112, Vignette 150×88, Zierlinie 300×37",
+ "pipeline": [
+  {
+   "step": "Hintergrund, Versuch 1 (verworfen)",
+   "tool": "genimg (gpt-image über Codex)",
+   "detail": "assets/raw/bg.png, 1536×1024, 74 s. Stilblock: Bildtafel eines Abenteuerbuchs des 19. Jahrhunderts als Kupferstich mit Radierung, nur Linien, Tonwert über Linienstärke und -abstand, gezogener Himmel, Wasser aus waagerechten Wellenlinien, Lichter als ausgespartes Papier, Linien grob genug für Bildschirmgröße, Verbote (Foto, 3D, Malerei, Bleistift, Holzschnitt, Postkarte, Papierstruktur, Rahmen); dazu Kompositionsblock, Motivblock, Hinweis auf animierte Effekte, background_only_en, Schutzregeln. Ergebnis gut gestochen, aber mit Sepia- und Rosaton und einem leeren Kai über das ganze untere Viertel: Die Figur wäre neben den Fässern nur etwa 140 px hoch geworden. Nicht verwendet."
+  },
+  {
+   "step": "Hintergrund, Versuch 2",
+   "tool": "genimg (gpt-image über Codex)",
+   "detail": "assets/raw/bg2.png, 1536×1024, 75 s. Gleicher Stich-Block, dazu „pure black ink on pure white paper, no tinted ground“, gröbere Linien („about 150 lines across the height“) und eine nähere Komposition: Figur am vorderen Kai etwa 30 % der Bildhöhe, Fässer ein Viertel der Bildhöhe, Häuschen weiter hinten mit Schornstein vor freiem Himmel, Laterne vor Himmel, Leuchtturm bei 82 % der Breite. Kam im ersten Versuch mit Nachtstimmung und gestochenen Linien, aber wieder mit Resten von Farbe (rotes Band, oranger Horizont, Laternenschein) und Flächenton zwischen den Linien."
+  },
+  {
+   "step": "Farbcode-Maske",
+   "tool": "genimg (gpt-image über Codex), Referenz raw/bg2.png",
+   "detail": "assets/raw/mask.png: dieselbe Komposition in flachen Codes (Himmel, Wasser, Boote, Fenster, Laternenglas, Leuchtfeuer, Schornstein). Mit einer Kantenüberlagerung geprüft: deckungsgleich mit dem Stich, keine Ausrichtung nötig. scripts/build_scene.py ordnet jedem Pixel den nächsten Code zu, nimmt für Lichtpunkte die größte zusammenhängende Fläche (Mischpixel an Codegrenzen fallen so weg) und schreibt assets/plate_mask.png (Himmel, Wasser, Boote) und assets/scene.json (Laterne, Leuchtfeuer, Fenster, Schornsteinkopf, Horizont)."
+  },
+  {
+   "step": "Druckplatte aufbereiten",
+   "tool": "scripts/build_plate.py (NumPy, Pillow)",
+   "detail": "Ausschnitt Zeilen 120–840, Helligkeit → Tuschedichte (Papier = 99. Perzentil). Flächenton zu 60 % abziehen: lokaler Grund = Minimum über 7×7, geglättet; ganz abgezogen wirkte die Nachtszene wie Tageslicht. Kontrast (−0,08, ×1/0,84, Gamma 0,9), Einfassungslinie, Lanczos auf 1120×525. Ausgabe plate_ink.png: R = Tusche, G = Kammfeld (Tusche weichgezeichnet, für das Ausdünnen im Licht), B = helle Spiegelungen im Wasser (für das Glitzern)."
+  },
+  {
+   "step": "Figur: Layout aus dem 3D-Modell",
+   "tool": "Blender 5.2 (blender/pose_layout.py aus bilderbuch-gouache übernommen) + scripts/make_layouts.py",
+   "detail": "Posen von shared/3d/badger.glb orthografisch auf Magenta, 2×5 Zellen: 8 Laufbilder, Stehen, Dreiviertel. Einmal mit 409,6 px/m (Figur 400 px), einmal mit --ortho 2.5 (204,8 px/m, Figur 200 px) für den Bogen in Spielgröße."
+  },
+  {
+   "step": "Laufbogen, Versuch 1 (nur als Referenz verwendet)",
+   "tool": "genimg (gpt-image über Codex), Referenzen Layout 400 px, Master-Sheet, Stilreferenz",
+   "detail": "assets/raw/walk.png, 86 s. Stilreferenz assets/ref/style_engraving.png = bg2 schwarz auf weiß ohne Flächenton (scripts/make_style_ref.py). Codex hielt Zellen und Posen und lieferte echten Alphakanal; der Dachs ist schön gestochen, aber mit Schraffur im Abstand von 3–4 px: auf 191 px verkleinert (Faktor 0,48) wurde daraus graues Fell wie Bleistift, neben der scharfen Platte."
+  },
+  {
+   "step": "Laufbogen in Spielgröße",
+   "tool": "genimg (gpt-image über Codex), Referenzen Layout 200 px, Master-Sheet, Stilreferenz, raw/walk.png",
+   "detail": "assets/raw/walk_small.png, 86 s. Prompt: Figuren nur etwa 200 px hoch, „use exactly the same absolute spacing and width of the lines as in the third reference, so the small figures have fewer lines, not finer lines“, vierte Referenz = Versuch 1 für Gesicht und Tonwerte. Codex zeichnete die Figuren 301 px hoch (1,5-mal das Layout), aber mit gröberen Linien; Faktor 0,63 ergibt lesbare Schraffur. Zellen, Grundlinie je Reihe und Posen gehalten."
+  },
+  {
+   "step": "Figur aufbereiten",
+   "tool": "scripts/build_badger.py (NumPy, Pillow)",
+   "detail": "Je Layoutzelle Alpha (Codex) und Tuschedichte = 1 − Helligkeit, Kontrast wie die Platte; Sohle aller Bilder auf eine Grundlinie, waagerecht Lage in der Zelle; vormultipliziert ×0,63 auf 193×203 je Bild. Blinzeln: in der Dreiviertelansicht das Auge (Glanzpunkt mit dunklem Ring, automatisch gesucht) mit dem Fell links daneben überdeckt und ein heller Lidstrich gesetzt. Bogen badger.png (11 Bilder, R = Tusche, G = Kammfeld, A = Deckung) und Bodenkontakt-Läufe je Bild (--runs)."
+  },
+  {
+   "step": "Vorschub und Ablauf",
+   "tool": "assets/badger_override.json (von Hand) + scripts/choreo.py",
+   "detail": "Die KI-Schritte sind ungleich: Der Standfuß wandert je Bild 0 bis 18 px. Vorschub je Bildwechsel von Hand aus den Kontaktläufen gelesen (Anker: Zehenspitze des Fußes, der in beiden Bildern flach steht; bei den Fußwechseln die Spitze des landenden Fußes im Band 8–18 Zeilen über der Sohle, wo er in der Luft hängt), walk_7 weggelassen (fast gleich walk_0); Summe 69 px je Zyklus (Blender-Vorlage 71 px). Die Figur rückt nur beim Bildwechsel vor; Haltezeit = Vorschub / 5,3 px, gerundet, mindestens 2 Takte; das ergibt 2-2-3-2-3-2-3 Takte (choreo.py bricht ab, wenn ein anderer Halt entsteht). Tabelle für 300 Takte (assets/timeline.json): Start am linken Tafelrand angeschnitten, 3,17 s Laufen über 366 px (116 px/s), 0,3 s Stehen, ab 3,47 s Dreiviertelansicht, Blinzeln bei 5,2 und 5,7 s."
+  },
+  {
+   "step": "Ornamente",
+   "tool": "genimg (gpt-image über Codex), Stilreferenz + scripts/build_ornaments.py",
+   "detail": "assets/raw/ornaments.png, 56 s: ein Blatt mit Initialrahmen (Seil, Anker, Seetang, Leuchtturm, leeres Feld), ovaler Schlussvignette (Seil, Anker, Möwe) und Zierlinie mit Knoten. Erkennung über Zusammenhangsflächen, leeres Feld = größte weiße Fläche ohne Randberührung; als Tusche-Alpha auf 112 px Höhe bzw. 150 und 300 px Breite. Godot setzt den Buchstaben aus der Schrift in das Feld, damit jeder Anfangsbuchstabe geht."
+  },
+  {
+   "step": "Papier und Schatten aus Code",
+   "tool": "scripts/make_paper.py, scripts/make_fx.py",
+   "detail": "Papier 1280×720 mit festem Seed: warmer Grundton, Wertrauschen-Fleckung, nachgedunkelter Rand, 2600 Fasern, Korn, 26 Stockflecken außerhalb der Platte, Plattenrand als Prägung und Plattenton. Schlagschatten 132×18 als waagerechte Linien (Abstand 3 px) mit Stärke nach Tonwert, 4-fach überabgetastet."
+  },
+  {
+   "step": "Godot-Demo",
+   "tool": "Godot 4.7.2, GDScript, 2 Shader + 1 Include",
+   "detail": "plate.gdshader zeichnet die Tafel samt Wasser, Licht, Strahl, Glitzern und Rauch in einem Durchgang; badger.gdshader druckt die Figur auf das Papier; inklight.gdshaderinc enthält die gemeinsame Lichtlogik. Möwen, Unterstreichung, Spaltenlinie und Initialbuchstabe als _draw()."
+  },
+  {
+   "step": "Messen und Aufnehmen",
+   "tool": "scripts/probe_feet.py, scripts/measure_fx.py, scripts/render_frames.py, tools/capture.py --poster-at 0.84",
+   "detail": "Füße im Godot-Bild mit --probe-badger-only (nur Figur auf Magenta): Schablonenvergleich des Fußes plus Fersen-/Spitzenenden in 2 und 4 Zeilen, der kleinere Wert zählt; dazu je Laufwechsel die Verschiebung des Rumpfs (Silhouette 38–118 Zeilen über der Sohle, beste Übereinstimmung, und mittlere Rumpfränder; darf nie negativ sein) und bei Fußwechseln die landende Spitze (Luft gegen Boden). Effekte je Bereich mit --probe-no-badger. Probeläufe mit --rendering-method mobile und gl_compatibility. Laternenschein zusätzlich Bild für Bild verglichen (Fläche linienfreien Papiers im Lichtkreis). Aufnahme 6 s, Poster bei 5,07 s (Dreiviertelansicht, Strahl ganz links, Unterstreichung, Parserzeile). Neubau aller Assets ohne Bildmodell: sh styles/kupferstich/scripts/build_all.sh (bitgleich geprüft)."
+  }
+ ],
+ "godot": [
+  "project.godot: 1280×720, stretch mode canvas_items, Forward+, kein MSAA (Kanten der gezeichneten Formen über antialiased-Polylinien), Löschfarbe = Papierton. Texturen verlustfrei ohne Mipmaps (Standardimport, in den .import-Dateien geprüft), Platte und Figur 1:1 auf ganzen Pixeln.",
+  "main.tscn enthält nur den Wurzelknoten mit main.gd; das Skript baut in _ready(): Papier-Sprite2D, die Platte als freies Sprite2D, darüber ein Control mit clip_contents, das um die 2 px breite Einfassungslinie eingerückt ist (darin ein um −2 px versetzter Node2D mit Möwen, Schatten und Dachs in Plattenkoordinaten), und die Buchseite aus Labels, einem RichTextLabel und TextureRects. Layout, Lichtpunkte, Bogenmaße und Ablauf kommen aus art/layout.json, art/scene.json, art/badger.json, art/timeline.json.",
+  "plate.gdshader: TEXTURE R = Tusche, G = Kammfeld, B = Spiegelungen; mask_tex aus der KI-Maske. Wasser: y-Versatz aus zwei Sinuswellen, vorn stärker, danach smoothstep(0,18; 0,78) auf die Tusche. Licht L = max aus Laternenkreis (im Himmel 0,85, auf Gegenständen 0,3, damit das Laternengestell stehen bleibt; linearer Abfall von 0,2 R bis 1,3 R), Lichtfleck am Boden, Fenster, Strahlkeil (nur Himmel, halbe Breite 3 + 0,085 × Abstand), Aufblitzen und Glitzern (Hash ohne sin, 16×3-px-Zellen). thin_lines(): Schwelle 1,05 × L auf dem Kammfeld, weich überblendet. Rauch: bis 12 Kreise als Uniform-Array, harte Vereinigung; Kontur aus dem Abstandsfeld und eigene waagerechte Linien (3 px, gewölbt mit 0,22 R) als Linien mit halber Breite nach Schattenseite minus Altersschwelle (line_cov: Deckung über ein Pixel gemittelt); die Himmelslinien darunter dünnt thin_lines() aus, solange der Ballen jung ist.",
+  "badger.gdshader: Papier aus der Papiertextur an der Bildschirmstelle (world_pos aus MODEL_MATRIX im vertex()), Tusche darüber, Laternenlicht dünnt die Linien mit 32 % der Plattenstärke aus. Sprite2D mit hframes = 11, centered = false, Lage und Bild je Takt aus timeline.json.",
+  "Leuchtfeuer: Umlauf 6 s, Strahllänge 760 px × |sin φ|, Richtung nach Vorzeichen, Stärke höher zur Kamera hin, Aufblitzen cos(φ)^10 (bei 0,5 s); bei 5,0 s zeigt der Strahl ganz nach links.",
+  "Zufall nur aus RandomNumberGenerator mit seed 18711011 (400 vorab gezogene Werte für Flackern; Index und Überblendung aus der ganzzahligen Taktnummer, nicht aus floor(t·10)); Zeit t als Summe der delta-Werte. Movie Maker schreibt das erste Bild nach dem ersten _process: Bild i zeigt Takt i + 1 (mit --probe-log nachgeprüft).",
+  "Prüfschalter nach --: --probe-badger-only (nur Figur auf Magenta, ohne Licht), --probe-no-badger (ohne Figur und Schatten), --probe-log (Takt und Bild je Frame in die Ausgabe)."
+ ],
+ "techniques": [
+  "ki-spritesheet",
+  "kinemagramm",
+  "ki-farbcode-maske",
+  "linien-licht",
+  "prozedurale-animation",
+  "fuss-halten",
+  "textoberflaeche",
+  "buchseite"
+ ],
+ "ratings": {
+  "ai_fit": 4,
+  "consistency": 3,
+  "effort": 3,
+  "text_adventure": 5,
+  "mobile": 5
+ },
+ "ratings_note": "ai_fit 4: gpt-image trifft den Stich in jedem Bild im ersten Versuch (Hintergrund, Laufbogen, Ornamente, Maske), aber nie ganz rein: Es legt Flächenton und Farbreste unter die Linien, die ein Skript abziehen muss, die erste Komposition war zu weit, und der erste Laufbogen war für Spielgröße zu fein schraffiert (6 Bilder für den Eintrag, davon 2 nicht im Spiel: der erste Hintergrund und der erste Laufbogen, der nur als Referenz diente). Der Look kommt zum größten Teil aus den KI-Bildern; Code macht Papier, Druck, Plattenrand und alle Effekte. consistency 3: Platte, Figur und Ornamente haben dieselbe Technik und Druckfarbe, aber die Figur ist feiner schraffiert als die Platte (Fell in etwa 2-px-Strichen gegen 3 px im Himmel), die Laufbilder sind einzeln gezeichnet (Schraffur und Schrittlänge wechseln von Bild zu Bild), und ob zwei Hintergründe gleich aussehen, ist nicht geprüft. effort 3: Ein neuer Ort kostet zwei Bilder (Stich und Maske) und läuft dann automatisch durch build_all.sh; jede neue Animation braucht ein Layout aus Blender, einen Bogen und eine von Hand gelesene Vorschubtabelle. mobile 5: --rendering-method mobile ist bitgleich zu Forward+, gl_compatibility weicht um höchstens 2 Stufen ab (Mittel 0,09; 12 Bilder der Aufnahme verglichen); ein Canvas-Shader mit einer Schleife über 12 Kreise, keine Nachbearbeitung. Die Leistung auf einem echten Gerät ist geschätzt, nicht gemessen.",
+ "verdict": "Sehr gut geeignet für unser Textadventure, besonders für eine Schauer- oder Mystery-Geschichte. Die Buchseite ist die Oberfläche: Bildtafel oben, Text mit Initiale darunter, Auswahl und Parser in derselben Typografie, und die Tafel deckt den Text nie ab. gpt-image liefert gestochene Hintergründe, Figurenbögen und Ornamente zuverlässig; man muss sie nur als Tuschedichte behandeln (Flächenton abziehen, eine Druckfarbe, ein Papier). Der wichtigste Kniff für Bewegung: Licht und Wasser verändern nur die Linien (ausdünnen, wellen), dann bleibt auch die Animation ein Stich. Bewusste Abweichung vom Motiv: Der Einfarbdruck macht roten Schal, grüne Mütze und Weste und das rote Band des Leuchtturms zu Schraffurdichten; der Kurier ist nur über Form und Strickstruktur des Schals erkennbar, nicht über seine Farben. Braucht das Spiel die Kostümfarben als Erkennungszeichen, wäre eine Handkolorierung wie bei kolorierten Stichen die Option (wenige transparente Lasurflächen unter der Tusche, z. B. aus einer Farbcode-Maske); das ist hier nicht gebaut. Figuren müssen vom Bildmodell in Spielgröße gezeichnet werden, weil es den absoluten Linienabstand hält; für ein Spiel mit vielen Animationen sollten Laufzyklen aus wenigen Bildern bestehen oder die Figur öfter stehen, denn KI-Schritte sind ungleich und brauchen eine Vorschubtabelle von Hand.",
+ "pitfalls": [
+  "Flächenton und Farbe: Beide Hintergründe kamen mit braunem Grund zwischen den Linien und Farbresten (Rosa-/Orangeton, rotes Band am Leuchtturm, Laternenschein), obwohl der Prompt reine schwarze Linien auf Weiß verlangte. Ganz abgezogen (lokales Minimum) verlor die Nachtszene ihre Dunkelheit und sah wie Tageslicht aus; jetzt 60 %.",
+  "Verworfen: Tonwert über Linienstärke nachstellen (je Pixel die Schwelle suchen, deren Deckung dem Ton des KI-Bildes entspricht, also Linien in dunklen Stellen verdicken). Linien, die nach dem Verkleinern unter 2 px Abstand liegen, verklumpten dabei zu Flecken; bei der Figur noch stärker. Die Platte bleibt deshalb bei den Linien des Bildmodells.",
+  "Linienabstand und Verkleinern: Das Bildmodell hält den absoluten Linienabstand (3–4 px) unabhängig von der Figurgröße. Der erste Laufbogen (Figuren 400 px) wurde auf 191 px grau und weich. Der zweite Bogen in Spielgröße hilft, aber Codex zeichnete die Figuren trotz 200-px-Layout 301 px hoch; das Fell bleibt mit etwa 2-px-Strichen feiner als der Himmel (3 px). Eine Generierung ging damit für einen Bogen drauf, der nur als Referenz dient.",
+  "Erste Komposition zu weit: Der leere Kai im unteren Viertel (vom Prompt verlangt) hätte die Figur neben den Fässern auf etwa 140 px gebracht. Ein zweiter Hintergrund mit Größenangaben für Figur und Fässer war nötig (2 der 6 Bilder für den Hintergrund).",
+  "Ungleiche KI-Schritte: Im Laufbogen wandert der Standfuß je Bild 3 bis 18 px statt gleichmäßig, die Bilder kommen paarweise (kleiner, großer Schritt); die Schrittsumme ist 69 px je Zyklus (Blender-Vorlage 71). Ein automatischer Sohlenabgleich (IoU) lieferte Unsinn, die Vorschubtabelle ist von Hand gelesen. Mit Vorschub nur beim Bildwechsel steht der Fuß, aber der Rumpf rückt ungleich vor: zweimal je Zyklus um etwa 17 px (walk_6 → walk_0, walk_2 → walk_3), sonst um 5 bis 8 px. Das wirkt leicht hoppelnd und liegt an den Posen des Bildmodells, nicht am Ablauf; walk_7 fällt weg.",
+  "Takt bewusst ungleich, Abweichung von der Regel „gleichbleibend 15, 10 oder 6 Bilder/s“: Die Halte wechseln 2-2-3-2-3-2-3 Takte (15 und 10 Bilder/s gemischt, beide gehen in 30 fps auf). Ein fester Takt ließe die Figur bei 3 px und bei 18 px Vorschub gleich lange stehen; dann würden die großen Schritte noch stärker springen. Der frühere 4-Takt-Halt (7,5 Bilder/s) nach dem 18-px-Schritt ist durch ein höheres Tempo (5,3 statt 4,4 px je Takt) weggefallen.",
+  "Fußwechsel walk_0 → walk_1 war falsch gelesen: Der Vorschub stand auf 0, weil die Spitze des landenden Fußes in den untersten 8 Zeilen gesucht wurde; dort liegt sie aber nicht, der Fuß hängt 8 bis 18 Zeilen über dem Boden. Die Figur ruckte deshalb einmal je Zyklus 2–3 px zurück (Spitze landete 12 px hinter ihrer Lage in der Luft), und die Schrittsumme war 59 statt 69 px (nicht, wie zuerst vermutet, weil das Bildmodell kürzere Schritte zeichnet). Jetzt 10 px: Die Spitze setzt bei beiden Fußwechseln (11 in der Aufnahme) 1–2 px hinter ihrer Luftlage auf, der Rumpf läuft in keinem Bildwechsel rückwärts. 8 px (Vorschlag der Prüfung) ließ die Spitze 4 px dahinter aufsetzen; 10 passt zum anderen Fußwechsel (1 px). Ein echter Standfuß existiert bei Fußwechseln nicht, die Luftlage der Spitze ist nur ein Näherungswert.",
+  "Fußmessung: Im Doppelstand verschmelzen beide Füße im gerenderten Bild zu einem Kontaktlauf, und beim Abrollen formt die KI den Fuß um; weder Endpunkte noch Schablone allein messen alle Wechsel. probe_feet.py nimmt deshalb den kleineren Wert aus Schablonenvergleich und Endpunkten (2 und 4 Zeilen); der Endpunktvergleich kann zufällig passende Enden zweier Füße finden. walk_3 → walk_4 zusätzlich an Ausschnitten von Hand geprüft (Spitze bleibt stehen).",
+  "Schraffur flimmert beim Laufen: Jedes Laufbild ist einzeln gestochen, Schraffurrichtung und -dichte im Fell wechseln von Bild zu Bild. Bei 2–3 Takten je Bild wirkt das wie das Boiling handgezeichneter Animation; für Stehen und Blinzeln gibt es deshalb nur ein Bild plus ein im Code geändertes Auge.",
+  "Licht frisst Gegenstände: Mit der vollen Schwelle im Laternenkreis verschwand das Laternengestell selbst im Lichtfleck. Jetzt wirkt das Licht im Himmel mit 0,85, auf Gegenständen mit 0,3 (über die Himmelsmaske).",
+  "Wenig Himmel über dem Schornstein (46 px bis zum Tafelrand): Steigender Rauch verließ sofort die Tafel und verschmolz mit weichem Vereinigen zu einer Wurst. Jetzt treibt er flach nach rechts und besteht aus getrennten, gebogten Ballen.",
+  "Die Initiale ist nur 112 px hoch: Das sehr fein gestochene Ornament (Seil, Anker, Leuchtturm) liest sich auf ein Siebtel verkleinert eher als dunkles Muster als als Bild.",
+  "Rauch, erste Fassung: Die Schraffur der Schattenseite bestand aus kurzen, fast senkrechten Strichen am Unterrand und wirkte wie eine Franse oder Regen; alte Ballen wurden über Alpha zu halbdurchsichtigen Scheiben mit grauer Kontur. Ein Zwischenversuch mit Formlinien parallel zum Umriss ergab dunkle, gestapelte Ringe, und Ballen, deren Himmelslinien schneller verschwanden als die eigenen Linien kamen, standen als leere Papierscheiben im Himmel. Jetzt waagerechte eigene Linien nach Schattenseite, Ausdünnen über eine Schwelle, und die Himmelslinien kehren zurück, bevor die eigenen Linien weg sind.",
+  "Laternenschein, erste Fassung: Radius 56–90 px und Stärke 0,62–1,0 sprangen 10-mal pro Sekunde, der Rand war hart: Die dichten Himmelslinien haben im Kammfeld nur Werte von etwa 0,4 bis 0,6, also verschwinden sie alle in einem schmalen Band der Lichtstärke, und ein steiler Abfall macht daraus einen Kreisrand. Die Stärke bestimmte die Größe des linienfreien Kreises mehr als der Radius. Jetzt Radius 66–82 px, Stärke 0,92–1,0, Überblenden über 2 Takte und linearer Abfall: Die Fläche linienfreien Papiers schwankt nur noch um den Faktor 1,6 statt 2,1, der größte Sprung von Bild zu Bild sank von 9,9 auf 6,1 % des Lichtkreises. Der Hof ist dafür etwas größer und weicher. Beurteilt an Bildfolgen und Messwerten, nicht in Echtzeit auf einem Gerät.",
+  "Einfassungslinie überdeckt: Solange Platte, Möwen und Dachs in einem Clip in voller Tafelgröße lagen, deckte die papiergefüllte Silhouette des Dachses beim Hereinlaufen die gestochene Einfassungslinie am linken Rand ab. Jetzt liegt die Platte frei und der Clip ist um die Linienbreite (2 px) eingerückt.",
+  "Einfarbdruck statt Kostümfarben (bewusste Abweichung vom Motiv): Roter Schal, grüne Mütze und Weste und das rote Band des Leuchtturms erscheinen nur als Tonwerte. Der Kurier ist über Form, Mütze und Strickstruktur des Schals erkennbar, aber nicht über seine Farben; für ein Spiel, das die Figur über Farben wiedererkennbar machen will, ist das eine echte Einschränkung (Ausweg: Handkolorierung, nicht gebaut).",
+  "Nicht umgesetzt aus den möglichen Umgebungsanimationen: schaukelnde Boote (die Boote liegen mitten in der Platte, Ausschneiden hätte Lücken im Stich hinterlassen)."
+ ],
+ "lessons": [
+  "Stiche als Tuschedichte behandeln: Helligkeit → Dichte, Flächenton anteilig über das lokale Minimum (7×7) abziehen, eine Druckfarbe als Alpha über ein Papier. So passen KI-Bilder mit Farbresten, Figuren und Ornamente zusammen, und Papier, Druckfarbe und Plattenrand sind Code.",
+  "Licht im Stich = Linien ausdünnen: Ein zweiter Kanal mit der weichgezeichneten Tusche (Kammfeld) und eine Schwelle, die mit dem Licht steigt, lassen feine Linien zuerst verschwinden und breite dünner werden. Laternenschein, Leuchtturmstrahl, Fenster und Glitzern sind damit alle derselbe Effekt, und nichts wird additiv aufgehellt.",
+  "Wasserlinien wellen und danach wieder scharf drucken (smoothstep auf die Tusche): Bilineares Abtasten nach dem Versatz macht sonst graue Linien.",
+  "Das Bildmodell hält den absoluten Linienabstand: Figuren und Ornamente in der Größe erzeugen lassen, in der sie im Spiel stehen (Layout in Spielgröße, Hinweis „fewer lines, not finer lines“, die Platte als Stilreferenz).",
+  "Den eigenen Hintergrund als Stilreferenz nicht roh, sondern bereinigt mitgeben (schwarz auf weiß, ohne Flächenton): Laufbogen und Ornamente kamen dann ohne Farbe.",
+  "Eine KI-Farbcode-Maske mit dem Stich als Referenz liegt bei gpt-image deckungsgleich und liefert Himmel, Wasser und alle Lichtpunkte; Lichtpunkte als größte zusammenhängende Fläche des Codes, damit Mischpixel an Codegrenzen nicht stören.",
+  "Gestochener Rauch: harte Vereinigung weniger Kreise ergibt gebogte Umrisse wie gestochene Wolken; Kontur aus dem Abstandsfeld und eigene waagerechte Linien im Abstand der Himmelslinien, deren Stärke zur Schattenseite zunimmt. Ausblenden über eine steigende Schwelle (Linien werden dünner, Lichtseite zuerst) statt über Alpha, und die verdeckten Himmelslinien früh zurückkehren lassen, sonst bleiben leere Papierscheiben.",
+  "Figur auf dasselbe Papier drucken: Im Figuren-Shader die Papiertextur an der Bildschirmstelle abtasten (world_pos aus MODEL_MATRIX), dann gibt es keine Kante zwischen Figur und Buchseite.",
+  "Initialrahmen mit leerem Feld vom Bildmodell, Buchstabe aus der Schrift: ein Ornament für alle Anfangsbuchstaben. Nach der Initiale das erste Wort in Kapitälchen ([font]-Tag im RichTextLabel) macht aus der Textbox sofort eine Buchseite.",
+  "Ungleiche KI-Laufzyklen: Vorschub nur beim Bildwechsel, Haltezeit proportional zum Vorschub (mindestens 2 Takte, Tempo so gewählt, dass nur 2er- und 3er-Halte entstehen), Positionen als ganzzahlige laufende Summe: der Standfuß steht auf 1 px, ohne die Bilder umzuzeichnen.",
+  "Bei Fußwechseln den landenden Fuß dort ablesen, wo er in der Luft hängt (Band über dem Boden), nicht in den untersten Zeilen, und zusätzlich den Rumpf messen: Läuft er bei einem Bildwechsel rückwärts, ist der Vorschub falsch. Eine Überlagerung beider Bilder mit probeweise verschobenem zweitem Bild (Rot/Blau, 4–5-fach vergrößert) zeigt in Sekunden, welcher Vorschub passt.",
+  "Licht als Ausdünnen braucht bei dichten, gleich starken Linien einen flachen, breiten Abfall: Das Kammfeld solcher Linien hat nur eine kleine Spanne, ein steiler Abfall wird zum Kreisrand. Flackern über den Radius statt über die Stärke, mit Überblenden über 2 Takte.",
+  "Figuren, die am Tafelrand ins Bild kommen, in einem um die Einfassungslinie eingerückten Clip zeichnen; die Platte selbst braucht keinen Clip.",
+  "Movie Maker schreibt das erste Bild nach dem ersten _process: Bild i zeigt Takt i + 1. Messskripte, die eine Ablauftabelle lesen, müssen um einen Takt versetzen (mit einer Protokollausgabe je Frame prüfen, nicht raten).",
+  "Alles als Funktion der aufsummierten Zeit, Zufall aus festem Seed: zwei Forward+-Läufe sind bitgleich, build_all.sh baut alle Assets bitgleich neu."
+ ],
+ "assets": [
+  {"file": "assets/plate_ink.png", "kind": "background", "made_with": "gpt-image (Codex) 1536×1024 + scripts/build_plate.py: Ausschnitt 1536×720, Flächenton zu 60 % abgezogen, ×0,729 auf 1120×525; R Tusche, G Kammfeld, B Spiegelungen", "prompt": "assets/raw/bg2.json"},
+  {"file": "assets/plate_mask.png", "kind": "mask", "made_with": "gpt-image (Codex) Farbcode-Maske mit raw/bg2.png als Referenz + scripts/build_scene.py: Himmel, Wasser, Boote in Tafelgröße", "prompt": "assets/raw/mask.json"},
+  {"file": "assets/scene.json", "kind": "data", "made_with": "scripts/build_scene.py aus der Farbcode-Maske: Laterne, Leuchtfeuer, Fenster, Schornsteinkopf, Horizont"},
+  {"file": "assets/badger.png", "kind": "spritesheet", "made_with": "gpt-image (Codex; Referenzen Blender-Layout in Spielgröße, Master-Sheet, Stilreferenz, raw/walk.png) + scripts/build_badger.py: 11 Bilder à 193×203 (8 Laufen, Stehen, Dreiviertel, Blinzeln), ×0,63", "prompt": "assets/raw/walk_small.json"},
+  {"file": "assets/timeline.json", "kind": "animation", "made_with": "scripts/choreo.py aus assets/badger_override.json (Vorschub von Hand gelesen)"},
+  {"file": "assets/orn_initial.png", "kind": "ui", "made_with": "gpt-image (Codex) Ornamentblatt + scripts/build_ornaments.py: Initialrahmen mit leerem Feld, 111×112", "prompt": "assets/raw/ornaments.json"},
+  {"file": "assets/orn_vignette.png", "kind": "ui", "made_with": "aus demselben Ornamentblatt: ovale Schlussvignette, 150×88", "prompt": "assets/raw/ornaments.json"},
+  {"file": "assets/orn_rule.png", "kind": "ui", "made_with": "aus demselben Ornamentblatt: Zierlinie mit Knoten, 300×37", "prompt": "assets/raw/ornaments.json"},
+  {"file": "assets/paper.png", "kind": "texture", "made_with": "scripts/make_paper.py (Code, fester Seed): altes Papier mit Plattenrand"},
+  {"file": "assets/shadow.png", "kind": "sprite", "made_with": "scripts/make_fx.py (Code): gestochener Schlagschatten"},
+  {"file": "assets/ref/style_engraving.png", "kind": "reference", "made_with": "scripts/make_style_ref.py: raw/bg2.png schwarz auf weiß ohne Flächenton, Stilreferenz für Laufbogen und Ornamente"},
+  {"file": "assets/ref/walk_small_layout.png", "kind": "reference", "made_with": "Blender 5.2 (blender/pose_layout.py --ortho 2.5) + scripts/make_layouts.py: Posen des gemeinsamen Dachsmodells in Spielgröße"}
+ ],
+ "licenses": [
+  {"item": "Schriften IM Fell English, IM Fell English Italic, IM Fell English SC, IM Fell French Canon (Igino Marini)", "license": "OFL-1.1", "source": "https://github.com/google/fonts (ofl/imfellenglish, ofl/imfellenglishsc, ofl/imfellfrenchcanon); Lizenztext demo/fonts/OFL-IMFell.txt"},
+  {"item": "Hash without Sine (Shader-Funktion), Copyright (c) 2014 David Hoskins – in demo/shaders/plate.gdshader", "license": "MIT", "source": "https://www.shadertoy.com/view/4djSRW"}
+ ],
+ "image_generations": 6,
+ "tool_issues": [],
+ "status": "done"
+}

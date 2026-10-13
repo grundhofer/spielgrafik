@@ -1,0 +1,148 @@
+[gd_scene load_steps=14 format=3]
+
+; Katalogeintrag lowpoly-flat: Hafen als Low-Poly-Fassung (models/harbor_lowpoly.glb aus
+; blender/build_lowpoly.py, gleiche Namen und Lage wie shared/3d), Dachs als badger_low.glb aus
+; shared/3d (876 Dreiecke). main.gd setzt die Palette nach Materialnamen, baut Wasser, Wolken, Rauch
+; und Möwen aus groben Formen und animiert alles über die aufsummierte Zeit t.
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://models/harbor_lowpoly.glb" id="2_harbor"]
+[ext_resource type="PackedScene" path="res://models/badger_low.glb" id="3_badger"]
+[ext_resource type="Shader" path="res://shaders/water.gdshader" id="4_water"]
+[ext_resource type="Shader" path="res://shaders/beam.gdshader" id="5_beam"]
+[ext_resource type="Shader" path="res://shaders/sky.gdshader" id="6_sky"]
+[ext_resource type="Script" path="res://ui.gd" id="7_ui"]
+
+[sub_resource type="ShaderMaterial" id="SkyMat"]
+shader = ExtResource("6_sky")
+
+[sub_resource type="Sky" id="Sky"]
+sky_material = SubResource("SkyMat")
+radiance_size = 2
+
+[sub_resource type="Environment" id="Env"]
+background_mode = 2
+sky = SubResource("Sky")
+ambient_light_source = 3
+ambient_light_sky_contribution = 1.0
+ambient_light_energy = 0.75
+reflected_light_source = 2
+tonemap_mode = 0
+tonemap_exposure = 1.0
+glow_enabled = true
+glow_intensity = 0.5
+glow_strength = 1.0
+glow_bloom = 0.0
+glow_hdr_threshold = 1.0
+glow_blend_mode = 1
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.93, 0.62, 0.66, 1)
+fog_density = 1.0
+fog_aerial_perspective = 0.55
+fog_sky_affect = 0.0
+fog_depth_begin = 28.0
+fog_depth_end = 420.0
+fog_depth_curve = 1.3
+
+[sub_resource type="ShaderMaterial" id="WaterMat"]
+render_priority = 0
+shader = ExtResource("4_water")
+
+; grober Kegel: 6 Seiten, damit der Strahl facettiert bleibt
+[sub_resource type="CylinderMesh" id="BeamMesh"]
+top_radius = 2.6
+bottom_radius = 0.28
+height = 26.0
+radial_segments = 6
+rings = 1
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="ShaderMaterial" id="BeamMat"]
+render_priority = 20
+shader = ExtResource("5_beam")
+shader_parameter/length_m = 26.0
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_main")
+water_material = SubResource("WaterMat")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Env")
+
+; Abendsonne von links, leicht von vorn, tief; Richtung setzt main.gd (SUN_TRAVEL)
+[node name="Sun" type="DirectionalLight3D" parent="."]
+light_color = Color(1, 0.74, 0.54, 1)
+light_energy = 1.35
+shadow_enabled = true
+shadow_blur = 1.2
+directional_shadow_max_distance = 80.0
+
+; kühles Fülllicht von rechts hinten oben, ohne Schatten: gibt den Facetten der Schattenseite Abstufungen
+[node name="Fill" type="DirectionalLight3D" parent="."]
+light_color = Color(0.62, 0.56, 0.92, 1)
+light_energy = 0.35
+
+; Hauptkamera wie shared/3d: Position (-1.8, 3.4, 14.5), rotation_degrees (-3, 0, 0), fov 42 (vertikal)
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.9986295, 0.05233596, 0, -0.05233596, 0.9986295, -1.8, 3.4, 14.5)
+current = true
+fov = 42.0
+near = 0.1
+far = 3000.0
+
+[node name="Harbor" parent="." instance=ExtResource("2_harbor")]
+
+[node name="Badger" parent="." instance=ExtResource("3_badger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.012, 1.2)
+
+[node name="Effects" type="Node3D" parent="."]
+
+; Alles unter "Attach" hängt main.gd an das gleichnamige Empty bzw. Objekt im Hafen.
+[node name="Attach" type="Node3D" parent="."]
+
+[node name="LanternLight" type="Node3D" parent="Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="Attach/LanternLight"]
+light_color = Color(1, 0.72, 0.42, 1)
+light_energy = 1.8
+omni_range = 6.0
+
+[node name="CottageWindow" type="Node3D" parent="Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="Attach/CottageWindow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+light_color = Color(1, 0.74, 0.46, 1)
+light_energy = 1.0
+omni_range = 4.0
+
+[node name="LighthouseLight" type="Node3D" parent="Attach"]
+
+[node name="Omni" type="OmniLight3D" parent="Attach/LighthouseLight"]
+light_color = Color(1, 0.86, 0.6, 1)
+light_energy = 2.0
+omni_range = 5.0
+
+[node name="Rotor" type="Node3D" parent="Attach/LighthouseLight"]
+
+[node name="Tilt" type="Node3D" parent="Attach/LighthouseLight/Rotor"]
+transform = Transform3D(1, 0, 0, 0, 0.9961947, 0.08715574, 0, -0.08715574, 0.9961947, 0, 0, 0)
+
+[node name="Beam" type="MeshInstance3D" parent="Attach/LighthouseLight/Rotor/Tilt"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, -13)
+cast_shadow = 0
+mesh = SubResource("BeamMesh")
+surface_material_override/0 = SubResource("BeamMat")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("7_ui")

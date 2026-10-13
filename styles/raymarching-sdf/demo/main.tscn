@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="Shader" path="res://shaders/harbor_sdf.gdshader" id="2_sdf"]
+[ext_resource type="Script" path="res://ui.gd" id="3_ui"]
+[ext_resource type="Shader" path="res://shaders/upscale_fxaa.gdshader" id="4_fxaa"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sdf"]
+shader = ExtResource("2_sdf")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fxaa"]
+shader = ExtResource("4_fxaa")
+
+[node name="Main" type="Node"]
+script = ExtResource("1_main")
+
+[node name="Render" type="SubViewport" parent="."]
+disable_3d = true
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+
+[node name="Scene" type="ColorRect" parent="Render"]
+material = SubResource("ShaderMaterial_sdf")
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="Display" type="TextureRect" parent="."]
+texture_filter = 2
+material = SubResource("ShaderMaterial_fxaa")
+offset_right = 1280.0
+offset_bottom = 720.0
+expand_mode = 1
+stretch_mode = 0
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_ui")

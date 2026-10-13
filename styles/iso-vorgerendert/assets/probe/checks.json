@@ -1,0 +1,150 @@
+{
+ "palette": {
+  "frames_checked": 30,
+  "scene_pixels_off_palette": 0,
+  "ui_pixels_off_palette": 187920,
+  "scene_unique_colors_frame140": 247
+ },
+ "deterministic_two_runs": true,
+ "godot_errors": [],
+ "occlusion": [
+  {
+   "frame": 0,
+   "badger_px": 626,
+   "visible_px": 0,
+   "hidden_share": 1.0
+  },
+  {
+   "frame": 6,
+   "badger_px": 657,
+   "visible_px": 32,
+   "hidden_share": 0.951
+  },
+  {
+   "frame": 12,
+   "badger_px": 641,
+   "visible_px": 81,
+   "hidden_share": 0.874
+  },
+  {
+   "frame": 18,
+   "badger_px": 636,
+   "visible_px": 235,
+   "hidden_share": 0.631
+  },
+  {
+   "frame": 24,
+   "badger_px": 663,
+   "visible_px": 405,
+   "hidden_share": 0.389
+  },
+  {
+   "frame": 30,
+   "badger_px": 626,
+   "visible_px": 478,
+   "hidden_share": 0.236
+  },
+  {
+   "frame": 36,
+   "badger_px": 652,
+   "visible_px": 614,
+   "hidden_share": 0.058
+  },
+  {
+   "frame": 42,
+   "badger_px": 668,
+   "visible_px": 600,
+   "hidden_share": 0.102
+  },
+  {
+   "frame": 48,
+   "badger_px": 624,
+   "visible_px": 490,
+   "hidden_share": 0.215
+  },
+  {
+   "frame": 54,
+   "badger_px": 660,
+   "visible_px": 500,
+   "hidden_share": 0.242
+  },
+  {
+   "frame": 60,
+   "badger_px": 641,
+   "visible_px": 467,
+   "hidden_share": 0.271
+  },
+  {
+   "frame": 66,
+   "badger_px": 636,
+   "visible_px": 492,
+   "hidden_share": 0.226
+  },
+  {
+   "frame": 72,
+   "badger_px": 662,
+   "visible_px": 565,
+   "hidden_share": 0.147
+  },
+  {
+   "frame": 78,
+   "badger_px": 626,
+   "visible_px": 576,
+   "hidden_share": 0.08
+  },
+  {
+   "frame": 84,
+   "badger_px": 654,
+   "visible_px": 654,
+   "hidden_share": 0.0
+  }
+ ],
+ "renderers": {
+  "mobile": {
+   "errors": [],
+   "diffs": [
+    {
+     "frame": 0,
+     "changed_share": 0.0,
+     "max_abs": 0
+    },
+    {
+     "frame": 60,
+     "changed_share": 0.0,
+     "max_abs": 0
+    },
+    {
+     "frame": 140,
+     "changed_share": 0.0,
+     "max_abs": 0
+    }
+   ]
+  },
+  "gl_compatibility": {
+   "errors": [],
+   "diffs": [
+    {
+     "frame": 0,
+     "changed_share": 0.00783,
+     "max_abs": 1
+    },
+    {
+     "frame": 60,
+     "changed_share": 0.01391,
+     "max_abs": 1
+    },
+    {
+     "frame": 140,
+     "changed_share": 0.01391,
+     "max_abs": 1
+    }
+   ]
+  }
+ },
+ "long_run": {
+  "t0": 30,
+  "frames": 60,
+  "errors": [],
+  "scene_pixels_off_palette": 0
+ }
+}

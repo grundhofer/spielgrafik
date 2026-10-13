@@ -1,0 +1,43 @@
+{
+ "godot_errors": [],
+ "frames_measured": 180,
+ "blend_ground_points_max_mm_per_frame": 1.7,
+ "walk_stance_foot_max_mm_per_frame": 4.16,
+ "walk_stance_foot_p95_mm_per_frame": 3.97,
+ "walk_stance_foot_max_px_per_frame_static_cam": 0.25,
+ "idle_wave_foot_span_from_3.9s": {
+  "heel.L": {
+   "world_mm": 0.8,
+   "px": 0.15
+  },
+  "toe.L": {
+   "world_mm": 0.9,
+   "px": 0.17
+  },
+  "heel.R": {
+   "world_mm": 1.3,
+   "px": 0.29
+  },
+  "toe.R": {
+   "world_mm": 1.3,
+   "px": 0.29
+  }
+ },
+ "end_position": [
+  -2.634,
+  1.57
+ ],
+ "end_rotation_deg": -67.0,
+ "godot_errors_mask": [],
+ "closeup_foot_row_min_max": [
+  625,
+  625
+ ],
+ "closeup_head_row_min_max": [
+  404,
+  405
+ ],
+ "closeup_head_max_jump_px": 1,
+ "closeup_foot_max_jump_px": 0,
+ "closeup_badger_height_px": 220
+}

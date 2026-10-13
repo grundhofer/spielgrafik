@@ -1,0 +1,8 @@
+# Lokale Bild-zu-3D-Umgebung (groß, nicht einchecken): venv, TripoSR-Quellcode, Modellgewichte (HF-Cache)
+tsr/venv/
+tsr/TripoSR/
+tsr/hf/
+# Zwischenstände von TripoSR und Blender (hochaufgelöste Meshes, Bake-Zwischenbilder)
+work/
+*.blend
+*.blend1

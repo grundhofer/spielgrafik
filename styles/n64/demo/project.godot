@@ -1,0 +1,116 @@
+; Engine configuration file.
+; Von Hand geschrieben: Katalogeintrag n64 (N64-Look), Godot 4.7.
+; 3D und Oberfläche entstehen in einem SubViewport mit 320×240 (MSAA 4×); shaders/n64_vi.gdshader gibt das Bild
+; wie die Videoeinheit der Konsole aus (16 Bit mit Dithering, Dither-Filter, weich ×3 auf 960×720).
+; Die globalen Shader-Uniforms setzt main.gd beim Start (Farben dort als sRGB notiert und linear übergeben).
+
+config_version=5
+
+[application]
+
+config/name="N64-Look – Hafen von Lornholm"
+run/main_scene="res://main.tscn"
+config/features=PackedStringArray("4.7", "Forward Plus")
+
+[display]
+
+window/size/viewport_width=960
+window/size/viewport_height=720
+window/size/window_width_override=960
+window/size/window_height_override=720
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+
+[rendering]
+
+anti_aliasing/quality/msaa_3d=0
+anti_aliasing/quality/screen_space_aa=0
+anti_aliasing/quality/use_taa=false
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)
+
+[shader_globals]
+
+n64_three_point={
+"type": "float",
+"value": 1.0
+}
+n64_mip={
+"type": "float",
+"value": 1.0
+}
+n64_fog_on={
+"type": "float",
+"value": 1.0
+}
+n64_vc_on={
+"type": "float",
+"value": 1.0
+}
+n64_fog_color={
+"type": "vec4",
+"value": Vector4(0.8, 0.35, 0.25, 1)
+}
+n64_fog_range={
+"type": "vec2",
+"value": Vector2(10, 90)
+}
+n64_fog_max={
+"type": "float",
+"value": 1.0
+}
+n64_sky_light={
+"type": "vec4",
+"value": Vector4(0.2, 0.2, 0.35, 1)
+}
+n64_ground_light={
+"type": "vec4",
+"value": Vector4(0.12, 0.08, 0.08, 1)
+}
+n64_sun_dir={
+"type": "vec3",
+"value": Vector3(0.86, -0.24, -0.46)
+}
+n64_sun_color={
+"type": "vec4",
+"value": Vector4(1, 0.45, 0.2, 1)
+}
+n64_sun_energy={
+"type": "float",
+"value": 1.0
+}
+n64_window_color={
+"type": "vec4",
+"value": Vector4(1, 0.5, 0.15, 1)
+}
+n64_window_pos={
+"type": "vec3",
+"value": Vector3(-9.2, 1.45, 0.87)
+}
+n64_lantern_color={
+"type": "vec4",
+"value": Vector4(1, 0.5, 0.15, 1)
+}
+n64_lantern_pos={
+"type": "vec3",
+"value": Vector3(4.1, 1.79, -0.12)
+}
+n64_lantern_energy={
+"type": "float",
+"value": 1.0
+}
+n64_lantern_range={
+"type": "float",
+"value": 6.0
+}
+n64_time={
+"type": "float",
+"value": 0.0
+}
+n64_debug={
+"type": "float",
+"value": 0.0
+}
+n64_tex_nearest={
+"type": "float",
+"value": 0.0
+}

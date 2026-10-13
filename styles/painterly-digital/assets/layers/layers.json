@@ -1,0 +1,14 @@
+{
+ "scale": 1.15,
+ "y_off": 85,
+ "horizon_raw": 403,
+ "horizon_screen": 378.4,
+ "size_raw": [
+  1264,
+  848
+ ],
+ "size": [
+  1454,
+  975
+ ]
+}

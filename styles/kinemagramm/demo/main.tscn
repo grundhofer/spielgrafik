@@ -1,0 +1,67 @@
+[gd_scene load_steps=19 format=3]
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="Texture2D" path="res://art/still.png" id="2_still"]
+[ext_resource type="Texture2D" path="res://art/plate.png" id="3_plate"]
+[ext_resource type="Texture2D" path="res://art/mask_a.png" id="4_ma"]
+[ext_resource type="Texture2D" path="res://art/mask_b.png" id="5_mb"]
+[ext_resource type="Texture2D" path="res://art/mask_c.png" id="6_mc"]
+[ext_resource type="Texture2D" path="res://art/noise.png" id="7_noise"]
+[ext_resource type="Shader" path="res://shaders/still.gdshader" id="8_still_sh"]
+[ext_resource type="Texture2D" path="res://art/badger_body.png" id="9_body"]
+[ext_resource type="Texture2D" path="res://art/badger_scarf.png" id="10_scarf"]
+[ext_resource type="Texture2D" path="res://art/badger_lids.png" id="11_lids"]
+[ext_resource type="Shader" path="res://shaders/badger.gdshader" id="12_badger_sh"]
+[ext_resource type="Shader" path="res://shaders/panel.gdshader" id="13_panel_sh"]
+
+[sub_resource type="ShaderMaterial" id="M_still"]
+shader = ExtResource("8_still_sh")
+shader_parameter/plate = ExtResource("3_plate")
+shader_parameter/mask_a = ExtResource("4_ma")
+shader_parameter/mask_b = ExtResource("5_mb")
+shader_parameter/mask_c = ExtResource("6_mc")
+shader_parameter/noise_tex = ExtResource("7_noise")
+
+[sub_resource type="ShaderMaterial" id="M_badger"]
+shader = ExtResource("12_badger_sh")
+shader_parameter/scarf_tex = ExtResource("10_scarf")
+shader_parameter/lid_tex = ExtResource("11_lids")
+
+[sub_resource type="Gradient" id="G_shadow"]
+offsets = PackedFloat32Array(0, 0.55, 1)
+colors = PackedColorArray(0, 0, 0, 0.62, 0, 0, 0, 0.32, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="T_shadow"]
+gradient = SubResource("G_shadow")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="ShaderMaterial" id="M_panel"]
+shader = ExtResource("13_panel_sh")
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="Still" type="Sprite2D" parent="."]
+material = SubResource("M_still")
+texture = ExtResource("2_still")
+centered = false
+
+[node name="BadgerShadow" type="Sprite2D" parent="."]
+texture = SubResource("T_shadow")
+
+[node name="Badger" type="Sprite2D" parent="."]
+material = SubResource("M_badger")
+texture = ExtResource("9_body")
+centered = false
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="ColorRect" parent="UI"]
+material = SubResource("M_panel")
+offset_right = 100.0
+offset_bottom = 100.0
+color = Color(1, 1, 1, 1)

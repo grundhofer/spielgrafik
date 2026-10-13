@@ -1,0 +1,221 @@
+{
+ "slug": "pico8-fantasy",
+ "name": "Fantasy-Konsole (16 Farben, 128×128)",
+ "family": "pixel",
+ "kind": "style",
+ "era": "seit 2015",
+ "summary": "Grafik einer erfundenen Spielkonsole: ein quadratischer Bildschirm mit 128×128 Pixeln, eine feste Palette aus 16 Farben, 8×8-Sprites aus einem einzigen 128×128-Sprite-Blatt und eine winzige 3×5-Blockschrift. Der Charme kommt aus der Reduktion: jede Figur ist ein 16×16-Sprite, Licht, Rauch und Strahlen entstehen aus wenigen Zeichenbefehlen mit Füllmustern. Die Demo bildet die Konsole als kleine Zeichenschicht in GDScript nach, die nur Farbnummern kennt.",
+ "references": [
+  "PICO-8 (Lexaloffle, 2015), die Fantasy-Konsole, deren Grenzen der Auftrag vorgibt",
+  "Celeste Classic (Maddy Thorson und Noel Berry, 2015, PICO-8)",
+  "Just One Boss (J-Fry, PICO-8)",
+  "Porklike (Krystman, PICO-8)",
+  "TIC-80 (Vadim Grigoruk, 2017), eine verwandte Fantasy-Konsole mit 240×136 Pixeln"
+ ],
+ "traits": [
+  "Bildschirm 128×128, quadratische Pixel, ganzzahlig ×5 auf 640×640 und mittig mit schwarzem Rand in 1280×720",
+  "genau die 16 Grundfarben der Vorbild-Palette (000000 1d2b53 7e2553 008751 ab5236 5f574f c2c3c7 fff1e8 ff004d ffa300 ffec27 00e436 29adff 83769c ff77a8 ffccaa); probe.py: höchstens 16 Farben je Bild, 0 fremde Farben in 180 Bildern",
+  "Bildspeicher enthält Farbnummern 0–15, die Palette setzt erst der Ausgabe-Shader ein; gezeichnet wird nur mit den Befehlen der Konsole (cls, pset, line, rect, rectfill, circfill, fillp, spr, sspr, map, pal, palt, print)",
+  "Sprite-Blatt 128×128 = 256 Sprites zu 8×8: Zeilen 0–3 Akteure (Dachs 9 Posen à 16×16, 2 Boote, 2 Möwenbilder, Paket, Laterne), ab Sprite 64 die 59 verschiedenen Kartenfelder (Sprites 64–122). Nach den Kartenfeldern sind 133 Sprites frei; zählt man jeden 8×8-Block, in den kein einziges Pixel geschrieben wurde (also auch die Lücken zwischen den Akteuren in Zeile 0–3), sind 148 von 256 leer",
+  "Szene als Karte aus 8×8-Feldern (16×12 Felder, 90 belegt), um 3 px nach oben versetzt, damit die Kaioberkante auf einer Feldgrenze liegt; Sprite 0 bleibt leer und wird von map() nicht gezeichnet",
+  "Durchsichtsfarbe in allen Sprites und Kartenfeldern ist Rosa (14); gezeichnet wird mit palt(0,false) palt(14,true), damit Schwarz eine nutzbare Farbe ist",
+  "Konturregel: alles, was vor dem dunkelblauen Meer steht (Fässer, Kisten, Tau, Poller, Laternenpfahl mit Arm und Haken, Laterne, Steg, Boote, Masten, Dachkante und Traufe des Häuschens), hat schwarze Konturen; Dunkelblau nur vor Himmel und hellen Flächen. Im Poster gemessen: Zeile 76 unter Fässern, Kisten und Tau schwarz direkt über der Kaikante, obere Kiste auf einer gemeinsamen schwarzen Kontur (Zeile 68), Haken und Laternenring schwarz in Zeile 52 direkt unter dem Arm, der Arm geht in den Pfahl über, Traufkante schwarz (Zeile 55), Traufschatten dunkelgrau (Zeile 56)",
+  "Größen auf 128 px: Dachs 15 px (Mütze bis Füße), Fässer 8×10, Kisten 9×9, Tau 9×5, Poller 5×5, Paket 7×6",
+  "Mittelgrund: kurzer Steg (x 52–70) mit Planke auf Pfählen, die an der Wasserlinie mit kleinen Wellenringen enden, ein Plankengang führt vom Kai hinauf; links Boot A mit Festmacherleine zum Poller auf dem Kai, rechts am Stegende der Kutter (Boot B) mit rotem Dach und einem Fenster",
+  "Himmel aus waagrechten Farbbändern mit Schachbrett-Füllmuster an den Übergängen, Sterne als Einzelpixel, Wolken aus zwei Rechtecken mit oranger Unterkante",
+  "Effekte aus Zeichenbefehlen: Leuchtfeuer dreht sich in 3 s (Keil im Schachbrettmuster, Aufblitzen zur Kamera mit kurzen Strahlen, Spiegelung im Wasser), Rauch als Kreis-Teilchen (1 px, 2×2, Kreis r=2, zuletzt halb durchsichtig), Laterne flackert in 3 Stufen über pal() und hellt einen Fleck auf dem Kai über eine Farbtabelle auf",
+  "Wasser: 27 Glitzerstriche in 9 Zeilen wandern um ganze Pixel (1 px je 10, 15 oder 20 Bilder) und blinken; Boote schaukeln um 1 px; zwei Möwen mit 2 Flügelbildern (6 Wechsel/s), Möwe 1 fliegt 1 px je 2 Bilder, Möwe 2 1 px je 3 Bilder",
+  "Dachs 16×16 im Profil: Laufzyklus aus 4 Bildern bei 10 Bildern/s (jedes Bild 3 Aufnahmebilder), 2 px Vorschub je Bild, Schalende flattert hinter dem Nacken mit; danach Stand mit Schalende im Wind (Wechsel alle 10 Bilder), Atemhub 1 px (15 Bilder unten, 15 oben, Füße fest) und Blinzeln über 2 px (heller Augenpunkt wird zu dunkelgrauem Lid, 4 Bilder, bei 4,3 s und 5,6 s, danach alle 4 s). Gemessen (probe.py): Standfuß 0 px Abweichung über 37 Wechsel, Fußzeile in allen 180 Bildern 88, Kopfoberkante 73/74",
+  "Eigene 3×5-Blockschrift in 4×6-Zellen (32 Zeichen je Zeile), nur Großbuchstabenformen, Ä/Ö/Ü mit Punkten in der Leerzeile darüber, ß mit offener Ecke und Unterlänge",
+  "Textbox 128×37 px (28,9 % des Bildes) mit hellgrauem Rahmen ohne Eckpixel: Ortsname orange, Satz mit Schreibmaschine (1 Zeichen je Bild, Pause nach Satzzeichen) und blinkendem ▼, dann drei Auswahlpunkte mit rotem ▶ und gelber Markierung und eine grüne Parserzeile mit blinkendem Block",
+  "Grafikdaten im Textformat der Vorbild-Konsole: demo/cart/lornholm.p8 mit __gfx__ (128 Zeilen à 128 Hexziffern) und __map__ (32 Zeilen à 256 Hexziffern)"
+ ],
+ "camera": "Seitenansicht wie eine Bühne, feste Kamera, ein Bildschirm",
+ "resolution": "128×128, 16 Farben, 8×8-Sprites, Schrift 3×5 in 4×6-Zellen",
+ "pipeline": [
+  {
+   "step": "Hintergrund als Lageplan erzeugen",
+   "tool": "genimg (agy, verbatim: true)",
+   "detail": "1024×1024, ein Versuch, 92 s (prompts/bg.txt): Ortsbild einer Fantasy-Konsole, 128 Kunstpixel breit, die 16 Farben als Hex-Liste, flache Flächen, Himmel in Bändern mit einer Schachbrettzeile, strenge Seitenansicht. Das Modell hielt die Palette genau ein und traf Himmel, Meer und Aufteilung, zeichnete aber mit etwa 5 Bildpixeln je Kunstpixel (rund 200 statt 128 Kunstpixel), Steg und ein Boot von oben und malte unten eine Reihe Farbfelder."
+  },
+  {
+   "step": "Auf 128×128 einrasten (Versuch, verworfen)",
+   "tool": "tools/sprites.py pixelize --width 128 --palette pico8 --resample mode",
+   "detail": "Himmel und Meer brauchbar, Gegenstände (Fässer, Kisten, Dach, Boote, Fenster) zu Pixelbrei, die Schachbrettzeile verrauscht. Das Ergebnis ×8 vergrößert liegt als assets/raw/bg128_snap_x8.png bei."
+  },
+  {
+   "step": "Saubere Fassung auf dem 128er-Raster anfordern (verworfen)",
+   "tool": "genimg (agy, verbatim: true), Referenz bg128_snap_x8.png",
+   "detail": "Ein Versuch, 60 s (prompts/bg_clean.txt): dasselbe Raster, Fehler der Verkleinerung beheben (Konturen, Boote und Steg von der Seite, Farbfelder weg). Das Modell hielt das 8-px-Raster genau, übernahm aber den Pixelbrei fast unverändert, ließ Steg und Boot in Aufsicht und malte Rauch, obwohl der Prompt das ausschloss. Nicht verwendet."
+  },
+  {
+   "step": "Figurenblatt als Vorlage erzeugen",
+   "tool": "genimg (Codex, Grund: Transparenz), Referenz shared/badger/master_sheet.png",
+   "detail": "1536×1024, ein Versuch, 70 s (prompts/badger.txt): 5 Bilder à 16×16 Kunstpixel verlangt, geliefert eine saubere Pixelfigur mit etwa 26×36 Kunstpixeln je Bild (echter Alphakanal, dunkler Dunst um die Figuren). Verkleinerung nach Materialmehrheit auf 16 px ergab unlesbare Flecken (Kontur oder Weiß überwiegt). Übernommen wurden nur Kopfform (spitze Schnauze nach rechts, Ohr hinten) und Kostümfarben."
+  },
+  {
+   "step": "Alle Grafik als Text pixeln",
+   "tool": "scripts/art.py (von Hand), scripts/preview_art.py",
+   "detail": "Jede Grafik als Hexziffern je Pixel: Schornstein, Fenster, Tür, Leuchtturm, Fässer, Kisten, Tau, Poller, Laternenpfahl, Laterne, Paket, Möwe, zwei Boote und der Dachs. Der Dachs in 6 Entwürfen, je vergrößert auf Kai-, Meer- und Himmelsfarbe geprüft; nach der Prüfung zwei weitere Kopf-Fassungen (Ohr, Nasenspitze, Ärmel) und ein Schalende hinter dem Nacken. Oberkörper fest (13 Zeilen), Beine je Pose aus Fußstellungen erzeugt, Lauf mit 2 px Vorschub, im Durchgang und beim Einatmen hebt sich der Körper um 1 px."
+  },
+  {
+   "step": "Szene zusammensetzen, in Felder zerlegen, Cartridge schreiben",
+   "tool": "scripts/build_cart.py",
+   "detail": "Häuschen (Dachziegel, Bruchsteinwand im Verband, schwarze Traufe, dunkelgrauer Traufschatten), Felsnase in drei Flächen mit Grasdecke, Steg auf kurzen Pfählen mit Plankengang zum Kai, Kaiplatten im Verband, Laternenpfahl und Poller werden im Code in Bildschirmkoordinaten gesetzt und mit den Stempeln aus art.py ergänzt. Zerlegung in 8×8-Felder mit 3 px Versatz, leere Pixel als Rosa (14), gleiche Felder zusammengelegt (59 verschiedene von 90 belegten), Akteure in Blattzeile 0–3. Ausgabe: demo/cart/lornholm.p8 (__gfx__, __map__), demo/cart/sprites.json, assets/spritesheet.png, assets/static_layer.png; das Skript nennt freie Sprites nach den Feldern und ganz leere 8×8-Blöcke getrennt."
+  },
+  {
+   "step": "Schrift zeichnen",
+   "tool": "scripts/font35.py",
+   "detail": "61 Zeichen als Text: A–Z, Ä/Ö/Ü (Punkte in Zeile −1), ß (offene Ecke oben links, Unterlänge in Zeile 5, damit es nicht wie B aussieht), Ziffern, Satzzeichen, ▶, ▼ (5 px breit), █. Ausgabe demo/cart/font35.json und assets/font_preview.png (Breite nach der längsten Zeile, B und ß nebeneinander)."
+  },
+  {
+   "step": "Spielprogramm und Konsole in Godot",
+   "tool": "demo/scripts/p8.gd, demo/scripts/main.gd, demo/shaders/screen.gdshader",
+   "detail": "p8.gd ist die Zeichenschicht der Konsole (Bildspeicher als PackedByteArray mit Farbnummern, Sprite-Blatt, Karte, Zeichenpalette, Durchsichtsfarben, Füllmuster, Clip, Kamera, Schrift). main.gd zeichnet jedes Bild neu: Himmel, Meer, Strahl, Möwen, Boote mit Festmacherleine, Rauch, Karte (palt Rosa), Leuchtfeuer, Laterne mit Lichtfleck, Paket, Dachs, Textbox."
+  },
+  {
+   "step": "Prüfen",
+   "tool": "scripts/probe.py, tools/capture.py",
+   "detail": "probe.py rendert den Dachs allein auf Rosa (--only=badger, --probe) und misst Kopf, Fußzeile, Fußläufe, Haltezeiten und die Folge der Standposen; dann die ganze Szene (Farben je Bild). Ergebnis media/probe.json. Zusätzlich von Hand: Mobile- und Compatibility-Renderer gegen Forward+ (180 von 180 Bildern bytegleich, nach dieser Überarbeitung erneut geprüft), Dauerlauf ab 30 s (--t0=30), Konturen im Poster pixelgenau nachgemessen, Zeichenzeit je Bild (--probe: Mittel 1,7 ms, höchstens 2,1 ms auf dem Mac)."
+  },
+  {
+   "step": "Blindtest der Lesbarkeit",
+   "tool": "codex exec -i (gpt) und claude -p --model sonnet, je eine Frage ohne Kontext",
+   "detail": "Kein Mensch verfügbar; ersatzweise zwei KI-Betrachter ohne Vorwissen, je eine Stichprobe auf dem Posterbild (1280×720): welches Tier, was trägt es, was ist das Holzgestell im Wasser und daneben, schwebt etwas. Vergleich altes Poster, Kopf-Fassung E (nur Nasenspitze) und Endfassung J. Der Gemini-CLI-Zugang war als dritter Betrachter nicht nutzbar (Client nicht mehr unterstützt). Keine Bilderzeugung."
+  }
+ ],
+ "godot": [
+  "Viewport 128×128, stretch mode viewport, scale_mode integer, Standardfilter Nearest; Fenster 640×640; capture.py skaliert ×5 und setzt das Bild mittig in 1280×720",
+  "main.tscn: Node2D mit main.gd und ein TextureRect (128×128) mit shaders/screen.gdshader; die Textur ist der Bildspeicher als Image im Format R8 (eine Farbnummer je Pixel), der Shader liest sie mit texelFetch und setzt eine konstante Palette aus 16 Farben ein",
+  "p8.gd (class_name P8): cls, pset, pget, line (Bresenham), rect, rectfill, circ, circfill (Pixel mit dx²+dy² ≤ r²+0,8r wie auf der Konsole: r=1 ergibt ein Kreuz), ovalfill, spr, sspr (mit Spiegeln und Skalieren), map, mget, pal, palt, fillp (16-Bit-Muster je 4×4-Zelle, Zweitfarbe im oberen Nibble oder durchsichtig), clip, camera, prnt (print heißt wegen der eingebauten GDScript-Funktion prnt), text_width",
+  "load_cart() liest __gfx__ und __map__ aus res://cart/lornholm.p8 (Textformat der Konsole); load_font() die Glyphen aus font35.json",
+  "Karte und alle Akteure werden mit palt(0,false) palt(14,true) gezeichnet (Rosa durchsichtig, Schwarz sichtbar), danach palt() zurück",
+  "Ablauf wie auf der Konsole mit 30 Bildern/s: Zeit über delta aufsummiert, daraus die Bildnummer; alle Bewegungen aus der ganzzahligen Bildnummer (Laufbild alle 3 Bilder; Möwe 1 fliegt 1 px je 2 Bilder, Möwe 2 1 px je 3 Bilder, Flügelschlag alle 5 Bilder; Wolken 1 px je 15 Bilder; Boote 1 px auf und ab alle 20 bzw. 22 Bilder); Zufall (Sterne, Glitzer, Rauch, Laternenfolge) mit RandomNumberGenerator, Seed 8128",
+  "Boote: Boot A (x 22) links vom Steg, Festmacherleine als zwei line()-Stücke in Hellgrau vom Bug zum Poller, die mit dem Boot mitschaukelt; Boot B (x 71) am rechten Stegende; Masten als Linien mit schwarzer Schattenseite",
+  "Laternenlicht: Farben in einer Ellipse über die Tabelle LIGHT (z. B. Hellgrau → Pfirsich, Braun → Orange) aufgehellt, Rand im Schachbrett; dunkles Meer bleibt unberührt, Schwarz bleibt Schwarz; Flackern über pal(10,9)/pal(9,4) bzw. pal(9,10)",
+  "Dachs: badger_state() wählt aus 9 Sprites. Lauf: contact, pass, contact2, pass2 (Schalende wechselt mit). Stand ab Bild 96: stand_a/stand_b (Schalende, Wechsel alle 10 Bilder) und breath_a/breath_b (Oberkörper 1 px höher in Bild 15–29 jeder Sekunde); blink ist stand_b mit Lid und liegt in Fenstern, in denen Schal b und Oberkörper unten sind (Bild 34 und 71 nach Standbeginn, Wiederholung alle 120 Bilder)",
+  "Ablauf der Demo: Dachs läuft von x = −8 herein und hält nach 3,2 s links vom Paket; Satz tippt ab 0,5 s, ▼ blinkt ab etwa 2,7 s, Auswahl ab 4,3 s (Cursor springt bei 5,0 s auf »Das Paket ansehen«), Parserzeile tippt ab 4,6 s; Leuchtfeuer so gestellt, dass der Strahl im Poster (3,6 s) schräg nach links zeigt",
+  "Benutzerargumente nach --: --t0=<s> (später starten), --only=badger (nur Dachs auf Rosa), --probe (Pose, Position und Zeichenzeit je Bild ins Log)",
+  "Renderer: Forward+, Mobile und Compatibility liefern bytegleiche Bilder (180 von 180 verglichen, nach der Überarbeitung erneut)"
+ ],
+ "techniques": [
+  "kachelsatz",
+  "textoberflaeche"
+ ],
+ "ratings": {
+  "ai_fit": 2,
+  "consistency": 4,
+  "effort": 3,
+  "text_adventure": 3,
+  "mobile": 4
+ },
+ "ratings_note": "ai_fit 2: Das Bildmodell hielt die 16 Farben genau ein und lieferte einen brauchbaren Lageplan und eine Kopfform für den Dachs, aber kein einziges Pixel des fertigen Bildes; Einrasten auf 128 px und eine KI-Nachbesserung auf dem Raster scheiterten (siehe pitfalls). Der Look kommt aus Handarbeit in art.py und Zeichenbefehlen in main.gd. Konsistenz 4, weil Palette, 8×8-Raster, eine Schrift und wenige Zeichenbefehle kaum Abweichung zulassen; die Qualität hängt aber an der Hand, die pixelt, und an Regeln wie der Konturfarbe vor dem Meer, die erst eine Prüfung aufgedeckt hat. Aufwand 3: Requisiten sind in Minuten gesetzt, der Dachs brauchte 8 Kopf-Fassungen und bleibt nur eingeschränkt als Dachs lesbar, eine Szene rund 60 Felder; die Zeichenschicht ist wiederverwendbar. Textadventure 3: 32 Zeichen je Zeile und 5 Zeilen in der Box reichen für Satz, Auswahl und Parser, längere deutsche Texte in Großbuchstaben 3×5 sind aber mühsam zu lesen. Mobil 4 geschätzt: Mobile- und Compatibility-Renderer bytegleich zu Forward+, aber jedes Bild wird in GDScript Pixel für Pixel gezeichnet (1,7 ms im Mittel, höchstens 2,1 ms auf dem Mac, kein Telefon getestet).",
+ "verdict": "Der Stil ist auf den ersten Blick erkennbar und für ein Agent-Team gut wiederholbar, weil alles Text ist: Grafik als Hexziffern, Szene als Skript, Zeichnen über eine kleine Konsolenschicht. Neue Orte brauchen ein neues art.py-Kapitel und einen Lauf von build_cart.py; die KI hilft nur beim Lageplan. Für unser Textadventure ist 128×128 eng: Ein Ort fasst nur wenige Gegenstände, schon zwei Boote, ein Steg und eine Laterne drängen sich im Mittelgrund, die Figur ist 16 px groß und nicht sicher als Dachs zu erkennen, und die Box zeigt 5 Zeilen à 32 Zeichen in Großbuchstaben. Wer den Look will, sollte Palette, 3×5-Schrift und Zeichenbefehle übernehmen, aber Leinwand, Figur und Text lockern (z. B. 192×128, Figur 16×24 oder Textseiten über den ganzen Bildschirm). Als Stil für ein kleines Nebenspiel oder einen Prototyp passt er sehr gut.",
+ "pitfalls": [
+  "KI-Hintergrund nicht verwendbar als Pixelbild: agy zeichnete mit etwa 5 Bildpixeln je Kunstpixel (rund 200 statt 128 Kunstpixel), Steg und linkes Boot in Aufsicht und unten eine Reihe Farbfelder. pixelize --resample mode auf 128 px machte aus Fässern, Kisten, Dach, Fenster und Booten Pixelbrei. Er diente nur als Lageplan (Häuschen links, Leuchtturm auf der Felsnase rechts, Horizont bei etwa 35 %, Kai unten).",
+  "KI-Nachbesserung auf dem 128er-Raster gescheitert: Mit dem eingerasteten Bild als Referenz hielt agy das 8-px-Raster genau, wiederholte aber die Fehler, statt sie zu beheben, und malte trotz Verbot Schornsteinrauch. Eine Erzeugung ohne Nutzen.",
+  "Schwebende Requisiten (in der ersten Fassung, jetzt behoben): Fässer, Kisten, Tau und Laternenpfahl hatten dunkelblaue Konturen, also dieselbe Farbe wie das Meer dahinter. Die Unterkontur verschwand, und alles schien 1 px über der Kaikante zu schweben, die obere Kiste 2 px über den unteren, die Laterne hing mit unsichtbarem Haken 3 px unter dem Arm, der Arm lag 1 px über dem Pfahl, und die Fuge zwischen Dach und Wand ging ins Meer über. Auf weißem Grund (static_layer.png) war nichts davon zu sehen, nur im Poster. Behoben mit schwarzen Konturen vor dem Meer, Rosa als Durchsichtsfarbe auch für die Karte, einer gemeinsamen Kontur der Kisten und einem Pfahl, der durch den Arm läuft (im Poster nachgemessen, siehe traits). Ausnahme: Die Mütze des Dachses hat eine dunkelblaue Kontur, die vor dem Meer (Zeile 74–76) verschwindet; die Mütze hängt aber am Kopf und bleibt durch ihr Grün lesbar, deshalb nicht geändert.",
+  "KI-Figur zu fein: Codex lieferte statt 16×16 etwa 26×36 Kunstpixel je Bild. Verkleinern auf 16 px nach Materialmehrheit ergab Flecken. Der Dachs ist von Hand gepixelt; die ersten Entwürfe lasen sich als Krokodil, Ente oder Gesicht mit Schnurrbart. Eine Vorderansicht wirkte wie eine Maske oder ein Totenkopf und fehlt deshalb; der Dachs zeigt nur das Profil.",
+  "Dachs nur eingeschränkt als Dachs lesbar, Blindtest nur mit KI-Betrachtern (je eine Stichprobe, keine Menschen): Altes Poster (schwarzes Band bis zur Schnauzenspitze, kein Ohr): Codex »Ente«, Claude »Dachs«. Fassung E nach dem Prüfvorschlag (weißes Ohr hinten unter der Mütze, Streif endet hinter dem Auge, Nasenspitze 2 px, heller Ärmel): Codex »Fuchs«, Claude »wahrscheinlich Dachs, vielleicht Hund oder Maus«. Endfassung J (wie E, aber der schwarze Streif läuft als 4-px-Band unter dem Auge Richtung Nase weiter, mit weißem Kinn darunter und abgesetzter Nasenspitze): Codex »weißer Hund«, Claude »Dachs wegen des gestreiften Gesichts, Waschbär möglich«. Ich habe J gewählt, weil das gestreifte Gesicht das einzige Merkmal war, das ein Betrachter als Grund für »Dachs« nannte; das weicht bewusst vom Vorschlag ab, den Streif ganz auf die Nasenspitze zu kürzen. Auf 16 px mit Mütze bleibt die Figur mehrdeutig; ein Test mit Menschen fehlt.",
+  "Der helle Ärmel ist Weiß (7), nicht Pfirsich (15): Das Paket direkt daneben ist schon Pfirsich, ein Ärmel in derselben Farbe würde damit verschmelzen (nicht ausprobiert, nur abgewogen). 7 (fff1e8) ist in dieser Palette das cremefarbene Weiß, aber auch die Farbe des Gesichtsfells.",
+  "Mittelgrund bleibt dicht, obwohl umgebaut: Der Steg ist auf 19 px gekürzt, Boot B liegt neben dem Stegende statt darauf (rotes Dach, ein Fenster statt zwei gelber »Augen«), die Pfähle enden an der Wasserlinie, Boot A hat eine Festmacherleine zum Poller. Der Plankengang zum Kai ist von vorn gesehen und mischt damit zwei Ansichten in einer Seitenansicht; er kann als Leiter oder Treppe gelesen werden. Beide KI-Betrachter erkannten in beiden neuen Fassungen Steg und Boot und nannten keine schwebenden Requisiten (Codex nannte einmal den Lichtkeil, siehe unten); auf dem alten Poster sah Codex »ein Boot mit Laterne auf dem Steg« und Claude »eine kleine graue Figur« zwischen zwei roten Gegenständen auf dem Steg; die Frage nach Schwebendem beantwortete Claude dort mit »Ja« für die Laterne.",
+  "Ein KI-Betrachter (Codex) las den Leuchtfeuer-Keil im Schachbrettmuster einmal als »gelb-orange gemusterten länglichen Gegenstand, der in der Luft schwebt«. Das Füllmuster ist eine typische Technik der Konsole und bleibt; als Lichtstrahl liest es sich vor allem in Bewegung.",
+  "Größen: Fässer (8×10) und Kisten (9×9) sind jetzt etwas größer, damit sie neben dem 15 px großen Dachs nicht wie Spielzeug wirken. Das Paket (7×6) ist bewusst groß, weil es der Gegenstand der Szene ist und auf 128 px sonst nicht auffällt.",
+  "Stand-Animation aus ganzen Sprites: Schal, Atem und Blinzeln kombinieren sich nicht frei, weil jede Kombination ein eigenes 16×16-Sprite bräuchte. Es gibt 5 Standsprites; Blinzeln gibt es nur mit Schal b und gesenktem Oberkörper und liegt deshalb auf festen Bildern (alle 4 s). Der Atemhub bewegt Kopf und Rumpf um 1 px auf 15 px Figur, das ist deutlich, aber noch ruhig.",
+  "Text: 32 Zeichen je Zeile; der Satz aus ui_text braucht 3 Zeilen, Ortsname, Satz und Auswahl passen nicht zugleich in die Box (Auswahl ersetzt den Satz ab 4,3 s). Nur Großbuchstabenformen; Umlaute stehen mit Punkten in der Leerzeile der Zeile darüber, im Demo-Text kommen keine vor (nur in assets/font_preview.png geprüft). Die Unterlänge des ß liegt in derselben Leerzeile und kann dort einen Umlautpunkt der nächsten Zeile berühren, wenn beide in derselben Spalte stehen. Die Parserzeile tippt sich selbst (keine Tastatur).",
+  "Vereinfacht gegenüber dem Vorbild: kein Lua, kein Token- und kein CPU-Limit, keine Speicheradressen (pal und palt sind Funktionen statt poke), keine Bildschirmpalette und keine Zusatzfarben, keine Sprite-Flags (die Karte wird als Ganzes gezeichnet), kein Ton. Der Lichtfleck über pget/pset würde auf der echten Konsole Rechenzeit kosten; gemessen ist das nicht.",
+  "lornholm.p8 hat echte __gfx__- und __map__-Abschnitte, ist aber nicht in der Vorbild-Konsole geprüft (nicht vorhanden); der __lua__-Teil ist nur ein Kommentar, das Spielprogramm steht in main.gd.",
+  "Für einen Export aus Godot müssen cart/*.p8 und cart/*.json über einen Exportfilter mitgenommen werden, weil sie per FileAccess gelesen werden und keine importierten Ressourcen sind; geprüft ist nur der Lauf aus dem Projektordner.",
+  "Die eingebaute Schrift des Vorbilds hat keine Umlaute; hier ist es eine eigene 3×5-Schrift. Eigene Schriften kann das Vorbild laden, dieser Weg ist aber nicht nachgebaut.",
+  "Erste Fassung: Der Ortsname als Reiter über der Box verdeckte die Füße des Dachses; der Lichtkreis der Laterne färbte Mast, Boot und Steg orange (unruhig). Jetzt steht der Ortsname in der Box, und das Licht wirkt nur auf Kai, Pfahl und Arm. circfill mit r=1 ergibt wie auf der Konsole ein Kreuz; als Rauch las sich das wie ein Stern, junge Wölkchen sind deshalb 2×2-Quadrate."
+ ],
+ "lessons": [
+  "Die Konsole als Zeichenschicht nachbauen (Bildspeicher mit Farbnummern als R8-Textur, Palette im Shader, nur Befehle der Konsole): Fremde Farben oder Zwischentöne sind dann nicht darstellbar, probe.py fand 0 fremde Farben. Die Schicht (p8.gd + screen.gdshader) ist ohne Änderung für weitere Orte nutzbar.",
+  "Konturfarbe nach dem Hintergrund wählen: Mit nur 16 Farben ist der dunkelste Ton oft auch die Fläche dahinter. Alles vor dem dunkelblauen Meer bekommt schwarze Konturen, Dunkelblau nur vor Himmel und hellen Flächen. Prüfen im fertigen Bild, nicht auf weißem Grund: static_layer.png auf Weiß sah fehlerfrei aus, das Poster zeigte schwebende Fässer, Kisten und Laterne.",
+  "Damit Schwarz in Kartenfeldern und Sprites zeichnen kann, Rosa (14) als Durchsichtsfarbe ins ganze Blatt schreiben und Karte wie Akteure mit palt(0,false) palt(14,true) zeichnen; die Szene darf Rosa dann nicht selbst verwenden (build_cart.py nutzt es nicht).",
+  "Gestapelte Dinge teilen sich eine Kontur (obere Kiste 1 px tiefer auf die Oberkante der unteren), Anbauten laufen ineinander (Pfahl durch den Arm, Haken direkt am Laternenring). Doppelte Konturen oder Ränder in Hintergrundfarbe lesen sich als Lücke.",
+  "Grafik als Text (eine Hexziffer je Pixel) und eine Szene als Skript lassen sich vergleichen, versionieren und von Agenten ändern; preview_art.py zeigt jedes Teil vergrößert auf Kai-, Meer- und Himmelsfarbe.",
+  "Die Karte um einige Pixel versetzt zeichnen (map(0,0,0,-3,…)), damit wichtige Kanten wie die Kaioberkante auf eine Feldgrenze fallen; gleiche Felder zusammenlegen ergibt für einen Ort etwa 60 Felder, ein Viertel des Blatts.",
+  "Typische Effekte der Konsole sind billig und wirken sofort: Schachbrett-Füllmuster für Himmelsübergänge, Strahlkeil und ausblendenden Rauch, Kreis-Teilchen für Rauch, eine Farbtabelle für Licht (pget → LIGHT → pset) und pal() für Flackern.",
+  "Mittelgrund auf 128 px: Boote neben den Steg legen, nicht darauf oder dahinter; ein Steuerhaus mit zwei hellen Fenstern liest sich als Gesicht, eines mit Dach und einem Fenster als Haus. Pfähle an einer Wasserlinie mit Wellenringen enden lassen statt bis zur Kaikante, sonst wird der Steg zum Tisch.",
+  "Bei 128 px liefert das Bildmodell bestenfalls einen Lageplan und eine Farbstimmung: Die 16 Hex-Farben hält agy genau ein, Raster und Seitenansicht nicht. Auch ein bereits eingerastetes Bild als Referenz bringt es nicht zu sauberen Pixeln. Lieber gleich von Hand setzen.",
+  "Dachs bei 16 px im Profil: dunkler Hinterkopf mit weißem Ohrpunkt, schräger schwarzer Streif mit hellem Augenpunkt, der unter dem Auge Richtung Nase weiterläuft, weißes Kinn darunter, abgesetzte schwarze Nasenspitze. Ein Streif, der die Unterkante der Schnauze bildet, liest sich als Schnabel oder Schnurrbart; eine ganz weiße Schnauze mit schwarzer Nase als Fuchs oder Hund.",
+  "Stand-Animation in ganzen Bildern: Schalende alle 10 Bilder, Atemhub 1 px in 15/15 Bildern, Blinzeln über 2 px (heller Punkt wird zu dunkelgrauem Lid). Blinzeln als eigenes Sprite in die Fenster legen, in denen die übrigen Teile passen, sonst springt der Schal für ein Bild.",
+  "Beine aus Fußstellungen erzeugen: Vorschub 2 px je Laufbild, der Standfuß wandert im Sprite genau 2 px zurück (7 → 5 → 3); den Lauf auf dem Durchgang enden lassen, dessen Standfuß die Stehpose übernimmt. Gemessen 0 px Abweichung über 37 Wechsel (Lauf und Atemhub), Fußzeile immer 88.",
+  "Eine eigene 3×5-Schrift mit 4-px-Vorschub ist schnell als Text gezeichnet, lizenzfrei und hat Umlaute; 32 Zeichen je Zeile auf 128 px. ß braucht eine Unterlänge oder offene Ecke, sonst ist es von B nicht zu unterscheiden; die Vorschau so breit anlegen, dass die längste Zeile passt. Schreibmaschine mit 1 Zeichen je Bild und 6 Bildern Pause nach Satzzeichen liest sich natürlich.",
+  "Ein schneller Blindtest mit KI-Betrachtern (codex exec -i, claude -p) kostet keine Bilderzeugung und findet grobe Lesefehler (Ente, schwebende Laterne, Gegenstand auf dem Steg); die Antworten schwanken aber von Stichprobe zu Stichprobe und ersetzen keinen Test mit Menschen.",
+  "Messmodi in der Demo selbst (--only=badger auf Rosa, --probe mit Pose, Position und Zeichenzeit) machen Fuß-, Farb- und Leistungsprüfungen mit einem kurzen Skript möglich."
+ ],
+ "assets": [
+  {
+   "file": "assets/spritesheet.png",
+   "kind": "tileset",
+   "made_with": "Code: scripts/art.py (von Hand gepixelt) + scripts/build_cart.py; Sprite-Blatt 128×128 mit Akteuren (9 Dachsposen) und 59 Kartenfeldern, Rosa = durchsichtig (×4)",
+   "prompt": ""
+  },
+  {
+   "file": "assets/static_layer.png",
+   "kind": "background",
+   "made_with": "Code: scripts/build_cart.py, feste Bildteile der Szene vor dem Zerlegen in Felder (×4)",
+   "prompt": ""
+  },
+  {
+   "file": "scripts/art.py",
+   "kind": "sprite",
+   "made_with": "Von Hand als Hexziffern: Dachs (Oberkörper + Beine je Pose, Schalende, Lid), Boote, Möwe, Paket, Laterne, Laternenpfahl, Poller, Häuschenteile, Leuchtturm, Fass, Kiste, Tau",
+   "prompt": ""
+  },
+  {
+   "file": "demo/cart/lornholm.p8",
+   "kind": "data",
+   "made_with": "scripts/build_cart.py: __gfx__ und __map__ im Textformat der Vorbild-Konsole",
+   "prompt": ""
+  },
+  {
+   "file": "assets/font_preview.png",
+   "kind": "font",
+   "made_with": "Eigene 3×5-Schrift (scripts/font35.py), Vorschau ×6 mit Umlauten und ß neben B",
+   "prompt": ""
+  },
+  {
+   "file": "demo/scripts/p8.gd",
+   "kind": "effect",
+   "made_with": "Code: Zeichenschicht der Konsole (Bildspeicher, Sprites, Karte, Füllmuster, Paletten, Schrift)",
+   "prompt": ""
+  },
+  {
+   "file": "demo/shaders/screen.gdshader",
+   "kind": "shader",
+   "made_with": "Code: Farbnummer → feste 16-Farben-Palette",
+   "prompt": ""
+  },
+  {
+   "file": "assets/raw/bg.png",
+   "kind": "reference",
+   "made_with": "agy (Gemini), nur als Lageplan genutzt",
+   "prompt": "assets/raw/bg.json"
+  },
+  {
+   "file": "assets/raw/bg_clean.png",
+   "kind": "reference",
+   "made_with": "agy (Gemini) mit dem eingerasteten Bild als Referenz, verworfen",
+   "prompt": "assets/raw/bg_clean.json"
+  },
+  {
+   "file": "assets/raw/badger.png",
+   "kind": "reference",
+   "made_with": "Codex (gpt-image) mit shared/badger/master_sheet.png, nur als Vorlage für Kopfform und Kostümfarben",
+   "prompt": "assets/raw/badger.json"
+  }
+ ],
+ "licenses": [
+  {
+   "item": "Eigene 3×5-Blockschrift font35 (scripts/font35.py, demo/cart/font35.json)",
+   "license": "CC0-1.0",
+   "source": "eigene Zeichnung für diesen Eintrag (Lizenztext: demo/fonts/LICENSE-font35.txt)"
+  }
+ ],
+ "image_generations": 3,
+ "tool_issues": [],
+ "status": "done"
+}

@@ -1,0 +1,66 @@
+{
+ "_doc": {
+  "use": "Variante für die Demo (z. B. \"ai_bg_flat_touchup\", \"ai_bg_flat_detail\", \"ai_bg_flat_lines\" oder \"ai_bg_flat\"); leer = automatisch (Detail-Variante, wenn die Strichvorlage zu mindestens 60 % auf Farbkanten liegt, sonst wie zuvor; die Handnacharbeit wird nie automatisch gewählt)",
+  "pairs": "Strichvorlage -> zugehöriges Farbbild (Dateistamm)",
+  "images.<stamm>.crop_top": "Beginn des 320:168-Ausschnitts als Anteil der Bildhöhe (null = mittig)",
+  "images.<stamm>.mapping": "auto | clusters | nearest (nearest nur, wenn das Bild schon EGA-Farben hat)",
+  "images.<stamm>.clusters": "Zahl der Farbgruppen (k-means), Standard 20",
+  "images.<stamm>.cluster_map": "Handzuordnung Gruppe -> EGA-Index, z. B. {\"3\": 1} oder farbgenau {\"#441e0c\": 0} (trifft die Gruppe mit der nächsten Mittelfarbe; Gruppennummern ändern sich mit Ausschnitt und Gruppenzahl); Gruppen stehen in <stamm>_clusters.png",
+  "images.<stamm>.min_area": "kleinere Farbflächen gehen in der Nachbarfarbe auf (Standard 3; Sterne bleiben)",
+  "images.<stamm>.ink_threshold / ink_coverage / close_gaps": "Strichvorlage: Grauwertschwelle (null = Otsu), Mindestanteil Tinte je Zielpixel (0.18), 1-Pixel-Lücken schließen (1)",
+  "images.<stamm>.region_majority": "Kombination: Mehrheitsanteil, ab dem eine Fläche einfarbig wird (0.6)",
+  "images.<stamm>.line_style": "auto (Linien gehen in Flächen auf oder werden dunklere Umrisse) | absorb | black",
+  "images.<stamm>.region_colors": "nur Strichvorlage ohne Farbbild: [[x, y, EGA-Index], ...] je Fläche (160×168-Koordinaten)",
+  "layout.<variante>": "Lage überschreiben: walk_y, quay_top, start_x, parcel_x, water, lamp [x0,y0,x1,y1], lantern [x0,y0,x1,y1], chimney_top [x,y], gull_y (Flughöhe der Möwe), glints [[x,y,len],...], priority_objects [[x0,y0,x1,y1,band],...]; null bei lamp/lantern/chimney_top schaltet die Animation ab",
+  "images.<stamm>.detail / detail_theta / detail_search / detail_darker": "Strichvorlage als Detailhinweis (Variante ai_<farbbild>_detail): an/aus (true), Mindestanteil der Minderheitsfarbe im Zielpixel (0.25), Nachbarpixel quer zur Linie mitprüfen (1), nur dunklere Details außer auf Schwarz/Dunkelblau (true)",
+  "touchup": "Handnacharbeit aus scripts/ai_touchup.py (Funktion touchup_<farbbild>) als Variante ai_<farbbild>_touchup erzeugen (true); false schaltet sie ab"
+ },
+ "use": "ai_bg_flat_touchup",
+ "touchup": true,
+ "pairs": {
+  "bg_lines": "bg_flat"
+ },
+ "images": {
+  "bg_flat": {
+   "crop_top": 0.06,
+   "clusters": 24,
+   "min_area": 5,
+   "cluster_map": {
+    "#24170b": 0,
+    "#441e0c": 0
+   }
+  },
+  "bg_lines": {
+   "detail_theta": 0.25
+  }
+ },
+ "layout": {
+  "ai_bg_flat_detail": {
+   "walk_y": 152,
+   "lantern": [
+    116,
+    83,
+    120,
+    93
+   ],
+   "chimney_top": [
+    12,
+    21
+   ]
+  },
+  "ai_bg_flat_touchup": {
+   "walk_y": 152,
+   "lantern": [
+    116,
+    83,
+    120,
+    93
+   ],
+   "chimney_top": [
+    12,
+    21
+   ],
+   "start_x": 132
+  }
+ }
+}

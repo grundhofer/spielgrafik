@@ -1,0 +1,27 @@
+; Engine configuration file.
+; Von Hand geschrieben: Katalogeintrag "Vorgerenderte Hintergründe, feste Kamera" (Godot 4.7).
+; Alles wird in 320×240 gerendert (Hintergrundbild, 3D-Figur, Oberfläche) und ganzzahlig ×3 vergrößert.
+
+config_version=5
+
+[application]
+
+config/name="Spielgrafik - Vorgerenderte Hintergruende, feste Kamera"
+run/main_scene="res://main.tscn"
+config/features=PackedStringArray("4.7", "Forward Plus")
+
+[display]
+
+window/size/viewport_width=320
+window/size/viewport_height=240
+window/size/window_width_override=960
+window/size/window_height_override=720
+window/stretch/mode="viewport"
+window/stretch/scale_mode="integer"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+anti_aliasing/quality/msaa_3d=0
+anti_aliasing/quality/screen_space_aa=0
+anti_aliasing/quality/use_taa=false

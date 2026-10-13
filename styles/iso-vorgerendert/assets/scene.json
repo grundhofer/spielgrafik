@@ -1,0 +1,70 @@
+{
+ "_comment": "Gemeinsame Szenendaten für Blender-Skripte, Python-Verarbeitung und Godot (Kopie in demo/data/scene.json). Koordinaten in Godot-Achsen (x rechts, y oben, z zur Hauptkamera), Meter.",
+ "camera": {
+  "euler_blender_deg": [
+   60.0,
+   0.0,
+   -45.0
+  ],
+  "note": "orthografisch, 30° Neigung, um -45° gedreht: Blick nach hinten rechts (+x, -z), Kamera vorne links. Iso-Bildkoordinaten: X = (x+z)/sqrt2, Y = (x-z)/(2 sqrt2) + y cos30. Kartenmaßstab: ein Laufzyklus des Dachses in Originalgröße (0,3667 m) = (8, 4) px, also 30,85 px/m.",
+  "stride_m": 0.3667,
+  "cycle_px": [
+   8,
+   4
+  ]
+ },
+ "map": {
+  "size": [
+   640,
+   480
+  ],
+  "X0": -9.2,
+  "Ytop_view": 4.9,
+  "view_row": 40,
+  "view_size": [
+   640,
+   360
+  ],
+  "bar_height": 84
+ },
+ "layout_changes": {
+  "Lighthouse": {
+   "pos": [
+    1.5,
+    -0.2,
+    10.0
+   ],
+   "scale": 0.55,
+   "face_deg": -30.0
+  },
+  "Barrel1": {
+   "pos": [
+    -6.62,
+    0.0,
+    1.5
+   ]
+  }
+ },
+ "sun": {
+  "azimuth_deg": 196.0,
+  "elevation_deg": 24.0,
+  "note": "Richtung zur Sonne: Azimut in der Bodenebene von +x gegen -z gemessen (Godot), 180 = Westen (-x)"
+ },
+ "badger_path": {
+  "start": [
+   -5.9,
+   0.0,
+   -0.75
+  ],
+  "direction": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "cycles": 7
+ },
+ "badger": {
+  "scale": 1.25,
+  "note": "Figur 1,25-fach überhöht (Spielmaßstab): 1,26 m, ein Zyklus = 0,458 m = (10, 5) px"
+ }
+}

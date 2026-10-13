@@ -1,0 +1,450 @@
+{
+ "pairs": [
+  {
+   "id": "vga_bg",
+   "title": "VGA-Hintergrund",
+   "kind": "background_pixel",
+   "codex": {
+    "file": "styles/vga-adventure/assets/raw/bg.png",
+    "size": "1536x1024",
+    "backend": "codex",
+    "seconds": 57.2,
+    "requested": "1536x1024",
+    "refs": 0,
+    "grid": {
+     "period_x": 14.83,
+     "peak_x": 0.007,
+     "period_y": 12.06,
+     "peak_y": 0.002,
+     "art_px": null
+    },
+    "colours95": 1063,
+    "transparency": {
+     "alpha": false
+    }
+   },
+   "agy": {
+    "file": "styles/bildmodelle-vergleich/assets/raw/vga_bg_agy.png",
+    "size": "1264x848",
+    "backend": "agy",
+    "seconds": 199.3,
+    "requested": "1536x1024",
+    "refs": 0,
+    "verbatim": true,
+    "source_format": "jpg",
+    "grid": {
+     "period_x": 2.74,
+     "peak_x": 0.118,
+     "period_y": 2.73,
+     "peak_y": 0.146,
+     "art_px": "462x310"
+    },
+    "colours95": 313,
+    "transparency": {
+     "alpha": false
+    }
+   }
+  },
+  {
+   "id": "oel_bg",
+   "title": "Ölmalerei-Hintergrund",
+   "kind": "background_paint",
+   "codex": {
+    "file": "styles/oelmalerei/assets/raw/bg3.png",
+    "size": "1536x1024",
+    "backend": "codex",
+    "seconds": 73.0,
+    "requested": "1536x1024",
+    "refs": 0,
+    "colours95": 490,
+    "transparency": {
+     "alpha": false
+    }
+   },
+   "agy": {
+    "file": "styles/bildmodelle-vergleich/assets/raw/oel_bg_agy.png",
+    "size": "1264x848",
+    "backend": "agy",
+    "seconds": 84.9,
+    "requested": "1536x1024",
+    "refs": 0,
+    "verbatim": true,
+    "source_format": "jpg",
+    "colours95": 364,
+    "transparency": {
+     "alpha": false
+    }
+   }
+  },
+  {
+   "id": "vga_badger",
+   "title": "VGA-Figurenblatt (Referenzblatt)",
+   "kind": "sprite_sheet",
+   "codex": {
+    "file": "styles/vga-adventure/assets/raw/badger_small.png",
+    "size": "1536x1024",
+    "backend": "codex",
+    "seconds": 65.1,
+    "requested": "1536x1024",
+    "refs": 1,
+    "grid": {
+     "period_x": 4.07,
+     "peak_x": 0.062,
+     "period_y": 4.2,
+     "peak_y": 0.073,
+     "art_px": "378x244"
+    },
+    "colours95": 405,
+    "transparency": {
+     "alpha": true,
+     "share_clear": 0.575,
+     "share_full": 0.0,
+     "share_semi": 0.425,
+     "share_haze_1_7": 0.089,
+     "opaque_alpha_median": 252,
+     "edge_px": 15511,
+     "edge_magenta_px": 0,
+     "purple_share_ring_0_1_2": [
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    "layout": {
+     "rows": [
+      {
+       "frames": 6,
+       "heights": [
+        339,
+        339,
+        339,
+        339,
+        339,
+        339
+       ],
+       "top_spread": 0,
+       "foot_spread": 0,
+       "height_share": 0.331,
+       "art_px_tall": 81
+      },
+      {
+       "frames": 4,
+       "heights": [
+        356,
+        356,
+        356,
+        356
+       ],
+       "top_spread": 0,
+       "foot_spread": 0,
+       "height_share": 0.348,
+       "art_px_tall": 85
+      }
+     ],
+     "row2_to_row1_scale": 1.05
+    }
+   },
+   "agy": {
+    "file": "styles/bildmodelle-vergleich/assets/raw/vga_badger_agy.png",
+    "size": "1264x848",
+    "backend": "agy",
+    "seconds": 67.0,
+    "requested": "1536x1024",
+    "refs": 1,
+    "verbatim": true,
+    "source_format": "jpg",
+    "key_transparent_share": 0.552,
+    "grid": {
+     "period_x": 4.22,
+     "peak_x": 0.123,
+     "period_y": 4.19,
+     "peak_y": 0.142,
+     "art_px": "299x202"
+    },
+    "colours95": 487,
+    "transparency": {
+     "alpha": true,
+     "share_clear": 0.552,
+     "share_full": 0.44,
+     "share_semi": 0.008,
+     "share_haze_1_7": 0.0,
+     "opaque_alpha_median": 255,
+     "edge_px": 13404,
+     "edge_magenta_px": 0,
+     "purple_share_ring_0_1_2": [
+      0.0,
+      0.178,
+      0.526
+     ]
+    },
+    "layout": {
+     "rows": [
+      {
+       "frames": 6,
+       "heights": [
+        298,
+        290,
+        294,
+        303,
+        298,
+        290
+       ],
+       "top_spread": 13,
+       "foot_spread": 0,
+       "height_share": 0.348,
+       "art_px_tall": 71
+      },
+      {
+       "frames": 4,
+       "heights": [
+        379,
+        383,
+        379,
+        379
+       ],
+       "top_spread": 4,
+       "foot_spread": 0,
+       "height_share": 0.448,
+       "art_px_tall": 91
+      }
+     ],
+     "row2_to_row1_scale": 1.286
+    }
+   }
+  },
+  {
+   "id": "oel_portrait",
+   "title": "Öl-Porträt (Referenzblatt)",
+   "kind": "portrait",
+   "codex": {
+    "file": "styles/oelmalerei/assets/raw/portrait.png",
+    "size": "1254x1254",
+    "backend": "codex",
+    "seconds": 77.1,
+    "requested": "1024x1024",
+    "refs": 1,
+    "colours95": 1605,
+    "transparency": {
+     "alpha": false
+    }
+   },
+   "agy": {
+    "file": "styles/bildmodelle-vergleich/assets/raw/oel_portrait_agy.png",
+    "size": "1024x1024",
+    "backend": "agy",
+    "seconds": 62.7,
+    "requested": "1024x1024",
+    "refs": 1,
+    "verbatim": true,
+    "source_format": "jpg",
+    "colours95": 2928,
+    "transparency": {
+     "alpha": false
+    }
+   }
+  },
+  {
+   "id": "master_sheet",
+   "title": "Figurenblatt ohne Referenz",
+   "kind": "character_sheet",
+   "codex": {
+    "file": "shared/badger/master_sheet.png",
+    "size": "1536x1024",
+    "backend": "codex",
+    "seconds": 46.4,
+    "requested": "1536x1024",
+    "refs": 0,
+    "colours95": 243,
+    "transparency": {
+     "alpha": false
+    }
+   },
+   "agy": {
+    "file": "styles/bildmodelle-vergleich/assets/raw/master_sheet_agy.png",
+    "size": "1264x848",
+    "backend": "agy",
+    "seconds": 46.5,
+    "requested": "1536x1024",
+    "refs": 0,
+    "verbatim": true,
+    "source_format": "jpg",
+    "colours95": 285,
+    "transparency": {
+     "alpha": false
+    }
+   }
+  },
+  {
+   "id": "vga_items",
+   "title": "Inventar-Symbole",
+   "kind": "icons",
+   "codex": {
+    "file": "styles/vga-adventure/assets/raw/items.png",
+    "size": "1254x1254",
+    "backend": "codex",
+    "seconds": 64.8,
+    "requested": "1024x1024",
+    "refs": 0,
+    "grid": {
+     "period_x": 8.79,
+     "peak_x": 0.044,
+     "period_y": 8.99,
+     "peak_y": 0.049,
+     "art_px": "143x140"
+    },
+    "colours95": 728,
+    "transparency": {
+     "alpha": true,
+     "share_clear": 0.618,
+     "share_full": 0.001,
+     "share_semi": 0.381,
+     "share_haze_1_7": 0.029,
+     "opaque_alpha_median": 253,
+     "edge_px": 10193,
+     "edge_magenta_px": 0,
+     "purple_share_ring_0_1_2": [
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "agy": {
+    "file": "styles/bildmodelle-vergleich/assets/raw/vga_items_agy.png",
+    "size": "1024x1024",
+    "backend": "agy",
+    "seconds": 43.5,
+    "requested": "1024x1024",
+    "refs": 0,
+    "verbatim": true,
+    "source_format": "jpg",
+    "key_transparent_share": 0.715,
+    "grid": {
+     "period_x": 10.45,
+     "peak_x": 0.152,
+     "period_y": 10.51,
+     "peak_y": 0.148,
+     "art_px": "98x97"
+    },
+    "colours95": 456,
+    "transparency": {
+     "alpha": true,
+     "share_clear": 0.715,
+     "share_full": 0.283,
+     "share_semi": 0.002,
+     "share_haze_1_7": 0.0,
+     "opaque_alpha_median": 255,
+     "edge_px": 7037,
+     "edge_magenta_px": 0,
+     "purple_share_ring_0_1_2": [
+      0.0,
+      0.048,
+      0.342
+     ]
+    }
+   }
+  },
+  {
+   "id": "ps1_textures",
+   "title": "Texturblatt 4×4",
+   "kind": "textures",
+   "codex": {
+    "file": "styles/bildmodelle-vergleich/assets/raw/ps1_textures_codex.png",
+    "size": "1254x1254",
+    "backend": "codex",
+    "seconds": 102.6,
+    "requested": "1024x1024",
+    "refs": 0,
+    "colours95": 998,
+    "transparency": {
+     "alpha": false
+    },
+    "seams": {
+     "tiles": 16,
+     "seam_ratio": [
+      1.86,
+      2.74,
+      2.03,
+      2.48,
+      2.17,
+      2.37,
+      2.23,
+      2.1,
+      3.25,
+      1.57,
+      2.42,
+      2.36,
+      1.66,
+      2.34,
+      3.25,
+      2.71
+     ],
+     "seam_ratio_median": 2.3499999999999996,
+     "tiles_over_2": 13
+    }
+   },
+   "agy": {
+    "file": "styles/ps1-lowpoly/assets/raw/textures.png",
+    "size": "1024x1024",
+    "backend": "agy",
+    "seconds": 55.7,
+    "requested": "1024x1024",
+    "refs": 0,
+    "verbatim": false,
+    "source_format": "jpg",
+    "colours95": 381,
+    "transparency": {
+     "alpha": false
+    },
+    "seams": {
+     "tiles": 16,
+     "seam_ratio": [
+      1.49,
+      1.44,
+      2.49,
+      2.99,
+      2.47,
+      3.33,
+      1.91,
+      1.48,
+      2.8,
+      2.52,
+      2.45,
+      1.83,
+      1.7,
+      1.92,
+      3.06,
+      2.15
+     ],
+     "seam_ratio_median": 2.3,
+     "tiles_over_2": 9
+    }
+   }
+  }
+ ],
+ "repeats": [
+  {
+   "id": "vga_bg_codex",
+   "model": "codex",
+   "a": "styles/vga-adventure/assets/raw/bg.png",
+   "b": "styles/bildmodelle-vergleich/assets/raw/vga_bg_codex_b.png",
+   "delta_e_48x32": 15.1,
+   "edge_corr_192x128": 0.309
+  },
+  {
+   "id": "vga_bg_agy",
+   "model": "agy",
+   "a": "styles/bildmodelle-vergleich/assets/raw/vga_bg_agy.png",
+   "b": "styles/bildmodelle-vergleich/assets/raw/vga_bg_agy_b.png",
+   "delta_e_48x32": 10.1,
+   "edge_corr_192x128": 0.311
+  }
+ ],
+ "cross_model": [
+  {
+   "id": "vga_bg codex↔agy",
+   "delta_e_48x32": 25.8,
+   "edge_corr_192x128": 0.279
+  }
+ ]
+}

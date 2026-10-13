@@ -1,0 +1,51 @@
+; Engine configuration file.
+; Von Hand geschrieben: Katalogeintrag pixel-3d (echtes 3D in 428×242 gerendert, ganzzahlig ×3), Godot 4.7.
+; Das Fenster ist 1280×720 groß. Die 3D-Szene rendert in den SubViewport "World" (428×242, ein Pixel Rand
+; für den Restversatz der Kamera), die Oberfläche in "UIView" (427×240). main.gd zeigt beide mit Nearest
+; dreifach vergrößert; die Farbpalette rastet ein canvas_item-Shader ein (shaders/palette.gdshader).
+
+config_version=5
+
+[application]
+
+config/name="Pixel-3D – Hafen von Lornholm"
+run/main_scene="res://main.tscn"
+config/features=PackedStringArray("4.7", "Forward Plus")
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+anti_aliasing/quality/msaa_3d=0
+anti_aliasing/quality/screen_space_aa=0
+anti_aliasing/quality/use_taa=false
+anti_aliasing/quality/use_debanding=false
+lights_and_shadows/directional_shadow/size=4096
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0
+lights_and_shadows/positional_shadow/soft_shadow_filter_quality=0
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)
+2d/snap/snap_2d_transforms_to_pixel=true
+2d/snap/snap_2d_vertices_to_pixel=true
+
+[shader_globals]
+
+p3d_time={
+"type": "float",
+"value": 0.0
+}
+p3d_pan={
+"type": "vec2",
+"value": Vector2(0, 0)
+}
+p3d_fog_color={
+"type": "color",
+"value": Color(0.85, 0.47, 0.47, 1)
+}
+p3d_fog_range={
+"type": "vec3",
+"value": Vector3(38, 420, 0.8)
+}

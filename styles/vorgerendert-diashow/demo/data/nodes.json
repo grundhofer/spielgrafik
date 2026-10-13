@@ -1,0 +1,30 @@
+{
+ "_comment": "Knotenansichten (Godot-Koordinaten: Position, Ziel, horizontaler Bildwinkel) und Dachs-Clip. Gelesen von blender/render_nodes.py und scripts/bake.py.",
+ "image_size": [544, 332],
+ "loop_s": 2.0,
+ "fps": 15,
+ "exposure": 0.0,
+ "sky_image": null,
+ "nodes": {
+  "kai": {"name": "Kai", "pos": [-2.2, 1.62, 5.6], "target": [-9.2, 2.9, -2.5], "hfov": 64, "lantern_flicker": false,
+          "hide_cut_bollards": true, "soft_rects": [[212, 0, 58, 86]]},
+  "steg": {"name": "Steg", "pos": [2.2, 1.62, 3.0], "target": [6.0, 2.6, -20.0], "hfov": 64, "hide_cut_bollards": true},
+  "tuer": {"name": "Leuchtturmtür", "pos": [11.2, 4.64, -18.9], "target": [9.4, 5.0, -25.6], "hfov": 68, "lantern_flicker": false}
+ },
+ "badger_clip": {
+  "node": "steg",
+  "start": [3.45, 0.04, -3.992],
+  "end": [3.45, 0.04, 0.0],
+  "speed_scale": 2.0,
+  "walk_s": 1.535,
+  "decel_s": 0.45,
+  "blend_to_wave_s": 0.3,
+  "blend_to_idle_s": 0.3,
+  "face_yaw_deg": -102.4,
+  "rim": {"dir": [1.65, 1.2, -0.8], "strength": 1.2, "power": 1.5, "color": "#FFE2B0"},
+  "frames": 117,
+  "intro_frames": 87,
+  "loop_start": 87,
+  "loop_frames": 30
+ }
+}

@@ -1,0 +1,68 @@
+{
+ "ohne Texturen (glTF-Farben)": {
+  "changed_share": 0.4386,
+  "mean_abs": 13.55
+ },
+ "ohne Parallaxe": {
+  "changed_share": 0.1931,
+  "mean_abs": 5.22
+ },
+ "ohne SDFGI": {
+  "changed_share": 0.5225,
+  "mean_abs": 13.21
+ },
+ "ohne SSR": {
+  "changed_share": 0.0183,
+  "mean_abs": 0.47
+ },
+ "ohne SSAO+SSIL": {
+  "changed_share": 0.025,
+  "mean_abs": 0.93
+ },
+ "ohne vol. Nebel": {
+  "changed_share": 0.201,
+  "mean_abs": 6.1
+ },
+ "ohne Dunst an Laterne/Fenster": {
+  "changed_share": 0.0803,
+  "mean_abs": 2.37
+ },
+ "ohne Fell": {
+  "changed_share": 0.0142,
+  "mean_abs": 0.4
+ },
+ "ohne Tiefenschärfe": {
+  "changed_share": 0.0173,
+  "mean_abs": 0.64
+ },
+ "Helligkeit um die Laterne (Endeinstellung)": {
+  "voll": 146.1,
+  "ohne vol. Nebel": 115.9
+ },
+ "Helligkeit vor dem Fenster": {
+  "voll": 82.4,
+  "ohne vol. Nebel": 31.1,
+  "ohne Dunst": 53.4
+ },
+ "Helligkeit um die Laterne (Totale)": {
+  "voll": 136.6,
+  "ohne vol. Nebel": 78.1,
+  "ohne Dunst": 104.2
+ },
+ "Totale ohne vol. Nebel": {
+  "changed_share": 0.2834,
+  "mean_abs": 9.05
+ },
+ "Totale ohne Dunst": {
+  "changed_share": 0.1024,
+  "mean_abs": 3.53
+ },
+ "Renderer Mobile": {
+  "changed_share": 0.6135,
+  "mean_abs": 22.83
+ },
+ "Renderer Compatibility": {
+  "changed_share": 0.9271,
+  "mean_abs": 62.76
+ }
+}

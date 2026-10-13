@@ -1,0 +1,162 @@
+{
+ "scale": 0.285,
+ "source": "assets/raw/puppet.png",
+ "pieces": {
+  "leg_n": {
+   "file": "leg_n.png",
+   "size": [
+    33,
+    73
+   ],
+   "pivot": [
+    16.5,
+    10.52
+   ],
+   "ankle_rel": [
+    0.74,
+    52.04
+   ]
+  },
+  "foot_n": {
+   "file": "foot_n.png",
+   "size": [
+    36,
+    25
+   ],
+   "pivot": [
+    10.97,
+    9.98
+   ],
+   "sole_rel": 13.11,
+   "toe_rel": 22.66,
+   "heel_rel": -15.53
+  },
+  "leg_f": {
+   "file": "leg_f.png",
+   "size": [
+    33,
+    73
+   ],
+   "pivot": [
+    16.56,
+    10.49
+   ],
+   "ankle_rel": [
+    0.83,
+    52.07
+   ]
+  },
+  "foot_f": {
+   "file": "foot_f.png",
+   "size": [
+    36,
+    25
+   ],
+   "pivot": [
+    11.11,
+    10.12
+   ],
+   "sole_rel": 13.11,
+   "toe_rel": 22.23,
+   "heel_rel": -15.68
+  },
+  "torso": {
+   "file": "torso.png",
+   "size": [
+    94,
+    122
+   ],
+   "pivot": [
+    41.13,
+    105.39
+   ]
+  },
+  "head": {
+   "file": "head.png",
+   "size": [
+    76,
+    58
+   ],
+   "pivot": [
+    27.5,
+    51.58
+   ]
+  },
+  "arm_n": {
+   "file": "arm_n.png",
+   "size": [
+    56,
+    69
+   ],
+   "pivot": [
+    22.03,
+    9.09
+   ]
+  },
+  "arm_f": {
+   "file": "arm_f.png",
+   "size": [
+    28,
+    81
+   ],
+   "pivot": [
+    10.94,
+    9.4
+   ]
+  },
+  "scarf_a": {
+   "file": "scarf_a.png",
+   "size": [
+    102,
+    50
+   ],
+   "pivot": [
+    88.21,
+    30.28
+   ],
+   "length": 78.5
+  },
+  "scarf_b": {
+   "file": "scarf_b.png",
+   "size": [
+    104,
+    50
+   ],
+   "pivot": [
+    89.92,
+    20.88
+   ],
+   "length": 80.2
+  }
+ },
+ "joints": {
+  "neck": [
+   13.88,
+   -91.86
+  ],
+  "shoulder_n": [
+   -1.51,
+   -78.18
+  ],
+  "shoulder_f": [
+   -6.07,
+   -78.18
+  ],
+  "scarf_root": [
+   -12.91,
+   -94.42
+  ],
+  "eye": [
+   32.55,
+   -114.66
+  ],
+  "eye_r": 3.7
+ },
+ "hip_to_ankle": 52.04,
+ "hip_to_sole": 65.15,
+ "height": 206.9,
+ "eye_rel_head": [
+  18.67,
+  -22.8
+ ]
+}

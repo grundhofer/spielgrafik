@@ -1,0 +1,169 @@
+[gd_scene load_steps=24 format=3]
+
+; N64-Look (Katalogeintrag n64). Hafen: harbor_n64.glb (N64-Fassung von shared/3d/harbor.glb mit gebackenem
+; Vertexlicht, blender/build_harbor_n64.py), Dachs: badger_low.glb aus shared/3d (876 Dreiecke).
+; Alles 3D und die Oberfläche liegen im SubViewport "Game" (320×240, MSAA 4×). "Screen/TV" zeigt dieses Bild
+; über shaders/n64_vi.gdshader wie die Videoeinheit der Konsole (16 Bit, Dither-Filter, weich ×3).
+; main.gd ersetzt alle glTF-Materialien nach Namen durch die N64-Shader und hängt die Knoten unter "Attach"
+; an die gleichnamigen Empties im Hafen.
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://models/harbor_n64.glb" id="2_harbor"]
+[ext_resource type="PackedScene" path="res://models/badger_low.glb" id="3_badger"]
+[ext_resource type="Shader" path="res://shaders/n64_sky.gdshader" id="4_sky"]
+[ext_resource type="Shader" path="res://shaders/n64_vi.gdshader" id="5_vi"]
+[ext_resource type="Shader" path="res://shaders/n64_glow.gdshader" id="6_glow"]
+[ext_resource type="Shader" path="res://shaders/n64_beam.gdshader" id="7_beam"]
+[ext_resource type="Shader" path="res://shaders/n64_shadow.gdshader" id="8_shadow"]
+[ext_resource type="Texture2D" path="res://textures/clouds.png" id="9_clouds"]
+[ext_resource type="Texture2D" path="res://textures/stars.png" id="10_stars"]
+[ext_resource type="Texture2D" path="res://textures/glow.png" id="11_glow"]
+[ext_resource type="Texture2D" path="res://textures/shadow.png" id="12_shadow"]
+[ext_resource type="Script" path="res://ui.gd" id="13_ui"]
+
+[sub_resource type="ShaderMaterial" id="SkyMat"]
+shader = ExtResource("4_sky")
+shader_parameter/clouds = ExtResource("9_clouds")
+shader_parameter/stars = ExtResource("10_stars")
+
+[sub_resource type="Sky" id="Sky"]
+sky_material = SubResource("SkyMat")
+radiance_size = 0
+
+; Licht und Nebel rechnen die eigenen Shader je Eckpunkt; Godots Umgebungslicht, Nebel, Glow und
+; Tonemapping bleiben aus (linear).
+[sub_resource type="Environment" id="Env"]
+background_mode = 2
+sky = SubResource("Sky")
+ambient_light_source = 1
+reflected_light_source = 1
+tonemap_mode = 0
+
+[sub_resource type="QuadMesh" id="GlowQuad"]
+size = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="LanternGlowMat"]
+render_priority = 2
+shader = ExtResource("6_glow")
+shader_parameter/tex = ExtResource("11_glow")
+shader_parameter/tint = Color(1, 0.72, 0.38, 1)
+shader_parameter/strength = 1.0
+shader_parameter/pull = 0.35
+
+[sub_resource type="ShaderMaterial" id="LampGlowMat"]
+render_priority = 2
+shader = ExtResource("6_glow")
+shader_parameter/tex = ExtResource("11_glow")
+shader_parameter/tint = Color(1, 0.86, 0.62, 1)
+shader_parameter/strength = 1.0
+shader_parameter/pull = 1.2
+
+[sub_resource type="CylinderMesh" id="BeamMesh"]
+top_radius = 2.4
+bottom_radius = 0.35
+height = 18.0
+radial_segments = 12
+rings = 4
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="ShaderMaterial" id="BeamMat"]
+render_priority = 1
+shader = ExtResource("7_beam")
+shader_parameter/color = Color(1, 0.84, 0.55, 1)
+shader_parameter/intensity = 0.32
+shader_parameter/length_m = 18.0
+
+[sub_resource type="QuadMesh" id="ShadowQuad"]
+size = Vector2(0.8, 0.62)
+orientation = 1
+
+[sub_resource type="ShaderMaterial" id="ShadowMat"]
+render_priority = 0
+shader = ExtResource("8_shadow")
+shader_parameter/tex = ExtResource("12_shadow")
+shader_parameter/strength = 0.6
+
+[sub_resource type="ShaderMaterial" id="VIMat"]
+shader = ExtResource("5_vi")
+
+[node name="Main" type="Node"]
+script = ExtResource("1_main")
+
+[node name="Game" type="SubViewport" parent="."]
+own_world_3d = true
+msaa_3d = 2
+size = Vector2i(320, 240)
+render_target_update_mode = 4
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Game"]
+environment = SubResource("Env")
+
+; Startwerte; main.gd führt die Kamera über die 6 s (Kamerafahrt wie eine Verfolgerkamera der Zeit).
+[node name="Camera" type="Camera3D" parent="Game"]
+transform = Transform3D(1, 0, 0, 0, 0.9986295, 0.05233596, 0, -0.05233596, 0.9986295, -1.8, 3.4, 14.5)
+current = true
+fov = 42.0
+near = 0.1
+far = 3000.0
+
+[node name="Harbor" parent="Game" instance=ExtResource("2_harbor")]
+
+[node name="Badger" parent="Game" instance=ExtResource("3_badger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 1.2)
+
+[node name="BlobShadow" type="MeshInstance3D" parent="Game"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.015, 1.2)
+cast_shadow = 0
+mesh = SubResource("ShadowQuad")
+surface_material_override/0 = SubResource("ShadowMat")
+
+; Alles unter "Attach" hängt main.gd an das gleichnamige Empty im Hafen (lokale Transformation bleibt).
+[node name="Attach" type="Node3D" parent="Game"]
+
+[node name="LanternLight" type="Node3D" parent="Game/Attach"]
+
+[node name="Glow" type="MeshInstance3D" parent="Game/Attach/LanternLight"]
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 0, 0)
+cast_shadow = 0
+mesh = SubResource("GlowQuad")
+surface_material_override/0 = SubResource("LanternGlowMat")
+
+[node name="LighthouseLight" type="Node3D" parent="Game/Attach"]
+
+[node name="Glow" type="MeshInstance3D" parent="Game/Attach/LighthouseLight"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+cast_shadow = 0
+mesh = SubResource("GlowQuad")
+surface_material_override/0 = SubResource("LampGlowMat")
+
+; Drehteil des Leuchtfeuers: main.gd dreht "Rotor" um Y; "Tilt" neigt den Kegel 5° nach unten
+[node name="Rotor" type="Node3D" parent="Game/Attach/LighthouseLight"]
+
+[node name="Tilt" type="Node3D" parent="Game/Attach/LighthouseLight/Rotor"]
+transform = Transform3D(1, 0, 0, 0, 0.9961947, 0.08715574, 0, -0.08715574, 0.9961947, 0, 0, 0)
+
+[node name="Beam" type="MeshInstance3D" parent="Game/Attach/LighthouseLight/Rotor/Tilt"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, -9)
+cast_shadow = 0
+mesh = SubResource("BeamMesh")
+surface_material_override/0 = SubResource("BeamMat")
+
+; Oberfläche in 320×240 im selben Bild wie die 3D-Szene (geht mit durch die Videoausgabe)
+[node name="UI" type="CanvasLayer" parent="Game"]
+
+[node name="Overlay" type="Control" parent="Game/UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 320.0
+offset_bottom = 240.0
+mouse_filter = 2
+script = ExtResource("13_ui")
+
+[node name="Screen" type="CanvasLayer" parent="."]
+
+[node name="TV" type="ColorRect" parent="Screen"]
+material = SubResource("VIMat")
+offset_right = 960.0
+offset_bottom = 720.0
+mouse_filter = 2

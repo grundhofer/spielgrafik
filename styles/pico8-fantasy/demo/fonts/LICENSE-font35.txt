@@ -1,0 +1,10 @@
+font35 – 3x5-Blockschrift für den Katalogeintrag pico8-fantasy (Hafen von Lornholm)
+
+Eigene Zeichnung, Glyphen als Text in scripts/font35.py, Daten in demo/cart/font35.json.
+
+CC0 1.0 Universal (Public Domain Dedication)
+https://creativecommons.org/publicdomain/zero/1.0/
+
+Soweit gesetzlich möglich, verzichtet der Urheber auf alle Urheber- und verwandten Schutzrechte an
+dieser Schrift. Sie darf ohne Erlaubnis und ohne Namensnennung kopiert, verändert und verwendet werden,
+auch kommerziell.

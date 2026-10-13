@@ -1,0 +1,313 @@
+{
+ "screen": [
+  1280,
+  720
+ ],
+ "k": 1.0126582278481013,
+ "oy": 65.832,
+ "dx_cottage": 100,
+ "lamp": [
+  1122.0,
+  122.7
+ ],
+ "horizon": 351.6,
+ "pavement_fill": [
+  {
+   "stone": 20,
+   "from": [
+    75,
+    681
+   ],
+   "to": [
+    408,
+    581
+   ],
+   "size": [
+    41,
+    91
+   ]
+  },
+  {
+   "stone": 22,
+   "from": [
+    745,
+    583
+   ],
+   "to": [
+    486,
+    593
+   ],
+   "size": [
+    43,
+    50
+   ]
+  },
+  {
+   "stone": 24,
+   "from": [
+    848,
+    648
+   ],
+   "to": [
+    540,
+    589
+   ],
+   "size": [
+    22,
+    27
+   ]
+  },
+  {
+   "stone": 27,
+   "from": [
+    207,
+    653
+   ],
+   "to": [
+    408,
+    581
+   ],
+   "size": [
+    11,
+    11
+   ]
+  }
+ ],
+ "quay": {
+  "file": "quay.png",
+  "shadow": "quay_shadow.png",
+  "size": [
+   1280,
+   720
+  ],
+  "shadow_pad": 20
+ },
+ "cottage": {
+  "file": "cottage.png",
+  "shadow": "cottage_shadow.png",
+  "size": [
+   1280,
+   639
+  ],
+  "shadow_pad": 20,
+  "pos": [
+   0,
+   81
+  ]
+ },
+ "window": [
+  259.5,
+  370.8,
+  361.8,
+  471.1
+ ],
+ "lantern_glass": [
+  835.4,
+  361.7,
+  872.9,
+  402.2
+ ],
+ "chimney_top": [
+  345.6,
+  89.3
+ ],
+ "quay_top": 518.7,
+ "jetty": {
+  "file": "jetty.png",
+  "shadow": "jetty_shadow.png",
+  "size": [
+   411,
+   129
+  ],
+  "shadow_pad": 12,
+  "scale": 0.62,
+  "origin_img": [
+   41,
+   44
+  ]
+ },
+ "boat_l": {
+  "file": "boat_l.png",
+  "shadow": "boat_l_shadow.png",
+  "size": [
+   168,
+   169
+  ],
+  "shadow_pad": 12,
+  "scale": 0.74,
+  "origin_img": [
+   53,
+   247
+  ],
+  "pivot": [
+   82.9,
+   146.5
+  ]
+ },
+ "boat_r": {
+  "file": "boat_r.png",
+  "shadow": "boat_r_shadow.png",
+  "size": [
+   231,
+   207
+  ],
+  "shadow_pad": 12,
+  "scale": 0.84,
+  "origin_img": [
+   333,
+   230
+  ],
+  "pivot": [
+   115.1,
+   180.6
+  ]
+ },
+ "cloud_a": {
+  "file": "cloud_a.png",
+  "shadow": "cloud_a_shadow.png",
+  "size": [
+   265,
+   84
+  ],
+  "shadow_pad": 12,
+  "scale": 0.9,
+  "origin_img": [
+   732,
+   56
+  ]
+ },
+ "cloud_b": {
+  "file": "cloud_b.png",
+  "shadow": "cloud_b_shadow.png",
+  "size": [
+   184,
+   69
+  ],
+  "shadow_pad": 12,
+  "scale": 0.9,
+  "origin_img": [
+   1035,
+   72
+  ]
+ },
+ "gull_body": {
+  "file": "gull_body.png",
+  "shadow": "gull_body_shadow.png",
+  "size": [
+   42,
+   25
+  ],
+  "shadow_pad": 12,
+  "scale": 0.26,
+  "origin_img": [
+   712,
+   229
+  ],
+  "pivot": [
+   20.3,
+   13.3
+  ],
+  "wing_at": [
+   22.9,
+   10.1
+  ]
+ },
+ "gull_wing": {
+  "file": "gull_wing.png",
+  "shadow": "gull_wing_shadow.png",
+  "size": [
+   78,
+   28
+  ],
+  "shadow_pad": 12,
+  "scale": 0.26,
+  "origin_img": [
+   892,
+   224
+  ],
+  "pivot": [
+   5.2,
+   17.2
+  ]
+ },
+ "smoke": {
+  "file": "smoke.png",
+  "shadow": "smoke_shadow.png",
+  "size": [
+   46,
+   50
+  ],
+  "shadow_pad": 12,
+  "scale": 0.5,
+  "origin_img": [
+   729,
+   380
+  ]
+ },
+ "strips": [
+  {
+   "file": "strip0.png",
+   "shadow": "strip0_shadow.png",
+   "top": 402,
+   "size": [
+    1440,
+    150
+   ],
+   "edge_offset": 14,
+   "shadow_pad": 10,
+   "color": [
+    92,
+    114,
+    136
+   ]
+  },
+  {
+   "file": "strip1.png",
+   "shadow": "strip1_shadow.png",
+   "top": 432,
+   "size": [
+    1440,
+    150
+   ],
+   "edge_offset": 14,
+   "shadow_pad": 10,
+   "color": [
+    78,
+    118,
+    132
+   ]
+  },
+  {
+   "file": "strip2.png",
+   "shadow": "strip2_shadow.png",
+   "top": 468,
+   "size": [
+    1440,
+    150
+   ],
+   "edge_offset": 14,
+   "shadow_pad": 10,
+   "color": [
+    62,
+    106,
+    120
+   ]
+  },
+  {
+   "file": "strip3.png",
+   "shadow": "strip3_shadow.png",
+   "top": 497,
+   "size": [
+    1440,
+    150
+   ],
+   "edge_offset": 14,
+   "shadow_pad": 10,
+   "color": [
+    50,
+    88,
+    104
+   ]
+  }
+ ]
+}

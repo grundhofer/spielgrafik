@@ -1,0 +1,7 @@
+{
+ "frames": 180,
+ "changed_any_mean": 6e-05,
+ "changed_any_max": 8e-05,
+ "changed_gt24_max": 6e-05,
+ "worst_frame": 36
+}

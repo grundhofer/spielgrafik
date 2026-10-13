@@ -1,0 +1,42 @@
+{
+ "cell": [
+  36,
+  49
+ ],
+ "anchor_col": 19,
+ "ground_row": 48,
+ "frames": [
+  "walk0",
+  "walk1",
+  "walk2",
+  "walk3",
+  "walk4",
+  "walk5",
+  "walk6",
+  "walk7",
+  "walk8",
+  "walk9",
+  "walk10",
+  "walk11",
+  "settle0",
+  "stand0",
+  "stand1",
+  "stand2",
+  "stand3",
+  "blink"
+ ],
+ "step_d": [
+  2,
+  2,
+  1,
+  2,
+  2,
+  1
+ ],
+ "stop_d": [
+  2,
+  1
+ ],
+ "stride": 10,
+ "fps": 15
+}
