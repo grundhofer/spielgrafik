@@ -1,5 +1,6 @@
 {
  "slug": "vorgerendert-fixkamera",
+ "related": ["vorgerendert-hd"],
  "name": "Vorgerenderte Hintergründe, feste Kamera",
  "family": "retro3d",
  "kind": "style",

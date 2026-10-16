@@ -1,0 +1,39 @@
+{
+ "errors": [],
+ "warnings": [],
+ "identical_runs": true,
+ "occlusion_max_share": 1.0,
+ "standing_foot_rows": [
+  651,
+  652,
+  653
+ ],
+ "planted_foot_screen_step_px": {
+  "median": 0.017,
+  "p90": 0.623,
+  "max": 1.583
+ },
+ "catcher_pixels_changed_gt3": 40896,
+ "catcher_max_difference": 20,
+ "catcher_darkened_pixels_gt3": 40075,
+ "catcher_lightened_pixels_gt3": 0,
+ "panorama_pixels_changed_gt3": 71964,
+ "catcher_without_character_max_difference": 0,
+ "blender_preview_vs_godot_agx_mean_difference": 0.736,
+ "mobile": {
+  "mean_channel_difference": 1.193,
+  "share_pixels_gt8": 0.0178,
+  "max_difference": 52
+ },
+ "gl_compatibility": {
+  "mean_channel_difference": 55.287,
+  "share_pixels_gt8": 0.9912,
+  "max_difference": 159
+ },
+ "late_frame_std": 52.7,
+ "frames_per_animation_run": 180,
+ "native_size": [
+  1280,
+  960
+ ]
+}

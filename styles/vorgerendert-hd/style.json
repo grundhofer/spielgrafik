@@ -1,0 +1,86 @@
+{
+ "slug": "vorgerendert-hd",
+ "name": "Vorgerenderte HD-Hintergründe",
+ "family": "hybrid",
+ "kind": "style",
+ "era": "Heute",
+ "summary": "Ein detailliert vorgerenderter Hafen mit einer beweglichen 3D-Figur: Tiefenbild, echte Figurenschatten und Panorama-Licht verbinden beide Ebenen. Dieselben zwei Einstellungen und dieselbe Laufbahn wie in der Retro-Fixkamera, diesmal in HD mit gemeinsamem AgX-Tonemapping.",
+ "references": ["Moderne Adventures mit vorgerenderten Schauplätzen und Echtzeitfiguren"],
+ "related": ["vorgerendert-fixkamera"],
+ "traits": [
+  "Zwei feste Kameraeinstellungen, harter Schnitt bei 2,1 s; Geometrie und Laufweg entsprechen der Retro-Version.",
+  "1280×960 statt 320×240: geglättete Konturen, erkennbare Stein-, Holz- und Stoffoberflächen.",
+  "Dachs mit 7.348 statt 876 Dreiecken, geriggt, mit PBR-Materialien und Gewebedetails; er läuft, hält an, dreht sich und winkt.",
+  "Das Tiefenbild verdeckt den Dachs hinter dem Häuschen. Unsichtbare Geometrie wirft Schatten auf die Figur.",
+  "Shadow-Catcher auf der Kaigeometrie: Der bewegliche Dachs wirft einen gerichteten Schatten auf die Renderplatte.",
+  "Dasselbe lineare HDR-Panorama beleuchtet Blender und Godot und liefert Reflexionen. Hintergrund und Figur durchlaufen gemeinsam AgX.",
+  "Leuchtturmstrahl dreht sich und Schornsteinrauch steigt auf; beide Effekte entstehen in Echtzeit."
+ ],
+ "camera": "Zwei feste Perspektivkameras, 4:3; identisch mit vorgerendert-fixkamera",
+ "resolution": "1280×960 nativ; Katalogvideo 1280×720 mit seitlichen Rändern",
+ "pipeline": [
+  {"step": "Hafen und Kameras übernehmen", "tool": "shared/3d, Blender 5.2.2 LTS", "detail": "Die gemeinsame Hafengeometrie und die Einstellungsdatei der Retro-Fixkamera werden übernommen. Die prozeduralen Cycles-Materialien liegen als eigenständige Kopie im Bauskript; shared/ und die Retro-Demo bleiben unverändert."},
+  {"step": "HDR-Panorama und Renderplatten bauen", "tool": "Blender/Cycles, blender/render_bg.py", "detail": "Der prozedurale Abendhimmel wird als lineares 1024×512-EXR gebacken. Dieses Panorama ersetzt den Himmel in Blender und wird später von Godot geladen. Je Kamera entsteht eine 1280×960-EXR-Platte mit 48 Samples und Entrauschung, ohne Dachs, Strahl oder Rauch. PNG-Vorschauen verwenden AgX ohne Kontrast-Look, Belichtung +1; die EXR-Dateien enthalten kein eingebranntes Tonemapping."},
+  {"step": "Verdeckung und Figurenmaterialien vorbereiten", "tool": "Cycles, scripts/bake.py, scripts/materials.py", "detail": "Ein ungefilterter Kamera-Z-Pass mit einem Sample je Pixel wird auf 24 Bit in RGB-PNG gepackt, Messbereich 0–1000 m. Deterministische, kachelbare Stoff-, Strick- und Ledertexturen mit Normal Maps ergänzen die unveränderte höher aufgelöste Dachs-Geometrie."},
+  {"step": "HD-Demo zusammensetzen", "tool": "Godot 4.7.2, Forward+", "detail": "Eine Bildfläche schreibt Renderfarbe und echte Tiefe. Die Figur verwendet StandardMaterial3D, Panorama-Licht und direkte Lichtquellen. Unsichtbare Hafenmeshes liefern Schatten; ein eigener Empfänger mit separater Licht- und Schattenmaske fängt nur den Dachs-Schatten auf. AgX mit Belichtung 2 wirkt gemeinsam auf die lineare Platte, Figur und Echtzeiteffekte."},
+  {"step": "Aufnehmen und messen", "tool": "tools/capture.py, scripts/probe.py", "detail": "180 Bilder bei 30 fps, Poster bei 4,9 s; Aufnahme ohne Godot-Fehler oder Warnungen. Drei vollständige Prüfläufe messen deterministische Posen, Fußkontakt und Verdeckung; weitere Differenzbilder messen Shadow-Catcher und Panorama. Vergleich mit Mobile und OpenGL sowie Spätprüfung ab 40 s. Ergebnisse stehen in assets/probe.json."}
+ ],
+ "godot": [
+  "Viewport 1280×960, Forward+, MSAA 4×; Movie Maker rendert native Bilder, capture.py verkleinert sie auf 960×720 und ergänzt die seitlichen Ränder.",
+  "WorldEnvironment: AgX, tonemap_exposure 2, Sky mit PanoramaSkyMaterial; Umgebungslicht und Reflexionen stammen aus derselben EXR-Datei wie der Blender-Himmel.",
+  "bg.gdshader liest die EXR-Platte linear, rekonstruiert die Tiefe aus RGB24 und schreibt DEPTH mit der Projektion der tatsächlich gerenderten Kamera. HDR- und Tiefentexturen werden verlustfrei, ohne Mipmaps, Farbsaumkorrektur oder automatische 3D-Kompression importiert.",
+  "Figur auf Lichtlayer 2, unsichtbare Hafen-Proxies auf Layer 1, Shadow-Catcher auf Layer 4. Die Figurenlichter berücksichtigen beide Schattengeber; CatcherSun beleuchtet nur den Empfänger und nimmt ausschließlich den Dachs als Schattengeber. Dadurch entstehen keine doppelten Schatten des Häuschens auf der Platte.",
+  "catcher.gdshader nutzt shadow_to_opacity. Weißes Albedo hält die Schatten-Opazitätsrechnung aktiv; Metallic 1, specular_disabled und eine schwarze RADIANCE-Überschreibung entfernen die sichtbare Empfängerfarbe. Nur der dunkle Schatten bleibt, mit maximal 0,55 Deckkraft.",
+  "main.gd berechnet Zeit aus dem Bildzähler und den Weg als Integral der Bremskurve. Der AnimationPlayer wird manuell auf die zugehörige Pose gesetzt; Strahl und Rauch sind periodisch mit 6 s. Die Demo läuft auch nach 40 s ohne leere Flächen.",
+  "Prüfschalter nach --: --key, --no-depth, --no-ui, --no-catcher, --no-panorama, --no-anim, --only-bg, --feet-log, --shot=totale|nah, --at=<Sekunden>, --t0=<Sekunden>."
+ ],
+ "techniques": ["vorgerenderter-hintergrund", "tiefenbild-verdeckung", "feste-kameras", "kameraschnitt", "shadow-catcher", "panorama-umgebungslicht", "pbr-materialien", "agx-tonemapping", "blender-cycles", "prozedurale-materialien", "textoberflaeche"],
+ "ratings": {"ai_fit": 1, "consistency": 5, "effort": 4, "text_adventure": 5, "mobile": 3},
+ "ratings_note": "ai_fit 1: Keine KI-Bilder verwendet; der Look stammt aus gemeinsamen Modellen, prozeduralen Materialien, Blender und Godot. consistency 5: Weitere Einstellungen sind Kameras derselben Szene; Panorama, Materialien und Farbverarbeitung bleiben gemeinsam. effort 4: Jeder Ort braucht ein 3D-Modell, Kameras, Renderplatten und Schatten-Proxies. text_adventure 5: Detaillierte Standbilder und gut lesbarer Dialog lassen sich mit wenigen beweglichen Figuren verbinden. mobile 3 geschätzt: Mobile startet fehlerfrei und weicht im Mittel um 1,19 Farbstufen je Kanal ab; 1,78 % der Pixel unterscheiden sich um mehr als 8 Stufen. Die HDR-Platten benötigen zusammen rund 14,7 MB RGB16F-Speicher, hinzu kommen Panorama, Radiance-Map, Schattenkarten und 4× MSAA. OpenGL ist für diese Fassung ungeeignet: im Mittel 55,29 Stufen Abweichung. Kein Smartphone-Test.",
+ "verdict": "Für unser Textadventure gut geeignet, wenn wir Orte modellieren können: Eine hochwertige feste Ansicht trägt den Schauplatz, die bewegliche Figur passt durch Panorama-Licht, Tiefenbild und gerichteten Schatten hinein. Gegenüber der Retro-Version sind Kanten, Materialien und Gesicht klarer; die Lichtverbindung wirkt geschlossener. Ohne laufende Figur entfallen Schatten-Proxies und Catcher. Für eine mobile Produktion müssen Auflösung, HDR-Speicher und Schattenqualität gezielt begrenzt werden.",
+ "pitfalls": [
+  "Die Figur bleibt die gemeinsame stilisierte Dachs-Geometrie mit 7.348 Dreiecken, keine neu modellierte Filmfigur. Die Materialdetails verbessern die Oberfläche, verändern aber weder Gesicht noch Proportionen.",
+  "Blender und Godot verwenden unterschiedliche Näherungen für AgX und die Beleuchtung. Der leere Godot-Hintergrund weicht im Mittel um 0,74 Farbstufen je Kanal von der Blender-AgX-Vorschau ab. Die Echtzeitfigur erhält keine vollständige Cycles-Beleuchtung: Fenster-Flächenlichter sind in Godot durch Punktlichter angenähert, lokale indirekte Lichtübertragung und bewegliche Reflexionen fehlen.",
+  "Der Catcher fängt den gerichteten Sonnenschatten auf dem Kai auf; zusätzliche Figurenschatten aus den Fenster- und Laternenlichtern werden nicht auf die Platte übertragen. Die sehr flache Abendsonne erzeugt einen langen Schatten, der teilweise unter der Dialogfläche liegt.",
+  "Der Shadow-Catcher war zunächst unsichtbar: Schwarzes Albedo setzte Godots interne Opazitätsgrenze auf null. Danach verursachte Panorama-Reflexion eine helle Spur. Erst die getrennte Behandlung von Opazität, Empfängerfarbe und Reflexion liefert einen dunklen Schatten. Gemessen: 40.075 Pixel dunkler als 3 Stufen, keine aufgehellten Pixel, ohne Figur 0 Stufen Unterschied.",
+  "Der Standfuß bewegt sich während des Laufens im Median um 0,017 px pro Bild, im 90. Perzentil um 0,623 px; maximal 1,583 px am gerundeten Bahnknick. Die Fußsilhouette im Stand liegt zwischen Zeile 651 und 653 (±1 px). Das gemeinsame Rig ist damit stabil, aber kein auf diese Kurve individuell angepasster Laufzyklus.",
+  "Die HD-Hintergründe sind Standbilder: Wasser und Boote bewegen sich hier nicht. Leuchtturmstrahl und Rauch werden als günstige Echtzeiteffekte ergänzt; ihre Bewegung spiegelt sich nicht im gerenderten Wasser. Das unterscheidet diese Umsetzung von der vollständig gerenderten Bildfolge der Retro-Version.",
+  "OpenGL Compatibility liefert deutlich andere HDR-Farben und Schatten. Die geprüfte Fassung zielt auf Forward+ und Mobile, ohne eine farbgleiche OpenGL-Ersatzfassung.",
+  "Die beiden festen Einstellungen weichen wie in der Retro-Version von der Hauptkamera des gemeinsamen Hafens ab. Beide Fixkamera-Einträge sind direkt miteinander vergleichbar; mit anderen 3D-Stilen stimmt die Geometrie, aber nicht der Bildausschnitt überein."
+ ],
+ "lessons": [
+  "Lineare EXR-Platten bis zur Engine aufbewahren: Hintergrund und Figur können dann genau denselben abschließenden AgX-Schritt durchlaufen, ohne eine bereits tonemapped Platte nochmals zu verändern.",
+  "Ein gebackenes Panorama für beide Renderer ist wiederholbar und reduziert die manuelle Lichtabstimmung. Die genaue Umgebungsgeometrie bleibt trotzdem für lokale Schatten erforderlich.",
+  "Licht- und Schattenmasken getrennt setzen: Ein Empfängerlicht kann die Figur als Schattengeber benutzen, ohne die Figur ein zweites Mal zu beleuchten oder vorhandene Umgebungsschatten zu wiederholen.",
+  "Differenzbilder müssen auch die Richtung prüfen: Ein sichtbarer Effekt kann eine helle Reflexion statt eines dunklen Schattens sein. Der Prüflauf misst deshalb Abdunklung, Aufhellung und den leeren Empfänger getrennt.",
+  "Analytischer Weg und manuell gesetzte Animationsposen vermeiden Abweichungen durch die ungleichmäßigen ersten Movie-Maker-Zeitschritte; alle 180 Bilder der wiederholten Figurenläufe sind bitgleich."
+ ],
+ "assets": [
+  {"file": "assets/preview/totale.png", "kind": "preview", "made_with": "Blender/Cycles, AgX-Vorschau der HD-Totale", "prompt": ""},
+  {"file": "assets/preview/nah.png", "kind": "preview", "made_with": "Blender/Cycles, AgX-Vorschau der HD-Nahaufnahme", "prompt": ""},
+  {"file": "assets/preview/depth_totale.png", "kind": "depth", "made_with": "scripts/bake.py: logarithmische Vorschau der tatsächlichen Kamera-Z-Tiefe", "prompt": ""},
+  {"file": "assets/preview/depth_nah.png", "kind": "depth", "made_with": "scripts/bake.py: logarithmische Tiefenvorschau der Nahaufnahme", "prompt": ""},
+  {"file": "assets/preview/catcher_difference.png", "kind": "comparison", "made_with": "scripts/probe.py: Differenz mit und ohne Shadow-Catcher bei 4,9 s, Helligkeit ×4", "prompt": ""},
+  {"file": "assets/probe.json", "kind": "measurement", "made_with": "scripts/probe.py: Verdeckung, Fußkontakt, Schatten, Panorama und Renderer-Vergleich", "prompt": ""},
+  {"file": "demo/bg/totale/base.exr", "kind": "background", "made_with": "Cycles: lineare HDR-Renderplatte 1280×960, ohne eingebranntes AgX", "prompt": ""},
+  {"file": "demo/bg/nah/base.exr", "kind": "background", "made_with": "Cycles: lineare HDR-Renderplatte 1280×960", "prompt": ""},
+  {"file": "demo/bg/panorama.exr", "kind": "texture", "made_with": "Cycles: prozeduraler Abendhimmel als gemeinsames 1024×512-HDR-Panorama", "prompt": ""},
+  {"file": "demo/bg/totale/depth.png", "kind": "depth", "made_with": "Cycles und bake.py: Kamera-Z auf 24 Bit in RGB gepackt", "prompt": ""},
+  {"file": "demo/bg/nah/depth.png", "kind": "depth", "made_with": "Cycles und bake.py: Kamera-Z auf 24 Bit in RGB gepackt", "prompt": ""},
+  {"file": "demo/models/badger.glb", "kind": "model", "made_with": "Unveränderte Kopie von shared/3d/badger.glb mit Idle, Walk und Wave", "prompt": ""},
+  {"file": "demo/models/harbor.glb", "kind": "model", "made_with": "Unveränderte gemeinsame Hafengeometrie als unsichtbare Schatten-Proxies und Empfänger", "prompt": ""},
+  {"file": "demo/shots.json", "kind": "data", "made_with": "Unveränderte Kameras und Bahn aus vorgerendert-fixkamera", "prompt": ""},
+  {"file": "demo/textures/cloth.png", "kind": "texture", "made_with": "scripts/materials.py: kachelbares Gewebe", "prompt": ""},
+  {"file": "demo/textures/knit.png", "kind": "texture", "made_with": "scripts/materials.py: kachelbare Strickstruktur", "prompt": ""},
+  {"file": "demo/textures/leather.png", "kind": "texture", "made_with": "scripts/materials.py: kachelbare Lederstruktur", "prompt": ""}
+ ],
+ "licenses": [
+  {"item": "Hafen und Dachs", "license": "Eigene Modelle, CC0", "source": "shared/3d/blender/"},
+  {"item": "Prozedurale Materialien, Panorama, Gewebetexturen und Shader", "license": "Eigene Erzeugnisse; Code MIT, Bilder CC0", "source": "blender/render_bg.py, scripts/materials.py, demo/shaders/"},
+  {"item": "Fira Sans Medium", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/firasans (Lizenztext: demo/fonts/OFL-FiraSans.txt)"},
+  {"item": "Cinzel", "license": "OFL-1.1", "source": "https://github.com/google/fonts/tree/main/ofl/cinzel (Lizenztext: demo/fonts/OFL-Cinzel.txt)"}
+ ],
+ "image_generations": 0,
+ "tool_issues": [],
+ "status": "done"
+}

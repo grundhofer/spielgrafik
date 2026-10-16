@@ -120,9 +120,9 @@ KIND_DE = {
 RESERVED = {"assets", "vergleich", "techniken", "textadventure", "werkzeuge", "impressum"}
 KNOWN_KEYS = {"slug", "name", "family", "kind", "era", "summary", "references", "traits", "camera", "resolution",
               "pipeline", "godot", "techniques", "ratings", "ratings_note", "verdict", "pitfalls", "lessons", "assets",
-              "licenses", "image_generations", "tool_issues", "status"}
+              "licenses", "image_generations", "tool_issues", "status", "related"}
 LIST_KEYS = ("references", "traits", "godot", "techniques", "pitfalls", "lessons", "tool_issues", "pipeline",
-             "assets", "licenses")
+             "assets", "licenses", "related")
 IMAGE_EXT = {".png", ".jpg", ".jpeg", ".webp", ".gif"}
 THUMB_MAX = 960            # längste Kante der verkleinerten Fassung
 LARGE_BYTES = 600_000      # ab hier gilt ein Bild als groß
@@ -362,6 +362,9 @@ def load(root):
     for e in entries:  # Einträge außerhalb des Katalogs brauchen Familie und Art aus style.json
         if e["family"] not in fam or e["kind"] not in KIND:
             problems.append(f"styles/{e['slug']}/style.json: family/kind fehlen oder sind unbekannt")
+        for slug in (e["st"] or {}).get("related", []):
+            if not isinstance(slug, str) or slug not in by_slug or slug == e["slug"]:
+                problems.append(f"styles/{e['slug']}/style.json → related: ungültiges Vergleichsziel {slug!r}")
     if problems:
         raise DataError(problems)
     return {"root": root, "families": families, "fam": fam, "entries": entries, "by": by_slug, "motif": motif}, warnings
@@ -977,6 +980,10 @@ def page_entry(D, O, e, users):
     if needs3d:
         kv.append(("Grundlage", h(needs3d)))
     right.append(f'<dl class="kv box">{"".join(f"<dt>{k}</dt><dd>{v}</dd>" for k, v in kv)}</dl>')
+    if st.get("related"):
+        related = [D["by"][slug] for slug in dict.fromkeys(st["related"])]
+        right.append(f'<div class="box"><h2>Direkt vergleichen</h2><div class="tags">'
+                     f'{entry_tags(related, page)}</div></div>')
     if st.get("references"):
         right.append(f'<div class="box"><h2>Vorbilder</h2>{lst(st["references"])}</div>')
     if st.get("techniques"):
