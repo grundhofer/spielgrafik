@@ -1,0 +1,64 @@
+[gd_scene load_steps=9 format=3]
+[ext_resource type="Script" path="res://main.gd" id="1"]
+[ext_resource type="PackedScene" path="res://models/badger.glb" id="2"]
+[ext_resource type="Shader" path="res://shaders/bg.gdshader" id="3"]
+[ext_resource type="PackedScene" path="res://models/harbor.glb" id="4"]
+[ext_resource type="Script" path="res://ui.gd" id="5"]
+[sub_resource type="Environment" id="Env"]
+background_mode = 1
+background_color = Color(0, 0, 0, 1)
+tonemap_mode = 4
+tonemap_exposure = 2.0
+[sub_resource type="QuadMesh" id="Quad"]
+size = Vector2(2, 2)
+[sub_resource type="ShaderMaterial" id="Bg"]
+shader = ExtResource("3")
+[node name="Main" type="Node3D"]
+script = ExtResource("1")
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Env")
+[node name="Camera" type="Camera3D" parent="."]
+current = true
+near = 0.05
+far = 3000.0
+[node name="Background" type="MeshInstance3D" parent="Camera"]
+position = Vector3(0, 0, -1)
+cast_shadow = 0
+extra_cull_margin = 16384.0
+mesh = SubResource("Quad")
+surface_material_override/0 = SubResource("Bg")
+[node name="Badger" parent="." instance=ExtResource("2")]
+[node name="Proxy" parent="." instance=ExtResource("4")]
+[node name="Dusk" type="DirectionalLight3D" parent="."]
+light_color = Color(1, 0.612, 0.353, 1)
+light_energy = 1.5
+shadow_enabled = true
+directional_shadow_max_distance = 60.0
+[node name="WindowSide" type="OmniLight3D" parent="."]
+position = Vector3(-6.525, 1.5, -1.15)
+light_color = Color(1, 0.69, 0.376, 1)
+light_energy = 1.0
+omni_range = 3.2
+shadow_enabled = true
+[node name="WindowFront" type="OmniLight3D" parent="."]
+position = Vector3(-9.2, 1.45, 0.85)
+light_color = Color(1, 0.69, 0.376, 1)
+light_energy = 1.2
+omni_range = 4.5
+shadow_enabled = true
+[node name="Lantern" type="OmniLight3D" parent="."]
+position = Vector3(4.1, 1.79, -0.12)
+light_color = Color(1, 0.7, 0.37, 1)
+light_energy = 1.6
+omni_range = 6.0
+shadow_enabled = true
+[node name="UI" type="CanvasLayer" parent="."]
+[node name="Box" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("5")

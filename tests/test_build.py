@@ -195,6 +195,12 @@ class TestFixtureBuild(unittest.TestCase):
         self.assertIn('rel="next"', text)               # nächster Eintrag der Familie
         self.assertNotIn('rel="prev"', text)            # erster der Familie
 
+    def test_direct_comparison_links(self):
+        page = self.read("probe-pixel/index.html")
+        self.assertIn("Direkt vergleichen", page)
+        self.assertIn('href="../probe-gemalt/"', page)
+        self.assertNotIn("Direkt vergleichen", self.read("probe-gemalt/index.html"))
+
     def test_alt_texts(self):
         for page in pages(self.out):
             for img in Page(page.read_text(encoding="utf-8")).imgs:
@@ -505,6 +511,12 @@ class TestDataErrors(unittest.TestCase):
     def test_rating_out_of_range(self):
         self.edit("probe-pixel", ratings={"ai_fit": 7})
         self.assertFails("ratings.ai_fit")
+
+    def test_invalid_comparison_targets(self):
+        for target in ("unknown-style", "probe-pixel", ["probe-gemalt"]):
+            with self.subTest(target=target):
+                self.edit("probe-pixel", related=[target])
+                self.assertFails("related")
 
     def test_unknown_status(self):
         self.edit("probe-gemalt", status="fast fertig")

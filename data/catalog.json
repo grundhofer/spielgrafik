@@ -143,6 +143,8 @@
   {"slug": "gemaltes-3d", "name": "Gemaltes 3D", "family": "modern3d", "kind": "style", "needs": ["shared3d"],
    "brief": "3D-Szene, die per Nachbearbeitung wie gemalt wirkt: Kuwahara-Filter, Pinselstrich-Textur, Papier- oder Leinwandstruktur, Aquarellränder. Vergleich zu echt gemalten 2D-Stilen."},
 
+  {"slug": "vorgerendert-hd", "name": "Vorgerenderte HD-Hintergründe", "family": "hybrid", "kind": "style", "needs": ["shared3d"],
+   "brief": "HD-Variante von vorgerendert-fixkamera: dieselbe Hafenszene, dieselben beiden festen Kameras und dieselbe Dachs-Laufbahn. Lineare HDR-Hintergründe in 1280×960 aus Blender/Cycles, höher aufgelöster geriggter Dachs mit PBR-Materialien in Godot, passendes Tiefenbild für Verdeckung, Shadow-Catcher statt Rundschatten, gemeinsames HDR-Panorama für Umgebungslicht und Reflexionen. Blender-Vorschau und Godot verwenden AgX; die lineare Hintergrundplatte wird zusammen mit der Figur erst in Godot tonemapped. Mindestens zwei Umgebungsanimationen und eine gut lesbare HD-Dialogoberfläche. Direkt mit der Retro-Version vergleichen und verbleibende Unterschiede der beiden Renderer offen benennen."},
   {"slug": "hd-2d", "name": "HD-2D", "family": "hybrid", "kind": "style", "needs": ["shared3d"],
    "brief": "Pixel-Sprites (Figur, Requisiten als Billboards mit Nearest) in einer 3D-Umgebung mit pixeligen Texturen, starke Tiefenunschärfe, Bloom, volumetrisches Licht, Vignette, leichte Aufsicht; Kamera schwenkt etwas. Vorbild: HD-2D-Rollenspiele."},
   {"slug": "pixel-3d", "name": "Pixel-3D", "family": "hybrid", "kind": "style", "needs": ["shared3d"],

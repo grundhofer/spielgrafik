@@ -4,7 +4,7 @@
 
 **One scene, many game-art styles.**
 
-A catalogue of 84 game-art styles and techniques (66 styles, 18 techniques), from 1-bit pixel art via
+A catalogue of 86 game-art styles and techniques (67 styles, 19 techniques), from 1-bit pixel art via
 home-computer graphics, watercolour and woodcut to PS1-style 3D and toon shading. Every entry shows the same
 scene: the harbour of Lornholm at dusk, crossed by the badger courier. Everything is made in-house with AI
 images, code, Blender and Godot, and every entry runs as a short Godot demo with a recording, ratings, the prompts

@@ -4,7 +4,7 @@
 
 **Eine Szene, viele Spielgrafiken.**
 
-Ein Katalog mit 84 Spielgrafik-Stilen und Techniken (66 Stile, 18 Techniken), von 1-Bit-Pixel-Art über
+Ein Katalog mit 86 Spielgrafik-Stilen und Techniken (67 Stile, 19 Techniken), von 1-Bit-Pixel-Art über
 Heimcomputer-Grafik, Aquarell und Holzschnitt bis zum PS1-Look und Cel-Shading. Jeder Eintrag zeigt dieselbe
 Szene: den Hafen von Lornholm in der Abenddämmerung, über den der Dachs-Kurier läuft. Alles ist selbst erzeugt,
 mit KI-Bildern, Code, Blender und Godot, und jeder Eintrag läuft als kurze Godot-Demo, mit Aufnahme, Bewertungen,
